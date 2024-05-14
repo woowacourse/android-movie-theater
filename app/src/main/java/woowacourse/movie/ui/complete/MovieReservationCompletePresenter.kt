@@ -1,20 +1,21 @@
 package woowacourse.movie.ui.complete
 
-import woowacourse.movie.model.data.MovieDataSource
-import woowacourse.movie.model.movie.UserTicket
+import woowacourse.movie.model.db.UserTicketRepository
 
 class MovieReservationCompletePresenter(
     private val view: MovieReservationCompleteContract.View,
-    private val userTickets: MovieDataSource<UserTicket>,
+    private val userTicketRepository: UserTicketRepository,
 ) :
     MovieReservationCompleteContract.Presenter {
     override fun loadTicket(ticketId: Long) {
-        try {
-            val userTicket = userTickets.find(ticketId)
-            view.showTicket(userTicket)
-        } catch (e: NoSuchElementException) {
-            view.showError(e)
-        }
+        Thread {
+            try {
+                val userTicket = userTicketRepository.find(ticketId)
+                view.showTicket(userTicket)
+            } catch (e: NoSuchElementException) {
+                view.showError(e)
+            }
+        }.start()
     }
 
     override fun handleError(throwable: Throwable) {

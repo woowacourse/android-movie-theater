@@ -2,10 +2,10 @@ package woowacourse.movie.model.movie
 
 import java.time.LocalDateTime
 
-data class UserTicket(
+data class Reservation(
     val title: String,
     val theater: String,
     val screeningStartDateTime: LocalDateTime,
-    val reservationDetail: ReservationDetail,
+    val reservationCount: ReservationCount,
     val id: Long = 0,
 )

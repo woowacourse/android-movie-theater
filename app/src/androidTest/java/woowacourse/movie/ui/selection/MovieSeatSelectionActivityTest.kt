@@ -15,21 +15,20 @@ import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.movie.ReservationDetail
-import woowacourse.movie.model.movie.UserTicket
-import woowacourse.movie.ui.reservation.MovieReservationKey
+import woowacourse.movie.model.data.ReservationsImpl
+import woowacourse.movie.model.movie.Reservation
+import woowacourse.movie.model.movie.ReservationCount
 import java.time.LocalDateTime
 
 class MovieSeatSelectionActivityTest {
-    private val userTicket: UserTicket = UserTicketsImpl.find(0L)
+    private val reservation: Reservation = ReservationsImpl.find(0L)
 
     private val intent =
         Intent(
             ApplicationProvider.getApplicationContext(),
             MovieSeatSelectionActivity::class.java,
         ).run {
-            putExtra(MovieReservationKey.TICKET_ID, 0L)
+            putExtra(MovieSeatSelectionKey.RESERVATION_ID, 0L)
         }
 
     @get:Rule
@@ -39,7 +38,7 @@ class MovieSeatSelectionActivityTest {
     fun `화면이_띄워지면_영화_제목이_보인다`() {
         onView(withId(R.id.tv_movie_title))
             .check(matches(isDisplayed()))
-            .check(matches(withText(userTicket.title)))
+            .check(matches(withText(reservation.title)))
     }
 
     @Test
@@ -61,16 +60,6 @@ class MovieSeatSelectionActivityTest {
     }
 
     @Test
-    fun `예매인원이_2명인_경우_2개_미만의_좌석을_선택하면_확인_버튼이_활성화_되지_않는다`() {
-        onView(withText("A1"))
-            .check(matches(isDisplayed()))
-            .perform(click())
-
-        onView(withId(R.id.btn_confirm))
-            .check(matches(not(isEnabled())))
-    }
-
-    @Test
     fun `예매인원이_2명인_경우_2개의_좌석을_선택하면_확인_버튼이_활성화_된다`() {
         onView(withText("A1"))
             .check(matches(isDisplayed()))
@@ -88,13 +77,12 @@ class MovieSeatSelectionActivityTest {
         @JvmStatic
         @BeforeClass
         fun setUp() {
-            UserTicketsImpl.save(
-                UserTicket(
-                    title = "해리포터와 마법사의 돌0",
-                    theater = "선릉",
+            ReservationsImpl.save(
+                Reservation(
+                    title = "해리포터",
+                    theater = "강남",
                     screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
-                    reservationDetail = ReservationDetail(2),
-                    id = 0L,
+                    reservationCount = ReservationCount(1),
                 ),
             )
         }

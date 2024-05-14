@@ -13,23 +13,24 @@ import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.FakeUserTicketDao
 import woowacourse.movie.R
-import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.movie.ReservationDetail
-import woowacourse.movie.model.movie.UserTicket
-import woowacourse.movie.ui.selection.MovieSeatSelectionKey
+import woowacourse.movie.model.db.UserTicket
+import woowacourse.movie.model.db.UserTicketRepositoryImpl
+import woowacourse.movie.model.movie.Seat
+import woowacourse.movie.model.movie.SeatRow
 import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
 class MovieReservationCompleteActivityTest {
-    private val userTicket: UserTicket = UserTicketsImpl.find(0L)
+    private val userTicket: UserTicket = UserTicketRepositoryImpl.get(FakeUserTicketDao()).find(testUserTicket.id)
 
     private val intent =
         Intent(
             ApplicationProvider.getApplicationContext(),
             MovieReservationCompleteActivity::class.java,
         ).run {
-            putExtra(MovieSeatSelectionKey.TICKET_ID, 0L)
+            putExtra(MovieReservationCompleteKey.TICKET_ID, 1L)
         }
 
     @get:Rule
@@ -39,7 +40,7 @@ class MovieReservationCompleteActivityTest {
     fun `화면이_띄워지면_영화_제목이_보인다`() {
         onView(withId(R.id.tv_title))
             .check(matches(isDisplayed()))
-            .check(matches(withText(userTicket.title)))
+            .check(matches(withText(userTicket.movieTitle)))
     }
 
     @Test
@@ -58,7 +59,7 @@ class MovieReservationCompleteActivityTest {
 
     @Test
     fun `화면이_띄워지면_예매_금액이_보인다`() {
-        val reservationAmount = userTicket.reservationDetail.totalSeatAmount()
+        val reservationAmount = userTicket.reservationAmount
 
         onView(withId(R.id.tv_reservation_amount))
             .check(matches(isDisplayed()))
@@ -66,23 +67,23 @@ class MovieReservationCompleteActivityTest {
     }
 
     companion object {
-        private const val RESERVATION_COUNT = 1
+        private val testUserTicket =
+            UserTicket(
+                movieTitle = "",
+                screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 21, 0),
+                reservationCount = 1,
+                reservationSeats = listOf(Seat(SeatRow.A, 0)),
+                theaterName = "선릉",
+                reservationAmount = 10000,
+                id = 1L,
+            )
 
         @JvmStatic
         @BeforeClass
         fun setUp() {
-            val reservationDetail =
-                ReservationDetail(RESERVATION_COUNT).apply {
-                    addSeat(0, 0) // A1
-                }
-            UserTicketsImpl.save(
-                UserTicket(
-                    title = "해리",
-                    theater = "선릉",
-                    screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 21, 0),
-                    reservationDetail = reservationDetail,
-                ),
-            )
+            UserTicketRepositoryImpl.get(FakeUserTicketDao()).apply {
+                insert(testUserTicket)
+            }
         }
     }
 }

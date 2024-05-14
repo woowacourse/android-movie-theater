@@ -4,9 +4,10 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.movie.ReservationDetail
-import woowacourse.movie.model.movie.UserTicket
+import woowacourse.movie.model.A1_SEAT
+import woowacourse.movie.model.db.UserTicket
+import woowacourse.movie.model.db.UserTicketRepositoryImpl
+import woowacourse.movie.model.ui.FakeUserTicketDao
 import woowacourse.movie.ui.complete.MovieReservationCompleteContract
 import woowacourse.movie.ui.complete.MovieReservationCompletePresenter
 import java.time.LocalDateTime
@@ -17,16 +18,15 @@ class MovieReservationCompletePresenterTest {
 
     @BeforeEach
     fun setUp() {
+        UserTicketRepositoryImpl.get(FakeUserTicketDao()).apply {
+            insert(testUserTicket)
+        }
         view = mockk<MovieReservationCompleteContract.View>(relaxed = true)
-        presenter = MovieReservationCompletePresenter(view, UserTicketsImpl)
-        UserTicketsImpl.save(
-            UserTicket(
-                "",
-                "강남",
-                LocalDateTime.of(2024, 3, 28, 10, 0),
-                ReservationDetail(1),
-            ),
-        )
+        presenter =
+            MovieReservationCompletePresenter(
+                view,
+                UserTicketRepositoryImpl.get(FakeUserTicketDao()),
+            )
     }
 
     @Test
@@ -37,17 +37,13 @@ class MovieReservationCompletePresenterTest {
         presenter.loadTicket(0L)
 
         // then
-        verify { view.showTicket(any()) }
+        verify { view.showTicket(testUserTicket) }
     }
 
     @Test
     fun `티켓 정보가 없을 경우 에러를 보여준다`() {
-        // given
-
-        // when
         presenter.loadTicket(-1L)
 
-        // then
         verify { view.showError(any()) }
     }
 
@@ -60,5 +56,17 @@ class MovieReservationCompletePresenterTest {
 
         // then
         verify { view.showError(any()) }
+    }
+
+    companion object {
+        private val testUserTicket =
+            UserTicket(
+                movieTitle = "",
+                screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 21, 0),
+                reservationCount = 1,
+                reservationSeats = listOf(A1_SEAT),
+                theaterName = "선릉",
+                reservationAmount = 10000,
+            )
     }
 }

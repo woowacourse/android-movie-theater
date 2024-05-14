@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.reservation
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -13,8 +14,8 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieReservationBinding
 import woowacourse.movie.model.data.MovieContentsImpl
+import woowacourse.movie.model.data.ReservationsImpl
 import woowacourse.movie.model.data.TheatersImpl
-import woowacourse.movie.model.data.UserTicketsImpl
 import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.model.movie.Theater
 import woowacourse.movie.ui.base.BaseActivity
@@ -104,7 +105,7 @@ class MovieReservationActivity :
             }
     }
 
-    override fun initializePresenter() = MovieReservationPresenter(this, MovieContentsImpl, TheatersImpl, UserTicketsImpl)
+    override fun initializePresenter() = MovieReservationPresenter(this, MovieContentsImpl, TheatersImpl, ReservationsImpl)
 
     private fun theaterId() = intent.getLongExtra(MovieReservationKey.THEATER_ID, DEFAULT_VALUE)
 
@@ -134,16 +135,23 @@ class MovieReservationActivity :
         binding.tvReservationCount.text = reservationCount.toString()
     }
 
-    override fun moveMovieSeatSelectionPage(userTicketId: Long) {
-        Intent(this, MovieSeatSelectionActivity::class.java).run {
-            putExtra(MovieReservationKey.TICKET_ID, userTicketId)
-            startActivity(this)
-        }
+    override fun moveMovieSeatSelectionPage(reservationId: Long) {
+        MovieSeatSelectionActivity.startActivity(this, reservationId)
     }
 
     companion object {
         private const val DEFAULT_VALUE = -1L
         private const val RESERVATION_COUNT_STATE_KEY = "reservationCount"
+
+        fun startActivity(
+            context: Context,
+            movieContentId: Long,
+            theaterId: Long,
+        ) = Intent(context, MovieReservationActivity::class.java).run {
+            putExtra(MovieReservationKey.MOVIE_CONTENT_ID, movieContentId)
+            putExtra(MovieReservationKey.THEATER_ID, theaterId)
+            context.startActivity(this)
+        }
     }
 }
 

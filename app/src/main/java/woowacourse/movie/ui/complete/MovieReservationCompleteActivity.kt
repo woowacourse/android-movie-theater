@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.complete
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,9 +12,10 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieReservationCompleteBinding
-import woowacourse.movie.model.data.UserTicketsImpl
+import woowacourse.movie.model.db.UserTicket
+import woowacourse.movie.model.db.UserTicketDatabase
+import woowacourse.movie.model.db.UserTicketRepositoryImpl
 import woowacourse.movie.model.movie.Seat
-import woowacourse.movie.model.movie.UserTicket
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.main.MovieMainActivity
 import java.time.LocalDateTime
@@ -40,7 +42,11 @@ class MovieReservationCompleteActivity :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun initializePresenter() = MovieReservationCompletePresenter(this, UserTicketsImpl)
+    override fun initializePresenter() =
+        MovieReservationCompletePresenter(
+            this,
+            UserTicketRepositoryImpl.get(UserTicketDatabase.database().userTicketDao()),
+        )
 
     private fun userTicketId() = intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
 
@@ -69,16 +75,19 @@ class MovieReservationCompleteActivity :
         onBackPressedDispatcher.addCallback(onBackPressedCallBack)
     }
 
-    private fun navigateBackToMainScreen() {
-        Intent(this, MovieMainActivity::class.java).also {
-            it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(it)
-        }
-    }
+    private fun navigateBackToMainScreen() = MovieMainActivity.startActivity(this)
 
     companion object {
         private val TAG = MovieReservationCompleteActivity::class.simpleName
         private const val USER_TICKET_ID_DEFAULT_VALUE = -1L
+
+        fun startActivity(
+            context: Context,
+            userTicketId: Long,
+        ) = Intent(context, MovieReservationCompleteActivity::class.java).run {
+            putExtra(MovieReservationCompleteKey.TICKET_ID, userTicketId)
+            context.startActivity(this)
+        }
     }
 }
 
@@ -91,7 +100,12 @@ fun setReservationResult(
 ) {
     textView.apply {
         text =
-            context.getString(R.string.reservation_result, count, seats.joinToString(), theaterName)
+            context.getString(
+                R.string.reservation_result,
+                count,
+                seats.joinToString { it.toString() },
+                theaterName,
+            )
     }
 }
 

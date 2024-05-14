@@ -9,10 +9,16 @@ object TheatersImpl : MovieDataSource<Theater> {
     private val theaters = mutableMapOf<Long, Theater>()
 
     init {
+        val dummyTime = mutableListOf<LocalTime>()
+        repeat(24) { hour ->
+            repeat(60) { minute ->
+                dummyTime.add(LocalTime.of(hour, minute))
+            }
+        }
         save(
             Theater(
                 "강남",
-                listOf(LocalTime.of(11, 0), LocalTime.of(13, 0), LocalTime.of(15, 0)),
+                dummyTime,
             ),
         )
 
@@ -78,7 +84,13 @@ object TheatersImpl : MovieDataSource<Theater> {
         save(
             Theater(
                 "강남",
-                listOf(LocalTime.of(11, 0), LocalTime.of(13, 0), LocalTime.of(15, 0), LocalTime.of(17, 0), LocalTime.of(19, 0)),
+                listOf(
+                    LocalTime.of(11, 0),
+                    LocalTime.of(13, 0),
+                    LocalTime.of(15, 0),
+                    LocalTime.of(17, 0),
+                    LocalTime.of(19, 0),
+                ),
             ),
         )
 

@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.home
+package woowacourse.movie.ui.home.theater
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +12,7 @@ import woowacourse.movie.databinding.FragmentTheaterSelectionBottomSheetBinding
 import woowacourse.movie.model.data.MovieContentsImpl
 import woowacourse.movie.model.data.TheatersImpl
 import woowacourse.movie.model.movie.Theater
-import woowacourse.movie.ui.home.adapter.TheaterAdapter
+import woowacourse.movie.ui.home.MovieHomeKey
 import woowacourse.movie.ui.reservation.MovieReservationActivity
 
 class TheaterSelectionBottomSheetFragment :
@@ -52,7 +52,10 @@ class TheaterSelectionBottomSheetFragment :
         movieContentId: Long,
         theaters: List<Theater>,
     ) {
-        adapter = TheaterAdapter(theaters, movieContentId)
+        adapter =
+            TheaterAdapter(theaters) { theaterId ->
+                MovieReservationActivity.startActivity(requireContext(), movieContentId, theaterId)
+            }
         binding.theaterList.adapter = adapter
     }
 

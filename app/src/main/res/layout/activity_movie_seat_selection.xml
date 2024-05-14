@@ -283,7 +283,7 @@
                 android:background="@drawable/selector_button"
                 android:clickable="false"
                 android:enabled="false"
-                android:onClick="@{() -> presenter.reservationSeat()}"
+                android:onClick="@{() -> presenter.checkReservationSeat()}"
                 android:text="@string/confirm"
                 android:textSize="18sp"
                 android:textStyle="bold" />

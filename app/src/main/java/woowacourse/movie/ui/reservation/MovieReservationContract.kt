@@ -16,7 +16,7 @@ interface MovieReservationContract {
 
         fun updateReservationCount(reservationCount: Int)
 
-        fun moveMovieSeatSelectionPage(userTicketId: Long)
+        fun moveMovieSeatSelectionPage(reservationId: Long)
     }
 
     interface Presenter {

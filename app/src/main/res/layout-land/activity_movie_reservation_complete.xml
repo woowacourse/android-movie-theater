@@ -7,7 +7,7 @@
 
         <variable
             name="userTicket"
-            type="woowacourse.movie.model.movie.UserTicket" />
+            type="woowacourse.movie.model.db.UserTicket" />
     </data>
 
     <LinearLayout
@@ -35,7 +35,7 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:paddingBottom="20dp"
-            android:text="@{userTicket.title}"
+            android:text="@{userTicket.movieTitle}"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -69,9 +69,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                movie:count="@{userTicket.reservationDetail.reservationCount}"
-                movie:seats="@{userTicket.reservationDetail.selectedSeat}"
-                movie:theaterName="@{userTicket.theater}" />
+                movie:count="@{userTicket.reservationCount}"
+                movie:seats="@{userTicket.reservationSeats}"
+                movie:theaterName="@{userTicket.theaterName}" />
 
         </LinearLayout>
 
@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@{@string/reservation_amount(userTicket.reservationDetail.totalSeatAmount())}"
+            android:text="@{@string/reservation_amount(userTicket.reservationAmount)}"
             android:textSize="15sp" />
 
     </LinearLayout>

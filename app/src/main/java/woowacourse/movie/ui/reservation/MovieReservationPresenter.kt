@@ -2,11 +2,10 @@ package woowacourse.movie.ui.reservation
 
 import woowacourse.movie.model.data.MovieDataSource
 import woowacourse.movie.model.movie.MovieContent
+import woowacourse.movie.model.movie.Reservation
 import woowacourse.movie.model.movie.ReservationCount
-import woowacourse.movie.model.movie.ReservationDetail
 import woowacourse.movie.model.movie.ScreeningDate
 import woowacourse.movie.model.movie.Theater
-import woowacourse.movie.model.movie.UserTicket
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -15,7 +14,7 @@ class MovieReservationPresenter(
     private val view: MovieReservationContract.View,
     private val movieContents: MovieDataSource<MovieContent>,
     private val theaters: MovieDataSource<Theater>,
-    private val userTickets: MovieDataSource<UserTicket>,
+    private val reservations: MovieDataSource<Reservation>,
 ) :
     MovieReservationContract.Presenter {
     private lateinit var reservationCount: ReservationCount
@@ -62,14 +61,14 @@ class MovieReservationPresenter(
 
     override fun reserveSeat() {
         val userTicket =
-            UserTicket(
+            Reservation(
                 movieContent.title,
                 theater.name,
                 LocalDateTime.of(screeningDate.date, movieTime),
-                ReservationDetail(reservationCount.count),
+                reservationCount,
             )
-        val ticketId = userTickets.save(userTicket)
-        view.moveMovieSeatSelectionPage(ticketId)
+        val reservationId = reservations.save(userTicket)
+        view.moveMovieSeatSelectionPage(reservationId)
     }
 
     override fun handleError(throwable: Throwable) {

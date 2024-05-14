@@ -11,6 +11,7 @@ import woowacourse.movie.databinding.FragmentMovieHomeBinding
 import woowacourse.movie.model.data.MovieContentsImpl
 import woowacourse.movie.model.movie.MovieContent
 import woowacourse.movie.ui.home.adapter.MovieContentAdapter
+import woowacourse.movie.ui.home.theater.TheaterSelectionBottomSheetFragment
 
 class MovieHomeFragment : Fragment(), MovieHomeContract.View {
     private lateinit var binding: FragmentMovieHomeBinding
@@ -28,9 +29,17 @@ class MovieHomeFragment : Fragment(), MovieHomeContract.View {
         savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_home, container, false)
-        presenter.loadMovieContents()
 
         return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
+        presenter.loadMovieContents()
     }
 
     override fun showMovieContents(movieContents: List<MovieContent>) {

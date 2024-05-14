@@ -1,6 +1,7 @@
 package woowacourse.movie.ui.selection
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +16,9 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
-import woowacourse.movie.model.data.UserTicketsImpl
+import woowacourse.movie.model.data.ReservationsImpl
+import woowacourse.movie.model.db.UserTicketDatabase
+import woowacourse.movie.model.db.UserTicketRepositoryImpl
 import woowacourse.movie.model.movie.Seat
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
@@ -25,7 +28,7 @@ class MovieSeatSelectionActivity :
     BaseActivity<MovieSeatSelectionPresenter>(),
     MovieSeatSelectionContract.View {
     private lateinit var binding: ActivityMovieSeatSelectionBinding
-    private val userTicketId by lazy { userTicketId() }
+    private val reservationId by lazy { reservationId() }
     private val selectedSeatInfo = mutableListOf<Int>()
     private val seats by lazy { binding.tlSeats.makeSeats() }
 
@@ -34,7 +37,7 @@ class MovieSeatSelectionActivity :
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_seat_selection)
         binding.presenter = presenter
 
-        presenter.loadTheaterInfo(userTicketId)
+        presenter.loadTheaterInfo(reservationId)
         presenter.updateSelectCompletion()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -66,7 +69,12 @@ class MovieSeatSelectionActivity :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun initializePresenter(): MovieSeatSelectionPresenter = MovieSeatSelectionPresenter(this, UserTicketsImpl)
+    override fun initializePresenter(): MovieSeatSelectionPresenter =
+        MovieSeatSelectionPresenter(
+            this,
+            ReservationsImpl,
+            UserTicketRepositoryImpl.get(UserTicketDatabase.database().userTicketDao()),
+        )
 
     override fun showMovieTitle(movieTitle: String) {
         binding.movieTitle = movieTitle
@@ -108,18 +116,22 @@ class MovieSeatSelectionActivity :
         }
     }
 
-    override fun showSeatReservationConfirmation(userTicketId: Long) {
+    override fun showSeatReservationConfirmation() {
         AlertDialog.Builder(this)
             .setCancelable(false)
             .setTitle(R.string.reservation_confirm)
             .setMessage(R.string.reservation_confirm_comment)
             .setPositiveButton(R.string.reservation_complete) { _, _ ->
-                moveMovieReservationCompletePage(userTicketId)
+                presenter.reservationSeat()
             }
             .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
+    }
+
+    override fun showReservationComplete(userTicketId: Long) {
+        MovieReservationCompleteActivity.startActivity(this, userTicketId)
     }
 
     override fun showError(throwable: Throwable) {
@@ -145,22 +157,23 @@ class MovieSeatSelectionActivity :
         }
     }
 
-    private fun moveMovieReservationCompletePage(ticketId: Long) {
-        Intent(this, MovieReservationCompleteActivity::class.java).run {
-            putExtra(MovieSeatSelectionKey.TICKET_ID, ticketId)
-            startActivity(this)
-        }
-    }
-
-    private fun userTicketId() =
+    private fun reservationId() =
         intent.getLongExtra(
-            MovieSeatSelectionKey.TICKET_ID,
+            MovieSeatSelectionKey.RESERVATION_ID,
             MOVIE_CONTENT_ID_DEFAULT_VALUE,
         )
 
     companion object {
         private val TAG = MovieSeatSelectionActivity::class.simpleName
         private const val MOVIE_CONTENT_ID_DEFAULT_VALUE = -1L
+
+        fun startActivity(
+            context: Context,
+            reservationId: Long,
+        ) = Intent(context, MovieSeatSelectionActivity::class.java).run {
+            putExtra(MovieSeatSelectionKey.RESERVATION_ID, reservationId)
+            context.startActivity(this)
+        }
     }
 }
 

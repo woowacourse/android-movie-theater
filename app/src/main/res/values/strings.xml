@@ -25,4 +25,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="reservation_screening_date_format">yyyy.M.d</string>
     <string name="reservation_screening_date_time_format">yyyy.M.d HH:mm</string>
+    <string name="push_alarm_text">푸시 알림 수신</string>
+    <string name="movie_alarm_comment">%s 30분 후에 상영</string>
+    <string name="setting_push_alarm_warning_comment">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="movie_alarm_title">예매 알림</string>
+    <string name="requre_alarm_permission_comment">알람 권한을 허용해 주세요</string>
+    <string name="alarm_permission_fail_comment">예매 알림 기능을 사용할 수 없습니다.</string>
 </resources>
