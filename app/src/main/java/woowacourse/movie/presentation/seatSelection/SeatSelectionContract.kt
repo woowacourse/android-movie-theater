@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.seatSelection
 
+import android.content.Context
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Seat
 import woowacourse.movie.model.SeatingSystem
@@ -21,7 +22,10 @@ interface SeatSelectionContract {
 
         fun showToastMessage(message: String?)
 
-        fun navigate(ticket: Ticket)
+        fun navigate(
+            ticket: Ticket,
+            ticketId: Long,
+        )
     }
 
     interface Presenter {
@@ -31,9 +35,17 @@ interface SeatSelectionContract {
 
         fun updateSeatSelection(index: Int)
 
+        fun setAlarm(
+            context: Context,
+            movieTitle: String,
+            ticket: Ticket,
+            ticketId: Long,
+        )
+
         fun navigate(
             screeningDateTime: String,
             theaterId: Long,
+            context: Context,
         )
     }
 }

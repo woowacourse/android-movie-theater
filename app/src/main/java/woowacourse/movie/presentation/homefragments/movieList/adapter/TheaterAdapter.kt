@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.presentation.homefragments.movieList.listener.TheaterClickListener
-import woowacourse.movie.presentation.homefragments.movieList.viewholder.TheaterViewHolder
 import woowacourse.movie.presentation.homefragments.movieList.uimodel.ScreeningTheater
+import woowacourse.movie.presentation.homefragments.movieList.viewholder.TheaterViewHolder
 
 class TheaterAdapter(
     private val screeningTheaters: List<ScreeningTheater>,

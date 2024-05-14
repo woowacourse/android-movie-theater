@@ -36,7 +36,7 @@ class HomeActivityTest {
         onView(withId(R.id.action_reservation_list))
             .perform(click())
 
-        onView(withId(R.id.reservation_fragment_tv))
+        onView(withId(R.id.rv_reservations))
             .check(matches(isDisplayed()))
     }
 
@@ -45,7 +45,7 @@ class HomeActivityTest {
         onView(withId(R.id.action_settings))
             .perform(click())
 
-        onView(withId(R.id.settings_fragment_layout))
+        onView(withId(R.id.push_title))
             .check(matches(isDisplayed()))
     }
 }

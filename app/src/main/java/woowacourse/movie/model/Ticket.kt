@@ -11,7 +11,7 @@ data class Ticket(val movieTitle: String, val screeningDateTime: String, val sel
     val totalCount = selectedSeats.size
 
     fun selectedSeatsToString(): String =
-        selectedSeats.joinToString(", ") { seat ->
+        selectedSeats.sortedBy { it.row }.sortedBy { it.col }.joinToString(", ") { seat ->
             seat.toString()
         }
 

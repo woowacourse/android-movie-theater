@@ -18,6 +18,7 @@ object DummyTheaterList : TheaterListRepository {
                                 LocalTime.of(10, 0),
                                 LocalTime.of(12, 0),
                                 LocalTime.of(14, 0),
+                                LocalTime.of(22, 56),
                             ),
                         ),
                         ScreeningMovie(

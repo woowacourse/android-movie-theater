@@ -35,7 +35,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_selection)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
 
         val movieId = intent.getLongExtra(EXTRA_MOVIE_ID, EXTRA_DEFAULT_MOVIE_ID)
@@ -58,7 +57,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 .setTitle("예매 확인")
                 .setMessage("정말 예매하시겠습니까?")
                 .setPositiveButton("예매 완료") { _, _ ->
-                    presenter.navigate(screeningDateTime, theaterId)
+                    presenter.navigate(screeningDateTime, theaterId, this)
                 }
                 .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }
                 .setCancelable(false)
@@ -105,8 +104,19 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun navigate(ticket: Ticket) {
-        startActivity(TicketingResultActivity.createIntent(this, ticket))
+    override fun navigate(
+        ticket: Ticket,
+        ticketId: Long,
+    ) {
+        runOnUiThread {
+            presenter.setAlarm(
+                context = this@SeatSelectionActivity,
+                movieTitle = ticket.movieTitle,
+                ticket = ticket,
+                ticketId = ticketId,
+            )
+            startActivity(TicketingResultActivity.createIntent(this, ticket))
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

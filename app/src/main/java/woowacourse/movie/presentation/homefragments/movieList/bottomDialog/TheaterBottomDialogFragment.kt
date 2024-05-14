@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.homefragments.movieList.fragment
+package woowacourse.movie.presentation.homefragments.movieList.bottomDialog
 
 import android.os.Bundle
 import android.view.LayoutInflater

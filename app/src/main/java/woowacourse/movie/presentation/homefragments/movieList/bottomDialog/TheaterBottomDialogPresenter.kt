@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.homefragments.movieList.fragment
+package woowacourse.movie.presentation.homefragments.movieList.bottomDialog
 
 import woowacourse.movie.model.Theater
 import woowacourse.movie.presentation.homefragments.movieList.uimodel.ScreeningTheater
