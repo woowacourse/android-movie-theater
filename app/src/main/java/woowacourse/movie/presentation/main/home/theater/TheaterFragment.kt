@@ -33,11 +33,8 @@ class TheaterFragment : BottomSheetDialogFragment(), TheaterContract.View {
     }
 
     override fun showTheaters(movieId: Long, theaters: List<Theater>) {
-        if (theaters.isEmpty()) {
-            binding.theaterRecyclerView.visibility = View.INVISIBLE
-            binding.tvEmptyTheater.visibility = View.VISIBLE
-        } else {
-            binding.tvEmptyTheater.visibility = View.INVISIBLE
+        binding.isEmpty = theaters.isEmpty()
+        if (theaters.isNotEmpty()) {
             theaterAdapter = TheaterAdapter(
                 movieId, theaters,
                 object : OnTheaterItemClickListener {
@@ -47,7 +44,6 @@ class TheaterFragment : BottomSheetDialogFragment(), TheaterContract.View {
                 }
             )
             binding.theaterRecyclerView.adapter = theaterAdapter
-            binding.theaterRecyclerView.visibility = View.VISIBLE
         }
     }
 

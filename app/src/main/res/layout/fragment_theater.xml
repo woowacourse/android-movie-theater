@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="isEmpty"
+            type="Boolean"/>
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,20 +26,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/theater_item"
-            tools:itemCount="5"/>
+            tools:itemCount="5"
+            android:visibility="@{isEmpty ? View.INVISIBLE : View.VISIBLE}"/>
 
         <TextView
             android:id="@+id/tv_empty_theater"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding= "20dp"
+            android:padding="20dp"
             android:text="@string/no_theater"
             android:textSize="20sp"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
+            android:visibility="@{isEmpty ? View.VISIBLE : View.INVISIBLE}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
+
