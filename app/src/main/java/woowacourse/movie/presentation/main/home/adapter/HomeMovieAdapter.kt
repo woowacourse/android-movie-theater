@@ -20,19 +20,30 @@ class HomeMovieAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         when (viewType) {
             VIEW_TYPE_MOVIE -> {
-                val binding = MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding =
+                    MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 MovieViewHolder(binding)
             }
+
             VIEW_TYPE_ADVERTISEMENT -> {
-                val binding = AdvertisementItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = AdvertisementItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 AdvertisementViewHolder(binding)
             }
+
             else -> throw IllegalArgumentException("알 수 없는 정보 $viewType")
         }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = items[position]) {
-            is HomeItem.MovieItem -> (holder as MovieViewHolder).bind(item, onMovieItemClick)
+            is HomeItem.MovieItem -> (holder as MovieViewHolder).bind(
+                movie = item,
+                onMovieItemClickListener = onMovieItemClick,
+            )
+
             is HomeItem.AdvertisementItem -> (holder as AdvertisementViewHolder).bind(item)
         }
     }

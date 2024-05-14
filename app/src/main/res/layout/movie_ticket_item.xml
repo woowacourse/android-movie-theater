@@ -11,7 +11,7 @@
 
         <variable
             name="onMovieTicketItemClickListener"
-            type="woowacourse.movie.presentation.main.history.adapter.OnMovieTicketItemClickListener" />
+            type="woowacourse.movie.presentation.main.history.ReservationHistoryContract.Presenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@drawable/item_selector"
-        android:onClick="@{()->onMovieTicketItemClickListener.onClick(movieTicket.id)}">
+        android:onClick="@{()->onMovieTicketItemClickListener.itemClicked(movieTicket.id)}">
 
         <TextView
             android:id="@+id/screening_date"

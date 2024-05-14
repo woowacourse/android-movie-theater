@@ -7,7 +7,6 @@ import woowacourse.movie.data.repository.MovieTicketRepositoryImpl
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.domain.model.movieticket.MovieTicket
 import woowacourse.movie.presentation.base.BaseFragment
-import woowacourse.movie.presentation.main.history.adapter.OnMovieTicketItemClickListener
 import woowacourse.movie.presentation.main.history.adapter.ReservationHistoryAdapter
 import woowacourse.movie.presentation.seats.SeatsActivity.Companion.EXTRA_MOVIE_TICKET_ID
 import woowacourse.movie.presentation.ticket.MovieTicketActivity
@@ -32,11 +31,7 @@ class ReservationHistoryFragment :
             binding?.tvEmptyReservation?.visibility = View.INVISIBLE
             adapter = ReservationHistoryAdapter(
                 movieTickets,
-                object : OnMovieTicketItemClickListener {
-                    override fun onClick(movieTicketId: Long) {
-                        presenter.itemClicked(movieTicketId)
-                    }
-                }
+                clickListener = presenter,
             )
             binding?.reservationHistoryRecyclerView?.adapter = adapter
             binding?.reservationHistoryRecyclerView?.visibility = View.VISIBLE
