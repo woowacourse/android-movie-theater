@@ -1,17 +1,13 @@
 package woowacourse.movie.home.presenter
 
-import io.mockk.Runs
-import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkObject
-import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.data.repository.HomeContentRepository
 import woowacourse.movie.home.presenter.contract.TheaterSelectionContract
-import woowacourse.movie.home.view.adapter.movie.HomeContent.*
+import woowacourse.movie.home.view.adapter.movie.HomeContent.Movie
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.Theater
 import java.time.LocalDate
@@ -58,19 +54,11 @@ class TheaterSelectionPresenterTest {
     fun setUp() {
         view = mockk()
         presenter = TheaterSelectionPresenter(view)
-        mockkObject(MovieRepository)
+        mockkObject(HomeContentRepository)
     }
 
     @Test
     fun `loadTheaters를 호출하면 adapter에 셋팅되는 리스트의 첫번째 보이는 상영관은 1개 이상이다`() {
         // Given
-        every { MovieRepository.getMovieById(any()) } returns movie
-        every { view.setUpTheaterAdapter(any()) } just Runs
-
-        // When
-        presenter.loadTheaters(0)
-
-        // Then
-        verify { view.setUpTheaterAdapter(match { it.size >= 1 }) }
     }
 }

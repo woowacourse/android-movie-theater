@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:history="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="reservationHistoryClickListener"
+            type="woowacourse.movie.reservationhistory.view.listener.ReservationHistoryClickListener" />
+
+        <variable
+            name="reservationHistoryEntity"
+            type="woowacourse.movie.data.db.ReservationHistoryEntity" />
+
+        <variable
+            name="reservationMovieTitle"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="@drawable/ripple_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> reservationHistoryClickListener.onReservationHistoryClick(reservationHistoryEntity.id)}">
+
+        <TextView
+            android:id="@+id/tv_history_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            history:information="@{reservationHistoryEntity}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:hint="2024-03-02 | 17:00 | 선릉 극장" />
+
+        <TextView
+            android:id="@+id/tv_history_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@{reservationMovieTitle}"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@id/tv_history_information"
+            app:layout_constraintTop_toBottomOf="@id/tv_history_information"
+            tools:hint="타이타닉" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

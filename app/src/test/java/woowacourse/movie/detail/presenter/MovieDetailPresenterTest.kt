@@ -12,7 +12,7 @@ import io.mockk.verifyAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.data.repository.HomeContentRepository
 import woowacourse.movie.detail.presenter.contract.MovieDetailContract
 import woowacourse.movie.home.view.adapter.movie.HomeContent.Movie
 import woowacourse.movie.model.MovieDate
@@ -60,7 +60,7 @@ class MovieDetailPresenterTest {
     fun setUp() {
         view = mockk()
         presenter = MovieDetailPresenter(view)
-        mockkObject(MovieRepository)
+        mockkObject(HomeContentRepository)
     }
 
     @Test
@@ -70,7 +70,7 @@ class MovieDetailPresenterTest {
         val dateSlot = slot<MovieDate>()
         val timeSlot = mutableListOf<List<LocalTime>>()
 
-        every { MovieRepository.getMovieById(any()) } returns movie
+        every { HomeContentRepository.getMovieById(any()) } returns movie
         every { view.displayMovieDetail(capture(movieSlot), any()) } just Runs
         every { view.setUpDateSpinner(capture(dateSlot)) } just Runs
         every { view.setUpTimeSpinner(capture(timeSlot)) } just Runs

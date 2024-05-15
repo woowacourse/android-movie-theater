@@ -1,7 +1,7 @@
 package woowacourse.movie.home.presenter
 
-import woowacourse.movie.data.MovieRepository.getAllAdvertisements
-import woowacourse.movie.data.MovieRepository.getAllMovies
+import woowacourse.movie.data.repository.HomeContentRepository.getAllAdvertisements
+import woowacourse.movie.data.repository.HomeContentRepository.getAllMovies
 import woowacourse.movie.home.presenter.contract.MovieHomeContract
 import woowacourse.movie.home.view.adapter.movie.HomeContent
 

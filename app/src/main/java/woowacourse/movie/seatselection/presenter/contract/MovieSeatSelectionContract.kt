@@ -16,7 +16,7 @@ interface MovieSeatSelectionContract {
 
         fun updateSelectedSeats(movieSelectedSeats: MovieSelectedSeats)
 
-        fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats)
+        fun navigateToResultView(ticketId: Long)
     }
 
     interface Presenter {
@@ -26,7 +26,12 @@ interface MovieSeatSelectionContract {
 
         fun clickTableSeat(index: Int)
 
-        fun clickPositiveButton()
+        fun clickPositiveButton(
+            movieId: Long,
+            date: String,
+            time: String,
+            theaterPosition: Int,
+        )
 
         fun updateSelectedSeats(count: Int)
     }

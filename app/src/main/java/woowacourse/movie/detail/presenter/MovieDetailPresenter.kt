@@ -1,6 +1,6 @@
 package woowacourse.movie.detail.presenter
 
-import woowacourse.movie.data.MovieRepository.getMovieById
+import woowacourse.movie.data.repository.HomeContentRepository.getMovieById
 import woowacourse.movie.detail.presenter.contract.MovieDetailContract
 import woowacourse.movie.model.MovieReservationCount
 

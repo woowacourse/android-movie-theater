@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.repository
 
 import woowacourse.movie.R
 import woowacourse.movie.home.view.adapter.movie.HomeContent.Advertisement
@@ -8,7 +8,7 @@ import woowacourse.movie.model.Theater
 import java.time.LocalDate
 import java.time.LocalTime
 
-object MovieRepository {
+object HomeContentRepository {
     private val movies =
         List(100) {
             Movie(

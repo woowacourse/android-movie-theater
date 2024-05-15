@@ -1,9 +1,13 @@
 package woowacourse.movie.result.presenter
 
-import woowacourse.movie.data.MovieRepository.getMovieById
+import android.content.Context
+import woowacourse.MovieApplication.Companion.database
+import woowacourse.movie.data.db.ReservationHistoryEntity
+import woowacourse.movie.data.repository.HomeContentRepository.getMovieById
 import woowacourse.movie.model.MovieSeat
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.model.MovieTicket
+import woowacourse.movie.notification.MovieNotificationAlarmManager
 import woowacourse.movie.result.presenter.contract.MovieResultContract
 import woowacourse.movie.util.Formatter.unFormatColumn
 import woowacourse.movie.util.Formatter.unFormatRow
@@ -12,37 +16,52 @@ import java.time.LocalTime
 
 class MovieResultPresenter(private val movieResultContractView: MovieResultContract.View) :
     MovieResultContract.Presenter {
-    override fun loadMovieTicket(
-        id: Long,
-        date: String,
-        time: String,
-        count: Int,
-        seats: String,
-        theaterName: String,
-    ) {
-        val movieData = getMovieById(id)
+    private lateinit var reservationHistoryEntity: ReservationHistoryEntity
 
-        val movieSelectedSeats = MovieSelectedSeats(count)
-        seats.split(", ").forEach { seat ->
-            movieSelectedSeats.selectSeat(
-                MovieSeat(
-                    seat.unFormatRow(),
-                    seat.unFormatColumn(),
+    override fun loadMovieTicket(
+        context: Context,
+        ticketId: Long,
+    ) {
+        val thread =
+            Thread {
+                reservationHistoryEntity =
+                    database.reservationHistoryDao()
+                        .findReservationHistoryById(
+                            ticketId,
+                        )
+            }
+        thread.start()
+        thread.join()
+
+        val movieData = getMovieById(reservationHistoryEntity.movieId)
+        movieData?.let { movie ->
+            val movieSelectedSeats = MovieSelectedSeats(reservationHistoryEntity.count)
+            reservationHistoryEntity.seats.split(", ").forEach { seat ->
+                movieSelectedSeats.selectSeat(
+                    MovieSeat(
+                        seat.unFormatRow(),
+                        seat.unFormatColumn(),
+                    ),
+                )
+            }
+            movieResultContractView.displayMovieTicket(
+                MovieTicket(
+                    movie.id,
+                    movie.title,
+                    LocalDate.parse(reservationHistoryEntity.date),
+                    LocalTime.parse(reservationHistoryEntity.time),
+                    reservationHistoryEntity.count,
+                    movieSelectedSeats,
+                    movie.theaters[reservationHistoryEntity.theaterPosition].name,
                 ),
             )
         }
+    }
 
-        movieResultContractView.displayMovieTicket(
-            movieData?.let { movie ->
-                MovieTicket(
-                    movie.title,
-                    LocalDate.parse(date),
-                    LocalTime.parse(time),
-                    count,
-                    movieSelectedSeats,
-                    theaterName,
-                )
-            },
-        )
+    override fun registrationMovieNotification(
+        context: Context,
+        ticketId: Long,
+    ) {
+        MovieNotificationAlarmManager.createNotification(context, ticketId)
     }
 }

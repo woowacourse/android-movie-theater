@@ -1,8 +1,12 @@
 package woowacourse.movie.seatselection.presenter
 
-import woowacourse.movie.data.MovieRepository.getMovieById
+import woowacourse.MovieApplication.Companion.database
+import woowacourse.movie.data.db.ReservationHistoryEntity
+import woowacourse.movie.data.repository.HomeContentRepository.getMovieById
 import woowacourse.movie.model.MovieSelectedSeats
 import woowacourse.movie.seatselection.presenter.contract.MovieSeatSelectionContract
+import woowacourse.movie.util.Formatter.formatColumn
+import woowacourse.movie.util.Formatter.formatRow
 
 class MovieSeatSelectionPresenter(
     private val movieSeatSelectionContractView: MovieSeatSelectionContract.View,
@@ -41,7 +45,41 @@ class MovieSeatSelectionPresenter(
         movieSeatSelectionContractView.updateSelectedSeats(movieSelectedSeats)
     }
 
-    override fun clickPositiveButton() {
-        movieSeatSelectionContractView.navigateToResultView(movieSelectedSeats)
+    override fun clickPositiveButton(
+        movieId: Long,
+        date: String,
+        time: String,
+        theaterPosition: Int,
+    ) {
+        val count = movieSelectedSeats.count
+        val seats =
+            movieSelectedSeats.selectedSeats.joinToString(", ") { seat ->
+                (seat.row.formatRow() + seat.column.formatColumn())
+            }
+        val ticketId = saveReservationHistory(date, time, count, seats, movieId, theaterPosition)
+        movieSeatSelectionContractView.navigateToResultView(ticketId)
+    }
+
+    private fun saveReservationHistory(
+        date: String,
+        time: String,
+        count: Int,
+        seats: String,
+        movieId: Long,
+        theaterPosition: Int,
+    ): Long {
+        var ticketId = -1L
+        val reservationHistoryEntity =
+            ReservationHistoryEntity(date, time, count, seats, movieId, theaterPosition)
+        val thread =
+            Thread {
+                ticketId =
+                    database.reservationHistoryDao()
+                        .saveReservationHistory(reservationHistoryEntity)
+            }
+        thread.start()
+        thread.join()
+
+        return ticketId
     }
 }

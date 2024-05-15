@@ -9,7 +9,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieRepository
+import woowacourse.movie.data.repository.HomeContentRepository
 import woowacourse.movie.home.presenter.contract.MovieHomeContract
 import woowacourse.movie.home.view.adapter.movie.HomeContent
 import woowacourse.movie.home.view.adapter.movie.HomeContent.Movie
@@ -68,14 +68,14 @@ class MovieMainPresenterTest {
     fun setUp() {
         view = mockk()
         presenter = MovieHomePresenter(view)
-        mockkObject(MovieRepository)
+        mockkObject(HomeContentRepository)
     }
 
     @Test
     fun `loadHomeContents 호출하면 view에서 영화 리스트를 보여준다`() {
         // Given
-        every { MovieRepository.getAllMovies() } returns movies
-        every { MovieRepository.getAllAdvertisements() } returns advertisements
+        every { HomeContentRepository.getAllMovies() } returns movies
+        every { HomeContentRepository.getAllAdvertisements() } returns advertisements
         every { view.displayHomeContents(any()) } just Runs
 
         // When

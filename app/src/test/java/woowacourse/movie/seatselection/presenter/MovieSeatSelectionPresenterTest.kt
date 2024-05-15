@@ -9,8 +9,8 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieRepository
-import woowacourse.movie.data.MovieRepository.getMovieById
+import woowacourse.movie.data.repository.HomeContentRepository
+import woowacourse.movie.data.repository.HomeContentRepository.getMovieById
 import woowacourse.movie.home.view.adapter.movie.HomeContent.Movie
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.Theater
@@ -60,7 +60,7 @@ class MovieSeatSelectionPresenterTest {
         view = mockk()
         presenter = MovieSeatSelectionPresenter(view)
         presenter.updateSelectedSeats(3)
-        mockkObject(MovieRepository)
+        mockkObject(HomeContentRepository)
     }
 
     @Test
@@ -110,7 +110,7 @@ class MovieSeatSelectionPresenterTest {
 
         // When
 
-        presenter.clickPositiveButton()
+        presenter.clickPositiveButton(0L, "2024-05-05", "13:00", 1)
 
         // Then
         verify { view.navigateToResultView(any()) }

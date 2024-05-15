@@ -1,6 +1,6 @@
 package woowacourse.movie.detail.presenter.contract
 
-import woowacourse.movie.home.view.adapter.movie.HomeContent.*
+import woowacourse.movie.home.view.adapter.movie.HomeContent.Movie
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.MovieReservationCount
 import java.time.LocalTime

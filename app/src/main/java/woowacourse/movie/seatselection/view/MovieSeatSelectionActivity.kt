@@ -22,14 +22,12 @@ import woowacourse.movie.seatselection.presenter.contract.MovieSeatSelectionCont
 import woowacourse.movie.seatselection.view.listener.MovieSeatSelectionClickListener
 import woowacourse.movie.util.Formatter.formatColumn
 import woowacourse.movie.util.Formatter.formatRow
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_COUNT
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_COUNT
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_DATE
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_TIME
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_SEAT_POSITIONS
-import woowacourse.movie.util.MovieIntentConstant.KEY_SELECTED_THEATER_NAME
+import woowacourse.movie.util.MovieIntent.MOVIE_DATE
+import woowacourse.movie.util.MovieIntent.MOVIE_ID
+import woowacourse.movie.util.MovieIntent.MOVIE_TIME
+import woowacourse.movie.util.MovieIntent.RESERVATION_COUNT
+import woowacourse.movie.util.MovieIntent.SELECTED_SEAT_POSITIONS
+import woowacourse.movie.util.MovieIntent.SELECTED_THEATER_POSITION
 
 class MovieSeatSelectionActivity :
     AppCompatActivity(),
@@ -57,14 +55,14 @@ class MovieSeatSelectionActivity :
             MovieSeatSelectionPresenter(this)
         seatSelectionPresenter.loadDetailMovie(
             intent.getLongExtra(
-                KEY_MOVIE_ID,
-                INVALID_VALUE_MOVIE_ID,
+                MOVIE_ID.key,
+                MOVIE_ID.invalidValue as Long,
             ),
         )
         seatSelectionPresenter.loadTableSeats(
             intent.getIntExtra(
-                KEY_MOVIE_COUNT,
-                INVALID_VALUE_MOVIE_COUNT,
+                RESERVATION_COUNT.key,
+                RESERVATION_COUNT.invalidValue as Int,
             ),
         )
     }
@@ -73,10 +71,10 @@ class MovieSeatSelectionActivity :
         super.onSaveInstanceState(outState)
 
         val count = seatSelectionPresenter.movieSelectedSeats.count
-        outState.putInt(KEY_MOVIE_COUNT, count)
+        outState.putInt(RESERVATION_COUNT.key, count)
 
         val selectedPositions = seatSelectionPresenter.movieSelectedSeats.getSelectedPositions()
-        outState.putIntArray(KEY_SELECTED_SEAT_POSITIONS, selectedPositions)
+        outState.putIntArray(SELECTED_SEAT_POSITIONS.key, selectedPositions)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -84,12 +82,12 @@ class MovieSeatSelectionActivity :
 
         val savedCount =
             savedInstanceState.getInt(
-                KEY_MOVIE_COUNT,
-                INVALID_VALUE_MOVIE_COUNT,
+                RESERVATION_COUNT.key,
+                RESERVATION_COUNT.invalidValue as Int,
             )
         seatSelectionPresenter.updateSelectedSeats(savedCount)
 
-        val selectedPositions = savedInstanceState.getIntArray(KEY_SELECTED_SEAT_POSITIONS)
+        val selectedPositions = savedInstanceState.getIntArray(SELECTED_SEAT_POSITIONS.key)
         setUpSelectedSeats(selectedPositions)
     }
 
@@ -125,26 +123,11 @@ class MovieSeatSelectionActivity :
         binding.movieSelectedSeats = movieSelectedSeats
     }
 
-    override fun navigateToResultView(movieSelectedSeats: MovieSelectedSeats) {
-        val movieId = intent?.getLongExtra(KEY_MOVIE_ID, INVALID_VALUE_MOVIE_ID)
-        val date = intent?.getStringExtra(KEY_MOVIE_DATE)
-        val time = intent?.getStringExtra(KEY_MOVIE_TIME)
-        val count = movieSelectedSeats.count
-        val seats =
-            movieSelectedSeats.selectedSeats.map { seat ->
-                (seat.row.formatRow() + seat.column.formatColumn())
-            }.joinToString(", ")
-        val theaterName = intent?.getStringExtra(KEY_SELECTED_THEATER_NAME)
-
+    override fun navigateToResultView(ticketId: Long) {
         val intent =
             MovieResultActivity.createIntent(
                 baseContext,
-                movieId,
-                date,
-                time,
-                count,
-                seats,
-                theaterName,
+                ticketId,
             )
         startActivity(intent)
     }
@@ -165,7 +148,18 @@ class MovieSeatSelectionActivity :
 
     override fun onCompleteButtonClick() {
         AlertDialog.Builder(this).setTitle("예매 확인").setMessage("정말 예매하시겠습니까?")
-            .setPositiveButton("예매 완료") { _, _ -> seatSelectionPresenter.clickPositiveButton() }
+            .setPositiveButton("예매 완료") { _, _ ->
+                seatSelectionPresenter.clickPositiveButton(
+                    intent?.getLongExtra(MOVIE_ID.key, MOVIE_ID.invalidValue as Long)
+                        ?: MOVIE_ID.invalidValue as Long,
+                    intent?.getStringExtra(MOVIE_DATE.key) ?: MOVIE_DATE.invalidValue as String,
+                    intent?.getStringExtra(MOVIE_TIME.key) ?: MOVIE_TIME.invalidValue as String,
+                    intent?.getIntExtra(
+                        SELECTED_THEATER_POSITION.key,
+                        SELECTED_THEATER_POSITION.invalidValue as Int,
+                    ) ?: SELECTED_THEATER_POSITION.invalidValue as Int,
+                )
+            }
             .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }.setCancelable(false).show()
     }
 
@@ -176,14 +170,14 @@ class MovieSeatSelectionActivity :
             date: String,
             time: String,
             count: Int,
-            theaterName: String,
+            theaterPosition: Int,
         ): Intent {
             return Intent(context, MovieSeatSelectionActivity::class.java).apply {
-                putExtra(KEY_MOVIE_ID, movieId)
-                putExtra(KEY_MOVIE_DATE, date)
-                putExtra(KEY_MOVIE_TIME, time)
-                putExtra(KEY_MOVIE_COUNT, count)
-                putExtra(KEY_SELECTED_THEATER_NAME, theaterName)
+                putExtra(MOVIE_ID.key, movieId)
+                putExtra(MOVIE_DATE.key, date)
+                putExtra(MOVIE_TIME.key, time)
+                putExtra(RESERVATION_COUNT.key, count)
+                putExtra(SELECTED_THEATER_POSITION.key, theaterPosition)
             }
         }
     }

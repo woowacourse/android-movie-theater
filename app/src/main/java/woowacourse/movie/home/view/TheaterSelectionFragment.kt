@@ -12,8 +12,7 @@ import woowacourse.movie.home.presenter.contract.TheaterSelectionContract
 import woowacourse.movie.home.view.adapter.theater.TheaterAdapter
 import woowacourse.movie.home.view.adapter.theater.listener.TheaterClickListener
 import woowacourse.movie.model.Theater
-import woowacourse.movie.util.MovieIntentConstant.INVALID_VALUE_MOVIE_ID
-import woowacourse.movie.util.MovieIntentConstant.KEY_MOVIE_ID
+import woowacourse.movie.util.MovieIntent.MOVIE_ID
 
 class TheaterSelectionFragment :
     BottomSheetDialogFragment(),
@@ -22,7 +21,9 @@ class TheaterSelectionFragment :
     private lateinit var binding: FragmentTheaterSelectionBinding
     private lateinit var theaterSelectionPresenter: TheaterSelectionPresenter
 
-    private val movieId: Long by lazy { arguments?.getLong(KEY_MOVIE_ID) ?: INVALID_VALUE_MOVIE_ID }
+    private val movieId: Long by lazy {
+        arguments?.getLong(MOVIE_ID.key) ?: MOVIE_ID.invalidValue as Long
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +54,7 @@ class TheaterSelectionFragment :
             return TheaterSelectionFragment().apply {
                 arguments =
                     Bundle().apply {
-                        putLong(KEY_MOVIE_ID, movieId)
+                        putLong(MOVIE_ID.key, movieId)
                     }
             }
         }
