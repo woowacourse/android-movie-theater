@@ -47,16 +47,12 @@ class ReservationListPresenterImpl(
     }
 
     private fun seatsJoinToString(seats: List<Seat>): List<String> {
-        val formattedSeats = mutableListOf<String>()
-        seats.forEach { seat ->
-            val formattedSeat =
-                String.format(
-                    SeatSelectionActivity.SEAT_POSITION_TEXT_FORMAT,
-                    SeatSelectionActivity.SEAT_ROW_START_VALUE + seat.row,
-                    SeatSelectionActivity.SEAT_COL_START_VALUE + seat.col,
-                )
-            formattedSeats.add(formattedSeat)
+        return seats.map { seat ->
+            String.format(
+                SeatSelectionActivity.SEAT_POSITION_TEXT_FORMAT,
+                SeatSelectionActivity.SEAT_ROW_START_VALUE + seat.row,
+                SeatSelectionActivity.SEAT_COL_START_VALUE + seat.col,
+            )
         }
-        return formattedSeats
     }
 }
