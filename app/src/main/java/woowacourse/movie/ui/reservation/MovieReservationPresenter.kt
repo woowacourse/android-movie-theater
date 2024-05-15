@@ -1,21 +1,22 @@
 package woowacourse.movie.ui.reservation
 
-import woowacourse.movie.model.data.DefaultMovieDataSource
-import woowacourse.movie.model.movie.MovieContent
-import woowacourse.movie.model.movie.ReservationCount
-import woowacourse.movie.model.movie.ReservationDetail
-import woowacourse.movie.model.movie.ScreeningDate
-import woowacourse.movie.model.movie.Theater
-import woowacourse.movie.model.movie.UserTicket
+import woowacourse.movie.data.database.movie.MovieContentDao
+import woowacourse.movie.data.database.theater.TheaterDao
+import woowacourse.movie.domain.MovieContent
+import woowacourse.movie.domain.ReservationCount
+import woowacourse.movie.domain.ScreeningDate
+import woowacourse.movie.domain.Theater
+import woowacourse.movie.data.mapper.toMovieContent
+import woowacourse.movie.data.mapper.toTheater
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import kotlin.concurrent.thread
 
 class MovieReservationPresenter(
     private val view: MovieReservationContract.View,
-    private val movieContentDataSource: DefaultMovieDataSource<Long, MovieContent>,
-    private val theaterDataSource: DefaultMovieDataSource<Long, Theater>,
-    private val userTicketDataSource: DefaultMovieDataSource<Long, UserTicket>,
+    private val movieContentDataSource: MovieContentDao,
+    private val theaterDataSource: TheaterDao,
 ) :
     MovieReservationContract.Presenter {
     private lateinit var reservationCount: ReservationCount
@@ -41,12 +42,14 @@ class MovieReservationPresenter(
         movieContentId: Long,
         theaterId: Long,
     ) {
-        try {
-            movieContent = movieContentDataSource.find(movieContentId)
-            theater = theaterDataSource.find(theaterId)
+        runCatching {
+            thread {
+                movieContent = movieContentDataSource.find(movieContentId).toMovieContent()
+                theater = theaterDataSource.find(theaterId).toTheater()
+            }.join()
             view.showScreeningContent(movieContent, theater)
-        } catch (e: NoSuchElementException) {
-            view.showError(e)
+        }.onFailure {
+            view.showError(it)
         }
     }
 
@@ -61,15 +64,14 @@ class MovieReservationPresenter(
     }
 
     override fun reserveSeat() {
-        val userTicket =
-            UserTicket(
+        val reservationDetail =
+            ReservationDetail(
                 title = movieContent.title,
                 theater = theater.name,
-                screeningStartDateTime = LocalDateTime.of(screeningDate.date, movieTime),
-                reservationDetail = ReservationDetail(reservationCount.count),
+                screeningDateTime = LocalDateTime.of(screeningDate.date, movieTime),
+                reservationCount.count,
             )
-        val ticketId = userTicketDataSource.save(userTicket)
-        view.moveMovieSeatSelectionPage(ticketId)
+        view.moveMovieSeatSelectionPage(reservationDetail)
     }
 
     override fun handleError(throwable: Throwable) {

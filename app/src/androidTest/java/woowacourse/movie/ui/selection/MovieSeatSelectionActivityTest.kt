@@ -1,6 +1,7 @@
 package woowacourse.movie.ui.selection
 
 import android.content.Intent
+import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -11,35 +12,58 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.hamcrest.Matchers.not
-import org.junit.BeforeClass
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.movie.ReservationDetail
-import woowacourse.movie.model.movie.UserTicket
+import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.data.database.ticket.TicketEntity
 import woowacourse.movie.ui.reservation.MovieReservationKey
+import woowacourse.movie.ui.reservation.ReservationDetail
 import java.time.LocalDateTime
 
 class MovieSeatSelectionActivityTest {
-    private val userTicket: UserTicket = UserTicketsImpl.find(0L)
+    private lateinit var db: MovieDatabase
+    private lateinit var userTicket: TicketEntity
 
     private val intent =
         Intent(
             ApplicationProvider.getApplicationContext(),
             MovieSeatSelectionActivity::class.java,
         ).run {
-            putExtra(MovieReservationKey.TICKET_ID, 0L)
+            val reservationDetail =
+                ReservationDetail(
+                    title = "해리 포터와 마법사의 돌",
+                    theater = "강남",
+                    screeningDateTime = LocalDateTime.of(2024, 1, 1, 11, 0),
+                    count = 2,
+                )
+            putExtra(MovieReservationKey.RESERVATION_DETAIL, reservationDetail)
         }
 
     @get:Rule
     val activityRule = ActivityScenarioRule<MovieSeatSelectionActivity>(intent)
 
+    @Before
+    fun setUp() {
+        db = Room.inMemoryDatabaseBuilder(
+            ApplicationProvider.getApplicationContext(),
+            MovieDatabase::class.java
+        ).build()
+        userTicket = db.ticketDao().find(0L)
+    }
+
+    @After
+    fun tearDown() {
+        db.close()
+    }
+
     @Test
     fun `화면이_띄워지면_영화_제목이_보인다`() {
         onView(withId(R.id.movie_title_text))
             .check(matches(isDisplayed()))
-            .check(matches(withText(userTicket.title)))
+            .check(matches(withText("해리 포터와 마법사의 돌")))
     }
 
     @Test
@@ -82,21 +106,5 @@ class MovieSeatSelectionActivityTest {
 
         onView(withId(R.id.confirm_button))
             .check(matches(isEnabled()))
-    }
-
-    companion object {
-        @JvmStatic
-        @BeforeClass
-        fun setUp() {
-            UserTicketsImpl.save(
-                UserTicket(
-                    title = "해리포터와 마법사의 돌0",
-                    theater = "선릉",
-                    screeningStartDateTime = LocalDateTime.of(2024, 3, 28, 10, 0),
-                    reservationDetail = ReservationDetail(2),
-                    id = 0L,
-                ),
-            )
-        }
     }
 }

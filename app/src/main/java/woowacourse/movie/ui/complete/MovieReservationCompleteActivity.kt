@@ -2,6 +2,8 @@ package woowacourse.movie.ui.complete
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
@@ -10,10 +12,10 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.data.database.ticket.TicketDao
 import woowacourse.movie.databinding.ActivityMovieReservationCompleteBinding
-import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.movie.Seat
-import woowacourse.movie.model.movie.UserTicket
+import woowacourse.movie.domain.UserTicket
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.main.MovieMainActivity
 import java.time.LocalDateTime
@@ -23,6 +25,8 @@ class MovieReservationCompleteActivity :
     BaseActivity<MovieReservationCompletePresenter>(),
     MovieReservationCompleteContract.View {
     private lateinit var binding: ActivityMovieReservationCompleteBinding
+    private val dao: TicketDao by lazy { MovieDatabase.getDatabase(applicationContext).ticketDao() }
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,26 +37,27 @@ class MovieReservationCompleteActivity :
             presenter.handleError(NoSuchElementException())
             return
         }
-
         initializeOnBackPressedCallback()
-
         presenter.loadTicket(userTicketId)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun initializePresenter() = MovieReservationCompletePresenter(this, UserTicketsImpl)
+    override fun initializePresenter() = MovieReservationCompletePresenter(this, dao)
 
-    private fun userTicketId() = intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
+    private fun userTicketId() =
+        intent.getLongExtra(MovieReservationCompleteKey.TICKET_ID, USER_TICKET_ID_DEFAULT_VALUE)
 
     override fun showReservationResult(userTicket: UserTicket) {
-        binding.userTicket = userTicket
+        handler.post {
+            binding.userTicket = userTicket
+            binding.executePendingBindings()
+        }
     }
 
     override fun showError(throwable: Throwable) {
         Log.e(TAG, throwable.message.toString())
         Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG)
             .show()
-        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -72,7 +77,7 @@ class MovieReservationCompleteActivity :
 
     private fun navigateBackToMainScreen() {
         Intent(this, MovieMainActivity::class.java).also {
-            it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            it.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(it)
         }
     }
@@ -86,13 +91,16 @@ class MovieReservationCompleteActivity :
 @BindingAdapter("userTicket")
 fun setReservationResult(
     textView: TextView,
-    userTicket: UserTicket,
+    userTicket: UserTicket?,
 ) {
+    if (userTicket == null) {
+        return
+    }
     textView.text =
         textView.context.getString(
             R.string.complete_reservation_result,
-            userTicket.reservationDetail.reservationCount,
-            userTicket.reservationDetail.selectedSeat.joinToString(),
+            userTicket.seatInformation.reservationCount,
+            userTicket.seatInformation.selectedSeat.joinToString(),
             userTicket.theater,
         )
 }
@@ -100,8 +108,13 @@ fun setReservationResult(
 @BindingAdapter("reservedDateTime")
 fun setReservedDateTime(
     textView: TextView,
-    dateTime: LocalDateTime,
+    dateTime: LocalDateTime?,
 ) {
-    textView.text =
-        dateTime.format(DateTimeFormatter.ofPattern(textView.context.getString(R.string.reservation_screening_date_time_format)))
+    if (dateTime == null) {
+        return
+    }
+    val context = textView.context
+    val dateTimeFormat = context.getString(R.string.reservation_screening_date_time_format)
+    val dateTimePattern = DateTimeFormatter.ofPattern(dateTimeFormat)
+    textView.text = dateTime.format(dateTimePattern)
 }

@@ -6,11 +6,11 @@
     <data>
         <variable
             name="movieContent"
-            type="woowacourse.movie.model.movie.MovieContent" />
+            type="woowacourse.movie.domain.MovieContent" />
 
         <variable
             name="onClickListener"
-            type="woowacourse.movie.ui.ReservationButtonClickListener" />
+            type="woowacourse.movie.ui.home.ReservationButtonClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

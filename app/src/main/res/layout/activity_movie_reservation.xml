@@ -12,10 +12,10 @@
             type="woowacourse.movie.ui.reservation.MovieReservationPresenter" />
         <variable
             name="theater"
-            type="woowacourse.movie.model.movie.Theater" />
+            type="woowacourse.movie.domain.Theater" />
         <variable
             name="movieContent"
-            type="woowacourse.movie.model.movie.MovieContent" />
+            type="woowacourse.movie.domain.MovieContent" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

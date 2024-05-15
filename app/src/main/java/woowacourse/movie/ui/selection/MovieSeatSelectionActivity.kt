@@ -2,6 +2,7 @@ package woowacourse.movie.ui.selection
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -14,20 +15,27 @@ import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.data.database.ticket.TicketDao
 import woowacourse.movie.databinding.ActivityMovieSeatSelectionBinding
-import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.movie.Seat
+import woowacourse.movie.domain.Seat
+import woowacourse.movie.domain.UserTicket
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.complete.MovieReservationCompleteActivity
+import woowacourse.movie.ui.notification.ReservationAlarmItem
+import woowacourse.movie.ui.notification.ReservationAlarmScheduler
+import woowacourse.movie.ui.reservation.MovieReservationKey.RESERVATION_DETAIL
+import woowacourse.movie.ui.reservation.ReservationDetail
 import woowacourse.movie.ui.utils.positionToIndex
+import java.time.LocalDateTime
 
 class MovieSeatSelectionActivity :
     BaseActivity<MovieSeatSelectionPresenter>(),
     MovieSeatSelectionContract.View {
     private lateinit var binding: ActivityMovieSeatSelectionBinding
-    private val userTicketId by lazy { userTicketId() }
     private val selectedSeatInfo = mutableListOf<Int>()
     private val seats by lazy { binding.seatTable.makeSeats() }
+    private val dao: TicketDao by lazy { MovieDatabase.getDatabase(applicationContext).ticketDao() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +43,19 @@ class MovieSeatSelectionActivity :
         binding.presenter = presenter
         binding.activity = this
 
-        presenter.loadTheaterInfo(userTicketId)
+        val reservationDetail =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                intent.getParcelableExtra(RESERVATION_DETAIL, ReservationDetail::class.java)
+            } else {
+                intent.getParcelableExtra(RESERVATION_DETAIL)
+            }
+
+        if (reservationDetail == null) {
+            presenter.handleError(IllegalStateException())
+            return
+        }
+
+        presenter.loadTheaterInfo(reservationDetail)
         presenter.updateSelectCompletion()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -62,20 +82,6 @@ class MovieSeatSelectionActivity :
         }
     }
 
-    fun showAlertDialog() {
-        AlertDialog.Builder(this)
-            .setCancelable(false)
-            .setTitle(R.string.selection_dialog_title)
-            .setMessage(R.string.selection_dialog_content)
-            .setPositiveButton(R.string.selection_dialog_btn_complete) { _, _ ->
-                moveMovieReservationCompletePage(userTicketId)
-            }
-            .setNegativeButton(R.string.selection_dialog_btn_cancel) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> finish()
@@ -83,15 +89,8 @@ class MovieSeatSelectionActivity :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun initializePresenter(): MovieSeatSelectionPresenter = MovieSeatSelectionPresenter(this, UserTicketsImpl)
-
-    override fun showTheater(
-        rowSize: Int,
-        colSize: Int,
-    ) {
-        repeat(rowSize) { row ->
-            makeSeats(colSize, row)
-        }
+    override fun initializePresenter(): MovieSeatSelectionPresenter {
+        return MovieSeatSelectionPresenter(this, dao)
     }
 
     override fun showSelectedSeat(index: Int) {
@@ -109,26 +108,81 @@ class MovieSeatSelectionActivity :
     }
 
     override fun showReservationTotalAmount(amount: Int) {
+        updateTotalPrice(amount)
+    }
+
+    override fun updateSelectCompletion(isComplete: Boolean) {
+        updateButtonCompletion(isComplete)
+    }
+
+    override fun setAlarm(
+        reservationId: Long,
+        reservedTime: LocalDateTime,
+        movieTitle: String,
+    ) {
+        val scheduler = ReservationAlarmScheduler(this)
+        scheduler.setSchedule(
+            ReservationAlarmItem(
+                reservationId,
+                reservedTime,
+                getString(R.string.notification_reservation_title),
+                getString(R.string.notification_reservation_subtitle, movieTitle),
+            ),
+        )
+    }
+
+    override fun showReservationInfo(
+        userTicket: UserTicket,
+        rowSize: Int,
+        colSize: Int
+    ) {
+        binding.title = userTicket.title
+        repeat(rowSize) { row ->
+            makeSeats(colSize, row)
+        }
+        updateTotalPrice(userTicket.seatInformation.totalSeatAmount())
+        updateButtonCompletion(userTicket.seatInformation.checkSelectCompletion())
+    }
+
+    override fun navigateToCompleteScreen(ticketId: Long) {
+        Intent(this, MovieReservationCompleteActivity::class.java).run {
+            putExtra(MovieSeatSelectionKey.TICKET_ID, ticketId)
+            startActivity(this)
+        }
+    }
+
+    override fun showError(throwable: Throwable) {
+        Log.e(TAG, throwable.message.toString())
+        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG)
+            .show()
+        finish()
+    }
+
+    fun showAlertDialog() {
+        AlertDialog.Builder(this)
+            .setCancelable(false)
+            .setTitle(R.string.selection_dialog_title)
+            .setMessage(R.string.selection_dialog_content)
+            .setPositiveButton(R.string.selection_dialog_btn_complete) { _, _ ->
+                presenter.completeReservation()
+            }
+            .setNegativeButton(R.string.selection_dialog_btn_cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun updateTotalPrice(amount: Int) {
         binding.totalSeatAmountText.text =
             resources.getString(R.string.selection_total_price)
                 .format(amount)
     }
 
-    override fun updateSelectCompletion(isComplete: Boolean) {
+    private fun updateButtonCompletion(isComplete: Boolean) {
         binding.confirmButton.apply {
             isEnabled = isComplete
             isClickable = isComplete
         }
-    }
-
-    override fun showMovieTitle(title: String) {
-        binding.title = title
-    }
-
-    override fun showError(throwable: Throwable) {
-        Log.e(TAG, throwable.message.toString())
-        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG).show()
-        finish()
     }
 
     private fun TableLayout.makeSeats(): List<TextView> =
@@ -147,19 +201,6 @@ class MovieSeatSelectionActivity :
             }
         }
     }
-
-    private fun moveMovieReservationCompletePage(ticketId: Long) {
-        Intent(this, MovieReservationCompleteActivity::class.java).run {
-            putExtra(MovieSeatSelectionKey.TICKET_ID, ticketId)
-            startActivity(this)
-        }
-    }
-
-    private fun userTicketId() =
-        intent.getLongExtra(
-            MovieSeatSelectionKey.TICKET_ID,
-            MOVIE_CONTENT_ID_DEFAULT_VALUE,
-        )
 
     private fun setOnConfirmButtonListener() {
         binding.confirmButton.setOnClickListener {

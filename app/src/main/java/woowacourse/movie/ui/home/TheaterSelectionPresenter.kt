@@ -1,25 +1,30 @@
 package woowacourse.movie.ui.home
 
-import woowacourse.movie.model.data.DefaultMovieDataSource
-import woowacourse.movie.model.movie.MovieContent
-import woowacourse.movie.model.movie.Theater
+import woowacourse.movie.data.database.movie.MovieContentDao
+import woowacourse.movie.data.database.theater.TheaterDao
+import woowacourse.movie.domain.MovieContent
+import woowacourse.movie.domain.Theater
+import woowacourse.movie.data.mapper.toMovieContent
+import woowacourse.movie.data.mapper.toTheater
+import kotlin.concurrent.thread
 
 class TheaterSelectionPresenter(
     private val view: TheaterSelectionContract.View,
-    private val movieContentDataSource: DefaultMovieDataSource<Long, MovieContent>,
-    private val theaterDataSource: DefaultMovieDataSource<Long, Theater>,
+    private val movieContentDataSource: MovieContentDao,
+    private val theaterDataSource: TheaterDao,
 ) :
     TheaterSelectionContract.Presenter {
-    private lateinit var movieContent: MovieContent
-
     override fun loadTheaters(movieContentId: Long) {
         runCatching {
-            movieContent = movieContentDataSource.find(movieContentId)
-            val movieTheaters =
-                movieContent.theaterIds.map { theaterId ->
-                    theaterDataSource.find(theaterId)
-                }
-            view.showTheaters(movieContentId, movieTheaters)
+            var theaters: List<Theater>? = null
+            thread {
+                val movieContent = movieContentDataSource.find(movieContentId).toMovieContent()
+                theaters =
+                    movieContent.theaterIds.map { theaterId ->
+                        theaterDataSource.find(theaterId).toTheater()
+                    }
+            }.join()
+            view.showTheaters(movieContentId, theaters ?: throw IllegalStateException())
         }.onFailure {
             view.showError(it)
         }

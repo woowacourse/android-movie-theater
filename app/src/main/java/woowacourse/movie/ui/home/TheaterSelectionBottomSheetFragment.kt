@@ -9,10 +9,11 @@ import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
+import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.data.database.movie.MovieContentDao
+import woowacourse.movie.data.database.theater.TheaterDao
 import woowacourse.movie.databinding.FragmentTheaterSelectionBottomSheetBinding
-import woowacourse.movie.model.data.MovieContentsImpl
-import woowacourse.movie.model.data.TheatersImpl
-import woowacourse.movie.model.movie.Theater
+import woowacourse.movie.domain.Theater
 import woowacourse.movie.ui.home.adapter.TheaterAdapter
 import woowacourse.movie.ui.reservation.MovieReservationActivity
 
@@ -25,6 +26,12 @@ class TheaterSelectionBottomSheetFragment :
     private lateinit var theaters: List<Theater>
     private val adapter: TheaterAdapter by lazy { generateTheaterAdapter() }
     private val presenter: TheaterSelectionPresenter by lazy { generatePresenter() }
+    private val movieContentDao: MovieContentDao by lazy {
+        MovieDatabase.getDatabase(requireContext()).movieContentDao()
+    }
+    private val theaterDao: TheaterDao by lazy {
+        MovieDatabase.getDatabase(requireContext()).theaterDao()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +51,7 @@ class TheaterSelectionBottomSheetFragment :
             presenter.loadTheaters(
                 bundle.getLong(MovieHomeKey.MOVIE_CONTENT_ID),
             )
+            binding.theaterList.adapter = adapter
         }
     }
 
@@ -53,41 +61,29 @@ class TheaterSelectionBottomSheetFragment :
     ) {
         this.theaters = theaters
         this.movieContentId = movieContentId
-        binding.theaterList.adapter = adapter
-    }
-
-    override fun navigateToMovieReservation(
-        movieContentId: Long,
-        theaterId: Long,
-    ) {
-        Intent(requireContext(), MovieReservationActivity::class.java).apply {
-            putExtra(MovieHomeKey.MOVIE_CONTENT_ID, movieContentId)
-            putExtra(MovieHomeKey.THEATER_ID, theaterId)
-            startActivity(this)
-        }
     }
 
     override fun showError(throwable: Throwable) {
         Toast.makeText(
             requireContext(),
             resources.getString(R.string.toast_invalid_key),
-            Toast.LENGTH_LONG
+            Toast.LENGTH_LONG,
         ).show()
     }
 
-    override fun onTheaterClick(movieContentId: Long, theaterId: Long) {
-        Intent(requireContext(), MovieReservationActivity::class.java).apply {
-            putExtra(MovieHomeKey.MOVIE_CONTENT_ID, movieContentId)
-            putExtra(MovieHomeKey.THEATER_ID, theaterId)
-            startActivity(this)
-        }
+    override fun onTheaterClick(
+        movieContentId: Long,
+        theaterId: Long,
+    ) {
+        Intent(requireContext(), MovieReservationActivity::class.java)
+            .putExtra(MovieHomeKey.MOVIE_CONTENT_ID, movieContentId)
+            .putExtra(MovieHomeKey.THEATER_ID, theaterId)
+            .also(::startActivity)
     }
 
-    private fun generateTheaterAdapter() =
-        TheaterAdapter(theaters, movieContentId, this)
+    private fun generateTheaterAdapter() = TheaterAdapter(theaters, movieContentId, this)
 
-    private fun generatePresenter() =
-        TheaterSelectionPresenter(this, MovieContentsImpl, TheatersImpl)
+    private fun generatePresenter() = TheaterSelectionPresenter(this, movieContentDao, theaterDao)
 
     companion object {
         private const val DEFAULT_MOVIE_CONTENT_ID: Long = -1L

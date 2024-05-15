@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.home
 
-import woowacourse.movie.model.movie.MovieContent
+import woowacourse.movie.domain.MovieContent
 import woowacourse.movie.ui.HandleError
 
 interface MovieHomeContract {

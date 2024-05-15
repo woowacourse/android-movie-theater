@@ -3,15 +3,14 @@ package woowacourse.movie.ui.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ListAdapter
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemAdvertisementBinding
 import woowacourse.movie.databinding.ItemMovieContentBinding
-import woowacourse.movie.model.movie.MovieContent
-import woowacourse.movie.ui.ReservationButtonClickListener
+import woowacourse.movie.domain.MovieContent
+import woowacourse.movie.ui.home.ReservationButtonClickListener
 
 class MovieContentAdapter(
     private val reservationButtonClickListener: ReservationButtonClickListener,
@@ -66,10 +65,6 @@ class MovieContentAdapter(
             position % DIVIDER_ADVERTISEMENT == INTERVAL_ADVERTISEMENT -> TYPE_ADS
             else -> TYPE_MOVIE
         }
-    }
-
-    fun addMovieContents(movieContents: List<MovieContent>) {
-        submitList(movieContents)
     }
 
     companion object {

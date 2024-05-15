@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.home
 
-import woowacourse.movie.model.movie.Theater
+import woowacourse.movie.domain.Theater
 import woowacourse.movie.ui.HandleError
 
 interface TheaterSelectionContract {
@@ -8,11 +8,6 @@ interface TheaterSelectionContract {
         fun showTheaters(
             movieContentId: Long,
             theaters: List<Theater>,
-        )
-
-        fun navigateToMovieReservation(
-            movieContentId: Long,
-            theaterId: Long,
         )
     }
 

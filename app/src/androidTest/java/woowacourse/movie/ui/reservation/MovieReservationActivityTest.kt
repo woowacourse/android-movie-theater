@@ -2,6 +2,7 @@ package woowacourse.movie.ui.reservation
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -11,18 +12,19 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.BeforeClass
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.model.data.MovieContentsImpl
-import woowacourse.movie.model.movie.MovieContent
-import java.time.LocalDate
+import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.data.database.movie.MovieContentEntity
 
 @RunWith(AndroidJUnit4::class)
 class MovieReservationActivityTest {
-    private val movieContent: MovieContent = MovieContentsImpl.find(0L)
+    private lateinit var db: MovieDatabase
+    private lateinit var movieContent: MovieContentEntity
 
     private val intent =
         Intent(
@@ -35,6 +37,20 @@ class MovieReservationActivityTest {
 
     @get:Rule
     val activityRule = ActivityScenarioRule<MovieReservationActivity>(intent)
+
+    @Before
+    fun setUp() {
+        db = Room.inMemoryDatabaseBuilder(
+            ApplicationProvider.getApplicationContext(),
+            MovieDatabase::class.java
+        ).build()
+        movieContent = db.movieContentDao().find(0L)
+    }
+
+    @After
+    fun tearDown() {
+        db.close()
+    }
 
     @Test
     fun `화면이_띄워지면_영화_제목이_보인다`() {
@@ -134,22 +150,23 @@ class MovieReservationActivityTest {
             .check(matches(withText("3")))
     }
 
-    companion object {
-        @JvmStatic
-        @BeforeClass
-        fun setUp() {
-            MovieContentsImpl.save(
-                MovieContent(
-                    imageId = "thumbnail_movie1",
-                    title = "해리 포터와 마법사의 돌",
-                    openingMovieDate = LocalDate.of(2024, 3, 1),
-                    endingMoviesDate = LocalDate.of(2024, 3, 28),
-                    runningTime = 152,
-                    synopsis = "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, " +
-                        "판타지 영화이다. 해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다. ",
-                    theaterIds = listOf(0L, 1L, 2L),
-                ),
-            )
-        }
-    }
+//    companion object {
+//        @JvmStatic
+//        @BeforeClass
+//        fun setUp() {
+//            MovieContentsImpl.save(
+//                MovieContent(
+//                    imageId = "thumbnail_movie1",
+//                    title = "해리 포터와 마법사의 돌",
+//                    openingMovieDate = LocalDate.of(2024, 3, 1),
+//                    endingMoviesDate = LocalDate.of(2024, 3, 28),
+//                    runningTime = 152,
+//                    synopsis =
+//                        "《해리 포터와 마법사의 돌》은 2001년 J. K. 롤링의 동명 소설을 원작으로 하여 만든, 영국과 미국 합작, " +
+//                            "판타지 영화이다. 해리포터 시리즈 영화 8부작 중 첫 번째에 해당하는 작품이다. 크리스 콜럼버스가 감독을 맡았다. ",
+//                    theaterIds = listOf(0L, 1L, 2L),
+//                ),
+//            )
+//        }
+//    }
 }

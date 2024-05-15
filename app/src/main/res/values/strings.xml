@@ -30,8 +30,17 @@
     <string name="menu_booking_history">예매 내역</string>
     <string name="menu_setting">설정</string>
 
+    <string name="history_booking_date_format">yyyy.M.d</string>
+    <string name="history_booking_time_format">HH:mm</string>
+    <string name="history_booking_data">%s | %s | %s 극장</string>
+
     <string name="toast_invalid_key">잘못된 접근입니다.</string>
 
     <string name="split">|</string>
     <string name="image_description_arrow_image">arrow_image</string>
+
+    <string name="notification_reservation_title">예매 알림</string>
+    <string name="notification_reservation_subtitle">%s 30분 후에 상영</string>
+    <string name="setting_menu_title_notification">푸시 알림 수신</string>
+    <string name="setting_menu_description_notification">해제하면 푸시 알림을 수신할 수 없습니다.</string>z
 </resources>

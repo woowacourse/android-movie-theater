@@ -2,6 +2,8 @@ package woowacourse.movie.ui.reservation
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,12 +11,12 @@ import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.data.database.movie.MovieContentDao
+import woowacourse.movie.data.database.theater.TheaterDao
 import woowacourse.movie.databinding.ActivityMovieReservationBinding
-import woowacourse.movie.model.data.MovieContentsImpl
-import woowacourse.movie.model.data.TheatersImpl
-import woowacourse.movie.model.data.UserTicketsImpl
-import woowacourse.movie.model.movie.MovieContent
-import woowacourse.movie.model.movie.Theater
+import woowacourse.movie.domain.MovieContent
+import woowacourse.movie.domain.Theater
 import woowacourse.movie.ui.base.BaseActivity
 import woowacourse.movie.ui.selection.MovieSeatSelectionActivity
 import woowacourse.movie.ui.utils.getImageFromId
@@ -25,6 +27,15 @@ class MovieReservationActivity :
     BaseActivity<MovieReservationPresenter>(),
     MovieReservationContract.View {
     private lateinit var binding: ActivityMovieReservationBinding
+    private val theaterDao: TheaterDao by lazy {
+        MovieDatabase.getDatabase(applicationContext).theaterDao()
+    }
+    private val movieContentDao: MovieContentDao by lazy {
+        MovieDatabase.getDatabase(
+            applicationContext,
+        ).movieContentDao()
+    }
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +43,9 @@ class MovieReservationActivity :
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_reservation)
         binding.presenter = presenter
 
-        val theaterId = theaterId()
-        val movieContentId = movieContentId()
+        val theaterId = intent.getLongExtra(MovieReservationKey.THEATER_ID, DEFAULT_VALUE)
+        val movieContentId =
+            intent.getLongExtra(MovieReservationKey.MOVIE_CONTENT_ID, DEFAULT_VALUE)
         if (movieContentId == DEFAULT_VALUE || theaterId == DEFAULT_VALUE) {
             presenter.handleError(NoSuchElementException())
             return
@@ -62,14 +74,12 @@ class MovieReservationActivity :
         }
     }
 
-    override fun initializePresenter() = MovieReservationPresenter(this, MovieContentsImpl, TheatersImpl, UserTicketsImpl)
-
-    private fun theaterId() = intent.getLongExtra(MovieReservationKey.THEATER_ID, DEFAULT_VALUE)
-
-    private fun movieContentId() = intent.getLongExtra(MovieReservationKey.MOVIE_CONTENT_ID, DEFAULT_VALUE)
+    override fun initializePresenter() =
+        MovieReservationPresenter(this, movieContentDao, theaterDao)
 
     override fun showError(throwable: Throwable) {
-        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, resources.getString(R.string.toast_invalid_key), Toast.LENGTH_LONG)
+            .show()
         finish()
     }
 
@@ -84,16 +94,21 @@ class MovieReservationActivity :
         binding.reservationCountText.text = reservationCount.toString()
     }
 
-    override fun moveMovieSeatSelectionPage(userTicketId: Long) {
-        Intent(this, MovieSeatSelectionActivity::class.java).run {
-            putExtra(MovieReservationKey.TICKET_ID, userTicketId)
-            startActivity(this)
-        }
+    override fun moveMovieSeatSelectionPage(reservationDetail: ReservationDetail) {
+        Intent(this, MovieSeatSelectionActivity::class.java)
+            .putExtra(MovieReservationKey.RESERVATION_DETAIL, reservationDetail)
+            .also(::startActivity)
     }
 
-    override fun showScreeningContent(movieContent: MovieContent, theater: Theater) {
-        binding.movieContent = movieContent
-        binding.theater = theater
+    override fun showScreeningContent(
+        movieContent: MovieContent,
+        theater: Theater,
+    ) {
+        handler.post {
+            binding.movieContent = movieContent
+            binding.theater = theater
+            binding.executePendingBindings()
+        }
     }
 
     companion object {
@@ -105,22 +120,32 @@ class MovieReservationActivity :
 @BindingAdapter("drawableResourceId")
 fun setImageViewResource(
     imageView: ImageView,
-    imageName: String,
+    imageName: String?,
 ) {
+    if (imageName == null) {
+        return
+    }
     imageView.setImageResource(imageName.getImageFromId(imageView.context))
 }
 
 @BindingAdapter("openingDate", "endingDate")
 fun setScreeningDate(
     textView: TextView,
-    openingDate: LocalDate,
-    endingDate: LocalDate,
+    openingDate: LocalDate?,
+    endingDate: LocalDate?,
 ) {
+    if (openingDate == null || endingDate == null) {
+        return
+    }
     val context = textView.context
     val formattedOpeningDate =
         openingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
     val formattedEndingDate =
         endingDate.format(DateTimeFormatter.ofPattern(context.getString(R.string.reservation_screening_date_format)))
     textView.text =
-        context.getString(R.string.home_screening_date, formattedOpeningDate, formattedEndingDate)
+        context.getString(
+            R.string.home_screening_date,
+            formattedOpeningDate,
+            formattedEndingDate,
+        )
 }
