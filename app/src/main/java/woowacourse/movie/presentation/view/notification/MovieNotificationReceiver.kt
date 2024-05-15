@@ -66,7 +66,7 @@ class MovieNotificationReceiver : BroadcastReceiver() {
     ): Notification {
         return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_movie_alarm)
-            .setContentTitle("예매 내역")
+            .setContentTitle(context.getString(R.string.notification_content_title))
             .setContentText(context.getString(R.string.notification_content, title))
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)

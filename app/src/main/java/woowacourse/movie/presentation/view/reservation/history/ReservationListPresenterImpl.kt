@@ -5,6 +5,7 @@ import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity
 import woowacourse.movie.repository.db.ReservationTicketDao
 import woowacourse.movie.repository.db.toTicketUiModel
+import kotlin.concurrent.thread
 
 class ReservationListPresenterImpl(
     private val ticketDao: ReservationTicketDao,
@@ -12,7 +13,7 @@ class ReservationListPresenterImpl(
 ) :
     ReservationListContract.Presenter {
     override fun loadReservationTickets() {
-        Thread {
+        thread {
             val tickets = ticketDao.findAllReservation()
 
             val movieTickets =
@@ -20,7 +21,7 @@ class ReservationListPresenterImpl(
                     ticketEntity.toTicketUiModel()
                 }
             view.showReservationTickets(movieTickets)
-        }.start()
+        }
     }
 
     override fun ticketInfo(ticketId: Long) {
