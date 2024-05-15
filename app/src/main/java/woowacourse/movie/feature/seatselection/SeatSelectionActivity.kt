@@ -28,6 +28,7 @@ import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
+import woowacourse.movie.model.ticket.Reservation
 import woowacourse.movie.utils.MovieUtils.bundleSerializable
 import woowacourse.movie.utils.MovieUtils.convertAmountFormat
 import woowacourse.movie.utils.MovieUtils.intentSerializable
@@ -41,10 +42,9 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initAmount()
         initPresenter()
-        seatsTable = collectSeatsInTableLayout()
-        presenter.loadReservationInformation()
+        initSeatsTable()
+        initReservationData()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -149,20 +149,26 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private fun initPresenter() {
         val ticketDao = TicketDatabase.initialize(this).ticketDao()
+        val reservation = makeReservation()
         presenter =
             SeatSelectionPresenter(
                 this,
                 SeatsDao(),
                 ScreeningDao(),
                 TheaterDao(),
-                receiveMovieId(),
-                receiveTheaterId(),
-                receiveHeadCount(),
-                receiveScreeningDateTime(),
                 ticketDao,
+                reservation,
             )
         binding.presenter = presenter
     }
+
+    private fun makeReservation() =
+        Reservation(
+            receiveMovieId(),
+            receiveTheaterId(),
+            receiveHeadCount(),
+            receiveScreeningDateTime(),
+        )
 
     private fun receiveMovieId() =
         intent.getIntExtra(
@@ -170,15 +176,20 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             DEFAULT_MOVIE_ID,
         )
 
-    private fun receiveHeadCount() = intent.intentSerializable(HEAD_COUNT, HeadCount::class.java)
-
     private fun receiveTheaterId(): Int = intent.getIntExtra(THEATER_ID, DEFAULT_THEATER_ID)
+
+    private fun receiveHeadCount() = intent.intentSerializable(HEAD_COUNT, HeadCount::class.java)
 
     private fun receiveScreeningDateTime() =
         intent.intentSerializable(
             SCREENING_DATE_TIME,
             LocalDateTime::class.java,
         )
+
+    private fun initSeatsTable() {
+        seatsTable = collectSeatsInTableLayout()
+        presenter.loadSeatNumber()
+    }
 
     private fun collectSeatsInTableLayout(): List<Button> =
         binding.tlSeatSelection.children.filterIsInstance<TableRow>().flatMap { it.children }
@@ -190,7 +201,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         presenter.restoreSeats(seats, index)
     }
 
-    private fun initAmount() {
+    private fun initReservationData() {
+        presenter.handleMovieLoading()
         binding.amount = getString(R.string.select_seat_default_price)
     }
 

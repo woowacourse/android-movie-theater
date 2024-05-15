@@ -18,6 +18,7 @@ import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.HeadCount
+import woowacourse.movie.model.ticket.Reservation
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -32,18 +33,23 @@ class SeatSelectionPresenterTest {
 
     @BeforeEach
     fun setUp() {
+        val reservation =
+            Reservation(
+                movieId = 0,
+                theaterId = 0,
+                HeadCount(4),
+                LocalDateTime.of(LocalDate.now(), LocalTime.now()),
+            )
         presenter =
             SeatSelectionPresenter(
                 view,
                 SeatsDao(),
                 ScreeningDao(),
                 TheaterDao(),
-                movieId = 0,
-                theaterId = 0,
-                HeadCount(4),
-                LocalDateTime.of(LocalDate.now(), LocalTime.now()),
                 ticketDao,
+                reservation,
             )
+
         with(presenter) {
             manageSelectedSeats(true, 0, Seat('A', 1, Grade.B))
             manageSelectedSeats(true, 0, Seat('C', 1, Grade.S))

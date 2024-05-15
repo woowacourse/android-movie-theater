@@ -10,7 +10,7 @@ typealias OnReservationDataSave = (HeadCount, Seats, seatsIndex: List<Int>) -> U
 
 interface SeatSelectionContract {
     interface Presenter {
-        fun loadReservationInformation()
+        fun handleMovieLoading()
 
         fun loadSeatNumber()
 

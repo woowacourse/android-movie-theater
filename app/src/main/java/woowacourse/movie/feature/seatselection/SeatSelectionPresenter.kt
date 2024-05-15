@@ -10,6 +10,7 @@ import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
+import woowacourse.movie.model.ticket.Reservation
 import woowacourse.movie.model.ticket.Ticket
 import woowacourse.movie.model.ticket.Ticket.Companion.toEntity
 import java.time.LocalDateTime
@@ -20,21 +21,26 @@ class SeatSelectionPresenter(
     seatsDao: SeatsDao,
     private val screeningDao: ScreeningDao,
     private val theaterDao: TheaterDao,
-    private val movieId: Int,
-    private val theaterId: Int,
-    private val headCount: HeadCount? = null,
-    private val screeningDateTime: LocalDateTime? = null,
     private val ticketDao: TicketDao,
+    private val reservation: Reservation,
 ) : SeatSelectionContract.Presenter {
     private val selectedSeats = Seats()
     private val seats = seatsDao.findAll()
+    private val movieId: Int = reservation.movieId
+    private val theaterId: Int = reservation.theaterId
+    private var isValidReservation: Boolean = false
+    private lateinit var headCount: HeadCount
+    private lateinit var screeningDateTime: LocalDateTime
 
-    override fun loadReservationInformation() {
-        if (isValidInformation()) {
-            loadSeatNumber()
+    init {
+        isValidReservation = isValidReservation()
+    }
+
+    override fun handleMovieLoading() {
+        if (isValidReservation) {
             loadMovie()
         } else {
-            handleUndeliveredData()
+            notifyError()
         }
     }
 
@@ -56,26 +62,18 @@ class SeatSelectionPresenter(
         }
     }
 
-    override fun loadSeatNumber() {
-        seats.forEachIndexed { index, seat ->
-            view.initializeSeatsTable(index, seat)
-        }
-    }
-
     override fun loadMovie() {
         val movie: Movie = screeningDao.find(movieId)
         view.showMovieTitle(movie)
     }
 
     override fun saveTicket() {
-        screeningDateTime?.let {
-            var ticketId: Long = 0
-            val ticket = makeTicket(screeningDateTime).toEntity()
-            thread {
-                ticketId = ticketDao.insert(ticket)
-            }.join()
-            view.navigateToFinished(ticketId)
-        }
+        var ticketId: Long = 0
+        val ticket = makeTicket().toEntity()
+        thread {
+            ticketId = ticketDao.insert(ticket)
+        }.join()
+        view.navigateToFinished(ticketId)
     }
 
     override fun requestReservationConfirm() {
@@ -83,16 +81,14 @@ class SeatSelectionPresenter(
     }
 
     override fun deliverReservationInfo(onReservationDataSave: OnReservationDataSave) {
-        headCount?.let {
-            onReservationDataSave(headCount, selectedSeats, selectedSeats.seatsIndex)
-        }
+        onReservationDataSave(headCount, selectedSeats, selectedSeats.seatsIndex)
     }
 
     override fun updateReservationState(
         seat: Seat,
         isSelected: Boolean,
     ) {
-        if (headCount != null && selectedSeats.seats.size < headCount.count || isSelected) {
+        if (isValidSelectedSeat(headCount) || isSelected) {
             val seatIndex = seats.indexOf(seat)
             view.updateSeatSelectedState(seatIndex, isSelected)
             manageSelectedSeats(!isSelected, seatIndex, seat)
@@ -118,31 +114,40 @@ class SeatSelectionPresenter(
     }
 
     override fun validateReservationAvailable() {
-        headCount?.let {
-            val isReservationAvailable = selectedSeats.seats.size >= headCount.count
-            view.setConfirmButtonEnabled(isReservationAvailable)
-        }
+        val isReservationAvailable = selectedSeats.seats.size >= headCount.count
+        view.setConfirmButtonEnabled(isReservationAvailable)
     }
 
-    private fun isValidInformation(): Boolean {
-        if (movieId == DEFAULT_MOVIE_ID) return false
-        if (theaterId == DEFAULT_THEATER_ID) return false
-        if (headCount == null) return false
-        if (screeningDateTime == null) return false
+    private fun isValidReservation(): Boolean {
+        if (reservation.movieId == DEFAULT_MOVIE_ID) return false
+        if (reservation.theaterId == DEFAULT_THEATER_ID) return false
+        if (reservation.headCount == null) return false
+        if (reservation.screeningDateTime == null) return false
+        headCount = reservation.headCount
+        screeningDateTime = reservation.screeningDateTime
         return true
     }
 
-    private fun handleUndeliveredData() {
+    private fun notifyError() {
         view.showErrorSnackBar()
     }
 
-    private fun makeTicket(screeningDateTime: LocalDateTime): Ticket {
+    private fun isValidSelectedSeat(headCount: HeadCount): Boolean {
+        return selectedSeats.seats.size < headCount.count
+    }
+
+    override fun loadSeatNumber() {
+        seats.forEachIndexed { index, seat ->
+            view.initializeSeatsTable(index, seat)
+        }
+    }
+
+    private fun makeTicket(): Ticket {
         val movieTitle = screeningDao.find(movieId).title
         val theaterName = theaterDao.find(theaterId).name
-        val dateTime: LocalDateTime = screeningDateTime
 
         return Ticket(
-            dateTime,
+            screeningDateTime,
             movieTitle,
             theaterName,
             selectedSeats,
