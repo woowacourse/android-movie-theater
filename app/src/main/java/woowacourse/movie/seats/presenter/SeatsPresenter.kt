@@ -1,17 +1,16 @@
 package woowacourse.movie.seats.presenter
 
 import android.widget.TextView
-import woowacourse.movie.common.MovieDataSource
+import woowacourse.movie.common.CommonDataSource.movieList
 import woowacourse.movie.seats.contract.SeatsContract
 import woowacourse.movie.seats.model.Seat
 import woowacourse.movie.seats.model.SeatsDataSource
-import woowacourse.movie.seats.model.SeatsDataSource.date
 import woowacourse.movie.seats.model.SeatsDataSource.movieId
 import woowacourse.movie.seats.model.SeatsDataSource.seat
 import woowacourse.movie.seats.model.SeatsDataSource.seatTotalPrice
 import woowacourse.movie.seats.model.SeatsDataSource.selectedSeats
 import woowacourse.movie.seats.model.SeatsDataSource.ticketCount
-import woowacourse.movie.seats.model.SeatsDataSource.time
+import woowacourse.movie.seats.model.SeatsDataSource.ticketData
 
 class SeatsPresenter(val view: SeatsContract.View) : SeatsContract.Presenter {
     override fun initCell(cell: TextView) {
@@ -37,14 +36,7 @@ class SeatsPresenter(val view: SeatsContract.View) : SeatsContract.Presenter {
     }
 
     override fun startNextActivity() {
-        view.startNextActivity(
-            movieId,
-            MovieDataSource.movieList[movieId.toInt()].title,
-            date,
-            time,
-            selectedSeats,
-            seatTotalPrice,
-        )
+        view.startNextActivity(ticketData)
     }
 
     override fun storeDate(date: String) {
@@ -64,8 +56,7 @@ class SeatsPresenter(val view: SeatsContract.View) : SeatsContract.Presenter {
     }
 
     override fun setMovieTitleInfo() {
-        val id = movieId.toInt()
-        view.setMovieTitle(MovieDataSource.movieList[id].title)
+        view.setMovieTitle(movieList.first { it.id == movieId }.title)
     }
 
     override fun setSeatsCellsBackgroundColorInfo() {
@@ -89,5 +80,9 @@ class SeatsPresenter(val view: SeatsContract.View) : SeatsContract.Presenter {
     override fun clearSelectedSeats() {
         seatTotalPrice = 0
         Seat.seats.clear()
+    }
+
+    override fun storeTheaterId(theaterId: Long) {
+        SeatsDataSource.theaterId = theaterId
     }
 }

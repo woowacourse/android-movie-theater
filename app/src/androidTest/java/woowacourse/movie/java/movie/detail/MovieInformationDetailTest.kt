@@ -1,4 +1,4 @@
-package woowacourse.movie.java
+package woowacourse.movie.java.movie.detail
 
 import android.content.pm.ActivityInfo
 import androidx.test.espresso.Espresso.onView

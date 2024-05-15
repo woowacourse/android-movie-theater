@@ -13,15 +13,13 @@ import woowacourse.movie.list.model.TheaterContent
 
 class MovieListAdapter(
     private var theaterContent: List<TheaterContent>,
-    private val movieHomeClickListener: OnItemClickListener,
+    private val movieHomeClickListener: MovieOnItemClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    inner class MovieViewHolder(val binding: MovieItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(
-            movie: Movie,
-        ) {
+    inner class MovieListViewHolder(val binding: MovieItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(movie: Movie) {
             binding.movie = movie
             binding.moviePoster.setImageResource(movie.posterResourceId)
-            binding.onItemClickListener = movieHomeClickListener
+            binding.movieOnItemClickListener = movieHomeClickListener
         }
     }
 
@@ -42,14 +40,11 @@ class MovieListAdapter(
         return item.type.separator
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int,
-    ): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == MovieListItemType.MOVIE.separator) {
             val binding =
                 MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            MovieViewHolder(binding)
+            MovieListViewHolder(binding)
         } else {
             val binding =
                 AdvertisementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -57,13 +52,10 @@ class MovieListAdapter(
         }
     }
 
-    override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        position: Int,
-    ) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (theaterContent[position]) {
             is Movie -> {
-                val movieHolder = holder as MovieViewHolder
+                val movieHolder = holder as MovieListViewHolder
                 val movie = theaterContent[position] as Movie
                 movieHolder.bind(movie)
             }

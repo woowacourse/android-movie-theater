@@ -1,43 +1,20 @@
 package woowacourse.movie.ticket.contract
 
-import woowacourse.movie.detail.model.Count
-import woowacourse.movie.seats.model.Seat
+import woowacourse.movie.ticket.model.TicketEntity
+import java.io.Serializable
 
 interface MovieTicketContract {
     interface View {
         val presenter: Presenter
 
-        fun showScreeningDate(info: String)
+        fun showTicketView(ticketEntity: TicketEntity)
 
-        fun showScreeningTime(info: String)
-
-        fun showTicketView(
-            movieTitle: String,
-            moviePrice: Int,
-            ticketCount: Int,
-            seats: List<Seat>,
-        )
+        fun makeAlarm(ticket: TicketEntity)
     }
 
     interface Presenter {
-        fun storeTicketCount(count: Count)
-
         fun setTicketInfo()
 
-        fun storeScreeningDate(date: String)
-
-        fun storeScreeningTime(time: String)
-
-        fun setScreeningDateInfo()
-
-        fun setScreeningTimeInfo()
-
-        fun storeMovieId(id: Long)
-
-        fun storePrice(price: Int)
-
-        fun storeSeats(seats: List<Seat>)
-
-//        fun setSeatsInfo()
+        fun storeTicketData(ticket: Serializable?, movieId: Long?)
     }
 }

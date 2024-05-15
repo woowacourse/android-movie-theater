@@ -6,10 +6,10 @@ interface MovieListContract {
     interface View {
         val presenter: Presenter
 
-        fun showMoviesInfo()
+        fun showMoviesList()
 
-        fun updateMovieEntity(theaterContent: List<TheaterContent>)
-        fun makeMovieListAdapter(theaterContent: List<TheaterContent>)
+        fun updateMovieItems(theaterContent: List<TheaterContent>)
+        fun linkMovieListAdapter(theaterContent: List<TheaterContent>)
     }
 
     interface Presenter {

@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <variable
+            name="theater"
+            type="woowacourse.movie.list.model.Theater" />
+
+        <variable
+            name="onItemClickListener"
+            type="woowacourse.movie.list.adapter.TheaterAdapter" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/theater_item"
@@ -13,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:text="@{theater.name}"
             android:textColor="@color/black"
             android:textSize="16dp"
             android:textStyle="bold"
@@ -20,17 +32,38 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="선릉 극장" />
 
-        <TextView
-            android:id="@+id/screening_times"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:textColor="@color/gray"
-            android:textSize="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/theater_name"
-            app:layout_constraintTop_toBottomOf="@id/theater_name"
-            tools:text="3개의 상영 시간" />
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/theater_name"
+            app:layout_constraintStart_toStartOf="@+id/theater_name">
+
+            <TextView
+                android:id="@+id/screening_times_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/gray"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/theater_name"
+                app:layout_constraintTop_toBottomOf="@id/theater_name"
+                tools:text="3" />
+
+            <TextView
+                android:id="@+id/screening_times"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/gray"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/theater_name"
+                app:layout_constraintTop_toBottomOf="@id/theater_name"
+                tools:text="개의 상영 시간" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/movie_reservation_button"

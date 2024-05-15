@@ -1,54 +1,35 @@
 package woowacourse.movie.ticket.presenter
 
-import woowacourse.movie.common.MovieDataSource
-import woowacourse.movie.detail.model.Count
-import woowacourse.movie.seats.model.Seat
+import android.content.Context
+import woowacourse.movie.database.TicketDatabase
 import woowacourse.movie.ticket.contract.MovieTicketContract
 import woowacourse.movie.ticket.model.TicketDataResource
-import woowacourse.movie.ticket.model.TicketDataResource.movieId
-import woowacourse.movie.ticket.model.TicketDataResource.price
-import woowacourse.movie.ticket.model.TicketDataResource.seats
+import woowacourse.movie.ticket.model.TicketEntity
+import java.io.Serializable
+import kotlin.concurrent.thread
 
 class MovieTicketPresenter(
     val view: MovieTicketContract.View,
 ) : MovieTicketContract.Presenter {
-    override fun storeTicketCount(count: Count) {
-        TicketDataResource.ticketCount = count
-    }
 
-    override fun storeMovieId(id: Long) {
-        movieId = id
+    override fun storeTicketData(ticket: Serializable?, movieId: Long?) {
+        val ticketDb = TicketDatabase.getDatabase(view as Context)
+        if (ticket == null) {
+            var ticketEntities: List<TicketEntity>? = null
+            thread {
+                ticketEntities = ticketDb.ticketDao().getAll()
+            }.join()
+            view.showTicketView(ticketEntities!!.first { it.id == movieId })
+            return
+        }
+        thread {
+            ticketDb.ticketDao().insertAll(ticket as TicketEntity)
+            view.makeAlarm(ticketDb.ticketDao().getLast())
+            view.showTicketView(ticketDb.ticketDao().getLast())
+        }.join()
     }
 
     override fun setTicketInfo() {
-        view.showTicketView(MovieDataSource.movieList[movieId.toInt()].title, price, seats.size, seats)
-    }
-
-    override fun storeScreeningDate(date: String) {
-        TicketDataResource.screeningDate = date
-    }
-
-    override fun storeScreeningTime(time: String) {
-        TicketDataResource.screeningTime = time
-    }
-
-    override fun setScreeningDateInfo() {
-        view.showScreeningDate(TicketDataResource.screeningDate)
-    }
-
-    override fun storePrice(price: Int) {
-        TicketDataResource.price = price
-    }
-
-    override fun storeSeats(seats: List<Seat>) {
-        TicketDataResource.seats = seats
-    }
-
-//    override fun setSeatsInfo() {
-//        view.showSeats(seats)
-//    }
-
-    override fun setScreeningTimeInfo() {
-        view.showScreeningTime(TicketDataResource.screeningTime)
+        view.showTicketView(TicketDataResource.ticketEntity)
     }
 }

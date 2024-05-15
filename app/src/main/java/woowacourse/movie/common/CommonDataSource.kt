@@ -6,7 +6,7 @@ import woowacourse.movie.list.model.Movie
 import woowacourse.movie.list.model.TheaterContent
 import java.time.LocalDate
 
-object MovieDataSource {
+object CommonDataSource {
     val theaterContent: List<TheaterContent> =
         listOf(
             Movie(

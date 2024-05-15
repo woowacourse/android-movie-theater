@@ -1,18 +1,28 @@
 package woowacourse.movie.ticket.model
 
 import woowacourse.movie.detail.model.Count
-import woowacourse.movie.seats.model.Seat
 
 object TicketDataResource {
-    var movieId: Long = -1
+    var ticket: Ticket =
+        Ticket(
+            -1,
+            "",
+            "",
+            Count(1),
+            emptyList(),
+            -1,
+            0,
+        )
 
-    var price: Int = -1
-
-    var seats = listOf<Seat>()
-
-    var ticketCount: Count = Count(1)
-
-    var screeningDate = ""
-
-    var screeningTime = ""
+    var ticketEntity: TicketEntity =
+        TicketEntity(
+            0,
+            "",
+            "",
+            "",
+            0,
+            "",
+            "",
+            0,
+        )
 }

@@ -1,9 +1,9 @@
 package woowacourse.movie.list.contract
 
-interface HomeContract {
+interface SettingContract {
     interface View
 
     interface Presenter {
-        fun saveInSharedPreference(isGranted: Boolean)
+        fun saveNotificationGranted(isGranted: Boolean)
     }
 }

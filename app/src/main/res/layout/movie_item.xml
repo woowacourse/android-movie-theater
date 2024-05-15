@@ -10,8 +10,8 @@
             type="woowacourse.movie.list.model.Movie" />
 
         <variable
-            name="onItemClickListener"
-            type="woowacourse.movie.list.adapter.OnItemClickListener" />
+            name="movieOnItemClickListener"
+            type="woowacourse.movie.list.adapter.MovieOnItemClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -119,7 +119,7 @@
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:onClick="@{() -> onItemClickListener.onClick(movie.id)}"
+            android:onClick="@{() -> movieOnItemClickListener.onClick(movie.id)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

@@ -24,18 +24,18 @@ class MovieListPresenterTest {
 
     @Test
     fun `영화 정보를 목록에 띄워야 한다`() {
-        every { view.showMoviesInfo() } just runs
+        every { view.showMoviesList() } just runs
         // when
         presenter.setMoviesInfo()
         // then
-        verify { view.showMoviesInfo() }
+        verify { view.showMoviesList() }
     }
 
     @Test
     fun `영화 개수는 9개여야 한다(광고 2개 포함)`() {
         // given
         val theaterContentSlot = slot<List<Movie>>()
-        every { view.makeMovieListAdapter(capture(theaterContentSlot)) } just runs
+        every { view.linkMovieListAdapter(capture(theaterContentSlot)) } just runs
         // when
         presenter.setMovieListAdapter()
         // then

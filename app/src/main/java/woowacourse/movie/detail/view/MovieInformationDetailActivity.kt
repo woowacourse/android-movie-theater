@@ -15,7 +15,7 @@ import woowacourse.movie.detail.contract.MovieInformationDetailContract
 import woowacourse.movie.detail.model.Count
 import woowacourse.movie.detail.presenter.MovieInformationDetailPresenter
 import woowacourse.movie.list.model.Movie
-import woowacourse.movie.list.view.MovieListFragment.Companion.EXTRA_MOVIE_ID_KEY
+import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_MOVIE_ID_KEY
 import woowacourse.movie.list.view.TheaterBottomSheetFragment.Companion.EXTRA_THEATER_ID_KEY
 import woowacourse.movie.seats.view.SeatsActivity
 import java.time.LocalDate
@@ -41,7 +41,7 @@ class MovieInformationDetailActivity : AppCompatActivity(), MovieInformationDeta
 
     private fun executePresenterTasks() {
         presenter.setCurrentResultTicketCountInfo()
-        presenter.storeMovieId(intent.getLongExtra(EXTRA_MOVIE_ID_KEY, 0))
+        presenter.storeMovieId(intent.getLongExtra(EXTRA_MOVIE_ID_KEY, -1))
         presenter.storeTheaterId(intent.getLongExtra(EXTRA_THEATER_ID_KEY, -1))
         presenter.setMovieInfo()
         presenter.setSpinnerInfo()
