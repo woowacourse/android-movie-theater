@@ -31,7 +31,7 @@ class ScreeningAlarm(
 
         return PendingIntent.getBroadcast(
             context,
-            ticket.uid!!.toInt(),
+            ticket.uid.toInt(),
             intent,
             PendingIntent.FLAG_IMMUTABLE,
         )
