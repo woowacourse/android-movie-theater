@@ -38,12 +38,10 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private lateinit var presenter: SeatSelectionPresenter
 
     private lateinit var seatsTable: List<Button>
-    private var headCount: HeadCount? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initAmount()
-        receiveReservationInfo()
         initPresenter()
         seatsTable = collectSeatsInTableLayout()
         presenter.loadReservationInformation()
@@ -66,7 +64,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             }.onFailure {
                 showErrorSnackBar()
             }
-            restoreReservationData(bundle)
+            presenter.restoreReservation()
         }
     }
 
@@ -149,10 +147,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         snackBar.show()
     }
 
-    private fun receiveReservationInfo() {
-        headCount = receiveHeadCount()
-    }
-
     private fun initPresenter() {
         val ticketDao = TicketDatabase.initialize(this).ticketDao()
         presenter =
@@ -163,7 +157,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                 TheaterDao(),
                 receiveMovieId(),
                 receiveTheaterId(),
-                headCount,
+                receiveHeadCount(),
                 receiveScreeningDateTime(),
                 ticketDao,
             )
@@ -189,11 +183,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun collectSeatsInTableLayout(): List<Button> =
         binding.tlSeatSelection.children.filterIsInstance<TableRow>().flatMap { it.children }
             .filterIsInstance<Button>().toList()
-
-    private fun restoreReservationData(bundle: Bundle) {
-        headCount = bundle.bundleSerializable(HEAD_COUNT, HeadCount::class.java)
-        presenter.restoreReservation()
-    }
 
     private fun restoreSeatsData(bundle: Bundle) {
         val seats = bundle.bundleSerializable(SEATS, Seats::class.java)
