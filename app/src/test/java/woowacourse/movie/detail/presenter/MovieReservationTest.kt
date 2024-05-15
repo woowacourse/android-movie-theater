@@ -7,7 +7,8 @@ import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.detail.contract.DetailContract
+import woowacourse.movie.presentation.detail.DetailContract
+import woowacourse.movie.presentation.detail.DetailPresenter
 
 class MovieReservationTest {
     private lateinit var view: DetailContract.View

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/gray_100"
-        tools:context=".seats.view.SeatsActivity">
+        tools:context=".presentation.seats.SeatsActivity">
 
         <ScrollView
             android:layout_width="match_parent"

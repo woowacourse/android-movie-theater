@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <data>
+
+        <variable
+            name="theater"
+            type="woowacourse.movie.domain.model.home.Theater" />
+
+        <variable
+            name="onTheaterItemClickListener"
+            type="woowacourse.movie.presentation.main.home.theater.adapter.OnTheaterItemClickListener" />
+
+        <variable
+            name="movieId"
+            type="long" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/theater_item"
+        android:padding="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_selector"
+        android:onClick="@{()->onTheaterItemClickListener.onClick(movieId, theater.id)}">
 
         <TextView
             android:id="@+id/theater_name"
@@ -14,8 +33,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:textColor="@color/black"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textStyle="bold"
+            android:text="@{theater.name}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="선릉 극장" />
@@ -25,8 +45,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:text="@{theater.getCount(movieId) + `개의 상영 시간`}"
             android:textColor="@color/gray_400"
-            android:textSize="12dp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/theater_name"
             app:layout_constraintTop_toBottomOf="@id/theater_name"
@@ -37,8 +58,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="8dp"
+            android:contentDescription="@string/reserve_button_text"
             android:src="@drawable/chevron_right"
-            android:text="지금 예매"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"

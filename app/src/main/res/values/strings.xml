@@ -9,6 +9,7 @@
     <string name="minute_text">분</string>
     <string name="screen">SCREEN</string>
     <string name="reservation_details">예매 내역</string>
+    <string name="reserve_button_text">지금 예매</string>
     <string name="home">홈</string>
     <string name="setting">설정</string>
     <string name="ticket_information_format">일반 %1$d명 | %2$s | %3$s</string>
@@ -22,4 +23,13 @@
     <string name="reservation_finish_text">예매 완료</string>
     <string name="total_price_format">%1$,d원 (현장 결제)</string>
     <string name="reservation_cancel_info">영화 상영 시작 시간 15분 전까지\n취소가 가능합니다.</string>
+    <string name="error_message">오류가 발생했습니다.</string>
+    <string name="no_theater">상영하는 극장이 없습니다.</string>
+    <string name="no_reservation">예매 내역이 없습니다.</string>
+    <string name="push_alarm">푸시 알림 수신</string>
+    <string name="push_alarm_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="permission_explanation">앱을 사용하기 위해서는 권한이 필요합니다.</string>
+    <string name="notification_title">"영화 시작 30분 전입니다!"</string>
+    <string name="notification_content">영화 시작 시간이 얼마 남지 않았습니다. 빠르게 극장에 도착해주세요.</string>
+    <string name="notification_permission">"알림 권한이 필요합니다."</string>
 </resources>
