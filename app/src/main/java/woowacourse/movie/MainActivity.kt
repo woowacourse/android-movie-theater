@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +17,7 @@ import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.feature.history.ReservationHistoryFragment
 import woowacourse.movie.feature.home.HomeFragment
 import woowacourse.movie.feature.setting.SettingFragment
+import woowacourse.movie.utils.MovieUtils.makeToast
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
@@ -81,9 +81,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showNotificationGrantedStatus(isGranted: Boolean) {
         if (isGranted) {
-            Toast.makeText(this, getString(R.string.main_notification_permission), Toast.LENGTH_SHORT).show()
+            makeToast(this, getString(R.string.main_notification_permission))
         } else {
-            Toast.makeText(this, getString(R.string.main_notification_rejection), Toast.LENGTH_SHORT).show()
+            makeToast(this, getString(R.string.main_notification_rejection))
         }
     }
 }
