@@ -1,43 +1,37 @@
 package woowacourse.movie.presentation.view.bottomNavigationBar
 
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
-import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreference
 import androidx.preference.SwitchPreferenceCompat
 import woowacourse.movie.R
+import woowacourse.movie.application.MovieApp
+import woowacourse.movie.sharedpreference.SharedPreferences
 
 class SettingFragment : PreferenceFragmentCompat() {
+    private val sharedPref = MovieApp.prefs
     private var notificationPreference: SwitchPreferenceCompat? = null
 
     override fun onCreatePreferences(
         savedInstanceState: Bundle?,
         rootKey: String?,
     ) {
-        val sharedPreferences = activity?.getSharedPreferences("movie", MODE_PRIVATE)
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
-        val isNotificationEnabled = sharedPreferences?.getBoolean("notifications", false)
         if (rootKey != null) {
-            notificationPreference = findPreference("notifications")
+            notificationPreference = findPreference(SharedPreferences.KEY_NOTIFICATION)
         }
 
+        val isNotificationEnabled = sharedPref.getNotificationPreference()
+        setUpNotificationPref(isNotificationEnabled)
+    }
+
+    private fun setUpNotificationPref(isNotificationEnabled: Boolean) {
         notificationPreference?.apply {
-            if (isNotificationEnabled != null) {
-                isChecked = isNotificationEnabled
-            }
+            isChecked = isNotificationEnabled
             setOnPreferenceChangeListener { _, newValue ->
                 newValue as Boolean
 
-                with(sharedPreferences?.edit()) {
-                    this?.putBoolean("notifications", newValue)
-                    this?.apply()
-                }
-
-                Log.d("Preferences", "Notifications enabled: $newValue")
+                sharedPref.setNotificationPreference(newValue)
                 true
             }
         }
