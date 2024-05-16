@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DividerStyle" parent="Widget.MaterialComponents.MaterialDivider">
+        <item name="dividerColor">@color/gray</item>
+    </style>
+</resources>
