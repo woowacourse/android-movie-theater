@@ -32,7 +32,7 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
                 layoutInflater,
             )
         setContentView(binding.root)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.title = intent.getStringExtra(TITLE_KEY)
         binding.price = getString(R.string.seat_total_price_format, 0)

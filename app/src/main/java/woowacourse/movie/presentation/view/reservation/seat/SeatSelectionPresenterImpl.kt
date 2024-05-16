@@ -63,7 +63,7 @@ class SeatSelectionPresenterImpl(
     private fun makeTicket(): MovieTicket {
         return MovieTicket(
             0,
-            reservationMovieInfo = reservationMovieInfoRepository.getScreeningMovieInfo()!!,
+            reservationMovieInfo = reservationMovieInfoRepository.getScreeningMovieInfo(),
             reservationInfo = reservationInfo,
         )
     }

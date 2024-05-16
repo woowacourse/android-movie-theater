@@ -6,7 +6,7 @@ import woowacourse.movie.presentation.repository.ReservationMovieInfoRepository
 object ReservationMovieInfoRepositoryImpl : ReservationMovieInfoRepository {
     private lateinit var reservationMovieInfo: ReservationMovieInfo
 
-    override fun getScreeningMovieInfo(): ReservationMovieInfo? {
+    override fun getScreeningMovieInfo(): ReservationMovieInfo {
         return reservationMovieInfo
     }
 

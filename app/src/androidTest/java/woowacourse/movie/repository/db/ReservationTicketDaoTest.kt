@@ -107,6 +107,6 @@ class ReservationTicketDaoTest {
         val ticket = ticketDao.findReservationById(2)
 
         // then
-        assertEquals("타이타닉", ticket!!.movieTitle)
+        assertEquals("타이타닉", ticket?.movieTitle)
     }
 }

@@ -25,7 +25,7 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
                 layoutInflater,
             )
         setContentView(binding.root)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val movieId = intent.getIntExtra(MOVIE_ID_KEY, DEFAULT_MOVIE_ID)
         val theaterId = intent.getIntExtra(THEATER_ID_KEY, DEFAULT_THEATER_ID)
 

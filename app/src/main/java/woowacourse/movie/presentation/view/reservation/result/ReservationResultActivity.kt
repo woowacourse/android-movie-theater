@@ -18,7 +18,7 @@ class ReservationResultActivity : BaseActivity() {
     private lateinit var binding: ActivityReservationResultBinding
 
     override fun onCreateSetup(savedInstanceState: Bundle?) {
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding = DataBindingUtil.setContentView(this, getLayoutResId())
         setUpFromIntent()
     }
