@@ -20,43 +20,6 @@ class SeatSelectionPresenterImpl(
         ReservationInfo(reservationCount, seatRepository.getSeatingChart())
     private val reservationMovieInfoRepository = ReservationMovieInfoRepositoryImpl
 
-    private fun makeTicket(): MovieTicket {
-        val ticket =
-            MovieTicket(
-                0,
-                reservationMovieInfo = reservationMovieInfoRepository.getScreeningMovieInfo()!!,
-                reservationInfo = reservationInfo,
-            )
-        return ticket
-    }
-
-    private fun storeData(): Long {
-        var ticketId = 0L
-        val ticket = makeTicket()
-
-        val thread =
-            Thread {
-                ticketId =
-                    ticketDao.saveReservationTicket(
-                        ticket.toReservationTicketEntity(
-                            selectDate =
-                                ticket.reservationMovieInfo.dateTime.screeningDate.date.format(
-                                    DateTimeFormatter.ISO_LOCAL_DATE,
-                                ),
-                            screenTime =
-                                ticket.reservationMovieInfo.dateTime.screeningDate.screeningTime.startTime.format(
-                                    DateTimeFormatter.ofPattern("HH:mm"),
-                                ),
-                        ),
-                    )
-            }
-
-        thread.start()
-        thread.join()
-
-        return ticketId
-    }
-
     override fun attachView(view: SeatSelectionContract.View) {
         this.view = view
         onViewSetUp()
@@ -93,7 +56,42 @@ class SeatSelectionPresenterImpl(
     override fun onAcceptButtonClicked() {
         val ticket = makeTicket()
         val movieTicketUiModel = MovieTicketUiModel(ticket)
-        val id = storeData()
+        val id = storeData(ticket)
         view?.moveToReservationResult(movieTicketUiModel)
+    }
+
+    private fun makeTicket(): MovieTicket {
+        return MovieTicket(
+            0,
+            reservationMovieInfo = reservationMovieInfoRepository.getScreeningMovieInfo()!!,
+            reservationInfo = reservationInfo,
+        )
+    }
+
+    private fun storeData(ticket: MovieTicket): Long {
+        var ticketId = 0L
+        val thread = Thread {
+            ticketId = saveTicket(ticket)
+        }
+
+        thread.start()
+        thread.join()
+        return ticketId
+    }
+
+
+    private fun saveTicket(ticket: MovieTicket): Long {
+        return ticketDao.saveReservationTicket(
+            ticket.toReservationTicketEntity(
+                selectDate =
+                ticket.reservationMovieInfo.dateTime.screeningDate.date.format(
+                    DateTimeFormatter.ISO_LOCAL_DATE,
+                ),
+                screenTime =
+                ticket.reservationMovieInfo.dateTime.screeningDate.screeningTime.startTime.format(
+                    DateTimeFormatter.ofPattern("HH:mm"),
+                ),
+            )
+        )
     }
 }
