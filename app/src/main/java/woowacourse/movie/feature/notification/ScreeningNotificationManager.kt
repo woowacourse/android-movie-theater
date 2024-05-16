@@ -9,8 +9,9 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
+import woowacourse.movie.model.movie.ScreeningNotification
 
-class ScreeningNotification(
+class ScreeningNotificationManager(
     val context: Context,
 ) {
     private var notificationManager: NotificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
@@ -21,15 +22,14 @@ class ScreeningNotification(
 
     fun deliver(
         intent: Intent,
-        title: String,
-        description: String,
+        screeningNotification: ScreeningNotification,
     ) {
         val pendingIntent = createPendingIntent(intent)
         val builder =
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.notification_icon)
-                .setContentTitle(title)
-                .setContentText(description)
+                .setContentTitle(screeningNotification.title)
+                .setContentText(screeningNotification.description)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

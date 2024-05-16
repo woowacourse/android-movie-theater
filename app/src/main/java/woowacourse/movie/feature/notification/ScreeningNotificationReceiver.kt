@@ -4,25 +4,26 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.feature.finished.ReservationFinishedActivity
-import woowacourse.movie.feature.history.ReservationHistoryFragment.Companion.TICKET_ID
-import woowacourse.movie.feature.notification.ScreeningAlarm.Companion.SCREENING_NOTIFICATION_TEXT
-import woowacourse.movie.feature.notification.ScreeningAlarm.Companion.SCREENING_NOTIFICATION_TITLE
-import woowacourse.movie.model.ticket.Ticket.Companion.DEFAULT_TICKET_ID
+import woowacourse.movie.feature.notification.ScreeningAlarm.Companion.SCREENING_NOTIFICATION
+import woowacourse.movie.model.movie.ScreeningNotification
+import woowacourse.movie.utils.MovieUtils.intentSerializable
 
 class ScreeningNotificationReceiver : BroadcastReceiver() {
     override fun onReceive(
         context: Context,
         intent: Intent,
     ) {
-        val notification = ScreeningNotification(context)
+        val notification = ScreeningNotificationManager(context)
 
-        val ticketId = intent.getLongExtra(TICKET_ID, DEFAULT_TICKET_ID)
-        val title = intent.getStringExtra(SCREENING_NOTIFICATION_TITLE)
-        val description = intent.getStringExtra(SCREENING_NOTIFICATION_TEXT)
+        val screeningInformation: ScreeningNotification? =
+            intent.intentSerializable(
+                SCREENING_NOTIFICATION,
+                ScreeningNotification::class.java,
+            )
 
-        if (title != null && description != null) {
-            val newIntent = Intent(context, ReservationFinishedActivity::class.java).putExtra(TICKET_ID, ticketId)
-            notification.deliver(newIntent, title, description)
+        if (screeningInformation != null) {
+            val newIntent = Intent(context, ReservationFinishedActivity::class.java).putExtra(SCREENING_NOTIFICATION, screeningInformation)
+            notification.deliver(newIntent, screeningInformation)
         }
     }
 }
