@@ -4,8 +4,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
-import com.google.android.material.switchmaterial.SwitchMaterial
-import woowacourse.movie.MovieTheaterSharedPreference
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Image

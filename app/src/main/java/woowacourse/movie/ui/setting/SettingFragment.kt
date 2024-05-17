@@ -61,17 +61,17 @@ class SettingFragment : Fragment(), SettingContract.View {
     }
 
     private fun initNotification() {
-        binding.receivePushNotificationSelect.isChecked = movieTheaterSharedPreference.notificationEnabled
+        binding.receivePushNotificationSelect.isChecked = movieTheaterSharedPreference.getNotificationEnable()
     }
 
     private fun onClickNotification() {
         binding.receivePushNotificationSelect.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 presenter.confirmAlarm()
-                movieTheaterSharedPreference.notificationEnabled = !movieTheaterSharedPreference.notificationEnabled
+                movieTheaterSharedPreference.setNotificationEnable(true)
             } else {
                 presenter.cancelAram()
-                movieTheaterSharedPreference.notificationEnabled = !movieTheaterSharedPreference.notificationEnabled
+                movieTheaterSharedPreference.setNotificationEnable(false)
             }
         }
     }
