@@ -96,7 +96,7 @@ class TheaterSeatPresenter(
         thread {
             ticketId = database.ticketDao().insertTicket(ticket).toInt()
             view.makeNotify(movieStartTime, cinema, ticketId)
-        }.join()
-        view.navigateToPurchase(ticketId)
+            view.navigateToPurchase(ticketId)
+        }
     }
 }
