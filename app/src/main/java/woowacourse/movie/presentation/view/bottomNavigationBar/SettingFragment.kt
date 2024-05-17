@@ -4,11 +4,10 @@ import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import woowacourse.movie.R
-import woowacourse.movie.application.MovieApp
-import woowacourse.movie.sharedpreference.SharedPreferences
+import woowacourse.movie.sharedpreference.MovieSharedPreferences
 
 class SettingFragment : PreferenceFragmentCompat() {
-    private val sharedPref = MovieApp.prefs
+    private val sharedPref by lazy { MovieSharedPreferences(requireContext()) }
     private var notificationPreference: SwitchPreferenceCompat? = null
 
     override fun onCreatePreferences(
@@ -17,8 +16,8 @@ class SettingFragment : PreferenceFragmentCompat() {
     ) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
-        if (rootKey != null) {
-            notificationPreference = findPreference(SharedPreferences.KEY_NOTIFICATION)
+        if (rootKey == null) {
+            notificationPreference = findPreference(MovieSharedPreferences.KEY_NOTIFICATION)
         }
 
         val isNotificationEnabled = sharedPref.getNotificationPreference()
@@ -30,7 +29,6 @@ class SettingFragment : PreferenceFragmentCompat() {
             isChecked = isNotificationEnabled
             setOnPreferenceChangeListener { _, newValue ->
                 newValue as Boolean
-
                 sharedPref.setNotificationPreference(newValue)
                 true
             }
