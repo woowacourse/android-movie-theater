@@ -58,9 +58,9 @@ class MovieStartNotificationManager(
         val actionPending =
             PendingIntent.getActivity(
                 context,
-                20,
+                System.currentTimeMillis().toInt(),
                 actionIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                PendingIntent.FLAG_IMMUTABLE,
             )
         builder.setContentIntent(actionPending)
     }

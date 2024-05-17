@@ -30,9 +30,9 @@ class MovieStartAlarmManager(
         val pendingIntent =
             PendingIntent.getBroadcast(
                 context,
-                0,
+                System.currentTimeMillis().toInt(),
                 receiverIntent,
-                PendingIntent.FLAG_IMMUTABLE,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
         val alarmTime = dateTimeBefore30min()
 
