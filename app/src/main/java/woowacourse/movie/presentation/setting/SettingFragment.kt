@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.utils.SharedPreferences
 import woowacourse.movie.utils.versionTiramisuOrHigher
 
 class SettingFragment : Fragment() {
@@ -34,7 +35,12 @@ class SettingFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         checkNotificationStatus()
+        showNotificationSetting()
         setupNotificationSwitchListener()
+    }
+
+    private fun showNotificationSetting() {
+        binding.isChecked = SharedPreferences.getAlarmSetting(requireContext())
     }
 
     private fun checkNotificationStatus() {
@@ -44,7 +50,7 @@ class SettingFragment : Fragment() {
                     requireContext(),
                     POST_NOTIFICATIONS,
                 ) == PackageManager.PERMISSION_GRANTED
-            binding.switchSettingAlarm.isChecked = isGranted
+            SharedPreferences.saveAlarmSetting(requireContext(), isGranted)
         }
     }
 

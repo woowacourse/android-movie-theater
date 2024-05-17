@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="isChecked"
+            type="boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +36,7 @@
             android:id="@+id/switch_setting_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="false"
+            android:checked="@{isChecked}"
             app:layout_constraintBottom_toBottomOf="@id/setting_alarm_information_textview"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/setting_alarm_title_textview" />
