@@ -49,10 +49,9 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        presenter.deliverReservationInfo { headCount, seats, seatsIndex ->
-            outState.putSerializable(HEAD_COUNT, headCount)
+        presenter.deliverReservationInfo { seats, seatsIndex ->
             outState.putSerializable(SEATS, seats)
-            outState.putIntegerArrayList(SEATS_INDEX, ArrayList(seatsIndex))
+            outState.putIntegerArrayList(SEATS_POSITION, ArrayList(seatsIndex))
         }
     }
 
@@ -197,8 +196,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     private fun restoreSeatsData(bundle: Bundle) {
         val seats = bundle.bundleSerializable(SEATS, Seats::class.java)
-        val index = bundle.getIntegerArrayList(SEATS_INDEX)
-        presenter.restoreSeats(seats, index)
+        val seatsPosition = bundle.getIntegerArrayList(SEATS_POSITION)
+        presenter.restoreSeats(seats, seatsPosition)
     }
 
     private fun initReservationData() {
@@ -219,6 +218,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     companion object {
         const val SEATS = "seats"
-        const val SEATS_INDEX = "seatsIndex"
+        const val SEATS_POSITION = "seatsPosition"
     }
 }

@@ -81,7 +81,7 @@ class SeatSelectionPresenter(
     }
 
     override fun deliverReservationInfo(onReservationDataSave: OnReservationDataSave) {
-        onReservationDataSave(headCount, selectedSeats, selectedSeats.seatsIndex)
+        onReservationDataSave(selectedSeats, selectedSeats.seatsIndex)
     }
 
     override fun updateReservationState(
