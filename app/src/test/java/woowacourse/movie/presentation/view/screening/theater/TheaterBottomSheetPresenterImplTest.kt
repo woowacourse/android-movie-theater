@@ -10,7 +10,9 @@ import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.presentation.uimodel.TheaterUiModel
-import woowacourse.movie.repository.TheaterRepositoryImpl
+import woowacourse.movie.data.repository.TheaterRepositoryImpl
+import woowacourse.movie.presentation.screening.theater.TheaterBottomSheetContract
+import woowacourse.movie.presentation.screening.theater.TheaterBottomSheetPresenterImpl
 
 @ExtendWith(MockKExtension::class)
 class TheaterBottomSheetPresenterImplTest {

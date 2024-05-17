@@ -6,11 +6,11 @@
     <data>
         <variable
             name="data"
-            type="woowacourse.movie.presentation.view.reservation.detail.MovieDetailPresenterImpl" />
+            type="woowacourse.movie.presentation.reservation.detail.MovieDetailPresenterImpl" />
 
         <variable
             name="view"
-            type="woowacourse.movie.presentation.view.reservation.detail.MovieDetailActivity" />
+            type="woowacourse.movie.presentation.reservation.detail.MovieDetailActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -18,7 +18,7 @@
         android:id="@+id/movie_detail_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.view.reservation.detail.MovieDetailActivity">
+        tools:context=".presentation.reservation.detail.MovieDetailActivity">
 
         <ScrollView
             android:layout_width="match_parent"

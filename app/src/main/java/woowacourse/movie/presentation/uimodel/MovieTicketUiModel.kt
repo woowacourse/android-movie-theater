@@ -7,9 +7,9 @@ import kotlinx.android.parcel.Parcelize
 import kotlinx.parcelize.Parceler
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.reservation.MovieTicket
-import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity.Companion.SEAT_COL_START_VALUE
-import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity.Companion.SEAT_POSITION_TEXT_FORMAT
-import woowacourse.movie.presentation.view.reservation.seat.SeatSelectionActivity.Companion.SEAT_ROW_START_VALUE
+import woowacourse.movie.presentation.reservation.seat.SeatSelectionActivity.Companion.SEAT_COL_START_VALUE
+import woowacourse.movie.presentation.reservation.seat.SeatSelectionActivity.Companion.SEAT_POSITION_TEXT_FORMAT
+import woowacourse.movie.presentation.reservation.seat.SeatSelectionActivity.Companion.SEAT_ROW_START_VALUE
 import java.time.format.DateTimeFormatter
 
 @Parcelize

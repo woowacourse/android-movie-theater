@@ -1,6 +1,6 @@
 package woowacourse.movie.domain.model.reservation
 
-import woowacourse.movie.repository.db.ReservationTicketEntity
+import woowacourse.movie.data.db.ReservationTicketEntity
 
 data class MovieTicket(
     val ticketId: Long,

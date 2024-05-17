@@ -9,7 +9,7 @@
 
         <variable
             name="listener"
-            type="woowacourse.movie.presentation.view.screening.theater.TheaterBottomSheetContract.ItemListener" />
+            type="woowacourse.movie.presentation.screening.theater.TheaterBottomSheetContract.ItemListener" />
 
     </data>
 
