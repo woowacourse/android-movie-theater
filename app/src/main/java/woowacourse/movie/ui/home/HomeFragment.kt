@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenAd
-import woowacourse.movie.domain.model.Theaters
 import woowacourse.movie.domain.repository.DummyMovies
 import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.ui.home.adapter.ScreenAdapter
@@ -50,10 +49,7 @@ class HomeFragment : Fragment(), HomeContract.View {
         adapter.submitList(screens)
     }
 
-    override fun showTheaters(
-        screen: Screen,
-        theaters: Theaters,
-    ) {
-        TheaterBottomSheet.startFragment(parentFragmentManager, screen, theaters)
+    override fun showTheaters(screen: Screen) {
+        TheaterBottomSheet.startFragment(parentFragmentManager, screen.id)
     }
 }

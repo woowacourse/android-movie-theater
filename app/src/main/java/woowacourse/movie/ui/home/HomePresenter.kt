@@ -2,10 +2,8 @@ package woowacourse.movie.ui.home
 
 import woowacourse.movie.domain.model.ScreenAd
 import woowacourse.movie.domain.repository.DummyAdvertisement
-import woowacourse.movie.domain.repository.DummyTheaters
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.domain.repository.ScreenRepository
-import woowacourse.movie.domain.repository.TheaterRepository
 import woowacourse.movie.ui.toPreviewUI
 
 class HomePresenter(
@@ -13,7 +11,6 @@ class HomePresenter(
     private val movieRepository: MovieRepository,
     private val screenRepository: ScreenRepository,
     private val adRepository: DummyAdvertisement = DummyAdvertisement(),
-    private val theaterRepository: TheaterRepository = DummyTheaters(),
 ) : HomeContract.Presenter {
     override fun loadScreen() {
         val screens =
@@ -37,8 +34,6 @@ class HomePresenter(
 
     override fun loadTheaters(screenId: Int) {
         val screen = screenRepository.findById(screenId).getOrThrow()
-        val theaters = theaterRepository.loadAll()
-
-        view.showTheaters(screen, theaters.screeningTheater(screen))
+        view.showTheaters(screen)
     }
 }

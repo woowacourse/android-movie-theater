@@ -18,9 +18,11 @@ import woowacourse.movie.domain.model.TimeReservation
 import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyScreens
 import woowacourse.movie.domain.repository.DummySeats
-import woowacourse.movie.ui.Currency
 import woowacourse.movie.ui.reservation.ReservationCompleteActivity
-import java.util.Locale
+
+fun interface OnReserveClickedListener {
+    fun onClick()
+}
 
 class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.View {
     private val presenter = SeatReservationPresenter(this, DummyScreens(DummySeats()), DummyReservation)
@@ -31,6 +33,8 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
         )
     }
 
+    private lateinit var onReserveButtonClickedListener: OnReserveClickedListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seat_reservation)
@@ -38,31 +42,30 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
         val timeReservationId = intent.getIntExtra(TIME_RESERVATION_ID, DEFAULT_TIME_RESERVATION_ID)
         val theaterId = intent.getIntExtra(PUT_EXTRA_THEATER_ID_KEY, DEFAULT_THEATER_ID)
 
-        binding.presenter = presenter
-        binding.theaterId = theaterId
-
-        presenter.loadData(timeReservationId)
+        with(presenter) {
+            saveId(theaterId, timeReservationId)
+            loadAllSeats()
+            loadTimeReservation()
+            onReserveButtonClickedListener = OnReserveClickedListener { reserve(theaterId) }
+            binding.onReserveClickedListener = onReserveButtonClickedListener
+        }
     }
 
-    override fun initBinding(
-        totalPrice: Int,
-        timeReservation: TimeReservation,
-    ) {
-        binding.totalPrice = totalPrice
+    override fun showTimeReservation(timeReservation: TimeReservation) {
         binding.timeReservation = timeReservation
     }
 
     override fun updateTotalPrice(totalPrice: Int) {
-        binding.tvSeatReservationTotalPrice.text = Currency.of(Locale.getDefault().country).format(totalPrice)
+        binding.totalPrice = totalPrice
     }
 
     override fun showAllSeats(seats: Seats) {
-        val gl = binding.glSeatReservationSeats
+        val seatsGridLayout = binding.glSeatReservationSeats
         val maxRow = seats.maxRow()
         val maxColumn = seats.maxColumn()
 
-        gl.columnCount = maxColumn
-        gl.rowCount = maxRow
+        seatsGridLayout.columnCount = maxColumn
+        seatsGridLayout.rowCount = maxRow
 
         for (row in 0 until maxRow) {
             for (column in 0 until maxColumn) {
@@ -82,20 +85,24 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
                         gravity = Gravity.CENTER
                         text = "${'A' + row} ${column + 1}"
                     }
-                gl.addView(textView)
+                seatsGridLayout.addView(textView)
             }
         }
     }
 
     override fun activateReservation(boolean: Boolean) {
-        binding.isReservationComplete = boolean
+        with(binding.btnSeatReservationComplete) {
+            if (boolean) {
+                isEnabled = true
+                setBackgroundColor(getColor(R.color.complete_activated))
+            } else {
+                isEnabled = false
+                setBackgroundColor(getColor(R.color.complete_deactivated))
+            }
+        }
     }
 
-    override fun showSeatReservationFail(throwable: Throwable) {
-        showToast(throwable)
-    }
-
-    override fun showReservationConfirmDialog(
+    override fun navigateToCompleteReservation(
         reservationId: Int,
         theaterId: Int,
     ) {
@@ -104,7 +111,7 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
                 .setTitle(R.string.check_reservation_title)
                 .setMessage(R.string.check_reservation_content)
                 .setPositiveButton(R.string.check_reservation_complete) { _, _ ->
-                    presenter.completeReservation(reservationId, theaterId)
+                    ReservationCompleteActivity.startActivity(this, reservationId, theaterId)
                 }
                 .setNegativeButton(R.string.check_reservation_cancel) { dialog, _ ->
                     dialog.dismiss()
@@ -115,15 +122,12 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
         alertDialog.show()
     }
 
-    override fun showToast(e: Throwable) {
-        Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+    override fun showSeatReservationFail(throwable: Throwable) {
+        showToast(throwable)
     }
 
-    override fun navigateToCompleteReservation(
-        reservationId: Int,
-        theaterId: Int,
-    ) {
-        ReservationCompleteActivity.startActivity(this, reservationId, theaterId)
+    override fun showToast(e: Throwable) {
+        Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

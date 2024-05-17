@@ -12,6 +12,14 @@
         <variable
             name="theaterName"
             type="String" />
+
+        <variable
+            name="screeningDate"
+            type="java.time.LocalDate" />
+
+        <variable
+            name="screeningTime"
+            type="java.time.LocalTime" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
-            android:text="@{String.valueOf(reservation.dateTime.date)}"
+            android:text="@{String.valueOf(screeningDate)}"
             android:textColor="@color/black"
             android:textSize="20dp"
             app:layout_constraintEnd_toStartOf="@id/tv_reservation_time"
@@ -69,7 +77,7 @@
             android:id="@+id/tv_reservation_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.valueOf(reservation.dateTime.time)}"
+            android:text="@{String.valueOf(screeningTime)}"
             android:textColor="@color/black"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_reservation_date"

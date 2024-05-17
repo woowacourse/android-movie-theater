@@ -4,19 +4,27 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
+import woowacourse.movie.db.reservationhistory.ReservationHistoryDatabase
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.repository.DummyReservation
 import woowacourse.movie.domain.repository.DummyTheaters
+import woowacourse.movie.util.BindingActivity
+import java.time.LocalDate
+import java.time.LocalTime
 
-class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.View {
-    private val presenter: ReservationContract.Presenter by lazy { ReservationPresenter(this, DummyReservation, DummyTheaters()) }
-    private val binding: ActivityReservationCompleteBinding by lazy {
-        DataBindingUtil.setContentView(this, R.layout.activity_reservation_complete)
+class ReservationCompleteActivity :
+    BindingActivity<ActivityReservationCompleteBinding>(R.layout.activity_reservation_complete),
+    ReservationContract.View {
+    private val presenter: ReservationContract.Presenter by lazy {
+        ReservationPresenter(
+            this,
+            DummyReservation,
+            DummyTheaters(),
+            ReservationHistoryDatabase.getInstance(this),
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,18 +34,22 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.Vie
     }
 
     private fun initView() {
-        val reservationId = intent.getIntExtra(PUT_EXTRA_KEY_RESERVATION_ID, DEFAULT_RESERVATION_ID)
-        val theaterId =
-            intent.getIntExtra(PUT_EXTRA_THEATER_ID_KEY, DEFAULT_THEATER_ID)
+        val reservationId = intent.getIntExtra(RESERVATION_ID, DEFAULT_RESERVATION_ID)
+        val theaterId = intent.getIntExtra(THEATER_ID, DEFAULT_THEATER_ID)
+
         presenter.loadReservation(reservationId, theaterId)
     }
 
     override fun showReservation(
         reservation: Reservation,
         theaterName: String,
+        screeningDate: LocalDate,
+        screeningTime: LocalTime,
     ) {
         binding.reservation = reservation
         binding.theaterName = theaterName
+        binding.screeningDate = screeningDate
+        binding.screeningTime = screeningTime
     }
 
     override fun showToastMessage(message: String) {
@@ -59,20 +71,21 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.Vie
     }
 
     companion object {
-        private const val PUT_EXTRA_KEY_RESERVATION_ID = "reservationId"
+        private const val RESERVATION_ID = "reservationId"
+        private const val THEATER_ID = "theaterId"
         private const val DEFAULT_RESERVATION_ID = -1
         private const val DEFAULT_THEATER_ID = -1
-        private const val PUT_EXTRA_THEATER_ID_KEY = "theaterId"
 
         fun startActivity(
             context: Context,
             reservationId: Int,
             theaterId: Int,
         ) {
-            val intent = Intent(context, ReservationCompleteActivity::class.java)
-            intent.putExtra(PUT_EXTRA_KEY_RESERVATION_ID, reservationId)
-            intent.putExtra(PUT_EXTRA_THEATER_ID_KEY, theaterId)
-            context.startActivity(intent)
+            Intent(context, ReservationCompleteActivity::class.java).apply {
+                putExtra(RESERVATION_ID, reservationId)
+                putExtra(THEATER_ID, theaterId)
+                context.startActivity(this)
+            }
         }
     }
 }
