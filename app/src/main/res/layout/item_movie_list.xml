@@ -1,41 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="data"
-            type="woowacourse.movie.model.ui.MovieItemDisplay" />
+            type="woowacourse.movie.presentation.movieList.model.MovieItemDisplay" />
 
         <variable
             name="listener"
-            type="woowacourse.movie.movieList.MovieItemListener" />
+            type="woowacourse.movie.presentation.movieList.MovieItemListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:paddingTop="16dp">
 
         <ImageView
             android:id="@+id/movie_thumbnail"
             android:layout_width="100dp"
-            android:layout_height="150dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
             app:imageResource="@{data.imgSrc}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/movie_making_poster" />
 
         <TextView
             android:id="@+id/movie_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="30dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="@{data.title}"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            app:layout_constraintEnd_toStartOf="@id/movie_details_button"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/movie_thumbnail"
-            app:layout_constraintTop_toTopOf="@id/movie_thumbnail" />
+            app:layout_constraintTop_toTopOf="@id/movie_thumbnail"
+            tools:text="제목" />
 
         <TextView
             android:id="@+id/movie_release_date"
@@ -59,11 +68,23 @@
             android:id="@+id/movie_details_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:background="@color/purple_700"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
             android:onClick="@{() ->listener.onClick()}"
+            android:paddingHorizontal="11dp"
+            android:paddingVertical="8dp"
             android:text="지금 예매"
             android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@id/movie_thumbnail"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movie_duration" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/grey"
+            app:layout_constraintTop_toBottomOf="@id/movie_details_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
