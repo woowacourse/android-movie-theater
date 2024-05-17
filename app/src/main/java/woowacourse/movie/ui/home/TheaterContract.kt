@@ -11,11 +11,6 @@ interface TheaterContract {
             screen: Screen,
             theaters: Theaters,
         )
-
-        fun navigateToScreenDetail(
-            screenId: Int,
-            theaterId: Int,
-        )
     }
 
     interface Presenter {

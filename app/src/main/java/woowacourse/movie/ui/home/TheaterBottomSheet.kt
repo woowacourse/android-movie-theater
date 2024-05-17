@@ -15,10 +15,13 @@ import woowacourse.movie.ui.detail.ScreenDetailActivity
 import woowacourse.movie.ui.home.adapter.TheaterAdapter
 
 interface TheaterActionHandler {
-    fun chooseTheater(theaterId: Int)
+    fun navigateToScreenDetail(
+        screenId: Int,
+        theaterId: Int,
+    )
 }
 
-class TheaterBottomSheet : BottomSheetDialogFragment(), TheaterContract.View {
+class TheaterBottomSheet : BottomSheetDialogFragment(), TheaterContract.View, TheaterActionHandler {
     private var _binding: BottomSheetTheaterBinding? = null
     private val binding: BottomSheetTheaterBinding
         get() = requireNotNull(_binding)
@@ -59,8 +62,7 @@ class TheaterBottomSheet : BottomSheetDialogFragment(), TheaterContract.View {
     }
 
     override fun initTheaterAdapter(screen: Screen) {
-        theaterAdapter =
-            TheaterAdapter(screen, presenter)
+        theaterAdapter = TheaterAdapter(screen, this)
         binding.rvTheater.adapter = theaterAdapter
     }
 

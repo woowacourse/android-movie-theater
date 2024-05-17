@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:background="@color/white"
-            android:onClick="@{() -> theaterActionHandler.chooseTheater(theater.id)}"
+            android:onClick="@{() -> theaterActionHandler.navigateToScreenDetail(screen.id,theater.id)}"
             android:src="@drawable/arrow_right"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
