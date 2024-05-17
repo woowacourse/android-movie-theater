@@ -8,17 +8,18 @@ class MovieTheaterSharedPreference private constructor(context: Context) {
         context.getSharedPreferences(MOVIE_THEATER_NAME, Context.MODE_PRIVATE)
     }
 
-    var notificationReservationHistory
+    var notificationEnabled
         set(value) =
             mTHSharedPreference.edit {
-                putBoolean(RESERVATION_NOTIFICATION_KEY, value)
+                putBoolean(NOTIFICATION_ENABLED_KEY, value)
                 apply()
             }
-        get() = mTHSharedPreference.getBoolean(RESERVATION_NOTIFICATION_KEY, false)
+        get() = mTHSharedPreference.getBoolean(NOTIFICATION_ENABLED_KEY, DEFAULT_NOTIFICATION_ENABLED)
 
     companion object {
         private const val MOVIE_THEATER_NAME = "movie_theater"
-        private const val RESERVATION_NOTIFICATION_KEY = "reservation_notification_key"
+        private const val NOTIFICATION_ENABLED_KEY = "reservation_notification_key"
+        private const val DEFAULT_NOTIFICATION_ENABLED = false
 
         @Volatile
         private var instance: MovieTheaterSharedPreference? = null

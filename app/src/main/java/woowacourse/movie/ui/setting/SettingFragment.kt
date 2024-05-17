@@ -16,11 +16,7 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.MovieTheaterSharedPreference
 import woowacourse.movie.ReservationHistoryAlarmManager
 import woowacourse.movie.databinding.FragmentSettingBinding
-import woowacourse.movie.db.reservationhistory.ReservationHistory
 import woowacourse.movie.db.reservationhistory.ReservationHistoryDatabase
-import woowacourse.movie.domain.model.Reservation
-import java.time.LocalDate
-import java.time.LocalTime
 
 class SettingFragment : Fragment(), SettingContract.View {
     private var _binding: FragmentSettingBinding? = null
@@ -54,6 +50,7 @@ class SettingFragment : Fragment(), SettingContract.View {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        initNotification()
         binding.movieTheaterSharedPreference = movieTheaterSharedPreference
     }
 
@@ -63,12 +60,18 @@ class SettingFragment : Fragment(), SettingContract.View {
         requestNotificationPermission()
     }
 
+    private fun initNotification() {
+        binding.receivePushNotificationSelect.isChecked = movieTheaterSharedPreference.notificationEnabled
+    }
+
     private fun onClickNotification() {
         binding.receivePushNotificationSelect.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 presenter.confirmAlarm()
+                movieTheaterSharedPreference.notificationEnabled = !movieTheaterSharedPreference.notificationEnabled
             } else {
                 presenter.cancelAram()
+                movieTheaterSharedPreference.notificationEnabled = !movieTheaterSharedPreference.notificationEnabled
             }
         }
     }
