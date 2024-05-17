@@ -47,9 +47,7 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     }
 
     override fun showReservationHistories(reservationHistories: List<ReservationHistory>) {
-        activity?.runOnUiThread {
-            reservationHistoryAdapter.submitList(reservationHistories)
-        }
+        reservationHistoryAdapter.submitList(reservationHistories)
     }
 
     private fun initAdapter() {
