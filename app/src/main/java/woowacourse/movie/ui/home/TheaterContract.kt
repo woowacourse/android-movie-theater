@@ -24,7 +24,5 @@ interface TheaterContract {
         fun initTheaterAdapter()
 
         fun loadTheaters()
-
-        fun onTheaterSelected(theaterId: Int)
     }
 }

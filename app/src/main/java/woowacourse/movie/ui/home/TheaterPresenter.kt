@@ -8,7 +8,7 @@ class TheaterPresenter(
     private val view: TheaterContract.View,
     private val screenRepository: ScreenRepository,
     private val theaterRepository: TheaterRepository,
-) : TheaterContract.Presenter {
+) : TheaterContract.Presenter, TheaterActionHandler {
     private var screenId: Int = 0
     private lateinit var loadedScreen: Screen
 
@@ -29,7 +29,7 @@ class TheaterPresenter(
         view.showTheaters(loadedScreen, theaters.screeningTheater(loadedScreen.movie))
     }
 
-    override fun onTheaterSelected(theaterId: Int) {
+    override fun chooseTheater(theaterId: Int) {
         view.navigateToScreenDetail(screenId, theaterId)
     }
 }

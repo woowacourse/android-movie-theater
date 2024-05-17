@@ -14,6 +14,10 @@ import woowacourse.movie.domain.repository.DummyTheaters
 import woowacourse.movie.ui.detail.ScreenDetailActivity
 import woowacourse.movie.ui.home.adapter.TheaterAdapter
 
+interface TheaterActionHandler {
+    fun chooseTheater(theaterId: Int)
+}
+
 class TheaterBottomSheet : BottomSheetDialogFragment(), TheaterContract.View {
     private var _binding: BottomSheetTheaterBinding? = null
     private val binding: BottomSheetTheaterBinding
@@ -21,7 +25,7 @@ class TheaterBottomSheet : BottomSheetDialogFragment(), TheaterContract.View {
 
     private lateinit var theaterAdapter: TheaterAdapter
 
-    private val presenter: TheaterContract.Presenter by lazy {
+    private val presenter by lazy {
         TheaterPresenter(this, DummyScreens(), DummyTheaters())
     }
 
@@ -56,9 +60,7 @@ class TheaterBottomSheet : BottomSheetDialogFragment(), TheaterContract.View {
 
     override fun initTheaterAdapter(screen: Screen) {
         theaterAdapter =
-            TheaterAdapter(screen) { theaterId ->
-                presenter.onTheaterSelected(theaterId)
-            }
+            TheaterAdapter(screen, presenter)
         binding.rvTheater.adapter = theaterAdapter
     }
 

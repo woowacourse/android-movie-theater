@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.databinding.HolderTheaterBinding
 import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.ui.home.TheaterActionHandler
 
 class TheaterAdapter(
     private val screen: Screen,
-    private val onTheaterClicked: (theaterId: Int) -> Unit,
+    private val theaterActionHandler: TheaterActionHandler,
 ) : ListAdapter<Theater, TheaterViewHolder>(TheaterDiffUtil()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -17,7 +18,7 @@ class TheaterAdapter(
     ): TheaterViewHolder {
         val binding =
             HolderTheaterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TheaterViewHolder(binding, onTheaterClicked)
+        return TheaterViewHolder(binding, theaterActionHandler)
     }
 
     override fun onBindViewHolder(
