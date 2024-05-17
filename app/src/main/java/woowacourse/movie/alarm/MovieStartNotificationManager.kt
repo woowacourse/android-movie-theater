@@ -23,9 +23,9 @@ class MovieStartNotificationManager(
         val ticket = intent.getParcelableExtra<MovieTicketUiModel>(ReservationResultActivity.INTENT_TICKET)!!
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "notification_before_screening"
-            val name = "영화 상영 시작 전 알림"
-            val descriptionText = "영화 상영 30분 전 사용자에게 알림을 발송합니다."
+            val channelId = context.getString(R.string.notification_channel_id)
+            val name = context.getString(R.string.notification_channel_name)
+            val descriptionText = context.getString(R.string.notification_channel_description)
             val importance = NotificationManager.IMPORTANCE_HIGH
 
             val notificationChannel = NotificationChannel(channelId, name, importance).apply {
@@ -40,8 +40,8 @@ class MovieStartNotificationManager(
         }
 
         notificationBuilder.setSmallIcon(R.drawable.ic_home)
-            .setContentTitle("영화")
-            .setContentText("영화 상영 시작 30분 전입니다.")
+            .setContentTitle(context.getString(R.string.notification_content_title))
+            .setContentText(context.getString(R.string.notification_content_text))
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setAutoCancel(true)
 

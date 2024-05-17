@@ -29,4 +29,9 @@
     <string name="settings_notifications_summary">상영 시작 30분 전 알림을 발송합니다.</string>
 
     <string name="notification_action">movie_start_after_30min</string>
+    <string name="notification_content_title">영화</string>
+    <string name="notification_content_text">영화 상영 시작 30분 전입니다.</string>
+    <string name="notification_channel_id">notification_before_screening</string>
+    <string name="notification_channel_name">영화 상영 시작 전 알림</string>
+    <string name="notification_channel_description">영화 상영 30분 전 사용자에게 알림을 발송합니다.</string>
 </resources>
