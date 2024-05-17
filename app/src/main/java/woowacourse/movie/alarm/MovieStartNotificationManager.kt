@@ -50,11 +50,13 @@ class MovieStartNotificationManager(
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setAutoCancel(true)
 
-        pendingIntent(notificationBuilder, ticket)
-        notificationManager.notify(ticket.ticketId.toInt(), notificationBuilder.build())
+        if (ticket != null) {
+            setPendingIntent(notificationBuilder, ticket)
+        }
+        ticket?.ticketId?.let { notificationManager.notify(it.toInt(), notificationBuilder.build()) }
     }
 
-    private fun pendingIntent(
+    private fun setPendingIntent(
         builder: NotificationCompat.Builder,
         movieTicketUiModel: MovieTicketUiModel,
     ) {
