@@ -1,12 +1,10 @@
 package woowacourse.movie.movieList
 
-import MovieListView
 import woowacourse.movie.model.movieInfo.MovieDate
 import woowacourse.movie.model.movieInfo.MovieInfo
 import woowacourse.movie.model.movieInfo.RunningTime
 import woowacourse.movie.model.movieInfo.Synopsis
 import woowacourse.movie.model.movieInfo.Title
-import woowacourse.movie.model.theater.Seat
 import woowacourse.movie.model.theater.Theater
 import java.time.LocalDate
 
@@ -47,29 +45,8 @@ class MovieListPresenter(
                         RunningTime(100 + i % 150),
                         Synopsis("Synopsis for movie $i"),
                     )
-                val seats = generateSeats()
-                Theater(movie, listOf(), seats)
+                Theater(movie, listOf())
             }
-        }
-
-        private fun generateSeats(): Map<String, Seat> {
-            val seats = mutableMapOf<String, Seat>()
-            val rows = 5
-            val columns = 4
-
-            for (row in 0 until rows) {
-                for (col in 1..columns) {
-                    val seatId = "${('A' + row)}$col"
-                    val grade =
-                        when (row) {
-                            0, 1 -> "B"
-                            2, 3 -> "S"
-                            else -> "A"
-                        }
-                    seats[seatId] = Seat(('A' + row), col, grade)
-                }
-            }
-            return seats
         }
     }
 }

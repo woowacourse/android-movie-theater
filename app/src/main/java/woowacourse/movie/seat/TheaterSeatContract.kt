@@ -1,12 +1,15 @@
 package woowacourse.movie.seat
 
 import android.content.Intent
+import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
 
 interface TheaterSeatContract {
     interface View {
         fun updateSeatDisplay(seat: Seat)
+
+        fun navigateToPurchase(ticketId: Int)
 
         fun showConfirmationDialog(
             title: String,
@@ -20,6 +23,12 @@ interface TheaterSeatContract {
         fun setSeatBackground(
             seatId: String,
             color: String,
+        )
+
+        fun makeNotify(
+            movieStartTime: Long,
+            cinema: Cinema,
+            ticketId: Int,
         )
 
         fun navigateToNextPage(intent: Intent)
@@ -39,6 +48,11 @@ interface TheaterSeatContract {
             onPositiveButtonClicked: () -> Unit,
             negativeLabel: String,
             onNegativeButtonClicked: () -> Unit,
+        )
+
+        fun saveTicketToDatabase(
+            movieStartTime: Long,
+            cinema: Cinema,
         )
     }
 }

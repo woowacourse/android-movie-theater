@@ -5,7 +5,7 @@
 
         <variable
             name="data"
-            type="woowacourse.movie.model.ui.MovieItemDisplay" />
+            type="woowacourse.movie.model.ui.Movie" />
 
         <variable
             name="listener"

@@ -1,10 +1,15 @@
 package woowacourse.movie.seat
 
+import woowacourse.movie.database.AppDatabase
+import woowacourse.movie.database.Ticket
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.theater.Seat
+import kotlin.concurrent.thread
 
 class TheaterSeatPresenter(
     private val view: TheaterSeatContract.View,
+    private val database: AppDatabase,
+    private val screeningDate: String,
     private val ticketLimit: Int,
     val cinema: Cinema,
 ) :
@@ -28,13 +33,10 @@ class TheaterSeatPresenter(
     }
 
     override fun toggleSeatSelection(seatId: String) {
-        val seat = seats[seatId] ?: return
         if (seatId in selectedSeats) {
-            seat.chosen = false
             selectedSeats.remove(seatId)
         } else {
             if (selectedSeats.size >= ticketLimit) return
-            seat.chosen = true
             selectedSeats.add(seatId)
         }
         updateSeatBackground(seatId)
@@ -42,8 +44,7 @@ class TheaterSeatPresenter(
     }
 
     private fun updateSeatBackground(seatId: String) {
-        val seat = seats[seatId] ?: return
-        if (seat.chosen) {
+        if (seatId in selectedSeats) {
             view.setSeatBackground(seatId, "#FF0000")
         } else {
             view.setSeatBackground(seatId, "#FFFFFF")
@@ -76,5 +77,26 @@ class TheaterSeatPresenter(
                 seats[seatId]?.price ?: 0
             }
         view.showPrice(totalPrice)
+    }
+
+    override fun saveTicketToDatabase(
+        movieStartTime: Long,
+        cinema: Cinema,
+    ) {
+        val ticket =
+            Ticket(
+                screeningDate = screeningDate,
+                seatNumbers = selectedSeats.joinToString(","),
+                cinemaName = cinema.cinemaName,
+                movieTitle = cinema.theater.movie.title.toString(),
+                runningTime = cinema.theater.movie.runningTime.toString(),
+                ticketPrice = totalPrice,
+            )
+        var ticketId = -1
+        thread {
+            ticketId = database.ticketDao().insertTicket(ticket).toInt()
+            view.makeNotify(movieStartTime, cinema, ticketId)
+            view.navigateToPurchase(ticketId)
+        }
     }
 }

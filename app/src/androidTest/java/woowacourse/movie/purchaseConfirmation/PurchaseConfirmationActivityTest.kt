@@ -54,7 +54,6 @@ class PurchaseConfirmationActivityTest {
                         LocalTime.of(14, 0),
                         LocalTime.of(18, 0),
                     ),
-                seats = mapOf(),
             ),
         )
     private val intent =

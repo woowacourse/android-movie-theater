@@ -1,6 +1,5 @@
 package woowacourse.movie.seat
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -13,16 +12,21 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
 import androidx.core.view.children
+import androidx.room.Room
 import woowacourse.movie.R
 import woowacourse.movie.base.BindingActivity
+import woowacourse.movie.database.AppDatabase
 import woowacourse.movie.databinding.ActivityTheaterSeatBinding
 import woowacourse.movie.error.ErrorActivity
 import woowacourse.movie.model.Cinema
 import woowacourse.movie.model.movieInfo.Title
 import woowacourse.movie.model.theater.Seat
+import woowacourse.movie.notification.NotificationChannelManager
 import woowacourse.movie.purchaseConfirmation.PurchaseConfirmationActivity
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-@SuppressLint("DiscouragedApi")
 class TheaterSeatActivity :
     BindingActivity<ActivityTheaterSeatBinding>(R.layout.activity_theater_seat),
     TheaterSeatContract.View {
@@ -32,6 +36,7 @@ class TheaterSeatActivity :
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(binding.root)
+
         initPresenter()
         initSeats()
 
@@ -88,22 +93,24 @@ class TheaterSeatActivity :
 
     override fun showTitle(title: Title) {
         binding.title = title.toString()
-        binding.invalidateAll()
+        binding.executePendingBindings()
     }
 
     override fun showPrice(price: Int) {
         binding.price = price
-        binding.invalidateAll()
+        binding.executePendingBindings()
     }
 
     private fun initPresenter() {
         val ticketNum = intent.getStringExtra(EXTRA_TICKET_NUM) ?: return ErrorActivity.start(this)
         val cinema = IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
+        val showTime = intent.getStringExtra(EXTRA_TIME_DATE) ?: return ErrorActivity.start(this)
         if (cinema == null) {
             ErrorActivity.start(this)
             return finish()
         }
-        presenter = TheaterSeatPresenter(this, ticketNum.toInt(), cinema)
+        val database = Room.databaseBuilder(this, AppDatabase::class.java, "ticket").build()
+        presenter = TheaterSeatPresenter(this, database, showTime, ticketNum.toInt(), cinema)
     }
 
     private fun initSeats() {
@@ -111,9 +118,7 @@ class TheaterSeatActivity :
             .forEach { row ->
                 row.children.filterIsInstance<Button>()
                     .forEach { button ->
-                        button.setOnClickListener {
-                            presenter.toggleSeatSelection(button.text.toString())
-                        }
+                        button.setOnClickListener { presenter.toggleSeatSelection(button.text.toString()) }
                     }
             }
     }
@@ -123,20 +128,12 @@ class TheaterSeatActivity :
             title = "예매 확인",
             message = "정말 예매하시겠습니까?",
             positiveLabel = "예매 완료",
-            onPositiveButtonClicked = {
+            onPositiveButtonClicked = onPositiveButtonClicked@{
                 val cinema =
                     IntentCompat.getSerializableExtra(intent, EXTRA_CINEMA, Cinema::class.java)
                 val ticketPrice = findViewById<TextView>(R.id.total_price).text
                 if (cinema != null) {
-                    PurchaseConfirmationActivity.newIntent(
-                        this,
-                        ticketPrice.toString(),
-                        presenter.selectedSeats.toTypedArray(),
-                        cinema,
-                        intent.getStringExtra(EXTRA_TIME_DATE)!!,
-                    ).apply {
-                        navigateToNextPage(this)
-                    }
+                    alarmSettings(cinema, ticketPrice)
                 } else {
                     Toast.makeText(this, "Cinema data is not available.", Toast.LENGTH_SHORT)
                         .show()
@@ -147,10 +144,47 @@ class TheaterSeatActivity :
         )
     }
 
+    private fun alarmSettings(
+        cinema: Cinema,
+        ticketPrice: CharSequence,
+    ) {
+        val timeDate = intent.getStringExtra(EXTRA_TIME_DATE)!!
+        val formatter = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.KOREA)
+        try {
+            val notificationChannelManager = NotificationChannelManager(this)
+            notificationChannelManager.createNotificationChannel()
+            val date = formatter.parse(timeDate)
+            val movieStartTime = date?.time ?: return
+            presenter.saveTicketToDatabase(movieStartTime, cinema)
+        } catch (e: ParseException) {
+            Toast.makeText(this, RESERVATION_TIME_FORMAT_ERROR_MESSAGE, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun navigateToPurchase(ticketId: Int) {
+        val confirmationIntent =
+            PurchaseConfirmationActivity
+                .newIntent(context = this, ticketId = ticketId)
+        navigateToNextPage(confirmationIntent)
+    }
+
+    override fun makeNotify(
+        movieStartTime: Long,
+        cinema: Cinema,
+        ticketId: Int,
+    ) {
+        NotificationChannelManager(this).scheduleMovieStartNotification(
+            movieStartTime,
+            cinema,
+            ticketId,
+        )
+    }
+
     companion object {
         const val EXTRA_TIME_DATE = "timeDate"
         const val EXTRA_TICKET_NUM = "ticketNum"
         const val EXTRA_CINEMA = "cinema"
+        const val RESERVATION_TIME_FORMAT_ERROR_MESSAGE = "예매 시간 형식이 잘못되었습니다."
 
         fun newIntent(
             context: Context,

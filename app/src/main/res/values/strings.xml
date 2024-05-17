@@ -16,15 +16,17 @@
     <string name="screen_display">SCREEN</string>
     <string name="time_date">TIME DATE</string>
     <string name="확인">확인</string>
-    <string name="reserved_information">영화 정보</string>
-
+    <string name="reserved_information">일반 %d명 | %s | %s</string>
     <string name="null_point_error">NullPoint Exception</string>
     <string name="title_reserve">예매 정보</string>
     <string name="title_home">홈</string>
     <string name="title_setting">설정</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="reservation_detail">%s | %s</string>
     <string name="movie_count_for_cinema_format">%s개의 상영 시간</string>
     <string name="binding_error">Binding_ERROR</string>
     <string name="running_date_format">"%d.%d.%d"</string>
     <string name="running_time_format">"%d 분"</string>
+    <string name="notifications">알림 설정</string>
+    <string name="enable_notifications">Enable Notifications</string>
 </resources>

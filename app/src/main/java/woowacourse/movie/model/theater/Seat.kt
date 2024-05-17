@@ -25,8 +25,4 @@ data class Seat(
         price = gradeInfo.first
         color = gradeInfo.second
     }
-
-    fun chooseSeat() {
-        chosen = !chosen
-    }
 }
