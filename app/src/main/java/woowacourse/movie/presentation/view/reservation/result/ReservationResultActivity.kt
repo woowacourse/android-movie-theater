@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.view.reservation.result
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -35,7 +36,7 @@ class ReservationResultActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                val intent = Intent(this, NavigationActivity::class.java)
+                val intent = NavigationActivity.getIntent(this)
                 startActivity(intent)
                 finish()
                 return true
@@ -46,5 +47,9 @@ class ReservationResultActivity : BaseActivity() {
 
     companion object {
         const val INTENT_TICKET = "ticket"
+
+        fun getIntent(context: Context): Intent {
+            return Intent(context, ReservationResultActivity::class.java)
+        }
     }
 }

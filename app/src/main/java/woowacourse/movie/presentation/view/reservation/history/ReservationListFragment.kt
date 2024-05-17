@@ -53,8 +53,8 @@ class ReservationListFragment :
     }
 
     override fun moveToReservationResult(movieTicketUiModel: MovieTicketUiModel) {
-        val intent = Intent(requireContext(), ReservationResultActivity::class.java)
-        intent.putExtra(ReservationResultActivity.INTENT_TICKET, movieTicketUiModel)
+        val intent = ReservationResultActivity.getIntent(requireContext())
+            .apply { putExtra(ReservationResultActivity.INTENT_TICKET, movieTicketUiModel) }
         startActivity(intent)
     }
 

@@ -1,6 +1,7 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -165,8 +166,9 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
     }
 
     override fun moveToReservationResult(movieTicketUiModel: MovieTicketUiModel) {
-        val intent = Intent(this, ReservationResultActivity::class.java)
-        intent.putExtra(ReservationResultActivity.INTENT_TICKET, movieTicketUiModel)
+        val intent = ReservationResultActivity.getIntent(this).apply {
+            putExtra(ReservationResultActivity.INTENT_TICKET, movieTicketUiModel)
+        }
         startActivity(intent)
     }
 
@@ -213,5 +215,9 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
         val S_RANK_COLOR = Color.argb(255, 27, 72, 233)
         const val WHITE_COLOR = Color.WHITE
         const val YELLOW_COLOR = Color.YELLOW
+
+        fun getIntent(context: Context): Intent {
+            return Intent(context, SeatSelectionActivity::class.java)
+        }
     }
 }

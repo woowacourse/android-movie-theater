@@ -1,6 +1,8 @@
 package woowacourse.movie.presentation.view.navigation
 
 import android.Manifest.permission.POST_NOTIFICATIONS
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
@@ -103,5 +105,11 @@ class NavigationActivity : AppCompatActivity() {
             message,
             Toast.LENGTH_SHORT,
         ).show()
+    }
+
+    companion object {
+        fun getIntent(context: Context): Intent {
+            return Intent(context, NavigationActivity::class.java)
+        }
     }
 }

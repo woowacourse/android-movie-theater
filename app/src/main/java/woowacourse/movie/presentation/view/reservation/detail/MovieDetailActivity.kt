@@ -140,9 +140,10 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
         reservationCount: Int,
         title: String,
     ) {
-        val intent = Intent(this, SeatSelectionActivity::class.java)
-        intent.putExtra(TITLE_KEY, title)
-        intent.putExtra(RESERVATION_COUNT_KEY, reservationCount)
+        val intent = SeatSelectionActivity.getIntent(this).apply {
+            putExtra(TITLE_KEY, title)
+            putExtra(RESERVATION_COUNT_KEY, reservationCount)
+        }
         startActivity(intent)
     }
 
