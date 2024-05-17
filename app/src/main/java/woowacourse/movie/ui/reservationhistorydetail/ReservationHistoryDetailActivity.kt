@@ -6,29 +6,25 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.databinding.ActivityReservationCompleteBinding
+import woowacourse.movie.databinding.ActivityReservationHistoryDetailBinding
+import woowacourse.movie.db.reservationhistory.ReservationHistory
 import woowacourse.movie.db.reservationhistory.ReservationHistoryDatabase
-import woowacourse.movie.domain.model.Reservation
-import java.time.LocalDate
-import java.time.LocalTime
 
-class ReservationHistoryDetailActivity : AppCompatActivity(), ReservationHistoryDetailContract.View {
-    private val binding: ActivityReservationCompleteBinding by lazy {
-        DataBindingUtil.setContentView(this, R.layout.activity_reservation_complete)
+class ReservationHistoryDetailActivity :
+    AppCompatActivity(),
+    ReservationHistoryDetailContract.View {
+    private val binding: ActivityReservationHistoryDetailBinding by lazy {
+        DataBindingUtil.setContentView(this, R.layout.activity_reservation_history_detail)
     }
-    private lateinit var presenter: ReservationHistoryDetailPresenter
+    private val presenter: ReservationHistoryDetailPresenter by lazy {
+        val db = ReservationHistoryDatabase.getInstance(this)
+        ReservationHistoryDetailPresenter(this, db)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initPresenter()
         initView()
-    }
-
-    private fun initPresenter() {
-        val db = ReservationHistoryDatabase.getInstance(this)
-
-        presenter = ReservationHistoryDetailPresenter(this, db)
     }
 
     private fun initView() {
@@ -41,17 +37,9 @@ class ReservationHistoryDetailActivity : AppCompatActivity(), ReservationHistory
         presenter.loadReservation(reservationHistoryId)
     }
 
-    override fun showReservation(
-        reservation: Reservation,
-        theaterName: String,
-        screeningDate: LocalDate,
-        screeningTime: LocalTime,
-    ) {
+    override fun showReservation(reservationHistory: ReservationHistory) {
         runOnUiThread {
-            binding.reservation = reservation
-            binding.theaterName = theaterName
-            binding.screeningDate = screeningDate
-            binding.screeningTime = screeningTime
+            binding.reservationHistory = reservationHistory
         }
     }
 

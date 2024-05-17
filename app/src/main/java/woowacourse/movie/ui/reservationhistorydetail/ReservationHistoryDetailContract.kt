@@ -1,17 +1,10 @@
 package woowacourse.movie.ui.reservationhistorydetail
 
-import woowacourse.movie.domain.model.Reservation
-import java.time.LocalDate
-import java.time.LocalTime
+import woowacourse.movie.db.reservationhistory.ReservationHistory
 
 interface ReservationHistoryDetailContract {
     interface View {
-        fun showReservation(
-            reservation: Reservation,
-            theaterName: String,
-            screeningDate: LocalDate,
-            screeningTime: LocalTime,
-        )
+        fun showReservation(reservationHistory: ReservationHistory)
     }
 
     interface Presenter {

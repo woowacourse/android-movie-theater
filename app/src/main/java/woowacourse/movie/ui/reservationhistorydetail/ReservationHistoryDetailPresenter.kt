@@ -8,18 +8,11 @@ class ReservationHistoryDetailPresenter(
     private val view: ReservationHistoryDetailContract.View,
     private val db: ReservationHistoryDatabase,
 ) : ReservationHistoryDetailContract.Presenter {
-    lateinit var reservationHistory: ReservationHistory
-
     override fun loadReservation(reservationId: Long) {
         thread {
-            reservationHistory = db.reservationHistoryDao().getById(reservationId)
+            val reservationHistory: ReservationHistory = db.reservationHistoryDao().getById(reservationId)
 
-            view.showReservation(
-                reservationHistory.reservation,
-                reservationHistory.theaterName,
-                reservationHistory.screeningDate,
-                reservationHistory.screeningTime,
-            )
+            view.showReservation(reservationHistory)
         }.join()
     }
 }
