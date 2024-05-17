@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.MovieTheaterSharedPreference
@@ -54,14 +53,14 @@ class SettingFragment : Fragment(), SettingContract.View {
         binding.movieTheaterSharedPreference = movieTheaterSharedPreference
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onStart() {
         super.onStart()
         requestNotificationPermission()
     }
 
     private fun initNotification() {
-        binding.receivePushNotificationSelect.isChecked = movieTheaterSharedPreference.getNotificationEnable()
+        binding.receivePushNotificationSelect.isChecked =
+            movieTheaterSharedPreference.getNotificationEnable()
     }
 
     private fun onClickNotification() {
@@ -76,9 +75,12 @@ class SettingFragment : Fragment(), SettingContract.View {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestNotificationPermission() {
-        if (checkRequestNotificationPermission()) {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) == PackageManager.PERMISSION_GRANTED && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+        ) {
             binding.receivePushNotificationSelect.isEnabled = false
 
             Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
@@ -91,15 +93,5 @@ class SettingFragment : Fragment(), SettingContract.View {
             binding.receivePushNotificationSelect.isChecked = true
             onClickNotification()
         }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun checkRequestNotificationPermission(): Boolean {
-        return !(
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.POST_NOTIFICATIONS,
-            ) == PackageManager.PERMISSION_GRANTED && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
-        )
     }
 }
