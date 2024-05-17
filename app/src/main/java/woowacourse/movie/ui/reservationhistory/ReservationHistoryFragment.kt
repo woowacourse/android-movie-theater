@@ -8,15 +8,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
+import woowacourse.movie.db.reservationhistory.ReservationHistory
 import woowacourse.movie.db.reservationhistory.ReservationHistoryDatabase
 import woowacourse.movie.ui.reservationhistory.adapter.ReservationHistoryAdapter
 import woowacourse.movie.ui.reservationhistorydetail.ReservationHistoryDetailActivity
 
-class ReservationHistoryFragment : Fragment() {
+class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     private var _binding: FragmentReservationHistoryBinding? = null
     private val binding: FragmentReservationHistoryBinding
         get() = requireNotNull(_binding)
     private lateinit var reservationHistoryAdapter: ReservationHistoryAdapter
+
+    private val presenter: ReservationHistoryContract.Presenter by lazy {
+        ReservationHistoryPresenter(this, ReservationHistoryDatabase.getInstance(requireContext()))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,34 +37,33 @@ class ReservationHistoryFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val db = ReservationHistoryDatabase.getInstance(requireContext())
-
-        val thread =
-            Thread {
-                val reservationHistories = db.reservationHistoryDao().getAll()
-
-                reservationHistoryAdapter =
-                    ReservationHistoryAdapter { reservationHistoryId ->
-                        startActivity(
-                            ReservationHistoryDetailActivity.newIntent(
-                                requireContext(),
-                                reservationHistoryId,
-                            ),
-                        )
-                    }
-                reservationHistoryAdapter.submitList(reservationHistories)
-
-                binding.adapter = reservationHistoryAdapter
-                val decoration = DividerItemDecoration(requireContext(), HORIZONTAL)
-                binding.reservationHistoryList.addItemDecoration(decoration)
-            }
-        thread.start()
-
-        thread.join()
+        initAdapter()
+        presenter.loadReservationHistories()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun showReservationHistories(reservationHistories: List<ReservationHistory>) {
+        activity?.runOnUiThread {
+            reservationHistoryAdapter.submitList(reservationHistories)
+        }
+    }
+
+    private fun initAdapter() {
+        reservationHistoryAdapter =
+            ReservationHistoryAdapter { reservationHistoryId ->
+                startActivity(
+                    ReservationHistoryDetailActivity.newIntent(
+                        requireContext(),
+                        reservationHistoryId,
+                    ),
+                )
+            }
+
+        binding.adapter = reservationHistoryAdapter
+        binding.reservationHistoryList.addItemDecoration(DividerItemDecoration(requireContext(), HORIZONTAL))
     }
 }
