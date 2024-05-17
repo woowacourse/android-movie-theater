@@ -2,6 +2,7 @@ package woowacourse.movie.presentation.view.reservation.result
 
 import android.content.IntentFilter
 import android.os.Bundle
+import androidx.core.content.IntentCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationResultBinding
@@ -28,7 +29,7 @@ class ReservationResultActivity : BaseActivity() {
     }
 
     private fun setUpFromIntent() {
-        ticket = intent.getParcelableExtra<MovieTicketUiModel>(INTENT_TICKET)!!
+        ticket = IntentCompat.getParcelableExtra(intent, INTENT_TICKET, MovieTicketUiModel::class.java)!!
         binding.data = ticket
     }
 

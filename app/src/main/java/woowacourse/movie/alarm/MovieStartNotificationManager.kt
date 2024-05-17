@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.content.IntentCompat
 import woowacourse.movie.R
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 import woowacourse.movie.presentation.view.reservation.result.ReservationResultActivity
@@ -20,7 +21,11 @@ class MovieStartNotificationManager(
     private lateinit var notificationBuilder: NotificationCompat.Builder
 
     fun startNotification() {
-        val ticket = intent.getParcelableExtra<MovieTicketUiModel>(ReservationResultActivity.INTENT_TICKET)!!
+        val ticket = IntentCompat.getParcelableExtra(
+            intent,
+            ReservationResultActivity.INTENT_TICKET,
+            MovieTicketUiModel::class.java,
+        )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelId = context.getString(R.string.notification_channel_id)
