@@ -13,7 +13,6 @@ class HomePresenter(
     private val movieRepository: MovieRepository,
     private val screenRepository: ScreenRepository,
     private val adRepository: DummyAdvertisement = DummyAdvertisement(),
-    private val theaterRepository: TheaterRepository = DummyTheaters(),
 ) : HomeContract.Presenter {
     override fun loadScreen() {
         val screens =
