@@ -18,6 +18,6 @@ fun MovieTicket.toReservationTicketEntity(
         theaterName = this.reservationMovieInfo.theaterName,
         screenDate = selectDate,
         screenTime = screenTime,
-        seats = this.reservationInfo.selectedSeats,
+        selectedSeats = this.reservationInfo.selectedSeats,
     )
 }

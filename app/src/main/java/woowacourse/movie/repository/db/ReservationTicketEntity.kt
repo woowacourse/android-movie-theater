@@ -13,7 +13,7 @@ data class ReservationTicketEntity(
     val theaterName: String,
     val screenDate: String,
     val screenTime: String,
-    val seats: SelectedSeats,
+    val selectedSeats: SelectedSeats,
 )
 
 fun ReservationTicketEntity.toTicketUiModel(): TicketUiModel {

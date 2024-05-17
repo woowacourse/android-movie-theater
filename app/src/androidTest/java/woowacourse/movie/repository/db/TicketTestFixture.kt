@@ -9,7 +9,7 @@ fun ticket(
     theaterName: String = "선릉",
     screenDate: String = "2024-05-01",
     screenTime: String = "22:00",
-    seats: SelectedSeats =
+    selectedSeats: SelectedSeats =
         SelectedSeats(
             SeatingChart(4, 4),
             1,
@@ -21,6 +21,6 @@ fun ticket(
         theaterName,
         screenDate,
         screenTime,
-        seats,
+        selectedSeats,
     )
 }

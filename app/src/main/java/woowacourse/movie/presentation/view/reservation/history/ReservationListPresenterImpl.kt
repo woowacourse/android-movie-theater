@@ -28,7 +28,7 @@ class ReservationListPresenterImpl(
         Thread {
             val ticket = ticketDao.findReservationById(ticketId)
             ticket?.let {
-                val seat = seatsJoinToString(ticket.seats.seats)
+                val seat = seatsJoinToString(ticket.selectedSeats.seats)
                 val ticketUiModel = ticket.toTicketUiModel()
                 val movieTicketUiModel =
                     MovieTicketUiModel(
@@ -36,8 +36,8 @@ class ReservationListPresenterImpl(
                         screeningDate = ticketUiModel.screeningDate,
                         title = ticketUiModel.title,
                         startTime = ticketUiModel.startTime,
-                        reservationCount = ticket.seats.seats.size,
-                        totalPrice = ticket.seats.totalPrice(),
+                        reservationCount = ticket.selectedSeats.seats.size,
+                        totalPrice = ticket.selectedSeats.totalPrice(),
                         selectedSeats = seat,
                         theaterName = ticketUiModel.theaterName,
                     )
