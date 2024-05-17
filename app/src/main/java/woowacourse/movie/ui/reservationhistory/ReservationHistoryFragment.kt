@@ -13,7 +13,11 @@ import woowacourse.movie.db.reservationhistory.ReservationHistoryDatabase
 import woowacourse.movie.ui.reservationhistory.adapter.ReservationHistoryAdapter
 import woowacourse.movie.ui.reservationhistorydetail.ReservationHistoryDetailActivity
 
-class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
+interface ReservationHistoryActionHandler {
+    fun moveToReservationHistoryDetailActivity(reservationHistoryId: Long)
+}
+
+class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View, ReservationHistoryActionHandler {
     private var _binding: FragmentReservationHistoryBinding? = null
     private val binding: FragmentReservationHistoryBinding
         get() = requireNotNull(_binding)
@@ -52,16 +56,18 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
 
     private fun initAdapter() {
         reservationHistoryAdapter =
-            ReservationHistoryAdapter { reservationHistoryId ->
-                startActivity(
-                    ReservationHistoryDetailActivity.newIntent(
-                        requireContext(),
-                        reservationHistoryId,
-                    ),
-                )
-            }
+            ReservationHistoryAdapter(this)
 
         binding.adapter = reservationHistoryAdapter
         binding.reservationHistoryList.addItemDecoration(DividerItemDecoration(requireContext(), HORIZONTAL))
+    }
+
+    override fun moveToReservationHistoryDetailActivity(reservationHistoryId: Long) {
+        startActivity(
+            ReservationHistoryDetailActivity.newIntent(
+                requireContext(),
+                reservationHistoryId,
+            ),
+        )
     }
 }

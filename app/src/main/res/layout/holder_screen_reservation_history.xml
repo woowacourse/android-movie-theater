@@ -8,11 +8,16 @@
         <variable
             name="reservationHistory"
             type="woowacourse.movie.db.reservationhistory.ReservationHistory" />
+
+        <variable
+            name="reservationHistoryActionHandler"
+            type="woowacourse.movie.ui.reservationhistory.ReservationHistoryActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/reservation_history_layout"
         android:layout_width="match_parent"
+        android:onClick="@{() -> reservationHistoryActionHandler.moveToReservationHistoryDetailActivity(reservationHistory.id)}"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         android:padding="12dp">
