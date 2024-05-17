@@ -11,6 +11,7 @@ import android.provider.Settings
 import androidx.core.app.AlarmManagerCompat
 import woowacourse.movie.model.Cinema
 
+
 class NotificationChannelManager(private val context: Context) {
     fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -30,7 +31,7 @@ class NotificationChannelManager(private val context: Context) {
     ) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         if (AlarmManagerCompat.canScheduleExactAlarms(alarmManager)) {
-            val alarmTime = movieStartTime - 30 * 60 * 1000
+            val alarmTime = movieStartTime - MINUTE_30
             val intent =
                 Intent(context, NotificationReceiver::class.java).apply {
                     putExtra("notificationId", 1001)
@@ -55,6 +56,7 @@ class NotificationChannelManager(private val context: Context) {
     }
 
     companion object {
+        private const val MINUTE_30 = 30 * 60 * 1000
         private const val CHANNEL_ID = "ticket_confirmation_channel"
         private const val CHANNEL_NAME = "Ticket Confirmation"
         private const val CHANNEL_DESCRIPTION = "Notifications for ticket confirmations"
