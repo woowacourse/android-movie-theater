@@ -1,10 +1,10 @@
 package woowacourse.movie.presentation.reservation.history
 
-import woowacourse.movie.domain.model.reservation.seat.Seat
-import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
-import woowacourse.movie.presentation.reservation.seat.SeatSelectionActivity
 import woowacourse.movie.data.db.ReservationTicketDao
 import woowacourse.movie.data.db.toTicketUiModel
+import woowacourse.movie.domain.model.reservation.seat.Seat
+import woowacourse.movie.presentation.reservation.seat.SeatSelectionActivity
+import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 import kotlin.concurrent.thread
 
 class ReservationListPresenterImpl(

@@ -28,10 +28,12 @@ class MovieNotificationReceiver : BroadcastReceiver() {
 
         subScribeToChannel()
 
-        val ticket = IntentCompat.getParcelableExtra(
-            intent,
-            INTENT_TICKET, MovieTicketUiModel::class.java
-        )
+        val ticket =
+            IntentCompat.getParcelableExtra(
+                intent,
+                INTENT_TICKET,
+                MovieTicketUiModel::class.java,
+            )
         val pendingIntent = createPendingIntent(context, ticket)
 
         val title = ticket!!.title
@@ -61,9 +63,10 @@ class MovieNotificationReceiver : BroadcastReceiver() {
         context: Context,
         ticket: MovieTicketUiModel?,
     ): PendingIntent {
-        val contentIntent = getIntent(context).apply {
-            putExtra(INTENT_TICKET, ticket)
-        }
+        val contentIntent =
+            getIntent(context).apply {
+                putExtra(INTENT_TICKET, ticket)
+            }
         return PendingIntent.getActivity(
             context,
             PENDING_REQUEST_CODE,

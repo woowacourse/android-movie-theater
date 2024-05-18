@@ -8,9 +8,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.admodel.Ad
-import woowacourse.movie.presentation.uimodel.MovieUiModel
 import woowacourse.movie.presentation.screening.adapter.MovieListAdapter
 import woowacourse.movie.presentation.screening.theater.TheaterBottomSheetDialogFragment
+import woowacourse.movie.presentation.uimodel.MovieUiModel
 
 class ScreeningMovieFragment : Fragment(), ScreeningContract.View, ScreeningContract.ViewActions {
     private lateinit var adapter: MovieListAdapter

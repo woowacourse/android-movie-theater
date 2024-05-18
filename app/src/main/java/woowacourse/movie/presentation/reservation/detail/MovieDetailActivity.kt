@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.reservation.detail
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -140,10 +139,11 @@ class MovieDetailActivity : BaseActivity(), MovieDetailContract.View {
         reservationCount: Int,
         title: String,
     ) {
-        val intent = SeatSelectionActivity.getIntent(this).apply {
-            putExtra(TITLE_KEY, title)
-            putExtra(RESERVATION_COUNT_KEY, reservationCount)
-        }
+        val intent =
+            SeatSelectionActivity.getIntent(this).apply {
+                putExtra(TITLE_KEY, title)
+                putExtra(RESERVATION_COUNT_KEY, reservationCount)
+            }
         startActivity(intent)
     }
 

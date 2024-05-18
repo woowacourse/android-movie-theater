@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.reservation.seat
 
+import woowacourse.movie.data.db.ReservationTicketDao
 import woowacourse.movie.data.repository.ReservationMovieInfoRepositoryImpl
 import woowacourse.movie.data.repository.SeatRepositoryImpl
 import woowacourse.movie.domain.model.reservation.MovieTicket
@@ -7,7 +8,6 @@ import woowacourse.movie.domain.model.reservation.ReservationInfo
 import woowacourse.movie.domain.model.reservation.toReservationTicketEntity
 import woowacourse.movie.domain.repository.SeatRepository
 import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
-import woowacourse.movie.data.db.ReservationTicketDao
 import java.time.format.DateTimeFormatter
 
 class SeatSelectionPresenterImpl(
@@ -70,28 +70,28 @@ class SeatSelectionPresenterImpl(
 
     private fun storeData(ticket: MovieTicket): Long {
         var ticketId = 0L
-        val thread = Thread {
-            ticketId = saveTicket(ticket)
-        }
+        val thread =
+            Thread {
+                ticketId = saveTicket(ticket)
+            }
 
         thread.start()
         thread.join()
         return ticketId
     }
 
-
     private fun saveTicket(ticket: MovieTicket): Long {
         return ticketDao.saveReservationTicket(
             ticket.toReservationTicketEntity(
                 selectDate =
-                ticket.reservationMovieInfo.dateTime.screeningDate.date.format(
-                    DateTimeFormatter.ISO_LOCAL_DATE,
-                ),
+                    ticket.reservationMovieInfo.dateTime.screeningDate.date.format(
+                        DateTimeFormatter.ISO_LOCAL_DATE,
+                    ),
                 screenTime =
-                ticket.reservationMovieInfo.dateTime.screeningDate.screeningTime.startTime.format(
-                    DateTimeFormatter.ofPattern("HH:mm"),
-                ),
-            )
+                    ticket.reservationMovieInfo.dateTime.screeningDate.screeningTime.startTime.format(
+                        DateTimeFormatter.ofPattern("HH:mm"),
+                    ),
+            ),
         )
     }
 }

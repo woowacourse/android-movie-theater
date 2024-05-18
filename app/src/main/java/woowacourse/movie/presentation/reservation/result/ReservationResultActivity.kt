@@ -9,9 +9,9 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.presentation.base.BaseActivity
-import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 import woowacourse.movie.presentation.navigation.NavigationActivity
 import woowacourse.movie.presentation.notification.MovieNotificationAlarmManager
+import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 
 class ReservationResultActivity : BaseActivity() {
     override fun getLayoutResId(): Int = R.layout.activity_reservation_result

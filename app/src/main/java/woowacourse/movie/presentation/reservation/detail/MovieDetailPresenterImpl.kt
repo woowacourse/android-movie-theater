@@ -2,6 +2,7 @@ package woowacourse.movie.presentation.reservation.detail
 
 import woowacourse.movie.data.repository.MovieRepositoryImpl
 import woowacourse.movie.data.repository.ReservationMovieInfoRepositoryImpl
+import woowacourse.movie.data.repository.TheaterRepositoryImpl
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.reservation.ReservationCount
 import woowacourse.movie.domain.model.reservation.ReservationMovieInfo
@@ -9,7 +10,6 @@ import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.domain.repository.ReservationMovieInfoRepository
 import woowacourse.movie.domain.repository.TheaterRepository
 import woowacourse.movie.presentation.uimodel.MovieUiModel
-import woowacourse.movie.data.repository.TheaterRepositoryImpl
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter

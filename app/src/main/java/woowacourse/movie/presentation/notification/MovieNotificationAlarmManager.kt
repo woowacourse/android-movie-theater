@@ -23,9 +23,10 @@ object MovieNotificationAlarmManager {
         ticketUiModel: MovieTicketUiModel,
     ) {
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-        val intent = MovieNotificationReceiver.getIntent(context).apply {
-            putExtra(INTENT_TICKET, ticketUiModel)
-        }
+        val intent =
+            MovieNotificationReceiver.getIntent(context).apply {
+                putExtra(INTENT_TICKET, ticketUiModel)
+            }
         val pendingIntent = pendingIntent(context, intent)
         val alarmTime =
             calculateAlarmTime(
@@ -67,7 +68,10 @@ object MovieNotificationAlarmManager {
         alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent)
     }
 
-    private fun canPushAlarm(alarmTime: Long, context: Context): Boolean {
+    private fun canPushAlarm(
+        alarmTime: Long,
+        context: Context,
+    ): Boolean {
         return isFutureTime(alarmTime) && SharedPreferences.getAlarmSetting(context)
     }
 

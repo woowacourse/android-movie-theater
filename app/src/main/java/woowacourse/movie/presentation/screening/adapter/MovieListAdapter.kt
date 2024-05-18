@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.domain.admodel.Ad
-import woowacourse.movie.presentation.uimodel.MovieUiModel
 import woowacourse.movie.presentation.screening.ScreeningContract
 import woowacourse.movie.presentation.screening.adapter.diffutil.MovieDiffCallback
+import woowacourse.movie.presentation.uimodel.MovieUiModel
 
 class MovieListAdapter(
     private var movieList: List<MovieUiModel>,

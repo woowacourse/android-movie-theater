@@ -13,13 +13,13 @@ import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import woowacourse.movie.R
+import woowacourse.movie.data.db.ReservationTicketDatabase
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.presentation.base.BaseActivity
-import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 import woowacourse.movie.presentation.reservation.detail.MovieDetailActivity.Companion.RESERVATION_COUNT_KEY
 import woowacourse.movie.presentation.reservation.detail.MovieDetailActivity.Companion.TITLE_KEY
 import woowacourse.movie.presentation.reservation.result.ReservationResultActivity
-import woowacourse.movie.data.db.ReservationTicketDatabase
+import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 
 class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
     private lateinit var seatSelectionPresenter: SeatSelectionContract.Presenter
@@ -166,9 +166,10 @@ class SeatSelectionActivity : BaseActivity(), SeatSelectionContract.View {
     }
 
     override fun moveToReservationResult(movieTicketUiModel: MovieTicketUiModel) {
-        val intent = ReservationResultActivity.getIntent(this).apply {
-            putExtra(ReservationResultActivity.INTENT_TICKET, movieTicketUiModel)
-        }
+        val intent =
+            ReservationResultActivity.getIntent(this).apply {
+                putExtra(ReservationResultActivity.INTENT_TICKET, movieTicketUiModel)
+            }
         startActivity(intent)
     }
 

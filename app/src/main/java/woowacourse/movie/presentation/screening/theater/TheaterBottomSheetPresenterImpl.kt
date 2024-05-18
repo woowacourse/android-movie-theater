@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.screening.theater
 
-import woowacourse.movie.domain.repository.TheaterRepository
 import woowacourse.movie.data.repository.TheaterRepositoryImpl
+import woowacourse.movie.domain.repository.TheaterRepository
 
 class TheaterBottomSheetPresenterImpl(
     private val view: TheaterBottomSheetContract.View,

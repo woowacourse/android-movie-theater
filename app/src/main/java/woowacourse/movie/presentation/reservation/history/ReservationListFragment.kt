@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import woowacourse.movie.data.db.ReservationTicketDatabase
 import woowacourse.movie.databinding.FragmentReservationListBinding
-import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
-import woowacourse.movie.presentation.uimodel.TicketUiModel
 import woowacourse.movie.presentation.reservation.history.adapter.ReservationListAdapter
 import woowacourse.movie.presentation.reservation.result.ReservationResultActivity
-import woowacourse.movie.data.db.ReservationTicketDatabase
+import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
+import woowacourse.movie.presentation.uimodel.TicketUiModel
 
 class ReservationListFragment :
     Fragment(),
@@ -52,8 +52,9 @@ class ReservationListFragment :
     }
 
     override fun moveToReservationResult(movieTicketUiModel: MovieTicketUiModel) {
-        val intent = ReservationResultActivity.getIntent(requireContext())
-            .apply { putExtra(ReservationResultActivity.INTENT_TICKET, movieTicketUiModel) }
+        val intent =
+            ReservationResultActivity.getIntent(requireContext())
+                .apply { putExtra(ReservationResultActivity.INTENT_TICKET, movieTicketUiModel) }
         startActivity(intent)
     }
 
