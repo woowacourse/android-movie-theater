@@ -9,9 +9,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
+import androidx.core.content.IntentCompat
 import woowacourse.movie.R
-import woowacourse.movie.presentation.notification.MovieNotificationAlarmManager.NOTIFICATION_TITLE
-import woowacourse.movie.presentation.reservation.result.ReservationResultActivity
+import woowacourse.movie.presentation.reservation.result.ReservationResultActivity.Companion.INTENT_TICKET
+import woowacourse.movie.presentation.uimodel.MovieTicketUiModel
 
 class MovieNotificationReceiver : BroadcastReceiver() {
     private lateinit var notificationManager: NotificationManager
@@ -26,16 +27,23 @@ class MovieNotificationReceiver : BroadcastReceiver() {
             ) as NotificationManager
 
         subScribeToChannel()
-        val pendingIntent = createPendingIntent(context)
 
-        val title = intent.getStringExtra(NOTIFICATION_TITLE) ?: " "
+        val ticket = IntentCompat.getParcelableExtra(
+            intent,
+            INTENT_TICKET, MovieTicketUiModel::class.java
+        )
+        val pendingIntent = createPendingIntent(context, ticket)
+
+        val title = ticket!!.title
+
         val notification =
             buildNotification(
                 context = context,
                 title = title,
                 pendingIntent = pendingIntent,
             )
-        notificationManager.notify(NOTIFICATION_ID, notification)
+        val requestId = createNotificationId()
+        notificationManager.notify(requestId, notification)
     }
 
     private fun subScribeToChannel() {
@@ -49,8 +57,13 @@ class MovieNotificationReceiver : BroadcastReceiver() {
         notificationManager.createNotificationChannel(channel)
     }
 
-    private fun createPendingIntent(context: Context): PendingIntent {
-        val contentIntent = Intent(context, ReservationResultActivity::class.java)
+    private fun createPendingIntent(
+        context: Context,
+        ticket: MovieTicketUiModel?,
+    ): PendingIntent {
+        val contentIntent = getIntent(context).apply {
+            putExtra(INTENT_TICKET, ticket)
+        }
         return PendingIntent.getActivity(
             context,
             PENDING_REQUEST_CODE,
@@ -73,10 +86,15 @@ class MovieNotificationReceiver : BroadcastReceiver() {
             .build()
     }
 
+    private fun createNotificationId(): Int = System.currentTimeMillis().toInt()
+
     companion object {
         private const val NOTIFICATION_CHANNEL_ID = "notification_channel"
         private const val NOTIFICATION_CHANNEL_NAME = "movieNotification"
-        const val NOTIFICATION_ID = 1
         const val PENDING_REQUEST_CODE = 0
+
+        fun getIntent(context: Context): Intent {
+            return Intent(context, MovieNotificationReceiver::class.java)
+        }
     }
 }
