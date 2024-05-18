@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="textsize_item_movietitle">16dp</dimen>
+    <dimen name="padding_item_reservation_detail">12dp</dimen>
+    <dimen name="margin_item_span">5dp</dimen>
+    <dimen name="margin_item_between_title_date">6dp</dimen>
     <dimen name="size_9">9dp</dimen>
     <dimen name="size_10">10dp</dimen>
     <dimen name="size_12">12dp</dimen>

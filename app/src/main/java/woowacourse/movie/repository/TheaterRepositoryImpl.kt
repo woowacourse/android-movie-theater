@@ -23,37 +23,44 @@ object TheaterRepositoryImpl : TheaterRepository {
                     0 to
                         mapOf(
                             // 날짜
-                            "24.4.8" to listOf("12:00", "15:00"),
+                            "2024-04-08" to listOf("12:00", "15:00"),
+                            "2024-05-12" to listOf("13:31", "13:32", "13:33", "13:34"),
                         ),
                     1 to
                         mapOf(
                             // 날짜
-                            "24.4.9" to listOf("12:00"),
+                            "2024-04-09" to listOf("12:00"),
+                            "2024-05-12" to listOf("13:31", "13:32", "13:33", "13:34"),
                         ),
                     2 to
                         mapOf(
                             // 날짜
-                            "24.4.10" to listOf("12:00", "15:00"),
+                            "2024-04-10" to listOf("12:00", "15:00"),
+                            "2024-05-12" to listOf("13:31", "13:32", "13:33", "13:34"),
                         ),
                     3 to
                         mapOf(
                             // 날짜
-                            "24.4.10" to listOf("12:00", "15:00"),
+                            "2024-04-10" to listOf("12:00", "15:00"),
+                            "2024-05-12" to listOf("13:31", "13:32", "13:33", "13:34"),
                         ),
                     4 to
                         mapOf(
                             // 날짜
-                            "24.4.10" to listOf("12:00", "15:00"),
+                            "2024-04-10" to listOf("12:00", "15:00"),
+                            "2024-05-12" to listOf("13:31", "13:32", "13:33", "13:34"),
                         ),
                     5 to
                         mapOf(
                             // 날짜
-                            "24.4.10" to listOf("12:00", "15:00"),
+                            "2024-04-10" to listOf("12:00", "15:00"),
+                            "2024-05-12" to listOf("13:31", "13:32", "13:33", "13:34"),
                         ),
                     6 to
                         mapOf(
                             // 날짜
-                            "24.4.10" to listOf("12:00", "15:00"),
+                            "2024-04-10" to listOf("12:00", "15:00"),
+                            "2024-05-12" to listOf("13:31", "13:32", "13:33", "13:34"),
                         ),
                 ),
             1 to
@@ -62,27 +69,30 @@ object TheaterRepositoryImpl : TheaterRepository {
                     0 to
                         mapOf(
                             // 날짜
-                            "24.4.2" to listOf("15:00", "18:00", "22:00"),
+                            "2024-04-02" to listOf("15:00", "18:00", "22:00"),
+                            "2024-05-12" to listOf("13:31", "13:32", "13:33", "13:34"),
                         ),
                     2 to
                         mapOf(
                             // 날짜
-                            "24.4.4" to listOf("12:00", "15:00"),
+                            "2024-04-04" to listOf("12:00", "15:00"),
+                            "2024-05-12" to listOf("13:31", "13:32", "13:33", "13:34"),
                         ),
                     5 to
                         mapOf(
                             // 날짜
-                            "24.4.4" to listOf("12:00", "15:00"),
+                            "2024-04-04" to listOf("12:00", "15:00"),
+                            "2024-05-12" to listOf("13:31", "13:32", "13:33", "13:34"),
                         ),
                     7 to
                         mapOf(
                             // 날짜
-                            "24.4.4" to listOf("12:00", "15:00"),
+                            "2024-04-04" to listOf("12:00", "15:00"),
                         ),
                     9 to
                         mapOf(
                             // 날짜
-                            "24.4.4" to listOf("12:00", "15:00"),
+                            "2024-04-04" to listOf("12:00", "15:00"),
                         ),
                 ),
             2 to
@@ -91,49 +101,49 @@ object TheaterRepositoryImpl : TheaterRepository {
                     1 to
                         mapOf(
                             // 날짜
-                            "24.4.19" to listOf("12:00", "15:00"),
+                            "2024-04-19" to listOf("12:00", "15:00"),
                         ),
                     2 to
                         mapOf(
                             // 날짜
-                            "24.4.20" to listOf("15:00", "16:00"),
-                            "24.4.24" to listOf("10:00", "17:00"),
+                            "2024-04-20" to listOf("15:00", "16:00"),
+                            "2024-04-24" to listOf("10:00", "17:00"),
                         ),
                     3 to
                         mapOf(
                             // 날짜
-                            "24.4.20" to listOf("15:00", "16:00"),
-                            "24.4.24" to listOf("10:00", "17:00"),
+                            "2024-04-20" to listOf("15:00", "16:00"),
+                            "2024-04-24" to listOf("10:00", "17:00"),
                         ),
                     4 to
                         mapOf(
                             // 날짜
-                            "24.4.20" to listOf("15:00", "16:00"),
-                            "24.4.24" to listOf("10:00", "17:00"),
+                            "2024-04-20" to listOf("15:00", "16:00"),
+                            "2024-04-24" to listOf("10:00", "17:00"),
                         ),
                     5 to
                         mapOf(
                             // 날짜
-                            "24.4.20" to listOf("15:00", "16:00"),
-                            "24.4.24" to listOf("10:00", "17:00"),
+                            "2024-04-20" to listOf("15:00", "16:00"),
+                            "2024-04-24" to listOf("10:00", "17:00"),
                         ),
                     6 to
                         mapOf(
                             // 날짜
-                            "24.4.20" to listOf("15:00", "16:00"),
-                            "24.4.24" to listOf("10:00", "17:00"),
+                            "2024-04-20" to listOf("15:00", "16:00"),
+                            "2024-04-24" to listOf("10:00", "17:00"),
                         ),
                     7 to
                         mapOf(
                             // 날짜
-                            "24.4.20" to listOf("15:00", "16:00"),
-                            "24.4.24" to listOf("10:00", "17:00"),
+                            "2024-04-20" to listOf("15:00", "16:00"),
+                            "2024-04-24" to listOf("10:00", "17:00"),
                         ),
                     8 to
                         mapOf(
                             // 날짜
-                            "24.4.20" to listOf("15:00", "16:00"),
-                            "24.4.24" to listOf("10:00", "17:00"),
+                            "2024-04-20" to listOf("15:00", "16:00"),
+                            "2024-04-24" to listOf("10:00", "17:00"),
                         ),
                 ),
             3 to
@@ -142,49 +152,49 @@ object TheaterRepositoryImpl : TheaterRepository {
                     1 to
                         mapOf(
                             // 날짜
-                            "24.4.19" to listOf("12:00", "15:00"),
+                            "2024-04-19" to listOf("12:00", "15:00"),
                         ),
                     2 to
                         mapOf(
                             // 날짜
-                            "24.4.20" to listOf("15:00", "16:00"),
-                            "24.4.24" to listOf("10:00", "17:00"),
+                            "2024-04-20" to listOf("15:00", "16:00"),
+                            "2024-04-24" to listOf("10:00", "17:00"),
                         ),
                     3 to
                         mapOf(
                             // 날짜
-                            "24.4.20" to listOf("15:00", "16:00"),
-                            "24.4.24" to listOf("10:00", "17:00"),
+                            "2024-04-20" to listOf("15:00", "16:00"),
+                            "2024-04-24" to listOf("10:00", "17:00"),
                         ),
                     4 to
                         mapOf(
                             // 날짜
-                            "24.4.20" to listOf("15:00", "16:00"),
-                            "24.4.24" to listOf("10:00", "17:00"),
+                            "2024-04-20" to listOf("15:00", "16:00"),
+                            "2024-04-24" to listOf("10:00", "17:00"),
                         ),
                     5 to
                         mapOf(
                             // 날짜
-                            "24.4.20" to listOf("15:00", "16:00"),
-                            "24.4.24" to listOf("10:00", "17:00"),
+                            "2024-04-20" to listOf("15:00", "16:00"),
+                            "2024-04-24" to listOf("10:00", "17:00"),
                         ),
                     6 to
                         mapOf(
                             // 날짜
-                            "24.4.20" to listOf("15:00", "16:00"),
-                            "24.4.24" to listOf("10:00", "17:00"),
+                            "2024-04-20" to listOf("15:00", "16:00"),
+                            "2024-04-24" to listOf("10:00", "17:00"),
                         ),
                     7 to
                         mapOf(
                             // 날짜
-                            "24.4.20" to listOf("15:00", "16:00"),
-                            "24.4.24" to listOf("10:00", "17:00"),
+                            "2024-04-20" to listOf("15:00", "16:00"),
+                            "2024-04-24" to listOf("10:00", "17:00"),
                         ),
                     8 to
                         mapOf(
                             // 날짜
-                            "24.4.20" to listOf("15:00", "16:00"),
-                            "24.4.24" to listOf("10:00", "17:00"),
+                            "2024-04-20" to listOf("15:00", "16:00"),
+                            "2024-04-24" to listOf("10:00", "17:00"),
                         ),
                 ),
         )
@@ -199,8 +209,10 @@ object TheaterRepositoryImpl : TheaterRepository {
     }
 
     override fun theatersInfo(movieId: Int): List<TheaterUiModel> {
-        return dummyTheaters.map { theater ->
-            TheaterUiModel(theater.id, theater.name, screenTimesCount(theater.id, movieId))
+        return dummyTheaters.mapNotNull { theater ->
+            val count = screenTimesCount(theater.id, movieId)
+            if (count != 0) TheaterUiModel(theater.id, theater.name, count)
+            else null
         }
     }
 
@@ -208,5 +220,20 @@ object TheaterRepositoryImpl : TheaterRepository {
         return dummyTheaters.find {
             theaterId == it.id
         }?.name ?: ""
+    }
+
+    override fun getScreeningDateInfo(
+        theaterId: Int,
+        movieId: Int,
+    ): List<String> {
+        return theaterScreeningInfo[theaterId]?.get(movieId)?.keys?.toList() ?: listOf("")
+    }
+
+    override fun getScreeningTimeInfo(
+        theaterId: Int,
+        movieId: Int,
+        date: String,
+    ): List<String> {
+        return theaterScreeningInfo[theaterId]?.get(movieId)?.get(date) ?: listOf("")
     }
 }

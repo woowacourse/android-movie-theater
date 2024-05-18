@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.admodel.Ad
 import woowacourse.movie.presentation.uimodel.MovieUiModel
 import woowacourse.movie.presentation.view.screening.ScreeningContract
@@ -19,6 +18,7 @@ import woowacourse.movie.presentation.view.screening.theater.TheaterBottomSheetD
 class HomeFragment : Fragment(), ScreeningContract.View, ScreeningContract.ViewActions {
     private lateinit var adapter: MovieListAdapter
     private lateinit var presenter: ScreeningContract.Presenter
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +31,9 @@ class HomeFragment : Fragment(), ScreeningContract.View, ScreeningContract.ViewA
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(
@@ -40,9 +41,8 @@ class HomeFragment : Fragment(), ScreeningContract.View, ScreeningContract.ViewA
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val movieListView = view.findViewById<RecyclerView>(R.id.movieList)
-        movieListView.layoutManager = LinearLayoutManager(context)
-        movieListView.adapter = adapter
+        binding.movieList.adapter = adapter
+        presenter.onViewSetUp()
     }
 
     override fun onUpdateMovies(movies: List<MovieUiModel>) {

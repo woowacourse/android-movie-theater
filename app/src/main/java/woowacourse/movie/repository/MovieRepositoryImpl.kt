@@ -1,12 +1,10 @@
-package woowacourse.movie.data.repository
+package woowacourse.movie.repository
 
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.ScreeningInfo
-import woowacourse.movie.domain.model.reservation.date.ScreeningTime
 import woowacourse.movie.presentation.repository.MovieRepository
 import java.time.LocalDate
-import java.time.LocalTime
 
 object MovieRepositoryImpl : MovieRepository {
     private var movies: List<Movie> = listOf()
@@ -18,7 +16,7 @@ object MovieRepositoryImpl : MovieRepository {
             screeningInfo =
                 ScreeningInfo(
                     startDate = LocalDate.of(2024, 4, 1),
-                    endDate = LocalDate.of(2024, 4, 30),
+                    endDate = LocalDate.of(2024, 10, 30),
                     runningTime = 148,
                 ),
             summary =
@@ -53,36 +51,6 @@ object MovieRepositoryImpl : MovieRepository {
         return movies.find { movie ->
             movie.movieId == movieId
         } ?: defaultMovie
-    }
-
-    override fun getScreeningDateInfo(movieId: Int): List<LocalDate> {
-        val screeningInfo = findMovieById(movieId).screeningInfo
-        val startDate = screeningInfo.startDate
-        val endDate = screeningInfo.endDate
-        val dateList = mutableListOf<LocalDate>()
-
-        var currentDate = startDate
-        while (!currentDate.isAfter(endDate)) {
-            dateList.add(currentDate)
-            currentDate = currentDate.plusDays(DATE_TERM)
-        }
-
-        return dateList
-    }
-
-    override fun getScreeningTimeInfo(isWeekend: Boolean): List<LocalTime> {
-        val timeList = mutableListOf<LocalTime>()
-
-        var startTime =
-            when (isWeekend) {
-                true -> ScreeningTime.DEFAULT_HOUR
-                false -> ScreeningTime.DEFAULT_WEEKDAY_HOUR
-            }
-        while (startTime < END_TIME) {
-            timeList.add(LocalTime.of(startTime, ScreeningTime.DEFAULT_MINUTE))
-            startTime += TIME_TERM
-        }
-        return timeList
     }
 
     private fun createDummyMovies(): List<Movie> {

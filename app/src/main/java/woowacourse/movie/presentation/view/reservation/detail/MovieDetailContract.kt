@@ -6,9 +6,8 @@ interface MovieDetailContract {
     interface View {
         fun showMovieDetails(movieUiModel: MovieUiModel)
 
-        fun setScreeningDatesAndTimes(
+        fun setScreeningDates(
             dates: List<String>,
-            times: List<String>,
             defaultDataIndex: Int,
         )
 
@@ -34,9 +33,9 @@ interface MovieDetailContract {
 
         fun loadMovieDetails()
 
-        fun loadScreeningDates(movieId: Int)
+        fun loadScreeningDates()
 
-        fun loadScreeningTimes(isWeekend: Boolean)
+        fun loadScreeningTimes(date: String)
 
         fun selectDate(date: String)
 
