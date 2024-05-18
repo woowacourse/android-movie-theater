@@ -55,8 +55,6 @@ class MovieDetailPresenterImpl(
 
     override fun loadScreeningDates() {
         val dates = theaterRepository.getScreeningDateInfo(theaterId, movieId)
-        val times =
-            theaterRepository.getScreeningTimeInfo(theaterId, movieId, dates[DEFAULT_DATA_INDEX])
         view?.setScreeningDates(dates, DEFAULT_DATA_INDEX)
     }
 

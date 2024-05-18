@@ -14,11 +14,11 @@ class SeatSelectionPresenterImpl(
     reservationCount: Int,
     private val reservationDao: ReservationDao,
     seatRepository: SeatRepository = SeatRepositoryImpl,
+    private val reservationMovieInfoRepository: ReservationMovieInfoRepositoryImpl = ReservationMovieInfoRepositoryImpl,
 ) : SeatSelectionContract.Presenter {
     private var view: SeatSelectionContract.View? = null
     private val reservationInfo =
         ReservationInfo(reservationCount, seatRepository.getSeatingChart())
-    private val reservationMovieInfoRepository = ReservationMovieInfoRepositoryImpl
 
     override fun attachView(view: SeatSelectionContract.View) {
         this.view = view

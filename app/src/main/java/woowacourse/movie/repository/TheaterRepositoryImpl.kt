@@ -226,7 +226,7 @@ object TheaterRepositoryImpl : TheaterRepository {
         theaterId: Int,
         movieId: Int,
     ): List<String> {
-        return theaterScreeningInfo[theaterId]?.get(movieId)?.keys?.toList() ?: listOf()
+        return theaterScreeningInfo[theaterId]?.get(movieId)?.keys?.toList() ?: listOf("")
     }
 
     override fun getScreeningTimeInfo(
@@ -234,6 +234,6 @@ object TheaterRepositoryImpl : TheaterRepository {
         movieId: Int,
         date: String,
     ): List<String> {
-        return theaterScreeningInfo[theaterId]?.get(movieId)?.get(date) ?: listOf()
+        return theaterScreeningInfo[theaterId]?.get(movieId)?.get(date) ?: listOf("")
     }
 }
