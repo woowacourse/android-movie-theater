@@ -9,6 +9,8 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import woowacourse.movie.TestFixture.getMockScreeningTimes
+import woowacourse.movie.TestFixture.mockMovies
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
 
@@ -20,6 +22,7 @@ class ReservationPresenterTest {
 
     @BeforeEach
     fun setUp() {
+        every { view.changeHeadCount(1) } just runs
         presenter =
             ReservationPresenter(
                 view,
@@ -27,28 +30,17 @@ class ReservationPresenterTest {
                 TheaterDao(),
                 movieId = 0,
                 theaterId = 0,
+                savedHeadCount = 1,
             )
+        verify { view.changeHeadCount(1) }
     }
 
     @Test
-    fun `영화 정보를 보여준다`() {
-        every { view.showMovieInformation(any()) } just runs
-        presenter.loadMovie()
-        verify { view.showMovieInformation(any()) }
-    }
-
-    @Test
-    fun `상영 기간을 보여준다`() {
-        every { view.showScreeningPeriod(any()) } just runs
-        presenter.loadScreeningPeriod()
-        verify { view.showScreeningPeriod(any()) }
-    }
-
-    @Test
-    fun `상영 시간을 보여준다`() {
-        every { view.showScreeningTimes(any(), any()) } just runs
-        presenter.loadScreeningTimes("2024-03-01")
-        verify { view.showScreeningTimes(any(), any()) }
+    fun `상영 정보를 불러온다`() {
+        val mockScreeningTimes = getMockScreeningTimes(movieId = 0, theaterId = 0)
+        every { view.showScreeningInformation(any(), any()) } just runs
+        presenter.loadScreening()
+        verify { view.showScreeningInformation(mockMovies[0], mockScreeningTimes) }
     }
 
     @Test
@@ -60,8 +52,11 @@ class ReservationPresenterTest {
 
     @Test
     fun `예약 인원이 2인 상태에 마이너스 버튼을 누르면 예약 인원은 1이 된다`() {
-        every { view.changeHeadCount(any()) } just runs
+        every { view.changeHeadCount(2) } just runs
         presenter.increaseHeadCount()
+        verify { view.changeHeadCount(2) }
+
+        every { view.changeHeadCount(1) } just runs
         presenter.decreaseHeadCount()
         verify { view.changeHeadCount(1) }
     }
@@ -83,5 +78,12 @@ class ReservationPresenterTest {
             presenter.increaseHeadCount()
         }
         verify { view.changeHeadCount(3) }
+    }
+
+    @Test
+    fun `선택된 상영시간을 보여준다`() {
+        every { view.showScreeningTime(0) } just runs
+        presenter.selectScreeningTime(0)
+        verify { view.showScreeningTime(0) }
     }
 }

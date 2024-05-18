@@ -6,19 +6,11 @@
     <data>
 
         <variable
-            name="activity"
-            type="woowacourse.movie.feature.finished.ReservationFinishedActivity" />
-
-        <variable
             name="ticket"
             type="woowacourse.movie.model.ticket.Ticket" />
 
         <variable
-            name="movie_title"
-            type="String" />
-
-        <variable
-            name="head_count"
+            name="headCount"
             type="int" />
 
         <variable
@@ -61,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:text="@{String.valueOf(movie_title)}"
+            android:text="@{String.valueOf(ticket.movieTitle)}"
             android:textAppearance="@style/Bold24"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,28 +66,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@{String.valueOf(ticket.screeningDateTime.date)}"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toStartOf="@id/tv_reservation_finished_screening_time"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@id/tv_reservation_finished_movie_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_reservation_finished_movie_title"
-            tools:text="2024.3.1" />
-
-        <TextView
-            android:id="@+id/tv_reservation_finished_screening_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="20dp"
-            android:text="@{String.valueOf(ticket.screeningDateTime.time)}"
+            android:text="@{@string/reservation_finished_date_time(ticket.screeningDateTime.toLocalDate(), ticket.screeningDateTime.toLocalTime())}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@id/tv_reservation_finished_movie_title"
-            app:layout_constraintStart_toEndOf="@id/tv_reservation_finished_screening_date"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/tv_reservation_finished_movie_title"
             app:layout_constraintTop_toBottomOf="@id/tv_reservation_finished_movie_title"
-            tools:text="17:00" />
+            tools:text="2024.3.1 17:00" />
 
         <TextView
             android:id="@+id/tv_reservation_finished_viewing_class"
@@ -115,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="@{@string/reservation_finished_person(head_count)}"
+            android:text="@{@string/reservation_finished_person(headCount)}"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_reservation_finished_viewing_class"
             app:layout_constraintEnd_toStartOf="@id/tv_reservation_finished_seats"

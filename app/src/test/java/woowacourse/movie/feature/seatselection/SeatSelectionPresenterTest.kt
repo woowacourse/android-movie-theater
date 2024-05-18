@@ -4,6 +4,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
+import io.mockk.mockk
 import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -12,11 +13,15 @@ import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.seats.SeatsDao
 import woowacourse.movie.db.theater.TheaterDao
-import woowacourse.movie.model.movie.ScreeningDateTime
+import woowacourse.movie.db.ticket.TicketDao
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
 import woowacourse.movie.model.ticket.HeadCount
+import woowacourse.movie.model.ticket.Reservation
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 @ExtendWith(MockKExtension::class)
 class SeatSelectionPresenterTest {
@@ -24,19 +29,27 @@ class SeatSelectionPresenterTest {
     private lateinit var view: SeatSelectionContract.View
     private lateinit var presenter: SeatSelectionContract.Presenter
 
+    private val ticketDao = mockk<TicketDao>()
+
     @BeforeEach
     fun setUp() {
+        val reservation =
+            Reservation(
+                movieId = 0,
+                theaterId = 0,
+                HeadCount(4),
+                LocalDateTime.of(LocalDate.now(), LocalTime.now()),
+            )
         presenter =
             SeatSelectionPresenter(
                 view,
                 SeatsDao(),
                 ScreeningDao(),
                 TheaterDao(),
-                movieId = 0,
-                theaterId = 0,
-                HeadCount(4),
-                ScreeningDateTime("", ""),
+                ticketDao,
+                reservation,
             )
+
         with(presenter) {
             manageSelectedSeats(true, 0, Seat('A', 1, Grade.B))
             manageSelectedSeats(true, 0, Seat('C', 1, Grade.S))
@@ -68,7 +81,7 @@ class SeatSelectionPresenterTest {
     @Test
     fun `선택된 좌석들을 복구한다`() {
         every { view.restoreSelectedSeats(any()) } just runs
-        presenter.restoreSeats(Seats(), emptyList())
+        presenter.restoreSeats(Seats(), ArrayList())
         verify { view.restoreSelectedSeats(any()) }
     }
 
@@ -86,8 +99,8 @@ class SeatSelectionPresenterTest {
         every { view.updateSeatSelectedState(any(), any()) } just runs
         every { view.showAmount(49_000) } just runs
         every { view.setConfirmButtonEnabled(any()) } just runs
-        presenter.updateReservationState(Seat('E', 2, Grade.A), 0, false)
-        verify { view.updateSeatSelectedState(0, false) }
+        presenter.updateReservationState(Seat('E', 2, Grade.A), false)
+        verify { view.updateSeatSelectedState(17, false) }
         verify { view.showAmount(49_000) }
         verify { view.setConfirmButtonEnabled(true) }
     }

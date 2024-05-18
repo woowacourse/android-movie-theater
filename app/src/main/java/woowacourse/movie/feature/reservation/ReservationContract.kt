@@ -1,19 +1,15 @@
 package woowacourse.movie.feature.reservation
 
 import woowacourse.movie.model.movie.Movie
-import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.ticket.HeadCount
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 interface ReservationContract {
     interface View {
-        fun showMovieInformation(movie: Movie)
-
-        fun showScreeningPeriod(movie: Movie)
-
-        fun showScreeningTimes(
+        fun showScreeningInformation(
+            movie: Movie,
             screeningTimes: List<LocalTime>,
-            selectedDate: String,
         )
 
         fun changeHeadCount(count: Int)
@@ -21,36 +17,32 @@ interface ReservationContract {
         fun showResultToast()
 
         fun navigateToSeatSelection(
-            dateTime: ScreeningDateTime,
+            dateTime: LocalDateTime,
             movieId: Int,
             theaterId: Int,
             count: HeadCount,
         )
 
-        fun getScreeningDate(): String
-
-        fun getScreeningTime(): String
-
-        fun showDateTime(dateTime: ScreeningDateTime)
+        fun showDateTime(dateTime: LocalDateTime)
 
         fun showErrorSnackBar()
+
+        fun showScreeningDate(selectedDateId: Long)
+
+        fun showScreeningTime(selectedTimeId: Long)
     }
 
     interface Presenter {
-        fun loadMovie()
+        fun loadScreening()
 
-        fun loadScreeningPeriod()
+        fun selectScreeningDate(selectedDateId: Long)
 
-        fun loadScreeningTimes(selectedDate: String)
+        fun selectScreeningTime(selectedTimeId: Long)
 
         fun increaseHeadCount()
 
         fun decreaseHeadCount()
 
-        fun sendTicketToSeatSelection()
-
-        fun restoreHeadCount()
-
-        fun handleUndeliveredData()
+        fun sendReservationInformationToSeatSelection()
     }
 }

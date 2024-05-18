@@ -4,15 +4,11 @@
     <data>
 
         <variable
-            name="view_holder"
-            type="woowacourse.movie.feature.theater.adapter.TheaterSelectionViewHolder" />
-
-        <variable
             name="theater"
             type="woowacourse.movie.model.theater.Theater" />
 
         <variable
-            name="screening_count"
+            name="screeningCount"
             type="int" />
     </data>
 
@@ -43,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingEnd="24dp"
-            android:text="@{@string/theater_screening_counts(screening_count)}"
+            android:text="@{@string/theater_screening_counts(screeningCount)}"
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@id/tv_theater_name"

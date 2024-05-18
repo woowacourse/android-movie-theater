@@ -3,9 +3,6 @@
 
     <data>
 
-        <variable
-            name="home"
-            type="woowacourse.movie.feature.home.HomeFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"

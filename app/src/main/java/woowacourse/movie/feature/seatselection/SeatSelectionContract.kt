@@ -1,18 +1,16 @@
 package woowacourse.movie.feature.seatselection
 
-import android.widget.Button
 import woowacourse.movie.model.movie.Movie
-import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.seats.Grade
 import woowacourse.movie.model.seats.Seat
 import woowacourse.movie.model.seats.Seats
-import woowacourse.movie.model.ticket.HeadCount
-import woowacourse.movie.model.ticket.Ticket
 
-typealias OnReservationDataSave = (HeadCount, Seats, seatsIndex: List<Int>) -> Unit
+typealias OnReservationDataSave = (Seats, seatsIndex: List<Int>) -> Unit
 
 interface SeatSelectionContract {
     interface Presenter {
+        fun handleMovieLoading()
+
         fun loadSeatNumber()
 
         fun loadMovie()
@@ -24,8 +22,8 @@ interface SeatSelectionContract {
         fun restoreReservation()
 
         fun restoreSeats(
-            selectedSeats: Seats,
-            seatsIndex: List<Int>,
+            selectedSeats: Seats?,
+            seatsIndex: ArrayList<Int>?,
         )
 
         fun manageSelectedSeats(
@@ -34,17 +32,14 @@ interface SeatSelectionContract {
             seat: Seat,
         )
 
-        fun makeTicket(screeningDateTime: ScreeningDateTime)
+        fun saveTicket()
 
         fun validateReservationAvailable()
 
         fun deliverReservationInfo(onReservationDataSave: OnReservationDataSave)
 
-        fun handleUndeliveredData()
-
         fun updateReservationState(
             seat: Seat,
-            index: Int,
             isSelected: Boolean,
         )
     }
@@ -56,13 +51,6 @@ interface SeatSelectionContract {
         )
 
         fun setUpSeatColorByGrade(grade: Grade): Int
-
-        fun Button.showSeatNumber(seat: Seat)
-
-        fun Button.updateReservationInformation(
-            index: Int,
-            seat: Seat,
-        )
 
         fun updateSeatSelectedState(
             index: Int,
@@ -77,7 +65,7 @@ interface SeatSelectionContract {
 
         fun launchReservationConfirmDialog()
 
-        fun navigateToFinished(ticket: Ticket)
+        fun navigateToFinished(ticketId: Long)
 
         fun restoreSelectedSeats(selectedSeats: List<Int>)
 

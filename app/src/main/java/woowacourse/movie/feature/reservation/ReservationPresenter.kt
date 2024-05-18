@@ -2,14 +2,15 @@ package woowacourse.movie.feature.reservation
 
 import woowacourse.movie.db.screening.ScreeningDao
 import woowacourse.movie.db.theater.TheaterDao
+import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
-import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.result.ChangeTicketCountResult
 import woowacourse.movie.model.result.Failure
 import woowacourse.movie.model.result.Success
 import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
-import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 class ReservationPresenter(
@@ -18,23 +19,35 @@ class ReservationPresenter(
     private val theaterDao: TheaterDao,
     private val movieId: Int,
     private val theaterId: Int,
-    savedHeadCount: Int = DEFAULT_HEAD_COUNT,
+    savedHeadCount: Int,
 ) : ReservationContract.Presenter {
     private val headCount = HeadCount(savedHeadCount)
+    private lateinit var movie: Movie
+    private lateinit var screeningDates: List<LocalDate>
+    private lateinit var screeningTimes: List<LocalTime>
+    private var screeningDateId: Long = 0
+    private var screeningTimeId: Long = 0
 
-    override fun loadMovie() {
-        val movie = screeningDao.find(movieId)
-        view.showMovieInformation(movie)
+    init {
+        view.changeHeadCount(savedHeadCount)
     }
 
-    override fun loadScreeningPeriod() {
-        val movie = screeningDao.find(movieId)
-        view.showScreeningPeriod(movie)
+    override fun loadScreening() {
+        if (isValidScreening()) {
+            loadScreeningInformation()
+        } else {
+            handleUndeliveredData()
+        }
     }
 
-    override fun loadScreeningTimes(selectedDate: String) {
-        val theaterTimes: List<LocalTime> = theaterDao.findScreeningTimesByMovieId(theaterId, movieId)
-        view.showScreeningTimes(theaterTimes, selectedDate)
+    override fun selectScreeningDate(selectedDateId: Long) {
+        screeningDateId = selectedDateId
+        view.showScreeningDate(screeningDateId)
+    }
+
+    override fun selectScreeningTime(selectedTimeId: Long) {
+        screeningTimeId = selectedTimeId
+        view.showScreeningTime(screeningTimeId)
     }
 
     override fun increaseHeadCount() {
@@ -47,24 +60,29 @@ class ReservationPresenter(
         handleHeadCountBounds(result)
     }
 
-    override fun sendTicketToSeatSelection() {
-        val date: String = view.getScreeningDate()
-        val time: String = view.getScreeningTime()
-        val dateTime = ScreeningDateTime(date, time)
+    override fun sendReservationInformationToSeatSelection() {
+        screeningDates = movie.screeningPeriod
+        val screeningDate = screeningDates[screeningDateId.toInt()]
+        val screeningTime = screeningTimes[screeningTimeId.toInt()]
+        val dateTime = LocalDateTime.of(screeningDate, screeningTime)
         view.showDateTime(dateTime)
         view.navigateToSeatSelection(dateTime, movieId, theaterId, headCount)
     }
 
-    override fun restoreHeadCount() {
-        view.changeHeadCount(headCount.count)
+    private fun isValidScreening(): Boolean {
+        if (movieId == DEFAULT_MOVIE_ID) return false
+        if (theaterId == DEFAULT_THEATER_ID) return false
+        return true
     }
 
-    override fun handleUndeliveredData() {
-        if (movieId == DEFAULT_MOVIE_ID ||
-            theaterId == DEFAULT_THEATER_ID
-        ) {
-            view.showErrorSnackBar()
-        }
+    private fun handleUndeliveredData() {
+        view.showErrorSnackBar()
+    }
+
+    private fun loadScreeningInformation() {
+        movie = screeningDao.find(movieId)
+        screeningTimes = theaterDao.findScreeningTimesByMovieId(theaterId, movieId)
+        view.showScreeningInformation(movie, screeningTimes)
     }
 
     private fun handleHeadCountBounds(result: ChangeTicketCountResult) {

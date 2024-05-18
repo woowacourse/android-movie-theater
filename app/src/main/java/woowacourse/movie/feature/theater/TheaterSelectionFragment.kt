@@ -15,13 +15,13 @@ import woowacourse.movie.db.theater.TheaterDao
 import woowacourse.movie.feature.home.HomeFragment.Companion.MOVIE_ID
 import woowacourse.movie.feature.reservation.ReservationActivity
 import woowacourse.movie.feature.theater.adapter.TheaterSelectionAdapter
-import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
 import woowacourse.movie.model.theater.Theater
 
 class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionContract.View {
     private var _binding: FragmentTheaterSelectionBinding? = null
     private val binding get() = _binding!!
     private lateinit var presenter: TheaterSelectionPresenter
+    private lateinit var theaterSelectionAdapter: TheaterSelectionAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,21 +39,14 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
     ) {
         super.onViewCreated(view, savedInstanceState)
         initPresenter()
-        with(presenter) {
-            handleUndeliveredMovieId()
-            loadTheater()
-        }
+        initTheaterSelectionAdapter()
+        presenter.loadTheater()
     }
 
     override fun showTheaters(
         theaters: List<Theater>,
         screeningCounts: List<Int>,
     ) {
-        val theaterSelectionAdapter =
-            TheaterSelectionAdapter { theaterId ->
-                presenter.sendTheaterInfoToReservation(theaterId)
-            }
-        binding.rvTheaterSelection.adapter = theaterSelectionAdapter
         theaterSelectionAdapter.updateData(theaters, screeningCounts)
     }
 
@@ -87,13 +80,7 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
         _binding = null
     }
 
-    private fun receiveMovieId(): Int {
-        val movieId = arguments?.getInt(MOVIE_ID)
-        movieId?.let {
-            return movieId
-        }
-        return DEFAULT_MOVIE_ID
-    }
+    private fun receiveMovieId(): Int? = arguments?.getInt(MOVIE_ID)
 
     private fun initPresenter() {
         presenter =
@@ -102,6 +89,14 @@ class TheaterSelectionFragment : BottomSheetDialogFragment(), TheaterSelectionCo
                 TheaterDao(),
                 receiveMovieId(),
             )
+    }
+
+    private fun initTheaterSelectionAdapter() {
+        theaterSelectionAdapter =
+            TheaterSelectionAdapter { theaterId ->
+                presenter.sendTheaterInfoToReservation(theaterId)
+            }
+        binding.rvTheaterSelection.adapter = theaterSelectionAdapter
     }
 
     companion object {

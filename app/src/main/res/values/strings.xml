@@ -8,6 +8,10 @@
     <string name="all_running_time">러닝타임:&#160;%s분</string>
     <string name="all_confirm">확인</string>
 
+    <!-- MainActivity -->
+    <string name="main_notification_permission">푸시 알림 수신을 허용 하셨습니다.</string>
+    <string name="main_notification_rejection">푸시 알림 수신을 거부 하셨습니다.</string>
+
     <!-- ReservationDetailActivity -->
     <string name="invalid_number_of_tickets">"범위를 벗어난 티켓 갯수입니다."</string>
 
@@ -30,12 +34,13 @@
     <string name="select_seat_number">%c%d</string>
 
     <!-- ReservationFinishedActivity -->
-    <string name="reservation_finished_seat_separator">,&#160;</string>
+    <string name="reservation_finished_seat_separator">", "</string>
     <string name="reservation_finished_error">"예기치 못한 오류가 발생해 티켓이 발급되지 않았습니다. 티켓을 처음부터 다시 발급하시겠습니까?"</string>
     <string name="reservation_finished_navigate_to_home">"홈으로 이동"</string>
 
     <!-- activity_reservation_finished -->
     <string name="reservation_finished_notice">영화 상영 시작 시간 15분 전까지\n취소가 가능합니다.</string>
+    <string name="reservation_finished_date_time">"%s %s"</string>
     <string name="reservation_finished_general">일반</string>
     <string name="reservation_finished_person">%d명 |</string>
     <string name="reservation_finished_theater">| %s</string>
@@ -48,6 +53,12 @@
     <!-- item_theater -->
     <string name="theater_screening_counts">%d개의 상영 시간</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- activity_setting -->
+    <string name="setting_notification_title">푸시 알림 수신</string>
+    <string name="setting_notification_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+
+    <!-- SettingFragment -->
+    <string name="setting_notification_permission_dialog_message">푸시 알림 수신이 거부된 상태 입니다. 푸시 알림 수신 허용하기 위해 설정 화면으로 이동하시겠습니까?</string>
+    <string name="setting_notification_rejection_dialog_message">"푸시 알림 수신이 허용된 상태입니다. 푸시 알림 수신을 거부하기 위해 설정 화면으로 이동하시겠습니까?"</string>
+    <string name="notification_channel_description">"%s 30분 후에 상영"</string>
 </resources>

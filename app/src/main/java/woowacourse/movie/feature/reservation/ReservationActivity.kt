@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
@@ -18,11 +19,12 @@ import woowacourse.movie.feature.seatselection.SeatSelectionActivity
 import woowacourse.movie.feature.theater.TheaterSelectionFragment.Companion.THEATER_ID
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.Movie.Companion.DEFAULT_MOVIE_ID
-import woowacourse.movie.model.movie.ScreeningDateTime
 import woowacourse.movie.model.theater.Theater.Companion.DEFAULT_THEATER_ID
 import woowacourse.movie.model.ticket.HeadCount
 import woowacourse.movie.model.ticket.HeadCount.Companion.DEFAULT_HEAD_COUNT
 import woowacourse.movie.utils.MovieUtils.makeToast
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 class ReservationActivity : AppCompatActivity(), ReservationContract.View {
@@ -37,63 +39,31 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.activity = this
-
         val savedHeadCount = bringSavedHeadCount(savedInstanceState)
         initPresenter(savedHeadCount)
-
-        with(presenter) {
-            handleUndeliveredData()
-            loadMovie()
-            loadScreeningPeriod()
-        }
-        changeHeadCount(savedHeadCount)
-        updateScreeningTimes(DEFAULT_TIME_ID)
+        presenter.loadScreening()
+        setOnScreeningDateSelectedListener()
+        setOnScreeningTimeSelectedListener()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.apply {
             putInt(HEAD_COUNT, binding.tvReservationHeadCount.text.toString().toInt())
-            putInt(SCREENING_PERIOD, binding.spinnerReservationScreeningDate.selectedItemPosition)
-            putInt(SCREENING_TIME, binding.spinnerReservationScreeningTime.selectedItemPosition)
         }
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        presenter.restoreHeadCount()
-        val selectedTimeId = savedInstanceState.getInt(SCREENING_TIME, DEFAULT_TIME_ID)
-        updateScreeningTimes(selectedTimeId)
-    }
-
-    override fun showMovieInformation(movie: Movie) {
+    override fun showScreeningInformation(
+        movie: Movie,
+        screeningTimes: List<LocalTime>,
+    ) {
         with(binding) {
             this.movie = movie
             screeningStartDate = movie.screeningPeriod.first()
             screeningEndDate = movie.screeningPeriod.last()
         }
-    }
-
-    override fun showScreeningPeriod(movie: Movie) {
-        binding.spinnerReservationScreeningDate.adapter =
-            ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_item,
-                movie.screeningPeriod,
-            )
-    }
-
-    override fun showScreeningTimes(
-        screeningTimes: List<LocalTime>,
-        selectedDate: String,
-    ) {
-        binding.spinnerReservationScreeningTime.adapter =
-            ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_item,
-                screeningTimes,
-            )
+        initScreeningDatesSpinner(movie.screeningPeriod)
+        initScreeningTimesSpinner(screeningTimes)
     }
 
     override fun changeHeadCount(count: Int) {
@@ -103,20 +73,47 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     override fun showResultToast() = makeToast(this, getString(R.string.invalid_number_of_tickets))
 
     override fun navigateToSeatSelection(
-        dateTime: ScreeningDateTime,
+        dateTime: LocalDateTime,
         movieId: Int,
         theaterId: Int,
         count: HeadCount,
     ) {
-        val intent = Intent(this, SeatSelectionActivity::class.java)
-        intent.apply {
-            putExtra(MOVIE_ID, movieId)
-            putExtra(THEATER_ID, theaterId)
-            putExtra(SCREENING_DATE_TIME, dateTime)
-            putExtra(HEAD_COUNT, count)
-        }
+        val intent =
+            Intent(this, SeatSelectionActivity::class.java)
+                .putExtra(MOVIE_ID, movieId)
+                .putExtra(THEATER_ID, theaterId)
+                .putExtra(SCREENING_DATE_TIME, dateTime)
+                .putExtra(HEAD_COUNT, count)
         startActivity(intent)
     }
+
+    override fun showScreeningDate(selectedDateId: Long) {
+        binding.spinnerReservationScreeningDate.setSelection(selectedDateId.toInt())
+    }
+
+    override fun showScreeningTime(selectedTimeId: Long) {
+        binding.spinnerReservationScreeningTime.setSelection(selectedTimeId.toInt())
+    }
+
+    override fun showDateTime(dateTime: LocalDateTime) {
+        binding.screeningDateTime = dateTime
+    }
+
+    override fun showErrorSnackBar() {
+        val snackBar =
+            Snackbar.make(
+                binding.root,
+                getString(R.string.all_error),
+                Snackbar.LENGTH_INDEFINITE,
+            )
+        snackBar.setAction(R.string.all_confirm) {
+            snackBar.dismiss()
+            finish()
+        }
+        snackBar.show()
+    }
+
+    private fun bringSavedHeadCount(savedInstanceState: Bundle?) = savedInstanceState?.getInt(HEAD_COUNT) ?: DEFAULT_HEAD_COUNT
 
     private fun initPresenter(savedHeadCount: Int) {
         val movieId = receiveMovieId()
@@ -137,10 +134,16 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     private fun receiveTheaterId() = intent.getIntExtra(THEATER_ID, DEFAULT_THEATER_ID)
 
-    private fun bringSavedHeadCount(savedInstanceState: Bundle?) = savedInstanceState?.getInt(HEAD_COUNT) ?: DEFAULT_HEAD_COUNT
+    private fun setOnScreeningDateSelectedListener() {
+        binding.spinnerReservationScreeningDate.setOnItemSelectedListener { selectDateId -> presenter.selectScreeningDate(selectDateId) }
+    }
 
-    private fun updateScreeningTimes(selectedTimeId: Int? = null) {
-        binding.spinnerReservationScreeningDate.onItemSelectedListener =
+    private fun setOnScreeningTimeSelectedListener() {
+        binding.spinnerReservationScreeningTime.setOnItemSelectedListener { selectTimeId -> presenter.selectScreeningTime(selectTimeId) }
+    }
+
+    private fun Spinner.setOnItemSelectedListener(onSelectItem: OnSelectedSpinnerItem) {
+        onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -148,51 +151,39 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
                     position: Int,
                     id: Long,
                 ) {
-                    val selectedDate = binding.spinnerReservationScreeningDate.selectedItem.toString()
-                    presenter.loadScreeningTimes(selectedDate)
-                    selectedTimeId?.let {
-                        if (selectedTimeId < binding.spinnerReservationScreeningTime.count) {
-                            binding.spinnerReservationScreeningTime.setSelection(it)
-                        }
-                    }
+                    onSelectItem(id)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
-                    Log.d(SELECTED_DATE_TAG, NOTHING_SELECTED_MESSAGE)
+                    Log.d(SPINNER_TAG, NOTHING_SELECTED_MESSAGE)
                 }
             }
     }
 
-    override fun getScreeningDate(): String = binding.spinnerReservationScreeningDate.selectedItem.toString()
-
-    override fun getScreeningTime(): String = binding.spinnerReservationScreeningTime.selectedItem.toString()
-
-    override fun showDateTime(dateTime: ScreeningDateTime) {
-        binding.dateTime = dateTime
+    private fun initScreeningDatesSpinner(screeningDates: List<LocalDate>) {
+        binding.spinnerReservationScreeningDate.adapter =
+            ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item,
+                screeningDates,
+            )
     }
 
-    override fun showErrorSnackBar() {
-        val snackBar =
-            Snackbar.make(
-                binding.root,
-                getString(R.string.all_error),
-                Snackbar.LENGTH_INDEFINITE,
+    private fun initScreeningTimesSpinner(screeningTimes: List<LocalTime>) {
+        binding.spinnerReservationScreeningTime.adapter =
+            ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item,
+                screeningTimes,
             )
-        snackBar.setAction(R.string.all_confirm) {
-            snackBar.dismiss()
-            finish()
-        }
-        snackBar.show()
     }
 
     companion object {
-        const val TICKET = "ticket"
         const val HEAD_COUNT = "headCount"
         const val SCREENING_DATE_TIME = "screeningDateTime"
-        const val SELECTED_DATE_TAG = "notSelectedDate"
-        const val NOTHING_SELECTED_MESSAGE = "nothingSelected"
-        private const val DEFAULT_TIME_ID = 0
-        private const val SCREENING_TIME = "screeningTime"
-        private const val SCREENING_PERIOD = "screeningPeriod"
+        private const val SPINNER_TAG = "spinner"
+        private const val NOTHING_SELECTED_MESSAGE = "nothingSelected"
     }
 }
+
+typealias OnSelectedSpinnerItem = (itemId: Long) -> Unit
