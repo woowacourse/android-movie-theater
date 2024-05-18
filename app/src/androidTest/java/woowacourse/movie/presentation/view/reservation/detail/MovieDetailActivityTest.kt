@@ -58,6 +58,18 @@ class MovieDetailActivityTest {
     }
 
     @Test
+    fun `상영_날짜를_선택하는_스피너가_나타난다`() {
+        onView(withId(R.id.dateSpinner))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun `상영_시간을_선택하는_스피너가_나타난다`() {
+        onView(withId(R.id.timeSpinner))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
     fun `영화_상세_화면에서_초기_예매_수량은_1이다`() {
         onView(withId(R.id.reservationCount))
             .check(matches(withText("1")))
