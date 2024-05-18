@@ -7,19 +7,24 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.presentation.repository.SeatRepository
+import woowacourse.movie.data.db.ReservationTicketDao
+import woowacourse.movie.domain.repository.SeatRepository
+import woowacourse.movie.presentation.reservation.seat.SeatSelectionContract
+import woowacourse.movie.presentation.reservation.seat.SeatSelectionPresenterImpl
 
 class SeatSelectionPresenterImplTest {
     private lateinit var view: SeatSelectionContract.View
     private lateinit var presenter: SeatSelectionPresenterImpl
     private lateinit var seatRepository: SeatRepository
+    private lateinit var ticketDao: ReservationTicketDao
 
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
         seatRepository = mockk(relaxed = true)
+        ticketDao = mockk(relaxed = true)
 
-        presenter = SeatSelectionPresenterImpl(1, seatRepository)
+        presenter = SeatSelectionPresenterImpl(1, seatRepository, ticketDao)
         presenter.attachView(view)
     }
 

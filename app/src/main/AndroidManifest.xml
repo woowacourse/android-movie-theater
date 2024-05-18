@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,9 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
+        <receiver
+            android:name=".presentation.notification.MovieNotificationReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
         <activity
-            android:name=".presentation.view.navigation.NavigationActivity"
-            android:exported="true" >
+            android:name=".presentation.navigation.NavigationActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,19 +30,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.view.reservation.seat.SeatSelectionActivity"
+            android:name=".presentation.reservation.seat.SeatSelectionActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.view.reservation.result.ReservationResultActivity"
+            android:name=".presentation.reservation.result.ReservationResultActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.view.reservation.detail.MovieDetailActivity"
+            android:name=".presentation.reservation.detail.MovieDetailActivity"
             android:exported="false" />
-        <activity
-            android:name=".presentation.view.screening.ScreeningActivity"
-            android:exported="true">
-
-        </activity>
     </application>
 
 </manifest>
