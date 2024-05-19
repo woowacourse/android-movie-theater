@@ -21,7 +21,7 @@
             android:name=".ui.pushnotification.PushNotificationBroadCastReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="APP_SPECIFIC_BROADCAST" />
+                <action android:name="MOVIE_RESERVATION_REMIND_PUSH_NOTIFICATION" />
             </intent-filter>
         </receiver>
 
