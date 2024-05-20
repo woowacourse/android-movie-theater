@@ -17,33 +17,30 @@ class ScreensAndAdvertisementUseCase(
             screenRepository.load().map { screen ->
                 val moviePoster = movieRepository.imageSrc(screen.movie.id)
                 screen.toPreviewUI(image = moviePoster)
-            }.toMutableList()
+            }
 
         val advertisement = adRepository.load()
-
-        return generatedScreenAdList(screenPreviewUis, advertisement).toList()
+        return generatedScreenAdList(screenPreviewUis, advertisement)
     }
 
     private fun generatedScreenAdList(
-        screenPreviewUis: MutableList<ScreenAd.ScreenPreviewUi>,
+        screenPreviewUis: List<ScreenAd.ScreenPreviewUi>,
         advertisement: ScreenAd.Advertisement,
-    ): MutableList<ScreenAd> {
-        val totalItems = screenPreviewUis.size + screenPreviewUis.size / 3
-        val screenAdList = mutableListOf<ScreenAd>()
-
-        (0 until totalItems).mapIndexed { index: Int, _ ->
-            if ((index + 1) % 4 == 0) {
-                screenAdList.add(advertisement)
+    ): List<ScreenAd> {
+        val totalItems = screenPreviewUis.size + screenPreviewUis.size / (ADVERTISEMENT_INTERVAL - 1)
+        return (0 until totalItems).mapIndexed { index: Int, _ ->
+            if ((index + 1) % ADVERTISEMENT_INTERVAL == 0) {
+                advertisement
             } else {
-                val screenIndex = index - index / 4
-                if (screenIndex < screenPreviewUis.size) {
-                    screenAdList.add(screenPreviewUis[screenIndex])
-                } else {
-                }
+                val screenIndex = index - index / ADVERTISEMENT_INTERVAL
+                screenPreviewUis[screenIndex]
             }
         }
-        return screenAdList
     }
 
     fun loadedScreens(screenId: Int): Result<Screen> = screenRepository.findById(screenId)
+
+    companion object {
+        private const val ADVERTISEMENT_INTERVAL = 4
+    }
 }
