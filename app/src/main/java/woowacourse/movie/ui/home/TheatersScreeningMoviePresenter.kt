@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.home
 
-import woowacourse.movie.domain.model.Screen
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.TheaterScreeningCount
 import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.domain.repository.TheaterRepository
@@ -11,15 +11,15 @@ class TheatersScreeningMoviePresenter(
     private val theaterRepository: TheaterRepository,
     private val screenId: Int,
 ) : TheatersScreeningMovieContract.Presenter {
-    private val loadedScreen: Screen = loadedScreen()
+    private val loadedScreenData: ScreenData = loadedScreen()
 
     override fun loadTheaters() {
         val theaters = theaterRepository.loadAll()
-        val theatersScreening = theaters.screeningTheater(loadedScreen.movie)
+        val theatersScreening = theaters.screeningTheater(loadedScreenData.movie)
 
         val theaterScreeningCount =
             theatersScreening.theaters.map { theater ->
-                TheaterScreeningCount(theater, theater.allScreeningTimeCount(loadedScreen))
+                TheaterScreeningCount(theater, theater.allScreeningTimeCount(loadedScreenData))
             }
 
         view.showTheatersScreeningcount(theaterScreeningCount)

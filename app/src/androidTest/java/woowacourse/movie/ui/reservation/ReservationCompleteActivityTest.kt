@@ -16,11 +16,11 @@ import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationTicket
 import woowacourse.movie.data.ReservationTicketDatabase
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Grade
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Position
-import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.Theater
@@ -91,13 +91,13 @@ class ReservationCompleteActivityTest {
 
 private fun reservationTicketTestFixture(): ReservationTicket {
     val movie = Movie(1, "title", 120, "description")
-    val screen = Screen(1, movie, DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)))
+    val screenData = ScreenData(1, movie, DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)))
     val seats =
         Seats(
             Seat(Position(1, 1), Grade.A),
         )
     return ReservationTicket(
-        screen = screen,
+        screenData = screenData,
         date = LocalDate.of(2024, 3, 2),
         time = LocalTime.of(12, 30),
         seats = seats,

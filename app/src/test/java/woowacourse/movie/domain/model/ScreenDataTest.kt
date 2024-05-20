@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.repository.FakeScreenRepository
 import java.time.LocalTime
 
-class ScreenTest {
+class ScreenDataTest {
     @Test
     fun `상영작이 상영하는 시간을 구한다`() {
-        val screen = FakeScreenRepository.fakeScreen1
+        val screen = FakeScreenRepository.fakeScreen1Data
 
         val actual = screen.allScreeningTime(WeeklyScreenTimePolicy())
 

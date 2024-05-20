@@ -1,22 +1,22 @@
 package woowacourse.movie.domain.repository
 
 import woowacourse.movie.data.ReservationTicket
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateTime
-import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.TimeReservation
 
 interface ReservationRepository {
     fun savedReservationId(
-        screen: Screen,
+        screenData: ScreenData,
         seats: Seats,
         dateTime: DateTime,
         theater: Theater,
     ): Result<Long>
 
     fun savedTimeReservationId(
-        screen: Screen,
+        screenData: ScreenData,
         count: Int,
         dateTime: DateTime,
     ): Result<Int>

@@ -1,11 +1,12 @@
 package woowacourse.movie.domain.model
 
+import woowacourse.movie.data.model.ScreenData
 import java.time.LocalDate
 import java.time.LocalTime
 
 data class Reservation(
     val id: Int,
-    val screen: Screen,
+    val screenData: ScreenData,
     val ticket: Ticket,
     val seats: Seats,
     val dateTime: DateTime,
@@ -19,7 +20,7 @@ data class Reservation(
         val NULL =
             Reservation(
                 id = -1,
-                screen = Screen.NULL,
+                screenData = ScreenData.NULL,
                 ticket = Ticket(1),
                 seats =
                     Seats(

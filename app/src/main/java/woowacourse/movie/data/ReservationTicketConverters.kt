@@ -7,7 +7,7 @@ import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
-import woowacourse.movie.domain.model.Screen
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.Theater
 import java.time.LocalDate
@@ -59,10 +59,10 @@ class ReservationTicketConverters {
     fun toLocalTime(value: String?): LocalTime? = value?.let { LocalTime.parse(it, timeFormatter) }
 
     @TypeConverter
-    fun fromScreen(screen: Screen?): String? = gson.toJson(screen)
+    fun fromScreen(screenData: ScreenData?): String? = gson.toJson(screenData)
 
     @TypeConverter
-    fun toScreen(screenString: String?): Screen? = gson.fromJson(screenString, Screen::class.java)
+    fun toScreen(screenString: String?): ScreenData? = gson.fromJson(screenString, ScreenData::class.java)
 
     @TypeConverter
     fun fromSeats(seats: Seats?): String? = gson.toJson(seats)

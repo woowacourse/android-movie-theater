@@ -3,8 +3,8 @@ package woowacourse.movie.ui.seat
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.Position
-import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.TimeReservation
 import woowacourse.movie.domain.repository.DummyTheaters
@@ -26,7 +26,7 @@ class SeatReservationPresenter(
     private val uiHandler = Handler(Looper.getMainLooper())
 
     private val timeReservation: TimeReservation = reservationRepository.loadTimeReservation(timeReservationId)
-    private val loadedAllSeats: Seats = screenRepository.seats(timeReservation.screen.id)
+    private val loadedAllSeats: Seats = screenRepository.seats(timeReservation.screenData.id)
     private val ticketCount = timeReservation.ticket.count
 
     private var selectedSeats = Seats()
@@ -79,7 +79,7 @@ class SeatReservationPresenter(
     }
 
     override fun reserve() {
-        val screenId = timeReservation.screen.id
+        val screenId = timeReservation.screenData.id
         thread {
             reservationRepository.savedReservationId(
                 loadedScreen(screenId),
@@ -105,7 +105,7 @@ class SeatReservationPresenter(
         }
     }
 
-    private fun loadedScreen(screenId: Int): Screen {
+    private fun loadedScreen(screenId: Int): ScreenData {
         screenRepository.findById(id = screenId).onSuccess { screen ->
             return screen
         }.onFailure { e ->

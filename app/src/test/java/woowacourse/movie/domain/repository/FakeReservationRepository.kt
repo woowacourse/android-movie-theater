@@ -1,9 +1,9 @@
 package woowacourse.movie.domain.repository
 
 import woowacourse.movie.data.ReservationTicket
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateTime
 import woowacourse.movie.domain.model.Reservation
-import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.Ticket
@@ -26,19 +26,19 @@ class FakeReservationRepository : ReservationRepository {
         )
 
     override fun savedReservationId(
-        screen: Screen,
+        screenData: ScreenData,
         seats: Seats,
         dateTime: DateTime,
         theater: Theater,
     ): Result<Long> =
         runCatching {
             val id = reservations.size + 1
-            reservations.add(Reservation(id, screen, Ticket(seats.count()), seats, dateTime, theater))
+            reservations.add(Reservation(id, screenData, Ticket(seats.count()), seats, dateTime, theater))
             id.toLong()
         }
 
     override fun savedTimeReservationId(
-        screen: Screen,
+        screenData: ScreenData,
         count: Int,
         dateTime: DateTime,
     ): Result<Int> =
@@ -47,7 +47,7 @@ class FakeReservationRepository : ReservationRepository {
             timeReservations.add(
                 TimeReservation(
                     id = timeReservations.size + 1,
-                    screen = screen,
+                    screenData = screenData,
                     ticket = Ticket(count),
                     dateTime = dateTime,
                 ),

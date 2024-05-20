@@ -1,9 +1,12 @@
-package woowacourse.movie.domain.model
+package woowacourse.movie.data.model
 
+import woowacourse.movie.domain.model.DateRange
+import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.ScreenTimePolicy
 import java.time.LocalDate
 import java.time.LocalTime
 
-data class Screen(
+data class ScreenData(
     val id: Int,
     val movie: Movie,
     val dateRange: DateRange = DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)),
@@ -16,7 +19,7 @@ data class Screen(
 
     companion object {
         val NULL =
-            Screen(
+            ScreenData(
                 id = -1,
                 movie = Movie.NULL,
             )

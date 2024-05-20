@@ -1,8 +1,8 @@
 package woowacourse.movie.domain.repository
 
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.Theaters
 import java.time.LocalDate
@@ -14,7 +14,7 @@ class DummyTheaters : TheaterRepository {
                 1,
                 "선릉 극장",
                 listOf(
-                    Screen(
+                    ScreenData(
                         id = 1,
                         Movie(
                             id = 1,
@@ -25,7 +25,7 @@ class DummyTheaters : TheaterRepository {
                         ),
                         dateRange = DateRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 3)),
                     ),
-                    Screen(
+                    ScreenData(
                         id = 2,
                         Movie(
                             id = 2,
@@ -36,7 +36,7 @@ class DummyTheaters : TheaterRepository {
                         ),
                         dateRange = DateRange(LocalDate.of(2024, 3, 2), LocalDate.of(2024, 3, 4)),
                     ),
-                    Screen(
+                    ScreenData(
                         id = 3,
                         Movie(
                             id = 3,
@@ -47,7 +47,7 @@ class DummyTheaters : TheaterRepository {
                         ),
                         dateRange = DateRange(LocalDate.of(2024, 3, 3), LocalDate.of(2024, 3, 5)),
                     ),
-                    Screen(
+                    ScreenData(
                         id = 12,
                         Movie(
                             id = 3,
@@ -64,7 +64,7 @@ class DummyTheaters : TheaterRepository {
                 2,
                 "잠실 극장",
                 listOf(
-                    Screen(
+                    ScreenData(
                         id = 4,
                         Movie(
                             id = 1,
@@ -75,7 +75,7 @@ class DummyTheaters : TheaterRepository {
                         ),
                         dateRange = DateRange(LocalDate.of(2024, 3, 4), LocalDate.of(2024, 3, 6)),
                     ),
-                    Screen(
+                    ScreenData(
                         id = 5,
                         Movie(
                             id = 2,
@@ -86,7 +86,7 @@ class DummyTheaters : TheaterRepository {
                         ),
                         dateRange = DateRange(LocalDate.of(2024, 3, 5), LocalDate.of(2024, 3, 7)),
                     ),
-                    Screen(
+                    ScreenData(
                         id = 6,
                         Movie(
                             id = 3,
@@ -97,7 +97,7 @@ class DummyTheaters : TheaterRepository {
                         ),
                         dateRange = DateRange(LocalDate.of(2024, 3, 6), LocalDate.of(2024, 3, 8)),
                     ),
-                    Screen(
+                    ScreenData(
                         id = 7,
                         Movie(
                             id = 1,
@@ -108,7 +108,7 @@ class DummyTheaters : TheaterRepository {
                         ),
                         dateRange = DateRange(LocalDate.of(2024, 3, 7), LocalDate.of(2024, 3, 9)),
                     ),
-                    Screen(
+                    ScreenData(
                         id = 9,
                         Movie(
                             id = 3,
@@ -119,7 +119,7 @@ class DummyTheaters : TheaterRepository {
                         ),
                         dateRange = DateRange(LocalDate.of(2024, 3, 9), LocalDate.of(2024, 3, 11)),
                     ),
-                    Screen(
+                    ScreenData(
                         id = 10,
                         Movie(
                             id = 1,
@@ -130,7 +130,7 @@ class DummyTheaters : TheaterRepository {
                         ),
                         dateRange = DateRange(LocalDate.of(2024, 3, 10), LocalDate.of(2024, 3, 12)),
                     ),
-                    Screen(
+                    ScreenData(
                         id = 11,
                         Movie(
                             id = 2,
@@ -147,7 +147,7 @@ class DummyTheaters : TheaterRepository {
                 3,
                 "강남 극장",
                 listOf(
-                    Screen(
+                    ScreenData(
                         id = 1,
                         Movie(
                             id = 1,
@@ -158,7 +158,7 @@ class DummyTheaters : TheaterRepository {
                         ),
                         dateRange = DateRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 3)),
                     ),
-                    Screen(
+                    ScreenData(
                         id = 2,
                         Movie(
                             id = 2,
@@ -169,7 +169,7 @@ class DummyTheaters : TheaterRepository {
                         ),
                         dateRange = DateRange(LocalDate.of(2024, 3, 2), LocalDate.of(2024, 3, 4)),
                     ),
-                    Screen(
+                    ScreenData(
                         id = 8,
                         Movie(
                             id = 2,
@@ -180,7 +180,7 @@ class DummyTheaters : TheaterRepository {
                         ),
                         dateRange = DateRange(LocalDate.of(2024, 3, 8), LocalDate.of(2024, 3, 10)),
                     ),
-                    Screen(
+                    ScreenData(
                         id = 9,
                         Movie(
                             id = 3,

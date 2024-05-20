@@ -9,11 +9,11 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Grade
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Position
-import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.Theater
@@ -40,7 +40,7 @@ class ReservationTicketDatabaseTest {
     @Test
     fun testInsert() {
         val movie = Movie(1, "title", 120, "description")
-        val screen = Screen(1, movie, DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)))
+        val screenData = ScreenData(1, movie, DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)))
         val seats =
             Seats(
                 Seat(Position(1, 1), Grade.A),
@@ -48,7 +48,7 @@ class ReservationTicketDatabaseTest {
         val reservationTicket =
             ReservationTicket(
                 id = 1,
-                screen = screen,
+                screenData = screenData,
                 date = LocalDate.of(2024, 3, 2),
                 time = LocalTime.of(12, 30),
                 seats = seats,
@@ -63,7 +63,7 @@ class ReservationTicketDatabaseTest {
     @Test
     fun testInsertAndRetrieve() {
         val movie = Movie(1, "title", 120, "description")
-        val screen = Screen(1, movie, DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)))
+        val screenData = ScreenData(1, movie, DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)))
         val seats =
             Seats(
                 Seat(Position(1, 1), Grade.A),
@@ -71,7 +71,7 @@ class ReservationTicketDatabaseTest {
         val reservationTicket =
             ReservationTicket(
                 id = 1,
-                screen = screen,
+                screenData = screenData,
                 date = LocalDate.of(2024, 3, 2),
                 time = LocalTime.of(12, 30),
                 seats = seats,
@@ -89,9 +89,9 @@ class ReservationTicketDatabaseTest {
         val movie2 = Movie(2, "title2", 120, "description2")
         val movie3 = Movie(3, "title3", 120, "description3")
 
-        val screen1 = Screen(1, movie1, DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)))
-        val screen2 = Screen(2, movie2, DateRange(LocalDate.of(2022, 2, 1), LocalDate.of(2022, 3, 10)))
-        val screen3 = Screen(3, movie3, DateRange(LocalDate.of(2023, 2, 10), LocalDate.of(2023, 10, 7)))
+        val screenData1 = ScreenData(1, movie1, DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)))
+        val screenData2 = ScreenData(2, movie2, DateRange(LocalDate.of(2022, 2, 1), LocalDate.of(2022, 3, 10)))
+        val screenData3 = ScreenData(3, movie3, DateRange(LocalDate.of(2023, 2, 10), LocalDate.of(2023, 10, 7)))
 
         val seats1 =
             Seats(
@@ -117,7 +117,7 @@ class ReservationTicketDatabaseTest {
         val reservationTicket1 =
             ReservationTicket(
                 id = 1,
-                screen = screen1,
+                screenData = screenData1,
                 date = LocalDate.of(2024, 3, 2),
                 time = LocalTime.of(12, 30),
                 seats = seats1,
@@ -126,7 +126,7 @@ class ReservationTicketDatabaseTest {
         val reservationTicket2 =
             ReservationTicket(
                 id = 2,
-                screen = screen2,
+                screenData = screenData2,
                 date = LocalDate.of(2024, 3, 2),
                 time = LocalTime.of(12, 30),
                 seats = seats2,
@@ -135,7 +135,7 @@ class ReservationTicketDatabaseTest {
         val reservationTicket3 =
             ReservationTicket(
                 id = 3,
-                screen = screen3,
+                screenData = screenData3,
                 date = LocalDate.of(2024, 3, 2),
                 time = LocalTime.of(12, 30),
                 seats = seats3,

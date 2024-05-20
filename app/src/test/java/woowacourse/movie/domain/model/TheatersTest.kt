@@ -2,6 +2,7 @@ package woowacourse.movie.domain.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.model.ScreenData
 import java.time.LocalDate
 
 class TheatersTest {
@@ -55,8 +56,8 @@ class TheatersTest {
     private fun fakeScreenWithScreenAndMovieId(
         screenId: Int,
         movieId: Int,
-    ): Screen =
-        Screen(
+    ): ScreenData =
+        ScreenData(
             id = screenId,
             movie = fakeMovieWithMovieId(movieId),
             dateRange = DateRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 3)),

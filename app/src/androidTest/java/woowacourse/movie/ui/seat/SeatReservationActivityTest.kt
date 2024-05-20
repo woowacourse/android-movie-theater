@@ -14,8 +14,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.data.ReservationTicketDatabase
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateTime
-import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.repository.OfflineReservationRepository
 
 @RunWith(AndroidJUnit4::class)
@@ -26,7 +26,7 @@ class SeatReservationActivityTest {
     fun setup() {
         // 상영작, 예매 개수, 날짜를 미리 예약해둔다.
         OfflineReservationRepository(reservationTicketDao = dao).savedTimeReservationId(
-            screen = Screen.NULL,
+            screenData = ScreenData.NULL,
             count = 2,
             dateTime = DateTime.NULL,
         )

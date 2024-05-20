@@ -17,9 +17,9 @@ class ScreenRepositoryTest {
         val screens = repository.load()
         val expected =
             listOf(
-                FakeScreenRepository.fakeScreen1,
-                FakeScreenRepository.fakeScreen2,
-                FakeScreenRepository.fakeScreen3,
+                FakeScreenRepository.fakeScreen1Data,
+                FakeScreenRepository.fakeScreen2Data,
+                FakeScreenRepository.fakeScreen3Data,
             )
 
         // then
@@ -29,7 +29,7 @@ class ScreenRepositoryTest {
     @Test
     fun `상영 ID를 통해 상영 정보를 불러온다`() {
         val actual = repository.findById(1).getOrThrow()
-        val expected = FakeScreenRepository.fakeScreen1
+        val expected = FakeScreenRepository.fakeScreen1Data
 
         // then
         assertThat(actual).isEqualTo(expected)

@@ -2,9 +2,9 @@ package woowacourse.movie.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateTime
 import woowacourse.movie.domain.model.Reservation
-import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.Ticket
@@ -15,7 +15,7 @@ import java.time.LocalTime
 data class ReservationTicket(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val screen: Screen,
+    val screenData: ScreenData,
     val date: LocalDate,
     val time: LocalTime,
     val seats: Seats,
@@ -27,7 +27,7 @@ data class ReservationTicket(
         val NULL =
             ReservationTicket(
                 id = -1,
-                screen = Screen.NULL,
+                screenData = ScreenData.NULL,
                 date = LocalDate.MIN,
                 time = LocalTime.MIN,
                 seats = Seats(),
@@ -39,7 +39,7 @@ data class ReservationTicket(
 fun ReservationTicket.toReservation(): Reservation {
     return Reservation(
         id = id,
-        screen = screen,
+        screenData = screenData,
         ticket = Ticket(seats.count()),
         seats = seats,
         dateTime = DateTime(date, time),

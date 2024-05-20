@@ -1,8 +1,8 @@
 package woowacourse.movie.domain.repository
 
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Seats
 import java.time.LocalDate
 
@@ -10,9 +10,9 @@ class DummyScreens(
     private val seatsRepository: SeatsRepository = DummySeats(),
 ) : ScreenRepository {
     // TODO 더미 데이터
-    private val screens =
+    private val screenData =
         listOf(
-            Screen(
+            ScreenData(
                 id = 1,
                 Movie(
                     id = 1,
@@ -23,7 +23,7 @@ class DummyScreens(
                 ),
                 dateRange = DateRange(LocalDate.of(2024, 5, 13), LocalDate.of(2024, 5, 15)),
             ),
-            Screen(
+            ScreenData(
                 id = 2,
                 Movie(
                     id = 2,
@@ -34,7 +34,7 @@ class DummyScreens(
                 ),
                 dateRange = DateRange(LocalDate.of(2024, 5, 13), LocalDate.of(2024, 3, 17)),
             ),
-            Screen(
+            ScreenData(
                 id = 3,
                 Movie(
                     id = 3,
@@ -45,7 +45,7 @@ class DummyScreens(
                 ),
                 dateRange = DateRange(LocalDate.of(2024, 5, 13), LocalDate.of(2024, 5, 19)),
             ),
-            Screen(
+            ScreenData(
                 id = 4,
                 Movie(
                     id = 1,
@@ -56,7 +56,7 @@ class DummyScreens(
                 ),
                 dateRange = DateRange(LocalDate.of(2024, 5, 13), LocalDate.of(2024, 5, 20)),
             ),
-            Screen(
+            ScreenData(
                 id = 5,
                 Movie(
                     id = 2,
@@ -67,7 +67,7 @@ class DummyScreens(
                 ),
                 dateRange = DateRange(LocalDate.of(2024, 5, 13), LocalDate.of(2024, 5, 21)),
             ),
-            Screen(
+            ScreenData(
                 id = 6,
                 Movie(
                     id = 3,
@@ -78,7 +78,7 @@ class DummyScreens(
                 ),
                 dateRange = DateRange(LocalDate.of(2024, 5, 13), LocalDate.of(2024, 5, 24)),
             ),
-            Screen(
+            ScreenData(
                 id = 7,
                 Movie(
                     id = 1,
@@ -89,7 +89,7 @@ class DummyScreens(
                 ),
                 dateRange = DateRange(LocalDate.of(2024, 5, 13), LocalDate.of(2024, 5, 25)),
             ),
-            Screen(
+            ScreenData(
                 id = 8,
                 Movie(
                     id = 2,
@@ -100,7 +100,7 @@ class DummyScreens(
                 ),
                 dateRange = DateRange(LocalDate.of(2024, 5, 13), LocalDate.of(2024, 5, 25)),
             ),
-            Screen(
+            ScreenData(
                 id = 9,
                 Movie(
                     id = 3,
@@ -111,7 +111,7 @@ class DummyScreens(
                 ),
                 dateRange = DateRange(LocalDate.of(2024, 5, 13), LocalDate.of(2024, 5, 26)),
             ),
-            Screen(
+            ScreenData(
                 id = 10,
                 Movie(
                     id = 1,
@@ -122,7 +122,7 @@ class DummyScreens(
                 ),
                 dateRange = DateRange(LocalDate.of(2024, 5, 13), LocalDate.of(2024, 5, 27)),
             ),
-            Screen(
+            ScreenData(
                 id = 11,
                 Movie(
                     id = 2,
@@ -133,7 +133,7 @@ class DummyScreens(
                 ),
                 dateRange = DateRange(LocalDate.of(2024, 5, 13), LocalDate.of(2024, 5, 28)),
             ),
-            Screen(
+            ScreenData(
                 id = 12,
                 Movie(
                     id = 3,
@@ -146,9 +146,9 @@ class DummyScreens(
             ),
         )
 
-    override fun load(): List<Screen> = screens
+    override fun load(): List<ScreenData> = screenData
 
-    override fun findById(id: Int): Result<Screen> = runCatching { screens.find { it.id == id } ?: throw NoSuchElementException() }
+    override fun findById(id: Int): Result<ScreenData> = runCatching { screenData.find { it.id == id } ?: throw NoSuchElementException() }
 
     override fun seats(screenId: Int): Seats = seatsRepository.findById(screenId)
 }

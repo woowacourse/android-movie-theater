@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.detail
 
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateTime
-import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.ScreenTimePolicy
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.Ticket.Companion.MIN_TICKET_COUNT
@@ -20,8 +20,8 @@ class ScreenDetailPresenter(
     screenId: Int,
     private val theaterId: Int,
 ) : ScreenDetailContract.Presenter {
-    private val loadedScreen: Screen = loadedScreen(screenId)
-    private val dateRange = loadedScreen.dateRange
+    private val loadedScreenData: ScreenData = loadedScreen(screenId)
+    private val dateRange = loadedScreenData.dateRange
     private var ticket: Ticket = Ticket(MIN_TICKET_COUNT)
 
     private var datePosition: Int = 0
@@ -29,7 +29,7 @@ class ScreenDetailPresenter(
 
     override fun loadScreen() {
         try {
-            view.showScreen(loadedScreen.toDetailUI(movieRepository.imageSrc(loadedScreen.movie.id)))
+            view.showScreen(loadedScreenData.toDetailUI(movieRepository.imageSrc(loadedScreenData.movie.id)))
             view.showDateTimePicker(dateRange, screenTimePolicy, view::showDate, view::showTime)
         } catch (e: Exception) {
             view.showScreenFail(e)
@@ -52,7 +52,7 @@ class ScreenDetailPresenter(
         ticket = Ticket(count)
     }
 
-    private fun loadedScreen(id: Int): Screen {
+    private fun loadedScreen(id: Int): ScreenData {
         screenRepository.findById(id = id).onSuccess { screen ->
             return screen
         }.onFailure { e ->
@@ -83,7 +83,7 @@ class ScreenDetailPresenter(
         val date = dateRange.allDates()[datePosition]
 
         reservationRepository.savedTimeReservationId(
-            loadedScreen,
+            loadedScreenData,
             count = ticket.count,
             dateTime =
                 DateTime(

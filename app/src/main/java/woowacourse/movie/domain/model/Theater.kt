@@ -1,13 +1,15 @@
 package woowacourse.movie.domain.model
 
+import woowacourse.movie.data.model.ScreenData
+
 data class Theater(
     val id: Int,
     val name: String,
-    val screens: List<Screen>,
+    val screens: List<ScreenData>,
 ) {
-    fun hasScreen(screen: Screen): Boolean = screens.contains(screen)
+    fun hasScreen(screenData: ScreenData): Boolean = screens.contains(screenData)
 
-    fun allScreeningTimeCount(screen: Screen): Int = screen.allScreeningTime(WeeklyScreenTimePolicy()).count()
+    fun allScreeningTimeCount(screenData: ScreenData): Int = screenData.allScreeningTime(WeeklyScreenTimePolicy()).count()
 
     companion object {
         val NULL = Theater(0, "", emptyList())

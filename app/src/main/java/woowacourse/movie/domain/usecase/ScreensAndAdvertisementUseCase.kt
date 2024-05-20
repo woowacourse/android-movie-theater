@@ -1,6 +1,8 @@
 package woowacourse.movie.domain.usecase
 
-import woowacourse.movie.domain.model.Screen
+import woowacourse.movie.data.model.ScreenData
+import woowacourse.movie.domain.model.DateRange
+import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.repository.AdRepository
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.domain.repository.ScreenRepository
@@ -38,9 +40,21 @@ class ScreensAndAdvertisementUseCase(
         }
     }
 
-    fun loadedScreens(screenId: Int): Result<Screen> = screenRepository.findById(screenId)
+    fun loadedScreens(screenId: Int): Result<ScreenData> = screenRepository.findById(screenId)
 
     companion object {
         private const val ADVERTISEMENT_INTERVAL = 4
     }
+}
+
+sealed interface ScreenAndAd {
+    data class Screen(
+        val id: Int,
+        val movie: Movie,
+        val dateRange: DateRange,
+    ) : ScreenAndAd
+
+    data class Advertisement(
+        val id: Int,
+    ) : ScreenAndAd
 }

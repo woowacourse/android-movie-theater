@@ -11,10 +11,10 @@ class TheaterTest {
             Theater(
                 1,
                 "선릉 극장",
-                listOf(FakeScreenRepository.fakeScreen1, FakeScreenRepository.fakeScreen2, FakeScreenRepository.fakeScreen3),
+                listOf(FakeScreenRepository.fakeScreen1Data, FakeScreenRepository.fakeScreen2Data, FakeScreenRepository.fakeScreen3Data),
             )
 
-        val screen = FakeScreenRepository.fakeScreen1
+        val screen = FakeScreenRepository.fakeScreen1Data
         val actual = theater.hasScreen(screen)
 
         assertThat(actual).isTrue()
@@ -27,13 +27,13 @@ class TheaterTest {
                 1,
                 "선릉 극장",
                 listOf(
-                    FakeScreenRepository.fakeScreen1,
-                    FakeScreenRepository.fakeScreen2,
-                    FakeScreenRepository.fakeScreen3,
+                    FakeScreenRepository.fakeScreen1Data,
+                    FakeScreenRepository.fakeScreen2Data,
+                    FakeScreenRepository.fakeScreen3Data,
                 ),
             )
 
-        val screen = FakeScreenRepository.fakeScreen1
+        val screen = FakeScreenRepository.fakeScreen1Data
         val actual = theater.allScreeningTimeCount(screen)
 
         assertThat(actual).isEqualTo(22)

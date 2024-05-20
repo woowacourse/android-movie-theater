@@ -1,8 +1,8 @@
 package woowacourse.movie.ui
 
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Image
-import woowacourse.movie.domain.model.Screen
 
 sealed interface ScreenAd {
     data class ScreenPreviewUi(
@@ -17,7 +17,7 @@ sealed interface ScreenAd {
     ) : ScreenAd
 }
 
-fun Screen.toPreviewUI(image: Image<Any>) =
+fun ScreenData.toPreviewUI(image: Image<Any>) =
     ScreenAd.ScreenPreviewUi(
         id = id,
         moviePreviewUI = movie.toPreviewUI(image),

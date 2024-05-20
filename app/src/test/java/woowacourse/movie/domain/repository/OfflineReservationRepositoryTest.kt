@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.data.FakeReservationTicketDao
 import woowacourse.movie.data.ReservationTicket
 import woowacourse.movie.data.ReservationTicketRoomDao
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateTime
 import woowacourse.movie.domain.model.Grade
 import woowacourse.movie.domain.model.Position
 import woowacourse.movie.domain.model.Reservation
-import woowacourse.movie.domain.model.Screen
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.Theater
@@ -34,7 +34,7 @@ class OfflineReservationRepositoryTest {
 
         // when
         val result =
-            repository.savedReservationId(reservation.screen, reservation.seats, reservation.dateTime, Theater.NULL)
+            repository.savedReservationId(reservation.screenData, reservation.seats, reservation.dateTime, Theater.NULL)
                 .getOrThrow()
 
         // then
@@ -60,9 +60,9 @@ class OfflineReservationRepositoryTest {
                 Seat(Position(0, 3), Grade.B),
             )
 
-        repository.savedReservationId(Screen.NULL, seats1, DateTime.NULL, Theater.NULL)
-        repository.savedReservationId(Screen.NULL, seats2, DateTime.NULL, Theater.NULL)
-        repository.savedReservationId(Screen.NULL, seats3, DateTime.NULL, Theater.NULL)
+        repository.savedReservationId(ScreenData.NULL, seats1, DateTime.NULL, Theater.NULL)
+        repository.savedReservationId(ScreenData.NULL, seats2, DateTime.NULL, Theater.NULL)
+        repository.savedReservationId(ScreenData.NULL, seats3, DateTime.NULL, Theater.NULL)
 
         // when
         val result = repository.loadAllReservationHistory().getOrThrow()
@@ -70,9 +70,9 @@ class OfflineReservationRepositoryTest {
         // then
         assertThat(result).isEqualTo(
             listOf(
-                ReservationTicket(1, Screen.NULL, DateTime.NULL.date, DateTime.NULL.time, seats1, Theater.NULL),
-                ReservationTicket(2, Screen.NULL, DateTime.NULL.date, DateTime.NULL.time, seats2, Theater.NULL),
-                ReservationTicket(3, Screen.NULL, DateTime.NULL.date, DateTime.NULL.time, seats3, Theater.NULL),
+                ReservationTicket(1, ScreenData.NULL, DateTime.NULL.date, DateTime.NULL.time, seats1, Theater.NULL),
+                ReservationTicket(2, ScreenData.NULL, DateTime.NULL.date, DateTime.NULL.time, seats2, Theater.NULL),
+                ReservationTicket(3, ScreenData.NULL, DateTime.NULL.date, DateTime.NULL.time, seats3, Theater.NULL),
             ),
         )
     }
@@ -80,13 +80,13 @@ class OfflineReservationRepositoryTest {
     @Test
     fun `오프라인 시간 예약 저장 & 불러오기 테스트`() {
         // given
-        val timeReservationId = repository.savedTimeReservationId(Screen.NULL, 2, DateTime.NULL).getOrThrow()
+        val timeReservationId = repository.savedTimeReservationId(ScreenData.NULL, 2, DateTime.NULL).getOrThrow()
 
         // when
         val actual = repository.loadTimeReservation(timeReservationId)
 
         // then
-        val expected = TimeReservation(timeReservationId, Screen.NULL, Ticket(2), DateTime.NULL)
+        val expected = TimeReservation(timeReservationId, ScreenData.NULL, Ticket(2), DateTime.NULL)
         assertThat(actual).isEqualTo(expected)
     }
 }
