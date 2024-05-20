@@ -80,7 +80,7 @@ class OfflineReservationRepositoryTest {
     @Test
     fun `오프라인 시간 예약 저장 & 불러오기 테스트`() {
         // given
-        val timeReservationId = repository.saveTimeReservation(Screen.NULL, 2, DateTime.NULL).getOrThrow()
+        val timeReservationId = repository.savedTimeReservationId(Screen.NULL, 2, DateTime.NULL).getOrThrow()
 
         // when
         val actual = repository.loadTimeReservation(timeReservationId)

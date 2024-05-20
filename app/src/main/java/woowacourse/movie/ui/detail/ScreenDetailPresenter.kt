@@ -82,7 +82,7 @@ class ScreenDetailPresenter(
     override fun reserve() {
         val date = dateRange.allDates()[datePosition]
 
-        reservationRepository.saveTimeReservation(
+        reservationRepository.savedTimeReservationId(
             loadedScreen,
             count = ticket.count,
             dateTime =

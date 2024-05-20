@@ -25,7 +25,7 @@ class SeatReservationActivityTest {
     @Before
     fun setup() {
         // 상영작, 예매 개수, 날짜를 미리 예약해둔다.
-        OfflineReservationRepository(reservationTicketDao = dao).saveTimeReservation(
+        OfflineReservationRepository(reservationTicketDao = dao).savedTimeReservationId(
             screen = Screen.NULL,
             count = 2,
             dateTime = DateTime.NULL,

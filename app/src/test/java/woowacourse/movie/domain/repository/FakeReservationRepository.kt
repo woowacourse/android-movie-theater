@@ -37,7 +37,7 @@ class FakeReservationRepository : ReservationRepository {
             id.toLong()
         }
 
-    override fun saveTimeReservation(
+    override fun savedTimeReservationId(
         screen: Screen,
         count: Int,
         dateTime: DateTime,

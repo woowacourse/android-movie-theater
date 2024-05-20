@@ -29,7 +29,7 @@ class OfflineReservationRepository(private val reservationTicketDao: Reservation
             )
         }
 
-    override fun saveTimeReservation(
+    override fun savedTimeReservationId(
         screen: Screen,
         count: Int,
         dateTime: DateTime,

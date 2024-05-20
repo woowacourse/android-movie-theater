@@ -15,7 +15,7 @@ interface ReservationRepository {
         theater: Theater,
     ): Result<Long>
 
-    fun saveTimeReservation(
+    fun savedTimeReservationId(
         screen: Screen,
         count: Int,
         dateTime: DateTime,
