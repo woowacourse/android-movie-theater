@@ -25,7 +25,7 @@ class FakeReservationRepository : ReservationRepository {
             TimeReservation.NULL,
         )
 
-    override fun saveReservation(
+    override fun savedReservationId(
         screen: Screen,
         seats: Seats,
         dateTime: DateTime,

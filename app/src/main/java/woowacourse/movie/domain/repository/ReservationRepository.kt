@@ -8,7 +8,7 @@ import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.TimeReservation
 
 interface ReservationRepository {
-    fun saveReservation(
+    fun savedReservationId(
         screen: Screen,
         seats: Seats,
         dateTime: DateTime,

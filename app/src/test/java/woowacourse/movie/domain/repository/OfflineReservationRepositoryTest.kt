@@ -34,7 +34,7 @@ class OfflineReservationRepositoryTest {
 
         // when
         val result =
-            repository.saveReservation(reservation.screen, reservation.seats, reservation.dateTime, Theater.NULL)
+            repository.savedReservationId(reservation.screen, reservation.seats, reservation.dateTime, Theater.NULL)
                 .getOrThrow()
 
         // then
@@ -60,9 +60,9 @@ class OfflineReservationRepositoryTest {
                 Seat(Position(0, 3), Grade.B),
             )
 
-        repository.saveReservation(Screen.NULL, seats1, DateTime.NULL, Theater.NULL)
-        repository.saveReservation(Screen.NULL, seats2, DateTime.NULL, Theater.NULL)
-        repository.saveReservation(Screen.NULL, seats3, DateTime.NULL, Theater.NULL)
+        repository.savedReservationId(Screen.NULL, seats1, DateTime.NULL, Theater.NULL)
+        repository.savedReservationId(Screen.NULL, seats2, DateTime.NULL, Theater.NULL)
+        repository.savedReservationId(Screen.NULL, seats3, DateTime.NULL, Theater.NULL)
 
         // when
         val result = repository.loadAllReservationHistory().getOrThrow()

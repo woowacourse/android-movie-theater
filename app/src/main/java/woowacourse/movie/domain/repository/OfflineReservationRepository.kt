@@ -10,27 +10,24 @@ import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.TimeReservation
 
 class OfflineReservationRepository(private val reservationTicketDao: ReservationTicketDao) : ReservationRepository {
-    override fun saveReservation(
+    override fun savedReservationId(
         screen: Screen,
         seats: Seats,
         dateTime: DateTime,
         theater: Theater,
-    ): Result<Long> {
-        return runCatching {
-            val id =
-                reservationTicketDao.insert(
-                    reservationTicket =
-                        ReservationTicket(
-                            screen = screen,
-                            date = dateTime.date,
-                            time = dateTime.time,
-                            seats = seats,
-                            theater = theater,
-                        ),
-                )
-            id
+    ): Result<Long> =
+        runCatching {
+            reservationTicketDao.insert(
+                reservationTicket =
+                    ReservationTicket(
+                        screen = screen,
+                        date = dateTime.date,
+                        time = dateTime.time,
+                        seats = seats,
+                        theater = theater,
+                    ),
+            )
         }
-    }
 
     override fun saveTimeReservation(
         screen: Screen,

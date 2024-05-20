@@ -81,7 +81,7 @@ class SeatReservationPresenter(
     override fun reserve() {
         val screenId = timeReservation.screen.id
         thread {
-            reservationRepository.saveReservation(
+            reservationRepository.savedReservationId(
                 loadedScreen(screenId),
                 selectedSeats,
                 timeReservation.dateTime,
