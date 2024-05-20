@@ -1,8 +1,9 @@
 package woowacourse.movie.domain.usecase
 
 import woowacourse.movie.data.model.ScreenData
-import woowacourse.movie.domain.model.DateRange
-import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.Image
+import woowacourse.movie.domain.model.ScreenAndAd
+import woowacourse.movie.domain.model.toScreen
 import woowacourse.movie.domain.repository.AdRepository
 import woowacourse.movie.domain.repository.MovieRepository
 import woowacourse.movie.domain.repository.ScreenRepository
@@ -14,6 +15,28 @@ class ScreensAndAdvertisementUseCase(
     private val screenRepository: ScreenRepository,
     private val adRepository: AdRepository,
 ) {
+    fun generated2(): List<ScreenAndAd> {
+        val screens = screenRepository.load().map { it.toScreen() }
+        val advertisement = adRepository.load()
+
+        return generatedScreenAdList2(screens, advertisement)
+    }
+
+    private fun generatedScreenAdList2(
+        screens: List<ScreenAndAd.Screen>,
+        advertisement: ScreenAndAd.Advertisement,
+    ): List<ScreenAndAd> {
+        val totalItems = screens.size + screens.size / (ADVERTISEMENT_INTERVAL - 1)
+        return (0 until totalItems).mapIndexed { index: Int, _ ->
+            if ((index + 1) % ADVERTISEMENT_INTERVAL == 0) {
+                advertisement
+            } else {
+                val screenIndex = index - index / ADVERTISEMENT_INTERVAL
+                screens[screenIndex]
+            }
+        }
+    }
+
     fun generated(): List<ScreenAd> {
         val screenPreviewUis =
             screenRepository.load().map { screen ->
@@ -22,7 +45,10 @@ class ScreensAndAdvertisementUseCase(
             }
 
         val advertisement = adRepository.load()
-        return generatedScreenAdList(screenPreviewUis, advertisement)
+        return generatedScreenAdList(
+            screenPreviewUis,
+            ScreenAd.Advertisement(id = 1, Image.DrawableImage(0)), // advertisement
+        )
     }
 
     private fun generatedScreenAdList(
@@ -45,16 +71,4 @@ class ScreensAndAdvertisementUseCase(
     companion object {
         private const val ADVERTISEMENT_INTERVAL = 4
     }
-}
-
-sealed interface ScreenAndAd {
-    data class Screen(
-        val id: Int,
-        val movie: Movie,
-        val dateRange: DateRange,
-    ) : ScreenAndAd
-
-    data class Advertisement(
-        val id: Int,
-    ) : ScreenAndAd
 }
