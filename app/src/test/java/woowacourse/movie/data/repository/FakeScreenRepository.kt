@@ -28,19 +28,19 @@ class FakeScreenRepository : ScreenRepository {
         val fakeScreen1Data =
             ScreenData(
                 1,
-                FakeMovieRepository.fakeMovie1Data,
+                FakeMovieDataSource.fakeMovie1Data,
                 DateRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 3)),
             )
         val fakeScreen2Data =
             ScreenData(
                 2,
-                FakeMovieRepository.fakeMovie2Data,
+                FakeMovieDataSource.fakeMovie2Data,
                 DateRange(LocalDate.of(2024, 3, 2), LocalDate.of(2024, 3, 4)),
             )
         val fakeScreen3Data =
             ScreenData(
                 2,
-                FakeMovieRepository.fakeMovie3Data,
+                FakeMovieDataSource.fakeMovie3Data,
                 DateRange(LocalDate.of(2024, 3, 3), LocalDate.of(2024, 3, 5)),
             )
     }

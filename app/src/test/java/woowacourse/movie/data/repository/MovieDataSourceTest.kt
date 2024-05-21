@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.data.model.MovieData
 import woowacourse.movie.domain.model.Image
 
-class MovieRepositoryTest {
-    private val movieRepository2 = FakeMovieRepository()
+class MovieDataSourceTest {
+    private val movieRepository2 = FakeMovieDataSource()
 
     @Test
     fun `영화 id 로 영화 포스터를 찾는다`() {

@@ -5,7 +5,7 @@ import woowacourse.movie.data.model.MovieData
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.domain.model.MoviePoster
 
-class DummyMovies : MovieRepository {
+class DummyMovieDataSource : MovieDataSource {
     private val movieData =
         listOf(
             MovieData(

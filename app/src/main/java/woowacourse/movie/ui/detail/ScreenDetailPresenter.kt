@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.detail
 
 import woowacourse.movie.data.model.ScreenData
-import woowacourse.movie.data.repository.MovieRepository
+import woowacourse.movie.data.repository.MovieDataSource
 import woowacourse.movie.data.repository.ReservationRepository
 import woowacourse.movie.data.repository.ScreenRepository
 import woowacourse.movie.domain.model.DateTime
@@ -13,7 +13,7 @@ import woowacourse.movie.ui.toDetailUI
 
 class ScreenDetailPresenter(
     private val view: ScreenDetailContract.View,
-    private val movieRepository: MovieRepository,
+    private val movieDataSource: MovieDataSource,
     private val screenRepository: ScreenRepository,
     private val reservationRepository: ReservationRepository,
     private val screenTimePolicy: ScreenTimePolicy = WeeklyScreenTimePolicy(),
@@ -29,7 +29,7 @@ class ScreenDetailPresenter(
 
     override fun loadScreen() {
         try {
-            view.showScreen(loadedScreenData.toDetailUI(movieRepository.imageSrc(loadedScreenData.movieData.id)))
+            view.showScreen(loadedScreenData.toDetailUI(movieDataSource.imageSrc(loadedScreenData.movieData.id)))
             view.showDateTimePicker(dateRange, screenTimePolicy, view::showDate, view::showTime)
         } catch (e: Exception) {
             view.showScreenFail(e)

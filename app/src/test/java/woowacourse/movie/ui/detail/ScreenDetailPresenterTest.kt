@@ -4,7 +4,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.repository.FakeMovieRepository
+import woowacourse.movie.data.repository.FakeMovieDataSource
 import woowacourse.movie.data.repository.FakeReservationRepository
 import woowacourse.movie.data.repository.FakeScreenRepository
 import woowacourse.movie.domain.model.DateRange
@@ -117,7 +117,7 @@ class ScreenDetailPresenterTest {
     ): ScreenDetailPresenter {
         return ScreenDetailPresenter(
             view = mockView,
-            movieRepository = FakeMovieRepository(),
+            movieDataSource = FakeMovieDataSource(),
             screenRepository = FakeScreenRepository(),
             reservationRepository = FakeReservationRepository(),
             screenId = screenId,

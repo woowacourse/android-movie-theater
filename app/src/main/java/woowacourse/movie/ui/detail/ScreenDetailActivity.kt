@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationTicketDatabase
-import woowacourse.movie.data.repository.DummyMovies
+import woowacourse.movie.data.repository.DummyMovieDataSource
 import woowacourse.movie.data.repository.DummyScreens
 import woowacourse.movie.data.repository.OfflineReservationRepository
 import woowacourse.movie.domain.model.DateRange
@@ -44,7 +44,7 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
         presenter =
             ScreenDetailPresenter(
                 this,
-                DummyMovies(),
+                DummyMovieDataSource(),
                 DummyScreens(),
                 OfflineReservationRepository(
                     ReservationTicketDatabase.getDatabase(applicationContext).reservationDao(),

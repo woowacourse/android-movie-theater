@@ -2,7 +2,7 @@ package woowacourse.movie.domain.usecase
 
 import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.data.repository.AdRepository
-import woowacourse.movie.data.repository.MovieRepository
+import woowacourse.movie.data.repository.MovieDataSource
 import woowacourse.movie.data.repository.ScreenRepository
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.domain.model.ScreenAndAd
@@ -11,7 +11,7 @@ import woowacourse.movie.ui.ScreenAd
 import woowacourse.movie.ui.toPreviewUI
 
 class ScreensAndAdvertisementUseCase(
-    private val movieRepository: MovieRepository,
+    private val movieDataSource: MovieDataSource,
     private val screenRepository: ScreenRepository,
     private val adRepository: AdRepository,
 ) {
@@ -40,7 +40,7 @@ class ScreensAndAdvertisementUseCase(
     fun generated(): List<ScreenAd> {
         val screenPreviewUis =
             screenRepository.load().map { screen ->
-                val moviePoster = movieRepository.imageSrc(screen.movieData.id)
+                val moviePoster = movieDataSource.imageSrc(screen.movieData.id)
                 screen.toPreviewUI(image = moviePoster)
             }
 
