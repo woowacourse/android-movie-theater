@@ -6,7 +6,6 @@ import woowacourse.movie.data.source.MovieDataSource
 import woowacourse.movie.data.source.ScreenDataSource
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.domain.model.ScreenAndAd
-import woowacourse.movie.domain.model.toScreen
 import woowacourse.movie.ui.ScreenAd
 import woowacourse.movie.ui.toPreviewUI
 
@@ -16,10 +15,12 @@ class ScreensAndAdvertisementUseCase(
     private val advertisementDataSource: AdvertisementDataSource,
 ) {
     fun generated2(): List<ScreenAndAd> {
-        val screens = screenDataSource.load().map { it.toScreen() }
-        val advertisement = advertisementDataSource.load()
-
-        return generatedScreenAdList2(screens, advertisement)
+//        val screens = screenDataSource.load().map { it.toScreen() }
+//        val advertisement = advertisementDataSource.load()
+//
+//        return generatedScreenAdList2(screens, advertisement)
+        // TODO:
+        throw NotImplementedError()
     }
 
     private fun generatedScreenAdList2(
