@@ -1,10 +1,10 @@
 package woowacourse.movie.domain.repository
 
+import woowacourse.movie.data.model.MovieData
 import woowacourse.movie.domain.model.Image
-import woowacourse.movie.domain.model.Movie
 
 interface MovieRepository {
-    fun findById(id: Int): Movie
+    fun findById(id: Int): MovieData
 
     fun imageSrc(id: Int): Image<Any>
 }

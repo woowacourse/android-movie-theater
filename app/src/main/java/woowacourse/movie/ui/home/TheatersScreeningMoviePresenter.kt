@@ -15,7 +15,7 @@ class TheatersScreeningMoviePresenter(
 
     override fun loadTheaters() {
         val theaters = theaterRepository.loadAll()
-        val theatersScreening = theaters.screeningTheater(loadedScreenData.movie)
+        val theatersScreening = theaters.screeningTheater(loadedScreenData.movieData)
 
         val theaterScreeningCount =
             theatersScreening.theaters.map { theater ->

@@ -15,9 +15,9 @@ fun ScreenData.toDetailUI(image: Image<Any>) =
         id = id,
         movieDetailUI =
             MovieDetailUI(
-                title = movie.title,
-                runningTime = movie.runningTime,
-                description = movie.description,
+                title = movieData.title,
+                runningTime = movieData.runningTime,
+                description = movieData.description,
                 image = image,
             ),
         dateRange = dateRange,

@@ -9,10 +9,10 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.data.model.MovieData
 import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Grade
-import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Position
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
@@ -39,8 +39,8 @@ class ReservationTicketDatabaseTest {
 
     @Test
     fun testInsert() {
-        val movie = Movie(1, "title", 120, "description")
-        val screenData = ScreenData(1, movie, DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)))
+        val movieData = MovieData(1, "title", 120, "description")
+        val screenData = ScreenData(1, movieData, DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)))
         val seats =
             Seats(
                 Seat(Position(1, 1), Grade.A),
@@ -62,8 +62,8 @@ class ReservationTicketDatabaseTest {
 
     @Test
     fun testInsertAndRetrieve() {
-        val movie = Movie(1, "title", 120, "description")
-        val screenData = ScreenData(1, movie, DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)))
+        val movieData = MovieData(1, "title", 120, "description")
+        val screenData = ScreenData(1, movieData, DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)))
         val seats =
             Seats(
                 Seat(Position(1, 1), Grade.A),
@@ -85,13 +85,13 @@ class ReservationTicketDatabaseTest {
 
     @Test
     fun testFindAllReservationTickets() {
-        val movie1 = Movie(1, "title1", 120, "description1")
-        val movie2 = Movie(2, "title2", 120, "description2")
-        val movie3 = Movie(3, "title3", 120, "description3")
+        val movieData1 = MovieData(1, "title1", 120, "description1")
+        val movieData2 = MovieData(2, "title2", 120, "description2")
+        val movieData3 = MovieData(3, "title3", 120, "description3")
 
-        val screenData1 = ScreenData(1, movie1, DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)))
-        val screenData2 = ScreenData(2, movie2, DateRange(LocalDate.of(2022, 2, 1), LocalDate.of(2022, 3, 10)))
-        val screenData3 = ScreenData(3, movie3, DateRange(LocalDate.of(2023, 2, 10), LocalDate.of(2023, 10, 7)))
+        val screenData1 = ScreenData(1, movieData1, DateRange(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 12, 31)))
+        val screenData2 = ScreenData(2, movieData2, DateRange(LocalDate.of(2022, 2, 1), LocalDate.of(2022, 3, 10)))
+        val screenData3 = ScreenData(3, movieData3, DateRange(LocalDate.of(2023, 2, 10), LocalDate.of(2023, 10, 7)))
 
         val seats1 =
             Seats(

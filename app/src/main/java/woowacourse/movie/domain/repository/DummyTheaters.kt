@@ -1,8 +1,8 @@
 package woowacourse.movie.domain.repository
 
+import woowacourse.movie.data.model.MovieData
 import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateRange
-import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.Theaters
 import java.time.LocalDate
@@ -16,7 +16,7 @@ class DummyTheaters : TheaterRepository {
                 listOf(
                     ScreenData(
                         id = 1,
-                        Movie(
+                        MovieData(
                             id = 1,
                             "해리 포터와 마법사의 돌",
                             151,
@@ -27,7 +27,7 @@ class DummyTheaters : TheaterRepository {
                     ),
                     ScreenData(
                         id = 2,
-                        Movie(
+                        MovieData(
                             id = 2,
                             "해리 포터와 마법사의 돌2",
                             152,
@@ -38,7 +38,7 @@ class DummyTheaters : TheaterRepository {
                     ),
                     ScreenData(
                         id = 3,
-                        Movie(
+                        MovieData(
                             id = 3,
                             "해리 포터와 마법사의 돌3",
                             153,
@@ -49,7 +49,7 @@ class DummyTheaters : TheaterRepository {
                     ),
                     ScreenData(
                         id = 12,
-                        Movie(
+                        MovieData(
                             id = 3,
                             "해리 포터와 마법사의 돌3",
                             153,
@@ -66,7 +66,7 @@ class DummyTheaters : TheaterRepository {
                 listOf(
                     ScreenData(
                         id = 4,
-                        Movie(
+                        MovieData(
                             id = 1,
                             "해리 포터와 마법사의 돌4",
                             151,
@@ -77,7 +77,7 @@ class DummyTheaters : TheaterRepository {
                     ),
                     ScreenData(
                         id = 5,
-                        Movie(
+                        MovieData(
                             id = 2,
                             "해리 포터와 마법사의 돌5",
                             152,
@@ -88,7 +88,7 @@ class DummyTheaters : TheaterRepository {
                     ),
                     ScreenData(
                         id = 6,
-                        Movie(
+                        MovieData(
                             id = 3,
                             "해리 포터와 마법사의 돌6",
                             153,
@@ -99,7 +99,7 @@ class DummyTheaters : TheaterRepository {
                     ),
                     ScreenData(
                         id = 7,
-                        Movie(
+                        MovieData(
                             id = 1,
                             "해리 포터와 마법사의 돌7",
                             151,
@@ -110,7 +110,7 @@ class DummyTheaters : TheaterRepository {
                     ),
                     ScreenData(
                         id = 9,
-                        Movie(
+                        MovieData(
                             id = 3,
                             "해리 포터와 마법사의 돌3",
                             153,
@@ -121,7 +121,7 @@ class DummyTheaters : TheaterRepository {
                     ),
                     ScreenData(
                         id = 10,
-                        Movie(
+                        MovieData(
                             id = 1,
                             "해리 포터와 마법사의 돌",
                             151,
@@ -132,7 +132,7 @@ class DummyTheaters : TheaterRepository {
                     ),
                     ScreenData(
                         id = 11,
-                        Movie(
+                        MovieData(
                             id = 2,
                             "해리 포터와 마법사의 돌2",
                             152,
@@ -149,7 +149,7 @@ class DummyTheaters : TheaterRepository {
                 listOf(
                     ScreenData(
                         id = 1,
-                        Movie(
+                        MovieData(
                             id = 1,
                             "해리 포터와 마법사의 돌",
                             151,
@@ -160,7 +160,7 @@ class DummyTheaters : TheaterRepository {
                     ),
                     ScreenData(
                         id = 2,
-                        Movie(
+                        MovieData(
                             id = 2,
                             "해리 포터와 마법사의 돌2",
                             152,
@@ -171,7 +171,7 @@ class DummyTheaters : TheaterRepository {
                     ),
                     ScreenData(
                         id = 8,
-                        Movie(
+                        MovieData(
                             id = 2,
                             "해리 포터와 마법사의 돌2",
                             152,
@@ -182,7 +182,7 @@ class DummyTheaters : TheaterRepository {
                     ),
                     ScreenData(
                         id = 9,
-                        Movie(
+                        MovieData(
                             id = 3,
                             "해리 포터와 마법사의 돌3",
                             153,

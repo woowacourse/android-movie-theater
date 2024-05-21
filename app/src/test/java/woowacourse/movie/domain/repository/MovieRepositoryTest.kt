@@ -2,8 +2,8 @@ package woowacourse.movie.domain.repository
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.model.MovieData
 import woowacourse.movie.domain.model.Image
-import woowacourse.movie.domain.model.Movie
 
 class MovieRepositoryTest {
     private val movieRepository2 = FakeMovieRepository()
@@ -18,7 +18,7 @@ class MovieRepositoryTest {
     fun `영화 id 로 영화를 찾는다`() {
         val actual = movieRepository2.findById(1)
         val expected =
-            Movie(
+            MovieData(
                 1,
                 "title1",
                 1,

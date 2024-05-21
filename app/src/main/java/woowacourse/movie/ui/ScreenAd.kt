@@ -20,6 +20,6 @@ sealed interface ScreenAd {
 fun ScreenData.toPreviewUI(image: Image<Any>) =
     ScreenAd.ScreenPreviewUi(
         id = id,
-        moviePreviewUI = movie.toPreviewUI(image),
+        moviePreviewUI = movieData.toPreviewUI(image),
         dateRange = dateRange,
     )

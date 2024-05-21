@@ -40,14 +40,14 @@ class ScreensAndAdvertisementUseCase(
     fun generated(): List<ScreenAd> {
         val screenPreviewUis =
             screenRepository.load().map { screen ->
-                val moviePoster = movieRepository.imageSrc(screen.movie.id)
+                val moviePoster = movieRepository.imageSrc(screen.movieData.id)
                 screen.toPreviewUI(image = moviePoster)
             }
 
         val advertisement = adRepository.load()
         return generatedScreenAdList(
             screenPreviewUis,
-            ScreenAd.Advertisement(id = 1, Image.DrawableImage(0)), // advertisement
+            ScreenAd.Advertisement(id = 1, Image.DrawableImage(0)),
         )
     }
 

@@ -29,7 +29,7 @@ class ScreenDetailPresenter(
 
     override fun loadScreen() {
         try {
-            view.showScreen(loadedScreenData.toDetailUI(movieRepository.imageSrc(loadedScreenData.movie.id)))
+            view.showScreen(loadedScreenData.toDetailUI(movieRepository.imageSrc(loadedScreenData.movieData.id)))
             view.showDateTimePicker(dateRange, screenTimePolicy, view::showDate, view::showTime)
         } catch (e: Exception) {
             view.showScreenFail(e)
