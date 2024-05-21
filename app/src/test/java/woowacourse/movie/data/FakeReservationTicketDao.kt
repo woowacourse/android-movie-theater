@@ -1,5 +1,8 @@
 package woowacourse.movie.data
 
+import woowacourse.movie.data.model.ReservationTicket
+import woowacourse.movie.data.source.ReservationTicketRoomDao
+
 class FakeReservationTicketDao : ReservationTicketRoomDao {
     private val reservationTickets = mutableListOf<ReservationTicket>()
 

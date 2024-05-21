@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import woowacourse.movie.data.ReservationTicket
+import woowacourse.movie.data.model.ReservationTicket
 import woowacourse.movie.databinding.HolderReservationHistoryBinding
 
 class ReservationHistoryAdapter(

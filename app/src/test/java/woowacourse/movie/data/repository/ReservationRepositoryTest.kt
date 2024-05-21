@@ -3,7 +3,7 @@ package woowacourse.movie.data.repository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.ReservationTicket
+import woowacourse.movie.data.model.ReservationTicket
 import woowacourse.movie.domain.model.TimeReservation
 
 class ReservationRepositoryTest {

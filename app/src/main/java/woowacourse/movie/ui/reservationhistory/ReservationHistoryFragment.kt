@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import woowacourse.movie.data.ReservationTicket
 import woowacourse.movie.data.ReservationTicketDatabase
+import woowacourse.movie.data.model.ReservationTicket
 import woowacourse.movie.data.repository.OfflineReservationRepository
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.ui.reservation.ReservationCompleteActivity

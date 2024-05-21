@@ -8,8 +8,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationTicket
 import woowacourse.movie.data.ReservationTicketDatabase
+import woowacourse.movie.data.model.ReservationTicket
 import woowacourse.movie.data.repository.OfflineReservationRepository
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
 import woowacourse.movie.ui.MainActivity

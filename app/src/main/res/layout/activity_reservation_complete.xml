@@ -10,7 +10,7 @@
 
         <variable
             name="reservationTicket"
-            type="woowacourse.movie.data.ReservationTicket" />
+            type="woowacourse.movie.data.model.ReservationTicket" />
 
         <variable
             name="totalPrice"

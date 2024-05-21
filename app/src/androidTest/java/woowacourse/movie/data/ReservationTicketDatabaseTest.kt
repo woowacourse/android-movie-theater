@@ -10,7 +10,9 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.data.model.MovieData
+import woowacourse.movie.data.model.ReservationTicket
 import woowacourse.movie.data.model.ScreenData
+import woowacourse.movie.data.source.ReservationTicketDao
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Grade
 import woowacourse.movie.domain.model.Position

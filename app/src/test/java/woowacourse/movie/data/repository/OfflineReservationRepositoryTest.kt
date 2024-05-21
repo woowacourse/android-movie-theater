@@ -4,9 +4,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.FakeReservationTicketDao
-import woowacourse.movie.data.ReservationTicket
-import woowacourse.movie.data.ReservationTicketRoomDao
+import woowacourse.movie.data.model.ReservationTicket
 import woowacourse.movie.data.model.ScreenData
+import woowacourse.movie.data.source.ReservationTicketRoomDao
 import woowacourse.movie.domain.model.DateTime
 import woowacourse.movie.domain.model.Grade
 import woowacourse.movie.domain.model.Position

@@ -1,4 +1,6 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.source
+
+import woowacourse.movie.data.model.ReservationTicket
 
 interface ReservationTicketDao {
     fun insert(reservationTicket: ReservationTicket): Long

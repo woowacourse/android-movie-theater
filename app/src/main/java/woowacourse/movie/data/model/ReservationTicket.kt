@@ -1,8 +1,7 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateTime
 import woowacourse.movie.domain.model.Reservation
 import woowacourse.movie.domain.model.Seats

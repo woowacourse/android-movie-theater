@@ -1,8 +1,9 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.source
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import woowacourse.movie.data.model.ReservationTicket
 
 @Dao
 interface ReservationTicketRoomDao : ReservationTicketDao {
