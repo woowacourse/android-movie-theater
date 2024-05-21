@@ -1,9 +1,9 @@
 package woowacourse.movie.ui.home
 
 import woowacourse.movie.data.model.ScreenData
+import woowacourse.movie.data.repository.ScreenRepository
+import woowacourse.movie.data.repository.TheaterRepository
 import woowacourse.movie.domain.model.TheaterScreeningCount
-import woowacourse.movie.domain.repository.ScreenRepository
-import woowacourse.movie.domain.repository.TheaterRepository
 
 class TheatersScreeningMoviePresenter(
     private val view: TheatersScreeningMovieContract.View,

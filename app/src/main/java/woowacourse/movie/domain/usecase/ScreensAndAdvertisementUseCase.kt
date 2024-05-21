@@ -1,12 +1,12 @@
 package woowacourse.movie.domain.usecase
 
 import woowacourse.movie.data.model.ScreenData
+import woowacourse.movie.data.repository.AdRepository
+import woowacourse.movie.data.repository.MovieRepository
+import woowacourse.movie.data.repository.ScreenRepository
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.domain.model.ScreenAndAd
 import woowacourse.movie.domain.model.toScreen
-import woowacourse.movie.domain.repository.AdRepository
-import woowacourse.movie.domain.repository.MovieRepository
-import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.ui.ScreenAd
 import woowacourse.movie.ui.toPreviewUI
 

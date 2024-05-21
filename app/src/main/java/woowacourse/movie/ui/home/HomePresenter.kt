@@ -1,8 +1,8 @@
 package woowacourse.movie.ui.home
 
-import woowacourse.movie.domain.repository.DummyAdvertisement
-import woowacourse.movie.domain.repository.DummyMovies
-import woowacourse.movie.domain.repository.DummyScreens
+import woowacourse.movie.data.repository.DummyAdvertisement
+import woowacourse.movie.data.repository.DummyMovies
+import woowacourse.movie.data.repository.DummyScreens
 import woowacourse.movie.domain.usecase.ScreensAndAdvertisementUseCase
 
 class HomePresenter(

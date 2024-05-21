@@ -2,7 +2,7 @@ package woowacourse.movie.ui.reservation
 
 import android.os.Handler
 import android.os.Looper
-import woowacourse.movie.domain.repository.ReservationRepository
+import woowacourse.movie.data.repository.ReservationRepository
 import kotlin.concurrent.thread
 
 class ReservationPresenter(

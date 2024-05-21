@@ -4,11 +4,11 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.repository.FakeMovieRepository
+import woowacourse.movie.data.repository.FakeReservationRepository
+import woowacourse.movie.data.repository.FakeScreenRepository
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Image
-import woowacourse.movie.domain.repository.FakeMovieRepository
-import woowacourse.movie.domain.repository.FakeReservationRepository
-import woowacourse.movie.domain.repository.FakeScreenRepository
 import woowacourse.movie.ui.MovieDetailUI
 import woowacourse.movie.ui.ScreenDetailUi
 import java.time.LocalDate

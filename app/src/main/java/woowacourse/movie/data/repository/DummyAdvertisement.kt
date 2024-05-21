@@ -1,4 +1,4 @@
-package woowacourse.movie.domain.repository
+package woowacourse.movie.data.repository
 
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Image

@@ -9,8 +9,8 @@ import io.mockk.mockkStatic
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.repository.FakeReservationRepository
-import woowacourse.movie.domain.repository.FakeScreenRepository
+import woowacourse.movie.data.repository.FakeReservationRepository
+import woowacourse.movie.data.repository.FakeScreenRepository
 
 class SeatReservationPresenterTest {
     private lateinit var mockView: SeatReservationContract.View

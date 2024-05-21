@@ -4,9 +4,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.repository.DummyAdvertisement
-import woowacourse.movie.domain.repository.FakeMovieRepository
-import woowacourse.movie.domain.repository.FakeScreenRepository
+import woowacourse.movie.data.repository.DummyAdvertisement
+import woowacourse.movie.data.repository.FakeMovieRepository
+import woowacourse.movie.data.repository.FakeScreenRepository
 import woowacourse.movie.domain.usecase.ScreensAndAdvertisementUseCase
 import woowacourse.movie.ui.home.HomeContract
 import woowacourse.movie.ui.home.HomePresenter

@@ -1,14 +1,14 @@
 package woowacourse.movie.ui.detail
 
 import woowacourse.movie.data.model.ScreenData
+import woowacourse.movie.data.repository.MovieRepository
+import woowacourse.movie.data.repository.ReservationRepository
+import woowacourse.movie.data.repository.ScreenRepository
 import woowacourse.movie.domain.model.DateTime
 import woowacourse.movie.domain.model.ScreenTimePolicy
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.Ticket.Companion.MIN_TICKET_COUNT
 import woowacourse.movie.domain.model.WeeklyScreenTimePolicy
-import woowacourse.movie.domain.repository.MovieRepository
-import woowacourse.movie.domain.repository.ReservationRepository
-import woowacourse.movie.domain.repository.ScreenRepository
 import woowacourse.movie.ui.toDetailUI
 
 class ScreenDetailPresenter(

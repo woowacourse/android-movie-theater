@@ -1,4 +1,4 @@
-package woowacourse.movie.domain.repository
+package woowacourse.movie.data.repository
 
 import woowacourse.movie.data.ReservationTicket
 import woowacourse.movie.data.model.ScreenData

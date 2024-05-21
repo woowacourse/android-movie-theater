@@ -4,13 +4,13 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import woowacourse.movie.data.model.ScreenData
+import woowacourse.movie.data.repository.DummyTheaters
+import woowacourse.movie.data.repository.ReservationRepository
+import woowacourse.movie.data.repository.ScreenRepository
+import woowacourse.movie.data.repository.TheaterRepository
 import woowacourse.movie.domain.model.Position
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.TimeReservation
-import woowacourse.movie.domain.repository.DummyTheaters
-import woowacourse.movie.domain.repository.ReservationRepository
-import woowacourse.movie.domain.repository.ScreenRepository
-import woowacourse.movie.domain.repository.TheaterRepository
 import java.time.LocalDateTime
 import java.time.ZoneId
 import kotlin.concurrent.thread

@@ -1,4 +1,4 @@
-package woowacourse.movie.domain.repository
+package woowacourse.movie.data.repository
 
 import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateRange
@@ -26,10 +26,22 @@ class FakeScreenRepository : ScreenRepository {
 
     companion object {
         val fakeScreen1Data =
-            ScreenData(1, FakeMovieRepository.fakeMovie1Data, DateRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 3)))
+            ScreenData(
+                1,
+                FakeMovieRepository.fakeMovie1Data,
+                DateRange(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 3)),
+            )
         val fakeScreen2Data =
-            ScreenData(2, FakeMovieRepository.fakeMovie2Data, DateRange(LocalDate.of(2024, 3, 2), LocalDate.of(2024, 3, 4)))
+            ScreenData(
+                2,
+                FakeMovieRepository.fakeMovie2Data,
+                DateRange(LocalDate.of(2024, 3, 2), LocalDate.of(2024, 3, 4)),
+            )
         val fakeScreen3Data =
-            ScreenData(2, FakeMovieRepository.fakeMovie3Data, DateRange(LocalDate.of(2024, 3, 3), LocalDate.of(2024, 3, 5)))
+            ScreenData(
+                2,
+                FakeMovieRepository.fakeMovie3Data,
+                DateRange(LocalDate.of(2024, 3, 3), LocalDate.of(2024, 3, 5)),
+            )
     }
 }

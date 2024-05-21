@@ -10,7 +10,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.ReservationTicket
-import woowacourse.movie.domain.repository.FakeReservationRepository
+import woowacourse.movie.data.repository.FakeReservationRepository
 
 class ReservationHistoryPresenterTest {
     private lateinit var mockView: ReservationHistoryContract.View

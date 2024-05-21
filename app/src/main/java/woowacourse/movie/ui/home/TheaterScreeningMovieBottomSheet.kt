@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import woowacourse.movie.data.repository.DummyScreens
+import woowacourse.movie.data.repository.DummyTheaters
 import woowacourse.movie.databinding.BottomSheetTheaterBinding
 import woowacourse.movie.domain.model.TheaterScreeningCount
-import woowacourse.movie.domain.repository.DummyScreens
-import woowacourse.movie.domain.repository.DummyTheaters
 import woowacourse.movie.ui.detail.ScreenDetailActivity
 import woowacourse.movie.ui.home.adapter.TheaterScreeningCountAdapter
 

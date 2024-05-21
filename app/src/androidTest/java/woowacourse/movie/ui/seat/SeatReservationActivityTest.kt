@@ -15,8 +15,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.data.ReservationTicketDatabase
 import woowacourse.movie.data.model.ScreenData
+import woowacourse.movie.data.repository.OfflineReservationRepository
 import woowacourse.movie.domain.model.DateTime
-import woowacourse.movie.domain.repository.OfflineReservationRepository
 
 @RunWith(AndroidJUnit4::class)
 class SeatReservationActivityTest {
