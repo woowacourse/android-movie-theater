@@ -5,6 +5,7 @@ data class Movie(
     val title: String,
     val runningTime: Int,
     val description: String,
+    val poster: Image<Any>,
 ) {
     companion object {
         val NULL =
@@ -13,6 +14,7 @@ data class Movie(
                 title = "",
                 runningTime = -1,
                 description = "",
+                poster = Image.StringImage(""),
             )
     }
 }
