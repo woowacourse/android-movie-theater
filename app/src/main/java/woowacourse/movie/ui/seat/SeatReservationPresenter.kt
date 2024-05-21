@@ -6,7 +6,7 @@ import android.view.View
 import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.data.repository.DummyTheaters
 import woowacourse.movie.data.repository.ReservationRepository
-import woowacourse.movie.data.repository.ScreenRepository
+import woowacourse.movie.data.repository.ScreenDataSource
 import woowacourse.movie.data.repository.TheaterRepository
 import woowacourse.movie.domain.model.Position
 import woowacourse.movie.domain.model.Seats
@@ -17,7 +17,7 @@ import kotlin.concurrent.thread
 
 class SeatReservationPresenter(
     private val view: SeatReservationContract.View,
-    private val screenRepository: ScreenRepository,
+    private val screenDataSource: ScreenDataSource,
     private val reservationRepository: ReservationRepository,
     private val theaterRepository: TheaterRepository = DummyTheaters(),
     private val theaterId: Int,
@@ -26,7 +26,7 @@ class SeatReservationPresenter(
     private val uiHandler = Handler(Looper.getMainLooper())
 
     private val timeReservation: TimeReservation = reservationRepository.loadTimeReservation(timeReservationId)
-    private val loadedAllSeats: Seats = screenRepository.seats(timeReservation.screenData.id)
+    private val loadedAllSeats: Seats = screenDataSource.seats(timeReservation.screenData.id)
     private val ticketCount = timeReservation.ticket.count
 
     private var selectedSeats = Seats()
@@ -106,7 +106,7 @@ class SeatReservationPresenter(
     }
 
     private fun loadedScreen(screenId: Int): ScreenData {
-        screenRepository.findById(id = screenId).onSuccess { screen ->
+        screenDataSource.findById(id = screenId).onSuccess { screen ->
             return screen
         }.onFailure { e ->
             throw e

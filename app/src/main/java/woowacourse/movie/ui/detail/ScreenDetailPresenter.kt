@@ -3,7 +3,7 @@ package woowacourse.movie.ui.detail
 import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.data.repository.MovieDataSource
 import woowacourse.movie.data.repository.ReservationRepository
-import woowacourse.movie.data.repository.ScreenRepository
+import woowacourse.movie.data.repository.ScreenDataSource
 import woowacourse.movie.domain.model.DateTime
 import woowacourse.movie.domain.model.ScreenTimePolicy
 import woowacourse.movie.domain.model.Ticket
@@ -14,7 +14,7 @@ import woowacourse.movie.ui.toDetailUI
 class ScreenDetailPresenter(
     private val view: ScreenDetailContract.View,
     private val movieDataSource: MovieDataSource,
-    private val screenRepository: ScreenRepository,
+    private val screenDataSource: ScreenDataSource,
     private val reservationRepository: ReservationRepository,
     private val screenTimePolicy: ScreenTimePolicy = WeeklyScreenTimePolicy(),
     screenId: Int,
@@ -53,7 +53,7 @@ class ScreenDetailPresenter(
     }
 
     private fun loadedScreen(id: Int): ScreenData {
-        screenRepository.findById(id = id).onSuccess { screen ->
+        screenDataSource.findById(id = id).onSuccess { screen ->
             return screen
         }.onFailure { e ->
             throw e

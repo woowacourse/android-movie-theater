@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.repository.DummyAdvertisement
 import woowacourse.movie.data.repository.FakeMovieDataSource
-import woowacourse.movie.data.repository.FakeScreenRepository
+import woowacourse.movie.data.repository.FakeScreenDataSource
 import woowacourse.movie.domain.usecase.ScreensAndAdvertisementUseCase
 import woowacourse.movie.ui.home.HomeContract
 import woowacourse.movie.ui.home.HomePresenter
@@ -23,7 +23,7 @@ class HomePresenterTest {
                 view = view,
                 ScreensAndAdvertisementUseCase(
                     movieDataSource = FakeMovieDataSource(),
-                    screenRepository = FakeScreenRepository(),
+                    screenDataSource = FakeScreenDataSource(),
                     adRepository = DummyAdvertisement(),
                 ),
             )

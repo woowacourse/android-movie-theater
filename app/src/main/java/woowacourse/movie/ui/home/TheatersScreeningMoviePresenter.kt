@@ -1,13 +1,13 @@
 package woowacourse.movie.ui.home
 
 import woowacourse.movie.data.model.ScreenData
-import woowacourse.movie.data.repository.ScreenRepository
+import woowacourse.movie.data.repository.ScreenDataSource
 import woowacourse.movie.data.repository.TheaterRepository
 import woowacourse.movie.domain.model.TheaterScreeningCount
 
 class TheatersScreeningMoviePresenter(
     private val view: TheatersScreeningMovieContract.View,
-    private val screenRepository: ScreenRepository,
+    private val screenDataSource: ScreenDataSource,
     private val theaterRepository: TheaterRepository,
     private val screenId: Int,
 ) : TheatersScreeningMovieContract.Presenter {
@@ -25,7 +25,7 @@ class TheatersScreeningMoviePresenter(
         view.showTheatersScreeningcount(theaterScreeningCount)
     }
 
-    private fun loadedScreen() = screenRepository.findById(screenId).getOrThrow()
+    private fun loadedScreen() = screenDataSource.findById(screenId).getOrThrow()
 
     override fun selectTheater(theaterId: Int) {
         view.showScreenDetail(screenId, theaterId)

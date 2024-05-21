@@ -8,8 +8,8 @@ import woowacourse.movie.domain.model.Position
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 
-class ScreenRepositoryTest {
-    private val repository = FakeScreenRepository()
+class ScreenDataSourceTest {
+    private val repository = FakeScreenDataSource()
 
     @Test
     fun `상영 정보들을 불러온다`() {
@@ -17,9 +17,9 @@ class ScreenRepositoryTest {
         val screens = repository.load()
         val expected =
             listOf(
-                FakeScreenRepository.fakeScreen1Data,
-                FakeScreenRepository.fakeScreen2Data,
-                FakeScreenRepository.fakeScreen3Data,
+                FakeScreenDataSource.fakeScreen1Data,
+                FakeScreenDataSource.fakeScreen2Data,
+                FakeScreenDataSource.fakeScreen3Data,
             )
 
         // then
@@ -29,7 +29,7 @@ class ScreenRepositoryTest {
     @Test
     fun `상영 ID를 통해 상영 정보를 불러온다`() {
         val actual = repository.findById(1).getOrThrow()
-        val expected = FakeScreenRepository.fakeScreen1Data
+        val expected = FakeScreenDataSource.fakeScreen1Data
 
         // then
         assertThat(actual).isEqualTo(expected)

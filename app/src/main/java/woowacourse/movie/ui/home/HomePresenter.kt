@@ -2,7 +2,7 @@ package woowacourse.movie.ui.home
 
 import woowacourse.movie.data.repository.DummyAdvertisement
 import woowacourse.movie.data.repository.DummyMovieDataSource
-import woowacourse.movie.data.repository.DummyScreens
+import woowacourse.movie.data.repository.DummyScreenDataSource
 import woowacourse.movie.domain.usecase.ScreensAndAdvertisementUseCase
 
 class HomePresenter(
@@ -10,7 +10,7 @@ class HomePresenter(
     private val screensAndAdvertisementUseCase: ScreensAndAdvertisementUseCase =
         ScreensAndAdvertisementUseCase(
             movieDataSource = DummyMovieDataSource(),
-            screenRepository = DummyScreens(),
+            screenDataSource = DummyScreenDataSource(),
             adRepository = DummyAdvertisement(),
         ),
 ) : HomeContract.Presenter {

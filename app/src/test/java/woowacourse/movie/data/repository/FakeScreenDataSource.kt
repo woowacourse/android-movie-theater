@@ -8,7 +8,7 @@ import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import java.time.LocalDate
 
-class FakeScreenRepository : ScreenRepository {
+class FakeScreenDataSource : ScreenDataSource {
     private val screens = listOf(fakeScreen1Data, fakeScreen2Data, fakeScreen3Data)
 
     override fun load(): List<ScreenData> {

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.repository.FakeMovieDataSource
 import woowacourse.movie.data.repository.FakeReservationRepository
-import woowacourse.movie.data.repository.FakeScreenRepository
+import woowacourse.movie.data.repository.FakeScreenDataSource
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.ui.MovieDetailUI
@@ -118,7 +118,7 @@ class ScreenDetailPresenterTest {
         return ScreenDetailPresenter(
             view = mockView,
             movieDataSource = FakeMovieDataSource(),
-            screenRepository = FakeScreenRepository(),
+            screenDataSource = FakeScreenDataSource(),
             reservationRepository = FakeReservationRepository(),
             screenId = screenId,
             theaterId = theaterId,

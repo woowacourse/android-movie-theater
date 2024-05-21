@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.repository.FakeAdRepository
 import woowacourse.movie.data.repository.FakeMovieDataSource
-import woowacourse.movie.data.repository.FakeScreenRepository
+import woowacourse.movie.data.repository.FakeScreenDataSource
 import woowacourse.movie.domain.model.ScreenAndAd
 import woowacourse.movie.domain.model.toScreen
 
@@ -17,7 +17,7 @@ class ScreensAndAdvertisementUseCaseTest {
         screensAndAdvertisementUseCase =
             ScreensAndAdvertisementUseCase(
                 FakeMovieDataSource(),
-                FakeScreenRepository(),
+                FakeScreenDataSource(),
                 FakeAdRepository(),
             )
     }
@@ -30,9 +30,9 @@ class ScreensAndAdvertisementUseCaseTest {
         // then
         val expected =
             listOf<ScreenAndAd>(
-                FakeScreenRepository.fakeScreen1Data.toScreen(),
-                FakeScreenRepository.fakeScreen2Data.toScreen(),
-                FakeScreenRepository.fakeScreen3Data.toScreen(),
+                FakeScreenDataSource.fakeScreen1Data.toScreen(),
+                FakeScreenDataSource.fakeScreen2Data.toScreen(),
+                FakeScreenDataSource.fakeScreen3Data.toScreen(),
                 ScreenAndAd.Advertisement(0),
             )
 

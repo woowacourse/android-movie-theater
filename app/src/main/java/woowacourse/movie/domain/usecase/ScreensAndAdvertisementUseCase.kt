@@ -3,7 +3,7 @@ package woowacourse.movie.domain.usecase
 import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.data.repository.AdRepository
 import woowacourse.movie.data.repository.MovieDataSource
-import woowacourse.movie.data.repository.ScreenRepository
+import woowacourse.movie.data.repository.ScreenDataSource
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.domain.model.ScreenAndAd
 import woowacourse.movie.domain.model.toScreen
@@ -12,11 +12,11 @@ import woowacourse.movie.ui.toPreviewUI
 
 class ScreensAndAdvertisementUseCase(
     private val movieDataSource: MovieDataSource,
-    private val screenRepository: ScreenRepository,
+    private val screenDataSource: ScreenDataSource,
     private val adRepository: AdRepository,
 ) {
     fun generated2(): List<ScreenAndAd> {
-        val screens = screenRepository.load().map { it.toScreen() }
+        val screens = screenDataSource.load().map { it.toScreen() }
         val advertisement = adRepository.load()
 
         return generatedScreenAdList2(screens, advertisement)
@@ -39,7 +39,7 @@ class ScreensAndAdvertisementUseCase(
 
     fun generated(): List<ScreenAd> {
         val screenPreviewUis =
-            screenRepository.load().map { screen ->
+            screenDataSource.load().map { screen ->
                 val moviePoster = movieDataSource.imageSrc(screen.movieData.id)
                 screen.toPreviewUI(image = moviePoster)
             }
@@ -66,7 +66,7 @@ class ScreensAndAdvertisementUseCase(
         }
     }
 
-    fun loadedScreens(screenId: Int): Result<ScreenData> = screenRepository.findById(screenId)
+    fun loadedScreens(screenId: Int): Result<ScreenData> = screenDataSource.findById(screenId)
 
     companion object {
         private const val ADVERTISEMENT_INTERVAL = 4

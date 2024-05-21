@@ -10,7 +10,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.repository.FakeReservationRepository
-import woowacourse.movie.data.repository.FakeScreenRepository
+import woowacourse.movie.data.repository.FakeScreenDataSource
 
 class SeatReservationPresenterTest {
     private lateinit var mockView: SeatReservationContract.View
@@ -49,7 +49,7 @@ class SeatReservationPresenterTest {
         SeatReservationPresenter(
             view = mockView,
             reservationRepository = FakeReservationRepository(),
-            screenRepository = FakeScreenRepository(),
+            screenDataSource = FakeScreenDataSource(),
             timeReservationId = timeReservationId,
             theaterId = theaterId,
         )

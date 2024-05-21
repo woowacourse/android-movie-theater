@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.data.repository.DummyScreens
+import woowacourse.movie.data.repository.DummyScreenDataSource
 import woowacourse.movie.data.repository.DummyTheaters
 import woowacourse.movie.databinding.BottomSheetTheaterBinding
 import woowacourse.movie.domain.model.TheaterScreeningCount
@@ -24,7 +24,7 @@ class TheaterScreeningMovieBottomSheet : BottomSheetDialogFragment(), TheatersSc
         super.onCreate(savedInstanceState)
 
         val screenId = arguments?.getInt(ARGUMENT_SCREEN_ID) ?: throw IllegalArgumentException("ScreenId is required")
-        presenter = TheatersScreeningMoviePresenter(this, DummyScreens(), DummyTheaters(), screenId)
+        presenter = TheatersScreeningMoviePresenter(this, DummyScreenDataSource(), DummyTheaters(), screenId)
     }
 
     override fun onCreateView(

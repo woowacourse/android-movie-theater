@@ -2,13 +2,13 @@ package woowacourse.movie.domain.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.repository.FakeScreenRepository
+import woowacourse.movie.data.repository.FakeScreenDataSource
 import java.time.LocalTime
 
 class ScreenDataTest {
     @Test
     fun `상영작이 상영하는 시간을 구한다`() {
-        val screen = FakeScreenRepository.fakeScreen1Data
+        val screen = FakeScreenDataSource.fakeScreen1Data
 
         val actual = screen.allScreeningTime(WeeklyScreenTimePolicy())
 

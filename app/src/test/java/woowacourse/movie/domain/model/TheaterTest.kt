@@ -2,7 +2,7 @@ package woowacourse.movie.domain.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.repository.FakeScreenRepository
+import woowacourse.movie.data.repository.FakeScreenDataSource
 
 class TheaterTest {
     @Test
@@ -11,10 +11,10 @@ class TheaterTest {
             Theater(
                 1,
                 "선릉 극장",
-                listOf(FakeScreenRepository.fakeScreen1Data, FakeScreenRepository.fakeScreen2Data, FakeScreenRepository.fakeScreen3Data),
+                listOf(FakeScreenDataSource.fakeScreen1Data, FakeScreenDataSource.fakeScreen2Data, FakeScreenDataSource.fakeScreen3Data),
             )
 
-        val screen = FakeScreenRepository.fakeScreen1Data
+        val screen = FakeScreenDataSource.fakeScreen1Data
         val actual = theater.hasScreen(screen)
 
         assertThat(actual).isTrue()
@@ -27,13 +27,13 @@ class TheaterTest {
                 1,
                 "선릉 극장",
                 listOf(
-                    FakeScreenRepository.fakeScreen1Data,
-                    FakeScreenRepository.fakeScreen2Data,
-                    FakeScreenRepository.fakeScreen3Data,
+                    FakeScreenDataSource.fakeScreen1Data,
+                    FakeScreenDataSource.fakeScreen2Data,
+                    FakeScreenDataSource.fakeScreen3Data,
                 ),
             )
 
-        val screen = FakeScreenRepository.fakeScreen1Data
+        val screen = FakeScreenDataSource.fakeScreen1Data
         val actual = theater.allScreeningTimeCount(screen)
 
         assertThat(actual).isEqualTo(22)

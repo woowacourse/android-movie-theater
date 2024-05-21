@@ -6,9 +6,9 @@ import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Seats
 import java.time.LocalDate
 
-class DummyScreens(
+class DummyScreenDataSource(
     private val seatsRepository: SeatsRepository = DummySeats(),
-) : ScreenRepository {
+) : ScreenDataSource {
     // TODO 더미 데이터
     private val screenData =
         listOf(
