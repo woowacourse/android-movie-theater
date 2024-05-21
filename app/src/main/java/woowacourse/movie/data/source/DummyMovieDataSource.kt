@@ -1,4 +1,4 @@
-package woowacourse.movie.data.repository
+package woowacourse.movie.data.source
 
 import woowacourse.movie.R
 import woowacourse.movie.data.model.MovieData

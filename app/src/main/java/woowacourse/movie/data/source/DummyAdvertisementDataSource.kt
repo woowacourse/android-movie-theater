@@ -1,17 +1,11 @@
-package woowacourse.movie.data.repository
+package woowacourse.movie.data.source
 
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.domain.model.ScreenAndAd
 
-class DummyAdvertisement : AdRepository {
+class DummyAdvertisementDataSource : AdvertisementDataSource {
     override fun load(): ScreenAndAd.Advertisement = ScreenAndAd.Advertisement(0)
 
     override fun imageSrc(advertisementId: Int): Image.DrawableImage = Image.DrawableImage(R.drawable.advertisement)
-}
-
-interface AdRepository {
-    fun load(): ScreenAndAd.Advertisement
-
-    fun imageSrc(advertisementId: Int): Image.DrawableImage
 }

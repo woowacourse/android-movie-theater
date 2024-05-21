@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationTicketDatabase
-import woowacourse.movie.data.repository.DummyMovieDataSource
-import woowacourse.movie.data.repository.DummyScreenDataSource
 import woowacourse.movie.data.repository.OfflineReservationRepository
+import woowacourse.movie.data.source.DummyMovieDataSource
+import woowacourse.movie.data.source.DummyScreenDataSource
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.ScreenTimePolicy
 import woowacourse.movie.domain.model.Ticket

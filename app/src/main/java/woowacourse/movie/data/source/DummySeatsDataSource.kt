@@ -1,4 +1,4 @@
-package woowacourse.movie.data.repository
+package woowacourse.movie.data.source
 
 import woowacourse.movie.domain.model.Grade
 import woowacourse.movie.domain.model.Position
@@ -6,7 +6,7 @@ import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 
 // TODO: 모든 상영관이 같은 좌석을 가진다고 가정
-class DummySeats : SeatsRepository {
+class DummySeatsDataSource : SeatsDataSource {
     override fun findById(screenId: Int): Seats =
         Seats(
             Seat(Position(0, 0), Grade.B),

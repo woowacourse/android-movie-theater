@@ -1,9 +1,9 @@
 package woowacourse.movie.ui.detail
 
 import woowacourse.movie.data.model.ScreenData
-import woowacourse.movie.data.repository.MovieDataSource
 import woowacourse.movie.data.repository.ReservationRepository
-import woowacourse.movie.data.repository.ScreenDataSource
+import woowacourse.movie.data.source.MovieDataSource
+import woowacourse.movie.data.source.ScreenDataSource
 import woowacourse.movie.domain.model.DateTime
 import woowacourse.movie.domain.model.ScreenTimePolicy
 import woowacourse.movie.domain.model.Ticket

@@ -4,9 +4,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.repository.DummyAdvertisement
 import woowacourse.movie.data.repository.FakeMovieDataSource
 import woowacourse.movie.data.repository.FakeScreenDataSource
+import woowacourse.movie.data.source.DummyAdvertisementDataSource
 import woowacourse.movie.domain.usecase.ScreensAndAdvertisementUseCase
 import woowacourse.movie.ui.home.HomeContract
 import woowacourse.movie.ui.home.HomePresenter
@@ -24,7 +24,7 @@ class HomePresenterTest {
                 ScreensAndAdvertisementUseCase(
                     movieDataSource = FakeMovieDataSource(),
                     screenDataSource = FakeScreenDataSource(),
-                    adRepository = DummyAdvertisement(),
+                    advertisementDataSource = DummyAdvertisementDataSource(),
                 ),
             )
     }

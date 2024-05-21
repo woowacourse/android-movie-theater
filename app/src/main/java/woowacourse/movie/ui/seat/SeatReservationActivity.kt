@@ -14,10 +14,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationTicketDatabase
-import woowacourse.movie.data.repository.DummyScreenDataSource
-import woowacourse.movie.data.repository.DummySeats
-import woowacourse.movie.data.repository.DummyTheaters
 import woowacourse.movie.data.repository.OfflineReservationRepository
+import woowacourse.movie.data.source.DummyScreenDataSource
+import woowacourse.movie.data.source.DummySeatsDataSource
+import woowacourse.movie.data.source.DummyTheatersDataSource
 import woowacourse.movie.databinding.ActivitySeatReservationBinding
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
@@ -60,11 +60,11 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
         presenter =
             SeatReservationPresenter(
                 this,
-                DummyScreenDataSource(DummySeats()),
+                DummyScreenDataSource(DummySeatsDataSource()),
                 OfflineReservationRepository(
                     ReservationTicketDatabase.getDatabase(applicationContext).reservationDao(),
                 ),
-                DummyTheaters(),
+                DummyTheatersDataSource(),
                 theaterId,
                 timeReservationId,
             )

@@ -1,4 +1,4 @@
-package woowacourse.movie.data.repository
+package woowacourse.movie.data.source
 
 import woowacourse.movie.data.model.MovieData
 import woowacourse.movie.data.model.ScreenData
@@ -7,7 +7,7 @@ import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.Theaters
 import java.time.LocalDate
 
-class DummyTheaters : TheaterRepository {
+class DummyTheatersDataSource : TheaterDataSource {
     private val theaters =
         mutableListOf(
             Theater(

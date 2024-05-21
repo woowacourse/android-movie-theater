@@ -4,10 +4,10 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import woowacourse.movie.data.model.ScreenData
-import woowacourse.movie.data.repository.DummyTheaters
 import woowacourse.movie.data.repository.ReservationRepository
-import woowacourse.movie.data.repository.ScreenDataSource
-import woowacourse.movie.data.repository.TheaterRepository
+import woowacourse.movie.data.source.DummyTheatersDataSource
+import woowacourse.movie.data.source.ScreenDataSource
+import woowacourse.movie.data.source.TheaterDataSource
 import woowacourse.movie.domain.model.Position
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.TimeReservation
@@ -19,7 +19,7 @@ class SeatReservationPresenter(
     private val view: SeatReservationContract.View,
     private val screenDataSource: ScreenDataSource,
     private val reservationRepository: ReservationRepository,
-    private val theaterRepository: TheaterRepository = DummyTheaters(),
+    private val theaterDataSource: TheaterDataSource = DummyTheatersDataSource(),
     private val theaterId: Int,
     timeReservationId: Int,
 ) : SeatReservationContract.Presenter {
@@ -85,7 +85,7 @@ class SeatReservationPresenter(
                 loadedScreen(screenId),
                 selectedSeats,
                 timeReservation.dateTime,
-                theaterRepository.findById(theaterId),
+                theaterDataSource.findById(theaterId),
             ).onSuccess { reservationTicketId ->
                 schedulePushAlarm(reservationTicketId.toInt())
                 view.showCompleteReservation(reservationTicketId.toInt())

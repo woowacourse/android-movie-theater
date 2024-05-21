@@ -1,4 +1,4 @@
-package woowacourse.movie.data.repository
+package woowacourse.movie.data.source
 
 import woowacourse.movie.data.model.MovieData
 import woowacourse.movie.data.model.ScreenData
@@ -7,7 +7,7 @@ import woowacourse.movie.domain.model.Seats
 import java.time.LocalDate
 
 class DummyScreenDataSource(
-    private val seatsRepository: SeatsRepository = DummySeats(),
+    private val seatsDataSource: SeatsDataSource = DummySeatsDataSource(),
 ) : ScreenDataSource {
     // TODO 더미 데이터
     private val screenData =
@@ -150,5 +150,5 @@ class DummyScreenDataSource(
 
     override fun findById(id: Int): Result<ScreenData> = runCatching { screenData.find { it.id == id } ?: throw NoSuchElementException() }
 
-    override fun seats(screenId: Int): Seats = seatsRepository.findById(screenId)
+    override fun seats(screenId: Int): Seats = seatsDataSource.findById(screenId)
 }

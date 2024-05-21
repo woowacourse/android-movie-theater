@@ -1,8 +1,8 @@
 package woowacourse.movie.ui.home
 
-import woowacourse.movie.data.repository.DummyAdvertisement
-import woowacourse.movie.data.repository.DummyMovieDataSource
-import woowacourse.movie.data.repository.DummyScreenDataSource
+import woowacourse.movie.data.source.DummyAdvertisementDataSource
+import woowacourse.movie.data.source.DummyMovieDataSource
+import woowacourse.movie.data.source.DummyScreenDataSource
 import woowacourse.movie.domain.usecase.ScreensAndAdvertisementUseCase
 
 class HomePresenter(
@@ -11,7 +11,7 @@ class HomePresenter(
         ScreensAndAdvertisementUseCase(
             movieDataSource = DummyMovieDataSource(),
             screenDataSource = DummyScreenDataSource(),
-            adRepository = DummyAdvertisement(),
+            advertisementDataSource = DummyAdvertisementDataSource(),
         ),
 ) : HomeContract.Presenter {
     override fun loadScreen() {

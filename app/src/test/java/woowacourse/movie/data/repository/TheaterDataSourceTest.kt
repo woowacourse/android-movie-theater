@@ -5,22 +5,24 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.model.MovieData
 import woowacourse.movie.data.model.ScreenData
+import woowacourse.movie.data.source.DummyTheatersDataSource
+import woowacourse.movie.data.source.TheaterDataSource
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.Theaters
 import java.time.LocalDate
 
-class TheaterRepositoryTest {
-    private lateinit var theaterRepository: TheaterRepository
+class TheaterDataSourceTest {
+    private lateinit var theaterDataSource: TheaterDataSource
 
     @BeforeEach
     fun setUp() {
-        theaterRepository = DummyTheaters()
+        theaterDataSource = DummyTheatersDataSource()
     }
 
     @Test
     fun `모든 영화관 정보를 가져온다`() {
-        val actual = theaterRepository.loadAll()
+        val actual = theaterDataSource.loadAll()
 
         assertThat(actual).isEqualTo(
             Theaters(
@@ -213,7 +215,7 @@ class TheaterRepositoryTest {
 
     @Test
     fun `영화관 아이디를 통해 영화관을 가져온다`() {
-        val actual = theaterRepository.findById(1)
+        val actual = theaterDataSource.findById(1)
         val expected =
             Theater(
                 1,

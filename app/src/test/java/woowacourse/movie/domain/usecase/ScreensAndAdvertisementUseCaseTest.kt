@@ -3,7 +3,7 @@ package woowacourse.movie.domain.usecase
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.repository.FakeAdRepository
+import woowacourse.movie.data.repository.FakeAdvertisementDataSource
 import woowacourse.movie.data.repository.FakeMovieDataSource
 import woowacourse.movie.data.repository.FakeScreenDataSource
 import woowacourse.movie.domain.model.ScreenAndAd
@@ -18,7 +18,7 @@ class ScreensAndAdvertisementUseCaseTest {
             ScreensAndAdvertisementUseCase(
                 FakeMovieDataSource(),
                 FakeScreenDataSource(),
-                FakeAdRepository(),
+                FakeAdvertisementDataSource(),
             )
     }
 

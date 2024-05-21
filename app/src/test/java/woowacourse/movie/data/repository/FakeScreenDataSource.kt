@@ -1,6 +1,7 @@
 package woowacourse.movie.data.repository
 
 import woowacourse.movie.data.model.ScreenData
+import woowacourse.movie.data.source.ScreenDataSource
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Grade
 import woowacourse.movie.domain.model.Position
