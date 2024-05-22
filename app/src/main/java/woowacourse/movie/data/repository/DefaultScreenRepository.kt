@@ -18,16 +18,12 @@ class DefaultScreenRepository(
         }
     }
 
-    override fun loadScreen(screenId: Int): ScreenAndAd.Screen {
-        screenDataSource.findById(screenId).onSuccess { screenData ->
-            return ScreenAndAd.Screen(
+    override fun loadScreen(screenId: Int): Result<ScreenAndAd.Screen> =
+        screenDataSource.findById(screenId).mapCatching { screenData ->
+            ScreenAndAd.Screen(
                 id = screenData.id,
                 movie = movieRepository.loadMovie(screenData.movieData.id),
                 dateRange = screenData.dateRange,
             )
-        }.onFailure {
-            throw IllegalArgumentException("Screen not found")
         }
-        throw IllegalStateException("Screen not found")
-    }
 }

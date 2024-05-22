@@ -27,7 +27,7 @@ class DefaultScreenRepositoryTest {
     fun loadScreen() {
         val screen = screenRepository.loadScreen(1)
 
-        assertThat(screen).isEqualTo(
+        assertThat(screen.getOrThrow()).isEqualTo(
             ScreenAndAd.Screen(
                 id = 1,
                 movie =
@@ -74,7 +74,7 @@ class DefaultScreenRepositoryTest {
                     dateRange = DateRange(LocalDate.of(2024, 3, 2), LocalDate.of(2024, 3, 4)),
                 ),
                 ScreenAndAd.Screen(
-                    id = 2,
+                    id = 3,
                     movie =
                         Movie(
                             id = 3,
