@@ -20,7 +20,7 @@ data class ScreenData(
         val NULL =
             ScreenData(
                 id = -1,
-                movieData = MovieData.NULL,
+                movieData = MovieData.FAKE,
             )
     }
 }

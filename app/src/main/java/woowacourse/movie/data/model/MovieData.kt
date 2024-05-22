@@ -7,7 +7,7 @@ data class MovieData(
     val description: String,
 ) {
     companion object {
-        val NULL =
+        val FAKE =
             MovieData(
                 id = -1,
                 title = "",

@@ -2,8 +2,8 @@ package woowacourse.movie.data.source
 
 import woowacourse.movie.R
 import woowacourse.movie.data.model.MovieData
+import woowacourse.movie.data.model.MoviePosterData
 import woowacourse.movie.domain.model.Image
-import woowacourse.movie.domain.model.MoviePoster
 
 class DummyMovieDataSource : MovieDataSource {
     private val movieData =
@@ -33,12 +33,14 @@ class DummyMovieDataSource : MovieDataSource {
 
     private val movieImages =
         listOf(
-            MoviePoster(1, Image.DrawableImage(R.drawable.img_poster)),
-            MoviePoster(2, Image.DrawableImage(R.drawable.ic_launcher_foreground)),
-            MoviePoster(3, Image.DrawableImage(R.drawable.ic_launcher_background)),
+            MoviePosterData(1, Image.DrawableImage(R.drawable.img_poster)),
+            MoviePosterData(2, Image.DrawableImage(R.drawable.ic_launcher_foreground)),
+            MoviePosterData(3, Image.DrawableImage(R.drawable.ic_launcher_background)),
         )
 
     override fun findById(id: Int): MovieData = movieData.find { it.id == id } ?: throw NoSuchElementException()
 
     override fun imageSrc(id: Int): Image<Any> = movieImages.find { it.movieId == id }?.poster ?: throw NoSuchElementException()
+
+    override fun imageSrc2(id: Int): MoviePosterData = movieImages.find { it.movieId == id } ?: throw NoSuchElementException()
 }

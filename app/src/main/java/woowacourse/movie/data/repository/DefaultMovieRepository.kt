@@ -8,13 +8,14 @@ class DefaultMovieRepository(
 ) : MovieRepository {
     override fun loadMovie(movieId: Int): Movie {
         val movieData = movieDataSource.findById(movieId)
+        val moviePosterData = movieDataSource.imageSrc2(movieId)
 
         return Movie(
             id = movieData.id,
             title = movieData.title,
             runningTime = movieData.runningTime,
             description = movieData.description,
-            poster = movieDataSource.imageSrc(movieId),
+            poster = moviePosterData.poster,
         )
     }
 }
