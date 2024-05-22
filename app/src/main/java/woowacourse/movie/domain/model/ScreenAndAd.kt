@@ -9,6 +9,8 @@ sealed interface ScreenAndAd {
 
     data class Advertisement(
         val id: Int,
+        val content: String,
+        val image: Image<Any>,
     ) : ScreenAndAd
 }
 

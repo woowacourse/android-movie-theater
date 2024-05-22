@@ -1,10 +1,10 @@
 package woowacourse.movie.data.source
 
+import woowacourse.movie.data.model.AdvertisementData
 import woowacourse.movie.domain.model.Image
-import woowacourse.movie.domain.model.ScreenAndAd
 
 interface AdvertisementDataSource {
-    fun load(): ScreenAndAd.Advertisement
+    fun load(): AdvertisementData
 
     fun imageSrc(advertisementId: Int): Image.DrawableImage
 }
