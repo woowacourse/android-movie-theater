@@ -1,5 +1,7 @@
 package woowacourse.movie.domain.model
 
+import woowacourse.movie.data.model.MovieData
+import woowacourse.movie.ui.MovieDetailUI
 import woowacourse.movie.ui.MoviePreviewUI
 
 data class Movie(
@@ -26,4 +28,20 @@ fun Movie.toPreviewUI() =
         title = title,
         runningTime = runningTime,
         image = poster,
+    )
+
+fun Movie.toDetailUi() =
+    MovieDetailUI(
+        title = title,
+        runningTime = runningTime,
+        description = description,
+        image = poster,
+    )
+
+fun Movie.toData() =
+    MovieData(
+        id = id,
+        title = title,
+        runningTime = runningTime,
+        description = description,
     )
