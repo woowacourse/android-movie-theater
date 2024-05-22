@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.ui.ScreenAd
 import woowacourse.movie.ui.home.adapter.ScreenAdapter
@@ -51,8 +50,8 @@ class HomeFragment : Fragment(), HomeContract.View {
         screenAdapter.submitList(screens)
     }
 
-    override fun showTheatersScreeningMovie(screenData: ScreenData) {
-        val theaterScreeningMovieBottomSheet = TheaterScreeningMovieBottomSheet.newInstance(screenData.id)
+    override fun showTheatersScreeningMovie(screen: ScreenAd.ScreenPreviewUi) {
+        val theaterScreeningMovieBottomSheet = TheaterScreeningMovieBottomSheet.newInstance(screen.id)
         theaterScreeningMovieBottomSheet.show(childFragmentManager, "TheaterBottomSheet")
     }
 

@@ -1,5 +1,7 @@
 package woowacourse.movie.domain.model
 
+import woowacourse.movie.ui.MoviePreviewUI
+
 data class Movie(
     val id: Int,
     val title: String,
@@ -18,3 +20,10 @@ data class Movie(
             )
     }
 }
+
+fun Movie.toPreviewUI() =
+    MoviePreviewUI(
+        title = title,
+        runningTime = runningTime,
+        image = poster,
+    )

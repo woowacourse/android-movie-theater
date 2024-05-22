@@ -1,5 +1,7 @@
 package woowacourse.movie.domain.model
 
+import woowacourse.movie.ui.ScreenAd
+
 sealed interface ScreenAndAd {
     data class Screen(
         val id: Int,
@@ -14,9 +16,9 @@ sealed interface ScreenAndAd {
     ) : ScreenAndAd
 }
 
-// fun ScreenData.toScreen(): ScreenAndAd.Screen =
-//    ScreenAndAd.Screen(
-//        id = id,
-//        movie = movie,
-//        dateRange = dateRange,
-//    )
+fun ScreenAndAd.Screen.toPreviewUI(): ScreenAd.ScreenPreviewUi =
+    ScreenAd.ScreenPreviewUi(
+        id = id,
+        dateRange = dateRange,
+        moviePreviewUI = movie.toPreviewUI(),
+    )
