@@ -1,4 +1,4 @@
-package woowacourse.movie.ui
+package woowacourse.movie.ui.main
 
 import android.Manifest
 import android.content.Intent
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private val settingFragment: SettingFragment by lazy { SettingFragment() }
 
     private val notificationPreference: NotificationPreference by lazy {
-        (application as MovieReservationApplication).notificationPreference
+        MovieReservationApplication.notificationPreference
     }
 
     private val requestPermissionLauncher =

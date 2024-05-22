@@ -11,7 +11,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
-import woowacourse.movie.ui.MainActivity
+import woowacourse.movie.ui.main.MainActivity
 import woowacourse.movie.ui.reservation.ReservationCompleteActivity
 import woowacourse.movie.ui.reservation.ReservationCompleteActivity.Companion.DEFAULT_RESERVATION_TICKET_ID
 import woowacourse.movie.ui.reservation.ReservationCompleteActivity.Companion.PUT_EXTRA_KEY_RESERVATION_TICKET_ID

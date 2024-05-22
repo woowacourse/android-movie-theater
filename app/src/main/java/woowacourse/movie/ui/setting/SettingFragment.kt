@@ -20,7 +20,7 @@ class SettingFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val notificationPreference: NotificationPreference by lazy {
-        (requireActivity().applicationContext as MovieReservationApplication).notificationPreference
+        MovieReservationApplication.notificationPreference
     }
 
     override fun onCreateView(

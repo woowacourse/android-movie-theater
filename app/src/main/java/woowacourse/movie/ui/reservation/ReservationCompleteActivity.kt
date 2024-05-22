@@ -12,7 +12,7 @@ import woowacourse.movie.data.ReservationTicketDatabase
 import woowacourse.movie.data.model.ReservationTicket
 import woowacourse.movie.data.repository.OfflineReservationRepository
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
-import woowacourse.movie.ui.MainActivity
+import woowacourse.movie.ui.main.MainActivity
 
 class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.View {
     private lateinit var presenter: ReservationContract.Presenter
