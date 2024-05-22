@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationTicketDatabase
+import woowacourse.movie.data.repository.DefaultMovieRepository
+import woowacourse.movie.data.repository.DefaultScreenRepository
 import woowacourse.movie.data.repository.OfflineReservationRepository
 import woowacourse.movie.data.source.DummyMovieDataSource
 import woowacourse.movie.data.source.DummyScreenDataSource
@@ -41,17 +43,20 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
     private fun initPresenter() {
         val screenId = intent.getIntExtra(PUT_EXTRA_KEY_ID, DEFAULT_SCREEN_ID)
         val theaterId = intent.getIntExtra(PUT_EXTRA_THEATER_ID_KEY, DEFAULT_THEATER_ID)
+
+        val movieRepository = DefaultMovieRepository(DummyMovieDataSource())
         presenter =
             ScreenDetailPresenter(
                 this,
-                DummyMovieDataSource(),
-                DummyScreenDataSource(),
-                OfflineReservationRepository(
-                    ReservationTicketDatabase.getDatabase(applicationContext).reservationDao(),
-                ),
-                WeeklyScreenTimePolicy(),
-                screenId,
-                theaterId,
+                movieRepository = movieRepository,
+                screenRepository = DefaultScreenRepository(DummyScreenDataSource(), movieRepository),
+                reservationRepository =
+                    OfflineReservationRepository(
+                        ReservationTicketDatabase.getDatabase(applicationContext).reservationDao(),
+                    ),
+                screenTimePolicy = WeeklyScreenTimePolicy(),
+                screenId = screenId,
+                theaterId = theaterId,
             )
     }
 
