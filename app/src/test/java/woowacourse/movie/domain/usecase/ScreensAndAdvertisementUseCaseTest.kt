@@ -18,19 +18,10 @@ import java.time.LocalDate
 class ScreensAndAdvertisementUseCaseTest {
     private lateinit var screensAndAdvertisementUseCase: ScreensAndAdvertisementUseCase
 
-    private lateinit var screensAndAdvertisementUseCase2: ScreensAndAdvertisementUseCase2
-
     @BeforeEach
     fun setUp() {
         screensAndAdvertisementUseCase =
             ScreensAndAdvertisementUseCase(
-                FakeMovieDataSource(),
-                FakeScreenDataSource(),
-                FakeAdvertisementDataSource(),
-            )
-
-        screensAndAdvertisementUseCase2 =
-            ScreensAndAdvertisementUseCase2(
                 screenRepository =
                     DefaultScreenRepository(
                         FakeScreenDataSource(),
@@ -41,27 +32,9 @@ class ScreensAndAdvertisementUseCaseTest {
     }
 
     @Test
-    fun `상영과 광고 목록을 생성한다_last`() {
-        // given & when
-        val generatedScreenAndAd = screensAndAdvertisementUseCase.generated2()
-
-        // then
-        val expected =
-            listOf<ScreenAndAd>(
-                // TODO:
-//                FakeScreenDataSource.fakeScreen1Data.toScreen(),
-//                FakeScreenDataSource.fakeScreen2Data.toScreen(),
-//                FakeScreenDataSource.fakeScreen3Data.toScreen(),
-//                ScreenAndAd.Advertisement(0),
-            )
-
-        assertThat(generatedScreenAndAd).isEqualTo(expected)
-    }
-
-    @Test
     fun `상영과 광고 목록을 생성한다`() {
         // given & when
-        val generatedScreenAndAd = screensAndAdvertisementUseCase2.generatedScreenAndAdvertisement()
+        val generatedScreenAndAd = screensAndAdvertisementUseCase.generatedScreenAndAdvertisement()
 
         // then
         val expected =
