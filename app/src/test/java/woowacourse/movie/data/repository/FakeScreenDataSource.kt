@@ -40,7 +40,7 @@ class FakeScreenDataSource : ScreenDataSource {
             )
         val fakeScreen3Data =
             ScreenData(
-                2,
+                3,
                 FakeMovieDataSource.fakeMovie3Data,
                 DateRange(LocalDate.of(2024, 3, 3), LocalDate.of(2024, 3, 5)),
             )
