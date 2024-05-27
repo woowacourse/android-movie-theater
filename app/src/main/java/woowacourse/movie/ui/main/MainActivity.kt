@@ -31,28 +31,12 @@ class MainActivity : AppCompatActivity() {
     private val homeFragment: HomeFragment by lazy { HomeFragment() }
     private val settingFragment: SettingFragment by lazy { SettingFragment() }
 
-    private val preferenceRepository: PreferenceRepository by lazy {
-        SharedPreferenceRepository(
-            MovieReservationApplication.notificationPreference
-        )
-    }
-
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            preferenceRepository.saveNotificationPreference(isGranted)
-            if (!isGranted) {
-                showPermissionSnackBar()
-            }
-        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
             addFirstFragment(reservationHistoryFragment)
         }
         initBottomNavigationView()
-
-        requestPermission()
     }
 
     private fun addFirstFragment(fragment: Fragment) {
@@ -80,54 +64,5 @@ class MainActivity : AppCompatActivity() {
             setReorderingAllowed(true)
             replace(R.id.fragment_container_view, fragment)
         }
-    }
-
-    private fun requestPermission() {
-        when {
-            Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU -> return
-            hasPermission() -> preferenceRepository.saveNotificationPreference(true)
-            !hasPermission() -> showPermissionChangingGuide()
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun hasPermission() =
-        ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.POST_NOTIFICATIONS,
-        ) == PackageManager.PERMISSION_GRANTED
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun showPermissionChangingGuide() {
-        if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-            showPermissionSnackBar()
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        }
-    }
-
-    private fun showPermissionSnackBar() {
-        Snackbar.make(binding.root, R.string.push_notification_guide, Snackbar.LENGTH_LONG).setAction(R.string.ok) {
-            startApplicationDetailSettings()
-        }.show()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        preferenceRepository.saveNotificationPreference(checkedPermission())
-    }
-
-    private fun checkedPermission(): Boolean {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return true
-        return hasPermission()
-    }
-
-    private fun startApplicationDetailSettings() {
-        val intent =
-            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                data = Uri.fromParts("package", packageName, null)
-            }
-        startActivity(intent)
     }
 }

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -147,6 +148,7 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
 
     override fun showCompleteReservation(reservationTicketId: Int) {
         ReservationCompleteActivity.startActivity(this, reservationTicketId)
+        Log.d(TAG, "showCompleteReservation: start ReservationCompleteActivity")
     }
 
     override fun showSeatReservationFail(throwable: Throwable) {
@@ -230,6 +232,7 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
                 }
             context.startActivity(intent)
         }
+        private const val TAG = "SeatReservationActivity"
     }
 }
 

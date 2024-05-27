@@ -11,5 +11,7 @@ interface ReservationContract {
 
     interface Presenter {
         fun loadReservation()
+
+        fun updateNotificationPreference(isGranted: Boolean)
     }
 }

@@ -87,7 +87,8 @@ class SeatReservationPresenter(
                 timeReservation.dateTime,
                 theaterDataSource.findById(theaterId),
             ).onSuccess { reservationTicketId ->
-                schedulePushAlarm(reservationTicketId.toInt())
+                // TODO: 여기서 푸시 알람을 설정하는 게 아니라, 예매 완료가 되었을 때 설wjd해야 한다
+//                schedulePushAlarm(reservationTicketId.toInt())
                 view.showCompleteReservation(reservationTicketId.toInt())
             }.onFailure { e ->
                 view.showSeatReservationFail(e)
@@ -112,5 +113,9 @@ class SeatReservationPresenter(
             throw e
         }
         throw IllegalStateException("예기치 못한 오류")
+    }
+
+    companion object {
+        private const val TAG = "SeatReservationPresente"
     }
 }
