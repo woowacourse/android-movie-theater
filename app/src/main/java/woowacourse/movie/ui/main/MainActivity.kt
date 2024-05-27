@@ -17,8 +17,9 @@ import androidx.fragment.app.commit
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.MovieReservationApplication
 import woowacourse.movie.R
+import woowacourse.movie.data.repository.SharedPreferenceRepository
+import woowacourse.movie.data.repository.PreferenceRepository
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.preference.NotificationPreference
 import woowacourse.movie.ui.home.HomeFragment
 import woowacourse.movie.ui.reservationhistory.ReservationHistoryFragment
 import woowacourse.movie.ui.setting.SettingFragment
@@ -30,13 +31,15 @@ class MainActivity : AppCompatActivity() {
     private val homeFragment: HomeFragment by lazy { HomeFragment() }
     private val settingFragment: SettingFragment by lazy { SettingFragment() }
 
-    private val notificationPreference: NotificationPreference by lazy {
-        MovieReservationApplication.notificationPreference
+    private val preferenceRepository: PreferenceRepository by lazy {
+        SharedPreferenceRepository(
+            MovieReservationApplication.notificationPreference
+        )
     }
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            notificationPreference.saveNotificationPreference(isGranted)
+            preferenceRepository.saveNotificationPreference(isGranted)
             if (!isGranted) {
                 showPermissionSnackBar()
             }
@@ -82,7 +85,7 @@ class MainActivity : AppCompatActivity() {
     private fun requestPermission() {
         when {
             Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU -> return
-            hasPermission() -> notificationPreference.saveNotificationPreference(true)
+            hasPermission() -> preferenceRepository.saveNotificationPreference(true)
             !hasPermission() -> showPermissionChangingGuide()
         }
     }
@@ -111,7 +114,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        notificationPreference.saveNotificationPreference(checkedPermission())
+        preferenceRepository.saveNotificationPreference(checkedPermission())
     }
 
     private fun checkedPermission(): Boolean {
