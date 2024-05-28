@@ -11,8 +11,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.AfterClass
 import org.junit.BeforeClass
 import org.junit.Rule
+import android.Manifest
 import org.junit.Test
 import org.junit.runner.RunWith
+import androidx.test.rule.GrantPermissionRule
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationTicketDatabase
 import woowacourse.movie.data.model.MovieData
@@ -33,6 +35,10 @@ import java.time.LocalTime
  */
 @RunWith(AndroidJUnit4::class)
 class ReservationCompleteActivityTest {
+    @get:Rule
+    val grantPermissionRule: GrantPermissionRule = GrantPermissionRule.grant(Manifest.permission.POST_NOTIFICATIONS)
+
+
     @get:Rule
     val activityRule: ActivityScenarioRule<ReservationCompleteActivity> =
         ActivityScenarioRule<ReservationCompleteActivity>(
