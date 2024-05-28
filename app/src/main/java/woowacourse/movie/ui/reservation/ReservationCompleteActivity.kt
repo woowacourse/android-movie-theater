@@ -21,10 +21,13 @@ import woowacourse.movie.MovieReservationApplication
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationTicketDatabase
 import woowacourse.movie.data.model.ReservationTicket
+import woowacourse.movie.data.repository.AlarmTimeBeforeMinute
+import woowacourse.movie.data.repository.DefaultNotificationRepository
 import woowacourse.movie.data.repository.OfflineReservationRepository
 import woowacourse.movie.data.repository.SharedPreferenceRepository
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
 import woowacourse.movie.ui.main.MainActivity
+import woowacourse.movie.ui.pushnotification.PushNotificationBroadCastReceiver
 
 class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.View {
     private lateinit var presenter: ReservationContract.Presenter
@@ -79,11 +82,11 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.Vie
 
     // device check!
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun hasPermission(): Boolean = ContextCompat.checkSelfPermission(
-        this,
-        Manifest.permission.POST_NOTIFICATIONS,
-    ) == PackageManager.PERMISSION_GRANTED
-
+    private fun hasPermission(): Boolean =
+        ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.POST_NOTIFICATIONS,
+        ) == PackageManager.PERMISSION_GRANTED
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun showPermissionChangingGuide() {
@@ -118,9 +121,16 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.Vie
                 OfflineReservationRepository(
                     ReservationTicketDatabase.getDatabase(applicationContext).reservationDao(),
                 ),
-                preferenceRepository = SharedPreferenceRepository(
-                    notificationPreference = MovieReservationApplication.notificationPreference
-                ),
+                preferenceRepository =
+                    SharedPreferenceRepository(
+                        notificationPreference = MovieReservationApplication.notificationPreference,
+                    ),
+                notificationRepository =
+                    DefaultNotificationRepository(
+                        context = applicationContext,
+                        receiverClass = PushNotificationBroadCastReceiver::class.java,
+                        alarmTime = AlarmTimeBeforeMinute(),
+                    ),
                 reservationTicketId,
             )
     }
