@@ -53,8 +53,6 @@ class MovieReservationNotificationRepository(
         alarmTime: Long,
         pendingIntent: PendingIntent,
     ) {
-
-
         val alarmSetting = AlarmSetting(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent)
 
         when (Build.VERSION.SDK_INT) {
@@ -69,16 +67,18 @@ class MovieReservationNotificationRepository(
     }
 
     private fun isAlarmAlreadyRegistered(id: Int): Boolean {
-        val intent = Intent(context, receiverClass).apply {
-            putExtra(ReservationCompleteActivity.PUT_EXTRA_KEY_RESERVATION_TICKET_ID, id)
-        }
+        val intent =
+            Intent(context, receiverClass).apply {
+                putExtra(ReservationCompleteActivity.PUT_EXTRA_KEY_RESERVATION_TICKET_ID, id)
+            }
 
-        val existingIntent = PendingIntent.getBroadcast(
-            context,
-            movieReservationRequestCode(id),
-            intent,
-            PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
-        )
+        val existingIntent =
+            PendingIntent.getBroadcast(
+                context,
+                movieReservationRequestCode(id),
+                intent,
+                PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE,
+            )
         return existingIntent != null
     }
 

@@ -98,9 +98,7 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val intent = Intent(this@ReservationCompleteActivity, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                    startActivity(intent)
+                    MainActivity.backToHome(this@ReservationCompleteActivity)
                     finish()
                 }
             },
@@ -117,15 +115,15 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
                     ReservationTicketDatabase.getDatabase(applicationContext).reservationDao(),
                 ),
                 preferenceRepository =
-                SharedPreferenceRepository(
-                    notificationPreference = MovieReservationApplication.notificationPreference,
-                ),
+                    SharedPreferenceRepository(
+                        notificationPreference = MovieReservationApplication.notificationPreference,
+                    ),
                 notificationRepository =
-                MovieReservationNotificationRepository(
-                    context = applicationContext,
-                    receiverClass = PushNotificationBroadCastReceiver::class.java,
-                    alarmTime = AlarmTimeBeforeMinute(),
-                ),
+                    MovieReservationNotificationRepository(
+                        context = applicationContext,
+                        receiverClass = PushNotificationBroadCastReceiver::class.java,
+                        alarmTime = AlarmTimeBeforeMinute(),
+                    ),
                 reservationTicketId,
             )
     }
@@ -157,6 +155,7 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         ) {
             val intent = Intent(context, ReservationCompleteActivity::class.java)
             intent.putExtra(PUT_EXTRA_KEY_RESERVATION_TICKET_ID, reservationTicketId)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
             context.startActivity(intent)
         }
     }
