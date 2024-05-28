@@ -1,4 +1,3 @@
-
 # refactor 마주친 이슈와 공부
 
 - 좌석 예매
@@ -91,7 +90,9 @@ notificationManager.createNotificationChannel(channel)
         private const val MOVIE_RESERVATION_REMINDER_CHANNEL_NAME = "movie_reservation_reminder_channel_name"
         const val MOVIE_RESERVATION_REMINDER_REQUEST_CODE = 101
     }
+
 }
+
 ```
 
 ''' kotlin
@@ -144,6 +145,13 @@ class PushNotificationBroadCastReceiver(
 그런데 이렇게 하면, `NotificationRepository` 자체가 android.app.Notification 과 android.app.PendingIntent 와 의존성이 생기네..
 그러면 원시타입만 갖는 createNotification 만 만들어야 겠다.
 
-
 거기다가 스케줄 기능도 더 도메인 쪽으로 더 숨기자.
 완전 계산하는, 비즈니스 로직이니까.
+
+- 영화 예매 완료 액티비티에서 푸시 알림 설정
+
+이제 영화 예매 완료 시에 푸시 알림을 설정한다
+그런데 영화 예매 화면에 갈 때마다 계속 알림이 뜬다.
+그러면 어떻게 해야 하지...?
+
+먼저 영화 예매 액티비티, 프레젠터를 보자

@@ -2,7 +2,7 @@ package woowacourse.movie.ui.reservation
 
 import woowacourse.movie.data.model.ReservationTicket
 
-interface ReservationContract {
+interface ReservationCompleteContract {
     interface View {
         fun showReservation(reservationTicket: ReservationTicket)
 

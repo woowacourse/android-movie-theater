@@ -10,13 +10,13 @@ import woowacourse.movie.data.repository.ReservationRepository
 import java.time.LocalDateTime
 import kotlin.concurrent.thread
 
-class ReservationPresenter(
-    private val view: ReservationContract.View,
+class ReservationCompletePresenter(
+    private val view: ReservationCompleteContract.View,
     private val reservationRepository: ReservationRepository,
     private val preferenceRepository: PreferenceRepository,
     private val notificationRepository: NotificationRepository,
     private val reservationTicketId: Int = 1,
-) : ReservationContract.Presenter {
+) : ReservationCompleteContract.Presenter {
     private val uiHandler = Handler(Looper.getMainLooper())
 
     override fun loadReservation() {

@@ -29,8 +29,8 @@ import woowacourse.movie.domain.model.AlarmTimeBeforeMinute
 import woowacourse.movie.ui.main.MainActivity
 import woowacourse.movie.ui.pushnotification.PushNotificationBroadCastReceiver
 
-class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.View {
-    private lateinit var presenter: ReservationContract.Presenter
+class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteContract.View {
+    private lateinit var presenter: ReservationCompleteContract.Presenter
     private val binding: ActivityReservationCompleteBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_reservation_complete)
     }
@@ -115,7 +115,7 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.Vie
         Log.d(TAG, "initPresenter: called reservationTicketId: $reservationTicketId")
 
         presenter =
-            ReservationPresenter(
+            ReservationCompletePresenter(
                 this,
                 OfflineReservationRepository(
                     ReservationTicketDatabase.getDatabase(applicationContext).reservationDao(),

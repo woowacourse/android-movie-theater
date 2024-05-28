@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.data.repository.FakeReservationRepository
 import woowacourse.movie.data.repository.FakeScreenDataSource
 
-class SeatReservationPresenterTest {
+class SeatReservationCompletePresenterTest {
     private lateinit var mockView: SeatReservationContract.View
     private lateinit var presenter: SeatReservationPresenter
 
