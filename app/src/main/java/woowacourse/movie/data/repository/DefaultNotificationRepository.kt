@@ -25,14 +25,23 @@ class DefaultNotificationRepository(
         id: Int,
         dateTime: LocalDateTime,
     ) {
+        if (isAlarmAlreadyRegistered(id)) {
+            Log.d(TAG, "already registered the alarm for the id: $id")
+            return
+        }
+
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val pendingIntent = createPendingIntent(id)
 
         val time = alarmTime.calculated(dateTime, ALARM_TIME_MINUTE) // 그냥 localDatetime 으로 받자.
+        Log.d(TAG, "caculated the time of the alarm: $dateTime")
 
         if (time != null) {
+            Log.d(TAG, "register: set the new alarm")
             setAlarm(alarmManager, time, pendingIntent)
+            return
         }
+        Log.d(TAG, "register: not set the new alarm because the time is null")
     }
 
     private fun createPendingIntent(id: Int): PendingIntent {
@@ -42,7 +51,7 @@ class DefaultNotificationRepository(
             }
         return PendingIntent.getBroadcast(
             context,
-            MOVIE_RESERVATION_REMINDER_REQUEST_CODE,
+            movieReservationRequestCode(id),
             intent,
             PendingIntent.FLAG_IMMUTABLE,
         )
@@ -54,8 +63,6 @@ class DefaultNotificationRepository(
         pendingIntent: PendingIntent,
     ) {
         val datetime = LocalDateTime.ofInstant(Instant.ofEpochMilli(alarmTime), ZoneId.of("Asia/Seoul"))
-
-//        val timeLong = dateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
 
         Log.d(TAG, "alarmTime Long: $alarmTime")
@@ -74,10 +81,38 @@ class DefaultNotificationRepository(
         }
     }
 
+    private fun isAlarmAlreadyRegistered(id: Int): Boolean {
+        val intent = Intent(context, receiverClass).apply {
+            putExtra(ReservationCompleteActivity.PUT_EXTRA_KEY_RESERVATION_TICKET_ID, id)
+        }
+
+        val existingIntent = PendingIntent.getBroadcast(
+            context,
+            movieReservationRequestCode(id),
+            intent,
+            PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
+        )
+        return existingIntent != null
+
+
+        /*
+         val existingIntent = PendingIntent.getBroadcast(
+            context,
+            MOVIE_RESERVATION_REMINDER_REQUEST_CODE,
+            intent,
+            PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
+        )
+        return existingIntent != null
+         */
+    }
+
     companion object {
+        private const val TAG = "DefaultNotificationRepository"
+
         private const val ALARM_TIME_MINUTE = 30
         const val MOVIE_RESERVATION_REMINDER_REQUEST_CODE = 101
-        private const val TAG = "DefaultNotificationRepository"
+
+        private fun movieReservationRequestCode(id: Int): Int = id
     }
 }
 
