@@ -77,5 +77,4 @@ dependencies {
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
     androidTestImplementation("androidx.test:rules:1.5.0")
-
 }

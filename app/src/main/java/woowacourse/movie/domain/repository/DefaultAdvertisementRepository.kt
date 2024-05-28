@@ -1,5 +1,6 @@
-package woowacourse.movie.data.repository
+package woowacourse.movie.domain.repository
 
+import woowacourse.movie.data.repository.AdvertisementRepository
 import woowacourse.movie.data.source.AdvertisementDataSource
 import woowacourse.movie.domain.model.ScreenAndAd
 

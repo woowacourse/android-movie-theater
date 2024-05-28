@@ -1,7 +1,8 @@
-package woowacourse.movie.preference
+package woowacourse.movie.local.source
 
 import android.content.Context
 import android.content.SharedPreferences
+import woowacourse.movie.data.source.NotificationPreference
 
 class NotificationSharedPreferences(private val notificationPreference: SharedPreferences) : NotificationPreference {
     override fun saveNotificationPreference(enabled: Boolean) {

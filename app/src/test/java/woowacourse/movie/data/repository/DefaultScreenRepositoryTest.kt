@@ -7,6 +7,8 @@ import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.ScreenAndAd
+import woowacourse.movie.domain.repository.DefaultMovieRepository
+import woowacourse.movie.domain.repository.DefaultScreenRepository
 import java.time.LocalDate
 
 class DefaultScreenRepositoryTest {

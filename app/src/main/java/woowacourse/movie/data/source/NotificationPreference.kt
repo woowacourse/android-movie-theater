@@ -1,4 +1,4 @@
-package woowacourse.movie.preference
+package woowacourse.movie.data.source
 
 interface NotificationPreference {
     fun saveNotificationPreference(enabled: Boolean)

@@ -9,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationTicketDatabase
-import woowacourse.movie.data.repository.OfflineReservationRepository
 import woowacourse.movie.data.source.DummyScreenDataSource
 import woowacourse.movie.data.source.DummySeatsDataSource
 import woowacourse.movie.data.source.DummyTheatersDataSource
@@ -18,6 +16,8 @@ import woowacourse.movie.databinding.ActivitySeatReservationBinding
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.TimeReservation
+import woowacourse.movie.domain.repository.OfflineReservationRepository
+import woowacourse.movie.local.source.ReservationTicketDatabase
 import woowacourse.movie.ui.reservation.ReservationCompleteActivity
 import woowacourse.movie.ui.seat.adapter.OnSeatSelectedListener
 import woowacourse.movie.ui.seat.adapter.SeatsAdapter

@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.MovieReservationApplication
 import woowacourse.movie.R
+import woowacourse.movie.data.source.NotificationPreference
 import woowacourse.movie.databinding.FragmentSettingBinding
-import woowacourse.movie.preference.NotificationPreference
 
 class SettingFragment : Fragment() {
     private var _binding: FragmentSettingBinding? = null

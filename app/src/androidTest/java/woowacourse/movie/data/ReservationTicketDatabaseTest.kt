@@ -19,6 +19,7 @@ import woowacourse.movie.domain.model.Position
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.local.source.ReservationTicketDatabase
 import java.time.LocalDate
 import java.time.LocalTime
 

@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.reservation
 
+import android.Manifest
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -8,15 +9,13 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.GrantPermissionRule
 import org.junit.AfterClass
 import org.junit.BeforeClass
 import org.junit.Rule
-import android.Manifest
 import org.junit.Test
 import org.junit.runner.RunWith
-import androidx.test.rule.GrantPermissionRule
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationTicketDatabase
 import woowacourse.movie.data.model.MovieData
 import woowacourse.movie.data.model.ReservationTicket
 import woowacourse.movie.data.model.ScreenData
@@ -26,6 +25,7 @@ import woowacourse.movie.domain.model.Position
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.local.source.ReservationTicketDatabase
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -37,7 +37,6 @@ import java.time.LocalTime
 class ReservationCompleteActivityTest {
     @get:Rule
     val grantPermissionRule: GrantPermissionRule = GrantPermissionRule.grant(Manifest.permission.POST_NOTIFICATIONS)
-
 
     @get:Rule
     val activityRule: ActivityScenarioRule<ReservationCompleteActivity> =

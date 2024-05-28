@@ -1,6 +1,7 @@
-package woowacourse.movie.data.repository
+package woowacourse.movie.domain.repository
 
-import woowacourse.movie.preference.NotificationPreference
+import woowacourse.movie.data.repository.PreferenceRepository
+import woowacourse.movie.data.source.NotificationPreference
 
 class SharedPreferenceRepository(
     private val notificationPreference: NotificationPreference,

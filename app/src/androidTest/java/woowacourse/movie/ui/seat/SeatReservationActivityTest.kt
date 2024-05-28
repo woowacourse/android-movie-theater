@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.seat
 
-
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.view.View
@@ -20,10 +19,10 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationTicketDatabase
 import woowacourse.movie.data.model.ScreenData
-import woowacourse.movie.data.repository.OfflineReservationRepository
 import woowacourse.movie.domain.model.DateTime
+import woowacourse.movie.domain.repository.OfflineReservationRepository
+import woowacourse.movie.local.source.ReservationTicketDatabase
 
 @RunWith(AndroidJUnit4::class)
 class SeatReservationActivityTest {
@@ -70,7 +69,9 @@ class SeatReservationActivityTest {
     }
 }
 
-private fun hasColor(@ColorRes colorResId: Int): Matcher<in View>? {
+private fun hasColor(
+    @ColorRes colorResId: Int,
+): Matcher<in View> {
     return object : BoundedMatcher<View, View>(View::class.java) {
         override fun describeTo(description: Description) {
             description.appendText("has background color: $colorResId")
@@ -83,4 +84,3 @@ private fun hasColor(@ColorRes colorResId: Int): Matcher<in View>? {
         }
     }
 }
-

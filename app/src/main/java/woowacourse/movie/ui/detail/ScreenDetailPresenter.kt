@@ -1,7 +1,5 @@
 package woowacourse.movie.ui.detail
 
-import woowacourse.movie.data.repository.DefaultMovieRepository
-import woowacourse.movie.data.repository.DefaultScreenRepository
 import woowacourse.movie.data.repository.MovieRepository
 import woowacourse.movie.data.repository.ReservationRepository
 import woowacourse.movie.data.repository.ScreenRepository
@@ -15,6 +13,8 @@ import woowacourse.movie.domain.model.Ticket.Companion.MIN_TICKET_COUNT
 import woowacourse.movie.domain.model.WeeklyScreenTimePolicy
 import woowacourse.movie.domain.model.toData
 import woowacourse.movie.domain.model.toDetailUi
+import woowacourse.movie.domain.repository.DefaultMovieRepository
+import woowacourse.movie.domain.repository.DefaultScreenRepository
 
 class ScreenDetailPresenter(
     private val view: ScreenDetailContract.View,

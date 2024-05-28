@@ -1,8 +1,8 @@
 package woowacourse.movie
 
 import android.app.Application
-import woowacourse.movie.preference.NotificationPreference
-import woowacourse.movie.preference.NotificationSharedPreferences
+import woowacourse.movie.data.source.NotificationPreference
+import woowacourse.movie.local.source.NotificationSharedPreferences
 
 class MovieReservationApplication : Application() {
     override fun onCreate() {

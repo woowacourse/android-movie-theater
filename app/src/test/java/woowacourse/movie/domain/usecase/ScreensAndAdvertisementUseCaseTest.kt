@@ -3,9 +3,6 @@ package woowacourse.movie.domain.usecase
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.repository.DefaultAdvertisementRepository
-import woowacourse.movie.data.repository.DefaultMovieRepository
-import woowacourse.movie.data.repository.DefaultScreenRepository
 import woowacourse.movie.data.repository.FakeAdvertisementDataSource
 import woowacourse.movie.data.repository.FakeMovieDataSource
 import woowacourse.movie.data.repository.FakeScreenDataSource
@@ -13,6 +10,9 @@ import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.ScreenAndAd
+import woowacourse.movie.domain.repository.DefaultAdvertisementRepository
+import woowacourse.movie.domain.repository.DefaultMovieRepository
+import woowacourse.movie.domain.repository.DefaultScreenRepository
 import java.time.LocalDate
 
 class ScreensAndAdvertisementUseCaseTest {

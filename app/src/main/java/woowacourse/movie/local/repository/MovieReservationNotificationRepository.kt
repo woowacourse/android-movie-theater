@@ -1,4 +1,4 @@
-package woowacourse.movie.data.repository
+package woowacourse.movie.local.repository
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import woowacourse.movie.data.repository.NotificationRepository
 import woowacourse.movie.domain.model.AlarmTime
 import woowacourse.movie.ui.reservation.ReservationCompleteActivity
 import java.time.LocalDateTime

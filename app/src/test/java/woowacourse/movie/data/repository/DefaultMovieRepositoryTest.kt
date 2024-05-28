@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.data.source.MovieDataSource
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.repository.DefaultMovieRepository
 
 class DefaultMovieRepositoryTest {
     private lateinit var dataSource: MovieDataSource

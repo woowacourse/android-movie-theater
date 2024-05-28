@@ -1,8 +1,5 @@
 package woowacourse.movie.ui.home
 
-import woowacourse.movie.data.repository.DefaultAdvertisementRepository
-import woowacourse.movie.data.repository.DefaultMovieRepository
-import woowacourse.movie.data.repository.DefaultScreenRepository
 import woowacourse.movie.data.repository.ScreenRepository
 import woowacourse.movie.data.source.DummyAdvertisementDataSource
 import woowacourse.movie.data.source.DummyMovieDataSource
@@ -10,6 +7,9 @@ import woowacourse.movie.data.source.DummyScreenDataSource
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.domain.model.ScreenAndAd
 import woowacourse.movie.domain.model.toPreviewUI
+import woowacourse.movie.domain.repository.DefaultAdvertisementRepository
+import woowacourse.movie.domain.repository.DefaultMovieRepository
+import woowacourse.movie.domain.repository.DefaultScreenRepository
 import woowacourse.movie.domain.usecase.ScreensAndAdvertisementUseCase
 import woowacourse.movie.ui.ScreenAd
 

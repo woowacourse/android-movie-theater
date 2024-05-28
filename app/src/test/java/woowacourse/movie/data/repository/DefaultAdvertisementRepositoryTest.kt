@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.data.source.AdvertisementDataSource
 import woowacourse.movie.domain.model.Image
 import woowacourse.movie.domain.model.ScreenAndAd
+import woowacourse.movie.domain.repository.DefaultAdvertisementRepository
 
 class DefaultAdvertisementRepositoryTest {
     private lateinit var repository: DefaultAdvertisementRepository

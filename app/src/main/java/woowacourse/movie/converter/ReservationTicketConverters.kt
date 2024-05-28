@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.converter
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

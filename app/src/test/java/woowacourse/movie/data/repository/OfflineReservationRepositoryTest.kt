@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.data.FakeReservationTicketDao
 import woowacourse.movie.data.model.ReservationTicket
 import woowacourse.movie.data.model.ScreenData
-import woowacourse.movie.data.source.ReservationTicketRoomDao
 import woowacourse.movie.domain.model.DateTime
 import woowacourse.movie.domain.model.Grade
 import woowacourse.movie.domain.model.Position
@@ -16,6 +15,8 @@ import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.TimeReservation
+import woowacourse.movie.domain.repository.OfflineReservationRepository
+import woowacourse.movie.local.source.ReservationTicketRoomDao
 
 class OfflineReservationRepositoryTest {
     private lateinit var fakeDao: ReservationTicketRoomDao

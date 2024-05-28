@@ -18,13 +18,13 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.MovieReservationApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationTicketDatabase
 import woowacourse.movie.data.model.ReservationTicket
-import woowacourse.movie.data.repository.MovieReservationNotificationRepository
-import woowacourse.movie.data.repository.OfflineReservationRepository
-import woowacourse.movie.data.repository.SharedPreferenceRepository
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
 import woowacourse.movie.domain.model.AlarmTimeBeforeMinute
+import woowacourse.movie.domain.repository.OfflineReservationRepository
+import woowacourse.movie.domain.repository.SharedPreferenceRepository
+import woowacourse.movie.local.repository.MovieReservationNotificationRepository
+import woowacourse.movie.local.source.ReservationTicketDatabase
 import woowacourse.movie.ui.main.MainActivity
 import woowacourse.movie.ui.pushnotification.PushNotificationBroadCastReceiver
 
