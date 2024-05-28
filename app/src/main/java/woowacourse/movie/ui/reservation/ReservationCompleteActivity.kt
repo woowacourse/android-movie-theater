@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -60,7 +59,6 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate: called ")
         initPresenter()
         initView()
         onBackPressedCallback()
@@ -68,7 +66,6 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
 
     override fun onStart() {
         super.onStart()
-        Log.d(TAG, "onStart: called")
         requestPermission()
     }
 
@@ -112,7 +109,6 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
 
     private fun initPresenter() {
         val reservationTicketId = intent.getIntExtra(PUT_EXTRA_KEY_RESERVATION_TICKET_ID, DEFAULT_RESERVATION_TICKET_ID)
-        Log.d(TAG, "initPresenter: called reservationTicketId: $reservationTicketId")
 
         presenter =
             ReservationCompletePresenter(
@@ -121,15 +117,15 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
                     ReservationTicketDatabase.getDatabase(applicationContext).reservationDao(),
                 ),
                 preferenceRepository =
-                    SharedPreferenceRepository(
-                        notificationPreference = MovieReservationApplication.notificationPreference,
-                    ),
+                SharedPreferenceRepository(
+                    notificationPreference = MovieReservationApplication.notificationPreference,
+                ),
                 notificationRepository =
-                    DefaultNotificationRepository(
-                        context = applicationContext,
-                        receiverClass = PushNotificationBroadCastReceiver::class.java,
-                        alarmTime = AlarmTimeBeforeMinute(),
-                    ),
+                DefaultNotificationRepository(
+                    context = applicationContext,
+                    receiverClass = PushNotificationBroadCastReceiver::class.java,
+                    alarmTime = AlarmTimeBeforeMinute(),
+                ),
                 reservationTicketId,
             )
     }
@@ -139,7 +135,6 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
     }
 
     override fun showReservation(reservationTicket: ReservationTicket) {
-        Log.d(TAG, "showReservation: binding")
         binding.reservationTicket = reservationTicket
         binding.totalPrice = reservationTicket.totalPrice()
     }
@@ -164,7 +159,5 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
             intent.putExtra(PUT_EXTRA_KEY_RESERVATION_TICKET_ID, reservationTicketId)
             context.startActivity(intent)
         }
-
-        private const val TAG = "ReservationCompleteActivity"
     }
 }

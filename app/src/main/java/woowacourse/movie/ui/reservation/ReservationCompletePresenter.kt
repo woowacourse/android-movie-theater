@@ -2,7 +2,6 @@ package woowacourse.movie.ui.reservation
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import woowacourse.movie.data.model.ReservationTicket
 import woowacourse.movie.data.repository.NotificationRepository
 import woowacourse.movie.data.repository.PreferenceRepository
@@ -20,18 +19,15 @@ class ReservationCompletePresenter(
     private val uiHandler = Handler(Looper.getMainLooper())
 
     override fun loadReservation() {
-        Log.d(TAG, "loadReservation: called")
         thread {
-            reservationRepository.findById(reservationTicketId).also { Log.d(TAG, "loadReservation: it $it") }
+            reservationRepository.findById(reservationTicketId)
                 .onSuccess { reservationTicket ->
                     registerNotification(reservationTicket)
                     uiHandler.post {
-                        Log.d(TAG, "loadReservation: onSuccess reservationTicket: $reservationTicket")
                         view.showReservation(reservationTicket)
                     }
                 }
                 .onFailure { e ->
-                    Log.d(TAG, "loadReservation: onFailure reservationTicket: $reservationTicketId")
                     view.showReservationFail(e)
                 }
         }
@@ -44,9 +40,5 @@ class ReservationCompletePresenter(
     private fun registerNotification(reservationTicket: ReservationTicket) {
         val dateTIme = LocalDateTime.of(reservationTicket.date, reservationTicket.time)
         notificationRepository.register(reservationTicket.id, dateTIme)
-    }
-
-    companion object {
-        private const val TAG = "ReservationPresenter"
     }
 }

@@ -94,8 +94,4 @@ class SeatReservationPresenter(
         }
         throw IllegalStateException("예기치 못한 오류")
     }
-
-    companion object {
-        private const val TAG = "SeatReservationPresente"
-    }
 }

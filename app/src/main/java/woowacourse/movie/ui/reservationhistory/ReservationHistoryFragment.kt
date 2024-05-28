@@ -1,7 +1,6 @@
 package woowacourse.movie.ui.reservationhistory
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +34,6 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "onViewCreated: ")
         initPresenter()
         initAdapter()
         presenter.loadAllReservationHistory()
@@ -54,7 +52,6 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     private fun initAdapter() {
         adapter =
             ReservationHistoryAdapter { reservationId ->
-                Log.d(TAG, "initAdapter: itemClicked $reservationId")
                 showReservationHistoryInDetail(reservationId)
             }
         binding.rvReservationHistory.adapter = adapter
@@ -62,7 +59,6 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
 
     override fun showAllReservationHistory(reservations: List<ReservationTicket>) {
         adapter.submitList(reservations)
-        Log.d(TAG, "showAllReservationHistory: $reservations")
     }
 
     override fun showAllReservationHistoryError(throwable: Throwable) {
@@ -79,9 +75,5 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        private const val TAG = "ReservationHistoryFragment"
     }
 }

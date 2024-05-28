@@ -56,7 +56,6 @@ class OfflineReservationRepository(private val reservationTicketDao: Reservation
         }
 
     companion object {
-        const val TAG = "OfflineReservationRepository"
         private val timeReservation = mutableListOf<TimeReservation>()
     }
 }
