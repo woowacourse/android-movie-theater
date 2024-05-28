@@ -37,18 +37,10 @@ class SeatReservationPresenter(
         position: Position,
         selection: Boolean
     ) {
-        when (selection) {
-            true -> {
-                if (isSelectedFullCount()) return
-                allSeats = allSeats.updatedSeats(position, true)
-                view.showSeats(allSeats)
-            }
-
-            false -> {
-                allSeats = allSeats.updatedSeats(position, false)
-                view.showSeats(allSeats)
-            }
+        if (selection && isSelectedFullCount()) {
+            return
         }
+        updateSeats(position, selection)
     }
 
     private fun isSelectedFullCount(): Boolean {
@@ -57,6 +49,11 @@ class SeatReservationPresenter(
             return true
         }
         return false
+    }
+
+    private fun updateSeats(position: Position, selection: Boolean) {
+        allSeats = allSeats.updatedSeats(position, selection)
+        view.showSeats(allSeats)
     }
 
     override fun calculateTotalPrice() {
