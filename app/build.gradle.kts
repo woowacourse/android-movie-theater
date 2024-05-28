@@ -76,4 +76,6 @@ dependencies {
     androidTestRuntimeOnly("de.mannodermaus.junit5:android-test-runner:1.3.0")
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
+    androidTestImplementation("androidx.test:rules:1.5.0")
+
 }
