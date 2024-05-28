@@ -1,7 +1,5 @@
 package woowacourse.movie.ui.seat
 
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.data.repository.ReservationRepository
@@ -11,8 +9,6 @@ import woowacourse.movie.data.source.TheaterDataSource
 import woowacourse.movie.domain.model.Position
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.TimeReservation
-import java.time.LocalDateTime
-import java.time.ZoneId
 import kotlin.concurrent.thread
 
 class SeatReservationPresenter(
@@ -65,11 +61,9 @@ class SeatReservationPresenter(
 
     override fun calculateTotalPrice() {
         view.showTotalPrice(selectedSeats.totalPrice())
-        if (selectedSeats.count() == ticketCount) {
-            view.activateReservation(true)
-        } else {
-            view.activateReservation(false)
-        }
+
+        val reservationActivated = selectedSeats.count() == ticketCount
+        view.activateReservation(reservationActivated)
     }
 
     override fun attemptReserve() {

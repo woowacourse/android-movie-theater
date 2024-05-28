@@ -6,8 +6,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import woowacourse.movie.domain.model.AlarmTime
+import woowacourse.movie.domain.model.AlarmTimeBeforeMinute
 import woowacourse.movie.ui.reservation.ReservationCompleteActivity
+import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.concurrent.TimeUnit
@@ -25,7 +28,7 @@ class DefaultNotificationRepository(
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val pendingIntent = createPendingIntent(id)
 
-        val time = alarmTime.calculated(dateTime, ALARM_TIME_MINUTE)
+        val time = alarmTime.calculated(dateTime, ALARM_TIME_MINUTE) // 그냥 localDatetime 으로 받자.
 
         if (time != null) {
             setAlarm(alarmManager, time, pendingIntent)
@@ -50,8 +53,15 @@ class DefaultNotificationRepository(
         alarmTime: Long,
         pendingIntent: PendingIntent,
     ) {
-        val exactAlarmTime = alarmTime - TimeUnit.MINUTES.toMillis(30)
-        val alarmSetting = AlarmSetting(AlarmManager.RTC_WAKEUP, exactAlarmTime, pendingIntent)
+        val datetime = LocalDateTime.ofInstant(Instant.ofEpochMilli(alarmTime), ZoneId.of("Asia/Seoul"))
+
+//        val timeLong = dateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+
+        Log.d(TAG, "alarmTime Long: $alarmTime")
+        Log.d(TAG, "alarmTime: datetime : $datetime")
+
+        val alarmSetting = AlarmSetting(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent)
 
         when (Build.VERSION.SDK_INT) {
             in Build.VERSION_CODES.S..Int.MAX_VALUE -> {
@@ -67,6 +77,7 @@ class DefaultNotificationRepository(
     companion object {
         private const val ALARM_TIME_MINUTE = 30
         const val MOVIE_RESERVATION_REMINDER_REQUEST_CODE = 101
+        private const val TAG = "DefaultNotificationRepository"
     }
 }
 
