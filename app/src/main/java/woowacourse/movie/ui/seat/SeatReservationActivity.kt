@@ -232,6 +232,7 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
                 }
             context.startActivity(intent)
         }
+
         private const val TAG = "SeatReservationActivity"
     }
 }

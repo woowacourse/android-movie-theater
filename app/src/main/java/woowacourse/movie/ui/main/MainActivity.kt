@@ -1,24 +1,11 @@
 package woowacourse.movie.ui.main
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import com.google.android.material.snackbar.Snackbar
-import woowacourse.movie.MovieReservationApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.repository.SharedPreferenceRepository
-import woowacourse.movie.data.repository.PreferenceRepository
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.ui.home.HomeFragment
 import woowacourse.movie.ui.reservationhistory.ReservationHistoryFragment

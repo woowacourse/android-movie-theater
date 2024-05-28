@@ -3,7 +3,7 @@ package woowacourse.movie.data.repository
 import woowacourse.movie.preference.NotificationPreference
 
 class SharedPreferenceRepository(
-    private val notificationPreference: NotificationPreference
+    private val notificationPreference: NotificationPreference,
 ) : PreferenceRepository {
     override fun saveNotificationPreference(enabled: Boolean) {
         notificationPreference.saveNotificationPreference(enabled)
@@ -11,4 +11,3 @@ class SharedPreferenceRepository(
 
     override fun loadNotificationPreference(): Boolean = notificationPreference.loadNotificationPreference()
 }
-
