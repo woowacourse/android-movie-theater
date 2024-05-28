@@ -155,3 +155,17 @@ class PushNotificationBroadCastReceiver(
 그러면 어떻게 해야 하지...?
 
 먼저 영화 예매 액티비티, 프레젠터를 보자
+
+isAlready DefaultNotificationRepository 의 isAlarmAlreadyRegistered 메서드에서 확인하고, 이미 등록되어 있으면, 더 이상 등록하지 않도록 함.
+
+지금 예매 때 register 호출, 그리고 다시 내역에서 들어가서 한번더 register 호출함.
+
+그런데 이제 아예 알람을 호출 안하네?
+
+일단 한번만 호출하면 제대로 알림 등록 함.
+
+아니 왜 영화 시작 30분 전이 아니라 그냥 바로 알림을 줘버려??
+
+앱을 지우고,1시 44분에 2시 30분 예매 ㄱㄱ
+
+1시 45분에 바로 알람이 뜨네?

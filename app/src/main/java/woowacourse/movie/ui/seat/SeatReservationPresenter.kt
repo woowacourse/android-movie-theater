@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.seat
 
-import android.view.View
 import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.data.repository.ReservationRepository
 import woowacourse.movie.data.source.DummyTheatersDataSource
@@ -20,49 +19,51 @@ class SeatReservationPresenter(
     timeReservationId: Int,
 ) : SeatReservationContract.Presenter {
     private val timeReservation: TimeReservation = reservationRepository.loadTimeReservation(timeReservationId)
-    private val loadedAllSeats: Seats = screenDataSource.seats(timeReservation.screenData.id)
+    private var allSeats: Seats = screenDataSource.seats(timeReservation.screenData.id)
     private val ticketCount = timeReservation.ticket.count
 
-    private var selectedSeats = Seats()
-
     override fun loadAllSeats() {
-        view.showAllSeats(loadedAllSeats)
+        view.showAllSeats(allSeats)
     }
 
     override fun loadTimeReservation() {
         view.showTimeReservation(timeReservation)
-        view.showTotalPrice(selectedSeats.totalPrice())
+
+        val totalPrice = allSeats.selectedSeats().totalPrice()
+        view.showTotalPrice(totalPrice)
     }
 
     override fun selectSeat(
         position: Position,
-        seatView: View,
+        selection: Boolean
     ) {
-        val seat = loadedAllSeats.findSeat(position)
+        when (selection) {
+            true -> {
+                if (isSelectedFullCount()) return
+                allSeats = allSeats.updatedSeats(position, true)
+                view.showSeats(allSeats)
+            }
 
-        if (selectedSeats.seats.size >= ticketCount) {
-            view.showSelectedSeatFail(IllegalArgumentException("exceed ticket count that can be reserved."))
-            return
+            false -> {
+                allSeats = allSeats.updatedSeats(position, false)
+                view.showSeats(allSeats)
+            }
         }
-        selectedSeats = selectedSeats.add(seat)
-        view.showSelectedSeat(seatView)
     }
 
-    override fun deselectSeat(
-        position: Position,
-        seatView: View,
-    ) {
-        val seat = loadedAllSeats.findSeat(position)
-        if (selectedSeats.seats.contains(seat)) {
-            selectedSeats = selectedSeats.remove(seat)
+    private fun isSelectedFullCount(): Boolean {
+        if (allSeats.countSelected() >= ticketCount) {
+            view.showSelectedSeatFail(IllegalArgumentException("exceed ticket count that can be reserved."))
+            return true
         }
-        view.showDeselectedSeat(seatView)
+        return false
     }
 
     override fun calculateTotalPrice() {
-        view.showTotalPrice(selectedSeats.totalPrice())
+        val totalPrice = allSeats.selectedSeats().totalPrice()
+        view.showTotalPrice(totalPrice)
 
-        val reservationActivated = selectedSeats.count() == ticketCount
+        val reservationActivated = allSeats.countSelected() == ticketCount
         view.activateReservation(reservationActivated)
     }
 
@@ -75,7 +76,7 @@ class SeatReservationPresenter(
         thread {
             reservationRepository.savedReservationId(
                 loadedScreen(screenId),
-                selectedSeats,
+                allSeats.selectedSeats(),
                 timeReservation.dateTime,
                 theaterDataSource.findById(theaterId),
             ).onSuccess { reservationTicketId ->
@@ -93,5 +94,9 @@ class SeatReservationPresenter(
             throw e
         }
         throw IllegalStateException("예기치 못한 오류")
+    }
+
+    companion object {
+        private const val TAG = "SeatReservationPresenter"
     }
 }

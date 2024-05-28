@@ -7,7 +7,7 @@ class SeatDiffUtil : DiffUtil.ItemCallback<Seat>() {
     override fun areItemsTheSame(
         oldItem: Seat,
         newItem: Seat,
-    ): Boolean = oldItem.position == newItem.position
+    ): Boolean = oldItem == newItem
 
     override fun areContentsTheSame(
         oldItem: Seat,

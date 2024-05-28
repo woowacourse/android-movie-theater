@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.seat.adapter
 
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.HolderSeatBinding
 import woowacourse.movie.domain.model.Seat
@@ -10,11 +11,8 @@ class SeatViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(seat: Seat) {
         binding.seat = seat
-        binding.root.setOnClickListener { seatView ->
-            when {
-                seatView.isSelected -> onSeatSelectedListener.onSeatDeselected(seat, seatView)
-                !seatView.isSelected -> onSeatSelectedListener.onSeatSelected(seat, seatView)
-            }
+        binding.root.setOnClickListener {
+            onSeatSelectedListener.onSeatSelection(seat = seat, selection = !seat.selected)
         }
     }
 }

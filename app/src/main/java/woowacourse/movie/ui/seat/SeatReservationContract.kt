@@ -10,9 +10,7 @@ interface SeatReservationContract {
 
         fun showAllSeats(seats: Seats)
 
-        fun showSelectedSeat(seatView: android.view.View)
-
-        fun showDeselectedSeat(seatView: android.view.View)
+        fun showSeats(seats: Seats)
 
         fun showTotalPrice(totalPrice: Int)
 
@@ -26,10 +24,6 @@ interface SeatReservationContract {
 
         fun showSelectedSeatFail(throwable: Throwable)
 
-//        fun setAlarm(
-//            movieTimeMillis: Long,
-//            reservationTicketId: Int,
-//        )
     }
 
     interface Presenter {
@@ -37,15 +31,7 @@ interface SeatReservationContract {
 
         fun loadTimeReservation()
 
-        fun selectSeat(
-            position: Position,
-            seatView: android.view.View,
-        )
-
-        fun deselectSeat(
-            position: Position,
-            seatView: android.view.View,
-        )
+        fun selectSeat(position: Position, selection: Boolean)
 
         fun calculateTotalPrice()
 

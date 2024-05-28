@@ -3,7 +3,6 @@ package woowacourse.movie.ui.seat
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -79,18 +78,8 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
         seatsAdapter =
             SeatsAdapter(
                 object : OnSeatSelectedListener {
-                    override fun onSeatSelected(
-                        seat: Seat,
-                        seatView: View,
-                    ) {
-                        presenter.selectSeat(seat.position, seatView)
-                    }
-
-                    override fun onSeatDeselected(
-                        seat: Seat,
-                        seatView: View,
-                    ) {
-                        presenter.deselectSeat(seat.position, seatView)
+                    override fun onSeatSelection(seat: Seat, selection: Boolean) {
+                        presenter.selectSeat(seat.position, selection)
                     }
                 },
             )
@@ -100,13 +89,8 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
         seatsAdapter.submitList(seats.seats)
     }
 
-    override fun showSelectedSeat(seatView: View) {
-        seatView.isSelected = true
-        presenter.calculateTotalPrice()
-    }
-
-    override fun showDeselectedSeat(seatView: View) {
-        seatView.isSelected = false
+    override fun showSeats(seats: Seats) {
+        seatsAdapter.submitList(seats.seats)
         presenter.calculateTotalPrice()
     }
 
