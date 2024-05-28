@@ -20,7 +20,7 @@ import woowacourse.movie.MovieReservationApplication
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationTicketDatabase
 import woowacourse.movie.data.model.ReservationTicket
-import woowacourse.movie.data.repository.DefaultNotificationRepository
+import woowacourse.movie.data.repository.MovieReservationNotificationRepository
 import woowacourse.movie.data.repository.OfflineReservationRepository
 import woowacourse.movie.data.repository.SharedPreferenceRepository
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
@@ -121,7 +121,7 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
                     notificationPreference = MovieReservationApplication.notificationPreference,
                 ),
                 notificationRepository =
-                DefaultNotificationRepository(
+                MovieReservationNotificationRepository(
                     context = applicationContext,
                     receiverClass = PushNotificationBroadCastReceiver::class.java,
                     alarmTime = AlarmTimeBeforeMinute(),

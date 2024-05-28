@@ -10,7 +10,7 @@ import woowacourse.movie.domain.model.AlarmTime
 import woowacourse.movie.ui.reservation.ReservationCompleteActivity
 import java.time.LocalDateTime
 
-class DefaultNotificationRepository(
+class MovieReservationNotificationRepository(
     private val context: Context,
     private val receiverClass: Class<out BroadcastReceiver>,
     private val alarmTime: AlarmTime,
