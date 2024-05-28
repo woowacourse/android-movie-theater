@@ -1,18 +1,25 @@
 package woowacourse.movie.ui.seat
 
+
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
+import android.view.View
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isNotSelected
-import androidx.test.espresso.matcher.ViewMatchers.isSelected
+import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.hamcrest.Description
+import org.hamcrest.Matcher
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.R
 import woowacourse.movie.data.ReservationTicketDatabase
 import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.data.repository.OfflineReservationRepository
@@ -52,9 +59,9 @@ class SeatReservationActivityTest {
         b2.perform(click())
 
         // then
-        a1.check((matches(isSelected())))
-        b2.check((matches(isSelected())))
-        c3.check((matches(isNotSelected())))
+        a1.check(matches(hasColor(R.color.seat_selected)))
+        b2.check(matches(hasColor(R.color.seat_selected)))
+        c3.check(matches(hasColor(R.color.white)))
     }
 
     companion object {
@@ -62,3 +69,18 @@ class SeatReservationActivityTest {
         private val dao = db.reservationDao()
     }
 }
+
+private fun hasColor(@ColorRes colorResId: Int): Matcher<in View>? {
+    return object : BoundedMatcher<View, View>(View::class.java) {
+        override fun describeTo(description: Description) {
+            description.appendText("has background color: $colorResId")
+        }
+
+        override fun matchesSafely(view: View): Boolean {
+            val backgroundColor = (view.background as? ColorDrawable)?.color
+            val expectedColor = ContextCompat.getColor(view.context, colorResId)
+            return backgroundColor == expectedColor
+        }
+    }
+}
+
