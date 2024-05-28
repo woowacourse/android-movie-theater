@@ -26,10 +26,10 @@ interface SeatReservationContract {
 
         fun showSelectedSeatFail(throwable: Throwable)
 
-        fun setAlarm(
-            movieTimeMillis: Long,
-            reservationTicketId: Int,
-        )
+//        fun setAlarm(
+//            movieTimeMillis: Long,
+//            reservationTicketId: Int,
+//        )
     }
 
     interface Presenter {

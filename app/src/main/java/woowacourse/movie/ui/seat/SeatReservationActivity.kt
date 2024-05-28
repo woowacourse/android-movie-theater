@@ -159,12 +159,12 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
         showToast(throwable)
     }
 
-    override fun setAlarm(
-        movieTimeMillis: Long,
-        reservationTicketId: Int,
-    ) {
-        scheduleAlarm(movieTimeMillis, reservationTicketId)
-    }
+//    override fun setAlarm(
+//        movieTimeMillis: Long,
+//        reservationTicketId: Int,
+//    ) {
+//        scheduleAlarm(movieTimeMillis, reservationTicketId)
+//    }
 
     private fun scheduleAlarm(
         movieTime: Long,

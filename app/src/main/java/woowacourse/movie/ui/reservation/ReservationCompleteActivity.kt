@@ -80,7 +80,6 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationContract.Vie
         }
     }
 
-    // device check!
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun hasPermission(): Boolean =
         ContextCompat.checkSelfPermission(

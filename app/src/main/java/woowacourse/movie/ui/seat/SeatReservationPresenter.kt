@@ -23,8 +23,6 @@ class SeatReservationPresenter(
     private val theaterId: Int,
     timeReservationId: Int,
 ) : SeatReservationContract.Presenter {
-    private val uiHandler = Handler(Looper.getMainLooper())
-
     private val timeReservation: TimeReservation = reservationRepository.loadTimeReservation(timeReservationId)
     private val loadedAllSeats: Seats = screenDataSource.seats(timeReservation.screenData.id)
     private val ticketCount = timeReservation.ticket.count
@@ -87,21 +85,9 @@ class SeatReservationPresenter(
                 timeReservation.dateTime,
                 theaterDataSource.findById(theaterId),
             ).onSuccess { reservationTicketId ->
-                // TODO: 여기서 푸시 알람을 설정하는 게 아니라, 예매 완료가 되었을 때 설wjd해야 한다
-//                schedulePushAlarm(reservationTicketId.toInt())
                 view.showCompleteReservation(reservationTicketId.toInt())
             }.onFailure { e ->
                 view.showSeatReservationFail(e)
-            }
-        }
-    }
-
-    private fun schedulePushAlarm(reservationTicketId: Int) {
-        reservationRepository.findById(reservationTicketId).onSuccess { reservationTicket ->
-            val movieDateTime = LocalDateTime.of(reservationTicket.date, reservationTicket.time)
-            val movieTimeMillis = movieDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-            uiHandler.post {
-                view.setAlarm(movieTimeMillis, reservationTicketId)
             }
         }
     }

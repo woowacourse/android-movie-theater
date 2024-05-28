@@ -46,57 +46,9 @@
 - 세팅 화면(SettingFragment)에서 푸시 알림을 설정할 수 있다.
     - 푸시 알림을 변경하려고 하면 환경 설정 앱에서 변경하라고 안내하는 스낵바를 띄운다.
     - 이 때 스낵바를 통해 환경 설정 앱에서 변경해야만 스위치가 토글된다. 해당 창에서 바로 스위치가 토글되지 않는다
-  (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU 일 때)
-    - 
+      (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU 일 때)
+    -
 
 ## 프로그래밍 요구사항
 
 - DataBinding 을 사용해야 한다.
-
-
-### refactor 마주친 이슈와 공부
-
-- 좌석 예매
-
-원래는 좌석을 예매하는 순간에 권한을 푸시 알림 확인받으려고 했음.
-하지만 푸시 알림 권한이 없더라도, 좌서을 예매할 수 있어야 한다.  
-그러니까 좌석을 예매 완료하고 나서, 권한을 받고, 권한을 수락 받으면, push 알림을 설정해주어야 한다.
-
-
-- 좌석 ㅔ예매에서 onCreate 에서 requirePermission 했을 때
-
-``` kotlin
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    Log.d(TAG, "onCreate: called ")
-    initPresenter()
-    initView()
-    
-    requestPermission()
-    
-    onBackPressedCallback()
-}
-```
-
-``` kotlin
-override fun onStart() {
-    super.onStart()
-    Log.d(TAG, "onStart: called")
-    requestPermission()
-}
-```
-
-이렇게 했을 때 위 둘 다 터짐.
-영화 예매를 하고 넘어갈 때만 터짐.
-대신, 영화 예매 내역에서 넘어갈 때는 안 터짐..
-이유가 뭘까?
-
-에러는 바인딩 어댑터 관련 에러임.
-```agsl
- java.lang.IllegalStateException: not initialized seats: null
-    at woowacourse.movie.ui.SeatsBindingAdapterKt.textUiFormat(SeatsBindingAdapter.kt:16)
-```
-
-이게 [에디가 이야기하고 찾아냈던 오류](https://fre2-dom.tistory.com/571)네. 바인딩 어댑터 수정해서 해결
-
-
