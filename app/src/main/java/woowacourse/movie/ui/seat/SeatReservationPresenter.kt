@@ -35,7 +35,7 @@ class SeatReservationPresenter(
 
     override fun selectSeat(
         position: Position,
-        selection: Boolean
+        selection: Boolean,
     ) {
         if (selection && isSelectedFullCount()) {
             return
@@ -51,7 +51,10 @@ class SeatReservationPresenter(
         return false
     }
 
-    private fun updateSeats(position: Position, selection: Boolean) {
+    private fun updateSeats(
+        position: Position,
+        selection: Boolean,
+    ) {
         allSeats = allSeats.updatedSeats(position, selection)
         view.showSeats(allSeats)
     }

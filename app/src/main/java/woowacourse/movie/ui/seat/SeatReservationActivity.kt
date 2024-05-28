@@ -78,7 +78,10 @@ class SeatReservationActivity : AppCompatActivity(), SeatReservationContract.Vie
         seatsAdapter =
             SeatsAdapter(
                 object : OnSeatSelectedListener {
-                    override fun onSeatSelection(seat: Seat, selection: Boolean) {
+                    override fun onSeatSelection(
+                        seat: Seat,
+                        selection: Boolean,
+                    ) {
                         presenter.selectSeat(seat.position, selection)
                     }
                 },

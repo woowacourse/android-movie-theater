@@ -17,13 +17,19 @@ data class Seats(
 
     fun countSelected(): Int = seats.count { it.selected }
 
-    fun updatedSeats(position: Position, selected: Boolean): Seats = Seats(seats.map { seat ->
-        if (seat.position == position) {
-            seat.copy(selected = selected)
-        } else {
-            seat
-        }
-    })
+    fun updatedSeats(
+        position: Position,
+        selected: Boolean,
+    ): Seats =
+        Seats(
+            seats.map { seat ->
+                if (seat.position == position) {
+                    seat.copy(selected = selected)
+                } else {
+                    seat
+                }
+            },
+        )
 
     fun findSeat(position: Position): Seat =
         seats.find {

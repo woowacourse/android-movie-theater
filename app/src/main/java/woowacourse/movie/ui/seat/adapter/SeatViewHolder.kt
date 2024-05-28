@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.seat.adapter
 
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.HolderSeatBinding
 import woowacourse.movie.domain.model.Seat

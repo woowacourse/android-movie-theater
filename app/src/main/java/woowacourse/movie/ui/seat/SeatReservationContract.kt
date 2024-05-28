@@ -23,7 +23,6 @@ interface SeatReservationContract {
         fun showSeatReservationFail(throwable: Throwable)
 
         fun showSelectedSeatFail(throwable: Throwable)
-
     }
 
     interface Presenter {
@@ -31,7 +30,10 @@ interface SeatReservationContract {
 
         fun loadTimeReservation()
 
-        fun selectSeat(position: Position, selection: Boolean)
+        fun selectSeat(
+            position: Position,
+            selection: Boolean,
+        )
 
         fun calculateTotalPrice()
 
