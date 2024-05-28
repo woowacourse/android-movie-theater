@@ -14,7 +14,7 @@ class ReservationCompletePresenter(
     private val reservationRepository: ReservationRepository,
     private val preferenceRepository: PreferenceRepository,
     private val notificationRepository: NotificationRepository,
-    private val reservationTicketId: Int = 1,
+    private val reservationTicketId: Int,
 ) : ReservationCompleteContract.Presenter {
     private val uiHandler = Handler(Looper.getMainLooper())
 
