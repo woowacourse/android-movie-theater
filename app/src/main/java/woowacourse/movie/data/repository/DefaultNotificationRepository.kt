@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import woowacourse.movie.domain.model.AlarmTime
 import woowacourse.movie.ui.reservation.ReservationCompleteActivity
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -81,28 +82,4 @@ fun AlarmManager.setExact(alarmSetting: AlarmSetting) {
 
 fun AlarmManager.set(alarmSetting: AlarmSetting) {
     set(alarmSetting.alarmType, alarmSetting.alarmTime, alarmSetting.pendingIntent)
-}
-
-interface AlarmTime {
-    fun calculated(
-        dateTime: LocalDateTime,
-        alarmTimeMinutesBefore: Int,
-    ): Long?
-}
-
-class AlarmTimeBeforeMinute : AlarmTime {
-    override fun calculated(
-        dateTime: LocalDateTime,
-        alarmTimeMinutesBefore: Int,
-    ): Long? {
-        val time = dateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-        val alarmTime = time - alarmTimeMinutesBefore * 30 * 1000
-        val currentTime = System.currentTimeMillis()
-
-        return if (alarmTime > currentTime) {
-            alarmTime
-        } else {
-            null // 이미 영화 시간이 지났다
-        }
-    }
 }

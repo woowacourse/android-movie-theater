@@ -21,11 +21,11 @@ import woowacourse.movie.MovieReservationApplication
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationTicketDatabase
 import woowacourse.movie.data.model.ReservationTicket
-import woowacourse.movie.data.repository.AlarmTimeBeforeMinute
 import woowacourse.movie.data.repository.DefaultNotificationRepository
 import woowacourse.movie.data.repository.OfflineReservationRepository
 import woowacourse.movie.data.repository.SharedPreferenceRepository
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
+import woowacourse.movie.domain.model.AlarmTimeBeforeMinute
 import woowacourse.movie.ui.main.MainActivity
 import woowacourse.movie.ui.pushnotification.PushNotificationBroadCastReceiver
 
