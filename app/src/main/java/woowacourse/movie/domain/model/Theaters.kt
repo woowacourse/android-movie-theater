@@ -1,16 +1,17 @@
 package woowacourse.movie.domain.model
 
+import woowacourse.movie.data.model.MovieData
+
 data class Theaters(val theaters: List<Theater>) {
     constructor(vararg theaters: Theater) : this(theaters.toList())
 
-    fun screeningTheater(movie: Movie): Theaters =
+    fun screeningTheater(movieData: MovieData): Theaters =
         Theaters(
-            theaters.asSequence()
+            theaters
                 .filter { theater ->
                     theater.screens.any { screen ->
-                        screen.movie.id == movie.id
+                        screen.movieData.id == movieData.id
                     }
-                }
-                .toList(),
+                },
         )
 }

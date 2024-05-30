@@ -7,10 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentHomeBinding
-import woowacourse.movie.domain.model.Screen
-import woowacourse.movie.domain.model.ScreenAd
-import woowacourse.movie.domain.repository.DummyMovies
-import woowacourse.movie.domain.repository.DummyScreens
+import woowacourse.movie.ui.ScreenAd
 import woowacourse.movie.ui.home.adapter.ScreenAdapter
 
 class HomeFragment : Fragment(), HomeContract.View {
@@ -18,11 +15,7 @@ class HomeFragment : Fragment(), HomeContract.View {
     private val binding get() = _binding!!
 
     private val homePresenter: HomeContract.Presenter by lazy {
-        HomePresenter(
-            this,
-            DummyMovies(),
-            DummyScreens(),
-        )
+        HomePresenter(this)
     }
     private lateinit var screenAdapter: ScreenAdapter
 
@@ -57,9 +50,13 @@ class HomeFragment : Fragment(), HomeContract.View {
         screenAdapter.submitList(screens)
     }
 
-    override fun showTheatersBottomSheet(screen: Screen) {
-        val theaterBottomSheet = TheaterBottomSheet.newInstance(screen.id)
-        theaterBottomSheet.show(childFragmentManager, "TheaterBottomSheet")
+    override fun showTheatersScreeningMovie(screen: ScreenAd.ScreenPreviewUi) {
+        val theaterScreeningMovieBottomSheet = TheaterScreeningMovieBottomSheet.newInstance(screen.id)
+        theaterScreeningMovieBottomSheet.show(childFragmentManager, "TheaterBottomSheet")
+    }
+
+    override fun showTheatersFail(throwable: Throwable) {
+        Toast.makeText(requireContext(), "상영관 정보를 불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

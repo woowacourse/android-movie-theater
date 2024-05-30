@@ -1,13 +1,14 @@
 package woowacourse.movie.ui.home
 
-import woowacourse.movie.domain.model.Screen
-import woowacourse.movie.domain.model.ScreenAd
+import woowacourse.movie.ui.ScreenAd
 
 interface HomeContract {
     interface View {
         fun showScreens(screens: List<ScreenAd>)
 
-        fun showTheatersBottomSheet(screen: Screen)
+        fun showTheatersScreeningMovie(screen: ScreenAd.ScreenPreviewUi)
+
+        fun showTheatersFail(throwable: Throwable)
     }
 
     interface Presenter {

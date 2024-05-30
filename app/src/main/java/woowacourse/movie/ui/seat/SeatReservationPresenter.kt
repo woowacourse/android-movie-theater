@@ -1,116 +1,102 @@
 package woowacourse.movie.ui.seat
 
-import android.view.View
+import woowacourse.movie.data.model.ScreenData
+import woowacourse.movie.data.repository.ReservationRepository
+import woowacourse.movie.data.source.DummyTheatersDataSource
+import woowacourse.movie.data.source.ScreenDataSource
+import woowacourse.movie.data.source.TheaterDataSource
 import woowacourse.movie.domain.model.Position
-import woowacourse.movie.domain.model.Screen
-import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.TimeReservation
-import woowacourse.movie.domain.repository.ReservationRepository
-import woowacourse.movie.domain.repository.ScreenRepository
+import kotlin.concurrent.thread
 
 class SeatReservationPresenter(
     private val view: SeatReservationContract.View,
-    private val screenRepository: ScreenRepository,
+    private val screenDataSource: ScreenDataSource,
     private val reservationRepository: ReservationRepository,
+    private val theaterDataSource: TheaterDataSource = DummyTheatersDataSource(),
+    private val theaterId: Int,
+    timeReservationId: Int,
 ) : SeatReservationContract.Presenter {
-    private var theaterId: Int = 0
-    private var timeReservationId: Int = 0
-
-    private lateinit var timeReservation: TimeReservation
-    private var loadedAllSeats: Seats = Seats()
-    private var selectedSeats = Seats()
-    private var ticketCount = 0
-
-    override fun saveId(
-        theaterId: Int,
-        timeReservationId: Int,
-    ) {
-        this.theaterId = theaterId
-        this.timeReservationId = timeReservationId
-
-        timeReservation = reservationRepository.loadTimeReservation(timeReservationId)
-        loadedAllSeats = screenRepository.seats(timeReservation.screen.id)
-        ticketCount = timeReservation.ticket.count
-    }
+    private val timeReservation: TimeReservation = reservationRepository.loadTimeReservation(timeReservationId)
+    private var allSeats: Seats = screenDataSource.seats(timeReservation.screenData.id)
+    private val ticketCount = timeReservation.ticket.count
 
     override fun loadAllSeats() {
-        view.showAllSeats(loadedAllSeats)
+        view.showAllSeats(allSeats)
     }
 
     override fun loadTimeReservation() {
         view.showTimeReservation(timeReservation)
+
+        val totalPrice = allSeats.selectedSeats().totalPrice()
+        view.showTotalPrice(totalPrice)
     }
 
     override fun selectSeat(
         position: Position,
-        seatView: View,
+        selection: Boolean,
     ) {
-        val seat = loadedAllSeats.findSeat(position)
+        if (selection && isSelectedFullCount()) {
+            return
+        }
+        updateSeats(position, selection)
+    }
 
-        if (toggleSeatSelection(seat, seatView)) {
-            view.activateReservation(selectedSeats.count() == ticketCount)
-            view.updateTotalPrice(selectedSeats.totalPrice())
+    private fun isSelectedFullCount(): Boolean {
+        if (allSeats.countSelected() >= ticketCount) {
+            view.showSelectedSeatFail(IllegalArgumentException("exceed ticket count that can be reserved."))
+            return true
+        }
+        return false
+    }
+
+    private fun updateSeats(
+        position: Position,
+        selection: Boolean,
+    ) {
+        allSeats = allSeats.updatedSeats(position, selection)
+        view.showSeats(allSeats)
+    }
+
+    override fun calculateTotalPrice() {
+        val totalPrice = allSeats.selectedSeats().totalPrice()
+        view.showTotalPrice(totalPrice)
+
+        val reservationActivated = allSeats.countSelected() == ticketCount
+        view.activateReservation(reservationActivated)
+    }
+
+    override fun attemptReserve() {
+        view.checkReservationConfirm()
+    }
+
+    override fun reserve() {
+        val screenId = timeReservation.screenData.id
+        thread {
+            reservationRepository.savedReservationId(
+                loadedScreen(screenId),
+                allSeats.selectedSeats(),
+                timeReservation.dateTime,
+                theaterDataSource.findById(theaterId),
+            ).onSuccess { reservationTicketId ->
+                view.showCompleteReservation(reservationTicketId.toInt())
+            }.onFailure { e ->
+                view.showSeatReservationFail(e)
+            }
         }
     }
 
-    private fun toggleSeatSelection(
-        seat: Seat,
-        seatView: View,
-    ): Boolean =
-        when {
-            selectedSeats.seats.contains(seat) -> {
-                deselectSeat(seatView, seat)
-                true
-            }
-
-            selectedSeats.seats.size < ticketCount -> {
-                selectSeat(seatView, seat)
-                true
-            }
-
-            else -> {
-                view.showToast(IllegalArgumentException("exceed ticket count that can be reserved."))
-                false
-            }
-        }
-
-    private fun selectSeat(
-        seatView: View,
-        seat: Seat,
-    ) {
-        seatView.isSelected = true
-        selectedSeats = selectedSeats.add(seat)
-    }
-
-    private fun deselectSeat(
-        seatView: View,
-        seat: Seat,
-    ) {
-        seatView.isSelected = false
-        selectedSeats = selectedSeats.remove(seat)
-    }
-
-    override fun reserve(theaterId: Int) {
-        val screenId = timeReservation.screen.id
-
-        reservationRepository.save(
-            loadedScreen(screenId),
-            selectedSeats,
-            timeReservation.dateTime,
-        ).onSuccess { reservationId ->
-            view.navigateToCompleteReservation(reservationId, theaterId)
-        }.onFailure { e ->
-            view.showSeatReservationFail(e)
-        }
-    }
-
-    private fun loadedScreen(screenId: Int): Screen {
-        screenRepository.findById(id = screenId).onSuccess { screen ->
+    private fun loadedScreen(screenId: Int): ScreenData {
+        screenDataSource.findById(id = screenId).onSuccess { screen ->
             return screen
         }.onFailure { e ->
             throw e
         }
         throw IllegalStateException("예기치 못한 오류")
+    }
+
+    companion object {
+        private const val TAG = "SeatReservationPresenter"
     }
 }

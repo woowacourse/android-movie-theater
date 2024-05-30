@@ -3,6 +3,7 @@ package woowacourse.movie.domain.model
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
+import woowacourse.movie.data.model.ScreenData
 
 class ReservationTest {
     @Test
@@ -10,12 +11,14 @@ class ReservationTest {
         assertThrows<IllegalArgumentException> {
             Reservation(
                 1,
-                Screen.NULL,
+                ScreenData.NULL,
                 Ticket(1),
                 Seats(
                     Seat(Position(0, 0), Grade.S),
                     Seat(Position(0, 1), Grade.A),
                 ),
+                DateTime.NULL,
+                Theater.NULL,
             )
         }
     }
@@ -25,12 +28,14 @@ class ReservationTest {
         assertDoesNotThrow {
             Reservation(
                 1,
-                Screen.NULL,
+                ScreenData.NULL,
                 Ticket(2),
                 Seats(
                     Seat(Position(0, 0), Grade.S),
                     Seat(Position(0, 1), Grade.A),
                 ),
+                DateTime.NULL,
+                Theater.NULL,
             )
         }
     }

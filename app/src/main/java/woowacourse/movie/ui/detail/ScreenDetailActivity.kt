@@ -8,13 +8,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
+import woowacourse.movie.data.source.DummyMovieDataSource
+import woowacourse.movie.data.source.DummyScreenDataSource
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.ScreenTimePolicy
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.WeeklyScreenTimePolicy
-import woowacourse.movie.domain.repository.DummyMovies
-import woowacourse.movie.domain.repository.DummyReservation
-import woowacourse.movie.domain.repository.DummyScreens
+import woowacourse.movie.domain.repository.DefaultMovieRepository
+import woowacourse.movie.domain.repository.DefaultScreenRepository
+import woowacourse.movie.domain.repository.OfflineReservationRepository
+import woowacourse.movie.local.source.ReservationTicketDatabase
 import woowacourse.movie.ui.ScreenDetailUi
 import woowacourse.movie.ui.detail.view.DateTimeSpinnerView
 import woowacourse.movie.ui.detail.view.OnItemSelectedListener
@@ -24,15 +27,7 @@ import woowacourse.movie.ui.detail.view.TicketView
 import woowacourse.movie.ui.seat.SeatReservationActivity
 
 class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
-    private val presenter: ScreenDetailContract.Presenter by lazy {
-        ScreenDetailPresenter(
-            this,
-            DummyMovies(),
-            DummyScreens(),
-            DummyReservation,
-            WeeklyScreenTimePolicy(),
-        )
-    }
+    private lateinit var presenter: ScreenDetailContract.Presenter
 
     private val screenDetailView: ScreenDetailInformationView by lazy { findViewById(R.id.screen_detail_screen_view) }
     private val ticketView: TicketView by lazy { findViewById(R.id.screen_detail_ticket_view) }
@@ -41,15 +36,34 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_screen_detail)
+        initPresenter()
         initView()
+    }
+
+    private fun initPresenter() {
+        val screenId = intent.getIntExtra(PUT_EXTRA_KEY_ID, DEFAULT_SCREEN_ID)
+        val theaterId = intent.getIntExtra(PUT_EXTRA_THEATER_ID_KEY, DEFAULT_THEATER_ID)
+
+        val movieRepository = DefaultMovieRepository(DummyMovieDataSource())
+        presenter =
+            ScreenDetailPresenter(
+                this,
+                movieRepository = movieRepository,
+                screenRepository = DefaultScreenRepository(DummyScreenDataSource(), movieRepository),
+                reservationRepository =
+                    OfflineReservationRepository(
+                        ReservationTicketDatabase.getDatabase(applicationContext).reservationDao(),
+                    ),
+                screenTimePolicy = WeeklyScreenTimePolicy(),
+                screenId = screenId,
+                theaterId = theaterId,
+            )
     }
 
     private fun initView() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val screenId = intent.getIntExtra(PUT_EXTRA_KEY_ID, DEFAULT_SCREEN_ID)
-        val theaterId = intent.getIntExtra(PUT_EXTRA_THEATER_ID_KEY, DEFAULT_THEATER_ID)
+
         with(presenter) {
-            saveId(screenId, theaterId)
             loadScreen()
             loadTicket()
         }
@@ -93,12 +107,14 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
             presenter.saveTicket(count)
 
             val datePosition = bundle.getInt(PUT_DATE_POSITION_KEY)
-            dateTimeSpinnerView.restoreDatePosition(datePosition)
+            dateTimeSpinnerView.showDate(datePosition)
             presenter.saveDatePosition(datePosition)
+            showDate(datePosition)
 
             val timePosition = bundle.getInt(PUT_TIME_POSITION_KEY)
-            dateTimeSpinnerView.restoreTimePosition(timePosition)
+            dateTimeSpinnerView.showTime(timePosition)
             presenter.saveTimePosition(timePosition)
+            showTime(timePosition)
         }
     }
 
@@ -119,7 +135,15 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
         dateTimeSpinnerView.show(dateRange, screenTimePolicy, onDateSelectedListener, onTimeSelectedListener)
     }
 
-    override fun navigateToSeatsReservation(
+    override fun showDate(datePosition: Int) {
+        presenter.saveDatePosition(datePosition)
+    }
+
+    override fun showTime(timePosition: Int) {
+        presenter.saveTimePosition(timePosition)
+    }
+
+    override fun showSeatsReservation(
         timeReservationId: Int,
         theaterId: Int,
     ) {
@@ -130,17 +154,18 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
         )
     }
 
-    override fun goToBack(e: Throwable) {
+    override fun showScreenFail(e: Throwable) {
+        when (e) {
+            is NoSuchElementException -> showToastMessage(e)
+            else -> unexpectedFinish(e)
+        }
+    }
+
+    override fun showTicketFail(e: Throwable) {
         showToastMessage(e)
-        finish()
     }
 
-    override fun unexpectedFinish(e: Throwable) {
-        showSnackBar(e)
-        finish()
-    }
-
-    override fun showToastMessage(e: Throwable) {
+    private fun showToastMessage(e: Throwable) {
         when (e) {
             is NoSuchElementException -> Toast.makeText(this, "해당하는 상영 정보가 없습니다!!", Toast.LENGTH_SHORT).show()
             is IllegalArgumentException ->
@@ -154,7 +179,12 @@ class ScreenDetailActivity : AppCompatActivity(), ScreenDetailContract.View {
         }
     }
 
-    override fun showSnackBar(e: Throwable) {
+    private fun unexpectedFinish(e: Throwable) {
+        showSnackBar(e)
+        finish()
+    }
+
+    private fun showSnackBar(e: Throwable) {
         when (e) {
             is NoSuchElementException ->
                 Snackbar.make(

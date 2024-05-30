@@ -2,7 +2,6 @@ package woowacourse.movie.ui.detail.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
@@ -35,23 +34,25 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
         screenTimePolicy: ScreenTimePolicy,
         dateRange: DateRange,
         onTimeSelectedListener: OnItemSelectedListener,
-    ) = TimeAdapter(context, screenTimePolicy, dateRange.start, onTimeSelectedListener = { position ->
-        onTimeSelectedListener.onItemSelected(position)
-    })
+    ): TimeAdapter {
+        return TimeAdapter(context, screenTimePolicy, dateRange.start, onTimeSelectedListener = { position ->
+            onTimeSelectedListener.onItemSelected(position)
+        })
+    }
 
     private fun initDateAdapter(
         dateRange: DateRange,
         screenTimePolicy: ScreenTimePolicy,
         timeAdapter: TimeAdapter,
         onDateSelectedListener: OnItemSelectedListener,
-    ) = DateAdapter(context, dateRange) { position ->
-        val times = screenTimePolicy.screeningTimes(dateRange.allDates()[position]).toList()
-        Log.d(TAG, "initDateAdapter: times: $times")
+    ): DateAdapter =
+        DateAdapter(context, dateRange) { position ->
+            val times = screenTimePolicy.screeningTimes(dateRange.allDates()[position]).toList()
 
-        timeAdapter.clear()
-        timeAdapter.addAll(times)
-        onDateSelectedListener.onItemSelected(position)
-    }
+            timeAdapter.clear()
+            timeAdapter.addAll(times)
+            onDateSelectedListener.onItemSelected(position)
+        }
 
     private fun bindAdapters(
         timeAdapter: TimeAdapter,
@@ -64,12 +65,12 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
         binding.spnDate.onItemSelectedListener = dateAdapter
     }
 
-    override fun restoreDatePosition(position: Int) {
-        binding.spnDate.setSelection(position)
+    override fun showDate(position: Int) {
+        binding.spnDate.post { binding.spnDate.setSelection(position) }
     }
 
-    override fun restoreTimePosition(position: Int) {
-        binding.spnTime.setSelection(position)
+    override fun showTime(position: Int) {
+        binding.spnDate.post { binding.spnTime.setSelection(position) }
     }
 
     override fun selectedDatePosition(): Int {
@@ -78,9 +79,5 @@ class ScreenDetailDateTimeSpinnerView(context: Context, attrs: AttributeSet? = n
 
     override fun selectedTimePosition(): Int {
         return binding.spnTime.selectedItemPosition
-    }
-
-    companion object {
-        const val TAG = "ScreenDetailDateTimeSpinnerView"
     }
 }

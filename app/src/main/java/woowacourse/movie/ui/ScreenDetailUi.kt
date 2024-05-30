@@ -1,8 +1,8 @@
 package woowacourse.movie.ui
 
+import woowacourse.movie.data.model.ScreenData
 import woowacourse.movie.domain.model.DateRange
 import woowacourse.movie.domain.model.Image
-import woowacourse.movie.domain.model.Screen
 
 data class ScreenDetailUi(
     val id: Int,
@@ -10,14 +10,14 @@ data class ScreenDetailUi(
     val dateRange: DateRange,
 )
 
-fun Screen.toDetailUI(image: Image<Any>) =
+fun ScreenData.toDetailUI(image: Image<Any>) =
     ScreenDetailUi(
         id = id,
         movieDetailUI =
             MovieDetailUI(
-                title = movie.title,
-                runningTime = movie.runningTime,
-                description = movie.description,
+                title = movieData.title,
+                runningTime = movieData.runningTime,
+                description = movieData.description,
                 image = image,
             ),
         dateRange = dateRange,

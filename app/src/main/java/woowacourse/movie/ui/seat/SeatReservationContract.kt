@@ -10,35 +10,35 @@ interface SeatReservationContract {
 
         fun showAllSeats(seats: Seats)
 
-        fun updateTotalPrice(totalPrice: Int)
+        fun showSeats(seats: Seats)
 
-        fun activateReservation(boolean: Boolean)
+        fun showTotalPrice(totalPrice: Int)
 
-        fun navigateToCompleteReservation(
-            reservationId: Int,
-            theaterId: Int,
-        )
+        fun activateReservation(activated: Boolean)
+
+        fun checkReservationConfirm()
+
+        fun showCompleteReservation(reservationTicketId: Int)
 
         fun showSeatReservationFail(throwable: Throwable)
 
-        fun showToast(e: Throwable)
+        fun showSelectedSeatFail(throwable: Throwable)
     }
 
     interface Presenter {
-        fun saveId(
-            theaterId: Int,
-            timeReservationId: Int,
-        )
-
         fun loadAllSeats()
 
         fun loadTimeReservation()
 
         fun selectSeat(
             position: Position,
-            seatView: android.view.View,
+            selection: Boolean,
         )
 
-        fun reserve(theaterId: Int)
+        fun calculateTotalPrice()
+
+        fun attemptReserve()
+
+        fun reserve()
     }
 }
