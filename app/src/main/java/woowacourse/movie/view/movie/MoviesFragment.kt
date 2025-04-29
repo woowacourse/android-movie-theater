@@ -51,6 +51,11 @@ class MoviesFragment :
         presenter.fetchMovies()
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as? MoviesActivity)?.showBottomNav(true)
+    }
+
     override fun showMovies(movies: List<Movie>) {
         moviesAdapter.submitList(movies)
     }

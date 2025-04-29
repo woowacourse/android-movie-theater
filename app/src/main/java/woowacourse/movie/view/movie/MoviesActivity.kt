@@ -2,6 +2,7 @@ package woowacourse.movie.view.movie
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -76,5 +77,10 @@ class MoviesActivity :
             replace(R.id.fcv_main, fragment)
             addToBackStack(null)
         }
+    }
+
+    fun showBottomNav(isVisible: Boolean) {
+        val nav = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        nav.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 }

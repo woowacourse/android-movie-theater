@@ -32,7 +32,6 @@ class ReservationFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//
     }
 
     override fun onCreateView(
@@ -57,19 +56,19 @@ class ReservationFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setupButtonClickListener()
-        var movie: Movie? = null
-        setFragmentResultListener("requestKey") { requestKey, bundle ->
-            movie = bundle.getParcelable<Movie>("movieKey")
-            Log.d("rFragment", "${movie?.title}")
+
+        parentFragmentManager.setFragmentResultListener("requestKey", this) { _, bundle ->
+            val movie = bundle.getParcelable<Movie>("movieKey")
+            presenter.fetchData { movie }
         }
 
-        presenter.fetchData {
-            movie
-//            parentFragmentManager.setFragmentResultListener("requestKey", this) { key, bundle ->
-//                bundle.getParcelable("movieKey") as Movie
-//            }
-        }
+        setupButtonClickListener()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? MoviesActivity)?.showBottomNav(false)
     }
 
     private fun setupButtonClickListener() {
@@ -98,7 +97,6 @@ class ReservationFragment :
         ) { _ ->
             val intent = Intent(requireContext(), MoviesActivity::class.java)
             startActivity(intent)
-//            finish()
         }
     }
 
@@ -201,7 +199,8 @@ class ReservationFragment :
         binding.tvReservationTitle.text = title
         binding.tvReservationScreeningDate.text =
             resources.getString(R.string.movie_screening_date, startDate, endDate)
-        binding.tvReservationRunningTime.text = getString(R.string.movie_running_time).format(runningTime)
+        binding.tvReservationRunningTime.text =
+            getString(R.string.movie_running_time).format(runningTime)
     }
 
     private fun setupCompleteButtonClick() {
@@ -229,14 +228,4 @@ class ReservationFragment :
         super.onSaveInstanceState(outState)
         outState.putInt(Extras.ReservationData.TICKET_COUNT_KEY, presenter.currentTicketCount())
     }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        setupSavedData(savedInstanceState)
-    }
-
-//    override fun onSupportNavigateUp(): Boolean {
-//        finish()
-//        return super.onSupportNavigateUp()
-//    }
 }
