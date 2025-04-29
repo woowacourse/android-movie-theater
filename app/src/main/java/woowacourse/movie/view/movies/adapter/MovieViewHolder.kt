@@ -24,7 +24,7 @@ class MovieViewHolder(
 
     init {
         reserveButton.setOnClickListener {
-            movie?.let { eventListener.onClickReservation(it) }
+            eventListener.onClickShowTheater()
         }
     }
 

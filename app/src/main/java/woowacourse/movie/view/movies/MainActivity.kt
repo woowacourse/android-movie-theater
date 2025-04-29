@@ -35,8 +35,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         val movieAdapter: MovieAdapter =
             MovieAdapter(
                 object : OnMovieEventListener {
-                    override fun onClickReservation(movie: Movie) {
-                        navigate(movie)
+                    override fun onClickShowTheater() {
+                        val dialog = TheaterBottomSheetDialogFragment()
+                        dialog.show(supportFragmentManager, "TheaterBottomSheetDialog")
                     }
                 },
             )
