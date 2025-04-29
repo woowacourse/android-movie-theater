@@ -1,6 +1,7 @@
 package woowacourse.movie.model
 
 import java.time.LocalDate
+import java.time.LocalTime
 
 data class Movie(
     val imageSource: String,
@@ -8,6 +9,7 @@ data class Movie(
     val screeningStartDate: LocalDate,
     val screeningEndDate: LocalDate,
     val runningTime: Int,
+    val screeningTimes: List<LocalTime>,
 ) {
     init {
         require(title.isNotBlank()) { ERROR_TITLE_BLACK_MESSAGE }
