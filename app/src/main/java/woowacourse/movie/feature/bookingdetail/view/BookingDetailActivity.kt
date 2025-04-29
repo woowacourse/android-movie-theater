@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
+import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.feature.bookingdetail.contract.BookingDetailContract
 import woowacourse.movie.feature.bookingdetail.presenter.BookingDetailPresenter
 import woowacourse.movie.feature.bookingdetail.view.adapter.DateAdapter
@@ -165,15 +166,18 @@ class BookingDetailActivity :
     }
 
     companion object {
-        const val MOVIE_KEY = "MOVIE"
+        private const val MOVIE_KEY = "MOVIE"
+        private const val THEATER_KEY = "THEATER"
         private const val BOOKING_INFO_KEY = "BOOKING_INFO"
 
         fun newIntent(
             context: Context,
             movie: MovieUiModel,
+            theater: Theater,
         ): Intent =
             Intent(context, BookingDetailActivity::class.java).apply {
                 putExtra(MOVIE_KEY, movie)
+                putExtra(THEATER_KEY, theater)
             }
     }
 }

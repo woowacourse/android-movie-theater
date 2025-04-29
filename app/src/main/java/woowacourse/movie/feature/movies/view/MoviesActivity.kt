@@ -43,7 +43,7 @@ class MoviesActivity :
         movie: MovieUiModel,
         theater: Theater,
     ) {
-        val intent = BookingDetailActivity.newIntent(this, movie)
+        val intent = BookingDetailActivity.newIntent(this, movie, theater)
         startActivity(intent)
     }
 

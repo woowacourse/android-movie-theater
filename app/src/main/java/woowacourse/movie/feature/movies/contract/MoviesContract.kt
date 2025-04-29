@@ -19,5 +19,10 @@ interface MoviesContract {
         fun prepareMovies()
 
         fun selectMovieForBooking(movie: MovieUiModel)
+
+        fun selectTheater(
+            movie: MovieUiModel,
+            theater: Theater,
+        )
     }
 }
