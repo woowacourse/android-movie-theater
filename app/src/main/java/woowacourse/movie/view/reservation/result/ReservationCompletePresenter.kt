@@ -7,7 +7,6 @@ import woowacourse.movie.domain.movieseat.Seats
 class ReservationCompletePresenter(
     val view: ReservationCompleteContract.View,
 ) : ReservationCompleteContract.Presenter {
-
     override fun fetchData(
         ticket: Ticket,
         seats: Seats,

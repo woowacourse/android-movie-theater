@@ -48,7 +48,7 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
 
     private fun checkTicket(
         ticket: Ticket?,
-        seats: Seats?
+        seats: Seats?,
     ) {
         if (ticket == null || seats == null) {
             handleInvalidTicket()
