@@ -17,4 +17,6 @@
     <string name="booking_seat_okay">확인</string>
     <string name="screen">SCREEN</string>
     <string name="booking_seat_price">%,d원</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

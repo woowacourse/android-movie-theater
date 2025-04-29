@@ -112,5 +112,20 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <!-- 극장 바텀 시트 영화 극장 이름 -->
+    <style name="MoviesTheaterNameTextStyle" parent="BaseTextStyle">
+        <item name="android:gravity">start</item>
+        <item name="android:textSize">@dimen/font_size_normal</item> <!-- 16sp -->
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!-- 극장 바텀 시트 상영 시간 개수 -->
+    <style name="MoviesTheaterRunningTimesTextStyle" parent="BaseTextStyle">
+        <item name="android:gravity">start</item>
+        <item name="android:textSize">@dimen/font_size_small</item> <!-- 16sp -->
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/gray_700</item>
+    </style>
 </resources>
 
