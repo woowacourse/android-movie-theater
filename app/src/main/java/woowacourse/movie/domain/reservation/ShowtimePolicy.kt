@@ -5,7 +5,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-interface ShowtimePolicy {
+fun interface ShowtimePolicy {
     fun showtimes(
         date: LocalDate,
         current: LocalDateTime,
