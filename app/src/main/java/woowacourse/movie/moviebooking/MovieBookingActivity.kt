@@ -36,10 +36,11 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        movie = BuildVersion().getParcelableClass(
-            intent,
-            KEY_MOVIE, Movie::class
-        )
+        movie =
+            BuildVersion().getParcelableClass(
+                intent,
+                KEY_MOVIE, Movie::class,
+            )
         presenter = MovieBookingPresenter(this@MovieBookingActivity)
         presenter.loadMovie(movie)
 
@@ -52,11 +53,12 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
     override fun showMovieInfo() {
         binding.movieTitle.text = movie.title
         binding.moviePoster.setImageResource(movie.poster)
-        binding.movieDate.text = getString(
-            R.string.movie_screening_date,
-            movie.screeningPeriod.screeningStartDate.toDotFormat(),
-            movie.screeningPeriod.screeningEndDate.toDotFormat()
-        )
+        binding.movieDate.text =
+            getString(
+                R.string.movie_screening_date,
+                movie.screeningPeriod.screeningStartDate.toDotFormat(),
+                movie.screeningPeriod.screeningEndDate.toDotFormat(),
+            )
         binding.movieRunningTime.text = getString(R.string.movie_running_time, movie.runningTime)
     }
 
@@ -73,10 +75,11 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
     }
 
     override fun navigateToMovieBookingSeat(bookingStatus: BookingStatus) {
-        val intent = MovieBookingSeatActivity.Companion.movieBookingSeatIntent(
-            this@MovieBookingActivity,
-            bookingStatus
-        )
+        val intent =
+            MovieBookingSeatActivity.Companion.movieBookingSeatIntent(
+                this@MovieBookingActivity,
+                bookingStatus,
+            )
         startActivity(intent)
     }
 
@@ -89,35 +92,37 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
     }
 
     private fun setupDatePicker() {
-        binding.datePicker.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedDate = (parent.adapter as BookedDateSpinnerAdapter).getItem(position)
-                presenter.selectDate(selectedDate)
-            }
+        binding.datePicker.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    val selectedDate = (parent.adapter as BookedDateSpinnerAdapter).getItem(position)
+                    presenter.selectDate(selectedDate)
+                }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
     }
 
     private fun setupTimePicker() {
-        binding.timePicker.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedTime = (parent.adapter as BookedTimeSpinnerAdapter).getItem(position)
-                presenter.selectTime(selectedTime)
-            }
+        binding.timePicker.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    val selectedTime = (parent.adapter as BookedTimeSpinnerAdapter).getItem(position)
+                    presenter.selectTime(selectedTime)
+                }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
     }
 
     private fun setupMemberCount() {
@@ -132,7 +137,10 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
     companion object {
         private const val KEY_MOVIE = "movie"
 
-        fun movieBookingIntent(otherActivity: AppCompatActivity, movie: Movie): Intent {
+        fun movieBookingIntent(
+            otherActivity: AppCompatActivity,
+            movie: Movie,
+        ): Intent {
             return Intent(otherActivity, MovieBookingActivity::class.java)
                 .apply { putExtra(KEY_MOVIE, movie) }
         }

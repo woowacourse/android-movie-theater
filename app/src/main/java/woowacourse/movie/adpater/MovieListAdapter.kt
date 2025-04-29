@@ -13,11 +13,11 @@ import woowacourse.movie.helper.LocalDateHelper.toDotFormat
 class MovieListAdapter(
     private val value: List<Movie>,
     private val navigateToBook: (Movie) -> Unit,
-    private val navigateToAd: () -> Unit
+    private val navigateToAd: () -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_MOVIE -> {
@@ -47,7 +47,7 @@ class MovieListAdapter(
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int
+        position: Int,
     ) {
         if (getItemViewType(position) == VIEW_TYPE_MOVIE) {
             val realPosition = position - (position / 4)
@@ -64,22 +64,24 @@ class MovieListAdapter(
     }
 
     inner class MovieViewHolder(
-        private val binding: MovieItemBinding
+        private val binding: MovieItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bindMovie(movie: Movie) {
             binding.root.setOnSingleClickListener { navigateToBook(movie) }
 
             binding.movieTitle.text = movie.title
             binding.moviePoster.setImageResource(movie.poster)
-            binding.movieDate.text = binding.movieDate.context.getString(
-                R.string.movie_screening_date,
-                movie.screeningPeriod.screeningStartDate.toDotFormat(),
-                movie.screeningPeriod.screeningEndDate.toDotFormat()
-            )
-            binding.movieRunningTime.text = binding.movieRunningTime.context.getString(
-                R.string.movie_running_time,
-                movie.runningTime
-            )
+            binding.movieDate.text =
+                binding.movieDate.context.getString(
+                    R.string.movie_screening_date,
+                    movie.screeningPeriod.screeningStartDate.toDotFormat(),
+                    movie.screeningPeriod.screeningEndDate.toDotFormat(),
+                )
+            binding.movieRunningTime.text =
+                binding.movieRunningTime.context.getString(
+                    R.string.movie_running_time,
+                    movie.runningTime,
+                )
             binding.movieBookBtn.commonButton.text =
                 binding.movieBookBtn.commonButton.context.getString(R.string.movie_book)
             binding.movieBookBtn.commonButton.setOnSingleClickListener { navigateToBook(movie) }
@@ -87,7 +89,7 @@ class MovieListAdapter(
     }
 
     inner class AdViewHolder(
-        private val binding: AdItemBinding
+        private val binding: AdItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bindAd() {
             binding.root.setOnSingleClickListener {
@@ -101,4 +103,3 @@ class MovieListAdapter(
         private const val VIEW_TYPE_AD = 1
     }
 }
-

@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @JvmInline
 value class Row(
-    val value: Int
+    val value: Int,
 ) : Parcelable {
     init {
         require(value >= MINIMUM_ROW) { "행은 0보다 큰 숫자만 올 수 있습니다." }
@@ -16,4 +16,3 @@ value class Row(
         private const val MINIMUM_ROW = 0
     }
 }
-

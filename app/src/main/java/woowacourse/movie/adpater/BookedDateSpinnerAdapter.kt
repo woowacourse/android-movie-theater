@@ -24,16 +24,17 @@ class BookedDateSpinnerAdapter(val value: List<LocalDate>) : BaseAdapter() {
     override fun getView(
         position: Int,
         convertView: View?,
-        parent: ViewGroup
+        parent: ViewGroup,
     ): View {
         val view: TextView
 
         if (convertView == null) {
             view = TextView(parent.context)
-            view.text = view.context.getString(
-                R.string.movie_running_dateTime,
-                getItem(position).toDotFormat()
-            )
+            view.text =
+                view.context.getString(
+                    R.string.movie_running_dateTime,
+                    getItem(position).toDotFormat(),
+                )
         } else {
             view = convertView as TextView
         }

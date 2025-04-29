@@ -22,13 +22,19 @@ data class BookingStatus(
     }
 
     fun book(): BookingStatus {
-        return if (!isBooked) this.copy(isBooked = true)
-        else throw IllegalStateException(ERROR_ALREADY_BOOKED)
+        return if (!isBooked) {
+            this.copy(isBooked = true)
+        } else {
+            throw IllegalStateException(ERROR_ALREADY_BOOKED)
+        }
     }
 
     fun cancel(): BookingStatus {
-        return if (isBooked) this.copy(isBooked = false)
-        else throw IllegalStateException(ERROR_NOT_BOOKED)
+        return if (isBooked) {
+            this.copy(isBooked = false)
+        } else {
+            throw IllegalStateException(ERROR_NOT_BOOKED)
+        }
     }
 
     companion object {
@@ -39,13 +45,13 @@ data class BookingStatus(
             movie: Movie,
             count: Int,
             bookedDate: LocalDate,
-            bookedTime: LocalTime
+            bookedTime: LocalTime,
         ): BookingStatus {
             val bookedDateTime = LocalDateTime.of(bookedDate, bookedTime)
             return BookingStatus(
                 movie = movie,
                 seat = BookingSeats(count),
-                bookedTime = bookedDateTime
+                bookedTime = bookedDateTime,
             )
         }
 
@@ -53,7 +59,7 @@ data class BookingStatus(
             movie: Movie,
             count: Int,
             bookedDate: LocalDate,
-            bookedTime: LocalTime
+            bookedTime: LocalTime,
         ): BookingStatus = from(movie, count, bookedDate, bookedTime)
     }
 }

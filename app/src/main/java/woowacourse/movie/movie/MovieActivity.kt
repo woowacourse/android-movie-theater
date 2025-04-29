@@ -9,12 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import woowacourse.movie.movie.Movies
 import woowacourse.movie.R
 import woowacourse.movie.adpater.MovieListAdapter
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.movie.MoviesPresenter
 import woowacourse.movie.moviebooking.MovieBookingActivity
 
 class MovieActivity : AppCompatActivity(), Movies.View {
@@ -36,11 +34,12 @@ class MovieActivity : AppCompatActivity(), Movies.View {
     }
 
     override fun showMovies(movies: List<Movie>) {
-        binding.movies.adapter = MovieListAdapter(
-            movies,
-            { movie -> presenter.selectedMovie(movie) },
-            { presenter.selectedAd() },
-        )
+        binding.movies.adapter =
+            MovieListAdapter(
+                movies,
+                { movie -> presenter.selectedMovie(movie) },
+                { presenter.selectedAd() },
+            )
         binding.movies.layoutManager = LinearLayoutManager(this)
     }
 
@@ -50,9 +49,10 @@ class MovieActivity : AppCompatActivity(), Movies.View {
     }
 
     override fun navigateToAdPage() {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            Intent.setData = Uri.parse("https://www.woowacourse.io/")
-        }
+        val intent =
+            Intent(Intent.ACTION_VIEW).apply {
+                Intent.setData = Uri.parse("https://www.woowacourse.io/")
+            }
         binding.root.context.startActivity(intent)
     }
 

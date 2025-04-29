@@ -11,9 +11,11 @@ data class Seat(
 ) : Parcelable {
     fun price(): Int = grade.price
 
-
     companion object {
-        fun of(row: Int, col: Int) : Seat {
+        fun of(
+            row: Int,
+            col: Int,
+        ): Seat {
             val grade = gradeByRow(row)
             return Seat(Row(row), Col(col), grade)
         }

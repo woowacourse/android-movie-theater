@@ -1,6 +1,5 @@
 package woowacourse.movie.moviebooking
 
-import woowacourse.movie.moviebooking.MovieBooking
 import woowacourse.movie.R
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Movie
@@ -9,7 +8,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class MovieBookingPresenter(
-    private val view: MovieBooking.View
+    private val view: MovieBooking.View,
 ) : MovieBooking.Presenter {
     private lateinit var movie: Movie
     private var count: Int = 1

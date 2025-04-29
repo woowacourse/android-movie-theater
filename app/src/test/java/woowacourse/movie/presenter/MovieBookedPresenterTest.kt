@@ -7,8 +7,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.moviebooked.MovieBooked
 import woowacourse.movie.fixture.MovieFixture
+import woowacourse.movie.moviebooked.MovieBooked
 import woowacourse.movie.moviebooked.MovieBookedPresenter
 
 class MovieBookedPresenterTest {
@@ -23,7 +23,7 @@ class MovieBookedPresenterTest {
 
     @Test
     fun loadMovie_호출시_View의_showMovieInfo가_호출된다() {
-        //given - 예약 정보가 주어짐
+        // given - 예약 정보가 주어짐
         val bookingStatus = MovieFixture.BOOKING_STATUS
         every { view.showBookedStatus(any()) } just Runs
 

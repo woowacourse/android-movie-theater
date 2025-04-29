@@ -15,9 +15,7 @@ data class ScreeningPeriod(
         require(screeningEndDate.isAfter(screeningStartDate)) { ERROR_START_DATE_AFTER_END_DATE }
     }
 
-    fun betweenDates(
-        targetDate: LocalDate = LocalDate.now()
-    ): List<LocalDate> {
+    fun betweenDates(targetDate: LocalDate = LocalDate.now()): List<LocalDate> {
         val dates = mutableListOf<LocalDate>()
 
         var standardDate = if (!isStart(targetDate)) screeningStartDate else targetDate
@@ -41,13 +39,19 @@ data class ScreeningPeriod(
     companion object {
         private const val ERROR_START_DATE_AFTER_END_DATE = "영화 시작 날짜가 영화 종료 날짜보다 후 입니다."
 
-        fun ofDash(screeningStartDay: String, screeningEndDay: String): ScreeningPeriod {
+        fun ofDash(
+            screeningStartDay: String,
+            screeningEndDay: String,
+        ): ScreeningPeriod {
             val screeningStartDate = screeningStartDay.toLocalDateFromDash()
             val screeningEndDate = screeningEndDay.toLocalDateFromDash()
             return ScreeningPeriod(screeningStartDate, screeningEndDate)
         }
 
-        fun ofDot(screeningStartDay: String, screeningEndDay: String): ScreeningPeriod {
+        fun ofDot(
+            screeningStartDay: String,
+            screeningEndDay: String,
+        ): ScreeningPeriod {
             val screeningStartDate = screeningStartDay.toLocalDateFromDot()
             val screeningEndDate = screeningEndDay.toLocalDateFromDot()
             return ScreeningPeriod(screeningStartDate, screeningEndDate)

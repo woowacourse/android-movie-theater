@@ -6,7 +6,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import woowacourse.movie.moviebooked.MovieBooked
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookedBinding
 import woowacourse.movie.domain.BookingStatus
@@ -32,33 +31,38 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
     }
 
     override fun fetchBookingStatus() {
-        val bookingStatus = BuildVersion().getParcelableClass(
-            intent,
-            KEY_BOOKING_STATUS,
-            BookingStatus::class
-        )
+        val bookingStatus =
+            BuildVersion().getParcelableClass(
+                intent,
+                KEY_BOOKING_STATUS,
+                BookingStatus::class,
+            )
         presenter.loadBookedStatus(bookingStatus)
     }
 
     override fun showBookedStatus(bookingStatus: BookingStatus) {
         binding.movieTitle.text = bookingStatus.movie.title
-        binding.bookingDateTime.text = binding.bookingDateTime.context.getString(
-            R.string.movie_running_dateTime,
-            bookingStatus.bookedTime.toDotFormat()
-        )
-        binding.memberCount.text = binding.memberCount.context.getString(
-            R.string.member_count,
-            bookingStatus.memberCount
-        )
-        binding.movieTicketPrice.text = binding.movieTicketPrice.context.getString(
-            R.string.total_price,
-            bookingStatus.calculateTicketPrices()
-        )
-        val seatsText = bookingStatus.seat.seats.joinToString(", ") { seat ->
-            val rowChar = 'A' + seat.row.value
-            val colNumber = seat.col.value + 1
-            "$rowChar$colNumber"
-        }
+        binding.bookingDateTime.text =
+            binding.bookingDateTime.context.getString(
+                R.string.movie_running_dateTime,
+                bookingStatus.bookedTime.toDotFormat(),
+            )
+        binding.memberCount.text =
+            binding.memberCount.context.getString(
+                R.string.member_count,
+                bookingStatus.memberCount,
+            )
+        binding.movieTicketPrice.text =
+            binding.movieTicketPrice.context.getString(
+                R.string.total_price,
+                bookingStatus.calculateTicketPrices(),
+            )
+        val seatsText =
+            bookingStatus.seat.seats.joinToString(", ") { seat ->
+                val rowChar = 'A' + seat.row.value
+                val colNumber = seat.col.value + 1
+                "$rowChar$colNumber"
+            }
         binding.bookingSeat.text = seatsText
     }
 
@@ -67,7 +71,7 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
 
         fun movieBookedIntent(
             otherActivity: AppCompatActivity,
-            bookingStatus: BookingStatus
+            bookingStatus: BookingStatus,
         ): Intent {
             return Intent(otherActivity, MovieBookedActivity::class.java)
                 .apply { putExtra(KEY_BOOKING_STATUS, bookingStatus) }

@@ -8,11 +8,10 @@ import io.mockk.verify
 import io.mockk.verifyAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.moviebooking.MovieBooking
 import woowacourse.movie.R
-import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.ScreeningPeriod
 import woowacourse.movie.fixture.MovieFixture
+import woowacourse.movie.moviebooking.MovieBooking
 import woowacourse.movie.moviebooking.MovieBookingPresenter
 import java.time.LocalDate
 
@@ -28,13 +27,15 @@ class MovieBookingPresenterTest {
 
     @Test
     fun loadMovie_호출시_View의_showMovieInfo가_호출된다() {
-        //given - 영화 정보가 주어짐
-        val movie = MovieFixture.movie.copy(
-            screeningPeriod = ScreeningPeriod(
-                LocalDate.now().plusDays(1),
-                LocalDate.now().plusDays(2)
+        // given - 영화 정보가 주어짐
+        val movie =
+            MovieFixture.movie.copy(
+                screeningPeriod =
+                    ScreeningPeriod(
+                        LocalDate.now().plusDays(1),
+                        LocalDate.now().plusDays(2),
+                    ),
             )
-        )
 
         every { view.showMovieInfo() } just Runs
         every { view.updateMemberCount(any()) } just Runs

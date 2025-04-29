@@ -2,9 +2,9 @@ package woowacourse.movie.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.time.LocalDate
 import org.junit.jupiter.api.assertThrows
 import woowacourse.movie.fixture.MovieFixture
+import java.time.LocalDate
 
 class ScreeningPeriodTest {
     @Test
@@ -15,7 +15,7 @@ class ScreeningPeriodTest {
         assertThrows<IllegalArgumentException> {
             ScreeningPeriod(
                 screeningStartDate,
-                screeningEndDate
+                screeningEndDate,
             )
         }
     }

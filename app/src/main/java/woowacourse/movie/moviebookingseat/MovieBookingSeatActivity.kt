@@ -45,10 +45,11 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     override fun showBookingStatusInfo() {
         binding.screenText.text = getString(R.string.screen)
         binding.movieTitle.text = bookingStatus.movie.title
-        binding.moviePrice.text = binding.moviePrice.context.getString(
-            R.string.booking_seat_price,
-            price
-        )
+        binding.moviePrice.text =
+            binding.moviePrice.context.getString(
+                R.string.booking_seat_price,
+                price,
+            )
         binding.confirmButton.text = getString(R.string.booking_seat_okay)
     }
 
@@ -57,17 +58,21 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
         binding.confirmButton.setOnSingleClickListener { showConfirmDialog(bookingStatus) }
     }
 
-    override fun updateSeat(seat: Seat, isSelected: Boolean) {
+    override fun updateSeat(
+        seat: Seat,
+        isSelected: Boolean,
+    ) {
         val seatTextView: TextView = binding.seatTable.findViewWithTag(seat)
         seatTextView.setBackgroundResource(if (isSelected) R.color.yellow else R.drawable.seat_background)
         presenter.calculatePrice()
     }
 
     override fun showTotalPrice(price: Int) {
-        binding.moviePrice.text  = binding.moviePrice.context.getString(
-            R.string.booking_seat_price,
-            price
-        )
+        binding.moviePrice.text =
+            binding.moviePrice.context.getString(
+                R.string.booking_seat_price,
+                price,
+            )
     }
 
     override fun showConfirmDialog(bookingStatus: BookingStatus) {
@@ -85,10 +90,11 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     }
 
     override fun navigateToMovieBooked(bookingStatus: BookingStatus) {
-        val intent = MovieBookedActivity.Companion.movieBookedIntent(
-            this@MovieBookingSeatActivity,
-            bookingStatus
-        )
+        val intent =
+            MovieBookedActivity.Companion.movieBookedIntent(
+                this@MovieBookingSeatActivity,
+                bookingStatus,
+            )
         startActivity(intent)
         finish()
     }
@@ -120,7 +126,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
 
         fun movieBookingSeatIntent(
             otherActivity: AppCompatActivity,
-            bookingStatus: BookingStatus
+            bookingStatus: BookingStatus,
         ): Intent {
             return Intent(otherActivity, MovieBookingSeatActivity::class.java)
                 .apply { putExtra(KEY_BOOKING_SEAT, bookingStatus) }

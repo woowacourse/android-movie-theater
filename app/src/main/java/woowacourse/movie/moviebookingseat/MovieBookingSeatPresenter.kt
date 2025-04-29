@@ -4,7 +4,7 @@ import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.seat.Seat
 
 class MovieBookingSeatPresenter(
-    private val view: MovieBookingSeat.View
+    private val view: MovieBookingSeat.View,
 ) : MovieBookingSeat.Presenter {
     private lateinit var bookingStatus: BookingStatus
 
