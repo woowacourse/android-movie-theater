@@ -16,8 +16,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
-import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.MovieToReserve
+import woowacourse.movie.model.theater.MovieScreeningInfoByTheater
 import woowacourse.movie.presenter.reservation.ReservationContract
 import woowacourse.movie.presenter.reservation.ReservationPresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
@@ -61,7 +61,8 @@ class ReservationActivity :
     }
 
     private fun updateMovieToPresenter() {
-        val intentMovieData: Movie = intent.getSerializableExtraData<Movie>(MOVIE_DATA_KEY)
+        val intentMovieData: MovieScreeningInfoByTheater =
+            intent.getSerializableExtraData<MovieScreeningInfoByTheater>(MOVIE_DATA_KEY)
         presenter.updateMovieData(intentMovieData)
     }
 
@@ -213,11 +214,11 @@ class ReservationActivity :
 
         fun getIntent(
             context: Context,
-            movie: Movie,
+            movieScreeningInfoByTheater: MovieScreeningInfoByTheater,
         ): Intent =
             Intent(
                 context,
                 ReservationActivity::class.java,
-            ).apply { putExtra(MOVIE_DATA_KEY, movie) }
+            ).apply { putExtra(MOVIE_DATA_KEY, movieScreeningInfoByTheater) }
     }
 }

@@ -11,9 +11,11 @@ import woowacourse.movie.databinding.BottomSheetFragmentTheaterBinding
 import woowacourse.movie.model.theater.MovieScreeningInfoByTheater
 import woowacourse.movie.model.theater.MovieScreeningInfoByTheaters
 import woowacourse.movie.view.extension.getSerializableExtraData
+import woowacourse.movie.view.reservation.ReservationActivity
 
 class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetFragmentTheaterBinding
+    private lateinit var theaterAdapter: TheaterAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +40,15 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
         arguments?.getSerializableExtraData<MovieScreeningInfoByTheaters>("theaters")
 
-        binding.theaters.adapter =
-            TheaterAdapter(movieScreeningInfoByTheaters = MovieScreeningInfoByTheater.values)
+        theaterAdapter = TheaterAdapter(
+            movieScreeningInfoByTheaters = MovieScreeningInfoByTheater.values,
+            ::navigateToReservation
+        )
+        binding.theaters.adapter = theaterAdapter
+    }
+
+    private fun navigateToReservation(movieScreeningInfoByTheater: MovieScreeningInfoByTheater) {
+        val intent = ReservationActivity.getIntent(requireContext(), movieScreeningInfoByTheater)
+        startActivity(intent)
     }
 }

@@ -4,6 +4,7 @@ import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.MovieDate
 import woowacourse.movie.model.movie.MovieTime
 import woowacourse.movie.model.movie.MovieToReserve
+import woowacourse.movie.model.theater.MovieScreeningInfoByTheater
 import woowacourse.movie.model.ticket.TicketCount
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -11,14 +12,18 @@ import java.time.LocalDateTime
 class ReservationPresenter(
     private val view: ReservationContract.View,
 ) : ReservationContract.Presenter {
-    private lateinit var movie: Movie
+    private lateinit var movieScreeningInfoByTheater: MovieScreeningInfoByTheater
     private var ticketCount = TicketCount()
-    private val movieDate by lazy { MovieDate(movie.startDate, movie.endDate) }
+    private val movieDate by lazy {
+        MovieDate(
+            movieScreeningInfoByTheater.movie.startDate, movieScreeningInfoByTheater.movie.endDate
+        )
+    }
     private val movieTime by lazy { MovieTime() }
 
-    override fun updateMovieData(movie: Movie) {
-        this.movie = movie
-        updateView(movie)
+    override fun updateMovieData(movieScreeningInfoByTheater: MovieScreeningInfoByTheater) {
+        this.movieScreeningInfoByTheater = movieScreeningInfoByTheater
+        updateView(movieScreeningInfoByTheater.movie)
     }
 
     private fun updateView(movie: Movie) {
@@ -47,14 +52,13 @@ class ReservationPresenter(
     }
 
     override fun onMovieToReserveRequest() {
-        val movieToReserve =
-            MovieToReserve(
-                id = movie.id,
-                title = movie.title,
-                movieDate = movieDate,
-                movieTime = movieTime,
-                ticketCount = ticketCount,
-            )
+        val movieToReserve = MovieToReserve(
+            id = movieScreeningInfoByTheater.movie.id,
+            title = movieScreeningInfoByTheater.movie.title,
+            movieDate = movieDate,
+            movieTime = movieTime,
+            ticketCount = ticketCount,
+        )
         view.showSeatSelectionView(movieToReserve)
     }
 

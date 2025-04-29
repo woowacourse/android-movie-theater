@@ -7,12 +7,13 @@ import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.model.theater.MovieScreeningInfoByTheater
 
 class TheaterAdapter(
-    private val movieScreeningInfoByTheaters: List<MovieScreeningInfoByTheater>
+    private val movieScreeningInfoByTheaters: List<MovieScreeningInfoByTheater>,
+    private val onTheaterClick: (MovieScreeningInfoByTheater) -> Unit,
 ) : RecyclerView.Adapter<TheaterViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheaterViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val theaterBinding = ItemTheaterBinding.inflate(inflater, parent, false)
-        return TheaterViewHolder(theaterBinding)
+        return TheaterViewHolder(theaterBinding, onTheaterClick)
     }
 
     override fun getItemCount(): Int = movieScreeningInfoByTheaters.size
