@@ -1,18 +1,17 @@
 package woowacourse.movie.presentation.movies
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.data.MovieData
-import woowacourse.movie.presentation.booking.BookingActivity
+import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.ui.BaseActivity
 import woowacourse.movie.ui.adapter.MovieAdapter
-import woowacourse.movie.ui.constant.IntentKeys
 
-class MoviesActivity : BaseActivity(), MoviesContract.View {
+class MoviesActivity :
+    BaseActivity(),
+    MoviesContract.View {
     override val layoutRes: Int
         get() = R.layout.activity_movies
 
@@ -36,12 +35,9 @@ class MoviesActivity : BaseActivity(), MoviesContract.View {
         moviesView.adapter = adapter
     }
 
-    override fun navigateToBooking(movie: Movie) {
-        val intent =
-            Intent(this, BookingActivity::class.java).apply {
-                putExtra(IntentKeys.MOVIE, movie)
-            }
-        startActivity(intent)
+    override fun showTheaterSelectDialog(movie: Movie) {
+        val theaterSelectFragment = TheaterSelectFragment.newInstance(movie)
+        theaterSelectFragment.show(supportFragmentManager, theaterSelectFragment.tag)
     }
 
     private fun insertAdvertisement(movies: List<Movie>): List<MoviesItem> {

@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.movies
 
-import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.data.MovieData
+import woowacourse.movie.domain.model.movie.Movie
 
 class MoviesPresenter(
     private val view: MoviesContract.View,
@@ -13,6 +13,6 @@ class MoviesPresenter(
     }
 
     override fun onMovieClicked(movie: Movie) {
-        view.navigateToBooking(movie)
+        view.showTheaterSelectDialog(movie)
     }
 }

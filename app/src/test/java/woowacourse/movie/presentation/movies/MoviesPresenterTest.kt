@@ -5,8 +5,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.data.MovieData
+import woowacourse.movie.domain.model.movie.Movie
 import java.time.LocalDate
 
 class MoviesPresenterTest {
@@ -53,6 +53,6 @@ class MoviesPresenterTest {
         presenter.onMovieClicked(movie)
 
         // Then
-        verify { view.navigateToBooking(movie) }
+        verify { view.showTheaterSelectDialog(movie) }
     }
 }
