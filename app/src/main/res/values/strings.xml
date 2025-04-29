@@ -5,6 +5,8 @@
     <string name="movie_screening_date">상영일: %s ~ %s</string>
     <string name="movie_running_time">러닝타임: %d분</string>
     <string name="movie_reservation">지금 예매</string>
+    <!-- 극장 선택 바텀 시트 -->
+    <string name="theater_movie_screening_time_count">%s개의 상영 시간</string>
 
     <!-- 예매 확인 다이얼로그 -->
     <string name="reservation_dialog_title">예매 확인</string>

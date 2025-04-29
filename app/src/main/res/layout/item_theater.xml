@@ -2,12 +2,21 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="movieScreeningInfoByTheaters"
+            type="woowacourse.movie.model.theater.MovieScreeningInfoByTheater" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="8dp">
 
         <TextView
+            android:text="@{movieScreeningInfoByTheaters.screeningInfo.theater.name}"
             android:id="@+id/theater_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,6 +28,8 @@
             android:layout_marginStart="16dp" />
 
         <TextView
+            android:text="@{@string/theater_movie_screening_time_count(String.valueOf(movieScreeningInfoByTheaters.screeningInfo.screeningTimes.size()))}"
+            android:id="@+id/theater_screening_time_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/theater_name"
