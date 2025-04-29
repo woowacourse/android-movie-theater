@@ -11,13 +11,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.model.movie.Movie
+import woowacourse.movie.model.theater.MovieScreeningInfoByTheaters
 import woowacourse.movie.presenter.movies.MoviesContracts
 import woowacourse.movie.presenter.movies.MoviesPresenter
 import woowacourse.movie.view.movies.theater.TheaterBottomSheetDialogFragment
 
-class MoviesActivity :
-    AppCompatActivity(),
-    MoviesContracts.View {
+class MoviesActivity : AppCompatActivity(), MoviesContracts.View {
     private val presenter: MoviesContracts.Presenter = MoviesPresenter(this)
     private lateinit var movieAdapter: MovieAdapter
     private val movieListView by lazy { findViewById<RecyclerView>(R.id.rv_main_movies) }
@@ -37,32 +36,33 @@ class MoviesActivity :
 
     override fun showMovies(movies: List<Movie>) {
         if (::movieAdapter.isInitialized.not()) {
-            movieAdapter =
-                MovieAdapter(
-                    movies = mutableListOf(),
-                    movieClickListener =
-                        object : MovieClickListener {
-                            override fun onReservationClick(movieId: Long) {
-                                val bundle = Bundle()
-                                TheaterBottomSheetDialogFragment()
-                                    .apply {
-                                        bundle.putLong("movieId", movieId)
-                                        arguments = bundle
-                                    }.show(
-                                        supportFragmentManager,
-                                        "jay",
-                                    )
-                            }
-                        },
-                    advertisementClickListener = {
-                        presenter.onAdvertisementRequested(
-                            ADVERTISEMENT_URL,
-                        )
-                    },
-                )
+            movieAdapter = MovieAdapter(
+                movies = mutableListOf(),
+                movieClickListener = object : MovieClickListener {
+                    override fun onReservationClick(movieId: Long) {
+                        presenter.onTheaterRequested(movieId)
+                    }
+                },
+                advertisementClickListener = {
+                    presenter.onAdvertisementRequested(
+                        ADVERTISEMENT_URL,
+                    )
+                },
+            )
             movieListView.adapter = movieAdapter
         }
         movieAdapter.updateMovies(movies)
+    }
+
+    override fun showTheaters(movieScreeningInfoByTheaters: MovieScreeningInfoByTheaters) {
+        val bundle = Bundle()
+        TheaterBottomSheetDialogFragment().apply {
+            bundle.putSerializable("theaters", movieScreeningInfoByTheaters)
+            arguments = bundle
+        }.show(
+            supportFragmentManager,
+            "jay",
+        )
     }
 
     override fun showAdvertisement(url: String) {

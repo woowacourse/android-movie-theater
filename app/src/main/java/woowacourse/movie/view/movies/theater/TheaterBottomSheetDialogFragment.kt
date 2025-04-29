@@ -9,25 +9,23 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.BottomSheetFragmentTheaterBinding
 import woowacourse.movie.model.theater.MovieScreeningInfoByTheater
-import kotlin.properties.Delegates
+import woowacourse.movie.model.theater.MovieScreeningInfoByTheaters
+import woowacourse.movie.view.extension.getSerializableExtraData
 
 class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetFragmentTheaterBinding
-    private var movieId by Delegates.notNull<Long>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.bottom_sheet_fragment_theater,
-                container,
-                false,
-            )
-        movieId = arguments?.getLong("movieId") ?: 0
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.bottom_sheet_fragment_theater,
+            container,
+            false,
+        )
 
         return binding.root
     }
@@ -37,6 +35,9 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+
+        arguments?.getSerializableExtraData<MovieScreeningInfoByTheaters>("theaters")
+
         binding.theaters.adapter =
             TheaterAdapter(movieScreeningInfoByTheaters = MovieScreeningInfoByTheater.values)
     }
