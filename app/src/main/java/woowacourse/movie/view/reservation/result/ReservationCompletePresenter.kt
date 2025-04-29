@@ -9,16 +9,12 @@ class ReservationCompletePresenter(
 ) : ReservationCompleteContract.Presenter {
 
     override fun fetchData(
-        ticket: Ticket?,
-        seats: Seats?,
+        ticket: Ticket,
+        seats: Seats,
     ) {
-        if (ticket == null || seats == null) {
-            view.handleInvalidTicket()
-        } else {
-            view.showTicketInfo(ticket, seats)
-            view.showSeatsInfo(seats.toSeatString())
-            view.showTicketMoney(seats.reservationPrice())
-        }
+        view.showTicketInfo(ticket, seats)
+        view.showSeatsInfo(seats.toSeatString())
+        view.showTicketMoney(seats.reservationPrice())
     }
 
     private fun Seats.toSeatString(): String {

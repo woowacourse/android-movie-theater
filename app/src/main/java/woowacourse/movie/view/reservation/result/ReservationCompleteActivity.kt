@@ -42,7 +42,19 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
             } else {
                 intent.getSerializableExtra(KET_SEATS) as? Seats
             }
-        presenter.fetchData(ticket, seats)
+
+        checkTicket(ticket, seats)
+    }
+
+    private fun checkTicket(
+        ticket: Ticket?,
+        seats: Seats?
+    ) {
+        if (ticket == null || seats == null) {
+            handleInvalidTicket()
+        } else {
+            presenter.fetchData(ticket, seats)
+        }
     }
 
     override fun handleInvalidTicket() {

@@ -61,7 +61,15 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
             } else {
                 intent.getSerializableExtra(KEY_MOVIE) as? Movie
             }
-        present.fetchData(movie)
+        checkMovie(movie)
+    }
+
+    private fun checkMovie(movie: Movie?) {
+        if (movie == null) {
+            showErrorInvalidMovie()
+        } else {
+            present.fetchData(movie)
+        }
     }
 
     override fun showErrorInvalidMovie() {

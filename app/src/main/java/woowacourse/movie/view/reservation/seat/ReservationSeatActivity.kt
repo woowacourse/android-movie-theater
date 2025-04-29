@@ -46,7 +46,16 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
                 intent.getSerializableExtra(KEY_TICKET) as? Ticket
             }
         seat = findViewById<TableLayout>(R.id.tv_seat)
-        presenter.fetchData(ticket)
+
+        checkTicket(ticket)
+    }
+
+    private fun checkTicket(ticket: Ticket?) {
+        if (ticket == null) {
+            handleInvalidTicket()
+        } else {
+            presenter.fetchData(ticket)
+        }
     }
 
     private fun getAllSeatTextViews(): Sequence<TextView> {
