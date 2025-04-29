@@ -33,6 +33,7 @@
         tools:text="3개의 상영 시간" />
 
     <ImageView
+        android:id="@+id/btn_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/baseline_arrow_forward_ios_24"
