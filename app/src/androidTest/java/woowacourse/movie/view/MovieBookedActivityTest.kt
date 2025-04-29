@@ -14,6 +14,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.MovieFixture
+import woowacourse.movie.moviebooked.MovieBookedActivity
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest

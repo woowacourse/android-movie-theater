@@ -17,6 +17,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import woowacourse.movie.R
+import woowacourse.movie.moviebooking.MovieBookingActivity
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest

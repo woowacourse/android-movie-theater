@@ -1,6 +1,6 @@
-package woowacourse.movie.presenter
+package woowacourse.movie.moviebooking
 
-import woowacourse.movie.MovieBooking
+import woowacourse.movie.moviebooking.MovieBooking
 import woowacourse.movie.R
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Movie
@@ -51,7 +51,7 @@ class MovieBookingPresenter(
     }
 
     override fun confirmBooking() {
-        val bookingStatus = BookingStatus(movie, count, bookedDate, bookedTime)
+        val bookingStatus = BookingStatus.Companion(movie, count, bookedDate, bookedTime)
         view.navigateToMovieBookingSeat(bookingStatus)
     }
 }

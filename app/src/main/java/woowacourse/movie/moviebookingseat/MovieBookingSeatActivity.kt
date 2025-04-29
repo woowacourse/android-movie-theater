@@ -1,4 +1,4 @@
-package woowacourse.movie.view
+package woowacourse.movie.moviebookingseat
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,15 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
-import woowacourse.movie.MovieBookingSeat
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookingSeatBinding
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.seat.Seat
 import woowacourse.movie.helper.BuildVersion
 import woowacourse.movie.helper.CustomClickListenerHelper.setOnSingleClickListener
-import woowacourse.movie.presenter.MovieBookingSeatPresenter
-import woowacourse.movie.view.MovieBookedActivity.Companion.movieBookedIntent
+import woowacourse.movie.moviebooked.MovieBookedActivity
 
 class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     private lateinit var binding: MovieBookingSeatBinding
@@ -87,7 +85,10 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     }
 
     override fun navigateToMovieBooked(bookingStatus: BookingStatus) {
-        val intent = movieBookedIntent(this@MovieBookingSeatActivity, bookingStatus)
+        val intent = MovieBookedActivity.Companion.movieBookedIntent(
+            this@MovieBookingSeatActivity,
+            bookingStatus
+        )
         startActivity(intent)
         finish()
     }
@@ -103,7 +104,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     private fun initSeatTable() {
         binding.seatTable.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, row ->
             row.children.filterIsInstance<TextView>().forEachIndexed { colIndex, seatTextView ->
-                val seat = Seat.of(rowIndex, colIndex)
+                val seat = Seat.Companion.of(rowIndex, colIndex)
                 seatTextView.apply {
                     tag = seat
                     setOnClickListener {

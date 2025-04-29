@@ -1,4 +1,4 @@
-package woowacourse.movie.view
+package woowacourse.movie.movie
 
 import android.content.Intent
 import android.net.Uri
@@ -9,15 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import woowacourse.movie.adpater.MovieListAdapter
+import woowacourse.movie.movie.Movies
 import woowacourse.movie.R
-import woowacourse.movie.domain.Movie
-import woowacourse.movie.view.MovieBookingActivity.Companion.movieBookingIntent
-import woowacourse.movie.Movies.View
+import woowacourse.movie.adpater.MovieListAdapter
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.presenter.MoviesPresenter
+import woowacourse.movie.domain.Movie
+import woowacourse.movie.movie.MoviesPresenter
+import woowacourse.movie.moviebooking.MovieBookingActivity
 
-class MovieActivity : AppCompatActivity(), View {
+class MovieActivity : AppCompatActivity(), Movies.View {
     private lateinit var binding: ActivityMainBinding
     private lateinit var presenter: MoviesPresenter
 
@@ -45,13 +45,13 @@ class MovieActivity : AppCompatActivity(), View {
     }
 
     override fun navigateToBook(movie: Movie) {
-        val intent = movieBookingIntent(this@MovieActivity, movie)
+        val intent = MovieBookingActivity.Companion.movieBookingIntent(this@MovieActivity, movie)
         startActivity(intent)
     }
 
     override fun navigateToAdPage() {
         val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse("https://www.woowacourse.io/")
+            Intent.setData = Uri.parse("https://www.woowacourse.io/")
         }
         binding.root.context.startActivity(intent)
     }

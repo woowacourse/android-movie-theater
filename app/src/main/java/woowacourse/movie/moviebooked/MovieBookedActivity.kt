@@ -1,4 +1,4 @@
-package woowacourse.movie.view
+package woowacourse.movie.moviebooked
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,13 +6,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import woowacourse.movie.MovieBooked
-import woowacourse.movie.helper.BuildVersion
+import woowacourse.movie.moviebooked.MovieBooked
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookedBinding
 import woowacourse.movie.domain.BookingStatus
+import woowacourse.movie.helper.BuildVersion
 import woowacourse.movie.helper.LocalDateHelper.toDotFormat
-import woowacourse.movie.presenter.MovieBookedPresenter
 
 class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
     private lateinit var binding: MovieBookedBinding

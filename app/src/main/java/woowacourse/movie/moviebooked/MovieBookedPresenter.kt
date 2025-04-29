@@ -1,6 +1,6 @@
-package woowacourse.movie.presenter
+package woowacourse.movie.moviebooked
 
-import woowacourse.movie.MovieBooked
+import woowacourse.movie.moviebooked.MovieBooked
 import woowacourse.movie.domain.BookingStatus
 
 class MovieBookedPresenter(

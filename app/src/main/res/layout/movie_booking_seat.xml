@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MovieBookingSeatActivity">
+    tools:context=".moviebookingseat.MovieBookingSeatActivity">
 
     <!-- 스크롤 가능한 좌석 영역 -->
     <ScrollView

@@ -1,4 +1,4 @@
-package woowacourse.movie.view
+package woowacourse.movie.moviebooking
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,18 +9,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import woowacourse.movie.MovieBooking
+import woowacourse.movie.R
 import woowacourse.movie.adpater.BookedDateSpinnerAdapter
 import woowacourse.movie.adpater.BookedTimeSpinnerAdapter
-import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookingBinding
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.helper.BuildVersion
 import woowacourse.movie.helper.LocalDateHelper.toDotFormat
-import woowacourse.movie.presenter.MovieBookingPresenter
-import woowacourse.movie.view.MovieBookedActivity.Companion.movieBookedIntent
-import woowacourse.movie.view.MovieBookingSeatActivity.Companion.movieBookingSeatIntent
+import woowacourse.movie.moviebookingseat.MovieBookingSeatActivity
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -76,7 +73,10 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
     }
 
     override fun navigateToMovieBookingSeat(bookingStatus: BookingStatus) {
-        val intent = movieBookingSeatIntent(this@MovieBookingActivity, bookingStatus)
+        val intent = MovieBookingSeatActivity.Companion.movieBookingSeatIntent(
+            this@MovieBookingActivity,
+            bookingStatus
+        )
         startActivity(intent)
     }
 

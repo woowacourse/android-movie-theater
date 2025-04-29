@@ -7,8 +7,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.MovieBooked
+import woowacourse.movie.moviebooked.MovieBooked
 import woowacourse.movie.fixture.MovieFixture
+import woowacourse.movie.moviebooked.MovieBookedPresenter
 
 class MovieBookedPresenterTest {
     private lateinit var view: MovieBooked.View

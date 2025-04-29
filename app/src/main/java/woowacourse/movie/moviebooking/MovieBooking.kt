@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.moviebooking
 
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Movie

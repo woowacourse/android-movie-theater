@@ -1,6 +1,6 @@
-package woowacourse.movie.presenter
+package woowacourse.movie.movie
 
-import woowacourse.movie.Movies
+import woowacourse.movie.movie.Movies
 import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
 import java.time.LocalDate
