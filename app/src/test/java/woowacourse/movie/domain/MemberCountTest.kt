@@ -5,6 +5,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
+import woowacourse.movie.domain.seat.BookingSeats
 import woowacourse.movie.domain.seat.Seat
 
 class MemberCountTest {
@@ -12,14 +13,17 @@ class MemberCountTest {
     @ValueSource(ints = [-1, 0, -100])
     fun 예매_가능한_인원_수는_1명_이상이다(count: Int) {
         assertThrows<IllegalArgumentException> {
-            Seat(count)
+            BookingSeats(count)
         }
     }
 
     @ParameterizedTest
     @CsvSource(value = ["1,13000", "2,26000"])
-    fun 인원에따라_예매_가격을_계산할_수_있다(count: Int, price: Int) {
-        val seat = Seat(count)
+    fun 인원에따라_예매_가격을_계산할_수_있다(
+        count: Int,
+        price: Int,
+    ) {
+        val seat = BookingSeats(count)
 
         val actual = seat.calculateTicketPrices()
 
