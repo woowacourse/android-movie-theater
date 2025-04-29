@@ -106,6 +106,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="B2, B3" />
+
+                <TextView
+                    style="@style/SubTitleTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" | "
+                    android:paddingHorizontal="8dp" />
+
+                <TextView
+                    android:id="@+id/booking_theater_name"
+                    style="@style/SubTitleTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="선릉 극장" />
+
+
             </LinearLayout>
 
             <TextView
