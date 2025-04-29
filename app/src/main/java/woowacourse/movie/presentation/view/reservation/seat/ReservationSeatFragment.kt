@@ -1,24 +1,30 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
+import android.view.View
+import androidx.core.os.bundleOf
+import androidx.fragment.app.commit
 import woowacourse.movie.R
-import woowacourse.movie.presentation.base.BaseActivity
+import woowacourse.movie.databinding.FragmentReservationSeatBinding
+import woowacourse.movie.presentation.base.BaseFragment
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.ScreenUiModel
 import woowacourse.movie.presentation.model.SeatUiModel
 import woowacourse.movie.presentation.model.TicketBundleUiModel
 import woowacourse.movie.presentation.util.DialogInfo
-import woowacourse.movie.presentation.view.reservation.result.ReservationResultActivity
+import woowacourse.movie.presentation.view.reservation.result.ReservationResultFragment
 
-class ReservationSeatActivity :
-    BaseActivity(R.layout.activity_reservation_seat),
+class ReservationSeatFragment :
+    BaseFragment<FragmentReservationSeatBinding>(R.layout.fragment_reservation_seat),
     ReservationSeatContract.View {
     private val presenter: ReservationSeatPresenter by lazy { ReservationSeatPresenter(this) }
-    private val views: ReservationSeatViews by lazy { ReservationSeatViews(this) }
+    private val views: ReservationSeatViews by lazy {
+        ReservationSeatViews(
+            requireContext(),
+            binding,
+        )
+    }
 
     private val publishTicketConfirmationDialogInfo: DialogInfo by lazy {
         DialogInfo(
@@ -31,26 +37,21 @@ class ReservationSeatActivity :
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
         setupActionBar()
 
-        val screen = intent?.getParcelableCompat<ScreenUiModel>(BUNDLE_KEY_SCREEN)
+        val screen = arguments?.getParcelableCompat<ScreenUiModel>(BUNDLE_KEY_SCREEN)
         val reservationInfo = getReservationInfo(savedInstanceState)
         presenter.fetchData(reservationInfo, screen)
     }
 
     private fun getReservationInfo(savedInstanceState: Bundle?): ReservationInfoUiModel =
         savedInstanceState?.getParcelableCompat<ReservationInfoUiModel>(BUNDLE_KEY_RESERVATION_INFO)
-            ?: intent.getParcelableCompat<ReservationInfoUiModel>(BUNDLE_KEY_RESERVATION_INFO)
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            onBackPressedDispatcher.onBackPressed()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
+            ?: arguments.getParcelableCompat<ReservationInfoUiModel>(BUNDLE_KEY_RESERVATION_INFO)
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -86,8 +87,13 @@ class ReservationSeatActivity :
     }
 
     override fun notifyPublishedTickets(ticketBundle: TicketBundleUiModel) {
-        val intent = ReservationResultActivity.newIntent(this, ticketBundle)
-        startActivity(intent)
+        val fragment = ReservationResultFragment.newInstance(ticketBundle)
+
+        parentFragmentManager.commit {
+            setReorderingAllowed(true)
+            add(R.id.fragment_container_view, fragment)
+            addToBackStack(null)
+        }
     }
 
     override fun notifySeatUpdateFailed(message: String) {
@@ -95,21 +101,23 @@ class ReservationSeatActivity :
     }
 
     private fun setupActionBar() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        showActionBarBackButton(true)
     }
 
     companion object {
         private const val BUNDLE_KEY_RESERVATION_INFO = "reservation_info"
         private const val BUNDLE_KEY_SCREEN = "screen"
 
-        fun newIntent(
-            context: Context,
+        fun newInstance(
             reservationInfo: ReservationInfoUiModel,
             screen: ScreenUiModel,
-        ): Intent =
-            Intent(context, ReservationSeatActivity::class.java).apply {
-                putExtra(BUNDLE_KEY_RESERVATION_INFO, reservationInfo)
-                putExtra(BUNDLE_KEY_SCREEN, screen)
+        ): ReservationSeatFragment =
+            ReservationSeatFragment().apply {
+                arguments =
+                    bundleOf(
+                        BUNDLE_KEY_SCREEN to screen,
+                        BUNDLE_KEY_RESERVATION_INFO to reservationInfo,
+                    )
             }
     }
 }

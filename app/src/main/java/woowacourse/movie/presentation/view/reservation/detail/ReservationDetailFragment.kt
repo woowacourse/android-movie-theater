@@ -3,6 +3,7 @@ package woowacourse.movie.presentation.view.reservation.detail
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationDetailBinding
 import woowacourse.movie.presentation.base.BaseFragment
@@ -12,6 +13,7 @@ import woowacourse.movie.presentation.model.MovieUiModel
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.ScreenUiModel
 import woowacourse.movie.presentation.util.DialogInfo
+import woowacourse.movie.presentation.view.reservation.seat.ReservationSeatFragment
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -82,8 +84,19 @@ class ReservationDetailFragment :
         reservationInfo: ReservationInfoUiModel,
         screen: ScreenUiModel,
     ) {
-//        val intent = ReservationSeatActivity.newIntent(this, reservationInfo, screen)
-//        startActivity(intent)
+        val fragment = ReservationSeatFragment.newInstance(reservationInfo, screen)
+        parentFragmentManager.commit {
+            setReorderingAllowed(true)
+            add(R.id.fragment_container_view, fragment)
+            addToBackStack(null)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val movie = arguments.getParcelableCompat<MovieUiModel>(BUNDLE_KEY_MOVIE)
+        presenter.fetchData(movie)
     }
 
     override fun updateDates(

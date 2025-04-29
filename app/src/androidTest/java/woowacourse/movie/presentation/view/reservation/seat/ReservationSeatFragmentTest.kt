@@ -5,7 +5,9 @@ import android.graphics.drawable.ColorDrawable
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import androidx.test.core.app.ActivityScenario
+import androidx.core.os.bundleOf
+import androidx.fragment.app.testing.FragmentScenario
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions.click
@@ -22,13 +24,12 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.cinema.screen.Screen
-import woowacourse.movie.presentation.fixture.fakeContext
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.toUiModel
 import java.time.LocalDateTime
 
-class ReservationSeatActivityTest {
-    private lateinit var scenario: ActivityScenario<ReservationSeatActivity>
+class ReservationSeatFragmentTest {
+    private lateinit var scenario: FragmentScenario<ReservationSeatFragment>
     private val fakeReservationInfo =
         ReservationInfoUiModel(
             "해리 포터와 마법사의 돌",
@@ -39,8 +40,11 @@ class ReservationSeatActivityTest {
 
     @Before
     fun setUp() {
-        val intent = ReservationSeatActivity.newIntent(fakeContext, fakeReservationInfo, Screen.DEFAULT_SCREEN.toUiModel())
-        scenario = ActivityScenario.launch(intent)
+        val bundle = bundleOf("reservation_info" to fakeReservationInfo, "screen" to Screen.DEFAULT_SCREEN.toUiModel())
+        scenario =
+            launchFragmentInContainer(bundle) {
+                ReservationSeatFragment()
+            }
     }
 
     @Test
@@ -121,8 +125,8 @@ class ReservationSeatActivityTest {
         onView(withText("A2")).perform(click())
         onView(withId(R.id.tv_seats_total_price)).check(matches(withText("20,000원")))
 
-        scenario.onActivity { activity ->
-            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        scenario.onFragment { fragment ->
+            fragment.requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
 
         onView(withText("A1")).check(matches(hasBackgroundColor(R.color.yellow_fa)))

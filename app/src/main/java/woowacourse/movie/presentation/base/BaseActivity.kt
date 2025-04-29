@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 
 abstract class BaseActivity<T : ViewDataBinding>(
@@ -34,10 +35,24 @@ abstract class BaseActivity<T : ViewDataBinding>(
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val currentFragment = getCurrentVisibleFragment()
+
         if (item.itemId == android.R.id.home) {
+            if (currentFragment is HomeButtonHandler) {
+                currentFragment.onHomePressed()
+                return true
+            }
+
             supportFragmentManager.popBackStack()
-            return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun getCurrentVisibleFragment(): Fragment? {
+        val fragments = supportFragmentManager.fragments
+        for (fragment in fragments.reversed()) {
+            if (fragment.isVisible) return fragment
+        }
+        return null
     }
 }

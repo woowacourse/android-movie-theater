@@ -1,11 +1,11 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
+import android.content.Context
 import android.view.Gravity
-import android.widget.Button
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentReservationSeatBinding
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.ScreenUiModel
 import woowacourse.movie.presentation.model.SeatTypeUiModel
@@ -13,23 +13,19 @@ import woowacourse.movie.presentation.model.SeatUiModel
 import woowacourse.movie.presentation.util.CustomAlertDialog
 
 class ReservationSeatViews(
-    private val activity: ReservationSeatActivity,
+    private val context: Context,
+    private val binding: FragmentReservationSeatBinding,
 ) {
-    private val tvTitle: TextView by lazy { activity.findViewById(R.id.tv_seats_movie_title) }
-    private val tvTotalPrice: TextView by lazy { activity.findViewById(R.id.tv_seats_total_price) }
-    private val tableLayout: TableLayout by lazy { activity.findViewById(R.id.tb_seats) }
-    private val btnConfirm: Button by lazy { activity.findViewById(R.id.btn_confirm) }
-
     private val cachedSeatViews: MutableMap<SeatUiModel, TextView> = mutableMapOf()
 
-    val dialog: CustomAlertDialog by lazy { CustomAlertDialog(activity) }
+    val dialog: CustomAlertDialog by lazy { CustomAlertDialog(context) }
 
     fun setData(
         reservationInfo: ReservationInfoUiModel,
         screen: ScreenUiModel,
         selectedSeats: List<SeatUiModel>,
     ) {
-        tvTitle.text = reservationInfo.title
+        binding.tvSeatsMovieTitle.text = reservationInfo.title
         renderSeatLayout(screen, selectedSeats)
     }
 
@@ -38,12 +34,12 @@ class ReservationSeatViews(
         onClickSeat: (SeatUiModel) -> Unit,
     ) {
         cachedSeatViews.forEach { (seat, view) -> view.setupSeatClickListener(seat, onClickSeat) }
-        btnConfirm.setOnClickListener { onClickConfirm() }
+        binding.btnConfirm.setOnClickListener { onClickConfirm() }
     }
 
     fun updateTotalPrice(price: Int) {
-        tvTotalPrice.text =
-            activity.getString(R.string.reservation_select_total_price_format, price)
+        binding.tvSeatsTotalPrice.text =
+            context.getString(R.string.reservation_select_total_price_format, price)
     }
 
     fun updateSeatState(seat: SeatUiModel) {
@@ -52,7 +48,7 @@ class ReservationSeatViews(
 
     fun updateConfirmButton(canPublish: Boolean) {
         val color = if (canPublish) R.color.purple_62 else R.color.gray_b7
-        btnConfirm.apply {
+        binding.btnConfirm.apply {
             isEnabled = canPublish
             setBackgroundResource(color)
         }
@@ -78,16 +74,16 @@ class ReservationSeatViews(
     }
 
     private fun addRowToLayout(row: TableRow) {
-        tableLayout.addView(row)
+        binding.tbSeats.addView(row)
     }
 
-    private fun createTableRow(): TableRow = TableRow(activity)
+    private fun createTableRow(): TableRow = TableRow(context)
 
     private fun createSeatView(
         seat: SeatUiModel,
         selectedSeats: List<SeatUiModel>,
     ): TextView =
-        TextView(activity).apply {
+        TextView(context).apply {
             setupSeatText(seat)
             setupSeatStyle(seat, selectedSeats.contains(seat))
             setupSeatLayoutParams()
@@ -132,9 +128,9 @@ class ReservationSeatViews(
 
     private fun SeatTypeUiModel.getSeatColor(): Int =
         when (this) {
-            SeatTypeUiModel.S_CLASS -> activity.getColor(R.color.purple_8e)
-            SeatTypeUiModel.A_CLASS -> activity.getColor(R.color.green_19)
-            SeatTypeUiModel.B_CLASS -> activity.getColor(R.color.blue_1b)
+            SeatTypeUiModel.S_CLASS -> context.getColor(R.color.purple_8e)
+            SeatTypeUiModel.A_CLASS -> context.getColor(R.color.green_19)
+            SeatTypeUiModel.B_CLASS -> context.getColor(R.color.blue_1b)
         }
 
     private fun TextView.toggleSeatBackgroundColor() {
