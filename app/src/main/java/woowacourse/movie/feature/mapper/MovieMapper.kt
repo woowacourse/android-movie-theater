@@ -23,6 +23,7 @@ fun Movie.toUi(): MovieUiModel =
         endDate = endDate.toUi(),
         runningTime = runningTime,
         poster = getPosterImage(title),
+        availableTheaters = availableTheaters,
     )
 
 fun MovieUiModel.toDomain(): Movie =
@@ -31,6 +32,7 @@ fun MovieUiModel.toDomain(): Movie =
         startDate = startDate.toDomain(),
         endDate = endDate.toDomain(),
         runningTime = runningTime,
+        availableTheaters = availableTheaters,
     )
 
 fun BookingInfo.toUi(): BookingInfoUiModel =

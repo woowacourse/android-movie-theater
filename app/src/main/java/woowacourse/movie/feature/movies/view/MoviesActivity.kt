@@ -7,6 +7,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.feature.TheatersDialogFragment
 import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity
 import woowacourse.movie.feature.model.MovieUiModel
 import woowacourse.movie.feature.movies.contract.MoviesContract
@@ -31,7 +33,16 @@ class MoviesActivity :
         findViewById<RecyclerView>(R.id.rv_movies).adapter = moviesAdapter
     }
 
-    override fun navigateToBookingDetail(movie: MovieUiModel) {
+    override fun showTheaters(movie: MovieUiModel) {
+        TheatersDialogFragment(movie.availableTheaters) { theater ->
+            navigateToBookingDetail(movie, theater)
+        }.show(supportFragmentManager, TheatersDialogFragment.TAG)
+    }
+
+    override fun navigateToBookingDetail(
+        movie: MovieUiModel,
+        theater: Theater,
+    ) {
         val intent = BookingDetailActivity.newIntent(this, movie)
         startActivity(intent)
     }
