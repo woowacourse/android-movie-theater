@@ -57,5 +57,7 @@ class MovieActivity : AppCompatActivity(), MovieContract.View {
 
         bundle.putParcelableArrayList(KEY_THEATERS, theaters)
         fragment.arguments = bundle
+
+        fragment.show(supportFragmentManager, fragment.tag)
     }
 }

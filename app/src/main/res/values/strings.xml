@@ -2,6 +2,8 @@
     <string name="app_name">Movie</string>
     <string name="screening_date_info">상영일: </string>
     <string name="running_time_info">러닝타임: </string>
+    <string name="theater_place">%s 극장</string>
+    <string name="theater_movie_count">%d개의 상영 시간</string>
     <string name="btn_plus_text">+</string>
     <string name="btn_minus_text">-</string>
     <string name="default_head_count">0</string>

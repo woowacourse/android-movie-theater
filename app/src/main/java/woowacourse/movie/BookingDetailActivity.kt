@@ -180,6 +180,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     companion object {
         private const val TAG = "BookingDetailActivity"
         const val KEY_MOVIE_DATA = "movieData"
+        const val KEY_THEATER_DATA = "theaterData"
         private const val KEY_HEAD_COUNT = "HEAD_COUNT"
         private const val KEY_SCREENING_DATE = "SCREENING_DATE"
         private const val KEY_SCREENING_TIME = "SCREENING_TIME"
