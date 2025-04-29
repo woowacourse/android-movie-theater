@@ -1,16 +1,18 @@
 package woowacourse.movie.presentation.view.movies
 
 import android.os.Bundle
-import androidx.recyclerview.widget.RecyclerView
+import android.view.View
+import androidx.fragment.app.commit
 import woowacourse.movie.R
-import woowacourse.movie.presentation.base.BaseActivity
+import woowacourse.movie.databinding.FragmentMoviesBinding
+import woowacourse.movie.presentation.base.BaseFragment
 import woowacourse.movie.presentation.model.MovieUiModel
 import woowacourse.movie.presentation.view.movies.adapter.MoviesAdapter
 import woowacourse.movie.presentation.view.movies.adapter.OnMovieEventListener
-import woowacourse.movie.presentation.view.reservation.detail.ReservationDetailActivity
+import woowacourse.movie.presentation.view.reservation.detail.ReservationDetailFragment
 
-class MoviesActivity :
-    BaseActivity(R.layout.activity_movies),
+class MoviesFragment :
+    BaseFragment<FragmentMoviesBinding>(R.layout.fragment_movies),
     MoviesContract.View {
     private val presenter: MoviesPresenter by lazy { MoviesPresenter(this) }
     private val moviesAdapter: MoviesAdapter by lazy {
@@ -23,9 +25,13 @@ class MoviesActivity :
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
 
+        showActionBarBackButton(false)
         presenter.fetchData()
         setMoviesAdapter()
     }
@@ -35,7 +41,7 @@ class MoviesActivity :
     }
 
     private fun setMoviesAdapter() {
-        val lvMovie = findViewById<RecyclerView>(R.id.lv_movie)
+        val lvMovie = binding.rvMovie
         lvMovie.adapter = moviesAdapter
     }
 
@@ -44,7 +50,12 @@ class MoviesActivity :
     }
 
     private fun navigateToReservationScreen(movie: MovieUiModel) {
-        val intent = ReservationDetailActivity.newIntent(this, movie)
-        startActivity(intent)
+        val fragment = ReservationDetailFragment.newInstance(movie)
+
+        parentFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.fragment_container_view, fragment)
+            addToBackStack(null)
+        }
     }
 }

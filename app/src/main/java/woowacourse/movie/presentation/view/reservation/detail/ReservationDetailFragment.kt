@@ -1,27 +1,31 @@
 package woowacourse.movie.presentation.view.reservation.detail
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
+import android.view.View
+import androidx.core.os.bundleOf
 import woowacourse.movie.R
-import woowacourse.movie.presentation.base.BaseActivity
+import woowacourse.movie.databinding.FragmentReservationDetailBinding
+import woowacourse.movie.presentation.base.BaseFragment
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.extension.toDateTimeFormatter
 import woowacourse.movie.presentation.model.MovieUiModel
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.ScreenUiModel
 import woowacourse.movie.presentation.util.DialogInfo
-import woowacourse.movie.presentation.view.reservation.seat.ReservationSeatActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class ReservationDetailActivity :
-    BaseActivity(R.layout.activity_reservation),
+class ReservationDetailFragment :
+    BaseFragment<FragmentReservationDetailBinding>(R.layout.fragment_reservation_detail),
     ReservationDetailContract.View {
     private val presenter: ReservationDetailPresenter by lazy { ReservationDetailPresenter(this) }
-    private val views: ReservationDetailViews by lazy { ReservationDetailViews(this) }
+    private val views: ReservationDetailViews by lazy {
+        ReservationDetailViews(
+            requireContext(),
+            binding,
+        )
+    }
 
     private var shouldIgnoreNextSelection = false
 
@@ -31,18 +35,21 @@ class ReservationDetailActivity :
             message = getString(R.string.no_available_times_dialog_message),
             positiveButtonText = getString(R.string.no_available_times_dialog_positive),
             onClickPositiveButton = {
-                onBackPressedDispatcher.onBackPressed()
+                parentFragmentManager.popBackStack()
             },
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
         setupActionBar()
 
         shouldIgnoreNextSelection = savedInstanceState != null
 
-        val movie = intent.getParcelableCompat<MovieUiModel>(BUNDLE_KEY_MOVIE)
+        val movie = arguments.getParcelableCompat<MovieUiModel>(BUNDLE_KEY_MOVIE)
         val (count, dateTime) = restoreReservationData(savedInstanceState)
         presenter.fetchData(movie, count, dateTime)
     }
@@ -51,14 +58,6 @@ class ReservationDetailActivity :
         super.onSaveInstanceState(outState)
         saveSpinnersData(outState)
         saveReservationCount(outState)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            onBackPressedDispatcher.onBackPressed()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun updateReservationCount(
@@ -83,8 +82,8 @@ class ReservationDetailActivity :
         reservationInfo: ReservationInfoUiModel,
         screen: ScreenUiModel,
     ) {
-        val intent = ReservationSeatActivity.newIntent(this, reservationInfo, screen)
-        startActivity(intent)
+//        val intent = ReservationSeatActivity.newIntent(this, reservationInfo, screen)
+//        startActivity(intent)
     }
 
     override fun updateDates(
@@ -110,7 +109,7 @@ class ReservationDetailActivity :
     }
 
     private fun setupActionBar() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        showActionBarBackButton(true)
     }
 
     private fun setupReservationCountControls() {
@@ -144,7 +143,8 @@ class ReservationDetailActivity :
 
     private fun saveSpinnersData(outState: Bundle) {
         val (date, time) = views.selectedSpinnerDateAndTime()
-        val reservationDateTime = if (date != null && time != null) LocalDateTime.of(date, time) else null
+        val reservationDateTime =
+            if (date != null && time != null) LocalDateTime.of(date, time) else null
 
         reservationDateTime?.let { dateTime ->
             outState.putString(RESTORE_BUNDLE_KEY_RESERVATION_DATETIME, dateTime.toString())
@@ -174,9 +174,9 @@ class ReservationDetailActivity :
         private const val RESTORE_BUNDLE_KEY_RESERVATION_NUMBER = "reservation_number"
         private const val SPINNER_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm"
 
-        fun newIntent(
-            context: Context,
-            movie: MovieUiModel,
-        ): Intent = Intent(context, ReservationDetailActivity::class.java).putExtra(BUNDLE_KEY_MOVIE, movie)
+        fun newInstance(movie: MovieUiModel): ReservationDetailFragment =
+            ReservationDetailFragment().apply {
+                arguments = bundleOf(BUNDLE_KEY_MOVIE to movie)
+            }
     }
 }

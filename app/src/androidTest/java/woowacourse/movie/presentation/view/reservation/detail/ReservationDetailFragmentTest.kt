@@ -1,7 +1,9 @@
 package woowacourse.movie.presentation.view.reservation.detail
 
 import android.content.pm.ActivityInfo
-import androidx.test.core.app.ActivityScenario
+import androidx.core.os.bundleOf
+import androidx.fragment.app.testing.FragmentScenario
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.swipeUp
@@ -14,13 +16,13 @@ import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.movie.ScreeningPeriod
 import woowacourse.movie.presentation.extension.toDateTimeFormatter
-import woowacourse.movie.presentation.fixture.fakeContext
 import woowacourse.movie.presentation.model.MovieUiModel
 import woowacourse.movie.presentation.model.PosterUiModel
 import java.time.LocalDate
 
-class ReservationDetailActivityTest {
-    private lateinit var scenario: ActivityScenario<ReservationDetailActivity>
+class ReservationDetailFragmentTest {
+    private lateinit var scenario: FragmentScenario<ReservationDetailFragment>
+
     private val fakeMovie =
         MovieUiModel(
             1,
@@ -35,8 +37,11 @@ class ReservationDetailActivityTest {
 
     @Before
     fun setUp() {
-        val intent = ReservationDetailActivity.newIntent(fakeContext, fakeMovie)
-        scenario = ActivityScenario.launch(intent)
+        val args = bundleOf("movie" to fakeMovie)
+        scenario =
+            launchFragmentInContainer(args) {
+                ReservationDetailFragment()
+            }
     }
 
     @Test
@@ -78,8 +83,8 @@ class ReservationDetailActivityTest {
 
     @Test
     fun `화면을_회전해도_데이터가_유지된다`() {
-        scenario.onActivity { activity ->
-            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        scenario.onFragment {
+            it.requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
 
         onView(withId(R.id.main))
@@ -95,10 +100,9 @@ class ReservationDetailActivityTest {
 
     @Test
     fun `선택_가능한_날짜가_없다면_다이얼로그가_노출된다`() {
-        scenario.onActivity { activity ->
-            val intent =
-                ReservationDetailActivity.newIntent(
-                    fakeContext,
+        val args =
+            bundleOf(
+                "movie" to
                     fakeMovie
                         .copy(
                             screeningPeriod =
@@ -107,8 +111,9 @@ class ReservationDetailActivityTest {
                                     LocalDate.of(2025, 1, 1),
                                 ),
                         ),
-                )
-            activity.startActivity(intent)
+            )
+        launchFragmentInContainer(args) {
+            ReservationDetailFragment()
         }
 
         Thread.sleep(1000)
