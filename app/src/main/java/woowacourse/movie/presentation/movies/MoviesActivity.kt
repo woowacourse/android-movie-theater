@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.movie.Movie
-import woowacourse.movie.domain.model.movie.ScreeningMovies
+import woowacourse.movie.data.MovieData
 import woowacourse.movie.presentation.booking.BookingActivity
 import woowacourse.movie.ui.BaseActivity
 import woowacourse.movie.ui.adapter.MovieAdapter
@@ -22,7 +22,7 @@ class MoviesActivity : BaseActivity(), MoviesContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupScreen(layoutRes)
-        moviesPresenter = MoviesPresenter(this, ScreeningMovies())
+        moviesPresenter = MoviesPresenter(this, MovieData)
         moviesPresenter.onViewCreated()
     }
 

@@ -6,12 +6,12 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.movie.Movie
-import woowacourse.movie.domain.model.movie.ScreeningMovies
+import woowacourse.movie.data.MovieData
 import java.time.LocalDate
 
 class MoviesPresenterTest {
     private lateinit var view: MoviesContract.View
-    private lateinit var screeningMovies: ScreeningMovies
+    private lateinit var movieData: MovieData
     private lateinit var presenter: MoviesContract.Presenter
 
     private val testMovies =
@@ -27,20 +27,20 @@ class MoviesPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        screeningMovies = mockk()
-        presenter = MoviesPresenter(view, screeningMovies)
+        movieData = mockk()
+        presenter = MoviesPresenter(view, movieData)
     }
 
     @Test
     fun `영화 목록을 가져와서 화면에 출력한다`() {
         // Given
-        every { screeningMovies.getData() } returns testMovies
+        every { movieData.getData() } returns testMovies
 
         // When
         presenter.onViewCreated()
 
         // Then
-        verify { screeningMovies.getData() }
+        verify { movieData.getData() }
         verify { view.showMovies(testMovies) }
     }
 
