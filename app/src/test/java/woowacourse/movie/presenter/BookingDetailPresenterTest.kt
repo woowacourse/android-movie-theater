@@ -6,7 +6,6 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.DateType
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieDate
 import woowacourse.movie.domain.model.MovieTime
@@ -24,6 +23,7 @@ class BookingDetailPresenterTest {
 
     private lateinit var movieUiModel: MovieUiModel
     private lateinit var bookingInfoUiModel: BookingInfoUiModel
+    private lateinit var theater: Theater
 
     @BeforeEach
     fun setUp() {
@@ -50,12 +50,14 @@ class BookingDetailPresenterTest {
                 date = movieUiModel.startDate,
                 movieTime = MovieTime(10, 0).toUi(),
             )
+
+        theater = Theater(times = listOf(MovieTime(10, 0)))
     }
 
     @Test
     fun `onCreateView 호출 시 날짜, 시간, 예약정보를 갱신한다`() {
         // given & when
-        presenter.prepareBookingInfo(movieUiModel)
+        presenter.prepareBookingInfo(movieUiModel, theater)
         val dates = slot<List<MovieDateUiModel>>()
         val times = slot<List<String>>()
         val bookingInfo = slot<BookingInfoUiModel>()
@@ -73,26 +75,10 @@ class BookingDetailPresenterTest {
     }
 
     @Test
-    fun `onDateSelected 호출 시 영화 시간을 갱신한다`() {
-        // given
-        val date = movieUiModel.startDate
-        val time = slot<List<String>>()
-        val expectedTimes = MovieTime.getMovieTimes(DateType.WEEKDAY).map { it.toUi().toString() }
-        presenter.prepareBookingInfo(movieUiModel)
-
-        // when
-        presenter.selectDate(date.toString())
-
-        // then
-        verify { view.updateTimeSpinnerItems(capture(time)) }
-        assertThat(time.captured).isEqualTo(expectedTimes)
-    }
-
-    @Test
     fun `onTicketCountIncreased 호출 시 티켓 수 증가 후 뷰의 출력을 갱신한다`() {
         // given
         val ticketCount = slot<Int>()
-        presenter.prepareBookingInfo(movieUiModel)
+        presenter.prepareBookingInfo(movieUiModel, theater)
 
         // when
         presenter.increaseTicketCount()
@@ -106,7 +92,7 @@ class BookingDetailPresenterTest {
     fun `onTicketCountDecreased 호출 시 티켓 수 감소 후 뷰의 출력을 갱신한다`() {
         // given
         val ticketCount = slot<Int>()
-        presenter.prepareBookingInfo(movieUiModel)
+        presenter.prepareBookingInfo(movieUiModel, theater)
 
         // when
         presenter.decreaseTicketCount()
@@ -120,7 +106,7 @@ class BookingDetailPresenterTest {
     fun `onBookingCompleteButtonClicked 호출 시 좌석 선택 화면으로 이동한다`() {
         // given
         val bookingInfo = slot<BookingInfoUiModel>()
-        presenter.prepareBookingInfo(movieUiModel)
+        presenter.prepareBookingInfo(movieUiModel, theater)
 
         // when
         presenter.confirmBookingInfo()
@@ -142,7 +128,7 @@ class BookingDetailPresenterTest {
     @Test
     fun `onSaveInstanceState 호출 시 현재 예약정보를 반환한다`() {
         // given
-        presenter.prepareBookingInfo(movieUiModel)
+        presenter.prepareBookingInfo(movieUiModel, theater)
 
         // when
         val savedState = presenter.saveBookingInfo()
@@ -154,7 +140,7 @@ class BookingDetailPresenterTest {
     @Test
     fun `onRestoreInstanceState 호출 시 기존에 저장된 예약정보로 복원한다`() {
         // given
-        presenter.prepareBookingInfo(movieUiModel)
+        presenter.prepareBookingInfo(movieUiModel, theater)
 
         // when
         presenter.loadBookingInfo(bookingInfoUiModel)

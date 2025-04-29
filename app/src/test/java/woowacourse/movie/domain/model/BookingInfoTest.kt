@@ -45,7 +45,7 @@ class BookingInfoTest {
     fun `updateDate 호출 시 날짜와 상영시간이 변경된다`() {
         // given
         val expectedDate = MovieDate(2025, 4, 10)
-        val expectedTime = MovieTime.getMovieTimes(DateType.from(expectedDate)).first()
+        val expectedTime = MovieTime(9, 0)
 
         // when
         bookingInfo.updateDate(expectedDate)

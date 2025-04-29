@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.bookingdetail.contract
 
+import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.model.MovieDateUiModel
 import woowacourse.movie.feature.model.MovieUiModel
@@ -14,15 +15,16 @@ interface BookingDetailContract {
 
         fun updateTicketCount(count: Int)
 
-        fun updateTimeSpinnerItems(times: List<String>)
-
         fun navigateToBack()
 
         fun navigateToBookingSeat(bookingInfo: BookingInfoUiModel)
     }
 
     interface Presenter {
-        fun prepareBookingInfo(movieUiModel: MovieUiModel)
+        fun prepareBookingInfo(
+            movieUiModel: MovieUiModel,
+            theater: Theater,
+        )
 
         fun selectDate(date: String)
 

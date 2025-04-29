@@ -1,11 +1,9 @@
 package woowacourse.movie.domain.model
 
-import woowacourse.movie.domain.model.MovieTime.Companion.getMovieTimes
-
 data class BookingInfo(
     val movie: Movie,
     private var date: MovieDate = movie.startDate,
-    private var time: MovieTime = getMovieTimes(DateType.from(date)).first(),
+    private var time: MovieTime = MovieTime(),
     private val seats: MovieSeats = MovieSeats(),
     private val ticketCount: TicketCount = TicketCount(),
 ) {
@@ -18,7 +16,6 @@ data class BookingInfo(
 
     fun updateDate(date: MovieDate) {
         this.date = date
-        this.time = getMovieTimes(DateType.from(date)).first()
     }
 
     fun updateMovieTime(movieTime: MovieTime) {

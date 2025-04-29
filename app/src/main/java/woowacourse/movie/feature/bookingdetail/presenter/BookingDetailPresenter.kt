@@ -1,10 +1,10 @@
 package woowacourse.movie.feature.bookingdetail.presenter
 
 import woowacourse.movie.domain.model.BookingInfo
-import woowacourse.movie.domain.model.DateType
 import woowacourse.movie.domain.model.MovieDate
 import woowacourse.movie.domain.model.MovieDates
 import woowacourse.movie.domain.model.MovieTime
+import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.feature.bookingdetail.contract.BookingDetailContract
 import woowacourse.movie.feature.bookingdetail.contract.BookingDetailContract.Presenter
 import woowacourse.movie.feature.mapper.toDomain
@@ -19,13 +19,17 @@ class BookingDetailPresenter(
 ) : Presenter {
     private lateinit var bookingInfo: BookingInfo
 
-    override fun prepareBookingInfo(movieUiModel: MovieUiModel) {
+    override fun prepareBookingInfo(
+        movieUiModel: MovieUiModel,
+        theater: Theater,
+    ) {
         bookingInfo = BookingInfo(movieUiModel.toDomain())
+        bookingInfo.updateMovieTime(theater.times.first())
 
         val movieDates = MovieDates(bookingInfo.movie.startDate, bookingInfo.movie.endDate).value.map { it.toUi() }
         view.setupDateView(movieDates)
 
-        val movieTimes = MovieTime.getMovieTimes(DateType.from(bookingInfo.selectedDate)).map { it.toUi().toString() }
+        val movieTimes = theater.times.map { it.toUi().toString() }
         view.setupTimeView(movieTimes)
 
         view.updateView(bookingInfo.toUi())
@@ -34,9 +38,6 @@ class BookingDetailPresenter(
     override fun selectDate(date: String) {
         val movieDate: MovieDate = MovieDateUiModel.from(date).toDomain()
         bookingInfo.updateDate(movieDate)
-
-        val movieTimes: List<String> = MovieTime.getMovieTimes(DateType.from(movieDate)).map { it.toUi().toString() }
-        view.updateTimeSpinnerItems(movieTimes)
     }
 
     override fun selectTime(time: String) {

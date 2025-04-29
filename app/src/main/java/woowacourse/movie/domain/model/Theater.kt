@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Theater(
-    val name: String,
-    val times: List<MovieTime>,
+    val name: String = "",
+    val times: List<MovieTime> = emptyList<MovieTime>(),
 ) : Parcelable {
     val timesCount: Int get() = times.size
 }

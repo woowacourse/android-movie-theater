@@ -45,7 +45,10 @@ class BookingDetailActivity :
         setupTimeSpinnerItemClickListener()
         setupTicketCountClickListeners()
         setupSelectCompleteClickListener()
-        presenter.prepareBookingInfo(movieUiModel = intent.getExtra(MOVIE_KEY) ?: MovieUiModel())
+        presenter.prepareBookingInfo(
+            movieUiModel = intent.getExtra(MOVIE_KEY) ?: MovieUiModel(),
+            theater = intent.getExtra(THEATER_KEY) ?: Theater(),
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -79,10 +82,6 @@ class BookingDetailActivity :
     override fun navigateToBookingSeat(bookingInfo: BookingInfoUiModel) {
         val intent = BookingSeatActivity.newIntent(this, bookingInfo)
         startActivity(intent)
-    }
-
-    override fun updateTimeSpinnerItems(times: List<String>) {
-        timeAdapter.updateTimes(times)
     }
 
     override fun updateTicketCount(count: Int) {

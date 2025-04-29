@@ -9,15 +9,9 @@ class TimeAdapter(
 ) : ArrayAdapter<String>(
         context,
         android.R.layout.simple_spinner_item,
-        times.toMutableList(),
+        times,
     ) {
     init {
         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-    }
-
-    fun updateTimes(times: List<String>) {
-        clear()
-        addAll(times)
-        notifyDataSetChanged()
     }
 }
