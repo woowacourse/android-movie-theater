@@ -13,7 +13,7 @@ import woowacourse.movie.R
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.presenter.movies.MoviesContracts
 import woowacourse.movie.presenter.movies.MoviesPresenter
-import woowacourse.movie.view.reservation.ReservationActivity
+import woowacourse.movie.view.movies.theater.TheaterBottomSheetDialogFragment
 
 class MoviesActivity :
     AppCompatActivity(),
@@ -43,7 +43,15 @@ class MoviesActivity :
                     movieClickListener =
                         object : MovieClickListener {
                             override fun onReservationClick(movieId: Long) {
-                                presenter.onReservationRequested(movieId)
+                                val bundle = Bundle()
+                                TheaterBottomSheetDialogFragment()
+                                    .apply {
+                                        bundle.putLong("movieId", movieId)
+                                        arguments = bundle
+                                    }.show(
+                                        supportFragmentManager,
+                                        "jay",
+                                    )
                             }
                         },
                     advertisementClickListener = {
@@ -55,10 +63,6 @@ class MoviesActivity :
             movieListView.adapter = movieAdapter
         }
         movieAdapter.updateMovies(movies)
-    }
-
-    override fun showReservationView(movie: Movie) {
-        startActivity(ReservationActivity.getIntent(this, movie))
     }
 
     override fun showAdvertisement(url: String) {

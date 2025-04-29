@@ -9,7 +9,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.presenter.MOVIE
 
 class MoviesPresenterTest {
     private lateinit var presenter: MoviesPresenter
@@ -31,18 +30,6 @@ class MoviesPresenterTest {
 
         // then:
         verify { view.showMovies(any()) }
-    }
-
-    @Test
-    fun `예매 요청을 보내면 영화 예매 뷰가 보인다`() {
-        // given:
-        every { view.showReservationView(any()) } just Runs
-
-        // when:
-        presenter.onReservationRequested(MOVIE.id)
-
-        // then:
-        verify { view.showReservationView(any()) }
     }
 
     @Test
