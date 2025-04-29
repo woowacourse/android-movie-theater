@@ -83,7 +83,7 @@ class ScreeningPresenterTest {
     fun `예매할 영화를 선택할 수 있다`() {
         // given
         every {
-            view.navigateToReservationScreen(
+            view.showCinemas(
                 Screening(
                     Movie(
                         0,
@@ -111,7 +111,7 @@ class ScreeningPresenterTest {
 
         // then
         verify {
-            view.navigateToReservationScreen(
+            view.showCinemas(
                 Screening(
                     Movie(
                         0,

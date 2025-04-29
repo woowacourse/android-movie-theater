@@ -13,6 +13,6 @@ interface ScreeningContract {
     interface View {
         fun setScreeningContents(screenings: List<ScreeningContent>)
 
-        fun navigateToReservationScreen(screening: Screening)
+        fun showCinemas(screening: Screening)
     }
 }

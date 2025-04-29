@@ -15,7 +15,6 @@ import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ScreeningContent
 import woowacourse.movie.presenter.cinema.ScreeningPresenter
 import woowacourse.movie.view.cinema.adapter.ScreeningAdapter
-import woowacourse.movie.view.reservation.ReservationActivity
 
 class ScreeningActivity :
     AppCompatActivity(),
@@ -39,9 +38,7 @@ class ScreeningActivity :
         initListView(screeningContents)
     }
 
-    override fun navigateToReservationScreen(screening: Screening) {
-        val intent = ReservationActivity.Companion.newIntent(this, screening)
-        startActivity(intent)
+    override fun showCinemas(screening: Screening) {
     }
 
     private fun initListView(screeningContents: List<ScreeningContent>) {
