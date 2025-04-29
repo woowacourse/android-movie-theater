@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentMoviesBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.view.movie.adapter.MovieAdapter
 
@@ -15,6 +16,7 @@ class MoviesFragment :
     MovieContract.View {
     private val presenter: MoviePresenter by lazy { MoviePresenter(this) }
     private lateinit var moviesAdapter: MovieAdapter
+    private lateinit var binding: FragmentMoviesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,14 +26,26 @@ class MoviesFragment :
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? = inflater.inflate(R.layout.fragment_movies, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_movies,
+            container,
+            false
+        )
+
+        binding.fragmentMovies = this
+
+        return binding.root
+    }
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setupMovieAdapter(view)
+        setupMovieAdapter()
+        presenter.fetchMovies()
     }
 
     override fun showMovies(movies: List<Movie>) {
@@ -42,8 +56,8 @@ class MoviesFragment :
 //        TODO("Not yet implemented")
     }
 
-    private fun setupMovieAdapter(view: View) {
-        val recyclerView = view.findViewById<RecyclerView>(R.id.rv_movies)
+    private fun setupMovieAdapter() {
+        val recyclerView = binding.rvMovies
         moviesAdapter =
             MovieAdapter(
                 object : MovieClickListener {

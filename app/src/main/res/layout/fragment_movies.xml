@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="fragmentMovies"
+            type="woowacourse.movie.view.movie.MoviesFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
