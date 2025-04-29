@@ -11,7 +11,8 @@ import java.time.LocalTime
 data class ScreeningPeriod(
     val startDate: LocalDate,
     val endDate: LocalDate,
-    val screeningTimes: List<LocalTime>
+    val screeningTimes: List<LocalTime>,
+    val cinemaId:Int
 ) : Parcelable {
     fun getAvailableDates(now: LocalDateTime): List<LocalDate> {
         val dates = mutableListOf<LocalDate>()

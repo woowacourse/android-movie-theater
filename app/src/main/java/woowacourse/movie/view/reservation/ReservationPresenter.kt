@@ -32,7 +32,7 @@ class ReservationPresenter(
         dateTime?.let { dateTimeStr ->
             val formatter = DateTimeFormatter.ofPattern(SPINNER_DATETIME_FORMAT)
             val realDateTime = LocalDateTime.parse(dateTimeStr, formatter)
-            val times = movie?.screeningPeriod?.getAvailableTimesFor(LocalDateTime.now(), realDateTime.toLocalDate()) ?: emptyList()
+            val times = movie?.screeningPeriods[0]?.getAvailableTimesFor(LocalDateTime.now(), realDateTime.toLocalDate()) ?: emptyList()
             view.updateTimeSet(times, realDateTime.toLocalTime())
         }
 
@@ -52,10 +52,10 @@ class ReservationPresenter(
     }
 
     override fun selectDate(date: LocalDate) {
-        val times = movie?.screeningPeriod?.getAvailableTimesFor(LocalDateTime.now(), date) ?: emptyList()
+        val times = movie?.screeningPeriods[0]?.getAvailableTimesFor(LocalDateTime.now(), date) ?: emptyList()
         times.ifEmpty {
             val nextDate = date.plusDays(1)
-            val dates = movie?.screeningPeriod?.getAvailableDates(LocalDateTime.of(nextDate, LocalTime.of(0, 0))) ?: emptyList()
+            val dates = movie?.screeningPeriods[0]?.getAvailableDates(LocalDateTime.of(nextDate, LocalTime.of(0, 0))) ?: emptyList()
             if (dates.isEmpty()) {
                 view.notifyUnavailableDate()
                 return
@@ -63,7 +63,7 @@ class ReservationPresenter(
             view.updateDateSet(dates, nextDate)
         }
 
-        val temp = movie?.screeningPeriod?.getAvailableDates(LocalDateTime.now()) ?: emptyList()
+        val temp = movie?.screeningPeriods[0]?.getAvailableDates(LocalDateTime.now()) ?: emptyList()
         view.updateDateSet(temp)
         view.updateTimeSet(times)
     }

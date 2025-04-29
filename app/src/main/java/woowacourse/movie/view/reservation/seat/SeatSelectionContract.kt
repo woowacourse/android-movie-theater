@@ -2,7 +2,7 @@ package woowacourse.movie.view.reservation.seat
 
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seat
-import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.SeatFactory
 import woowacourse.movie.domain.model.TicketMachine
 
 interface SeatSelectionContract {
@@ -43,11 +43,11 @@ class SeatSelectionPresenter(
 ) : SeatSelectionContract.Presenter {
     private var reservationInfo: ReservationInfo? = null
 
-    private val theater = Theater.default()
+    private val seatFactory = SeatFactory.default()
     private val ticketMachine = TicketMachine()
 
     override fun loadSeats(reservationInfo: ReservationInfo?) {
-        val seats = theater.createSeats()
+        val seats = seatFactory.createSeats()
         this.reservationInfo = reservationInfo
 
         view.showSeats(seats)

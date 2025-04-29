@@ -1,6 +1,6 @@
 package woowacourse.movie.domain.model
 
-class Theater(
+class SeatFactory(
     val rows: Int,
     val columns: Int,
 ) {
@@ -15,6 +15,6 @@ class Theater(
     }
 
     companion object {
-        fun default() = Theater(5, 4)
+        fun default() = SeatFactory(5, 4)
     }
 }
