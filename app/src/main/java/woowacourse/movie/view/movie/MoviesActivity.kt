@@ -6,8 +6,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.model.Movie
@@ -19,6 +19,7 @@ class MoviesActivity :
     AppCompatActivity(),
     MovieContract.View {
     private val presenter: MoviePresenter by lazy { MoviePresenter(this) }
+    private val bnView: BottomNavigationView by lazy { findViewById<BottomNavigationView>(R.id.bottom_navigation_view) }
     private lateinit var moviesAdapter: MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,9 +39,18 @@ class MoviesActivity :
             }
         }
 
-        findViewById<BottomNavigationView>(R.id.bottom_navigation_view).selectedItemId =
-            R.id.fragment_movies
-
+        bnView.selectedItemId = R.id.fragment_movies
+        bnView.setOnItemSelectedListener {
+            replaceFragment(
+                when (it.itemId) {
+                    R.id.fragment_movies -> MoviesFragment()
+                    R.id.fragment_list -> ReservationListFragment()
+                    R.id.fragment_setting -> SettingFragment()
+                    else -> throw IllegalArgumentException("알수없는 프래그먼트 입니다")
+                },
+            )
+            true
+        }
     }
 
     override fun showMovies(movies: List<Movie>) {
@@ -54,5 +64,9 @@ class MoviesActivity :
                 ReservationActivity::class.java,
             ).apply { putExtra(Extras.MovieData.MOVIE_KEY, movie) }
         startActivity(intent)
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.fl_main, fragment).commit()
     }
 }

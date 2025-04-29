@@ -1,16 +1,18 @@
 package woowacourse.movie.view.movie
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.model.Movie
 import woowacourse.movie.view.movie.adapter.MovieAdapter
 
-class MoviesFragment : Fragment(),MovieContract.View {
+class MoviesFragment :
+    Fragment(),
+    MovieContract.View {
     private val presenter: MoviePresenter by lazy { MoviePresenter(this) }
     private lateinit var moviesAdapter: MovieAdapter
 
@@ -19,17 +21,18 @@ class MoviesFragment : Fragment(),MovieContract.View {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_movies, container, false)
-    }
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? = inflater.inflate(R.layout.fragment_movies, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setupMovieAdapter(view)
     }
-
 
     override fun showMovies(movies: List<Movie>) {
         moviesAdapter.submitList(movies)
