@@ -18,6 +18,10 @@ class BookingTest {
                 runningTime = 152,
                 screeningStartDate = LocalDate.of(2025, 4, 1),
                 screeningEndDate = LocalDate.of(2025, 4, 25),
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(12, 0),
+                    ),
             )
     }
 

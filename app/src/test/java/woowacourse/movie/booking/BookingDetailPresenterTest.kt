@@ -34,6 +34,11 @@ class BookingDetailPresenterTest {
                 screeningStartDate = LocalDate.of(2028, 10, 1),
                 screeningEndDate = LocalDate.of(2028, 10, 25),
                 runningTime = 150,
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(12, 0),
+                        LocalTime.of(20, 0),
+                    ),
             )
 
         mockTicket =

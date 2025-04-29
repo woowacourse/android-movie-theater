@@ -5,7 +5,9 @@ import woowacourse.movie.BookingDetailActivity
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Movie
+import woowacourse.movie.model.Theater
 import java.time.LocalDate
+import java.time.LocalTime
 
 class MoviePresenter(
     private val view: MovieContract.View,
@@ -22,18 +24,35 @@ class MoviePresenter(
             view.showToast("기본 영화 목록을 불러왔습니다.")
         }
 
-        val movies =
-            movie?.let { listOf(it) }
-                ?: List(10) { mockMovieList() }
-                    .flatten()
-                    .map { it.toUiModel() }
+        val movies = getReservableMovies().map { it.toUiModel() }
         view.setupMovieList(movies)
     }
 
-    fun getMockMovieList(): List<Movie> = mockMovieList()
+    private fun getReservableMovies(): List<Movie> {
+        val theaters = mockTheaterList()
+
+        return theaters.map { it.movies }.flatten().distinct()
+    }
 
     override fun onReserveClicked(movieUi: MovieUiModel) {
         view.startBookingActivity(movieUi)
+    }
+
+    private fun mockTheaterList(): List<Theater> {
+        return listOf(
+            Theater(
+                place = "선릉",
+                movies = mockMovieList(),
+            ),
+            Theater(
+                place = "잠실",
+                movies = mockMovieList(),
+            ),
+            Theater(
+                place = "강남",
+                movies = mockMovieList(),
+            ),
+        )
     }
 
     private fun mockMovieList(): List<Movie> {
@@ -44,6 +63,11 @@ class MoviePresenter(
                 screeningStartDate = LocalDate.of(2025, 4, 1),
                 screeningEndDate = LocalDate.of(2025, 4, 25),
                 runningTime = 152,
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(12, 0),
+                        LocalTime.of(20, 0),
+                    ),
             ),
             Movie(
                 title = "해리 포터와 비밀의 방",
@@ -51,6 +75,11 @@ class MoviePresenter(
                 screeningStartDate = LocalDate.of(2025, 4, 1),
                 screeningEndDate = LocalDate.of(2025, 4, 28),
                 runningTime = 162,
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(12, 0),
+                        LocalTime.of(20, 0),
+                    ),
             ),
             Movie(
                 title = "해리 포터와 아즈카반의 죄수",
@@ -58,6 +87,11 @@ class MoviePresenter(
                 screeningStartDate = LocalDate.of(2025, 5, 1),
                 screeningEndDate = LocalDate.of(2025, 5, 31),
                 runningTime = 141,
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(12, 0),
+                        LocalTime.of(20, 0),
+                    ),
             ),
             Movie(
                 title = "해리 포터와 불의 잔",
@@ -65,6 +99,11 @@ class MoviePresenter(
                 screeningStartDate = LocalDate.of(2025, 6, 1),
                 screeningEndDate = LocalDate.of(2025, 6, 30),
                 runningTime = 157,
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(12, 0),
+                        LocalTime.of(20, 0),
+                    ),
             ),
             Movie(
                 title = "스타 이즈 본",
@@ -72,6 +111,11 @@ class MoviePresenter(
                 screeningStartDate = LocalDate.of(2025, 4, 19),
                 screeningEndDate = LocalDate.of(2025, 5, 25),
                 runningTime = 135,
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(12, 0),
+                        LocalTime.of(20, 0),
+                    ),
             ),
         )
     }

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import java.time.LocalDate
+import java.time.LocalTime
 
 class MovieTest {
     @Test
@@ -15,6 +16,10 @@ class MovieTest {
                 LocalDate.of(2025, 4, 17),
                 LocalDate.of(2025, 4, 18),
                 152,
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(12, 0),
+                    ),
             )
         }
 
@@ -25,6 +30,10 @@ class MovieTest {
                 LocalDate.of(2025, 4, 17),
                 LocalDate.of(2025, 4, 18),
                 152,
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(12, 0),
+                    ),
             )
         }
     }
@@ -38,6 +47,10 @@ class MovieTest {
                 LocalDate.of(2025, 4, 17),
                 LocalDate.of(2025, 4, 18),
                 0,
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(12, 0),
+                    ),
             )
         }
 
@@ -48,6 +61,10 @@ class MovieTest {
                 LocalDate.of(2025, 4, 17),
                 LocalDate.of(2025, 4, 18),
                 152,
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(12, 0),
+                    ),
             )
         }
     }
@@ -61,6 +78,10 @@ class MovieTest {
                 LocalDate.of(2025, 4, 20),
                 LocalDate.of(2025, 4, 18),
                 1,
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(12, 0),
+                    ),
             )
         }
 
@@ -71,6 +92,10 @@ class MovieTest {
                 LocalDate.of(2025, 4, 17),
                 LocalDate.of(2025, 4, 18),
                 152,
+                screeningTimes =
+                    listOf(
+                        LocalTime.of(12, 0),
+                    ),
             )
         }
     }

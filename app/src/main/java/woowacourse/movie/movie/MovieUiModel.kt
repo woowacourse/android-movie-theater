@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
+import java.time.LocalTime
 
 @Parcelize
 data class MovieUiModel(
@@ -13,4 +14,5 @@ data class MovieUiModel(
     val screeningStartDate: LocalDate,
     val screeningEndDate: LocalDate,
     val runningTime: Int,
+    val screeningTimes: List<LocalTime>,
 ) : Parcelable
