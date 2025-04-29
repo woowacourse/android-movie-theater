@@ -5,11 +5,12 @@ import woowacourse.movie.domain.reservation.ShowtimePolicy
 import java.time.LocalDate
 import java.time.LocalTime
 
-class Cinema(
-    screenings: List<Screening>,
+data class Cinema(
+    val name: String,
+    private val _screenings: List<Screening>,
     private val showtimePolicy: ShowtimePolicy,
 ) {
-    val screenings = screenings.map { it.copy() }
+    val screenings = _screenings.map { it.copy() }
 
     fun showtimes(
         screening: Screening,

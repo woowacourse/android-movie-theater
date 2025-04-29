@@ -6,6 +6,7 @@ import woowacourse.movie.data.reservation.LocalAdvertisementData
 import woowacourse.movie.data.reservation.LocalScreeningData
 import woowacourse.movie.data.reservation.ScreeningData
 import woowacourse.movie.domain.reservation.DefaultScreeningContentsPolicy
+import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ScreeningContentsPolicy
 
 class ScreeningPresenter(
@@ -19,7 +20,7 @@ class ScreeningPresenter(
         view.setScreeningContents(screeningContentsPolicy.screeningContents())
     }
 
-    override fun presentCinemas() {
+    override fun selectScreening(screening: Screening) {
         view.showCinemas(screening)
     }
 }

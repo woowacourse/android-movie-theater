@@ -26,4 +26,8 @@
     <string name="seat_selection_price">%1$,d원</string>
     <string name="seat_selection_screen">SCREEN</string>
     <string name="seat_selection_confirm">확인</string>
+
+    <!--item_cinema-->
+    <string name="content_description_item_cinema_navigation">이동하기</string>
+    <string name="item_cinema_showtime_count">%d개의 상영시간</string>
 </resources>
