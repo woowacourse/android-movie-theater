@@ -28,6 +28,7 @@ class BookingDetailActivityTest {
             newIntent(
                 context = getApplicationContext(),
                 movie = MOVIE_UI_MODEL_01.copy(),
+                theater = MOVIE_UI_MODEL_01.copy().availableTheaters.first(),
             )
 
         activityScenario = ActivityScenario.launch(intent)

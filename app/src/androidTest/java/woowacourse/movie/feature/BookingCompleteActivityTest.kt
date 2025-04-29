@@ -15,6 +15,7 @@ import woowacourse.movie.domain.model.MovieDate
 import woowacourse.movie.domain.model.MovieSeat
 import woowacourse.movie.domain.model.MovieSeats
 import woowacourse.movie.domain.model.MovieTime
+import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity.Companion.newIntent
 import woowacourse.movie.feature.mapper.toUi
@@ -36,6 +37,12 @@ class BookingCompleteActivityTest {
                                 startDate = MovieDate(2025, 4, 1),
                                 endDate = MovieDate(2025, 4, 25),
                                 runningTime = 152,
+                                availableTheaters =
+                                    listOf(
+                                        Theater("선릉", listOf(MovieTime(9, 0), MovieTime(12, 0), MovieTime(15, 0))),
+                                        Theater("잠실", listOf(MovieTime(10, 0), MovieTime(13, 0))),
+                                        Theater("강남", listOf(MovieTime(11, 0), MovieTime(14, 0), MovieTime(17, 0), MovieTime(20, 0))),
+                                    ),
                             ),
                         date = MovieDate(2025, 4, 1),
                         time = MovieTime(9, 0),

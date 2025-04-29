@@ -31,7 +31,7 @@ class MoviesPresenterTest {
     }
 
     @Test
-    fun `selectMovieForBooking 호출 시 예약 상세 화면으로 이동한다`() {
+    fun `selectMovieForBooking 호출 시 극장 목록을 보여준다`() {
         // given
         val movieUiModel = movies.first().toUi()
 
@@ -40,7 +40,7 @@ class MoviesPresenterTest {
 
         // then
         verify {
-            view.navigateToBookingDetail(movieUiModel)
+            view.showTheaters(movieUiModel)
         }
     }
 }
