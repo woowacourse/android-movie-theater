@@ -11,6 +11,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import woowacourse.movie.R
+import woowacourse.movie.domain.model.ScreeningInfo
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.presentation.seats.SeatsActivity
@@ -144,13 +145,13 @@ class BookingActivity : BaseActivity(), BookingContract.View {
     }
 
     private fun fetchMovieFromIntent(): Boolean {
-        val data = intent.intentSerializable(IntentKeys.MOVIE, Movie::class.java)
+        val data = intent.intentSerializable(IntentKeys.SCREENING_INFO, ScreeningInfo::class.java)
         if (data == null) {
             Toast.makeText(this, MOVIE_INTENT_ERROR, Toast.LENGTH_SHORT).show()
             finish()
             return false
         }
-        movie = data
+        movie = data.movie
         return true
     }
 
