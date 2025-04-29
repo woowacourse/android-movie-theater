@@ -1,22 +1,28 @@
 package woowacourse.movie.ui.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.databinding.ItemTheaterBinding
+import woowacourse.movie.domain.model.ScreeningInfo
+
+//import woowacourse.movie.domain.model.Theater
 
 class TheaterAdapter(
-    private val items: List<Theater>,
+    private val items: List<ScreeningInfo>,
+    private val onClick: (ScreeningInfo) -> Unit,
 ) : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
+    private lateinit var binding: ItemTheaterBinding
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): TheaterViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_theater, parent, false)
-        return TheaterViewHolder(view)
+        binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_theater, parent, false)
+        return TheaterViewHolder(parent.context, binding, onClick)
     }
 
     override fun getItemCount(): Int = items.size
@@ -29,12 +35,17 @@ class TheaterAdapter(
     }
 
     class TheaterViewHolder(
-        view: View,
-    ) : RecyclerView.ViewHolder(view) {
-        private val name: TextView = view.findViewById(R.id.textview_theater_name)
+        private val context: Context,
+        private val binding: ItemTheaterBinding,
+        private val onClick: (ScreeningInfo) -> Unit,
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Theater) {
-            name.text = item.name
+        fun bind(item: ScreeningInfo) {
+            binding.textviewTheaterName.text = item.theater
+            binding.textviewScreeningTime.text = context.getString(R.string.theater_text, item.times.size)
+            binding.constraintlayoutTheater.setOnClickListener {
+                onClick(item)
+            }
         }
     }
 }
