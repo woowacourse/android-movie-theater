@@ -22,7 +22,7 @@
             android:name=".view.ticket.TicketActivity"
             android:exported="false" />
         <activity
-            android:name=".view.reservation.ScreeningActivity"
+            android:name=".view.cinema.ScreeningActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

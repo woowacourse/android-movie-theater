@@ -1,6 +1,6 @@
-package woowacourse.movie.presenter.reservation
+package woowacourse.movie.presenter.cinema
 
-import woowacourse.movie.contract.reservation.ScreeningContract
+import woowacourse.movie.contract.cinema.ScreeningContract
 import woowacourse.movie.data.reservation.AdvertisementData
 import woowacourse.movie.data.reservation.LocalAdvertisementData
 import woowacourse.movie.data.reservation.LocalScreeningData

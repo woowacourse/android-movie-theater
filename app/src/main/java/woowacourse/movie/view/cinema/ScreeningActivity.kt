@@ -1,4 +1,4 @@
-package woowacourse.movie.view.reservation
+package woowacourse.movie.view.cinema
 
 import android.content.Context
 import android.content.Intent
@@ -10,11 +10,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.contract.reservation.ScreeningContract
+import woowacourse.movie.contract.cinema.ScreeningContract
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ScreeningContent
-import woowacourse.movie.presenter.reservation.ScreeningPresenter
-import woowacourse.movie.view.reservation.adapter.ScreeningAdapter
+import woowacourse.movie.presenter.cinema.ScreeningPresenter
+import woowacourse.movie.view.cinema.adapter.ScreeningAdapter
+import woowacourse.movie.view.reservation.ReservationActivity
 
 class ScreeningActivity :
     AppCompatActivity(),
@@ -39,7 +40,7 @@ class ScreeningActivity :
     }
 
     override fun navigateToReservationScreen(screening: Screening) {
-        val intent = ReservationActivity.newIntent(this, screening)
+        val intent = ReservationActivity.Companion.newIntent(this, screening)
         startActivity(intent)
     }
 

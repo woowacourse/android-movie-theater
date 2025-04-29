@@ -1,4 +1,4 @@
-package woowacourse.movie.contract.reservation
+package woowacourse.movie.contract.cinema
 
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ScreeningContent

@@ -1,4 +1,4 @@
-package woowacourse.movie.view.reservation.adapter
+package woowacourse.movie.view.cinema.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package woowacourse.movie.presenter.reservation
+package woowacourse.movie.presenter.cinema
 
 import io.mockk.Runs
 import io.mockk.every
@@ -7,7 +7,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.contract.reservation.ScreeningContract
+import woowacourse.movie.contract.cinema.ScreeningContract
 import woowacourse.movie.data.reservation.FakeScreeningData
 import woowacourse.movie.domain.reservation.Movie
 import woowacourse.movie.domain.reservation.Screening
@@ -123,5 +123,14 @@ class ScreeningPresenterTest {
                 ),
             )
         }
+    }
+
+    @Test
+    fun `영화를 선택하면 극장을 선택할 수 있는 창이 나온다`() {
+        // given
+
+        // when
+
+        // then
     }
 }
