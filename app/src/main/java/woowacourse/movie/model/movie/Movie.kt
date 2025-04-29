@@ -12,6 +12,7 @@ data class Movie(
     val endDate: LocalDate,
     val runningTime: Int,
 ) : Serializable {
+
     companion object {
         private val posterImages =
             listOf(
