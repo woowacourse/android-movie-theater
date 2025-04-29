@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
-import woowacourse.movie.adpater.BookedDateSpinnerAdapter
-import woowacourse.movie.adpater.BookedTimeSpinnerAdapter
 import woowacourse.movie.databinding.MovieBookingBinding
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Movie
