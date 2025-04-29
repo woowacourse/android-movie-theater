@@ -2,14 +2,24 @@ package woowacourse.movie.model.theater
 
 import woowacourse.movie.R
 import woowacourse.movie.model.movie.Movie
+import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalTime
 
 data class MovieScreeningInfoByTheater(
     val movie: Movie,
     val screeningInfo: ScreeningInfo,
-) {
+) : Serializable {
     companion object {
+        fun findMovieScreeningInfo(
+            movieScreeningInfoByTheaters: List<MovieScreeningInfoByTheater>,
+            movieId: Long,
+        ): List<ScreeningInfo> {
+            return movieScreeningInfoByTheaters.filter { movieScreeningInfoByTheater ->
+                movieScreeningInfoByTheater.movie.id == movieId
+            }.map { it.screeningInfo }
+        }
+
         val values =
             listOf(
                 MovieScreeningInfoByTheater(
