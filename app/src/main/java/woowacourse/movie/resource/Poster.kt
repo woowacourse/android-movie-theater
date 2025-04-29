@@ -9,6 +9,7 @@ private val posters: Map<String, Int> =
         "해리 포터와 비밀의 방" to R.drawable.img_harry_potter_and_the_chamber_of_secrets,
         "해리 포터와 아즈카반의 죄수" to R.drawable.img_harry_potter_and_the_prisoner_of_azkaban,
         "해리 포터와 불의 잔" to R.drawable.img_harry_potter_and_the_goblet_of_fire,
+        "레디 플레이어 원" to R.drawable.img_ready_player_one,
     )
 
 @DrawableRes
