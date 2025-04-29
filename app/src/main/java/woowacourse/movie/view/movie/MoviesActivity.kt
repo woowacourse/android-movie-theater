@@ -15,7 +15,7 @@ import woowacourse.movie.databinding.ActivityMoviesBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.movie.adapter.MovieAdapter
-import woowacourse.movie.view.reservation.reservation.ReservationActivity
+import woowacourse.movie.view.reservation.reservation.ReservationFragment
 
 class MoviesActivity :
     AppCompatActivity(),
@@ -44,12 +44,13 @@ class MoviesActivity :
 
         bnView.selectedItemId = R.id.fragment_movies
         bnView.setOnItemSelectedListener {
-            val fragment = when (it.itemId) {
-                R.id.fragment_movies -> MoviesFragment()
-                R.id.fragment_list -> ReservationListFragment()
-                R.id.fragment_setting -> SettingFragment()
-                else -> throw IllegalArgumentException("알 수 없는 프래그먼트 입니다")
-            }
+            val fragment =
+                when (it.itemId) {
+                    R.id.fragment_movies -> MoviesFragment()
+                    R.id.fragment_list -> ReservationListFragment()
+                    R.id.fragment_setting -> SettingFragment()
+                    else -> throw IllegalArgumentException("알 수 없는 프래그먼트 입니다")
+                }
 
             replaceFragment(fragment)
             true
@@ -64,15 +65,16 @@ class MoviesActivity :
         val intent =
             Intent(
                 this,
-                ReservationActivity::class.java,
+                ReservationFragment::class.java,
             ).apply { putExtra(Extras.MovieData.MOVIE_KEY, movie) }
         startActivity(intent)
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.fcv_main, fragment)
+            addToBackStack(null)
         }
     }
 }
