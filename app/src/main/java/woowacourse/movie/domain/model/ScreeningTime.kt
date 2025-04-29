@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 class ScreeningTime(
-    val screeningTimes: List<LocalTime>
+    val screeningTimes: List<LocalTime> = emptyList(),
 ) {
     fun getAvailableScreeningTimes(
         nowDateTime: LocalDateTime,

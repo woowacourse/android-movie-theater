@@ -1,7 +1,9 @@
 package woowacourse.movie.ui.movielist.presenter
 
 import woowacourse.movie.domain.model.Advertisement
+import woowacourse.movie.domain.model.Advertisement.Companion.DUMMY_ADS
 import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.Movie.Companion.DUMMY_MOVIES
 import woowacourse.movie.domain.model.MovieListItem
 import woowacourse.movie.ui.movielist.contract.MovieListContract
 
@@ -9,14 +11,14 @@ class MovieListPresenter(
     private val movieListView: MovieListContract.View,
 ) : MovieListContract.Presenter {
     override fun getMovieList(): List<MovieListItem.MovieItem> =
-        Movie.Companion.DUMMY_MOVIES.map {
+        DUMMY_MOVIES.map {
             MovieListItem.MovieItem(
                 it,
             )
         }
 
     override fun getAdvertisementList(): List<MovieListItem.AdItem> =
-        Advertisement.Companion.DUMMY_ADS.map {
+        DUMMY_ADS.map {
             MovieListItem.AdItem(
                 it,
             )
