@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieData
 import woowacourse.movie.domain.model.movie.Movie
+import woowacourse.movie.presentation.theater.TheaterSelectFragment
 import woowacourse.movie.ui.BaseActivity
 import woowacourse.movie.ui.adapter.MovieAdapter
 
