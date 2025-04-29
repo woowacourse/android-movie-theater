@@ -8,12 +8,12 @@ interface MovieContract {
 
         fun showToast(message: String)
 
-        fun startBookingActivity(movie: MovieUiModel)
+        fun showTheaterDialog(theaters: ArrayList<TheaterUiModel>)
     }
 
     interface Presenter {
         fun initializeData(intent: Intent)
 
-        fun onReserveClicked(movie: MovieUiModel)
+        fun setTheaters(movie: MovieUiModel)
     }
 }

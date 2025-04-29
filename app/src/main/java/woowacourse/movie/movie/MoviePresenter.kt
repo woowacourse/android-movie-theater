@@ -3,6 +3,7 @@ package woowacourse.movie.movie
 import android.content.Intent
 import woowacourse.movie.BookingDetailActivity
 import woowacourse.movie.mapper.IntentCompat
+import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Theater
@@ -12,6 +13,8 @@ import java.time.LocalTime
 class MoviePresenter(
     private val view: MovieContract.View,
 ) : MovieContract.Presenter {
+    val theater = mockTheaterList()
+
     override fun initializeData(intent: Intent) {
         val movie =
             IntentCompat.getParcelableExtra(
@@ -29,13 +32,15 @@ class MoviePresenter(
     }
 
     private fun getReservableMovies(): List<Movie> {
-        val theaters = mockTheaterList()
-
-        return theaters.map { it.movies }.flatten().distinct()
+        return theater.map { it.movies }.flatten().distinct()
     }
 
-    override fun onReserveClicked(movieUi: MovieUiModel) {
-        view.startBookingActivity(movieUi)
+    override fun setTheaters(movie: MovieUiModel) {
+        val domainMovie = movie.toDomain()
+
+        val domainTheaters = theater.filter { it.movies.contains(domainMovie) }
+
+        view.showTheaterDialog(ArrayList(domainTheaters.map { it.toUiModel() }))
     }
 
     private fun mockTheaterList(): List<Theater> {

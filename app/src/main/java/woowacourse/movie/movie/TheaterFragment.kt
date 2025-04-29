@@ -40,4 +40,8 @@ class TheaterFragment : BottomSheetDialogFragment() {
             }
         }
     }
+
+    companion object {
+        const val KEY_THEATERS = "theatersData"
+    }
 }

@@ -1,6 +1,5 @@
 package woowacourse.movie
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -9,10 +8,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.BookingDetailActivity.Companion.KEY_MOVIE_DATA
 import woowacourse.movie.movie.MovieContract
 import woowacourse.movie.movie.MoviePresenter
 import woowacourse.movie.movie.MovieUiModel
+import woowacourse.movie.movie.TheaterFragment
+import woowacourse.movie.movie.TheaterFragment.Companion.KEY_THEATERS
+import woowacourse.movie.movie.TheaterUiModel
 import woowacourse.movie.movie.adapter.MovieAdapter
 
 class MovieActivity : AppCompatActivity(), MovieContract.View {
@@ -39,7 +40,7 @@ class MovieActivity : AppCompatActivity(), MovieContract.View {
     override fun setupMovieList(movies: List<MovieUiModel>) {
         val adapter =
             MovieAdapter(movies) { movie ->
-                presenter.onReserveClicked(movie)
+                presenter.setTheaters(movie)
             }
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView_layout)
         recyclerView.adapter = adapter
@@ -50,11 +51,11 @@ class MovieActivity : AppCompatActivity(), MovieContract.View {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun startBookingActivity(movie: MovieUiModel) {
-        val intent =
-            Intent(this, BookingDetailActivity::class.java).apply {
-                putExtra(KEY_MOVIE_DATA, movie)
-            }
-        startActivity(intent)
+    override fun showTheaterDialog(theaters: ArrayList<TheaterUiModel>) {
+        val fragment = TheaterFragment()
+        val bundle = Bundle()
+
+        bundle.putParcelableArrayList(KEY_THEATERS, theaters)
+        fragment.arguments = bundle
     }
 }
