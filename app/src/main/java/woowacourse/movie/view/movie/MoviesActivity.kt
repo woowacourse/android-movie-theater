@@ -6,7 +6,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.model.Movie
 import woowacourse.movie.view.Extras
@@ -29,25 +31,20 @@ class MoviesActivity :
             insets
         }
 
-        setupMovieAdapter()
-        presenter.fetchMovies()
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add(R.id.fragment_movies, MoviesFragment())
+            }
+        }
+
+        findViewById<BottomNavigationView>(R.id.bottom_navigation_view).selectedItemId =
+            R.id.fragment_movies
+
     }
 
     override fun showMovies(movies: List<Movie>) {
         moviesAdapter.submitList(movies)
-    }
-
-    private fun setupMovieAdapter() {
-        val recyclerView = findViewById<RecyclerView>(R.id.rv_movies)
-        moviesAdapter =
-            MovieAdapter(
-                object : MovieClickListener {
-                    override fun onReservationClick(movie: Movie) {
-                        navigateToReservation(movie)
-                    }
-                },
-            )
-        recyclerView.adapter = moviesAdapter
     }
 
     override fun navigateToReservation(movie: Movie) {

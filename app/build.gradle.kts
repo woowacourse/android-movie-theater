@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.android.junit5)
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 android {
@@ -30,6 +31,11 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
@@ -53,6 +59,7 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.espresso.contrib)
+    implementation(libs.androidx.fragment.ktx)
 
     testImplementation(libs.assertj.core)
     testImplementation(libs.junit.jupiter)
