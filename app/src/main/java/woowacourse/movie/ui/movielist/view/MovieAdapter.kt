@@ -1,12 +1,12 @@
 package woowacourse.movie.ui.movielist.view
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieListItem
 import woowacourse.movie.domain.model.MovieListItem.AdItem
@@ -42,13 +42,13 @@ class MovieAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerView.ViewHolder {
-        val view: View
-
         if (viewType == VIEW_TYPE_MOVIE) {
-            view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
-            return MovieViewHolder(view, onClickBooking)
+            val inflater = LayoutInflater.from(parent.context)
+            val itemBinding = MovieItemBinding.inflate(inflater, parent, false)
+            return MovieViewHolder(itemBinding, onClickBooking)
         }
-        view =
+
+        val view =
             LayoutInflater.from(parent.context).inflate(R.layout.advertisement_item, parent, false)
         return AdvertisementViewHolder(view)
     }

@@ -1,24 +1,17 @@
 package woowacourse.movie.ui.movielist.view
 
-import android.view.View
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.utils.StringFormatter.periodFormat
+import woowacourse.movie.utils.StringFormatter
 
 class MovieViewHolder(
-    itemView: View,
+    val itemBinding: MovieItemBinding,
     val onClickBooking: (Movie) -> Unit,
-) : RecyclerView.ViewHolder(itemView) {
+) : RecyclerView.ViewHolder(itemBinding.root) {
     private var currentMovieItem: Movie? = null
-
-    private val moviePoster: ImageView = itemView.findViewById<ImageView>(R.id.img_advertisement)
-    private val movieTitle: TextView = itemView.findViewById<TextView>(R.id.tv_title)
-    private val movieReleaseDate: TextView = itemView.findViewById<TextView>(R.id.tv_release_date)
-    private val movieRunningTime: TextView = itemView.findViewById<TextView>(R.id.tv_running_time)
     private val bookingBtn: Button = itemView.findViewById<Button>(R.id.btn_booking)
 
     init {
@@ -30,14 +23,8 @@ class MovieViewHolder(
     }
 
     fun bind(item: Movie) {
-        with(item) {
-            currentMovieItem = this
-            moviePoster.setImageResource(posterId)
-            movieTitle.text = title
-            movieReleaseDate.text =
-                periodFormat(releaseDate.startDate, releaseDate.endDate)
-            movieRunningTime.text =
-                itemView.context.getString(R.string.text_minute).format(runningTime)
-        }
+        currentMovieItem = item
+        itemBinding.stringFormatter = StringFormatter
+        itemBinding.movie = item
     }
 }

@@ -1,15 +1,17 @@
 package woowacourse.movie.utils
 
 import android.icu.text.DecimalFormat
+import woowacourse.movie.domain.model.ScreeningDate
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 object StringFormatter {
-    fun periodFormat(
-        startDate: LocalDate,
-        endDate: LocalDate,
-    ): String = PERIOD_FORMAT.format(dotDateFormat(startDate), dotDateFormat(endDate))
+    fun periodFormat(screeningDate: ScreeningDate): String =
+        PERIOD_FORMAT.format(
+            dotDateFormat(screeningDate.startDate),
+            dotDateFormat(screeningDate.endDate),
+        )
 
     fun dotDateFormat(time: LocalDate): String {
         val formatter = DateTimeFormatter.ofPattern(DATE_TIME_DOT_FORMAT)
