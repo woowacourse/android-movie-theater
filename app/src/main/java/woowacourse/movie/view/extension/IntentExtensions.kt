@@ -2,6 +2,7 @@ package woowacourse.movie.view.extension
 
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import java.io.Serializable
 
 const val SERIALIZABLE_EXTRA_ERROR_MESSAGE = "Serializable extra '%s'를 찾을 수 없습니다."
@@ -21,3 +22,20 @@ inline fun <reified T : Serializable> Intent.getSerializableExtraData(key: Strin
             )
         }
     }
+
+inline fun <reified T : Serializable> Bundle.getSerializableExtraData(key: String): T =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        requireNotNull(
+            getSerializable(
+                key,
+                T::class.java,
+            ),
+        ) { SERIALIZABLE_EXTRA_ERROR_MESSAGE.format(key) }
+    } else {
+        requireNotNull(getSerializable(key) as? T) {
+            SERIALIZABLE_EXTRA_ERROR_MESSAGE.format(
+                key,
+            )
+        }
+    }
+
