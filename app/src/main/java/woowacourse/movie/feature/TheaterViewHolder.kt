@@ -8,7 +8,7 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.model.Theater
 
 class TheaterViewHolder(
-    view: View,
+    private val view: View,
 ) : RecyclerView.ViewHolder(view) {
     private val name: TextView = view.findViewById(R.id.tv_theater_name)
     private val time: TextView = view.findViewById(R.id.tv_theater_time)
@@ -18,8 +18,8 @@ class TheaterViewHolder(
         theater: Theater,
         onBookingClick: (Theater) -> Unit,
     ) {
-        name.text = theater.name
-        time.text = theater.timesCount.toString()
+        name.text = view.context.getString(R.string.theater_name, theater.name)
+        time.text = view.context.getString(R.string.theater_movie_time, theater.timesCount)
         bookingButton.setOnClickListener { onBookingClick(theater) }
     }
 }
