@@ -36,6 +36,7 @@ class ReservationSeatFragmentTest {
             LocalDateTime.of(2025, 4, 1, 11, 0),
             3,
             listOf(),
+            "선릉 극장",
         )
 
     @Before

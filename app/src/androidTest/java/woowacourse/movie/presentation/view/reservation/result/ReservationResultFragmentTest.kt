@@ -34,7 +34,7 @@ class ReservationResultFragmentTest {
                         10_000,
                     ),
                 ),
-            ).toUiModel()
+            ).toUiModel("선릉 극장")
 
     @Before
     fun setUp() {
@@ -62,9 +62,9 @@ class ReservationResultFragmentTest {
     }
 
     @Test
-    fun `예매한_영화_예매_인원_수와_좌석_번호를_보여준다`() {
+    fun `예매한_영화_예매_인원_수와_좌석_번호와_극장_이름을_보여준다`() {
         onView(withId(R.id.tv_reservation_count_info))
-            .check(matches(withText("일반 2명 | A1, A2")))
+            .check(matches(withText("일반 2명 | A1, A2 | 선릉 극장")))
     }
 
     @Test

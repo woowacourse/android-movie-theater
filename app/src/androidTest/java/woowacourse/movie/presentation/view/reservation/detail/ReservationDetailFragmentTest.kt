@@ -18,7 +18,9 @@ import woowacourse.movie.domain.model.movie.ScreeningPeriod
 import woowacourse.movie.presentation.extension.toDateTimeFormatter
 import woowacourse.movie.presentation.model.MovieUiModel
 import woowacourse.movie.presentation.model.PosterUiModel
+import woowacourse.movie.presentation.model.TheaterUiModel
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 class ReservationDetailFragmentTest {
     private lateinit var scenario: FragmentScenario<ReservationDetailFragment>
@@ -35,9 +37,25 @@ class ReservationDetailFragmentTest {
             152,
         )
 
+    private val fakeTheater: TheaterUiModel =
+        TheaterUiModel(
+            "선릉 극장",
+            listOf(
+                LocalDateTime
+                    .now()
+                    .plusDays(1)
+                    .withNano(0)
+                    .withSecond(0),
+            ),
+        )
+
     @Before
     fun setUp() {
-        val args = bundleOf("movie" to fakeMovie)
+        val args =
+            bundleOf(
+                "movie" to fakeMovie,
+                "theater" to fakeTheater,
+            )
         scenario =
             launchFragmentInContainer(args) {
                 ReservationDetailFragment()
@@ -111,6 +129,7 @@ class ReservationDetailFragmentTest {
                                     LocalDate.of(2025, 1, 1),
                                 ),
                         ),
+                "theater" to fakeTheater.copy(times = emptyList()),
             )
         launchFragmentInContainer(args) {
             ReservationDetailFragment()
