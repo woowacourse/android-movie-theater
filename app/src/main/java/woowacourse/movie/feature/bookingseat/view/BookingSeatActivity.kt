@@ -6,7 +6,6 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -48,7 +47,7 @@ class BookingSeatActivity :
         rowCount: Int,
         columnCount: Int,
     ) {
-        val tableLayout = findViewById<TableLayout>(R.id.tl_booking_seat)
+        val tableLayout = binding.tlBookingSeat
 
         for (rowIndex in 0 until rowCount) {
             val tableRow =
