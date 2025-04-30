@@ -48,15 +48,19 @@
 
     <TextView
         android:id="@+id/tv_reservation_complete_ticket_count"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="80dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_reservation_complete_timestamp"
-        tools:text="일반 3명" />
+        tools:text="일반 3명 | C3, C2, C1 | 엄청나게 긴 극장이름입니다" />
 
     <TextView
         android:id="@+id/tv_reservation_complete_ticket_price"

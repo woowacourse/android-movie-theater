@@ -26,7 +26,7 @@ class ReservationCompletePresenterTest {
         // given:
         every { view.showTitle(any()) } just Runs
         every { view.showTimestamp(any(), any()) } just Runs
-        every { view.showSeat(any()) } just Runs
+        every { view.showSeatTheaterInfo(any(), any()) } just Runs
         every { view.showPrice(any()) } just Runs
 
         // when:
@@ -40,7 +40,7 @@ class ReservationCompletePresenterTest {
                 MOVIE_TICKET_B1_C3.movieTime.value,
             )
         }
-        verify { view.showSeat(MOVIE_TICKET_B1_C3.seats) }
+        verify { view.showSeatTheaterInfo(MOVIE_TICKET_B1_C3.seats, "JAY 극장") }
         verify { view.showPrice(MOVIE_TICKET_B1_C3.price()) }
     }
 

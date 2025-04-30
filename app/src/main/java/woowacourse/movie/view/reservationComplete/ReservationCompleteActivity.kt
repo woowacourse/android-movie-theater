@@ -82,10 +82,18 @@ class ReservationCompleteActivity :
             )
     }
 
-    override fun showSeat(seats: List<Seat>) {
+    override fun showSeatTheaterInfo(
+        seats: List<Seat>,
+        theaterName: String,
+    ) {
         val seatsFormat: String = seatsToUI(seats, ", ")
         ticketCountTextView.text =
-            resources.getString(R.string.reservation_complete_ticket_count, seats.size, seatsFormat)
+            resources.getString(
+                R.string.reservation_complete_seat_theater_name_info,
+                seats.size,
+                seatsFormat,
+                theaterName,
+            )
     }
 
     override fun showPrice(price: Int) {

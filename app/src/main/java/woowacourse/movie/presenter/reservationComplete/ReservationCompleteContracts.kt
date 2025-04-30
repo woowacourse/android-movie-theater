@@ -13,7 +13,10 @@ interface ReservationCompleteContracts {
             time: Int,
         )
 
-        fun showSeat(seats: List<Seat>)
+        fun showSeatTheaterInfo(
+            seats: List<Seat>,
+            theaterName: String,
+        )
 
         fun showPrice(price: Int)
     }

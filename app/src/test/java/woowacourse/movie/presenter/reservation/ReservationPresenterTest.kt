@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.model.movie.MovieDate
 import woowacourse.movie.model.movie.MovieTime
 import woowacourse.movie.presenter.MOVIE
+import woowacourse.movie.presenter.MOVIE_SCREENING_INFO_BY_THEATER
 
 class ReservationPresenterTest {
     private lateinit var presenter: ReservationPresenter
@@ -39,7 +40,7 @@ class ReservationPresenterTest {
         every { view.updateTimes(any()) } just Runs
 
         // when:
-        presenter.updateMovieData(MOVIE)
+        presenter.updateMovieData(MOVIE_SCREENING_INFO_BY_THEATER)
 
         // then:
         verify { view.showTitle(any()) }
@@ -102,7 +103,7 @@ class ReservationPresenterTest {
         every { view.updateTimes(any()) } just Runs
         every { view.showSeatSelectionView(any()) } just Runs
 
-        presenter.updateMovieData(MOVIE)
+        presenter.updateMovieData(MOVIE_SCREENING_INFO_BY_THEATER)
 
         // when:
         presenter.onMovieToReserveRequest()
