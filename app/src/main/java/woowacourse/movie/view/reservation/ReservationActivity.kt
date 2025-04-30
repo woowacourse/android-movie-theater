@@ -62,7 +62,7 @@ class ReservationActivity :
 
     private fun updateMovieToPresenter() {
         val intentMovieData: MovieScreeningInfoByTheater =
-            intent.getSerializableExtraData<MovieScreeningInfoByTheater>(MOVIE_DATA_KEY)
+            intent.getSerializableExtraData<MovieScreeningInfoByTheater>(SCREENING_INFO_KEY)
         presenter.updateMovieData(intentMovieData)
     }
 
@@ -137,7 +137,7 @@ class ReservationActivity :
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val savedCount: Int? = savedInstanceState.getInt(TICKET_COUNT_DATA_KEY)
+        val savedCount: Int = savedInstanceState.getInt(TICKET_COUNT_DATA_KEY)
         val savedDatePosition: Int = savedInstanceState.getInt(TICKET_DATE_POSITION_DATA_KEY)
         val savedTimePosition: Int = savedInstanceState.getInt(MOVIE_TIME_POSITION_DATA_KEY)
 
@@ -210,7 +210,7 @@ class ReservationActivity :
         private const val TICKET_COUNT_DATA_KEY = "count"
         private const val TICKET_DATE_POSITION_DATA_KEY = "date"
         private const val MOVIE_TIME_POSITION_DATA_KEY = "time"
-        private const val MOVIE_DATA_KEY = "data"
+        private const val SCREENING_INFO_KEY = "data"
 
         fun getIntent(
             context: Context,
@@ -219,6 +219,6 @@ class ReservationActivity :
             Intent(
                 context,
                 ReservationActivity::class.java,
-            ).apply { putExtra(MOVIE_DATA_KEY, movieScreeningInfoByTheater) }
+            ).apply { putExtra(SCREENING_INFO_KEY, movieScreeningInfoByTheater) }
     }
 }
