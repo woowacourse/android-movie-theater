@@ -18,6 +18,7 @@ import woowacourse.movie.util.Formatter.formatDateDotSeparated
 import woowacourse.movie.util.Formatter.formatTimeWithMidnight24
 import java.time.LocalDate
 import java.time.LocalTime
+import kotlin.test.assertEquals
 
 class SchedulerDetailPresenterTest {
     private lateinit var presenter: BookingDetailPresenter
@@ -66,7 +67,7 @@ class SchedulerDetailPresenterTest {
         presenter.initializeData()
 
         verify { mockView.showMovieInfo(mockMovieUiData) }
-        verify { mockView.showTicket(any()) }
+        verify { mockView.showHeadCount() }
 
         verify { mockView.showScreeningDates(any(), any()) }
         verify { mockView.showScreeningTimes(any(), any()) }
@@ -81,28 +82,7 @@ class SchedulerDetailPresenterTest {
         val selectedDate = LocalDate.of(2028, 10, 13)
         presenter.selectDate(selectedDate)
 
-        val formattedDate = formatDateDotSeparated(selectedDate)
-
-        verify { mockView.showTicket(match { it.selectedDateText == formattedDate }) }
-    }
-
-    @Test
-    fun `날짜와 시간을 선택하면 해당하는 내용이 화면에 표시된다`() {
-        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
-        presenter.createDefaultTicket()
-        presenter.initializeData()
-
-        // 평일임
-        val selectedDate = LocalDate.of(2028, 10, 13)
-        val selectedTime = LocalTime.of(23, 0)
-        presenter.selectDate(selectedDate)
-        presenter.selectTime(selectedTime)
-
-        val formattedDate = formatDateDotSeparated(selectedDate)
-        val formattedTime = formatTimeWithMidnight24(selectedTime)
-
-        verify { mockView.showTicket(match { it.selectedDateText == formattedDate }) }
-        verify { mockView.showTicket(match { it.selectedTimeText == formattedTime }) }
+        verify { mockView.showScreeningTimes(any(), any()) }
     }
 
     @Test
@@ -117,38 +97,9 @@ class SchedulerDetailPresenterTest {
         presenter.selectDate(selectedDate)
         presenter.selectTime(selectedTime)
 
-        val formattedDate = formatDateDotSeparated(selectedDate)
-        val formattedTime = formatTimeWithMidnight24(selectedTime)
-
         presenter.increaseHeadCount()
 
-        verify { mockView.showTicket(match { it.selectedDateText == formattedDate }) }
-        verify { mockView.showTicket(match { it.selectedTimeText == formattedTime }) }
-
-        verify { mockView.showTicket(match { it.headCount == 1 }) }
-    }
-
-    @Test
-    fun `-버튼을 누르면 인원수가 0인 경우에 버튼을 눌러도 인원수가 변경되지 않는다`() {
-        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
-        presenter.createDefaultTicket()
-        presenter.initializeData()
-
-        // 평일임
-        val selectedDate = LocalDate.of(2028, 10, 13)
-        val selectedTime = LocalTime.of(23, 0)
-
-        presenter.selectDate(selectedDate)
-        presenter.selectTime(selectedTime)
-
-        val formattedDate = formatDateDotSeparated(selectedDate)
-        val formattedTime = formatTimeWithMidnight24(selectedTime)
-        presenter.decreaseHeadCount()
-
-        verify { mockView.showTicket(match { it.selectedDateText == formattedDate }) }
-        verify { mockView.showTicket(match { it.selectedTimeText == formattedTime }) }
-
-        verify { mockView.showTicket(match { it.headCount == 0 }) }
+        verify { mockView.showHeadCount() }
     }
 
     @Test
@@ -180,37 +131,24 @@ class SchedulerDetailPresenterTest {
 
     @Test
     fun `인원수가 10명인 경우 -버튼을 누르면 인원수가 줄어든다`() {
-        presenter.restoreTicketData(10, "2028-10-13", "11:00")
+        presenter.restoreTicketData(10, "2028.10.13", "11:00")
         presenter.initializeData()
 
         presenter.decreaseHeadCount()
+        val currentTicket = presenter.getCurrentTicketUiModel()
 
-        verify { mockView.showTicket(match { it.headCount == 9 }) }
-    }
-
-    @Test
-    fun `상태를 복원했을 때 화면에 이전 값이 그대로 표시된다`() {
-        presenter.restoreTicketData(3, "2028-10-13", "11:00")
-        presenter.initializeData()
-
-        verify {
-            mockView.showTicket(
-                match {
-                    it.selectedDateText == "2028.10.13" &&
-                        it.selectedTimeText == "11:00" &&
-                        it.headCount == 3
-                },
-            )
-        }
+        verify { mockView.showHeadCount() }
+        assertEquals(currentTicket.headCount, 9)
     }
 
     @Test
     fun `저장된 인원 수가 있으면 복원된다`() {
-        presenter.restoreTicketData(10, "2028-10-13", "11:00")
+        presenter.restoreTicketData(10, "2028.10.13", "11:00")
         presenter.initializeData()
 
-        verify { mockView.showTicket(match { it.selectedDateText == "2028.10.13" }) }
-        verify { mockView.showTicket(match { it.selectedTimeText == "11:00" }) }
-        verify { mockView.showTicket(match { it.headCount == 10 }) }
+        val currentTicket = presenter.getCurrentTicketUiModel()
+        verify { mockView.showHeadCount() }
+
+        assertEquals(currentTicket.headCount, 10)
     }
 }

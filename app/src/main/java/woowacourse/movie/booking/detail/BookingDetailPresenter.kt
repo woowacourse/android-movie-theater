@@ -17,8 +17,7 @@ class BookingDetailPresenter(
     private val movie: MovieUiModel,
     private val theater: TheaterUiModel,
 ) : BookingDetailContract.Presenter {
-    lateinit var ticket: Ticket
-        private set
+    private lateinit var ticket: Ticket
     private lateinit var scheduler: Scheduler
 
     override fun initializeData() {
