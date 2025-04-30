@@ -47,7 +47,7 @@ class MovieListActivity :
         val adapter =
             MovieAdapter(
                 onClickBooking = { movie ->
-                    val theaterFragment = TheaterBottomSheetDialogFragment.newInstance()
+                    val theaterFragment = TheaterBottomSheetDialogFragment.newInstance(movie)
                     theaterFragment.show(supportFragmentManager, "dialog")
                 },
             )

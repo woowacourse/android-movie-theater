@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.movielist.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +9,13 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
+import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Theaters
+import woowacourse.movie.sample.DUMMY_MOVIES
 import woowacourse.movie.sample.DUMMY_THEATERS
 import woowacourse.movie.ui.booking.view.BookingActivity
+import woowacourse.movie.utils.bundleSerializable
+import woowacourse.movie.utils.intentSerializable
 
 class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
@@ -41,16 +46,21 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
             TheaterAdapter { theater ->
                 startActivity(BookingActivity.newIntent(view.context, theater))
             }
+
+        val movie = arguments?.bundleSerializable("EXTRA_MOVIE", Movie::class.java) ?: DUMMY_MOVIES.first()
+
         binding.theatersRecyclerView.adapter = adapter
-        val theaters = Theaters(DUMMY_THEATERS.theaters)
+        val theaters = DUMMY_THEATERS.availableTheaters(movie)
         adapter.submitList(theaters.theaters.toList())
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() =
+        fun newInstance(movie: Movie) =
             TheaterBottomSheetDialogFragment().apply {
-                arguments = Bundle()
+                arguments = Bundle().apply {
+                    putSerializable("EXTRA_MOVIE", movie)
+                }
             }
     }
 }
