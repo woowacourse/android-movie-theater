@@ -45,18 +45,15 @@ class ReservationSeatFragment :
         setupActionBar()
 
         val screen = arguments?.getParcelableCompat<ScreenUiModel>(BUNDLE_KEY_SCREEN)
-        val reservationInfo = getReservationInfo(savedInstanceState)
-        presenter.fetchData(reservationInfo, screen)
+        val reservationInfo = arguments.getParcelableCompat<ReservationInfoUiModel>(BUNDLE_KEY_RESERVATION_INFO)
+        val restoredSeats = savedInstanceState?.getParcelableCompat<ScreenUiModel>(BUNDLE_RESTORE_KEY_SEATS)
+        presenter.fetchData(reservationInfo, screen, restoredSeats)
     }
-
-    private fun getReservationInfo(savedInstanceState: Bundle?): ReservationInfoUiModel =
-        savedInstanceState?.getParcelableCompat<ReservationInfoUiModel>(BUNDLE_KEY_RESERVATION_INFO)
-            ?: arguments.getParcelableCompat<ReservationInfoUiModel>(BUNDLE_KEY_RESERVATION_INFO)
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        outState.putParcelable(BUNDLE_KEY_RESERVATION_INFO, presenter.reservationInfo)
+        outState.putParcelable(BUNDLE_RESTORE_KEY_SEATS, ScreenUiModel(views.findSelectedViews()))
     }
 
     override fun showScreen(
@@ -107,6 +104,7 @@ class ReservationSeatFragment :
     companion object {
         private const val BUNDLE_KEY_RESERVATION_INFO = "reservation_info"
         private const val BUNDLE_KEY_SCREEN = "screen"
+        private const val BUNDLE_RESTORE_KEY_SEATS = "seats"
 
         fun newInstance(
             reservationInfo: ReservationInfoUiModel,

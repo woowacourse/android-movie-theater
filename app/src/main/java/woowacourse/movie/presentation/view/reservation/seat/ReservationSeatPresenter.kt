@@ -15,18 +15,21 @@ class ReservationSeatPresenter(
     private val view: ReservationSeatContract.View,
 ) : ReservationSeatContract.Presenter {
     private val machine: TicketMachine = TicketMachine(DiceCinemaPricePolicy())
-    private var _reservationInfo: ReservationInfo? = null
-    val reservationInfo get() = _reservationInfo?.toUiModel()
+    private var reservationInfo: ReservationInfo? = null
+    private lateinit var theaterName: String
 
     override fun fetchData(
         reservationInfo: ReservationInfoUiModel,
         screen: ScreenUiModel?,
+        restoredSeats: ScreenUiModel?,
     ) {
-        _reservationInfo = reservationInfo.toModel()
+        this.reservationInfo = reservationInfo.toModel()
+        restoreSelectedSeats(restoredSeats)
+        this.theaterName = reservationInfo.theaterName
         view.showScreen(
             reservationInfo,
             screen ?: Screen.DEFAULT_SCREEN.toUiModel(),
-            _reservationInfo?.seats?.map { it.toUiModel() } ?: emptyList(),
+            this.reservationInfo?.seats?.map { it.toUiModel() } ?: emptyList(),
             publishTicketBundle()?.totalPrice ?: 0,
             canPublish(),
         )
@@ -34,7 +37,7 @@ class ReservationSeatPresenter(
 
     override fun updateSeat(seat: SeatUiModel) {
         runCatching {
-            _reservationInfo?.updateSeats(seat.toModel())
+            reservationInfo?.updateSeats(seat.toModel())
         }.onFailure {
             view.notifySeatUpdateFailed(it.message.orEmpty())
             return
@@ -49,16 +52,20 @@ class ReservationSeatPresenter(
 
     override fun publishTickets() {
         publishTicketBundle()?.let {
-            view.notifyPublishedTickets(it.toUiModel())
+            view.notifyPublishedTickets(it.toUiModel(theaterName))
             return
         }
     }
 
-    private fun canPublish(): Boolean = _reservationInfo?.canPublish() ?: false
+    private fun restoreSelectedSeats(restoredSeats: ScreenUiModel?) {
+        restoredSeats?.seats?.forEach { reservationInfo?.updateSeats(it.toModel()) }
+    }
+
+    private fun canPublish(): Boolean = reservationInfo?.canPublish() ?: false
 
     private fun publishTicketBundle(): TicketBundle? {
         runCatching {
-            reservationInfo?.let { machine.publishTickets(it.toModel()) }
+            reservationInfo?.let { machine.publishTickets(it) }
         }.onSuccess {
             return it
         }

@@ -57,9 +57,9 @@ class ReservationDetailPresenter(
                 movie.title,
                 reservationDateTime,
                 reservationCount,
-            ).toUiModel()
+            ).toUiModel(theater.name)
 
-        view.notifyReservationConfirm(reservationInfo, screen.toUiModel())
+        view.notifyReservationConfirm(reservationInfo, screen.toUiModel(), theater.name)
     }
 
     private fun setupInitialView(dateTime: LocalDateTime?) {

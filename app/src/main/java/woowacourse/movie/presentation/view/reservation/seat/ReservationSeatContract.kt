@@ -10,6 +10,7 @@ interface ReservationSeatContract {
         fun fetchData(
             reservationInfo: ReservationInfoUiModel,
             screen: ScreenUiModel?,
+            restoredSeats: ScreenUiModel?,
         )
 
         fun updateSeat(seat: SeatUiModel)

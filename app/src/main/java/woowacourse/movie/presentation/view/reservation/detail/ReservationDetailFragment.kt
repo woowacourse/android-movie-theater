@@ -86,6 +86,7 @@ class ReservationDetailFragment :
     override fun notifyReservationConfirm(
         reservationInfo: ReservationInfoUiModel,
         screen: ScreenUiModel,
+        theaterName: String,
     ) {
         val fragment = ReservationSeatFragment.newInstance(reservationInfo, screen)
         parentFragmentManager.commit {
@@ -94,14 +95,6 @@ class ReservationDetailFragment :
             addToBackStack(null)
         }
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//
-//        val movie = arguments.getParcelableCompat<MovieUiModel>(BUNDLE_KEY_MOVIE)
-//        val theater = arguments.getParcelableCompat<TheaterUiModel>(BUNDLE_KEY_THEATER)
-//        presenter.fetchData(movie, theater)
-//    }
 
     override fun updateDates(
         dates: List<LocalDate>,
@@ -192,10 +185,6 @@ class ReservationDetailFragment :
         private const val RESTORE_BUNDLE_KEY_RESERVATION_NUMBER = "reservation_number"
         private const val SPINNER_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm"
 
-        //        fun newInstance(movie: MovieUiModel): ReservationDetailFragment =
-//            ReservationDetailFragment().apply {
-//                arguments = bundleOf(BUNDLE_KEY_MOVIE to movie)
-//            }
         fun newInstance(
             movie: MovieUiModel,
             theater: TheaterUiModel,

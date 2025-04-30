@@ -12,13 +12,15 @@ class TicketBundleUiModel(
     val dateTime: LocalDateTime,
     val totalPrice: Int,
     val labels: List<SeatUiModel>,
+    val theaterName: String,
 ) : Parcelable
 
-fun TicketBundle.toUiModel(): TicketBundleUiModel =
+fun TicketBundle.toUiModel(theaterName: String): TicketBundleUiModel =
     TicketBundleUiModel(
         title,
         size,
         dateTime,
         totalPrice,
         labels.map { it.toUiModel() },
+        theaterName,
     )

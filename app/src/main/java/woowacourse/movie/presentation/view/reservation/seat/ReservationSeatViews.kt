@@ -54,6 +54,12 @@ class ReservationSeatViews(
         }
     }
 
+    fun findSelectedViews(): List<SeatUiModel> =
+        cachedSeatViews
+            .filter {
+                it.value.isSeatSelected()
+            }.map { it.key }
+
     private fun renderSeatLayout(
         screen: ScreenUiModel,
         selectedSeats: List<SeatUiModel>,
@@ -134,9 +140,11 @@ class ReservationSeatViews(
         }
 
     private fun TextView.toggleSeatBackgroundColor() {
-        val isSelected = this.getTag(id) as? Boolean ?: false
+        val isSelected = this.isSeatSelected()
         val newColorRes = if (isSelected) R.color.white else R.color.yellow_fa
         setTag(id, !isSelected)
         setBackgroundResource(newColorRes)
     }
+
+    private fun TextView.isSeatSelected(): Boolean = this.getTag(id) as? Boolean ?: false
 }
