@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="movie"
             type="woowacourse.movie.model.Movie" />
+
         <variable
             name="moviesFragment"
             type="woowacourse.movie.view.movie.MoviesFragment" />
@@ -66,7 +68,6 @@
             android:layout_height="0dp"
             android:paddingVertical="10dp"
             android:text="@string/movie_reservation"
-            android:onClick="@{() -> moviesFragment.navigateToReservation(movie)}"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

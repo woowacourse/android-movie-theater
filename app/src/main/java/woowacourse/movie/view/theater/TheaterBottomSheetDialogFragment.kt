@@ -10,22 +10,22 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.model.Movie
-import woowacourse.movie.model.MovieDao
-import woowacourse.movie.model.Theater
 import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.compatParcelable
 import woowacourse.movie.view.reservation.reservation.ReservationActivity
 
-class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
+class TheaterBottomSheetDialogFragment :
+    BottomSheetDialogFragment(),
+    TheaterContract.View {
     private lateinit var theaterAdapter: TheaterAdapter
     private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
-    private lateinit var movie: Movie
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        movie =
-            requireArguments().compatParcelable(Extras.MovieData.MOVIE_KEY) ?: error(ERROR_ARGUMENT)
+    private val presenter: TheaterPresenter by lazy {
+        TheaterPresenter(
+            this,
+            requireArguments().compatParcelable(Extras.MovieData.MOVIE_KEY)
+                ?: error(ERROR_ARGUMENT),
+        )
     }
 
     override fun onCreateView(
@@ -50,6 +50,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         setupTheaterAdapter()
+        presenter.fetchTheaters()
     }
 
     private fun setupTheaterAdapter() {
@@ -58,18 +59,18 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
             TheaterAdapter(
                 object : TheaterClickListener {
                     override fun onTheaterClick(theaterUIModel: TheaterUIModel) {
-                        navigateToReservation(theaterUIModel)
+                        presenter.theaterSelected(theaterUIModel)
                     }
                 },
-                movie,
             )
         recyclerView.adapter = theaterAdapter
-        theaterAdapter.submitList(
-            MovieDao().getTheaterNames().map { Theater(it, MovieDao().getMovies(it)) },
-        )
     }
 
-    private fun navigateToReservation(theaterUIModel: TheaterUIModel) {
+    override fun showTheaters(theaters: List<TheaterUIModel>) {
+        theaterAdapter.submitList(theaters)
+    }
+
+    override fun navigateToReservation(theaterUIModel: TheaterUIModel) {
         val intent =
             Intent(requireContext(), ReservationActivity::class.java).apply {
                 putExtra(Extras.TheaterData.THEATER_UI_MODEL_KEY, theaterUIModel)

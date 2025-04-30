@@ -5,14 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.model.Movie
-import woowacourse.movie.model.Theater
 import woowacourse.movie.model.TheaterUIModel
 
 class TheaterAdapter(
     private val clickListener: TheaterClickListener,
-    val movie: Movie,
-) : ListAdapter<Theater, RecyclerView.ViewHolder>(TheaterDiffUtil) {
+) : ListAdapter<TheaterUIModel, RecyclerView.ViewHolder>(TheaterDiffUtil) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -26,13 +23,6 @@ class TheaterAdapter(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
-        val theater = (getItem(position))
-        (holder as TheaterViewHolder).bind(
-            TheaterUIModel(
-                theater.name,
-                movie,
-                theater.getTotalTimeSlotCount(movie),
-            ),
-        )
+        (holder as TheaterViewHolder).bind(getItem(position))
     }
 }

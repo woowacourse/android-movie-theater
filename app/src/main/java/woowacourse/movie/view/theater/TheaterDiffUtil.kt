@@ -1,16 +1,16 @@
 package woowacourse.movie.view.theater
 
 import androidx.recyclerview.widget.DiffUtil
-import woowacourse.movie.model.Theater
+import woowacourse.movie.model.TheaterUIModel
 
-object TheaterDiffUtil : DiffUtil.ItemCallback<Theater>() {
+object TheaterDiffUtil : DiffUtil.ItemCallback<TheaterUIModel>() {
     override fun areItemsTheSame(
-        oldItem: Theater,
-        newItem: Theater,
+        oldItem: TheaterUIModel,
+        newItem: TheaterUIModel,
     ): Boolean = oldItem.name == newItem.name
 
     override fun areContentsTheSame(
-        oldItem: Theater,
-        newItem: Theater,
+        oldItem: TheaterUIModel,
+        newItem: TheaterUIModel,
     ): Boolean = oldItem == newItem
 }
