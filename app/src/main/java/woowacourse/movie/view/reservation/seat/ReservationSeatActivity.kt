@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -48,6 +49,15 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
         seat = findViewById<TableLayout>(R.id.tv_seat)
 
         checkTicket(ticket)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> onBackPressedDispatcher.onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun checkTicket(ticket: Ticket?) {
