@@ -60,7 +60,7 @@ class ReservationPresenter(
                 movieDate = movieDate,
                 movieTime = movieTime,
                 ticketCount = ticketCount,
-                theater = movieScreeningInfoByTheater.screeningInfo.theater,
+                theater = movieScreeningInfoByTheater.theater,
             )
         view.showSeatSelectionView(movieToReserve)
     }
