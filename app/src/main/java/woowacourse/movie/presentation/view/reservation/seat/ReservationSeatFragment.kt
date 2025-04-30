@@ -42,11 +42,12 @@ class ReservationSeatFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setupActionBar()
 
         val screen = arguments?.getParcelableCompat<ScreenUiModel>(BUNDLE_KEY_SCREEN)
-        val reservationInfo = arguments.getParcelableCompat<ReservationInfoUiModel>(BUNDLE_KEY_RESERVATION_INFO)
-        val restoredSeats = savedInstanceState?.getParcelableCompat<ScreenUiModel>(BUNDLE_RESTORE_KEY_SEATS)
+        val reservationInfo =
+            arguments.getParcelableCompat<ReservationInfoUiModel>(BUNDLE_KEY_RESERVATION_INFO)
+        val restoredSeats =
+            savedInstanceState?.getParcelableCompat<ScreenUiModel>(BUNDLE_RESTORE_KEY_SEATS)
         presenter.fetchData(reservationInfo, screen, restoredSeats)
     }
 
@@ -95,10 +96,6 @@ class ReservationSeatFragment :
 
     override fun notifySeatUpdateFailed(message: String) {
         showToast(message.ifEmpty { getString(R.string.default_error_message) })
-    }
-
-    private fun setupActionBar() {
-        showActionBarBackButton(true)
     }
 
     companion object {

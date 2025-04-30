@@ -14,7 +14,6 @@ import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.ScreenUiModel
 import woowacourse.movie.presentation.model.TheaterUiModel
 import woowacourse.movie.presentation.util.DialogInfo
-import woowacourse.movie.presentation.view.MovieTheaterActivity
 import woowacourse.movie.presentation.view.reservation.seat.ReservationSeatFragment
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -44,18 +43,11 @@ class ReservationDetailFragment :
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        (requireActivity() as? MovieTheaterActivity)?.setVisibleBottomNavigation(false)
-    }
-
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setupActionBar()
 
         shouldIgnoreNextSelection = savedInstanceState != null
 
@@ -123,10 +115,6 @@ class ReservationDetailFragment :
 
     override fun notifyReservationLimitReached() {
         showToast(getString(R.string.reservation_count_limit_reached_message))
-    }
-
-    private fun setupActionBar() {
-        showActionBarBackButton(true)
     }
 
     private fun setupReservationCountControls() {

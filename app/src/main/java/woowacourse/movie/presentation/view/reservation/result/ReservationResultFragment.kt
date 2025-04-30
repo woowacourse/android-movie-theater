@@ -31,7 +31,6 @@ class ReservationResultFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setupActionBar()
         setBackPressedDispatcher()
 
         val ticketBundle =
@@ -48,10 +47,6 @@ class ReservationResultFragment :
 
     override fun onHomePressed() {
         navigateToMoviesScreen()
-    }
-
-    private fun setupActionBar() {
-        showActionBarBackButton(true)
     }
 
     private fun setBackPressedDispatcher() {

@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.view
 
 import android.os.Bundle
-import androidx.core.view.isVisible
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
@@ -14,9 +14,16 @@ import woowacourse.movie.presentation.view.setting.SettingFragment
 class MovieTheaterActivity : BaseActivity<ActivityMovieTheaterBinding>(R.layout.activity_movie_theater) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setBottomNavigationItemClickListener()
 
+        if (savedInstanceState == null) {
+            binding.bottomNavigation.selectedItemId = R.id.menu_home
+        }
+    }
+
+    private fun setBottomNavigationItemClickListener() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
-            if (binding.bottomNavigation.selectedItemId == item.itemId) return@setOnItemSelectedListener false
+            if (isSameNavItem(item)) return@setOnItemSelectedListener false
 
             when (item.itemId) {
                 R.id.menu_home -> navigateToScreen(MoviesFragment())
@@ -26,24 +33,14 @@ class MovieTheaterActivity : BaseActivity<ActivityMovieTheaterBinding>(R.layout.
 
             true
         }
-
-        if (savedInstanceState == null) {
-            binding.bottomNavigation.selectedItemId = R.id.menu_home
-        }
     }
 
-    fun setVisibleBottomNavigation(isVisible: Boolean) {
-        binding.bottomNavigation.isVisible = isVisible
-    }
+    private fun isSameNavItem(item: MenuItem): Boolean = binding.bottomNavigation.selectedItemId == item.itemId
 
-    private fun navigateToScreen(
-        fragment: Fragment,
-        isAddBackStack: Boolean = false,
-    ) {
+    private fun navigateToScreen(fragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.fragment_container_view, fragment)
-            if (isAddBackStack) addToBackStack(null)
         }
     }
 }

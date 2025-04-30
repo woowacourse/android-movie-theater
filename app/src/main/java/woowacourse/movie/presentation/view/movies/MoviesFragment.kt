@@ -2,17 +2,15 @@ package woowacourse.movie.presentation.view.movies
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMoviesBinding
 import woowacourse.movie.presentation.base.BaseFragment
 import woowacourse.movie.presentation.model.MovieUiModel
 import woowacourse.movie.presentation.model.TheaterUiModel
 import woowacourse.movie.presentation.model.TheatersUiModel
-import woowacourse.movie.presentation.view.MovieTheaterActivity
+import woowacourse.movie.presentation.view.ReservationActivity
 import woowacourse.movie.presentation.view.movies.adapter.OnMovieEventListener
 import woowacourse.movie.presentation.view.movies.dialog.TheaterBottomSheetDialogFragment
-import woowacourse.movie.presentation.view.reservation.detail.ReservationDetailFragment
 
 class MoviesFragment :
     BaseFragment<FragmentMoviesBinding>(R.layout.fragment_movies),
@@ -20,18 +18,11 @@ class MoviesFragment :
     private val presenter: MoviesPresenter by lazy { MoviesPresenter(this) }
     private val views: MoviesViews by lazy { MoviesViews(requireContext(), binding) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        (requireActivity() as? MovieTheaterActivity)?.setVisibleBottomNavigation(true)
-    }
-
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        showActionBarBackButton(false)
 
         views.bind(
             object : OnMovieEventListener {
@@ -61,13 +52,8 @@ class MoviesFragment :
         movie: MovieUiModel,
         theater: TheaterUiModel,
     ) {
-        val fragment = ReservationDetailFragment.newInstance(movie, theater)
-
-        parentFragmentManager.commit {
-            setReorderingAllowed(true)
-            add(R.id.fragment_container_view, fragment)
-            addToBackStack(null)
-        }
+        val intent = ReservationActivity.newIntent(requireContext(), movie, theater)
+        startActivity(intent)
     }
 
     companion object {
