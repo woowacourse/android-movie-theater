@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookingSeatBinding
 import woowacourse.movie.domain.BookingStatus
@@ -29,8 +30,8 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = MovieBookingSeatBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+        binding = DataBindingUtil.setContentView(this, R.layout.movie_booking_seat)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booking_seat)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -46,14 +47,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     }
 
     override fun showBookingStatusInfo() {
-        binding.screenText.text = getString(R.string.screen)
-        binding.movieTitle.text = bookingStatus.movie.title
-        binding.moviePrice.text =
-            binding.moviePrice.context.getString(
-                R.string.booking_seat_price,
-                price,
-            )
-        binding.confirmButton.text = getString(R.string.booking_seat_okay)
+        binding.bookingStatus = bookingStatus
     }
 
     override fun updateButton() {
