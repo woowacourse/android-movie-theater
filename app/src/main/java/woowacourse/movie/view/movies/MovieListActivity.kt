@@ -9,13 +9,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieStore
-import woowacourse.movie.view.booking.BookingActivity
+import woowacourse.movie.data.TheaterStore
+import woowacourse.movie.domain.model.theater.Theaters
 import woowacourse.movie.view.movies.adapter.MovieAdapter
+import woowacourse.movie.view.movies.bottomsheet.TheaterBottomSheet
 import woowacourse.movie.view.movies.model.UiModel
 
 class MovieListActivity : AppCompatActivity(), MovieListContract.View {
     private val presenter: MovieListContract.Presenter by lazy {
-        MovieListPresenter(this, MovieStore())
+        MovieListPresenter(this, MovieStore(), TheaterStore())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,13 +41,26 @@ class MovieListActivity : AppCompatActivity(), MovieListContract.View {
         val adapter =
             MovieAdapter(
                 itemsList = movieList,
-                onClickBooking = { moveToBookingComplete(it) },
+                onClickBooking = {
+                    presenter.loadTheaters(it)
+                },
             )
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
     }
 
-    private fun moveToBookingComplete(movieId: Int) {
-        startActivity(BookingActivity.newIntent(this, movieId))
+    override fun showTheaterBottomSheet(
+        movieId: Int,
+        theaters: Theaters,
+    ) {
+        TheaterBottomSheet(
+            theaters,
+            movieId,
+            onclick = {},
+        ).show(supportFragmentManager, THEATER_BOTTOM_SHEET)
+    }
+
+    companion object {
+        private const val THEATER_BOTTOM_SHEET = "BOTTOM_SHEET"
     }
 }
