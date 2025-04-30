@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class SeatGradeTest {
     @ParameterizedTest
-    @CsvSource(value = ["1,B", "2,B", "3,S", "4,S", "5,A"])
+    @CsvSource(value = ["0,B", "1,B", "2,S", "3,S", "4,A"])
     fun `좌석 행에 따라 좌석 등급을 반환한다`(
         rowValue: Int,
         expected: SeatGrade,
