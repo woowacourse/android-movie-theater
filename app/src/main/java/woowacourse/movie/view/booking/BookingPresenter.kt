@@ -17,17 +17,15 @@ class BookingPresenter(
     private val screeningInfo: ScreeningInfo,
 ) : BookingContract.Presenter {
     override fun loadMovieDetail() {
-        val screeningTimes = screeningInfo.screening
-        val screeningDate = screeningTimes.map { it.toLocalDate() }
+        val screening = screeningInfo.screening
+        val screeningDate = screening.map { it.toLocalDate() }
 
         val screeningBookingDates = ScreeningDate(screeningDate)
 
         loadScreeningDate(screeningInfo.screening, LocalDateTime.now())
 
-        // Todo 2, 예매 가능한 시간 판별
-
         view.showScreeningPeriod(screeningBookingDates.startDate, screeningBookingDates.endDate)
-        view.showMovieDetail(movies[screeningInfo.movieId], screeningTimes)
+        view.showMovieDetail(movies[screeningInfo.movieId], screening)
     }
 
     override fun loadPeopleCount() {
@@ -51,8 +49,10 @@ class BookingPresenter(
         selectedDate: LocalDate,
         now: LocalDateTime,
     ) {
-        val screeningTime = ScreeningTime(now, selectedDate)
-        val availableTimes = screeningTime.getAvailableScreeningTimes()
+        val timeOnSelectedDate = screeningInfo.screeningTime(selectedDate)
+        val availableTimes =
+            ScreeningTime(now, timeOnSelectedDate)
+                .getAvailableScreeningTimes(selectedDate)
 
         if (availableTimes.isEmpty()) {
             view.showToast()

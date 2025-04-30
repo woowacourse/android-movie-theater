@@ -44,7 +44,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         val screeningInfo = intent.getSerializable(KEY_SCREENING, ScreeningInfo::class.java)
 
         presenter = BookingPresenter(this, MovieStore(), PeopleCount(), screeningInfo)
-
         initView()
 
         savedInstanceState?.let {
@@ -77,7 +76,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
             initPosterView(posterResource)
 
             initRunningTimeView(runningTime)
-//            presenter.loadScreeningTime(dateSpinner.selectedItem as LocalDate, LocalDateTime.now())
+            presenter.loadScreeningTime(dateSpinner.selectedItem as LocalDate, LocalDateTime.now())
         }
     }
 
