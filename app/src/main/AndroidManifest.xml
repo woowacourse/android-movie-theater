@@ -23,21 +23,15 @@
         </activity>
         <activity
             android:name=".view.reservation.seat.ReservationSeatActivity"
-            android:exported="false"
-            android:parentActivityName=".view.movies.MoviesActivity" />
+            android:exported="false" />
         <activity
             android:name=".view.reservation.detail.ReservationActivity"
             android:exported="false"
-            android:parentActivityName=".view.movies.MoviesActivity" />
+            android:parentActivityName=".view.MainActivity" />
         <activity
             android:name=".view.reservation.result.ReservationCompleteActivity"
             android:exported="false"
-            android:parentActivityName=".view.movies.MoviesActivity" />
-        <activity
-            android:name=".view.movies.MoviesActivity"
-            android:exported="false">
-
-        </activity>
+            android:parentActivityName=".view.MainActivity" />
     </application>
 
 </manifest>

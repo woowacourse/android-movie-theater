@@ -3,7 +3,7 @@ package woowacourse.movie.view.movies
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.Showings
 
-interface MainContract {
+interface HomeContract {
     interface Presenter {
         fun fetchData()
     }

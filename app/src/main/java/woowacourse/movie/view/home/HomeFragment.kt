@@ -4,60 +4,91 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentHomeBinding
+import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.MovieItem
+import woowacourse.movie.domain.Showings
+import woowacourse.movie.view.movies.HomeContract
+import woowacourse.movie.view.movies.HomePresenter
+import woowacourse.movie.view.movies.OnBottomSheetDialogEventListener
+import woowacourse.movie.view.movies.OnMovieEventListener
+import woowacourse.movie.view.movies.TheaterBottomSheetDialogFragment
+import woowacourse.movie.view.movies.adapter.MovieAdapter
+import woowacourse.movie.view.reservation.detail.ReservationActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+class HomeFragment : Fragment(), HomeContract.View {
+    private val presenter = HomePresenter(this)
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        @JvmStatic
-        fun newInstance(
-            param1: String,
-            param2: String,
-        ) = HomeFragment().apply {
-            arguments =
-                Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        presenter.fetchData()
+    }
+
+    override fun showMoviesScreen(
+        movies: List<Movie>,
+        navigate: (Movie) -> Unit,
+    ) {
+        val recyclerView: RecyclerView = binding.root.findViewById(R.id.recycler_view)
+        val movieAdapter: MovieAdapter =
+            MovieAdapter(
+                object : OnMovieEventListener {
+                    override fun onClickShowTheater(movie: Movie) {
+                        navigate(movie)
+                    }
+                },
+            )
+
+        val movieItems = mutableListOf<MovieItem>()
+        movies.forEachIndexed { index, movie ->
+            movieItems.add(MovieItem.Movie(movie))
+            if ((index + 1) % 3 == 0) {
+                movieItems.add(MovieItem.Advertisement)
+            }
         }
+        recyclerView.adapter = movieAdapter
+        movieAdapter.submitList(movieItems)
+    }
+
+    override fun showTheaterSelectDialog(
+        movie: Movie,
+        navigate: (Showings) -> Unit,
+    ) {
+        val dialog =
+            TheaterBottomSheetDialogFragment(
+                object : OnBottomSheetDialogEventListener {
+                    override fun onClick(showings: Showings) {
+                        navigateToReservation(movie, showings)
+                    }
+                },
+            )
+        val bundle = Bundle()
+        bundle.putSerializable("movie", movie)
+        dialog.arguments = bundle
+        dialog.show(childFragmentManager, "TheaterBottomSheetDialog")
+    }
+
+    override fun navigateToReservation(
+        movie: Movie,
+        showings: Showings,
+    ) {
+        val intent = ReservationActivity.newIntent(requireContext(), movie, showings)
+        startActivity(intent)
     }
 }
