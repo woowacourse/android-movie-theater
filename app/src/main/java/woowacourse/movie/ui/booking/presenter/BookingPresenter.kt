@@ -1,8 +1,6 @@
 package woowacourse.movie.ui.booking.presenter
 
 import woowacourse.movie.domain.model.Headcount
-import woowacourse.movie.domain.model.ScreeningPeriod
-import woowacourse.movie.domain.model.ScreeningTimeItems
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.sample.DUMMY_THEATERS
 import woowacourse.movie.ui.booking.contract.BookingContract
@@ -51,18 +49,17 @@ class BookingPresenter(
     }
 
     override fun setupDateSpinner() {
-        val (startDate, endDate) = theater.movieSchedules[0].movie.releaseDate
-        val screeningBookingDates: List<LocalDate> =
-            ScreeningPeriod(startDate, endDate).bookingDates(LocalDate.now())
-
-        bookingView.setDateSpinner(screeningBookingDates, selectedDatePosition)
+        val screeningDateTime: List<LocalDate> =
+            theater.movieSchedules.map { it.screeningDateTime.screeningDate }
+        bookingView.setDateSpinner(screeningDateTime, selectedDatePosition)
     }
 
     override fun setupTimeSpinner() {
         val selectedDate = bookingView.getSelectedDate()
         val screeningTimesItems =
-            ScreeningTimeItems().getAvailableScreeningTimes(LocalDateTime.now(), selectedDate)
-
+            theater.movieSchedules
+                .filter { it.screeningDateTime.screeningDate.isEqual(selectedDate) }
+                .map { it.screeningDateTime.screeningTime }
         bookingView.setTimeSpinner(screeningTimesItems, selectedTimePosition)
     }
 
@@ -77,6 +74,10 @@ class BookingPresenter(
     }
 
     override fun completeBooking() {
-        bookingView.startBookingSeatActivity(theater.movieSchedules[0].movie.title, selectedDateTime, headcount)
+        bookingView.startBookingSeatActivity(
+            theater.movieSchedules[0].movie.title,
+            selectedDateTime,
+            headcount,
+        )
     }
 }
