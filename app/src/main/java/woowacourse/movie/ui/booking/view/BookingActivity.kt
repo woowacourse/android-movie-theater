@@ -13,12 +13,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.ui.booking.contract.BookingContract
 import woowacourse.movie.ui.booking.presenter.BookingPresenter
 import woowacourse.movie.ui.seat.BookingSeatActivity
+import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.StringFormatter.dotDateFormat
 import woowacourse.movie.utils.bundleSerializable
 import woowacourse.movie.utils.intentSerializable
@@ -29,17 +33,18 @@ import java.time.LocalTime
 class BookingActivity :
     AppCompatActivity(),
     BookingContract.View {
+    private lateinit var binding: ActivityBookingBinding
+
     private val bookingPresenter = BookingPresenter(this)
 
-    private val peopleCountView: TextView by lazy { findViewById(R.id.tv_headcount) }
     private val dateSpinner: Spinner by lazy { findViewById(R.id.sp_date) }
     private val timeSpinner: Spinner by lazy { findViewById(R.id.sp_time) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_booking)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_booking)
 
         applyWindowInsets()
 
@@ -61,23 +66,13 @@ class BookingActivity :
     override fun getSelectedTimePosition(): Int = timeSpinner.selectedItemPosition
 
     override fun setMovieInfoViews(movie: Movie) {
-        val movieTitleView: TextView = findViewById(R.id.tv_title)
-        val (startDate, endDate) = movie.releaseDate
-        val posterView: ImageView = findViewById(R.id.img_movie_poster)
-        val movieReleaseDateView: TextView = findViewById(R.id.tv_screening_period)
-        val movieRunningTimeView: TextView = findViewById(R.id.tv_running_time)
-
-        movieTitleView.text = movie.title
-        posterView.setImageResource(movie.posterId)
-        movieReleaseDateView.text =
-            getString(R.string.text_date_period)
-                .format(dotDateFormat(startDate), dotDateFormat(endDate))
-        movieRunningTimeView.text = getString(R.string.text_minute).format(movie.runningTime)
+        binding.movie = movie
+        binding.stringFormatter = StringFormatter
         bookingPresenter.refreshHeadcountDisplay()
     }
 
     override fun updateHeadcountDisplay(headcount: Headcount) {
-        peopleCountView.text = headcount.count.toString()
+        binding.headcount = headcount
     }
 
     override fun setDateSpinner(
@@ -89,9 +84,11 @@ class BookingActivity :
                 ArrayAdapter(
                     this@BookingActivity,
                     android.R.layout.simple_spinner_item,
-                    spinnerItems,
+                    spinnerItems
                 )
-            setSelection(position)
+            if (spinnerItems.isNotEmpty()) {
+                setSelection(position)
+            }
 
             onItemSelectedListener =
                 AdapterItemSelectedListener { pos ->
