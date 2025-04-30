@@ -29,30 +29,34 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        binding.mainBottomNavigationBar.setOnItemSelectedListener(object :
-            NavigationBarView.OnItemSelectedListener {
-            override fun onNavigationItemSelected(item: MenuItem): Boolean {
-                var selectedFragment: Fragment? = null
-                when (item.itemId) {
-                    R.id.bottom_navigation_reservation_details -> selectedFragment =
-                        ReservationDetailsFragment()
+        binding.mainBottomNavigationBar.setOnItemSelectedListener(
+            object :
+                NavigationBarView.OnItemSelectedListener {
+                override fun onNavigationItemSelected(item: MenuItem): Boolean {
+                    var selectedFragment: Fragment? = null
+                    when (item.itemId) {
+                        R.id.bottom_navigation_reservation_details ->
+                            selectedFragment =
+                                ReservationDetailsFragment()
 
-                    R.id.bottom_navigation_home -> selectedFragment = HomeFragment()
-                    R.id.bottom_navigation_setting -> selectedFragment = SettingFragment()
+                        R.id.bottom_navigation_home -> selectedFragment = HomeFragment()
+                        R.id.bottom_navigation_setting -> selectedFragment = SettingFragment()
+                    }
+                    selectedFragment?.let {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.main_fragment_container, selectedFragment).commit()
+                        return true
+                    }
+                    return false
                 }
-                selectedFragment?.let {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_fragment_container, selectedFragment).commit()
-                    return true
-                }
-                return false
-            }
-        })
+            },
+        )
     }
 
     companion object {
-        fun getIntent(context: Context): Intent = Intent(context, MainActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        }
+        fun getIntent(context: Context): Intent =
+            Intent(context, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            }
     }
 }

@@ -30,7 +30,10 @@ class HomeFragment : Fragment(), MoviesContracts.View {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         presenter.initView()
@@ -38,19 +41,21 @@ class HomeFragment : Fragment(), MoviesContracts.View {
 
     override fun showMovies(movies: List<Movie>) {
         if (::movieAdapter.isInitialized.not()) {
-            movieAdapter = MovieAdapter(
-                movies = mutableListOf(),
-                movieClickListener = object : MovieClickListener {
-                    override fun onReservationClick(movieId: Long) {
-                        presenter.onTheaterRequested(movieId)
-                    }
-                },
-                advertisementClickListener = {
-                    presenter.onAdvertisementRequested(
-                        ADVERTISEMENT_URL,
-                    )
-                },
-            )
+            movieAdapter =
+                MovieAdapter(
+                    movies = mutableListOf(),
+                    movieClickListener =
+                        object : MovieClickListener {
+                            override fun onReservationClick(movieId: Long) {
+                                presenter.onTheaterRequested(movieId)
+                            }
+                        },
+                    advertisementClickListener = {
+                        presenter.onAdvertisementRequested(
+                            ADVERTISEMENT_URL,
+                        )
+                    },
+                )
             binding.rvMainMovies.adapter = movieAdapter
         }
         movieAdapter.updateMovies(movies)

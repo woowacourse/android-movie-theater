@@ -14,11 +14,11 @@ data class MovieScreeningInfoByTheater(
         fun findMovieScreeningInfo(
             movieScreeningInfoByTheaters: List<MovieScreeningInfoByTheater>,
             movieId: Long,
-        ): List<ScreeningInfo> {
-            return movieScreeningInfoByTheaters.filter { movieScreeningInfoByTheater ->
-                movieScreeningInfoByTheater.movie.id == movieId
-            }.map { it.screeningInfo }
-        }
+        ): List<ScreeningInfo> =
+            movieScreeningInfoByTheaters
+                .filter { movieScreeningInfoByTheater ->
+                    movieScreeningInfoByTheater.movie.id == movieId
+                }.map { it.screeningInfo }
 
         val values =
             listOf(
