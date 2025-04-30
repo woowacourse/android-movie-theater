@@ -23,8 +23,10 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(R.layout.ac
         val movie = intent.getParcelableCompat<MovieUiModel>(BUNDLE_KEY_MOVIE)
         val theater = intent.getParcelableCompat<TheaterUiModel>(BUNDLE_KEY_THEATER)
 
-        val fragment = ReservationDetailFragment.newInstance(movie, theater)
-        navigateToScreen(fragment)
+        if (savedInstanceState == null) {
+            val fragment = ReservationDetailFragment.newInstance(movie, theater)
+            navigateToScreen(fragment)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
