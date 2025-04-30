@@ -4,10 +4,12 @@ import android.os.Bundle
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import woowacourse.movie.databinding.ActivityMainBinding
+import woowacourse.movie.presentation.bookinglist.BookingListFragment
 import woowacourse.movie.presentation.movies.MoviesFragment
+import woowacourse.movie.presentation.setting.SettingFragment
 import woowacourse.movie.ui.BaseActivity
 
 class MainActivity : BaseActivity() {
@@ -36,25 +38,29 @@ class MainActivity : BaseActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_list -> {
-                    supportFragmentManager.commit {
-                    }
+                    replaceFragment(BookingListFragment())
                     true
                 }
 
                 R.id.action_home -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace(R.id.main_container, MoviesFragment())
-                    }
+                    replaceFragment(MoviesFragment())
                     true
                 }
 
                 R.id.action_settings -> {
+                    replaceFragment(SettingFragment())
                     true
                 }
 
                 else -> false
             }
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(binding.mainContainer.id, fragment)
         }
     }
 }
