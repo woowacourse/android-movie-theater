@@ -13,6 +13,8 @@ import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieDao
 import woowacourse.movie.model.Theater
+import woowacourse.movie.view.Extras
+import woowacourse.movie.view.compatParcelable
 import woowacourse.movie.view.movie.MovieClickListener
 import woowacourse.movie.view.movie.MoviesActivity
 import woowacourse.movie.view.reservation.reservation.ReservationFragment
@@ -24,7 +26,9 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        movie = requireArguments().getParcelable("movieKey")!!
+        movie =
+            requireArguments().compatParcelable(Extras.MovieData.MOVIE_KEY)
+                ?: error("Movie argument is required")
     }
 
     override fun onCreateView(
@@ -84,7 +88,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun navigateToReservation(movie: Movie) {
-        val bundle = bundleOf("movieKey" to movie)
+        val bundle = bundleOf(Extras.MovieData.MOVIE_KEY to movie)
         parentFragmentManager.setFragmentResult("requestKey", bundle)
 
         (requireActivity() as? MoviesActivity)?.replaceFragment(ReservationFragment())
@@ -92,13 +96,11 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        private const val MOVIE_KEY = "movieKey"
-
         fun newInstance(movie: Movie): TheaterBottomSheetDialogFragment =
             TheaterBottomSheetDialogFragment().apply {
                 arguments =
                     Bundle().apply {
-                        putParcelable(MOVIE_KEY, movie)
+                        putParcelable(Extras.MovieData.MOVIE_KEY, movie)
                     }
             }
     }

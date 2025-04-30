@@ -60,12 +60,8 @@ class MoviesFragment :
     }
 
     override fun navigateToReservation(movie: Movie) {
-//        val bundle = bundleOf("movieKey" to movie)
-//        parentFragmentManager.setFragmentResult("requestKey", bundle)
-//
-//        (requireActivity() as? MoviesActivity)?.replaceFragment(ReservationFragment())
         val bottomSheet = TheaterBottomSheetDialogFragment.newInstance(movie)
-        bottomSheet.show(parentFragmentManager, "theater_sheet")
+        bottomSheet.show(parentFragmentManager, "theater_bottom_sheet")
     }
 
     private fun setupMovieAdapter() {

@@ -17,6 +17,7 @@ import woowacourse.movie.databinding.FragmentReservationBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.view.Extras
+import woowacourse.movie.view.compatParcelable
 import woowacourse.movie.view.movie.MoviesActivity
 import woowacourse.movie.view.reservation.seat.SeatSelectActivity
 import java.time.LocalDate
@@ -56,7 +57,7 @@ class ReservationFragment :
         super.onViewCreated(view, savedInstanceState)
 
         parentFragmentManager.setFragmentResultListener("requestKey", this) { _, bundle ->
-            val movie = bundle.getParcelable<Movie>("movieKey")
+            val movie = bundle.compatParcelable<Movie>(Extras.MovieData.MOVIE_KEY)
             presenter.fetchData { movie }
         }
 
