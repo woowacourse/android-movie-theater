@@ -2,11 +2,14 @@ package woowacourse.movie.presenter.reservation
 
 import woowacourse.movie.contract.reservation.ReservationContract
 import woowacourse.movie.domain.reservation.Screening
-import java.time.LocalDate
+import woowacourse.movie.domain.reservation.ShowtimePolicy
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 class ReservationPresenter(
     private val view: ReservationContract.View,
     private val screening: Screening,
+    private val showtimePolicy: ShowtimePolicy,
     ticketCount: Int? = null,
     timeItemPosition: Int? = null,
 ) : ReservationContract.Presenter {
@@ -42,8 +45,9 @@ class ReservationPresenter(
         view.setDates(screening.availableDates())
     }
 
-    override fun presentTimes(date: LocalDate) {
-        view.setTimes(screening.showtimes(date), timeItemPosition)
+    override fun presentTimes(currentDate: LocalDateTime) {
+        val showtimes: List<LocalTime> = showtimePolicy.showtimes(currentDate)
+        view.setTimes(showtimes, timeItemPosition)
     }
 
     override fun presentTicketCount() {

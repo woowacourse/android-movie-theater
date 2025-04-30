@@ -78,6 +78,8 @@ class ReservationActivity :
                 this,
                 intent.getScreeningExtra(EXTRA_SCREENING)
                     ?: error(ErrorMessage(CAUSE_SCREENING).notProvided()),
+                intent.getShowtimePolicyExtra()
+                    ?: error(ErrorMessage(CAUSE_SCREENING).notProvided()),
                 ticketCount,
                 timeItemPosition,
             )
@@ -103,6 +105,15 @@ class ReservationActivity :
                 getSerializableExtra(key, Screening::class.java)
 
             else -> getSerializableExtra(key) as? Screening
+        }
+
+    @Suppress("DEPRECATION")
+    private fun Intent.getShowtimePolicyExtra(): ShowtimePolicy? =
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ->
+                getSerializableExtra(EXTRA_SHOWTIME_POLICY, ShowtimePolicy::class.java)
+
+            else -> getSerializableExtra(EXTRA_SHOWTIME_POLICY) as? ShowtimePolicy
         }
 
     private fun initViews() {
@@ -133,8 +144,7 @@ class ReservationActivity :
                     position: Int,
                     id: Long,
                 ) {
-                    val selectedDate: LocalDate = dateSpinner.selectedItem as LocalDate
-                    presenter?.presentTimes(selectedDate)
+                    presenter?.presentTimes(LocalDateTime.now())
                         ?: error(ErrorMessage(CAUSE_SCREENING).notProvided())
                 }
 

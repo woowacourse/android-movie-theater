@@ -1,6 +1,7 @@
 package woowacourse.movie.contract.reservation
 
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 interface ReservationContract {
@@ -15,7 +16,7 @@ interface ReservationContract {
 
         fun presentDates()
 
-        fun presentTimes(date: LocalDate)
+        fun presentTimes(currentDate: LocalDateTime)
 
         fun presentTicketCount()
 
