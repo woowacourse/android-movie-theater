@@ -110,6 +110,7 @@
                     app:layout_constraintTop_toBottomOf="@id/screening_layout">
 
                     <TextView
+                        app:layout_constraintEnd_toStartOf="@id/tv_delimiter"
                         android:id="@+id/tv_head_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -122,6 +123,7 @@
                         tools:text="일반 n명" />
 
                     <TextView
+                        app:layout_constraintEnd_toStartOf="@id/tv_seats"
                         android:id="@+id/tv_delimiter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -141,10 +143,40 @@
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:text="@{ticket.seats}"
+                        app:layout_constraintEnd_toStartOf="@id/tv_delimiter2"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_delimiter"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="B1, D2" />
+
+                    <TextView
+                        android:id="@+id/tv_delimiter2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="|"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toEndOf="@id/tv_seats"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_complete_theater"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <TextView
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:maxWidth="200dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_delimiter2"
+                        android:id="@+id/tv_complete_theater"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:text="@{@string/theater_place(ticket.theater)}"
+                        tools:text="너무너무 긴 극장 이름이 등장" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

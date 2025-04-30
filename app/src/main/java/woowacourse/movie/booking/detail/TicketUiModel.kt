@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class TicketUiModel(
+    val theater: String,
     val title: String,
     val headCount: Int,
     val selectedDateText: String,

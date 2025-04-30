@@ -90,6 +90,7 @@ class BookingDetailPresenter(
 
         ticket =
             Ticket(
+                theater = theater.place,
                 title = movie.title,
                 headCount = HeadCount(headCount),
                 selectedDate = screeningDate?.let { LocalDate.parse(it, dateFormatter) } ?: LocalDate.now(),
@@ -101,6 +102,7 @@ class BookingDetailPresenter(
     override fun createDefaultTicket() {
         ticket =
             Ticket(
+                theater = theater.place,
                 title = movie.title,
                 headCount = HeadCount(0),
                 selectedDate = LocalDate.now(),

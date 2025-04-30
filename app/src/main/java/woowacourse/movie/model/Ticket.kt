@@ -4,6 +4,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 data class Ticket(
+    val theater: String,
     val title: String,
     val headCount: HeadCount,
     val selectedDate: LocalDate,

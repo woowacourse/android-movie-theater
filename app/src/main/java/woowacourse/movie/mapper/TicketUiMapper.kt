@@ -18,12 +18,13 @@ fun Ticket.toUiModel(): TicketUiModel {
     val amountText = formatMoney(amount)
 
     return TicketUiModel(
+        theater = theater,
         title = title,
         headCount = headCount.value,
         selectedDateText = selectedDateText,
         selectedTimeText = selectedTimeText,
         totalPrice = amountText,
-        seats = seats.values.joinToString(",") { it.seatName },
+        seats = seats.values.joinToString(", ") { it.seatName },
     )
 }
 
@@ -38,12 +39,13 @@ fun TicketUiModel.toDomain(): Ticket {
         if (seats.isBlank()) {
             emptyList()
         } else {
-            seats.split(",").map { seatName ->
+            seats.split(", ").map { seatName ->
                 Seat(seatName = seatName, isSelected = true)
             }
         }
 
     return Ticket(
+        theater = theater,
         title = title,
         headCount = HeadCount(headCount),
         selectedDate = selectedDate,
