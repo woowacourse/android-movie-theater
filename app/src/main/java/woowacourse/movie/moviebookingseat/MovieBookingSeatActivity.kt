@@ -86,12 +86,15 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
             .setCancelable(false)
     }
 
-    override fun navigateToMovieBooked(bookingStatus: BookingStatus, theater: Theater) {
+    override fun navigateToMovieBooked(
+        bookingStatus: BookingStatus,
+        theater: Theater,
+    ) {
         val intent =
             MovieBookedActivity.Companion.movieBookedIntent(
                 this@MovieBookingSeatActivity,
                 bookingStatus,
-                theater
+                theater,
             )
         startActivity(intent)
         finish()
@@ -126,12 +129,13 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
         fun movieBookingSeatIntent(
             otherActivity: AppCompatActivity,
             bookingStatus: BookingStatus,
-            theater: Theater
+            theater: Theater,
         ): Intent {
             return Intent(otherActivity, MovieBookingSeatActivity::class.java)
-                .apply { putExtra(KEY_BOOKING_SEAT, bookingStatus)
-                    putExtra(KEY_THEATER, theater)}
-
+                .apply {
+                    putExtra(KEY_BOOKING_SEAT, bookingStatus)
+                    putExtra(KEY_THEATER, theater)
+                }
         }
     }
 }

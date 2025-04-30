@@ -19,7 +19,10 @@ interface MovieBookingSeat {
 
         fun showConfirmDialog(bookingStatus: BookingStatus)
 
-        fun navigateToMovieBooked(bookingStatus: BookingStatus, theater: Theater)
+        fun navigateToMovieBooked(
+            bookingStatus: BookingStatus,
+            theater: Theater,
+        )
 
         fun showError(messageRes: Int)
     }

@@ -16,6 +16,7 @@ class TheaterListAdapter(
     val onClicked: (Theater) -> Unit,
 ) : RecyclerView.Adapter<TheaterListAdapter.TheaterViewHolder>() {
     private lateinit var binding: BottomSheetItemBinding
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -43,5 +44,4 @@ class TheaterListAdapter(
             }
         }
     }
-
 }

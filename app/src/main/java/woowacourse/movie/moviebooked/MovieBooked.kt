@@ -7,10 +7,16 @@ interface MovieBooked {
     interface View {
         fun fetchBookingStatus()
 
-        fun showBookedStatus(bookingStatus: BookingStatus, theater: Theater)
+        fun showBookedStatus(
+            bookingStatus: BookingStatus,
+            theater: Theater,
+        )
     }
 
     interface Presenter {
-        fun loadBookedStatus(bookingStatus: BookingStatus, theater: Theater)
+        fun loadBookedStatus(
+            bookingStatus: BookingStatus,
+            theater: Theater,
+        )
     }
 }

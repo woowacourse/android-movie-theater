@@ -18,6 +18,7 @@ private const val ARG_PARAM1 = "movie"
 
 class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,7 +29,10 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val movie: Movie =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

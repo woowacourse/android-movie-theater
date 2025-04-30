@@ -12,7 +12,6 @@ import woowacourse.movie.databinding.MovieBookedBinding
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.helper.BuildVersion
-import woowacourse.movie.helper.LocalDateHelper.toDotFormat
 
 class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
     private lateinit var binding: MovieBookedBinding
@@ -42,7 +41,10 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
         presenter.loadBookedStatus(bookingStatus, theater)
     }
 
-    override fun showBookedStatus(bookingStatus: BookingStatus, theater: Theater) {
+    override fun showBookedStatus(
+        bookingStatus: BookingStatus,
+        theater: Theater,
+    ) {
         binding.bookingStatus = bookingStatus
         binding.theater = theater
         val seatsText =
@@ -61,7 +63,7 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
         fun movieBookedIntent(
             otherActivity: AppCompatActivity,
             bookingStatus: BookingStatus,
-            theater: Theater
+            theater: Theater,
         ): Intent {
             return Intent(otherActivity, MovieBookedActivity::class.java)
                 .apply {

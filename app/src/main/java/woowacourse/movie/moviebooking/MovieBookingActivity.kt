@@ -41,10 +41,11 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
                 intent,
                 KEY_MOVIE, Movie::class,
             )
-        theater = BuildVersion().getParcelableClass(
-            intent,
-            KEY_THEATER, Theater::class
-        )
+        theater =
+            BuildVersion().getParcelableClass(
+                intent,
+                KEY_THEATER, Theater::class,
+            )
 
         presenter = MovieBookingPresenter(this@MovieBookingActivity)
         presenter.loadMovie(movie)
@@ -76,7 +77,7 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
             MovieBookingSeatActivity.movieBookingSeatIntent(
                 this@MovieBookingActivity,
                 bookingStatus,
-                theater
+                theater,
             )
         startActivity(intent)
     }
