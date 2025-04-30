@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".presentation.bookingsummary.BookingSummaryActivity">
+        tools:context=".presentation.bookingsummary.BookingSummaryActivityDataBinding">
 
         <LinearLayout
             android:layout_width="match_parent"

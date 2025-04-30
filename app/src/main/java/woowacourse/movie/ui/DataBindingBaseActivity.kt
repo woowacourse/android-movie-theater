@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import woowacourse.movie.R
 
-abstract class BaseActivity<T: ViewDataBinding> : AppCompatActivity() {
+abstract class DataBindingBaseActivity<T: ViewDataBinding> : AppCompatActivity() {
     abstract val layoutRes: Int @LayoutRes get
     abstract var binding: T
 

@@ -11,7 +11,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterSelectBinding
 import woowacourse.movie.domain.model.ScreeningInfo
 import woowacourse.movie.domain.model.movie.Movie
-import woowacourse.movie.presentation.booking.BookingActivity
+import woowacourse.movie.presentation.booking.BookingActivityDataBinding
 import woowacourse.movie.ui.adapter.TheaterAdapter
 import woowacourse.movie.ui.constant.IntentKeys
 import woowacourse.movie.ui.util.bundleSerializable
@@ -58,7 +58,7 @@ class TheaterSelectFragment :
 
     override fun navigateToBooking(screeningInfo: ScreeningInfo) {
         val intent =
-            Intent(context, BookingActivity::class.java).apply {
+            Intent(context, BookingActivityDataBinding::class.java).apply {
                 putExtra(IntentKeys.SCREENING_INFO, screeningInfo)
             }
         startActivity(intent)

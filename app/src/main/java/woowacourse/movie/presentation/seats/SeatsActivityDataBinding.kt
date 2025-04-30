@@ -2,7 +2,6 @@ package woowacourse.movie.presentation.seats
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
@@ -12,14 +11,14 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
-import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
-import woowacourse.movie.ui.BaseActivity
+import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivityDataBinding
+import woowacourse.movie.ui.DataBindingBaseActivity
 import woowacourse.movie.ui.constant.IntentKeys
 import woowacourse.movie.ui.util.TicketUiFormatter
 import woowacourse.movie.ui.util.intentSerializable
 import java.io.Serializable
 
-class SeatsActivity : BaseActivity<ActivitySeatsBinding>(), SeatsContract.View {
+class SeatsActivityDataBinding : DataBindingBaseActivity<ActivitySeatsBinding>(), SeatsContract.View {
     override val layoutRes: Int
         get() = R.layout.activity_seats
 
@@ -102,7 +101,7 @@ class SeatsActivity : BaseActivity<ActivitySeatsBinding>(), SeatsContract.View {
 
     override fun navigateToSummary(ticket: MovieTicket) {
         val intent =
-            Intent(this, BookingSummaryActivity::class.java).apply {
+            Intent(this, BookingSummaryActivityDataBinding::class.java).apply {
                 putExtra(IntentKeys.TICKET, ticket)
             }
         startActivity(intent)

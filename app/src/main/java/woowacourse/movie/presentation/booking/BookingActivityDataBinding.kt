@@ -5,18 +5,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.ScreeningInfo
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.movie.MovieTicket
-import woowacourse.movie.presentation.seats.SeatsActivity
-import woowacourse.movie.ui.BaseActivity
+import woowacourse.movie.presentation.seats.SeatsActivityDataBinding
+import woowacourse.movie.ui.DataBindingBaseActivity
 import woowacourse.movie.ui.constant.IntentKeys
 import woowacourse.movie.ui.util.PosterMapper
 import woowacourse.movie.ui.util.intentSerializable
@@ -24,8 +20,8 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Locale
 
-class BookingActivity :
-    BaseActivity<ActivityBookingBinding>(),
+class BookingActivityDataBinding :
+    DataBindingBaseActivity<ActivityBookingBinding>(),
     BookingContract.View {
     override val layoutRes: Int
         get() = R.layout.activity_booking
@@ -135,7 +131,7 @@ class BookingActivity :
 
     override fun navigateToSeats(ticket: MovieTicket) {
         val intent =
-            Intent(this, SeatsActivity::class.java).apply {
+            Intent(this, SeatsActivityDataBinding::class.java).apply {
                 putExtra(IntentKeys.TICKET, ticket)
             }
         startActivity(intent)

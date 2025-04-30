@@ -7,9 +7,9 @@ import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.bookinglist.BookingListFragment
 import woowacourse.movie.presentation.movies.MoviesFragment
 import woowacourse.movie.presentation.setting.SettingFragment
-import woowacourse.movie.ui.BaseActivity
+import woowacourse.movie.ui.DataBindingBaseActivity
 
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivityDataBinding : DataBindingBaseActivity<ActivityMainBinding>() {
     override val layoutRes: Int
         get() = R.layout.activity_main
 
