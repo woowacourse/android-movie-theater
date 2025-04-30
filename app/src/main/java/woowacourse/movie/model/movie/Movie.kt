@@ -13,7 +13,7 @@ data class Movie(
     val runningTime: Int,
 ) : Serializable {
     companion object {
-        private val posterImages =
+        val posterImages =
             listOf(
                 R.drawable.harry_potter_azkaban,
                 R.drawable.harry_potter_final_1,
