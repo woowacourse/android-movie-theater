@@ -79,6 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
+                android:paddingHorizontal="20dp"
                 android:orientation="horizontal"
                 android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@id/booking_date_time"
@@ -119,7 +120,9 @@
                     style="@style/SubTitleTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="선릉 극장" />
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    tools:text="선릉선릉선릉선릉선릉선릉선릉선릉선릉선릉선릉선릉선릉 극장" />
 
 
             </LinearLayout>
