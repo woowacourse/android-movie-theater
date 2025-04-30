@@ -15,24 +15,32 @@ class ReservationResultViews(
         cancellationTime: Int,
     ) {
         binding.tvMovieTitle.text = ticketBundle.title
-        context
-            .getString(R.string.reservation_datetime_format)
-            .toDateTimeFormatter()
-            ?.let { formatter ->
-                binding.tvMovieDate.text = ticketBundle.dateTime.format(formatter)
-            }
-        binding.tvReservationCountInfo.text =
-            context.getString(
-                R.string.reservation_count_info,
-                ticketBundle.size,
-                ticketBundle.labels.joinToString { it.toLabel() },
-            )
-        binding.tvReservationTotalPrice.text =
-            context.getString(R.string.reservation_total_price).format(ticketBundle.totalPrice)
-        binding.tvCancelDescription.text =
-            context.getString(
-                R.string.reservation_result_cancel_time_description,
-                cancellationTime,
-            )
+        binding.tvMovieDate.text = ticketBundle.toDateTimeUiString()
+        binding.tvReservationCountInfo.text = ticketBundle.toReservationCountUiString()
+        binding.tvReservationTotalPrice.text = ticketBundle.toReservationTotalPriceUiString()
+        binding.tvCancelDescription.text = setCancelDescription(cancellationTime)
     }
+
+    private fun TicketBundleUiModel.toDateTimeUiString(): String {
+        val formatter =
+            context.getString(R.string.reservation_datetime_format).toDateTimeFormatter()
+        return this.dateTime.format(formatter)
+    }
+
+    private fun TicketBundleUiModel.toReservationCountUiString(): String =
+        context.getString(
+            R.string.reservation_count_info,
+            this.size,
+            this.labels.joinToString { it.toLabel() },
+            this.theaterName,
+        )
+
+    private fun TicketBundleUiModel.toReservationTotalPriceUiString(): String =
+        context.getString(R.string.reservation_total_price).format(this.totalPrice)
+
+    private fun setCancelDescription(cancellationTime: Int): String =
+        context.getString(
+            R.string.reservation_result_cancel_time_description,
+            cancellationTime,
+        )
 }
