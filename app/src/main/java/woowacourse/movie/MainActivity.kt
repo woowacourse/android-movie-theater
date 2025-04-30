@@ -3,14 +3,13 @@ package woowacourse.movie
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.google.android.material.navigation.NavigationBarView
+import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.view.home.HomeFragment
 import woowacourse.movie.view.reservationDetails.ReservationDetailsFragment
@@ -18,6 +17,9 @@ import woowacourse.movie.view.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val homeFragment by lazy { HomeFragment() }
+    private val settingFragment by lazy { SettingFragment() }
+    private val reservationDetailsFragment by lazy { ReservationDetailsFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,28 +31,25 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        binding.mainBottomNavigationBar.setOnItemSelectedListener(
-            object :
-                NavigationBarView.OnItemSelectedListener {
-                override fun onNavigationItemSelected(item: MenuItem): Boolean {
-                    var selectedFragment: Fragment? = null
-                    when (item.itemId) {
-                        R.id.bottom_navigation_reservation_details ->
-                            selectedFragment =
-                                ReservationDetailsFragment()
+        binding.mainBottomNavigationBar.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.bottom_navigation_reservation_details ->
+                    replaceFragment(
+                        reservationDetailsFragment,
+                    )
 
-                        R.id.bottom_navigation_home -> selectedFragment = HomeFragment()
-                        R.id.bottom_navigation_setting -> selectedFragment = SettingFragment()
-                    }
-                    selectedFragment?.let {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_fragment_container, selectedFragment).commit()
-                        return true
-                    }
-                    return false
-                }
-            },
-        )
+                R.id.bottom_navigation_home -> replaceFragment(homeFragment)
+                R.id.bottom_navigation_setting -> replaceFragment(settingFragment)
+            }
+            false
+        }
+    }
+
+    private fun replaceFragment(selectedFragment: Fragment) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(binding.mainFragmentContainer.id, selectedFragment)
+        }
     }
 
     companion object {
