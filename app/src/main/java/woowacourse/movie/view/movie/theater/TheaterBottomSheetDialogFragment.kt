@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -13,6 +14,7 @@ import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieDao
 import woowacourse.movie.model.Theater
 import woowacourse.movie.view.movie.MovieClickListener
+import woowacourse.movie.view.movie.MoviesActivity
 import woowacourse.movie.view.reservation.reservation.ReservationFragment
 
 class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
@@ -66,7 +68,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
             TheaterAdapter(
                 object : MovieClickListener {
                     override fun onReservationClick(movie: Movie) {
-//                        navigateToReservation(movie)
+                        navigateToReservation(movie)
                     }
                 },
                 movie,
@@ -79,6 +81,14 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
                 Theater("잠실", MovieDao().getMovies("잠실")),
             ),
         )
+    }
+
+    private fun navigateToReservation(movie: Movie) {
+        val bundle = bundleOf("movieKey" to movie)
+        parentFragmentManager.setFragmentResult("requestKey", bundle)
+
+        (requireActivity() as? MoviesActivity)?.replaceFragment(ReservationFragment())
+        dismiss()
     }
 
     companion object {
