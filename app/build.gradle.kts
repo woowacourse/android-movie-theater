@@ -53,15 +53,15 @@ android {
 }
 
 dependencies {
-    implementation("androidx.recyclerview:recyclerview:1.4.0")
+    implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.google.material)
     implementation(libs.androidx.activity)
-    implementation("androidx.fragment:fragment-ktx:1.8.6")
-    testImplementation("io.mockk:mockk:1.14.0")
+    implementation(libs.androidx.fragment.ktx)
+    testImplementation(libs.mockk)
     testImplementation(libs.assertj.core)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.kotest.runner.junit5)
