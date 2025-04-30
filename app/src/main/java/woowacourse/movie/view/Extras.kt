@@ -7,6 +7,7 @@ object Extras {
 
     object TheaterData {
         const val THEATER_UI_MODEL_KEY = "theater_ui_model"
+        const val THEATER_REQUEST_KEY = "requestKey"
     }
 
     object ReservationData {

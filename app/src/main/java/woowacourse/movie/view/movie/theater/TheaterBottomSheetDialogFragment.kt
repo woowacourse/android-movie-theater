@@ -43,9 +43,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
                 container,
                 false,
             )
-
         binding.fragmentBottomSheet = this
-
         return binding.root
     }
 
@@ -88,7 +86,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
             bundleOf(
                 Extras.TheaterData.THEATER_UI_MODEL_KEY to theaterUIModel,
             )
-        parentFragmentManager.setFragmentResult("requestKey", bundle)
+        parentFragmentManager.setFragmentResult(Extras.TheaterData.THEATER_REQUEST_KEY, bundle)
 
         (requireActivity() as? MoviesActivity)?.replaceFragment(ReservationFragment())
         dismiss()

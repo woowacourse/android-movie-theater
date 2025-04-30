@@ -56,8 +56,12 @@ class ReservationFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        parentFragmentManager.setFragmentResultListener("requestKey", this) { _, bundle ->
-            val theaterUiModel = bundle.compatParcelable<TheaterUIModel>(Extras.TheaterData.THEATER_UI_MODEL_KEY)
+        parentFragmentManager.setFragmentResultListener(
+            Extras.TheaterData.THEATER_REQUEST_KEY,
+            this,
+        ) { _, bundle ->
+            val theaterUiModel =
+                bundle.compatParcelable<TheaterUIModel>(Extras.TheaterData.THEATER_UI_MODEL_KEY)
             presenter.fetchData { theaterUiModel }
         }
 
