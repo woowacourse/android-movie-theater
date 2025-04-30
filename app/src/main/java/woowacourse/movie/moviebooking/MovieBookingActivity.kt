@@ -10,13 +10,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookingBinding
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.helper.BuildVersion
-import woowacourse.movie.helper.LocalDateHelper.toDotFormat
 import woowacourse.movie.moviebookingseat.MovieBookingSeatActivity
 import java.time.LocalDate
 import java.time.LocalTime
@@ -30,8 +30,7 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = MovieBookingBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.movie_booking)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booking)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -57,15 +56,7 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
     }
 
     override fun showMovieInfo() {
-        binding.movieTitle.text = movie.title
-        binding.moviePoster.setImageResource(movie.poster)
-        binding.movieDate.text =
-            getString(
-                R.string.movie_screening_date,
-                movie.screeningPeriod.screeningStartDate.toDotFormat(),
-                movie.screeningPeriod.screeningEndDate.toDotFormat(),
-            )
-        binding.movieRunningTime.text = getString(R.string.movie_running_time, movie.runningTime)
+        binding.movie = movie
     }
 
     override fun updateMemberCount(count: Int) {
@@ -82,7 +73,7 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
 
     override fun navigateToMovieBookingSeat(bookingStatus: BookingStatus) {
         val intent =
-            MovieBookingSeatActivity.Companion.movieBookingSeatIntent(
+            MovieBookingSeatActivity.movieBookingSeatIntent(
                 this@MovieBookingActivity,
                 bookingStatus,
                 theater
