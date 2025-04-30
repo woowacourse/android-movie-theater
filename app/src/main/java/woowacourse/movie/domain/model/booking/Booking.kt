@@ -6,6 +6,7 @@ import java.time.LocalTime
 
 class Booking(
     val title: String,
+    val theaterName: String,
     val bookingDate: LocalDate,
     val bookingTime: LocalTime,
     val count: PeopleCount,

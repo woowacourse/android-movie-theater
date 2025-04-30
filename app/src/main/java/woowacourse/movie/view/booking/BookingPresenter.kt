@@ -85,6 +85,7 @@ class BookingPresenter(
         val booking =
             Booking(
                 title = title,
+                theaterName = screeningInfo.theaterName,
                 bookingDate = LocalDate.parse(bookingDate),
                 bookingTime = LocalTime.parse(bookingTime),
                 count = PeopleCount(count.toInt()),

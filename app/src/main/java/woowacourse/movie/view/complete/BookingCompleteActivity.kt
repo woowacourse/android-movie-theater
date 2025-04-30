@@ -46,6 +46,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             initBookingMovieTitleView(title)
             initBookingScheduleView(bookingDate, bookingTime)
             initBookingSeatView(seats)
+            initTheaterNameView(theaterName)
             initBookingPeopleCountView(count.value)
             initBookingTicketPriceView(price)
         }
@@ -69,6 +70,10 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
     private fun initBookingSeatView(seats: Set<Seat>) {
         findViewById<TextView>(R.id.tv_seat).text = seatToLabel(seats)
+    }
+
+    private fun initTheaterNameView(theaterName: String) {
+        findViewById<TextView>(R.id.tv_theater_name).text = theaterName
     }
 
     private fun initBookingPeopleCountView(peopleCount: Int) {
