@@ -2,24 +2,26 @@ package woowacourse.movie
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.booking.complete.BookingCompleteContract
 import woowacourse.movie.booking.complete.BookingCompletePresenter
 import woowacourse.movie.booking.detail.TicketUiModel
+import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.mapper.IntentCompat
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
     private lateinit var presenter: BookingCompleteContract.Presenter
+    private lateinit var binding: ActivityBookingCompleteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_booking_complete)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
         setUpUi()
 
         val bookingResult = requireResultOrFinish()
@@ -30,7 +32,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     }
 
     private fun setUpUi() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -51,24 +53,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     }
 
     override fun showBookingCompleteResult(ticketUiData: TicketUiModel) {
-        val completeTitle = findViewById<TextView>(R.id.tv_complete_title)
-        val completeScreenDate = findViewById<TextView>(R.id.tv_complete_screening_date)
-        val completeScreenTime = findViewById<TextView>(R.id.tv_complete_screening_time)
-        val completeHeadCount = findViewById<TextView>(R.id.tv_head_count)
-        val completeTotalAmount = findViewById<TextView>(R.id.tv_booking_amount)
-        val completeSeats = findViewById<TextView>(R.id.tv_seats)
-
-        val completeHeadCountText =
-            getString(R.string.screening_complete_headCount, ticketUiData.headCount)
-        val totalPriceText =
-            getString(R.string.screening_complete_booking_amount, ticketUiData.totalPrice)
-
-        completeTitle.text = ticketUiData.title
-        completeScreenDate.text = ticketUiData.selectedDateText
-        completeScreenTime.text = ticketUiData.selectedTimeText
-        completeHeadCount.text = completeHeadCountText
-        completeTotalAmount.text = totalPriceText
-        completeSeats.text = ticketUiData.seats
+        binding.ticket = ticketUiData
     }
 
     override fun showToastErrorAndFinish(message: String) {
