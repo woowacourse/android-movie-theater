@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.google.material)
     implementation(libs.androidx.activity)
+    implementation("androidx.fragment:fragment-ktx:1.8.6")
     testImplementation("io.mockk:mockk:1.14.0")
     testImplementation(libs.assertj.core)
     testImplementation(libs.junit.jupiter)
