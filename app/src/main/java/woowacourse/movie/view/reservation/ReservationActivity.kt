@@ -191,8 +191,8 @@ class ReservationActivity :
         findViewById<TextView>(R.id.tv_screening_period).text =
             getString(
                 R.string.movie_date,
-                movie.screeningPeriods[0].startDate.format(formatter),
-                movie.screeningPeriods[0].endDate
+                movie.startDate.format(formatter),
+                movie.endDate
                     .format(formatter),
             )
         findViewById<TextView>(R.id.tv_reservation_running_time).text =

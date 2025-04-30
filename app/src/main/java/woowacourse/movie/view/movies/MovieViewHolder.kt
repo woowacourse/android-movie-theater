@@ -26,11 +26,11 @@ class MovieViewHolder(
         ivPoster.setImageResource(movie.poster.toInt())
         tvTitle.text = movie.title
         tvDate.text =
-            movie.screeningPeriods.run {
+            movie.screening.run {
                 view.context.getString(
                     R.string.movie_date,
-                    movie.screeningPeriods[0].startDate.format(DateTimeFormatter.ofPattern(format)),
-                    movie.screeningPeriods[0].endDate.format(DateTimeFormatter.ofPattern(format)),
+                    movie.startDate.format(DateTimeFormatter.ofPattern(format)),
+                    movie.endDate.format(DateTimeFormatter.ofPattern(format)),
                 )
             }
         tvRunningTime.text = view.context.getString(R.string.running_time, movie.runningTime.minute.toString())
