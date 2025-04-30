@@ -2,7 +2,9 @@ package woowacourse.movie.view.home.theater
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.model.theater.MovieScreeningInfoByTheater
 
@@ -15,7 +17,13 @@ class TheaterAdapter(
         viewType: Int,
     ): TheaterViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val theaterBinding = ItemTheaterBinding.inflate(inflater, parent, false)
+        val theaterBinding =
+            DataBindingUtil.inflate<ItemTheaterBinding>(
+                inflater,
+                R.layout.item_theater,
+                parent,
+                false,
+            )
         return TheaterViewHolder(theaterBinding, onTheaterClick)
     }
 
