@@ -1,5 +1,6 @@
 package woowacourse.movie.feature.model
 
+import android.icu.text.DecimalFormat
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import woowacourse.movie.domain.model.Theater
@@ -13,4 +14,12 @@ data class BookingInfoUiModel(
     val ticketCount: Int = 1,
     val totalPrice: Int = 0,
     val selectedSeats: Set<MovieSeatUiModel> = setOf<MovieSeatUiModel>(),
-) : Parcelable
+) : Parcelable {
+    fun getSelectedSeatsText(): String = selectedSeats.joinToString { it.toLabel() }
+
+    fun getTotalPriceText(): String = MONEY_DECIMAL_FORMAT.format(totalPrice)
+
+    companion object {
+        private val MONEY_DECIMAL_FORMAT = DecimalFormat("#,###")
+    }
+}

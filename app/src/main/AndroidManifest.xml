@@ -32,7 +32,7 @@
             android:exported="false" />
         <activity
             android:name=".feature.movies.view.MoviesActivity"
-            android:exported="false"/>
+            android:exported="true"/>
     </application>
 
 </manifest>
