@@ -9,6 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.sample.DUMMY_MOVIES
 import woowacourse.movie.sample.DUMMY_THEATERS
 import woowacourse.movie.ui.booking.view.BookingActivity
@@ -41,7 +42,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
         val adapter =
             TheaterAdapter { theater ->
-                startActivity(BookingActivity.newIntent(view.context, theater))
+                startBookingActivity(view, theater)
             }
 
         val movie =
@@ -50,6 +51,15 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         binding.theatersRecyclerView.adapter = adapter
         val theaters = DUMMY_THEATERS.availableTheaters(movie)
         adapter.submitList(theaters.theaters.toList())
+    }
+
+    private fun startBookingActivity(
+        view: View,
+        theater: Theater,
+    ) {
+        if (theater.movieSchedules.isNotEmpty()) {
+            startActivity(BookingActivity.newIntent(view.context, theater))
+        }
     }
 
     companion object {
