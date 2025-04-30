@@ -16,7 +16,9 @@ import woowacourse.movie.ui.adapter.TheaterAdapter
 import woowacourse.movie.ui.constant.IntentKeys
 import woowacourse.movie.ui.util.bundleSerializable
 
-class TheaterSelectFragment : BottomSheetDialogFragment(), TheaterContract.View {
+class TheaterSelectFragment :
+    BottomSheetDialogFragment(),
+    TheaterContract.View {
     private var movie: Movie? = null
     private lateinit var binding: FragmentTheaterSelectBinding
     private lateinit var presenter: TheaterContract.Presenter
@@ -34,7 +36,8 @@ class TheaterSelectFragment : BottomSheetDialogFragment(), TheaterContract.View 
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_theater_select, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_theater_select, container, false)
         return binding.root
     }
 
@@ -47,15 +50,17 @@ class TheaterSelectFragment : BottomSheetDialogFragment(), TheaterContract.View 
     }
 
     override fun showTheaters(theaters: List<ScreeningInfo>) {
-        binding.recyclerviewTheaters.adapter = TheaterAdapter(theaters) {
-            presenter.onTheaterClicked(it)
-        }
+        binding.recyclerviewTheaters.adapter =
+            TheaterAdapter(theaters) {
+                presenter.onTheaterClicked(it)
+            }
     }
 
     override fun navigateToBooking(screeningInfo: ScreeningInfo) {
-        val intent = Intent(context, BookingActivity::class.java).apply {
-            putExtra(IntentKeys.SCREENING_INFO, screeningInfo)
-        }
+        val intent =
+            Intent(context, BookingActivity::class.java).apply {
+                putExtra(IntentKeys.SCREENING_INFO, screeningInfo)
+            }
         startActivity(intent)
     }
 

@@ -23,7 +23,7 @@
             android:name=".presentation.bookingsummary.BookingSummaryActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.movies.MoviesActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
