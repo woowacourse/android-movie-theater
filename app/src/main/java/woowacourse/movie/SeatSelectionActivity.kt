@@ -14,19 +14,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.BookingCompleteActivity.Companion.KEY_BOOKING_RESULT
 import woowacourse.movie.booking.detail.TicketUiModel
+import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.seat.SeatSelectionContract
 import woowacourse.movie.seat.SeatSelectionPresenter
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private lateinit var presenter: SeatSelectionContract.Presenter
+    private lateinit var binding: ActivitySeatSelectionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_seat_selection)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
         setUi()
 
         val ticket = requireResultOrFinish()
@@ -40,7 +43,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun setUi() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -79,14 +82,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun showTicket(ticketUiData: TicketUiModel) {
-        val ticketMovieTitle = findViewById<TextView>(R.id.tv_seat_movie_title)
-        val ticketAmount = findViewById<TextView>(R.id.tv_seat_amount)
-
-        val totalPriceText =
-            getString(R.string.screening_selection_booking_amount, ticketUiData.totalPrice)
-
-        ticketMovieTitle.text = ticketUiData.title
-        ticketAmount.text = totalPriceText
+        binding.ticket = ticketUiData
     }
 
     override fun showSeatState(
