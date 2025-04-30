@@ -8,7 +8,7 @@ import woowacourse.movie.domain.model.movie.ScreeningPeriod
 
 @Parcelize
 data class MovieUiModel(
-    val id: Long,
+    val id: Int,
     val title: String,
     val poster: PosterUiModel,
     val screeningPeriod: ScreeningPeriod,
