@@ -2,75 +2,51 @@ package woowacourse.movie.view.reservation.reservation
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.R.layout
 import woowacourse.movie.R
-import woowacourse.movie.databinding.FragmentReservationBinding
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.Extras
-import woowacourse.movie.view.compatParcelable
+import woowacourse.movie.view.getParcelableExtraCompat
 import woowacourse.movie.view.movie.MoviesActivity
 import woowacourse.movie.view.reservation.seat.SeatSelectActivity
 import java.time.LocalDate
 
-class ReservationFragment :
-    Fragment(),
+class ReservationActivity :
+    AppCompatActivity(),
     ReservationContract.View {
     private val reservationDialog by lazy { ReservationDialog() }
+    private val ticketCountTextView: TextView by lazy { findViewById(R.id.tv_reservation_ticket_count) }
     private val presenter: ReservationPresenter by lazy { ReservationPresenter(this) }
-    private lateinit var binding: FragmentReservationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_reservation,
-                container,
-                false,
-            )
-
-        binding.fragmentReservation = this
-        return binding.root
-    }
-
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
-
-        parentFragmentManager.setFragmentResultListener(
-            Extras.TheaterData.THEATER_REQUEST_KEY,
-            this,
-        ) { _, bundle ->
-            val theaterUiModel =
-                bundle.compatParcelable<TheaterUIModel>(Extras.TheaterData.THEATER_UI_MODEL_KEY)
-            presenter.fetchData { theaterUiModel }
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_reservation)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.sv_reservation)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
 
+        presenter.fetchData {
+            intent?.getParcelableExtraCompat<TheaterUIModel>(Extras.TheaterData.THEATER_UI_MODEL_KEY)
+        }
         setupButtonClickListener()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        (activity as? MoviesActivity)?.showBottomNav(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun setupButtonClickListener() {
@@ -92,18 +68,19 @@ class ReservationFragment :
 
     override fun showErrorDialog() {
         reservationDialog.show(
-            requireContext(),
+            this,
             getString(R.string.reservation_error_dialog_title),
             getString(R.string.reservation_error_dialog_message),
             null,
         ) { _ ->
-            val intent = Intent(requireContext(), MoviesActivity::class.java)
+            val intent = Intent(this, MoviesActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 
     override fun showTicketCount(count: Int) {
-        binding.tvReservationTicketCount.text = count.toString()
+        ticketCountTextView.text = count.toString()
     }
 
     override fun updateDateAdapter(
@@ -112,12 +89,12 @@ class ReservationFragment :
     ) {
         val dateAdapter =
             ArrayAdapter(
-                requireContext(),
+                this,
                 layout.support_simple_spinner_dropdown_item,
                 duration,
             )
 
-        binding.spinnerReservationDate.apply {
+        findViewById<Spinner>(R.id.spinner_reservation_date).apply {
             adapter = dateAdapter
             setSelection(selected)
             onItemSelectedListener =
@@ -140,12 +117,12 @@ class ReservationFragment :
     override fun updateTimeAdapter(times: List<String>) {
         val timeAdapter =
             ArrayAdapter(
-                requireContext(),
+                this,
                 layout.support_simple_spinner_dropdown_item,
                 times,
             )
 
-        binding.spinnerReservationTime.apply {
+        findViewById<Spinner>(R.id.spinner_reservation_time).apply {
             adapter = timeAdapter
             onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
@@ -165,19 +142,19 @@ class ReservationFragment :
     }
 
     private fun setupPlusButtonClick() {
-        binding.btnReservationPlusTicketCount.setOnClickListener {
+        findViewById<Button>(R.id.btn_reservation_plus_ticket_count).setOnClickListener {
             presenter.plusTicketCount()
         }
     }
 
     private fun setupMinusButtonClick() {
-        binding.btnReservationMinusTicketCount.setOnClickListener {
+        findViewById<Button>(R.id.btn_reservation_minus_ticket_count).setOnClickListener {
             try {
                 presenter.minusTicketCount()
             } catch (e: IllegalArgumentException) {
                 Toast
                     .makeText(
-                        requireContext(),
+                        this,
                         e.message,
                         Toast.LENGTH_SHORT,
                     ).show()
@@ -192,21 +169,27 @@ class ReservationFragment :
         endDate: String,
         runningTime: Int,
     ) {
+        val posterImageView = findViewById<ImageView>(R.id.iv_reservation_poster)
         val poster =
             AppCompatResources.getDrawable(
-                requireContext(),
+                this,
                 posterResId,
             )
-        binding.ivReservationPoster.setImageDrawable(poster)
-        binding.tvReservationTitle.text = title
-        binding.tvReservationScreeningDate.text =
+        posterImageView.setImageDrawable(poster)
+
+        val movieTitleTextView = findViewById<TextView>(R.id.tv_reservation_title)
+        movieTitleTextView.text = title
+
+        val screeningDateTextView = findViewById<TextView>(R.id.tv_reservation_screening_date)
+        screeningDateTextView.text =
             resources.getString(R.string.movie_screening_date, startDate, endDate)
-        binding.tvReservationRunningTime.text =
-            getString(R.string.movie_running_time).format(runningTime)
+
+        val runningTimeTextView = findViewById<TextView>(R.id.tv_reservation_running_time)
+        runningTimeTextView.text = getString(R.string.movie_running_time).format(runningTime)
     }
 
     private fun setupCompleteButtonClick() {
-        binding.btnReservationSelectComplete.setOnClickListener {
+        findViewById<Button>(R.id.btn_reservation_select_complete).setOnClickListener {
             presenter.createTicket { ticket ->
                 navigateToSeatSelect(ticket)
             }
@@ -215,7 +198,7 @@ class ReservationFragment :
 
     override fun navigateToSeatSelect(ticket: MovieTicket) {
         val intent =
-            Intent(requireContext(), SeatSelectActivity::class.java).apply {
+            Intent(this, SeatSelectActivity::class.java).apply {
                 putExtra(Extras.TicketData.TICKET_KEY, ticket)
             }
         startActivity(intent)
@@ -229,5 +212,15 @@ class ReservationFragment :
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(Extras.ReservationData.TICKET_COUNT_KEY, presenter.currentTicketCount())
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        setupSavedData(savedInstanceState)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
     }
 }

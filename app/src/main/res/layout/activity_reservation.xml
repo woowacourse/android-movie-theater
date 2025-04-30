@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-            name="fragmentReservation"
-            type="woowacourse.movie.view.reservation.reservation.ReservationFragment" />
+            name="activityReservation"
+            type="woowacourse.movie.view.reservation.reservation.ReservationActivity" />
     </data>
 
     <ScrollView

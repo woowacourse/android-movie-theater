@@ -16,7 +16,7 @@ import woowacourse.movie.databinding.ActivityMoviesBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.movie.adapter.MovieAdapter
-import woowacourse.movie.view.reservation.reservation.ReservationFragment
+import woowacourse.movie.view.reservation.reservation.ReservationActivity
 
 class MoviesActivity :
     AppCompatActivity(),
@@ -66,7 +66,7 @@ class MoviesActivity :
         val intent =
             Intent(
                 this,
-                ReservationFragment::class.java,
+                ReservationActivity::class.java,
             ).apply { putExtra(Extras.MovieData.MOVIE_KEY, movie) }
         startActivity(intent)
     }

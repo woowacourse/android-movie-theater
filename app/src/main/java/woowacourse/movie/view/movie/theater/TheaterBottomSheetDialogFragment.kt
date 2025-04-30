@@ -1,12 +1,11 @@
 package woowacourse.movie.view.movie.theater
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
@@ -16,9 +15,8 @@ import woowacourse.movie.model.Theater
 import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.compatParcelable
-import woowacourse.movie.view.movie.MoviesActivity
 import woowacourse.movie.view.movie.TheaterClickListener
-import woowacourse.movie.view.reservation.reservation.ReservationFragment
+import woowacourse.movie.view.reservation.reservation.ReservationActivity
 
 class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private lateinit var theaterAdapter: TheaterAdapter
@@ -53,15 +51,6 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         setupTheaterAdapter()
-
-        binding.rvTheater.setOnClickListener {
-            parentFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace(R.id.fcv_main, ReservationFragment())
-                addToBackStack(null)
-                dismiss()
-            }
-        }
     }
 
     private fun setupTheaterAdapter() {
@@ -82,13 +71,11 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun navigateToReservation(theaterUIModel: TheaterUIModel) {
-        val bundle =
-            bundleOf(
-                Extras.TheaterData.THEATER_UI_MODEL_KEY to theaterUIModel,
-            )
-        parentFragmentManager.setFragmentResult(Extras.TheaterData.THEATER_REQUEST_KEY, bundle)
-
-        (requireActivity() as? MoviesActivity)?.replaceFragment(ReservationFragment())
+        val intent =
+            Intent(requireContext(), ReservationActivity::class.java).apply {
+                putExtra(Extras.TheaterData.THEATER_UI_MODEL_KEY, theaterUIModel)
+            }
+        startActivity(intent)
         dismiss()
     }
 
