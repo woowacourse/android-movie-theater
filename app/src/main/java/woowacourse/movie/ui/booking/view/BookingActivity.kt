@@ -119,8 +119,9 @@ class BookingActivity :
         movieTitle: String,
         dateTime: LocalDateTime,
         headcount: Headcount,
+        theater: Theater,
     ) {
-        startActivity(BookingSeatActivity.newIntent(this, movieTitle, dateTime, headcount))
+        startActivity(BookingSeatActivity.newIntent(this, movieTitle, dateTime, headcount, theater))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =

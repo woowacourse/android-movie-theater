@@ -59,6 +59,7 @@ interface BookingContract {
             movieTitle: String,
             dateTime: LocalDateTime,
             headcount: Headcount,
+            theater: Theater,
         )
     }
 }

@@ -21,6 +21,7 @@ class BookingCompletePresenter(
             Headcount(),
             LocalDateTime.now(),
             Seats(),
+            "",
         )
 
     override fun refreshTicketPrice() {

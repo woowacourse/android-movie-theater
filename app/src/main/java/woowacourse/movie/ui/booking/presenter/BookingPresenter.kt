@@ -78,6 +78,7 @@ class BookingPresenter(
             theater.movieSchedules[0].movie.title,
             selectedDateTime,
             headcount,
+            theater,
         )
     }
 }
