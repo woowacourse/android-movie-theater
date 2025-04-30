@@ -16,6 +16,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.ui.booking.contract.BookingContract
 import woowacourse.movie.ui.booking.presenter.BookingPresenter
 import woowacourse.movie.ui.seat.BookingSeatActivity
@@ -44,12 +45,12 @@ class BookingActivity :
 
         applyWindowInsets()
 
-        bookingPresenter.loadMovie()
+        bookingPresenter.loadTheater()
         bookingPresenter.updateViews()
         setButtonClickListeners()
     }
 
-    override fun getMovie(): Movie? = intent.intentSerializable(EXTRA_MOVIE, Movie::class.java)
+    override fun getTheater(): Theater? = intent.intentSerializable(EXTRA_THEATER, Theater::class.java)
 
     override fun getSelectedDateTime(): LocalDateTime =
         LocalDateTime.of(
@@ -195,16 +196,16 @@ class BookingActivity :
     companion object {
         fun newIntent(
             context: Context,
-            movie: Movie,
+            theater: Theater,
         ): Intent =
             Intent(context, BookingActivity::class.java).apply {
-                putExtra(EXTRA_MOVIE, movie)
+                putExtra(EXTRA_THEATER, theater)
             }
 
         private const val KEY_SELECTED_DATE_POSITION = "SELECTED_DATE_POSITION"
         private const val KEY_SELECTED_TIME_POSITION = "SELECTED_TIME_POSITION"
         private const val KEY_PEOPLE_COUNT = "SAVED_PEOPLE_COUNT"
 
-        private const val EXTRA_MOVIE = "movie"
+        private const val EXTRA_THEATER = "EXTRA_THEATER"
     }
 }

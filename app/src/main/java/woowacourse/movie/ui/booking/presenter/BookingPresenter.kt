@@ -1,10 +1,10 @@
 package woowacourse.movie.ui.booking.presenter
 
 import woowacourse.movie.domain.model.Headcount
-import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.ScreeningPeriod
 import woowacourse.movie.domain.model.ScreeningTimeItems
-import woowacourse.movie.sample.DUMMY_MOVIES
+import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.sample.DUMMY_THEATERS
 import woowacourse.movie.ui.booking.contract.BookingContract
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -15,7 +15,7 @@ class BookingPresenter(
     private var _headcount: Headcount = Headcount()
     val headcount get() = _headcount.deepCopy()
 
-    private val movie: Movie by lazy { loadMovie() }
+    private val theater: Theater by lazy { loadTheater() }
 
     private var selectedDatePosition: Int = 0
     private var selectedTimePosition: Int = 0
@@ -36,10 +36,10 @@ class BookingPresenter(
         bookingView.updateHeadcountDisplay(_headcount)
     }
 
-    override fun loadMovie(): Movie = bookingView.getMovie() ?: DUMMY_MOVIES.first()
+    override fun loadTheater(): Theater = bookingView.getTheater() ?: DUMMY_THEATERS.theaters.first()
 
     override fun refreshMovieInfo() {
-        bookingView.setMovieInfoViews(movie)
+        bookingView.setMovieInfoViews(theater.movieSchedules[0].movie)
     }
 
     override fun setHeadcount(headcount: Headcount) {
@@ -51,7 +51,7 @@ class BookingPresenter(
     }
 
     override fun setupDateSpinner() {
-        val (startDate, endDate) = movie.releaseDate
+        val (startDate, endDate) = theater.movieSchedules[0].movie.releaseDate
         val screeningBookingDates: List<LocalDate> =
             ScreeningPeriod(startDate, endDate).bookingDates(LocalDate.now())
 
@@ -77,6 +77,6 @@ class BookingPresenter(
     }
 
     override fun completeBooking() {
-        bookingView.startBookingSeatActivity(movie.title, selectedDateTime, headcount)
+        bookingView.startBookingSeatActivity(theater.movieSchedules[0].movie.title, selectedDateTime, headcount)
     }
 }

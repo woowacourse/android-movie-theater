@@ -2,6 +2,7 @@ package woowacourse.movie.ui.booking.contract
 
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.Theater
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -12,7 +13,7 @@ interface BookingContract {
 
         fun increaseHeadcount()
 
-        fun loadMovie(): Movie
+        fun loadTheater(): Theater
 
         fun completeBooking()
 
@@ -32,7 +33,7 @@ interface BookingContract {
     }
 
     interface View {
-        fun getMovie(): Movie?
+        fun getTheater(): Theater?
 
         fun getSelectedDate(): LocalDate
 
