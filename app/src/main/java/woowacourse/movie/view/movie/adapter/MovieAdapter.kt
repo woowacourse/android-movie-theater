@@ -1,5 +1,6 @@
 package woowacourse.movie.view.movie.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -49,11 +50,17 @@ class MovieAdapter(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
+        Log.d("madapter", "$currentList")
         when (holder) {
-            is MovieViewHolder -> holder.bind(getItem(position))
+            is MovieViewHolder -> {
+                val moviePosition = getMoviePosition(position)
+                holder.bind(getItem(moviePosition))
+            }
             is AdViewHolder -> holder.bind()
         }
     }
+
+    private fun getMoviePosition(adapterPosition: Int): Int = adapterPosition - (adapterPosition / AD_INTERVAL)
 
     companion object {
         private const val VIEW_TYPE_MOVIE = 0

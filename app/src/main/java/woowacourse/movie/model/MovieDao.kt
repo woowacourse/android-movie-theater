@@ -6,6 +6,30 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 class MovieDao {
+    fun getTheaterNames(): List<String> = screenings.keys.toList()
+
+    fun getShowingMovies(): List<Movie> {
+        val now = LocalDateTime.now()
+        val today = now.toLocalDate()
+        val currentHour = now.hour
+
+        val result = mutableSetOf<Movie>()
+        getTheaterNames().forEach { theaterName ->
+            getMovies(theaterName).forEach { movie ->
+                val screenTimes = getScreenTimes(theaterName, movie.title)
+                if (today == movie.endDate) {
+                    if (screenTimes.any { time -> time > currentHour }) {
+                        result.add(movie)
+                    }
+                } else if (!today.isBefore(movie.startDate) && !today.isAfter(movie.endDate)) {
+                    result.add(movie)
+                }
+            }
+        }
+
+        return result.toList()
+    }
+
     fun getTimeTable(
         now: LocalDateTime,
         selectedDate: LocalDate,

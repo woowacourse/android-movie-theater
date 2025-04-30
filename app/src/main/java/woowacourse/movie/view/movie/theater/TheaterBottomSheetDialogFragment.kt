@@ -80,11 +80,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
             )
         recyclerView.adapter = theaterAdapter
         theaterAdapter.submitList(
-            listOf(
-                Theater("선릉", MovieDao().getMovies("선릉")),
-                Theater("강남", MovieDao().getMovies("강남")),
-                Theater("잠실", MovieDao().getMovies("잠실")),
-            ),
+            MovieDao().getTheaterNames().map { Theater(it, MovieDao().getMovies(it)) },
         )
     }
 
