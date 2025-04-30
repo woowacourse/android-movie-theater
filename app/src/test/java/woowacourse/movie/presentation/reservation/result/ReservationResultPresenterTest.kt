@@ -30,7 +30,7 @@ class ReservationResultPresenterTest {
                         10_000,
                     ),
                 ),
-            ).toUiModel()
+            ).toUiModel("선릉 극장")
 
     @BeforeEach
     fun setUp() {

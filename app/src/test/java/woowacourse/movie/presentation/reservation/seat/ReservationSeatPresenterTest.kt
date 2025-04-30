@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.cinema.screen.Screen
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
+import woowacourse.movie.presentation.model.ScreenUiModel
 import woowacourse.movie.presentation.model.SeatTypeUiModel
 import woowacourse.movie.presentation.model.SeatUiModel
 import woowacourse.movie.presentation.model.toUiModel
@@ -25,6 +26,7 @@ class ReservationSeatPresenterTest {
             LocalDateTime.of(2025, 4, 1, 11, 0),
             2,
             listOf(),
+            "선릉 극장",
         )
 
     @BeforeEach
@@ -39,7 +41,7 @@ class ReservationSeatPresenterTest {
         every { view.showScreen(any(), any(), any(), any(), any()) } just Runs
 
         // When: presenter가 데이터를 불러온다
-        presenter.fetchData(fakeReservationInfo, Screen.DEFAULT_SCREEN.toUiModel())
+        presenter.fetchData(fakeReservationInfo, Screen.DEFAULT_SCREEN.toUiModel(), ScreenUiModel(emptyList()))
 
         // Then: view에 setScreen이 호출되어야 한다
         verify { view.showScreen(fakeReservationInfo, any(), any(), any(), any()) }
@@ -52,7 +54,7 @@ class ReservationSeatPresenterTest {
         // Given: 초기 데이터 로딩과 updateSeatStatus 동작을 설정한다
         every { view.showScreen(any(), any(), any(), any(), any()) } just Runs
         every { view.updateSeatState(any(), any(), any()) } just Runs
-        presenter.fetchData(fakeReservationInfo, Screen.DEFAULT_SCREEN.toUiModel())
+        presenter.fetchData(fakeReservationInfo, Screen.DEFAULT_SCREEN.toUiModel(), ScreenUiModel(emptyList()))
 
         // When: 좌석을 선택하여 업데이트한다
         presenter.updateSeat(seat)
@@ -69,7 +71,7 @@ class ReservationSeatPresenterTest {
         every { view.showScreen(any(), any(), any(), any(), any()) } just Runs
         every { view.updateSeatState(any(), any(), any()) } just Runs
         every { view.notifySeatUpdateFailed(any()) } just Runs
-        presenter.fetchData(fakeReservationInfo, Screen.DEFAULT_SCREEN.toUiModel())
+        presenter.fetchData(fakeReservationInfo, Screen.DEFAULT_SCREEN.toUiModel(), ScreenUiModel(emptyList()))
         presenter.updateSeat(seat)
         presenter.updateSeat(seat.copy(col = 2))
 
@@ -88,7 +90,7 @@ class ReservationSeatPresenterTest {
         every { view.showScreen(any(), any(), any(), any(), any()) } just Runs
         every { view.updateSeatState(any(), any(), any()) } just Runs
         every { view.notifyPublishedTickets(any()) } just Runs
-        presenter.fetchData(fakeReservationInfo, Screen.DEFAULT_SCREEN.toUiModel())
+        presenter.fetchData(fakeReservationInfo, Screen.DEFAULT_SCREEN.toUiModel(), ScreenUiModel(emptyList()))
         presenter.updateSeat(seat)
 
         // When: 티켓을 발행한다

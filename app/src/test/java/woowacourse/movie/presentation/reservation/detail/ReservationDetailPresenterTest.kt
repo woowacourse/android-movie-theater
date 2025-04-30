@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.movie.ScreeningPeriod
 import woowacourse.movie.presentation.fixture.dummyMovie
+import woowacourse.movie.presentation.model.TheaterUiModel
+import woowacourse.movie.presentation.model.toModel
 import woowacourse.movie.presentation.model.toUiModel
 import woowacourse.movie.presentation.view.reservation.detail.ReservationDetailContract
 import woowacourse.movie.presentation.view.reservation.detail.ReservationDetailPresenter
@@ -29,6 +31,8 @@ class ReservationDetailPresenterTest {
                     ),
             ).toUiModel()
 
+    private val fakeTheater = TheaterUiModel("선릉 극장", listOf(LocalDateTime.now().plusDays(1)))
+
     @BeforeEach
     fun setUp() {
         view = mockk()
@@ -43,7 +47,7 @@ class ReservationDetailPresenterTest {
         every { view.updateDates(any(), any(), any()) } just Runs
 
         // When: presenter가 영화 정보를 전달받아 fetchData를 호출하면
-        presenter.fetchData(fakeMovie)
+        presenter.fetchData(fakeMovie, fakeTheater)
 
         // Then: View의 setScreen이 영화 정보를 받아 호출된다.
         verify { view.showScreen(fakeMovie) }
@@ -64,15 +68,16 @@ class ReservationDetailPresenterTest {
     @Test
     fun `날짜를 선택하면 해당 날짜의 시간 목록을 보여준다`() {
         // Given: 특정 날짜에 해당하는 상영 시간을 준비하고 View의 동작을 설정한다.
-        val now = LocalDateTime.of(2025, 4, 1, 0, 0)
-        val times = dummyMovie.screeningPeriod.getAvailableTimesFor(now, now.toLocalDate())
+        val now = LocalDateTime.now().plusDays(2)
+//        val times = dummyMovie.screeningPeriod.getAvailableTimesFor(now, now.toLocalDate())
+        val times = fakeTheater.toModel(fakeMovie.id).getAvailableShowTimesFor(fakeMovie.id, now).map { it.toLocalTime() }
 
-        every { view.updateTimes(times) } just Runs
+        every { view.updateTimes(any()) } just Runs
         every { view.showScreen(fakeMovie) } just Runs
         every { view.updateDates(any(), any(), any()) } just Runs
         every { view.updateReservationCount(any(), any()) } just Runs
 
-        presenter.fetchData(fakeMovie)
+        presenter.fetchData(fakeMovie, fakeTheater)
 
         // When: 특정 날짜를 선택하면
         presenter.onSelectDate(now.toLocalDate())
@@ -93,9 +98,9 @@ class ReservationDetailPresenterTest {
         every { view.showScreen(any()) } just Runs
         every { view.updateDates(any(), any(), any()) } just Runs
         every { view.updateReservationCount(any(), any()) } just Runs
-        every { view.notifyReservationConfirm(any(), any()) } just Runs
+        every { view.notifyReservationConfirm(any(), any(), any()) } just Runs
 
-        presenter.fetchData(fakeMovie, 3)
+        presenter.fetchData(fakeMovie, fakeTheater, 3)
 
         // When: 사용자가 특정 시간에 예약을 요청하면
         presenter.onReserve(now)
@@ -109,6 +114,7 @@ class ReservationDetailPresenterTest {
                     assert(it.reservationCount == 3)
                 },
                 any(),
+                any(),
             )
         }
     }
@@ -117,7 +123,7 @@ class ReservationDetailPresenterTest {
     fun `예매 가능한 날짜가 없는 경우 다이얼로그를 보여준다`() {
         // Given: 상영 기간이 존재하지 않는 영화 데이터를 준비하고 View 설정을 한다.
         val fakeMovie =
-            dummyMovie.copy(
+            fakeMovie.copy(
                 screeningPeriod = ScreeningPeriod(LocalDate.MIN, LocalDate.MIN),
             )
         every { view.showScreen(any()) } just Runs
@@ -125,7 +131,7 @@ class ReservationDetailPresenterTest {
         every { view.notifyNoAvailableDates() } just Runs
 
         // When: 영화 데이터로 fetchData를 호출하면
-        presenter.fetchData(fakeMovie.toUiModel())
+        presenter.fetchData(fakeMovie, fakeTheater.copy(times = emptyList()))
 
         // Then: 예매 가능한 날짜가 없다는 다이얼로그를 보여준다.
         verify { view.notifyNoAvailableDates() }
