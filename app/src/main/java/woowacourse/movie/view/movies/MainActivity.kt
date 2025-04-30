@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.MovieItem
-import woowacourse.movie.domain.Theater
+import woowacourse.movie.domain.Showings
 import woowacourse.movie.view.movies.adapter.MovieAdapter
 import woowacourse.movie.view.reservation.detail.ReservationActivity
 
@@ -55,21 +55,27 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showTheaterSelectDialog(
         movie: Movie,
-        navigate: (Theater) -> Unit,
+        navigate: (Showings) -> Unit,
     ) {
         val dialog =
             TheaterBottomSheetDialogFragment(
                 object : OnBottomSheetDialogEventListener {
-                    override fun onClick(theater: Theater) {
-                        navigateToReservation(theater)
+                    override fun onClick(showings: Showings) {
+                        navigateToReservation(movie, showings)
                     }
                 },
             )
+        val bundle = Bundle()
+        bundle.putSerializable("movie", movie)
+        dialog.arguments = bundle
         dialog.show(supportFragmentManager, "TheaterBottomSheetDialog")
     }
 
-    override fun navigateToReservation(theater: Theater) {
-        val intent = ReservationActivity.newIntent(this, theater)
+    override fun navigateToReservation(
+        movie: Movie,
+        showings: Showings,
+    ) {
+        val intent = ReservationActivity.newIntent(this, movie, showings)
         startActivity(intent)
     }
 }

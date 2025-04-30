@@ -8,8 +8,8 @@ class MainPresenter(
     override fun fetchData() {
         val movies: List<Movie> = Movie.dummy
         view.showMoviesScreen(movies) { movie ->
-            view.showTheaterSelectDialog(movie) { theater ->
-                view.navigateToReservation(theater)
+            view.showTheaterSelectDialog(movie) { showings ->
+                view.navigateToReservation(movie, showings)
             }
         }
     }

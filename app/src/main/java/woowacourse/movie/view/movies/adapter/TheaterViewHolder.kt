@@ -24,6 +24,7 @@ class TheaterViewHolder(
     }
 
     fun bind(showings: Showings) {
+        this.showings = showings
         theaterNameTextView.text = showings.theaterName
         theaterTimeTextView.text = showings.showings.times.size.toString()
     }

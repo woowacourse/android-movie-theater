@@ -18,7 +18,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.Theater
+import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movietime.MovieSchedule
 import woowacourse.movie.domain.movietime.ScreeningTime
@@ -56,20 +56,29 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         plusButton = findViewById(R.id.btn_plus_button)
         minusButton = findViewById(R.id.btn_minus_button)
 
-        val theater: Theater? =
+        val movie: Movie? =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getSerializableExtra(KET_THEATER, Theater::class.java)
+                intent.getSerializableExtra(KEY_MOVIE, Movie::class.java)
             } else {
-                intent.getSerializableExtra(KET_THEATER) as? Theater
+                intent.getSerializableExtra(KEY_MOVIE) as? Movie
             }
-        checkTheater(theater)
+        val showings: Showings? =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                intent.getSerializableExtra(KEY_SHOWINGS, Showings::class.java)
+            } else {
+                intent.getSerializableExtra(KEY_SHOWINGS) as? Showings
+            }
+        checkTheater(movie, showings)
     }
 
-    private fun checkTheater(theater: Theater?) {
-        if (theater == null) {
+    private fun checkTheater(
+        movie: Movie?,
+        showings: Showings?,
+    ) {
+        if (movie == null || showings == null) {
             showErrorInvalidMovie()
         } else {
-            present.fetchData(theater.schedule.movie)
+            present.fetchData(movie)
         }
     }
 
@@ -219,16 +228,23 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     companion object {
-        private const val KET_THEATER = "THEATER"
+        private const val KEY_MOVIE = "MOVIE"
+        private const val KEY_SHOWINGS = "SHOWINGS"
         private const val DATE_PATTERN = "yyyy.M.d"
 
         fun newIntent(
             context: Context,
-            theater: Theater?,
+            movie: Movie?,
+            showings: Showings?,
         ): Intent =
-            Intent(context, ReservationActivity::class.java).putExtra(
-                KET_THEATER,
-                theater,
-            )
+            Intent(context, ReservationActivity::class.java)
+                .putExtra(
+                    KEY_MOVIE,
+                    movie,
+                )
+                .putExtra(
+                    KEY_SHOWINGS,
+                    showings,
+                )
     }
 }
