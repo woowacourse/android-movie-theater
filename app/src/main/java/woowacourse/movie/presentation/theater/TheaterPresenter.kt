@@ -1,19 +1,18 @@
 package woowacourse.movie.presentation.theater
 
-import woowacourse.movie.data.TheaterData
+import woowacourse.movie.data.ScreeningInfoData
 import woowacourse.movie.domain.model.ScreeningInfo
+import woowacourse.movie.domain.model.ScreeningInfos
 import woowacourse.movie.domain.model.movie.Movie
 
 class TheaterPresenter(
     private val view: TheaterContract.View,
     private val movie: Movie,
 ) : TheaterContract.Presenter {
-    override fun onViewCreated() {
-        val theaters = TheaterData.screeningInfos.filter { screeningInfo ->
-            screeningInfo.movie == this.movie
-        }
+    private val screeningInfos = ScreeningInfos(ScreeningInfoData.values)
 
-        view.showTheaters(theaters)
+    override fun onViewCreated() {
+        view.showTheaters(screeningInfos.findByMovie(movie))
     }
 
     override fun onTheaterClicked(screeningInfo: ScreeningInfo) {

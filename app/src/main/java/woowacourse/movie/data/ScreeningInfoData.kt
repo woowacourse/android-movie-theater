@@ -3,8 +3,8 @@ package woowacourse.movie.data
 import woowacourse.movie.domain.model.ScreeningInfo
 import java.time.LocalTime
 
-object TheaterData {
-    val screeningInfos: List<ScreeningInfo> = listOf(
+object ScreeningInfoData {
+    val values: List<ScreeningInfo> = listOf(
         ScreeningInfo(
             "선릉 극장",
             MovieData.movie1,

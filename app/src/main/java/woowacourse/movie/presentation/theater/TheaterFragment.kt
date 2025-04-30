@@ -16,7 +16,7 @@ import woowacourse.movie.ui.adapter.TheaterAdapter
 import woowacourse.movie.ui.constant.IntentKeys
 import woowacourse.movie.ui.util.bundleSerializable
 
-class TheaterSelectFragment :
+class TheaterFragment :
     BottomSheetDialogFragment(),
     TheaterContract.View {
     private var movie: Movie? = null
@@ -67,7 +67,7 @@ class TheaterSelectFragment :
     companion object {
         @JvmStatic
         fun newInstance(movie: Movie) =
-            TheaterSelectFragment().apply {
+            TheaterFragment().apply {
                 arguments =
                     Bundle().apply {
                         putSerializable(IntentKeys.MOVIE, movie)

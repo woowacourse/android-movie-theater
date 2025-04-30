@@ -17,7 +17,7 @@ import woowacourse.movie.data.MovieData
 import woowacourse.movie.ui.constant.IntentKeys
 
 @RunWith(AndroidJUnit4::class)
-class TheaterSelectFragmentTest {
+class TheaterFragmentTest {
     private val movie = MovieData.movie1
 
     private val args = Bundle().apply {
@@ -26,7 +26,7 @@ class TheaterSelectFragmentTest {
 
     @Test
     fun 극장_목록이_출력된다() {
-        launchFragmentInContainer<TheaterSelectFragment>(args)
+        launchFragmentInContainer<TheaterFragment>(args)
 
         onView(withId(R.id.recyclerview_theaters))
             .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))

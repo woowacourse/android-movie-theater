@@ -10,7 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.data.MovieData
 import woowacourse.movie.databinding.FragmentMoviesBinding
 import woowacourse.movie.domain.model.movie.Movie
-import woowacourse.movie.presentation.theater.TheaterSelectFragment
+import woowacourse.movie.presentation.theater.TheaterFragment
 import woowacourse.movie.ui.adapter.MovieAdapter
 
 class MoviesFragment :
@@ -51,7 +51,7 @@ class MoviesFragment :
     }
 
     override fun showTheaterSelectDialog(movie: Movie) {
-        val theaterSelectFragment = TheaterSelectFragment.newInstance(movie)
-        theaterSelectFragment.show(childFragmentManager, theaterSelectFragment.tag)
+        val theaterFragment = TheaterFragment.newInstance(movie)
+        theaterFragment.show(childFragmentManager, theaterFragment.tag)
     }
 }
