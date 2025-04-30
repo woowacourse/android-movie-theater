@@ -18,9 +18,7 @@ class BookingSeatPresenter(
     override fun prepareBookingInfo(bookingInfo: BookingInfoUiModel) {
         this.bookingInfo = bookingInfo.toDomain()
         view.showSeats(5, 4)
-        view.showBookingInfo(bookingInfo)
-        view.updatePrice(this.bookingInfo.totalPrice.value)
-        view.updateSeatSelectionCompleteButton(this.bookingInfo.isSeatAllSelected)
+        view.updateBookingInfo(bookingInfo)
     }
 
     override fun prepareSeats(
@@ -31,11 +29,9 @@ class BookingSeatPresenter(
     override fun selectSeat(seat: MovieSeatUiModel): SeatSelectionUiState {
         val result = bookingInfo.updateSeat(seat.toDomain())
 
-        view.updateSeatSelectionCompleteButton(bookingInfo.isSeatAllSelected)
-
         return when (result) {
             is SeatSelectionResult.Success -> {
-                view.updatePrice(bookingInfo.totalPrice.value)
+                view.updateBookingInfo(bookingInfo.toUi())
                 SeatSelectionUiState.Success(result.selectedSeat.toUi())
             }
 

@@ -11,13 +11,9 @@ interface BookingSeatContract {
             columnCount: Int,
         )
 
-        fun showBookingInfo(bookingInfo: BookingInfoUiModel)
+        fun updateBookingInfo(bookingInfo: BookingInfoUiModel)
 
         fun showBookingCompleteDialog()
-
-        fun updatePrice(price: Int)
-
-        fun updateSeatSelectionCompleteButton(enabled: Boolean)
 
         fun navigateToBookingComplete(bookingInfo: BookingInfoUiModel)
 

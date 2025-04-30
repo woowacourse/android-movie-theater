@@ -14,6 +14,7 @@ data class BookingInfoUiModel(
     val ticketCount: Int = 1,
     val totalPrice: Int = 0,
     val selectedSeats: Set<MovieSeatUiModel> = setOf<MovieSeatUiModel>(),
+    val isSeatAllSelected: Boolean = false,
 ) : Parcelable {
     fun getSelectedSeatsText(): String = selectedSeats.joinToString { it.toLabel() }
 

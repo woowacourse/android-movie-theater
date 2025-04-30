@@ -9,14 +9,13 @@ import android.view.MenuItem
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityBookingSeatBinding
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookingseat.contract.BookingSeatContract
 import woowacourse.movie.feature.bookingseat.presenter.BookingSeatPresenter
@@ -29,16 +28,20 @@ import woowacourse.movie.util.getExtra
 class BookingSeatActivity :
     AppCompatActivity(),
     BookingSeatContract.View {
+    private val binding: ActivityBookingSeatBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_booking_seat) }
     private val presenter: BookingSeatContract.Presenter by lazy { BookingSeatPresenter(this) }
     private val seats: MutableMap<TextView, MovieSeatUiModel> = mutableMapOf()
-    private val priceView: TextView by lazy { findViewById<TextView>(R.id.tv_booking_seat_movie_price) }
-    private val seatSelectionCompleteView: TextView by lazy { findViewById<TextView>(R.id.tv_booking_seat_select_complete) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupView()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupSeatSelectCompleteClickListener()
         presenter.prepareBookingInfo(bookingInfo = intent.getExtra(BOOKING_INFO_KEY) ?: BookingInfoUiModel())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) presenter.cancelSeatSelection()
+        return super.onOptionsItemSelected(item)
     }
 
     override fun showSeats(
@@ -66,14 +69,8 @@ class BookingSeatActivity :
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) presenter.cancelSeatSelection()
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun showBookingInfo(bookingInfo: BookingInfoUiModel) {
-        findViewById<TextView>(R.id.tv_booking_seat_movie_title).text = bookingInfo.movie.title
-        priceView.text = getString(R.string.booking_seat_price, bookingInfo.totalPrice)
+    override fun updateBookingInfo(bookingInfo: BookingInfoUiModel) {
+        binding.bookingInfo = bookingInfo
     }
 
     override fun showBookingCompleteDialog() {
@@ -88,14 +85,6 @@ class BookingSeatActivity :
             .show()
     }
 
-    override fun updatePrice(price: Int) {
-        priceView.text = getString(R.string.booking_seat_price, price)
-    }
-
-    override fun updateSeatSelectionCompleteButton(enabled: Boolean) {
-        seatSelectionCompleteView.isEnabled = enabled
-    }
-
     override fun navigateToBookingComplete(bookingInfo: BookingInfoUiModel) {
         val intent = BookingCompleteActivity.newIntent(this, bookingInfo)
         startActivity(intent)
@@ -104,17 +93,6 @@ class BookingSeatActivity :
 
     override fun navigateToBack() {
         finish()
-    }
-
-    private fun setupView() {
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_booking_seat)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.activity_booking_seat)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun createSeatTextView(seatName: String): TextView =
@@ -170,7 +148,7 @@ class BookingSeatActivity :
     }
 
     private fun setupSeatSelectCompleteClickListener() {
-        seatSelectionCompleteView.setOnClickListener {
+        binding.tvBookingSeatSelectComplete.setOnClickListener {
             presenter.completeSeatSelection()
         }
     }

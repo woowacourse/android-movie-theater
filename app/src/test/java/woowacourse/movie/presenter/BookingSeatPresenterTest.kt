@@ -64,7 +64,7 @@ class BookingSeatPresenterTest {
         // then
         verify {
             view.showSeats(5, 4)
-            view.showBookingInfo(bookingInfoUiModel)
+            view.updateBookingInfo(bookingInfoUiModel)
             view.updatePrice(capture(price))
             view.updateSeatSelectionCompleteButton(capture(isButtonEnabled))
         }
