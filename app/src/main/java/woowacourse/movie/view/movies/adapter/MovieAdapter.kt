@@ -39,6 +39,7 @@ class MovieAdapter(
                     holder.bind(item.movie)
                 }
             }
+
             is MovieItem.Advertisement -> {}
         }
     }

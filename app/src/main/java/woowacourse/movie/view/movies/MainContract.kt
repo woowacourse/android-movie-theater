@@ -1,6 +1,7 @@
 package woowacourse.movie.view.movies
 
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.Theater
 
 interface MainContract {
     interface Presenter {
@@ -13,6 +14,11 @@ interface MainContract {
             navigate: (Movie) -> Unit,
         )
 
-        fun navigateToReservation(movie: Movie)
+        fun navigateToReservation(theater: Theater)
+
+        fun showTheaterSelectDialog(
+            movie: Movie,
+            navigate: (Theater) -> Unit,
+        )
     }
 }
