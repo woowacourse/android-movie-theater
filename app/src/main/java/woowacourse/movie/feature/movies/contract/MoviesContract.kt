@@ -1,18 +1,16 @@
 package woowacourse.movie.feature.movies.contract
 
-import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.Screening
+import woowacourse.movie.domain.model.Screenings
 import woowacourse.movie.feature.model.MovieUiModel
 
 interface MoviesContract {
     interface View {
         fun showMovies(movies: List<MovieUiModel>)
 
-        fun showTheaters(movie: MovieUiModel)
+        fun showTheaters(screenings: Screenings)
 
-        fun navigateToBookingDetail(
-            movie: MovieUiModel,
-            theater: Theater,
-        )
+        fun navigateToBookingDetail(screening: Screening)
     }
 
     interface Presenter {
@@ -20,9 +18,6 @@ interface MoviesContract {
 
         fun selectMovieForBooking(movie: MovieUiModel)
 
-        fun selectTheater(
-            movie: MovieUiModel,
-            theater: Theater,
-        )
+        fun selectTheater(screening: Screening)
     }
 }

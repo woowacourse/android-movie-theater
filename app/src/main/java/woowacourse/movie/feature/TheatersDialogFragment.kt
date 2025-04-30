@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.Screening
+import woowacourse.movie.domain.model.Screenings
 
 class TheatersDialogFragment(
-    theaters: List<Theater>,
-    navigateToBookingDetail: (Theater) -> Unit,
+    screenings: Screenings,
+    navigateToBookingDetail: (Screening) -> Unit,
 ) : BottomSheetDialogFragment() {
-    private val theaterAdapter: TheaterAdapter by lazy { TheaterAdapter(theaters, navigateToBookingDetail) }
+    private val theaterAdapter: TheaterAdapter by lazy { TheaterAdapter(screenings, navigateToBookingDetail) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

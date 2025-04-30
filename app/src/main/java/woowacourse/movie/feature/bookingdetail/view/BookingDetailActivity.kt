@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.feature.bookingdetail.contract.BookingDetailContract
 import woowacourse.movie.feature.bookingdetail.presenter.BookingDetailPresenter
 import woowacourse.movie.feature.bookingdetail.view.adapter.DateAdapter
@@ -24,7 +24,6 @@ import woowacourse.movie.feature.bookingseat.view.BookingSeatActivity
 import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.model.MovieDateUiModel
 import woowacourse.movie.feature.model.MovieTimeUiModel
-import woowacourse.movie.feature.model.MovieUiModel
 import woowacourse.movie.util.getExtra
 
 class BookingDetailActivity :
@@ -46,8 +45,7 @@ class BookingDetailActivity :
         setupTicketCountClickListeners()
         setupSelectCompleteClickListener()
         presenter.prepareBookingInfo(
-            movieUiModel = intent.getExtra(MOVIE_KEY) ?: MovieUiModel(),
-            theater = intent.getExtra(THEATER_KEY) ?: Theater(),
+            intent.getExtra(SCREENING_KEY) ?: throw IllegalArgumentException(),
         )
     }
 
@@ -165,18 +163,15 @@ class BookingDetailActivity :
     }
 
     companion object {
-        private const val MOVIE_KEY = "MOVIE"
-        private const val THEATER_KEY = "THEATER"
+        private const val SCREENING_KEY = "SCREENING"
         private const val BOOKING_INFO_KEY = "BOOKING_INFO"
 
         fun newIntent(
             context: Context,
-            movie: MovieUiModel,
-            theater: Theater,
+            screening: Screening,
         ): Intent =
             Intent(context, BookingDetailActivity::class.java).apply {
-                putExtra(MOVIE_KEY, movie)
-                putExtra(THEATER_KEY, theater)
+                putExtra(SCREENING_KEY, screening)
             }
     }
 }

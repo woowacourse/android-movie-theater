@@ -1,9 +1,8 @@
 package woowacourse.movie.feature.bookingdetail.contract
 
-import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.model.MovieDateUiModel
-import woowacourse.movie.feature.model.MovieUiModel
 
 interface BookingDetailContract {
     interface View {
@@ -21,10 +20,7 @@ interface BookingDetailContract {
     }
 
     interface Presenter {
-        fun prepareBookingInfo(
-            movieUiModel: MovieUiModel,
-            theater: Theater,
-        )
+        fun prepareBookingInfo(screening: Screening)
 
         fun selectDate(date: String)
 

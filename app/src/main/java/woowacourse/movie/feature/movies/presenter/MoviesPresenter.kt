@@ -1,7 +1,8 @@
 package woowacourse.movie.feature.movies.presenter
 
 import woowacourse.movie.domain.model.Movie.Companion.movies
-import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.Screening
+import woowacourse.movie.domain.model.Screenings.Companion.screenings
 import woowacourse.movie.feature.mapper.toUi
 import woowacourse.movie.feature.model.MovieUiModel
 import woowacourse.movie.feature.movies.contract.MoviesContract
@@ -14,13 +15,10 @@ class MoviesPresenter(
     }
 
     override fun selectMovieForBooking(movie: MovieUiModel) {
-        view.showTheaters(movie)
+        view.showTheaters(screenings.getMovieScreenings(movie.title))
     }
 
-    override fun selectTheater(
-        movie: MovieUiModel,
-        theater: Theater,
-    ) {
-        view.navigateToBookingDetail(movie, theater)
+    override fun selectTheater(screening: Screening) {
+        view.navigateToBookingDetail(screening)
     }
 }
