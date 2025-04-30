@@ -11,8 +11,10 @@ import woowacourse.movie.R
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.domain.model.theater.Theaters
+import woowacourse.movie.view.booking.BookingActivity
 import woowacourse.movie.view.movies.adapter.MovieAdapter
 import woowacourse.movie.view.movies.bottomsheet.TheaterBottomSheet
+import woowacourse.movie.view.movies.model.ScreeningInfo
 import woowacourse.movie.view.movies.model.UiModel
 
 class MovieListActivity : AppCompatActivity(), MovieListContract.View {
@@ -56,8 +58,15 @@ class MovieListActivity : AppCompatActivity(), MovieListContract.View {
         TheaterBottomSheet(
             theaters,
             movieId,
-            onclick = {},
+            onclick = {
+                presenter.loadMovieScreening(movieId, it)
+            },
         ).show(supportFragmentManager, THEATER_BOTTOM_SHEET)
+    }
+
+    override fun moveToBooking(screening: ScreeningInfo) {
+        val intent = BookingActivity.newIntent(this, screening)
+        startActivity(intent)
     }
 
     companion object {

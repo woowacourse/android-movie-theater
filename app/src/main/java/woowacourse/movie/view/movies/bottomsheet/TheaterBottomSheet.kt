@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
+import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.domain.model.theater.Theaters
 import woowacourse.movie.view.movies.adapter.TheaterAdapter
 
 class TheaterBottomSheet(
     private val theaters: Theaters,
     private val movieId: Int,
-    private val onclick: (String) -> Unit,
+    private val onclick: (Theater) -> Unit,
 ) : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
