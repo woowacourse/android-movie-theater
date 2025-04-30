@@ -15,7 +15,7 @@ class BookingSummaryPresenterTest {
         MovieTicket(
             movieTitle = "test",
             theaterName = "선릉 극장",
-            screeningDateTime = LocalDateTime.of(2025, 4, 30, 12, 0),
+            screeningDateTime = LocalDateTime.of(2025, 12, 31, 12, 0),
             headCount = 2,
         )
 
