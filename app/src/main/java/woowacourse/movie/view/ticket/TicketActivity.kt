@@ -27,7 +27,7 @@ class TicketActivity :
 
     private lateinit var cancelDescriptionView: TextView
     private lateinit var priceView: TextView
-    private lateinit var countView: TextView
+    private lateinit var descriptionView: TextView
     private lateinit var showtimeView: TextView
     private lateinit var titleView: TextView
 
@@ -51,7 +51,11 @@ class TicketActivity :
             intent.getSeatsExtra() ?: error(
                 ErrorMessage(CAUSE_SEATS).notProvided(),
             )
-        presenter = TicketPresenter(this, ticket, seats)
+        val cinemaName =
+            intent.getStringExtra(EXTRA_CINEMA_NAME)
+                ?: error(ErrorMessage(CAUSE_CINEMA).notProvided())
+
+        presenter = TicketPresenter(this, ticket, seats, cinemaName)
         initViews()
     }
 
@@ -70,7 +74,7 @@ class TicketActivity :
     private fun findViews() {
         cancelDescriptionView = findViewById<TextView>(R.id.tv_ticket_cancel_description)
         priceView = findViewById<TextView>(R.id.tv_ticket_price)
-        countView = findViewById<TextView>(R.id.tv_ticket_count)
+        descriptionView = findViewById<TextView>(R.id.tv_ticket_description)
         showtimeView = findViewById<TextView>(R.id.tv_ticket_showtime)
         titleView = findViewById<TextView>(R.id.tv_ticket_movie_title)
     }
@@ -125,9 +129,15 @@ class TicketActivity :
     override fun setCount(
         count: Int,
         seats: Set<Seat>,
+        cinemaName: String,
     ) {
-        countView.text =
-            getString(R.string.ticket_count, count, seats.joinToString { it.prettyString })
+        descriptionView.text =
+            getString(
+                R.string.ticket_description,
+                count,
+                seats.joinToString { it.prettyString },
+                cinemaName,
+            )
     }
 
     private val Seat.prettyString: String get() = "${row.prettyString}${column.value}"
@@ -141,9 +151,11 @@ class TicketActivity :
     companion object {
         private const val CAUSE_TICKET = "ticket"
         private const val CAUSE_SEATS = "seats"
+        private const val CAUSE_CINEMA = "cinemaName"
 
         private const val EXTRA_TICKET = "woowacourse.movie.EXTRA_TICKET"
         private const val EXTRA_SEATS = "woowacourse.movie.EXTRA_SEATS"
+        private const val EXTRA_CINEMA_NAME = "woowacourse.movie.EXTRA_CINEMA_NAME"
 
         fun newIntent(
             context: Context,
@@ -151,12 +163,14 @@ class TicketActivity :
             count: Int,
             showtime: LocalDateTime,
             seats: Set<Seat>,
+            cinemaName: String,
         ): Intent =
             run {
                 val ticket = Ticket(title, count, showtime)
                 Intent(context, TicketActivity::class.java)
                     .putExtra(EXTRA_TICKET, ticket)
                     .putExtra(EXTRA_SEATS, seats as? Serializable)
+                    .putExtra(EXTRA_CINEMA_NAME, cinemaName)
             }
     }
 }

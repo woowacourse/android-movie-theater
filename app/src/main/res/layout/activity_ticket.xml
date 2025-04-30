@@ -49,13 +49,15 @@
             tools:text="상영 시각" />
 
         <TextView
-            android:id="@+id/tv_ticket_count"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_ticket_description"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/black"
             android:textSize="20sp"
-            tools:text="일반 2명" />
+            tools:text="일반 2명 | B3, D2 | 너무너무너무너무너무너무너무너무너무긴 극..." />
 
         <TextView
             android:id="@+id/tv_ticket_price"

@@ -61,6 +61,7 @@ interface ReservationContract {
         fun navigateToSeatSelectionScreen(
             title: String,
             ticketCount: Int,
+            cinemaName: String,
         )
     }
 }

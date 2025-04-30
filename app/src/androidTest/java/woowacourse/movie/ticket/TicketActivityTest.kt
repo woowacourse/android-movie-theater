@@ -42,7 +42,7 @@ class TicketActivityTest {
     @Test
     fun `인원_수가_표시된다`() {
         Espresso
-            .onView(ViewMatchers.withId(R.id.tv_ticket_count))
+            .onView(ViewMatchers.withId(R.id.tv_ticket_description))
             .check(ViewAssertions.matches(ViewMatchers.withText("일반 2명 | A1, B2")))
     }
 

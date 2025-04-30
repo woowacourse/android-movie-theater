@@ -80,6 +80,8 @@ class ReservationActivity :
                     ?: error(ErrorMessage(CAUSE_SCREENING).notProvided()),
                 intent.getShowtimePolicyExtra()
                     ?: error(ErrorMessage(CAUSE_SCREENING).notProvided()),
+                intent.getStringExtra(EXTRA_CINEMA_NAME)
+                    ?: error(ErrorMessage(CAUSE_CINEMA_NAME).notProvided()),
                 ticketCount,
                 timeItemPosition,
             )
@@ -260,6 +262,7 @@ class ReservationActivity :
     override fun navigateToSeatSelectionScreen(
         title: String,
         ticketCount: Int,
+        cinemaName: String,
     ) {
         val intent =
             SeatSelectionActivity.newIntent(
@@ -270,6 +273,7 @@ class ReservationActivity :
                     dateSpinner.selectedItem as LocalDate,
                     timeSpinner.selectedItem as LocalTime,
                 ),
+                cinemaName,
             )
         startActivity(intent)
     }
@@ -279,6 +283,7 @@ class ReservationActivity :
         private const val TIME_ITEM_POSITION = "TIME_ITEM_POSITION"
 
         private const val CAUSE_SCREENING = "screening"
+        private const val CAUSE_CINEMA_NAME = "cinemaName"
 
         private const val EXTRA_SCREENING = "woowacourse.movie.EXTRA_SCREENING"
         private const val EXTRA_CINEMA_NAME = "woowacourse.movie.EXTRA_CINEMA_NAME"
@@ -290,10 +295,11 @@ class ReservationActivity :
             cinemaName: String,
             showtimePolicy: ShowtimePolicy,
         ): Intent =
-            Intent(context, ReservationActivity::class.java).putExtra(
-                EXTRA_SCREENING,
-                screening,
-            ).putExtra(EXTRA_CINEMA_NAME, cinemaName)
+            Intent(context, ReservationActivity::class.java)
+                .putExtra(
+                    EXTRA_SCREENING,
+                    screening,
+                ).putExtra(EXTRA_CINEMA_NAME, cinemaName)
                 .putExtra(EXTRA_SHOWTIME_POLICY, showtimePolicy)
     }
 }

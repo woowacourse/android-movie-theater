@@ -26,6 +26,7 @@ interface TicketContract {
         fun setCount(
             count: Int,
             seats: Set<Seat>,
+            cinemaName: String,
         )
 
         fun setPrice(price: Int)

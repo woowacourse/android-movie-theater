@@ -46,6 +46,7 @@ interface SeatSelectionContract {
             count: Int,
             showtime: LocalDateTime,
             seats: Set<Seat>,
+            cinemaName: String,
         )
     }
 }

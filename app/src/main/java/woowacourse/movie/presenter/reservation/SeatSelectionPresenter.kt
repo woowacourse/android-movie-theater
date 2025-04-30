@@ -7,11 +7,12 @@ import woowacourse.movie.domain.ticket.Ticket
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private val ticket: Ticket,
+    private val cinemaName: String,
     selectedSeats: Set<Seat>?,
 ) : SeatSelectionContract.Presenter {
     private val seats: Set<Seat> = Seat.Companion.seats()
     private var selectedSeats = selectedSeats?.toSet() ?: emptySet()
-    private val completable get() = ticket.count == selectedSeats?.size
+    private val completable get() = ticket.count == selectedSeats.size
     private val price: Int get() = selectedSeats.sumOf(Seat::price)
 
     override fun presentSeats() {
@@ -50,7 +51,7 @@ class SeatSelectionPresenter(
 
     override fun confirmReservation() {
         ticket.run {
-            view.navigateToTicketScreen(title, count, showtime, selectedSeats)
+            view.navigateToTicketScreen(title, count, showtime, selectedSeats, cinemaName)
         }
     }
 

@@ -87,7 +87,16 @@ class SeatSelectionActivity :
     private fun initPresenter(selectedSeats: Set<Seat>?) {
         val ticket =
             intent.getTicketExtra(EXTRA_TICKET) ?: error(ErrorMessage(CAUSE_TICKET).notProvided())
-        presenter = SeatSelectionPresenter(this, ticket, selectedSeats)
+        val cinemaName =
+            intent.getStringExtra(EXTRA_CINEMA_NAME)
+                ?: error(ErrorMessage(CAUSE_CINEMA_NAME).notProvided())
+        presenter =
+            SeatSelectionPresenter(
+                this,
+                ticket,
+                cinemaName,
+                selectedSeats,
+            )
     }
 
     @Suppress("DEPRECATION")
@@ -213,6 +222,7 @@ class SeatSelectionActivity :
         count: Int,
         showtime: LocalDateTime,
         seats: Set<Seat>,
+        cinemaName: String,
     ) {
         val intent =
             TicketActivity.newIntent(
@@ -221,6 +231,7 @@ class SeatSelectionActivity :
                 count,
                 showtime,
                 seats,
+                cinemaName,
             )
         startActivity(intent)
         finish()
@@ -230,21 +241,25 @@ class SeatSelectionActivity :
         private const val KEY_SEATS = "KEY_SEATS"
 
         private const val CAUSE_TICKET = "ticket"
+        private const val CAUSE_CINEMA_NAME = "cinemaName"
         private const val CAUSE_SEAT_VIEW = "seatView"
         private const val IN_SEAT_LAYOUT = "seatLayout"
 
         private const val EXTRA_TICKET = "woowacourse.movie.EXTRA_TICKET"
+        private const val EXTRA_CINEMA_NAME = "woowacourse.movie.CINEMA_NAME"
 
         fun newIntent(
             context: Context,
             title: String,
             count: Int,
             showtime: LocalDateTime,
+            cinemaName: String,
         ): Intent =
             run {
                 val ticket = Ticket(title, count, showtime)
                 Intent(context, SeatSelectionActivity::class.java)
                     .putExtra(EXTRA_TICKET, ticket)
+                    .putExtra(EXTRA_CINEMA_NAME, cinemaName)
             }
     }
 }

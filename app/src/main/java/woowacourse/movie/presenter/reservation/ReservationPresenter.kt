@@ -10,6 +10,7 @@ class ReservationPresenter(
     private val view: ReservationContract.View,
     private val screening: Screening,
     private val showtimePolicy: ShowtimePolicy,
+    private val cinemaName: String,
     ticketCount: Int? = null,
     timeItemPosition: Int? = null,
 ) : ReservationContract.Presenter {
@@ -65,7 +66,7 @@ class ReservationPresenter(
     }
 
     override fun presentAvailableSeats() {
-        view.navigateToSeatSelectionScreen(screening.title, ticketCount)
+        view.navigateToSeatSelectionScreen(screening.title, ticketCount, cinemaName)
     }
 
     override fun getTicketCount(): Int = ticketCount
