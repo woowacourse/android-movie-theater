@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movies.theater
+package woowacourse.movie.view.home.theater
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemTheaterBinding

@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movies
+package woowacourse.movie.view.home
 
 interface MovieClickListener {
     fun onReservationClick(movieId: Long)

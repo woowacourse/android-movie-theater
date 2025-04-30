@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movies
+package woowacourse.movie.view.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,7 +14,7 @@ import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.theater.MovieScreeningInfoByTheaters
 import woowacourse.movie.presenter.movies.MoviesContracts
 import woowacourse.movie.presenter.movies.MoviesPresenter
-import woowacourse.movie.view.movies.theater.TheaterBottomSheetDialogFragment
+import woowacourse.movie.view.home.theater.TheaterBottomSheetDialogFragment
 
 class HomeFragment : Fragment(), MoviesContracts.View {
     private lateinit var binding: FragmentHomeBinding

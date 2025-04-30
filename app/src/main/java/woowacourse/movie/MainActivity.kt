@@ -12,7 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationBarView
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.view.movies.HomeFragment
+import woowacourse.movie.view.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

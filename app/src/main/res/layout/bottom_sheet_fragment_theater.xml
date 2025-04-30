@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="208dp"
-        tools:context=".view.movies.theater.TheaterBottomSheetDialogFragment"
+        tools:context=".view.home.theater.TheaterBottomSheetDialogFragment"
         android:paddingVertical="16dp"
         android:paddingHorizontal="8dp">
 

@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movies
+package woowacourse.movie.view.home
 
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
