@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookedBinding
 import woowacourse.movie.domain.BookingStatus
@@ -20,8 +21,7 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = MovieBookedBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.movie_booked)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booked)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -43,26 +43,8 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
     }
 
     override fun showBookedStatus(bookingStatus: BookingStatus, theater: Theater) {
-        binding.movieTitle.text = bookingStatus.movie.title
-        binding.bookingDateTime.text =
-            binding.bookingDateTime.context.getString(
-                R.string.movie_running_dateTime,
-                bookingStatus.bookedTime.toDotFormat(),
-            )
-        binding.memberCount.text =
-            binding.memberCount.context.getString(
-                R.string.member_count,
-                bookingStatus.memberCount,
-            )
-        binding.movieTicketPrice.text =
-            binding.movieTicketPrice.context.getString(
-                R.string.total_price,
-                bookingStatus.calculateTicketPrices(),
-            )
-        binding.bookingTheaterName.text = binding.bookingTheaterName.context.getString(
-            R.string.booked_theater_name,
-            theater.name
-        )
+        binding.bookingStatus = bookingStatus
+        binding.theater = theater
         val seatsText =
             bookingStatus.seat.seats.joinToString(", ") { seat ->
                 val rowChar = 'A' + seat.row.value
