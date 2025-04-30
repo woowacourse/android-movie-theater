@@ -51,6 +51,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private fun navigateToReservation(movieScreeningInfoByTheater: MovieScreeningInfoByTheater) {
         val intent = ReservationActivity.getIntent(requireContext(), movieScreeningInfoByTheater)
         startActivity(intent)
+        dismiss()
     }
 
     companion object {
