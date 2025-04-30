@@ -72,10 +72,10 @@
                 <TextView
                     android:id="@+id/booking_date_time"
                     style="@style/SubTitleTextStyle"
-                    android:text="@{booking_status.bookedTime.toString()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    app:formattedLocalDateTime="@{booking_status.bookedTime}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -115,6 +115,7 @@
                         style="@style/SubTitleTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:seat = "@{booking_status.seat.seats}"
                         tools:text="B2, B3" />
 
                     <TextView
