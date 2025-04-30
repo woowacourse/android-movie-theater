@@ -1,11 +1,12 @@
 package woowacourse.movie.domain.model
 
+import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalTime
 
 class Theaters(
     val theaters: List<Theater>,
-) {
+) : Serializable {
     fun availableTheaters(
         movie: Movie,
         date: LocalDate,
