@@ -27,7 +27,7 @@ class BookingCompletePresenterTest {
                 Headcount(1),
                 LocalDateTime.of(2025, 1, 1, 12, 0),
                 Seats().apply { Seat(1, 1) },
-                "선릉 극장"
+                "선릉 극장",
             )
     }
 
