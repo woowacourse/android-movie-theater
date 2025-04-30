@@ -13,14 +13,12 @@ class TheaterAdapter(
     private val items: List<ScreeningInfo>,
     private val onClick: (ScreeningInfo) -> Unit,
 ) : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
-    private lateinit var binding: ItemTheaterBinding
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): TheaterViewHolder {
-        binding =
-            DataBindingUtil.inflate(
+        val binding =
+            DataBindingUtil.inflate<ItemTheaterBinding>(
                 LayoutInflater.from(parent.context),
                 R.layout.item_theater,
                 parent,

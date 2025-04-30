@@ -2,33 +2,45 @@ package woowacourse.movie.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdvertisementBinding
+import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.presentation.movies.MoviesItem
 import woowacourse.movie.ui.util.PosterMapper
 
-class MovieAdapter(private val onClick: (Movie) -> Unit) : ListAdapter<MoviesItem, RecyclerView.ViewHolder>(diffCallback) {
+class MovieAdapter(private val onClick: (Movie) -> Unit) :
+    ListAdapter<MoviesItem, RecyclerView.ViewHolder>(diffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerView.ViewHolder {
         return when (viewType) {
             R.layout.item_movie -> {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
-                MovieViewHolder(view, parent.context, onClick)
+                val binding = DataBindingUtil.inflate<ItemMovieBinding>(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_movie,
+                    parent,
+                    false
+                )
+                MovieViewHolder(binding, parent.context, onClick)
             }
+
             R.layout.item_advertisement -> {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.item_advertisement, parent, false)
-                AdvertisementViewHolder(view)
+                val binding = DataBindingUtil.inflate<ItemAdvertisementBinding>(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_advertisement,
+                    parent,
+                    false
+                )
+                AdvertisementViewHolder(binding)
             }
+
             else -> throw IllegalArgumentException(TYPE_ERROR)
         }
     }
@@ -51,42 +63,35 @@ class MovieAdapter(private val onClick: (Movie) -> Unit) : ListAdapter<MoviesIte
     }
 
     private class MovieViewHolder(
-        view: View,
+        private val binding: ItemMovieBinding,
         private val context: Context,
         private val onClick: (Movie) -> Unit,
-    ) : RecyclerView.ViewHolder(view) {
-        private val poster: ImageView = view.findViewById(R.id.imageview_poster)
-        private val title: TextView = view.findViewById(R.id.textview_title)
-        private val screeningDate: TextView = view.findViewById(R.id.textview_screeningdate)
-        private val runningTime: TextView = view.findViewById(R.id.textview_runningtime)
-        private val reservationBtn: Button = view.findViewById(R.id.button_book)
-
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
-            title.text = movie.title
-            screeningDate.text =
+            binding.textviewTitle.text = movie.title
+            binding.textviewScreeningdate.text =
                 context.getString(
                     R.string.date_text,
                     movie.startScreeningDate,
                     movie.endScreeningDate,
                 )
-            runningTime.text =
+            binding.textviewRunningtime.text =
                 context.getString(
                     R.string.runningTime_text,
                     movie.runningTime.toString(),
                 )
-            poster.setImageResource(PosterMapper.convertTitleToResId(movie.title))
+            binding.imageviewPoster.setImageResource(PosterMapper.convertTitleToResId(movie.title))
 
-            reservationBtn.setOnClickListener {
+            binding.buttonBook.setOnClickListener {
                 onClick(movie)
             }
         }
     }
 
-    private class AdvertisementViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val adImage: ImageView = view.findViewById(R.id.imageview_ad)
-
+    private class AdvertisementViewHolder(private val binding: ItemAdvertisementBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind() {
-            adImage.setImageResource(R.drawable.advertisement)
+            binding.imageviewAd.setImageResource(R.drawable.advertisement)
         }
     }
 
