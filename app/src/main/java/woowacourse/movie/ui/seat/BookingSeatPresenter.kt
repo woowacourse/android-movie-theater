@@ -3,12 +3,14 @@ package woowacourse.movie.ui.seat
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
+import woowacourse.movie.domain.model.Theater
 
 class BookingSeatPresenter(
     private val bookingSeatView: BookingSeatContract.View,
 ) : BookingSeatContract.Presenter {
     private val headcount: Headcount by lazy { loadHeadcount() }
     private val movieTitle: String by lazy { loadMovieTitle() }
+    private lateinit var theater: Theater
     private var seats: Seats = Seats()
 
     fun fetchData() {
@@ -20,6 +22,10 @@ class BookingSeatPresenter(
         refreshMovieTitle()
         refreshTotalPrice()
         refreshConfirmButton()
+    }
+
+    override fun loadTheater(theater: Theater) {
+        this.theater = theater
     }
 
     override fun loadHeadcount(): Headcount = bookingSeatView.getHeadcount() ?: Headcount()
@@ -57,6 +63,6 @@ class BookingSeatPresenter(
     }
 
     override fun completeBookingSeat() {
-        bookingSeatView.startBookingCompleteActivity(movieTitle, headcount, seats)
+        bookingSeatView.startBookingCompleteActivity(movieTitle, headcount, seats, theater)
     }
 }

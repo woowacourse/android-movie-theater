@@ -20,6 +20,8 @@ import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
+import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.sample.DUMMY_THEATERS
 import woowacourse.movie.ui.complete.BookingCompleteActivity
 import woowacourse.movie.utils.StringFormatter.thousandFormat
 import woowacourse.movie.utils.intentSerializable
@@ -43,6 +45,8 @@ class BookingSeatActivity :
         initializeSeatTextViews()
         bookingSeatPresenter.fetchData()
         bookingSeatPresenter.updateViews()
+
+        bookingSeatPresenter.loadTheater(restoreTheater())
         setConfirmButtonClickListener()
     }
 
@@ -53,6 +57,10 @@ class BookingSeatActivity :
             insets
         }
     }
+
+    private fun restoreTheater() =
+        intent.intentSerializable(EXTRA_THEATER, Theater::class.java)
+            ?: DUMMY_THEATERS.theaters.first()
 
     override fun getHeadcount(): Headcount? = intent.intentSerializable(EXTRA_HEADCOUNT, Headcount::class.java)
 
@@ -103,6 +111,7 @@ class BookingSeatActivity :
         movieTitle: String,
         headcount: Headcount,
         seats: Seats,
+        theater: Theater,
     ) {
         val bookedDateTime =
             intent.intentSerializable(EXTRA_DATETIME, LocalDateTime::class.java)
@@ -113,6 +122,7 @@ class BookingSeatActivity :
                 headcount,
                 bookedDateTime,
                 seats,
+                theater.name,
             )
         startActivity(BookingCompleteActivity.newIntent(this, bookedTicket))
     }
@@ -168,7 +178,8 @@ class BookingSeatActivity :
             .setMessage(description)
             .setPositiveButton(getString(R.string.text_booking_dialog_positive_button)) { _, _ ->
                 bookingSeatPresenter.completeBookingSeat()
-            }.setNegativeButton(getString(R.string.text_booking_dialog_negative_button)) { dialog, _ ->
+            }
+            .setNegativeButton(getString(R.string.text_booking_dialog_negative_button)) { dialog, _ ->
                 dialog.dismiss()
             }.setCancelable(false)
             .show()
@@ -182,15 +193,18 @@ class BookingSeatActivity :
             movieTitle: String,
             dateTime: LocalDateTime,
             headcount: Headcount,
+            theater: Theater,
         ) = Intent(context, BookingSeatActivity::class.java).apply {
             putExtra(EXTRA_MOVIE_TITLE, movieTitle)
             putExtra(EXTRA_DATETIME, dateTime)
             putExtra(EXTRA_HEADCOUNT, headcount)
+            putExtra(EXTRA_THEATER, theater)
         }
 
         private const val EXTRA_MOVIE_TITLE = "movieTitle"
         private const val EXTRA_DATETIME = "dateTime"
         private const val EXTRA_HEADCOUNT = "headcount"
+        private const val EXTRA_THEATER = "theater"
         private const val ASCII_A = 'A'
 
         private const val B_LINE = 2
