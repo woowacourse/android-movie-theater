@@ -6,7 +6,7 @@ interface MovieContract {
     interface View {
         fun showMovies(movies: List<Movie>)
 
-        fun navigateToReservation(movie: Movie)
+        fun showBottomSheetDialog(movie: Movie)
     }
 
     interface Presenter {

@@ -19,10 +19,6 @@ class MoviesFragment :
     private lateinit var moviesAdapter: MovieAdapter
     private lateinit var binding: FragmentMoviesBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,18 +46,13 @@ class MoviesFragment :
         presenter.fetchMovies()
     }
 
-    override fun onResume() {
-        super.onResume()
-        (activity as? MoviesActivity)?.showBottomNav(true)
-    }
-
     override fun showMovies(movies: List<Movie>) {
         moviesAdapter.submitList(movies)
     }
 
-    override fun navigateToReservation(movie: Movie) {
+    override fun showBottomSheetDialog(movie: Movie) {
         val bottomSheet = TheaterBottomSheetDialogFragment.newInstance(movie)
-        bottomSheet.show(parentFragmentManager, "theater_bottom_sheet")
+        bottomSheet.show(parentFragmentManager, BOTTOM_SHEET_TAG)
     }
 
     private fun setupMovieAdapter() {
@@ -70,10 +61,14 @@ class MoviesFragment :
             MovieAdapter(
                 object : MovieClickListener {
                     override fun onReservationClick(movie: Movie) {
-                        navigateToReservation(movie)
+                        showBottomSheetDialog(movie)
                     }
                 },
             )
         recyclerView.adapter = moviesAdapter
+    }
+
+    companion object {
+        private const val BOTTOM_SHEET_TAG = "theater_bottom_sheet"
     }
 }
