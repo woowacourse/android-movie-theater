@@ -4,7 +4,7 @@ import java.io.Serializable
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
-data class ScreeningDate(
+data class ScreeningPeriod(
     val startDate: LocalDate,
     val endDate: LocalDate,
 ) : Serializable {

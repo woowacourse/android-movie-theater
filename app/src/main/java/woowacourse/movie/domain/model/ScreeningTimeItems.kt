@@ -4,35 +4,22 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class ScreeningTime(
+class ScreeningTimeItems(
     val screeningTimes: List<LocalTime> = emptyList(),
 ) {
     fun getAvailableScreeningTimes(
         nowDateTime: LocalDateTime,
         selectedDate: LocalDate,
     ): List<LocalTime> {
-        val times = getScreeningTimes(DayType.of(selectedDate))
         return if (isToday(nowDateTime, selectedDate)) {
-            times.filter { it.isAfter(nowDateTime.toLocalTime()) }
+            screeningTimes.filter { it.isAfter(nowDateTime.toLocalTime()) }
         } else {
-            times
+            screeningTimes
         }
-    }
-
-    private fun getScreeningTimes(dayType: DayType): List<LocalTime> {
-        val startTime = dayType.startTime
-        return (startTime.hour until MIDNIGHT step dayType.interval)
-            .map {
-                LocalTime.of(it, startTime.minute)
-            }
     }
 
     private fun isToday(
         nowDateTime: LocalDateTime,
         selectedDate: LocalDate,
     ): Boolean = selectedDate.isEqual(nowDateTime.toLocalDate())
-
-    companion object {
-        private const val MIDNIGHT = 24
-    }
 }

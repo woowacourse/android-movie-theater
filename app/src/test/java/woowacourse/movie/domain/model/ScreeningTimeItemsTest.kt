@@ -6,13 +6,13 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class ScreeningTimeTest {
-    private val screeningTime: ScreeningTime = ScreeningTime()
+class ScreeningTimeItemsTest {
+    private val screeningTimeItems: ScreeningTimeItems = ScreeningTimeItems()
 
     @Test
     fun `주말엔 9시부터 2시간 간격으로 상영 시간을 반환한다`() {
         val result =
-            screeningTime.getAvailableScreeningTimes(
+            screeningTimeItems.getAvailableScreeningTimes(
                 LocalDateTime.of(2025, 4, 19, 7, 20),
                 LocalDate.of(2025, 5, 17),
             )
@@ -35,7 +35,7 @@ class ScreeningTimeTest {
     @Test
     fun `평일엔 10시부터 2시간 간격으로 상영 시간을 반환한다`() {
         val result =
-            screeningTime.getAvailableScreeningTimes(
+            screeningTimeItems.getAvailableScreeningTimes(
                 LocalDateTime.of(2025, 4, 9, 3, 0),
                 LocalDate.of(2025, 4, 17),
             )
@@ -57,7 +57,7 @@ class ScreeningTimeTest {
     @Test
     fun `선택된 예매 날짜가 당일이면 당일 시간 이전은 제외한 예매 시간을 반환한다`() {
         val result =
-            screeningTime.getAvailableScreeningTimes(
+            screeningTimeItems.getAvailableScreeningTimes(
                 LocalDateTime.of(2025, 4, 16, 15, 0),
                 LocalDate.of(2025, 4, 16),
             )

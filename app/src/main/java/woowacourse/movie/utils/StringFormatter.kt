@@ -1,16 +1,16 @@
 package woowacourse.movie.utils
 
 import android.icu.text.DecimalFormat
-import woowacourse.movie.domain.model.ScreeningDate
+import woowacourse.movie.domain.model.ScreeningPeriod
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 object StringFormatter {
-    fun periodFormat(screeningDate: ScreeningDate): String =
+    fun periodFormat(screeningPeriod: ScreeningPeriod): String =
         PERIOD_FORMAT.format(
-            dotDateFormat(screeningDate.startDate),
-            dotDateFormat(screeningDate.endDate),
+            dotDateFormat(screeningPeriod.startDate),
+            dotDateFormat(screeningPeriod.endDate),
         )
 
     fun dotDateFormat(time: LocalDate): String {

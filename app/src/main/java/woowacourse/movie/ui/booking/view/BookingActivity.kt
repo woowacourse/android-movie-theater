@@ -6,14 +6,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.Spinner
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
@@ -23,7 +20,6 @@ import woowacourse.movie.ui.booking.contract.BookingContract
 import woowacourse.movie.ui.booking.presenter.BookingPresenter
 import woowacourse.movie.ui.seat.BookingSeatActivity
 import woowacourse.movie.utils.StringFormatter
-import woowacourse.movie.utils.StringFormatter.dotDateFormat
 import woowacourse.movie.utils.bundleSerializable
 import woowacourse.movie.utils.intentSerializable
 import java.time.LocalDate
@@ -84,7 +80,7 @@ class BookingActivity :
                 ArrayAdapter(
                     this@BookingActivity,
                     android.R.layout.simple_spinner_item,
-                    spinnerItems
+                    spinnerItems,
                 )
             if (spinnerItems.isNotEmpty()) {
                 setSelection(position)

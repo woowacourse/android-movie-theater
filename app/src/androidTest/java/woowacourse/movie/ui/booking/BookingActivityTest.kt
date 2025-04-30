@@ -19,7 +19,7 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.ScreeningDate
+import woowacourse.movie.domain.model.ScreeningPeriod
 import woowacourse.movie.fixture.fakeContext
 import woowacourse.movie.ui.booking.view.BookingActivity
 import java.time.LocalDate
@@ -37,7 +37,7 @@ class BookingActivityTest {
                     Movie(
                         "해리 포터와 마법사의 돌",
                         R.drawable.harry_potter_one,
-                        ScreeningDate(LocalDate.of(2025, 5, 1), LocalDate.of(2025, 5, 25)),
+                        ScreeningPeriod(LocalDate.of(2025, 5, 1), LocalDate.of(2025, 5, 25)),
                         152,
                     ),
                 )
