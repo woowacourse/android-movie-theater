@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationBarView
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.view.home.HomeFragment
+import woowacourse.movie.view.reservationDetails.ReservationDetailsFragment
 import woowacourse.movie.view.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
@@ -33,7 +34,9 @@ class MainActivity : AppCompatActivity() {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 var selectedFragment: Fragment? = null
                 when (item.itemId) {
-                    R.id.bottom_navigation_reservation_details -> {}
+                    R.id.bottom_navigation_reservation_details -> selectedFragment =
+                        ReservationDetailsFragment()
+
                     R.id.bottom_navigation_home -> selectedFragment = HomeFragment()
                     R.id.bottom_navigation_setting -> selectedFragment = SettingFragment()
                 }
