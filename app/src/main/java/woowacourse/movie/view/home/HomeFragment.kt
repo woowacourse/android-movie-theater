@@ -16,7 +16,9 @@ import woowacourse.movie.presenter.movies.MoviesContracts
 import woowacourse.movie.presenter.movies.MoviesPresenter
 import woowacourse.movie.view.home.theater.TheaterBottomSheetDialogFragment
 
-class HomeFragment : Fragment(), MoviesContracts.View {
+class HomeFragment :
+    Fragment(),
+    MoviesContracts.View {
     private lateinit var binding: FragmentHomeBinding
     private val presenter: MoviesContracts.Presenter = MoviesPresenter(this)
     private lateinit var movieAdapter: MovieAdapter
@@ -62,14 +64,9 @@ class HomeFragment : Fragment(), MoviesContracts.View {
     }
 
     override fun showTheaters(movieScreeningInfoByTheaters: MovieScreeningInfoByTheaters) {
-        val bundle = Bundle()
-        TheaterBottomSheetDialogFragment().apply {
-            bundle.putSerializable("theaters", movieScreeningInfoByTheaters)
-            arguments = bundle
-        }.show(
-            parentFragmentManager,
-            "jay",
-        )
+        TheaterBottomSheetDialogFragment
+            .newInstance(movieScreeningInfoByTheaters)
+            .show(parentFragmentManager, "jay")
     }
 
     override fun showAdvertisement(url: String) {

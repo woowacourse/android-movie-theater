@@ -39,11 +39,10 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.getSerializableExtraData<MovieScreeningInfoByTheaters>("theaters")
-
         theaterAdapter =
             TheaterAdapter(
-                movieScreeningInfoByTheaters = MovieScreeningInfoByTheater.values,
+                arguments?.getSerializableExtraData<MovieScreeningInfoByTheaters>(THEATER_KEY)?.value
+                    ?: emptyList(),
                 ::navigateToReservation,
             )
         binding.theaters.adapter = theaterAdapter
@@ -52,5 +51,18 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private fun navigateToReservation(movieScreeningInfoByTheater: MovieScreeningInfoByTheater) {
         val intent = ReservationActivity.getIntent(requireContext(), movieScreeningInfoByTheater)
         startActivity(intent)
+    }
+
+    companion object {
+        private const val THEATER_KEY = "theater"
+
+        @JvmStatic
+        fun newInstance(movieScreeningInfoByTheaters: MovieScreeningInfoByTheaters): TheaterBottomSheetDialogFragment =
+            TheaterBottomSheetDialogFragment().apply {
+                arguments =
+                    Bundle().apply {
+                        putSerializable(THEATER_KEY, movieScreeningInfoByTheaters)
+                    }
+            }
     }
 }
