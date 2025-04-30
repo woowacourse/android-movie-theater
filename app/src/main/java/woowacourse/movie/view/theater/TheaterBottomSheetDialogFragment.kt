@@ -53,19 +53,6 @@ class TheaterBottomSheetDialogFragment :
         presenter.fetchTheaters()
     }
 
-    private fun setupTheaterAdapter() {
-        val recyclerView = binding.rvTheater
-        theaterAdapter =
-            TheaterAdapter(
-                object : TheaterClickListener {
-                    override fun onTheaterClick(theaterUIModel: TheaterUIModel) {
-                        presenter.theaterSelected(theaterUIModel)
-                    }
-                },
-            )
-        recyclerView.adapter = theaterAdapter
-    }
-
     override fun showTheaters(theaters: List<TheaterUIModel>) {
         theaterAdapter.submitList(theaters)
     }
@@ -77,6 +64,19 @@ class TheaterBottomSheetDialogFragment :
             }
         startActivity(intent)
         dismiss()
+    }
+
+    private fun setupTheaterAdapter() {
+        val recyclerView = binding.rvTheater
+        theaterAdapter =
+            TheaterAdapter(
+                object : TheaterClickListener {
+                    override fun onTheaterClick(theaterUIModel: TheaterUIModel) {
+                        presenter.theaterSelected(theaterUIModel)
+                    }
+                },
+            )
+        recyclerView.adapter = theaterAdapter
     }
 
     companion object {
