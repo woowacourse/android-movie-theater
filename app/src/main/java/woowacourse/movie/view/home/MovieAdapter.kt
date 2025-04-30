@@ -2,8 +2,10 @@ package woowacourse.movie.view.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.model.movie.Movie
 
 class MovieAdapter(
@@ -23,9 +25,15 @@ class MovieAdapter(
     ): RecyclerView.ViewHolder =
         when (viewType) {
             MOVIE_ITEM_TYPE -> {
-                val view =
-                    LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
-                val holder = MovieViewHolder(view, parent.context, movieClickListener)
+                val inflater = LayoutInflater.from(parent.context)
+                val movieBinding =
+                    DataBindingUtil.inflate<ItemMovieBinding>(
+                        inflater,
+                        R.layout.item_movie,
+                        parent,
+                        false
+                    )
+                val holder = MovieViewHolder(movieBinding)
                 holder.button.setOnClickListener {
                     val position = holder.adapterPosition
                     val adjustedPosition = position - position / AD_POSITION_MULTIPLE
