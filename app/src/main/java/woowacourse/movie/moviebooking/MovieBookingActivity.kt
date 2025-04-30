@@ -1,5 +1,6 @@
 package woowacourse.movie.moviebooking
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -13,6 +14,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookingBinding
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.Theater
 import woowacourse.movie.helper.BuildVersion
 import woowacourse.movie.helper.LocalDateHelper.toDotFormat
 import woowacourse.movie.moviebookingseat.MovieBookingSeatActivity
@@ -134,13 +136,18 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
 
     companion object {
         private const val KEY_MOVIE = "movie"
+        private const val KEY_THEATER = "theater"
 
         fun movieBookingIntent(
-            otherActivity: AppCompatActivity,
+            context: Context,
             movie: Movie,
+            theater: Theater,
         ): Intent {
-            return Intent(otherActivity, MovieBookingActivity::class.java)
-                .apply { putExtra(KEY_MOVIE, movie) }
+            return Intent(context, MovieBookingActivity::class.java)
+                .apply {
+                    putExtra(KEY_MOVIE, movie)
+                    putExtra(KEY_THEATER, theater)
+                }
         }
     }
 }

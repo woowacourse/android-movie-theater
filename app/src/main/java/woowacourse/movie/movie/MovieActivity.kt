@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.moviebooking.MovieBookingActivity
 
 class MovieActivity : AppCompatActivity(), Movies.View {
     private lateinit var binding: ActivityMainBinding
@@ -43,8 +42,13 @@ class MovieActivity : AppCompatActivity(), Movies.View {
     }
 
     override fun navigateToBook(movie: Movie) {
-        val intent = MovieBookingActivity.Companion.movieBookingIntent(this@MovieActivity, movie)
-        startActivity(intent)
+        val dialog = TheaterBottomSheetDialogFragment()
+        val bundle =
+            Bundle().apply {
+                putParcelable("movie", movie)
+            }
+        dialog.arguments = bundle
+        dialog.show(supportFragmentManager, "TheaterBottomSheet")
     }
 
     override fun navigateToAdPage() {

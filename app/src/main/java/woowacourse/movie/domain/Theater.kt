@@ -1,12 +1,15 @@
 package woowacourse.movie.domain
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.time.LocalTime
 
+@Parcelize
 data class Theater(
     val name: String,
     val movies: Movies,
-    val timeTable: Map<Title, List<LocalTime>>
-) {
+    val timeTable: Map<Title, List<LocalTime>>,
+) : Parcelable {
     fun isShowing(movie: Movie): Boolean {
         return movies.toList().contains(movie)
     }
