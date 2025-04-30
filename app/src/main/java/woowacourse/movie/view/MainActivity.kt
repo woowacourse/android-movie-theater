@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.menu_fragment_list -> {
+                R.id.menu_fragment_history -> {
                     supportFragmentManager.commit {
                         setReorderingAllowed(true)
                         replace(R.id.main_fragment_container, HistoryFragment())

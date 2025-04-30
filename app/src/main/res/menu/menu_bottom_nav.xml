@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_fragment_list"
-        android:icon="@drawable/list_icon"
+        android:id="@+id/menu_fragment_history"
+        android:icon="@drawable/history_icon"
         android:title="예매 내역" />
     <item
         android:id="@+id/menu_fragment_home"
