@@ -58,7 +58,7 @@ class MoviesFragment :
 
         parentFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.fragment_container_view, fragment)
+            add(R.id.fragment_container_view, fragment)
             addToBackStack(null)
         }
     }
