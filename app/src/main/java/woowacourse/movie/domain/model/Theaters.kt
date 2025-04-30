@@ -9,8 +9,8 @@ class Theaters(
 ) : Serializable {
     fun availableTheaters(
         movie: Movie,
-        date: LocalDate,
-        time: LocalTime,
+        date: LocalDate = LocalDate.now(),
+        time: LocalTime = LocalTime.now(),
     ): Theaters {
         val filteredTheaters: List<Theater> =
             theaters.map { theater ->
