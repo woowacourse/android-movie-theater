@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.home.reservation
+package woowacourse.movie.presentation.home.reservation.result
 
 import io.mockk.Runs
 import io.mockk.every
