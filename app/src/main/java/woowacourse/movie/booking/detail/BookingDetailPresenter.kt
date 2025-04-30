@@ -10,6 +10,7 @@ import woowacourse.movie.movie.MovieUiModel
 import woowacourse.movie.movie.TheaterUiModel
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 class BookingDetailPresenter(
     private val view: BookingDetailContract.View,
@@ -87,12 +88,15 @@ class BookingDetailPresenter(
         screeningDate: String?,
         screeningTime: String?,
     ) {
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy.M.d")
+        val timeFormatter = DateTimeFormatter.ofPattern("H:mm")
+
         ticket =
             Ticket(
                 title = movie.title,
                 headCount = HeadCount(headCount),
-                selectedDate = screeningDate?.let { LocalDate.parse(it) } ?: LocalDate.now(),
-                selectedTime = screeningTime?.let { LocalTime.parse(it) } ?: LocalTime.now(),
+                selectedDate = screeningDate?.let { LocalDate.parse(it, dateFormatter) } ?: LocalDate.now(),
+                selectedTime = screeningTime?.let { LocalTime.parse(it, timeFormatter) } ?: LocalTime.now(),
                 seats = Seats(emptyList()),
             )
     }

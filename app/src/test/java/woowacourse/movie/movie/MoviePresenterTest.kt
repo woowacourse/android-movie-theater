@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Movie
 import java.time.LocalDate
-import java.time.LocalTime
 
 class MoviePresenterTest {
     private lateinit var presenter: MoviePresenter
@@ -27,11 +26,6 @@ class MoviePresenterTest {
                     screeningStartDate = LocalDate.of(2025, 4, 1),
                     screeningEndDate = LocalDate.of(2025, 4, 25),
                     runningTime = 152,
-                    screeningTimes =
-                        listOf(
-                            LocalTime.of(12, 0),
-                            LocalTime.of(20, 0),
-                        ),
                 ),
                 Movie(
                     title = "스타 이즈 본",
@@ -39,11 +33,6 @@ class MoviePresenterTest {
                     screeningStartDate = LocalDate.of(2025, 4, 19),
                     screeningEndDate = LocalDate.of(2025, 5, 25),
                     runningTime = 135,
-                    screeningTimes =
-                        listOf(
-                            LocalTime.of(12, 0),
-                            LocalTime.of(20, 0),
-                        ),
                 ),
             )
 
@@ -74,15 +63,11 @@ class MoviePresenterTest {
                 screeningStartDate = LocalDate.of(2025, 4, 1),
                 screeningEndDate = LocalDate.of(2025, 4, 25),
                 runningTime = 152,
-                screeningTimes =
-                    listOf(
-                        LocalTime.of(12, 0),
-                        LocalTime.of(20, 0),
-                    ),
             )
-        val movieUiData = movie.toUiModel()
-        presenter.onReserveClicked(movieUiData)
 
-        verify { mockView.startBookingActivity(movieUiData) }
+        val movieUiData = movie.toUiModel()
+        presenter.setTheaters(movieUiData)
+
+        verify { mockView.showTheaterDialog(any(), movieUiData) }
     }
 }

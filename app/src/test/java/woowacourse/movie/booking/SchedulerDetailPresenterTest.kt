@@ -9,9 +9,11 @@ import woowacourse.movie.booking.detail.BookingDetailPresenter
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Movie
+import woowacourse.movie.model.Schedule
 import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.movie.MovieUiModel
+import woowacourse.movie.movie.TheaterUiModel
 import woowacourse.movie.util.Formatter.formatDateDotSeparated
 import woowacourse.movie.util.Formatter.formatTimeWithMidnight24
 import java.time.LocalDate
@@ -22,6 +24,7 @@ class SchedulerDetailPresenterTest {
     private lateinit var mockView: BookingDetailContract.View
     private lateinit var mockMovie: Movie
     private lateinit var mockMovieUiData: MovieUiModel
+    private lateinit var mockTheaterUiData: TheaterUiModel
     private lateinit var mockTicket: Ticket
 
     @BeforeEach
@@ -34,11 +37,6 @@ class SchedulerDetailPresenterTest {
                 screeningStartDate = LocalDate.of(2028, 10, 1),
                 screeningEndDate = LocalDate.of(2028, 10, 25),
                 runningTime = 150,
-                screeningTimes =
-                    listOf(
-                        LocalTime.of(12, 0),
-                        LocalTime.of(20, 0),
-                    ),
             )
 
         mockTicket =
@@ -50,14 +48,20 @@ class SchedulerDetailPresenterTest {
                 seats = Seats(emptyList()),
             )
 
+        mockTheaterUiData =
+            TheaterUiModel(
+                place = "선릉",
+                schedule = Schedule(mockMovie, listOf(LocalTime.of(23, 0), LocalTime.of(11, 0))).toUiModel(),
+            )
+
         mockMovieUiData = mockMovie.toUiModel()
 
-        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData)
+        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
     }
 
     @Test
     fun `영화가 주어지면 View에 초기 데이터를 보여준다`() {
-        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData)
+        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
         presenter.createDefaultTicket()
         presenter.initializeData()
 
@@ -70,7 +74,7 @@ class SchedulerDetailPresenterTest {
 
     @Test
     fun `영화가 주어졌을 때 날짜를 선택하면 Ticket에 해당 날짜가 반영되어 화면에 표시된다`() {
-        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData)
+        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
         presenter.createDefaultTicket()
         presenter.initializeData()
 
@@ -80,43 +84,11 @@ class SchedulerDetailPresenterTest {
         val formattedDate = formatDateDotSeparated(selectedDate)
 
         verify { mockView.showTicket(match { it.selectedDateText == formattedDate }) }
-    }
-
-    @Test
-    fun `평일 날짜를 선택하면 해당하는 날짜에 맞는 시간대가 화면에 표시된다`() {
-        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData)
-        presenter.createDefaultTicket()
-        presenter.initializeData()
-
-        // 평일임
-        val selectedDate = LocalDate.of(2028, 10, 13)
-        presenter.selectDate(selectedDate)
-
-        val formattedDate = formatDateDotSeparated(selectedDate)
-
-        verify { mockView.showTicket(match { it.selectedDateText == formattedDate }) }
-        verify { mockView.showTicket(match { it.selectedTimeText == "09:00" }) }
-    }
-
-    @Test
-    fun `주말 날짜를 선택하면 해당하는 날짜에 맞는 시간대가 화면에 표시된다`() {
-        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData)
-        presenter.createDefaultTicket()
-        presenter.initializeData()
-
-        // 주말임
-        val selectedDate = LocalDate.of(2028, 10, 14)
-        presenter.selectDate(selectedDate)
-
-        val formattedDate = formatDateDotSeparated(selectedDate)
-
-        verify { mockView.showTicket(match { it.selectedDateText == formattedDate }) }
-        verify { mockView.showTicket(match { it.selectedTimeText == "10:00" }) }
     }
 
     @Test
     fun `날짜와 시간을 선택하면 해당하는 내용이 화면에 표시된다`() {
-        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData)
+        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
         presenter.createDefaultTicket()
         presenter.initializeData()
 
@@ -135,7 +107,7 @@ class SchedulerDetailPresenterTest {
 
     @Test
     fun `+버튼을 누르면 인원수가 0인 경우에 1명씩 추가됨을 화면에 표시한다`() {
-        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData)
+        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
         presenter.createDefaultTicket()
         presenter.initializeData()
 
@@ -158,7 +130,7 @@ class SchedulerDetailPresenterTest {
 
     @Test
     fun `-버튼을 누르면 인원수가 0인 경우에 버튼을 눌러도 인원수가 변경되지 않는다`() {
-        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData)
+        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
         presenter.createDefaultTicket()
         presenter.initializeData()
 

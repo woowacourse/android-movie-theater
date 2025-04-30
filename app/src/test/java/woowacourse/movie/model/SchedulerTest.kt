@@ -8,6 +8,7 @@ import java.time.LocalTime
 
 class SchedulerTest {
     private lateinit var movie: Movie
+    private lateinit var scheduler: Scheduler
 
     @BeforeEach
     fun setUp() {
@@ -18,16 +19,21 @@ class SchedulerTest {
                 runningTime = 152,
                 screeningStartDate = LocalDate.of(2025, 4, 1),
                 screeningEndDate = LocalDate.of(2025, 4, 25),
-                screeningTimes =
-                    listOf(
-                        LocalTime.of(12, 0),
-                    ),
+            )
+
+        scheduler =
+            Scheduler(
+                movie,
+                listOf(
+                    LocalTime.of(11, 0),
+                    LocalTime.of(12, 0),
+                ),
+                LocalDate.of(2025, 4, 20), LocalTime.of(8, 0),
             )
     }
 
     @Test
     fun `상영일자에 맞는 상영일들을 가져온다`() {
-        val booking = Scheduler(movie, LocalDate.of(2025, 4, 20), LocalTime.of(8, 0))
         val expected =
             localDates(
                 "2025-04-20",
@@ -38,40 +44,17 @@ class SchedulerTest {
                 "2025-04-25",
             )
 
-        val actual = booking.screeningPeriods()
+        val actual = scheduler.screeningPeriods()
 
         Assertions.assertThat(actual).isEqualTo(expected)
     }
 
     @Test
     fun `현재 시간을 기준으로 예매 가능한 시간들을 가져온다`() {
-        val booking = Scheduler(movie, LocalDate.of(2025, 4, 10), LocalTime.of(8, 0))
         val expected =
-            localTimes("09:00", "11:00", "13:00", "15:00", "17:00", "19:00", "21:00", "23:00")
+            localTimes("11:00", "12:00")
 
-        val actual = booking.screeningTimes(LocalDate.of(2025, 4, 10))
-
-        Assertions.assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `주말인 경우에 해당하는 시간들을 가져온다`() {
-        val booking = Scheduler(movie, LocalDate.of(2025, 4, 20), LocalTime.of(8, 0))
-        val expected =
-            localTimes("10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00", "24:00")
-
-        val actual = booking.screeningTimes(LocalDate.of(2025, 4, 20))
-
-        Assertions.assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `평일인 경우에 해당하는 시간들을 가져온다`() {
-        val booking = Scheduler(movie, LocalDate.of(2025, 4, 18), LocalTime.of(8, 0))
-        val expected =
-            localTimes("09:00", "11:00", "13:00", "15:00", "17:00", "19:00", "21:00", "23:00")
-
-        val actual = booking.screeningTimes(LocalDate.of(2025, 4, 18))
+        val actual = scheduler.screeningTimes(LocalDate.of(2025, 4, 10))
 
         Assertions.assertThat(actual).isEqualTo(expected)
     }

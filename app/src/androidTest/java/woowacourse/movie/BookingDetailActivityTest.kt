@@ -25,10 +25,12 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Movie
+import woowacourse.movie.model.Schedule
+import woowacourse.movie.movie.TheaterUiModel
 import java.time.LocalDate
 import java.time.LocalTime
 
-class SchedulerActivityTest {
+class BookingDetailActivityTest {
     private lateinit var scenario: ActivityScenario<BookingDetailActivity>
 
     @Before
@@ -36,12 +38,14 @@ class SchedulerActivityTest {
         Intents.init()
 
         val movie = mockMovie().toUiModel()
+        val theater = mockTheater()
         val intent =
             Intent(
                 ApplicationProvider.getApplicationContext(),
                 BookingDetailActivity::class.java,
             ).apply {
                 putExtra("movieData", movie)
+                putExtra("theaterData", theater)
             }
 
         scenario = ActivityScenario.launch(intent)
@@ -160,45 +164,7 @@ class SchedulerActivityTest {
     }
 
     @Test
-    fun `확인_버튼을_누르면_다이알로그가_뜬다`() {
-        onView(withId(R.id.btn_plus)).perform(click())
-
-        onView(withId(R.id.tv_people_count))
-            .check(matches(withText("1")))
-
-        onView(withId(R.id.btn_selection_confirm)).perform(click())
-
-        onView(withText("예매 확인"))
-            .check(matches(isDisplayed()))
-
-        onView(withText("정말 예매하시겠습니까?"))
-            .check(matches(isDisplayed()))
-
-        onView(withText("예매 완료"))
-            .check(matches(isDisplayed()))
-    }
-
-//    @Test
-//    fun `다이알로그에서_취소를_누르면_화면이_닫힌다`() {
-//        onView(withId(R.id.btn_plus)).perform(click())
-//
-//        onView(withId(R.id.tv_people_count))
-//            .check(matches(withText("1")))
-//
-//        onView(withId(R.id.btn_selection_confirm)).perform(click())
-//
-//        onView(withText("예매 확인"))
-//            .check(matches(isDisplayed()))
-//
-//        onView(withText("정말 예매하시겠습니까?"))
-//            .check(matches(isDisplayed()))
-//
-//        onView(withText("취소"))
-//            .perform(click())
-//    }
-
-    @Test
-    fun `특정_날짜를_선택했을_때_주말인_경우_시간이_정상적으로_표시되고_선택된다`() {
+    fun `특정_날짜를_선택했을_때_시간이_정상적으로_표시되고_선택된다`() {
         onView(withId(R.id.spinner_screening_date)).perform(click())
 
         val targetDate = LocalDate.of(2028, 10, 14)
@@ -219,30 +185,6 @@ class SchedulerActivityTest {
 
         onView(withId(R.id.spinner_screening_time))
             .check(matches(withSpinnerText(containsString("12:00"))))
-    }
-
-    @Test
-    fun `특정_날짜를_선택했을_때_평일인_경우_시간이_정상적으로_표시되고_선택된다`() {
-        onView(withId(R.id.spinner_screening_date)).perform(click())
-
-        val targetDate = LocalDate.of(2028, 10, 13)
-        onData(`is`(targetDate))
-            .inRoot(isPlatformPopup())
-            .perform(click())
-
-        onView(withId(R.id.spinner_screening_date))
-            .check(matches(withSpinnerText(containsString(targetDate.toString()))))
-
-        onView(withId(R.id.spinner_screening_time)).perform(click())
-
-        // 평일일 경우 09:00이 포함되어야 함
-        val targetTime = LocalTime.of(9, 0)
-        onData(`is`(targetTime))
-            .inRoot(isPlatformPopup())
-            .perform(click())
-
-        onView(withId(R.id.spinner_screening_time))
-            .check(matches(withSpinnerText(containsString("09:00"))))
     }
 
     @Test
@@ -302,6 +244,13 @@ class SchedulerActivityTest {
             runningTime = 152,
             screeningStartDate = LocalDate.of(2028, 10, 11),
             screeningEndDate = LocalDate.of(2028, 10, 25),
+        )
+    }
+
+    private fun mockTheater(): TheaterUiModel {
+        return TheaterUiModel(
+            place = "선릉",
+            schedule = Schedule(movie = mockMovie(), screeningTimes = listOf(LocalTime.of(11, 0), LocalTime.of(12, 0))).toUiModel(),
         )
     }
 }
