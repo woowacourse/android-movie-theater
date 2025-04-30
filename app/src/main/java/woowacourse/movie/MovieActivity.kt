@@ -12,6 +12,7 @@ import woowacourse.movie.movie.MovieContract
 import woowacourse.movie.movie.MoviePresenter
 import woowacourse.movie.movie.MovieUiModel
 import woowacourse.movie.movie.TheaterFragment
+import woowacourse.movie.movie.TheaterFragment.Companion.KEY_MOVIE
 import woowacourse.movie.movie.TheaterFragment.Companion.KEY_THEATERS
 import woowacourse.movie.movie.TheaterUiModel
 import woowacourse.movie.movie.adapter.MovieAdapter
@@ -51,11 +52,15 @@ class MovieActivity : AppCompatActivity(), MovieContract.View {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showTheaterDialog(theaters: ArrayList<TheaterUiModel>) {
+    override fun showTheaterDialog(
+        theaters: ArrayList<TheaterUiModel>,
+        movie: MovieUiModel,
+    ) {
         val fragment = TheaterFragment()
         val bundle = Bundle()
 
         bundle.putParcelableArrayList(KEY_THEATERS, theaters)
+        bundle.putParcelable(KEY_MOVIE, movie)
         fragment.arguments = bundle
 
         fragment.show(supportFragmentManager, fragment.tag)

@@ -8,7 +8,10 @@ interface MovieContract {
 
         fun showToast(message: String)
 
-        fun showTheaterDialog(theaters: ArrayList<TheaterUiModel>)
+        fun showTheaterDialog(
+            theaters: ArrayList<TheaterUiModel>,
+            movie: MovieUiModel,
+        )
     }
 
     interface Presenter {

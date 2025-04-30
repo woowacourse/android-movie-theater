@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.BookingDetailActivity
+import woowacourse.movie.BookingDetailActivity.Companion.KEY_MOVIE_DATA
 import woowacourse.movie.BookingDetailActivity.Companion.KEY_THEATER_DATA
 import woowacourse.movie.R
 import woowacourse.movie.movie.adapter.TheaterAdapter
@@ -43,6 +44,7 @@ class TheaterFragment : BottomSheetDialogFragment() {
                     val intent =
                         Intent(activity, BookingDetailActivity::class.java).apply {
                             putExtra(KEY_THEATER_DATA, theater)
+                            putExtra(KEY_MOVIE_DATA, initMovie())
                         }
                     startActivity(intent)
                     addToBackStack(null)
@@ -58,7 +60,15 @@ class TheaterFragment : BottomSheetDialogFragment() {
         return theaters!!
     }
 
+    private fun initMovie(): MovieUiModel {
+        val movie: MovieUiModel? = arguments?.getParcelable(KEY_MOVIE)
+        if (movie == null) dismiss()
+
+        return movie!!
+    }
+
     companion object {
         const val KEY_THEATERS = "theatersData"
+        const val KEY_MOVIE = "theatersMovieData"
     }
 }

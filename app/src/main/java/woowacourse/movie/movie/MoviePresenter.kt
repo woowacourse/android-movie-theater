@@ -33,7 +33,6 @@ class MoviePresenter(
     }
 
     private fun getReservableMovies(): List<Movie> {
-//        return theater.forEach { it.schedules }.flatten().distinct()
         return theater.map { it.schedules }.flatten().map { it.movie }.distinct()
     }
 
@@ -42,7 +41,7 @@ class MoviePresenter(
 
         val domainTheaters = theater.filter { it.schedules.map { it.movie }.contains(domainMovie) }
 
-        view.showTheaterDialog(ArrayList(domainTheaters.map { it.toUiModel() }))
+        view.showTheaterDialog(ArrayList(domainTheaters.map { it.toUiModel() }), movie)
     }
 
     private fun mockTheaterList(): List<Theater> {
