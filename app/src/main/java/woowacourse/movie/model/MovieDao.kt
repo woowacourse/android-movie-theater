@@ -42,7 +42,7 @@ class MovieDao {
         movieName: String,
     ): List<Int> = getTimeSlot(theaterName)[movieName] ?: emptyList()
 
-    fun getTimeSlot(theaterName: String): Map<String, List<Int>> = screenings[theaterName] ?: emptyMap()
+    private fun getTimeSlot(theaterName: String): Map<String, List<Int>> = screenings[theaterName] ?: emptyMap()
 }
 
 private fun List<Int>.timeTable(nowHour: Int): List<Int> {
