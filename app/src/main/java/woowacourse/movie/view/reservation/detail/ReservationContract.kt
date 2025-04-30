@@ -25,7 +25,10 @@ interface ReservationContract {
 
         fun selectedTime(position: Int)
 
-        fun createTicket(selectedDateTime: LocalDateTime)
+        fun createTicket(
+            selectedDateTime: LocalDateTime,
+            theaterName: String,
+        )
 
         fun resetSelectedTimePosition(position: Int)
     }
@@ -41,7 +44,7 @@ interface ReservationContract {
 
         fun setCountButtons()
 
-        fun setReservationButton()
+        fun setReservationButton(showings: Showings)
 
         fun showSpinnerData(
             movie: Movie,

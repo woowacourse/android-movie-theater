@@ -22,7 +22,7 @@ class ReservationPresent(
         view.showCount(count)
         view.showMovieReservationScreen(this.movie)
         view.setCountButtons()
-        view.setReservationButton()
+        view.setReservationButton(showings)
         view.showSpinnerData(this.movie, selectedDatePosition, showings)
     }
 
@@ -64,12 +64,16 @@ class ReservationPresent(
         }
     }
 
-    override fun createTicket(selectedDateTime: LocalDateTime) {
+    override fun createTicket(
+        selectedDateTime: LocalDateTime,
+        theaterName: String,
+    ) {
         val ticket =
             Ticket(
                 movie.title,
                 selectedDateTime,
                 count,
+                theaterName,
             )
         view.navigateToReservationComplete(ticket)
     }

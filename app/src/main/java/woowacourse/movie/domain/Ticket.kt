@@ -7,6 +7,7 @@ data class Ticket(
     val title: String,
     val date: LocalDateTime,
     val personnel: Int,
+    val theaterName: String,
 ) : Serializable {
     companion object {
         const val CANCEL_DEADLINE = 15

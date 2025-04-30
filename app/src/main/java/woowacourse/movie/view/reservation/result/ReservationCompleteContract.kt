@@ -22,5 +22,7 @@ class ReservationCompleteContract {
         fun showSeatsInfo(seats: String)
 
         fun showTicketMoney(moviePrice: Int)
+
+        fun showTheaterName(theaterName: String)
     }
 }

@@ -87,6 +87,11 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         movieSeatsTextView.text = getString(R.string.seat_list, seats)
     }
 
+    override fun showTheaterName(theaterName: String) {
+        val theaterNameTextView = findViewById<TextView>(R.id.tv_selected_theater_name)
+        theaterNameTextView.text = getString(R.string.theater_name, theaterName)
+    }
+
     override fun showTicketMoney(moviePrice: Int) {
         val priceFormatter = java.text.DecimalFormat(PRICE_PATTERN)
         val movieTotalPrice = findViewById<TextView>(R.id.tv_movie_total_price)

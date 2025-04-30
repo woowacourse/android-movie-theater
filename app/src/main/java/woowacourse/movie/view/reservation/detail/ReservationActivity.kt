@@ -137,7 +137,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         }
     }
 
-    override fun setReservationButton() {
+    override fun setReservationButton(showings: Showings) {
         val reservationButton = findViewById<Button>(R.id.btn_reservation)
 
         reservationButton.setOnClickListener {
@@ -151,7 +151,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
                 ).show()
                 return@setOnClickListener
             }
-            present.createTicket(LocalDateTime.of(selectedDate, selectedTime))
+            present.createTicket(LocalDateTime.of(selectedDate, selectedTime), showings.theaterName)
         }
     }
 
