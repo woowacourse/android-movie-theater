@@ -11,7 +11,10 @@ class ScreeningDateTime(
     fun isScreening(
         selectedDate: LocalDate,
         selectedTime: LocalTime,
-    ): Boolean {
-        return screeningDate.isBefore(selectedDate).not() && screeningTime.isBefore(selectedTime).not()
-    }
+    ): Boolean =
+        screeningDate.isAfter(selectedDate) ||
+            (
+                screeningDate.isEqual(selectedDate) &&
+                    screeningTime.isAfter(selectedTime)
+            )
 }
