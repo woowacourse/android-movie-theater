@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
@@ -18,20 +19,18 @@ import woowacourse.movie.ui.util.TicketUiFormatter
 import woowacourse.movie.ui.util.intentSerializable
 import java.io.Serializable
 
-class SeatsActivity : BaseActivity(), SeatsContract.View {
+class SeatsActivity : BaseActivity<ActivitySeatsBinding>(), SeatsContract.View {
     override val layoutRes: Int
         get() = R.layout.activity_seats
 
-    private val seatsTable: TableLayout by lazy { findViewById(R.id.tablelayout_seats) }
-    private val amountTextView: TextView by lazy { findViewById(R.id.textview_amount) }
-    private val confirmTextView: TextView by lazy { findViewById(R.id.textview_confirm) }
+    override lateinit var binding: ActivitySeatsBinding
     private lateinit var movieTicket: MovieTicket
     private lateinit var presenter: SeatsContract.Presenter
     private var confirmDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupScreen(layoutRes)
+        setupScreen()
         if (!fetchTicketFromIntent()) return
         presenter = SeatsPresenter(this, movieTicket)
         presenter.onViewCreated()
@@ -50,7 +49,7 @@ class SeatsActivity : BaseActivity(), SeatsContract.View {
     }
 
     override fun initSeats() {
-        seatsTable.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, row ->
+        binding.tablelayoutSeats.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, row ->
             row.children.filterIsInstance<TextView>().forEachIndexed { colIndex, view ->
                 val seat = presenter.getSeat(colIndex, rowIndex)
                 view.tag = seat
@@ -60,8 +59,7 @@ class SeatsActivity : BaseActivity(), SeatsContract.View {
     }
 
     override fun showMovieTitle(title: String) {
-        val titleTextView = findViewById<TextView>(R.id.textview_title)
-        titleTextView.text = title
+        binding.textviewTitle.text = title
     }
 
     override fun showConfirmDialog() {
@@ -74,11 +72,11 @@ class SeatsActivity : BaseActivity(), SeatsContract.View {
     }
 
     override fun updateAmount(amount: Int) {
-        amountTextView.text = TicketUiFormatter.formatAmount(getString(R.string.amount_message), amount)
+        binding.textviewAmount.text = TicketUiFormatter.formatAmount(getString(R.string.amount_message), amount)
     }
 
     override fun updateSelectedSeats(seats: List<Seat>) {
-        seatsTable.children.filterIsInstance<TableRow>().forEach { row ->
+        binding.tablelayoutSeats.children.filterIsInstance<TableRow>().forEach { row ->
             row.children.filterIsInstance<TextView>().forEach seat@{ seatView ->
                 val seat = seatView.tag as? Seat ?: return@seat
                 seatView.setBackgroundColor(
@@ -89,6 +87,7 @@ class SeatsActivity : BaseActivity(), SeatsContract.View {
     }
 
     override fun updateConfirmButtonEnabled(canConfirm: Boolean) {
+        val confirmTextView = binding.textviewConfirm
         if (canConfirm) {
             confirmTextView.setBackgroundColor(getColor(R.color.confirm_activate))
             confirmTextView.isClickable = true

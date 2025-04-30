@@ -1,9 +1,6 @@
 package woowacourse.movie
 
 import android.os.Bundle
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityMainBinding
@@ -12,21 +9,15 @@ import woowacourse.movie.presentation.movies.MoviesFragment
 import woowacourse.movie.presentation.setting.SettingFragment
 import woowacourse.movie.ui.BaseActivity
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
     override val layoutRes: Int
         get() = R.layout.activity_main
 
-    private lateinit var binding: ActivityMainBinding
+    override lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
+        setupScreen()
         setBottomNavigationView()
 
         if (savedInstanceState == null) {

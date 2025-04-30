@@ -11,6 +11,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.ScreeningInfo
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.movie.MovieTicket
@@ -24,30 +25,29 @@ import java.time.LocalTime
 import java.util.Locale
 
 class BookingActivity :
-    BaseActivity(),
+    BaseActivity<ActivityBookingBinding>(),
     BookingContract.View {
     override val layoutRes: Int
         get() = R.layout.activity_booking
 
-    private lateinit var presenter: BookingPresenter
+    override lateinit var binding: ActivityBookingBinding
+
+    private lateinit var presenter: BookingContract.Presenter
     private lateinit var screeningInfo: ScreeningInfo
     private var dateItemPosition: Int = DEFAULT_POSITION
     private var timeItemPosition: Int = DEFAULT_POSITION
-    private val dateSpinner: Spinner by lazy { findViewById(R.id.spinner_date) }
-    private val timeSpinner: Spinner by lazy { findViewById(R.id.spinner_time) }
-    private val headCountView: TextView by lazy { findViewById(R.id.textview_headcount) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!fetchMovieFromIntent()) return
-        setupScreen(layoutRes)
+        setupScreen()
         presenter = BookingPresenter(this, screeningInfo)
         presenter.onViewCreated()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(HEADCOUNT_KEY, headCountView.text.toString())
+        outState.putString(HEADCOUNT_KEY, binding.textviewHeadcount.text.toString())
         outState.putInt(DATE_POSITION_KEY, dateItemPosition)
         outState.putInt(TIME_POSITION_KEY, timeItemPosition)
     }
@@ -59,8 +59,8 @@ class BookingActivity :
         timeItemPosition = savedInstanceState.getInt(TIME_POSITION_KEY)
         presenter.onConfigurationChanged(
             count?.toIntOrNull(),
-            dateSpinner.getItemAtPosition(dateItemPosition) as LocalDate?,
-            timeSpinner.getItemAtPosition(timeItemPosition) as LocalTime?,
+            binding.spinnerDate.getItemAtPosition(dateItemPosition) as LocalDate?,
+            binding.spinnerTime.getItemAtPosition(timeItemPosition) as LocalTime?,
         )
     }
 
@@ -70,21 +70,15 @@ class BookingActivity :
     }
 
     override fun showMovie(movie: Movie) {
-        val poster = findViewById<ImageView>(R.id.imageview_poster)
-        poster.setImageResource(PosterMapper.convertTitleToResId(movie.title))
-
-        val title = findViewById<TextView>(R.id.textview_title)
-        title.text = movie.title
-
-        val screeningDate = findViewById<TextView>(R.id.textview_screeningdate)
-        screeningDate.text =
+        binding.imageviewPoster.setImageResource(PosterMapper.convertTitleToResId(movie.title))
+        binding.textviewTitle.text = movie.title
+        binding.textviewScreeningdate.text =
             getString(R.string.date_text, movie.startScreeningDate, movie.endScreeningDate)
-
-        val runningTime = findViewById<TextView>(R.id.textview_runningtime)
-        runningTime.text = getString(R.string.runningTime_text, movie.runningTime.toString())
+        binding.textviewRunningtime.text = getString(R.string.runningTime_text, movie.runningTime.toString())
     }
 
     override fun showBookableDates(dates: List<LocalDate>) {
+        val dateSpinner = binding.spinnerDate
         dateSpinner.adapter =
             ArrayAdapter(
                 this,
@@ -110,6 +104,7 @@ class BookingActivity :
     }
 
     override fun showBookableTimes(times: List<LocalTime>) {
+        val timeSpinner = binding.spinnerTime
         timeSpinner.adapter =
             ArrayAdapter(
                 this,
@@ -135,7 +130,7 @@ class BookingActivity :
     }
 
     override fun updateHeadCount(count: Int) {
-        headCountView.text = String.format(Locale.getDefault(), INTEGER_FORMAT, count)
+        binding.textviewHeadcount.text = String.format(Locale.getDefault(), INTEGER_FORMAT, count)
     }
 
     override fun navigateToSeats(ticket: MovieTicket) {
@@ -158,19 +153,16 @@ class BookingActivity :
     }
 
     private fun bindHeadCountButtonListeners() {
-        val increaseBtn = findViewById<Button>(R.id.button_increase)
-        increaseBtn.setOnClickListener {
+        binding.buttonIncrease.setOnClickListener {
             presenter.onIncreaseHeadCount()
         }
-        val decreaseBtn = findViewById<Button>(R.id.button_decrease)
-        decreaseBtn.setOnClickListener {
+        binding.buttonDecrease.setOnClickListener {
             presenter.onDecreaseHeadCount()
         }
     }
 
     private fun bindSelectButtonListener() {
-        val selectBtn = findViewById<Button>(R.id.button_select)
-        selectBtn.setOnClickListener {
+        binding.buttonSelect.setOnClickListener {
             presenter.onConfirmClicked()
         }
     }
