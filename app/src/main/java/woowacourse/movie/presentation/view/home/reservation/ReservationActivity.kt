@@ -20,24 +20,29 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(R.layout.ac
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val movie = intent.getParcelableCompat<MovieUiModel>(BUNDLE_KEY_MOVIE)
-        val theater = intent.getParcelableCompat<TheaterUiModel>(BUNDLE_KEY_THEATER)
-
-        if (savedInstanceState == null) {
-            val fragment = ReservationDetailFragment.newInstance(movie, theater)
-            navigateToScreen(fragment)
-        }
+        if (savedInstanceState == null) navigateToReservationDetailScreen()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            if (supportFragmentManager.fragments.reversed().firstOrNull() is HomeButtonHandler) {
+            if (isLastScreen()) {
                 finish()
-            } else {
-                supportFragmentManager.popBackStack()
+                return true
             }
+
+            supportFragmentManager.popBackStack()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun isLastScreen(): Boolean = supportFragmentManager.fragments.reversed().firstOrNull() is HomeButtonHandler
+
+    private fun navigateToReservationDetailScreen() {
+        val movie = intent.getParcelableCompat<MovieUiModel>(BUNDLE_KEY_MOVIE)
+        val theater = intent.getParcelableCompat<TheaterUiModel>(BUNDLE_KEY_THEATER)
+
+        val fragment = ReservationDetailFragment.newInstance(movie, theater)
+        navigateToScreen(fragment)
     }
 
     private fun navigateToScreen(fragment: Fragment) {
