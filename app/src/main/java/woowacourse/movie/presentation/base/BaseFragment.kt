@@ -33,4 +33,9 @@ abstract class BaseFragment<T : ViewDataBinding>(
     fun showActionBarBackButton(isEnabled: Boolean = false) {
         (requireActivity() as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(isEnabled)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mBinding = null
+    }
 }
