@@ -15,7 +15,6 @@ import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.feature.movies.view.MoviesActivity
 
 @Suppress("ktlint:standard:function-naming")
 class MoviesActivityTest {
@@ -27,7 +26,7 @@ class MoviesActivityTest {
         onView(
             allOf(
                 withId(R.id.tv_movie_title),
-                isDescendantOfA(nthChildOf(withId(R.id.rv_movies), 0)),
+                isDescendantOfA(nthChildOf(withId(R.id.rv_home_movies), 0)),
             ),
         ).check(matches(withText("해리 포터와 마법사의 돌")))
     }
