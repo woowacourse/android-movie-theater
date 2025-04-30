@@ -31,7 +31,7 @@ class TheaterAdapter(
         val context = holder.itemView.context
 
         holder.place.text = context.getString(R.string.theater_place, theater.place)
-        holder.count.text = context.getString(R.string.theater_movie_count, theater.movies.size)
+        holder.count.text = context.getString(R.string.theater_movie_count, theater.schedules.map { it.screeningTimes }.size)
         holder.button.setOnClickListener {
             onSelectClick(theater)
         }

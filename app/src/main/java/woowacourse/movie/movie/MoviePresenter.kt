@@ -6,6 +6,7 @@ import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Movie
+import woowacourse.movie.model.Schedule
 import woowacourse.movie.model.Theater
 import java.time.LocalDate
 import java.time.LocalTime
@@ -32,13 +33,14 @@ class MoviePresenter(
     }
 
     private fun getReservableMovies(): List<Movie> {
-        return theater.map { it.movies }.flatten().distinct()
+//        return theater.forEach { it.schedules }.flatten().distinct()
+        return theater.map { it.schedules }.flatten().map { it.movie }.distinct()
     }
 
     override fun setTheaters(movie: MovieUiModel) {
         val domainMovie = movie.toDomain()
 
-        val domainTheaters = theater.filter { it.movies.contains(domainMovie) }
+        val domainTheaters = theater.filter { it.schedules.map { it.movie }.contains(domainMovie) }
 
         view.showTheaterDialog(ArrayList(domainTheaters.map { it.toUiModel() }))
     }
@@ -47,15 +49,39 @@ class MoviePresenter(
         return listOf(
             Theater(
                 place = "선릉",
-                movies = mockMovieList(),
+                schedules =
+                    listOf(
+                        Schedule(
+                            Movie(
+                                title = "해리 포터와 마법사의 돌",
+                                imageSource = "harry_potter.png",
+                                screeningStartDate = LocalDate.of(2025, 4, 1),
+                                screeningEndDate = LocalDate.of(2025, 4, 25),
+                                runningTime = 152,
+                            ),
+                            listOf(LocalTime.of(11, 0)),
+                        ),
+                    ),
             ),
             Theater(
                 place = "잠실",
-                movies = mockMovieList(),
+                schedules =
+                    mockMovieList().map {
+                        Schedule(
+                            it,
+                            screeningTimes = listOf(LocalTime.of(11, 0)),
+                        )
+                    },
             ),
             Theater(
                 place = "강남",
-                movies = mockMovieList(),
+                schedules =
+                    mockMovieList().map {
+                        Schedule(
+                            it,
+                            screeningTimes = listOf(LocalTime.of(11, 0)),
+                        )
+                    },
             ),
         )
     }
@@ -68,11 +94,6 @@ class MoviePresenter(
                 screeningStartDate = LocalDate.of(2025, 4, 1),
                 screeningEndDate = LocalDate.of(2025, 4, 25),
                 runningTime = 152,
-                screeningTimes =
-                    listOf(
-                        LocalTime.of(12, 0),
-                        LocalTime.of(20, 0),
-                    ),
             ),
             Movie(
                 title = "해리 포터와 비밀의 방",
@@ -80,11 +101,6 @@ class MoviePresenter(
                 screeningStartDate = LocalDate.of(2025, 4, 1),
                 screeningEndDate = LocalDate.of(2025, 4, 28),
                 runningTime = 162,
-                screeningTimes =
-                    listOf(
-                        LocalTime.of(12, 0),
-                        LocalTime.of(20, 0),
-                    ),
             ),
             Movie(
                 title = "해리 포터와 아즈카반의 죄수",
@@ -92,11 +108,6 @@ class MoviePresenter(
                 screeningStartDate = LocalDate.of(2025, 5, 1),
                 screeningEndDate = LocalDate.of(2025, 5, 31),
                 runningTime = 141,
-                screeningTimes =
-                    listOf(
-                        LocalTime.of(12, 0),
-                        LocalTime.of(20, 0),
-                    ),
             ),
             Movie(
                 title = "해리 포터와 불의 잔",
@@ -104,11 +115,6 @@ class MoviePresenter(
                 screeningStartDate = LocalDate.of(2025, 6, 1),
                 screeningEndDate = LocalDate.of(2025, 6, 30),
                 runningTime = 157,
-                screeningTimes =
-                    listOf(
-                        LocalTime.of(12, 0),
-                        LocalTime.of(20, 0),
-                    ),
             ),
             Movie(
                 title = "스타 이즈 본",
@@ -116,11 +122,6 @@ class MoviePresenter(
                 screeningStartDate = LocalDate.of(2025, 4, 19),
                 screeningEndDate = LocalDate.of(2025, 5, 25),
                 runningTime = 135,
-                screeningTimes =
-                    listOf(
-                        LocalTime.of(12, 0),
-                        LocalTime.of(20, 0),
-                    ),
             ),
         )
     }

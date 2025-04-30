@@ -6,13 +6,13 @@ import woowacourse.movie.movie.TheaterUiModel
 fun Theater.toUiModel(): TheaterUiModel {
     return TheaterUiModel(
         place = place,
-        movies = movies.map { it.toUiModel() },
+        schedules = schedules.map { it.toUiModel() },
     )
 }
 
 fun TheaterUiModel.toDomain(): Theater {
     return Theater(
         place = place,
-        movies = movies.map { it.toDomain() },
+        schedules = schedules.map { it.toDomain() },
     )
 }

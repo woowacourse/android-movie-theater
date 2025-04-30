@@ -2,9 +2,10 @@ package woowacourse.movie.movie
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.time.LocalTime
 
 @Parcelize
-class TheaterUiModel(
-    val place: String,
-    val schedules: List<ScheduleUiModel>,
+class ScheduleUiModel(
+    val movie: MovieUiModel,
+    val screeningTimes: List<LocalTime>,
 ) : Parcelable

@@ -12,7 +12,6 @@ fun Movie.toUiModel(): MovieUiModel {
         screeningStartDate = screeningStartDate,
         screeningEndDate = screeningEndDate,
         runningTime = runningTime,
-        screeningTimes = screeningTimes,
     )
 }
 
@@ -23,7 +22,6 @@ fun MovieUiModel.toDomain(): Movie {
         screeningStartDate = screeningStartDate,
         screeningEndDate = screeningEndDate,
         runningTime = runningTime,
-        screeningTimes = screeningTimes,
     )
 }
 
