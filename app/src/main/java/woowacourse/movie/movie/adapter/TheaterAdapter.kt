@@ -1,26 +1,22 @@
 package woowacourse.movie.movie.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
-import woowacourse.movie.movie.MovieUiModel
+import woowacourse.movie.databinding.TheaterItemBinding
 import woowacourse.movie.movie.TheaterUiModel
 
 class TheaterAdapter(
     private val theaters: List<TheaterUiModel>,
-    private val movie: MovieUiModel,
-    private val onSelectClick: (TheaterUiModel) -> Unit,
+    private val onSelectClick: SelectClickListener,
 ) : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): TheaterViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.theater_item, parent, false)
-        return TheaterViewHolder(view)
+        val binding = TheaterItemBinding.inflate(inflater, parent, false)
+        return TheaterViewHolder(binding)
     }
 
     override fun getItemCount(): Int = theaters.size
@@ -30,18 +26,15 @@ class TheaterAdapter(
         position: Int,
     ) {
         val theater = theaters[position]
-        val context = holder.itemView.context
 
-        holder.place.text = context.getString(R.string.theater_place, theater.place)
-        holder.count.text = context.getString(R.string.theater_movie_count, theater.schedule.screeningTimes.size)
-        holder.button.setOnClickListener {
-            onSelectClick(theater)
-        }
+        holder.bind(theater)
     }
 
-    inner class TheaterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val place: TextView = view.findViewById(R.id.tv_theater_place)
-        val count: TextView = view.findViewById(R.id.tv_movie_count)
-        val button: TextView = view.findViewById(R.id.btn_select_theater)
+    inner class TheaterViewHolder(val binding: TheaterItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(theater: TheaterUiModel) {
+            binding.theater = theater
+            binding.clickListener = onSelectClick
+        }
     }
 }

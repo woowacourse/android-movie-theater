@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,15 +16,19 @@ import woowacourse.movie.BookingDetailActivity
 import woowacourse.movie.BookingDetailActivity.Companion.KEY_MOVIE_DATA
 import woowacourse.movie.BookingDetailActivity.Companion.KEY_THEATER_DATA
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentTheaterBinding
 import woowacourse.movie.movie.adapter.TheaterAdapter
 
 class TheaterFragment : BottomSheetDialogFragment() {
+    private lateinit var binding: FragmentTheaterBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        return inflater.inflate(R.layout.fragment_theater, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_theater, container, false)
+        return binding.root
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -35,10 +40,10 @@ class TheaterFragment : BottomSheetDialogFragment() {
 
         val theaters = initTheaters()
 
-        val recyclerView: RecyclerView = view.findViewById(R.id.rv_theater)
+        val recyclerView: RecyclerView = binding.rvTheater
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter =
-            TheaterAdapter(theaters, initMovie()) { theater ->
+            TheaterAdapter(theaters) { theater ->
                 parentFragmentManager.commit {
                     setReorderingAllowed(true)
                     val intent =

@@ -62,7 +62,8 @@ class MovieAdapter(
         }
     }
 
-    inner class MovieViewHolder(val binding: MovieListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MovieViewHolder(val binding: MovieListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieUiModel) {
             binding.movie = movie
             binding.clickListener = onReserveClick
