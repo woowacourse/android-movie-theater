@@ -6,23 +6,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.presentation.extension.getParcelableCompat
+import woowacourse.movie.presentation.model.MovieUiModel
 import woowacourse.movie.presentation.model.TheaterUiModel
 import woowacourse.movie.presentation.model.TheatersUiModel
+import woowacourse.movie.presentation.view.home.reservation.ReservationActivity
 
-class TheaterBottomSheetDialogFragment(
-    private val onClickTheater: (TheaterUiModel) -> Unit,
-) : BottomSheetDialogFragment() {
+class TheaterBottomSheetDialogFragment :
+    BottomSheetDialogFragment(),
+    TheaterBottomSheetDialogContract.View {
     private var mBinding: FragmentTheaterBottomSheetDialogBinding? = null
     private val binding get() = mBinding!!
+    private val presenter: TheaterBottomSheetDialogPresenter by lazy {
+        TheaterBottomSheetDialogPresenter(
+            this,
+        )
+    }
 
     private val theaterAdapter: TheatersAdapter by lazy {
         TheatersAdapter {
-            navigateToReservationScreen(it)
+            presenter.presentTheaterItem(it)
         }
     }
 
@@ -31,7 +37,13 @@ class TheaterBottomSheetDialogFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_theater_bottom_sheet_dialog, container, false)
+        mBinding =
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_theater_bottom_sheet_dialog,
+                container,
+                false,
+            )
         return binding.root
     }
 
@@ -41,27 +53,36 @@ class TheaterBottomSheetDialogFragment(
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val theaters = arguments.getParcelableCompat<TheatersUiModel>("theaters")
+        val theaters = arguments.getParcelableCompat<TheatersUiModel>(BUNDLE_KEY_THEATERS)
+        val movie = arguments.getParcelableCompat<MovieUiModel>(BUNDLE_KEY_MOVIE)
+        presenter.fetch(theaters, movie)
+    }
+
+    override fun showTheaters(theaters: TheatersUiModel) {
         binding.rvTheater.adapter = theaterAdapter
-        binding.rvTheater.layoutManager = LinearLayoutManager(requireContext())
         theaterAdapter.submitList(theaters.theaters.map { TheaterUiModel(it.key, it.value) })
     }
 
-    private fun navigateToReservationScreen(theater: TheaterUiModel) {
-        onClickTheater(theater)
+    override fun showDetail(
+        movie: MovieUiModel,
+        theater: TheaterUiModel,
+    ) {
+        val intent = ReservationActivity.newIntent(requireContext(), movie, theater)
+        startActivity(intent)
         dismiss()
     }
 
     companion object {
         private const val BUNDLE_KEY_THEATERS = "theaters"
+        private const val BUNDLE_KEY_MOVIE = "movie"
 
         fun newInstance(
             theaters: TheatersUiModel,
-            onClickTheater: (TheaterUiModel) -> Unit,
+            movie: MovieUiModel,
         ): TheaterBottomSheetDialogFragment {
-            val fragment = TheaterBottomSheetDialogFragment(onClickTheater)
+            val fragment = TheaterBottomSheetDialogFragment()
             fragment.apply {
-                arguments = bundleOf(BUNDLE_KEY_THEATERS to theaters)
+                arguments = bundleOf(BUNDLE_KEY_THEATERS to theaters, BUNDLE_KEY_MOVIE to movie)
             }
 
             return fragment

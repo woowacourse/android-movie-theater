@@ -6,11 +6,9 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMoviesBinding
 import woowacourse.movie.presentation.base.BaseFragment
 import woowacourse.movie.presentation.model.MovieUiModel
-import woowacourse.movie.presentation.model.TheaterUiModel
 import woowacourse.movie.presentation.model.TheatersUiModel
 import woowacourse.movie.presentation.view.home.movies.adapter.OnMovieEventListener
 import woowacourse.movie.presentation.view.home.movies.dialog.TheaterBottomSheetDialogFragment
-import woowacourse.movie.presentation.view.home.reservation.ReservationActivity
 
 class MoviesFragment :
     BaseFragment<FragmentMoviesBinding>(R.layout.fragment_movies),
@@ -43,17 +41,8 @@ class MoviesFragment :
         times: TheatersUiModel,
     ) {
         TheaterBottomSheetDialogFragment
-            .newInstance(times) { theaters ->
-                navigateToReservationScreen(movie, theaters)
-            }.show(parentFragmentManager, THEATER_BOTTOM_SHEET_DIALOG_TAG)
-    }
-
-    private fun navigateToReservationScreen(
-        movie: MovieUiModel,
-        theater: TheaterUiModel,
-    ) {
-        val intent = ReservationActivity.newIntent(requireContext(), movie, theater)
-        startActivity(intent)
+            .newInstance(times, movie)
+            .show(parentFragmentManager, THEATER_BOTTOM_SHEET_DIALOG_TAG)
     }
 
     companion object {
