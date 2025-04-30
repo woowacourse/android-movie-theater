@@ -12,8 +12,6 @@ interface BookingDetailContract {
 
         fun updateView(bookingInfo: BookingInfoUiModel)
 
-        fun updateTicketCount(count: Int)
-
         fun navigateToBack()
 
         fun navigateToBookingSeat(bookingInfo: BookingInfoUiModel)

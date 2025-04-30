@@ -6,15 +6,10 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityBookingDetailBinding
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.feature.bookingdetail.contract.BookingDetailContract
 import woowacourse.movie.feature.bookingdetail.presenter.BookingDetailPresenter
@@ -29,17 +24,15 @@ import woowacourse.movie.util.getExtra
 class BookingDetailActivity :
     AppCompatActivity(),
     BookingDetailContract.View {
+    private val binding: ActivityBookingDetailBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_booking_detail) }
+    private val presenter: BookingDetailPresenter by lazy { BookingDetailPresenter(this) }
     private lateinit var dateAdapter: DateAdapter
     private lateinit var timeAdapter: TimeAdapter
-    private val ticketCountView: TextView by lazy { findViewById(R.id.tv_booking_detail_count) }
-    private val dateSpinner: Spinner by lazy { findViewById(R.id.sp_booking_detail_date) }
-    private val timeSpinner: Spinner by lazy { findViewById(R.id.sp_booking_detail_time) }
-    private val presenter: BookingDetailPresenter by lazy { BookingDetailPresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setupView()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupDateSpinnerItemClickListener()
         setupTimeSpinnerItemClickListener()
         setupTicketCountClickListeners()
@@ -56,34 +49,21 @@ class BookingDetailActivity :
 
     override fun setupDateView(dates: List<MovieDateUiModel>) {
         dateAdapter = DateAdapter(this, dates)
-        dateSpinner.adapter = dateAdapter
+        binding.spBookingDetailDate.adapter = dateAdapter
     }
 
     override fun setupTimeView(times: List<String>) {
         timeAdapter = TimeAdapter(this, times)
-        timeSpinner.adapter = timeAdapter
+        binding.spBookingDetailTime.adapter = timeAdapter
     }
 
     override fun updateView(bookingInfo: BookingInfoUiModel) {
-        findViewById<TextView>(R.id.tv_booking_detail_movie_title).text = bookingInfo.movie.title
-        findViewById<TextView>(R.id.tv_booking_detail_date).text =
-            getString(R.string.movies_movie_date_with_tilde, bookingInfo.movie.startDate, bookingInfo.movie.endDate)
-        findViewById<TextView>(R.id.tv_booking_detail_running_time).text =
-            getString(R.string.movies_movie_running_time, bookingInfo.movie.runningTime)
-        findViewById<ImageView>(R.id.iv_booking_detail_movie_poster).setImageResource(bookingInfo.movie.poster)
-
-        ticketCountView.text = bookingInfo.ticketCount.toString()
-        dateSpinner.setSelection(dateAdapter.getPosition(bookingInfo.date.toString()))
-        timeSpinner.setSelection(timeAdapter.getPosition(bookingInfo.movieTime.toString()))
+        binding.bookingInfo = bookingInfo
     }
 
     override fun navigateToBookingSeat(bookingInfo: BookingInfoUiModel) {
         val intent = BookingSeatActivity.newIntent(this, bookingInfo)
         startActivity(intent)
-    }
-
-    override fun updateTicketCount(count: Int) {
-        ticketCountView.text = count.toString()
     }
 
     override fun navigateToBack() {
@@ -101,19 +81,8 @@ class BookingDetailActivity :
         presenter.loadBookingInfo(bookingInfo)
     }
 
-    private fun setupView() {
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_booking_detail)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.activity_booking_detail)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
     private fun setupDateSpinnerItemClickListener() {
-        dateSpinner.onItemSelectedListener =
+        binding.spBookingDetailDate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -130,7 +99,7 @@ class BookingDetailActivity :
     }
 
     private fun setupTimeSpinnerItemClickListener() {
-        timeSpinner.onItemSelectedListener =
+        binding.spBookingDetailTime.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -147,17 +116,17 @@ class BookingDetailActivity :
     }
 
     private fun setupTicketCountClickListeners() {
-        findViewById<Button>(R.id.btn_booking_detail_count_down).setOnClickListener {
+        binding.btnBookingDetailCountDown.setOnClickListener {
             presenter.decreaseTicketCount()
         }
 
-        findViewById<Button>(R.id.btn_booking_detail_count_up).setOnClickListener {
+        binding.btnBookingDetailCountUp.setOnClickListener {
             presenter.increaseTicketCount()
         }
     }
 
     private fun setupSelectCompleteClickListener() {
-        findViewById<Button>(R.id.btn_booking_detail_select_complete).setOnClickListener {
+        binding.btnBookingDetailSelectComplete.setOnClickListener {
             presenter.confirmBookingInfo()
         }
     }

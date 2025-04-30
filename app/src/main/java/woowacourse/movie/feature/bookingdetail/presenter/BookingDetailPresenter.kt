@@ -47,12 +47,12 @@ class BookingDetailPresenter(
 
     override fun decreaseTicketCount() {
         bookingInfo.decreaseTicketCount()
-        view.updateTicketCount(bookingInfo.currentTicketCount)
+        view.updateView(bookingInfo.toUi())
     }
 
     override fun increaseTicketCount() {
         bookingInfo.increaseTicketCount()
-        view.updateTicketCount(bookingInfo.currentTicketCount)
+        view.updateView(bookingInfo.toUi())
     }
 
     override fun confirmBookingInfo() {

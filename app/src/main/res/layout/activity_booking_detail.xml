@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_booking_detail"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:ignore="ContentDescription">
+
+    <data>
+        <variable
+            name="bookingInfo"
+            type="woowacourse.movie.feature.model.BookingInfoUiModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -25,6 +34,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:scaleType="centerCrop"
+                    app:imgRes="@{bookingInfo.movie.poster}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -50,6 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
+                android:text="@{bookingInfo.movie.title}"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +81,7 @@
                 android:id="@+id/tv_booking_detail_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{@string/movies_movie_date_with_tilde(bookingInfo.movie.startDate, bookingInfo.movie.endDate)}"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_booking_detail_date_label"
                 app:layout_constraintStart_toEndOf="@id/tv_booking_detail_date_label"
@@ -90,6 +102,7 @@
                 android:id="@+id/tv_booking_detail_running_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{String.valueOf(bookingInfo.movie.runningTime)}"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_booking_detail_running_time_label"
                 app:layout_constraintStart_toEndOf="@id/tv_booking_detail_running_time_label"
@@ -142,6 +155,7 @@
                 android:id="@+id/tv_booking_detail_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{String.valueOf(bookingInfo.ticketCount)}"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/btn_booking_detail_count_down"
@@ -166,4 +180,5 @@
                 app:layout_constraintTop_toBottomOf="@id/btn_booking_detail_count_down" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
