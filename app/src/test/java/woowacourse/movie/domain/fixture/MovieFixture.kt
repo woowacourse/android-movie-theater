@@ -6,8 +6,12 @@ import java.time.LocalDate
 
 val screeningDateFixture =
     ScreeningDate(
-        startDate = LocalDate.of(2025, 5, 1),
-        endDate = LocalDate.of(2025, 5, 25),
+        listOf(
+            LocalDate.of(2025, 5, 1),
+            LocalDate.of(2025, 5, 2),
+            LocalDate.of(2025, 5, 3),
+            LocalDate.of(2025, 5, 4),
+        ),
     )
 val moviesFixture =
     listOf(
