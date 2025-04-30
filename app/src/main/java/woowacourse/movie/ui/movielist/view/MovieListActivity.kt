@@ -5,8 +5,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMovieListBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieListItem
 import woowacourse.movie.ui.booking.view.BookingActivity
@@ -16,12 +19,13 @@ import woowacourse.movie.ui.movielist.presenter.MovieListPresenter
 class MovieListActivity :
     AppCompatActivity(),
     MovieListContract.View {
+    private lateinit var binding: ActivityMovieListBinding
     val movieListPresenter = MovieListPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_movie_list)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_list)
         applyWindowInsets()
 
         movieListPresenter.loadMovieList()
@@ -44,7 +48,10 @@ class MovieListActivity :
         val adapter =
             MovieAdapter(
                 onClickBooking = { movie ->
-                    startBookingActivity(movie)
+                    supportFragmentManager.commit {
+                        setReorderingAllowed(true)
+                        add(R.id.fragment_theater_select_view, TheaterBottomSheetDialogFragment())
+                    }
                 },
             )
 
