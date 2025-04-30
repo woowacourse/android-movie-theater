@@ -58,8 +58,8 @@ class HomeFragment :
                         )
                     },
                 )
-            binding.rvMainMovies.adapter = movieAdapter
         }
+        binding.rvMainMovies.adapter = movieAdapter
         movieAdapter.updateMovies(movies)
     }
 
