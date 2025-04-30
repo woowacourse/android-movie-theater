@@ -2,21 +2,21 @@ package woowacourse.movie.view.reservation
 
 import android.content.Context
 import android.widget.ArrayAdapter
-import woowacourse.movie.view.mapper.Formatter.movieTimeToUI
+import java.time.LocalTime
 
 class TimeSpinnerAdapter(
     context: Context,
-    times: List<Int> = emptyList(),
-) : ArrayAdapter<String>(
+    times: List<LocalTime> = emptyList(),
+) : ArrayAdapter<LocalTime>(
         context,
         com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
-        times.map { movieTimeToUI(it) },
+        times,
     ) {
-    override fun getItem(position: Int): String = super.getItem(position).toString()
+    override fun getItem(position: Int): LocalTime? = super.getItem(position)
 
-    fun updateDateItems(newItems: List<Int>) {
+    fun updateDateItems(newItems: List<LocalTime>) {
         clear()
-        addAll(newItems.map { movieTimeToUI(it) })
+        addAll(newItems)
         notifyDataSetChanged()
     }
 }

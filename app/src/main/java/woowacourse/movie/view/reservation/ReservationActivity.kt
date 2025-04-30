@@ -23,13 +23,11 @@ import woowacourse.movie.presenter.reservation.ReservationPresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.extension.showShortToast
 import woowacourse.movie.view.mapper.Formatter.localDateToUI
-import woowacourse.movie.view.mapper.Formatter.uiToMovieTime
 import woowacourse.movie.view.seatSelection.SeatSelectionActivity
 import java.time.LocalDate
+import java.time.LocalTime
 
-class ReservationActivity :
-    AppCompatActivity(),
-    ReservationContract.View {
+class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     private val presenter: ReservationContract.Presenter = ReservationPresenter(this)
     private lateinit var timeSpinnerAdapter: TimeSpinnerAdapter
 
@@ -117,10 +115,8 @@ class ReservationActivity :
                         position: Int,
                         id: Long,
                     ) {
-                        val selectedTime: String = timeSpinnerAdapter.getItem(position)
-                        presenter.updateMovieTime(
-                            uiToMovieTime(selectedTime.toString()),
-                        )
+                        val selectedTime: LocalTime = timeSpinnerAdapter.getItem(position) ?: return
+                        presenter.updateMovieTime(selectedTime)
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -194,7 +190,7 @@ class ReservationActivity :
         startActivity(SeatSelectionActivity.getIntent(this, movieToReserve))
     }
 
-    override fun updateTimes(times: List<Int>) {
+    override fun updateTimes(times: List<LocalTime>) {
         timeSpinnerAdapter.updateDateItems(times)
     }
 

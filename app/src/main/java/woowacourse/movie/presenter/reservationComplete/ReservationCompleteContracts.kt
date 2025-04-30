@@ -3,6 +3,7 @@ package woowacourse.movie.presenter.reservationComplete
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.ticket.MovieTicket
 import java.time.LocalDate
+import java.time.LocalTime
 
 interface ReservationCompleteContracts {
     interface View {
@@ -10,7 +11,7 @@ interface ReservationCompleteContracts {
 
         fun showTimestamp(
             date: LocalDate,
-            time: Int,
+            time: LocalTime,
         )
 
         fun showSeatTheaterInfo(

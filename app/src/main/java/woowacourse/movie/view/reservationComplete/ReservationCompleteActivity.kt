@@ -17,14 +17,12 @@ import woowacourse.movie.presenter.reservationComplete.ReservationCompleteContra
 import woowacourse.movie.presenter.reservationComplete.ReservationCompletePresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.mapper.Formatter.localDateToUI
-import woowacourse.movie.view.mapper.Formatter.movieTimeToUI
 import woowacourse.movie.view.mapper.Formatter.priceToUI
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.seatsToUI
 import java.time.LocalDate
+import java.time.LocalTime
 
-class ReservationCompleteActivity :
-    AppCompatActivity(),
-    ReservationCompleteContracts.View {
+class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteContracts.View {
     private val presenter: ReservationCompleteContracts.Presenter =
         ReservationCompletePresenter(this)
 
@@ -72,13 +70,13 @@ class ReservationCompleteActivity :
 
     override fun showTimestamp(
         date: LocalDate,
-        time: Int,
+        time: LocalTime,
     ) {
         screeningDateTextView.text =
             getString(
                 R.string.reservation_complete_ticket_timestamp,
                 localDateToUI(date),
-                movieTimeToUI(time),
+                time,
             )
     }
 
