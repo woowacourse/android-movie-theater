@@ -8,7 +8,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieTheaterBinding
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.view.history.ReservationHistoryFragment
-import woowacourse.movie.presentation.view.movies.MoviesFragment
+import woowacourse.movie.presentation.view.home.movies.MoviesFragment
 import woowacourse.movie.presentation.view.setting.SettingFragment
 
 class MovieTheaterActivity : BaseActivity<ActivityMovieTheaterBinding>(R.layout.activity_movie_theater) {

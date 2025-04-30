@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/gray_ea"
-        tools:context=".presentation.view.reservation.seat.ReservationSeatFragment">
+        tools:context=".presentation.view.home.reservation.seat.ReservationSeatFragment">
 
         <TextView
             android:id="@+id/tv_screen"

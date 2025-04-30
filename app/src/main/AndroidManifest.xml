@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.view.ReservationActivity"/>
+        <activity android:name=".presentation.view.home.reservation.ReservationActivity"/>
 
         <activity android:name="androidx.fragment.app.testing.EmptyFragmentActivity" />
     </application>
