@@ -28,8 +28,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         movie =
-            requireArguments().compatParcelable(Extras.MovieData.MOVIE_KEY)
-                ?: error("Movie argument is required")
+            requireArguments().compatParcelable(Extras.MovieData.MOVIE_KEY) ?: error(ERROR_ARGUMENT)
     }
 
     override fun onCreateView(
@@ -103,5 +102,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
                         putParcelable(Extras.MovieData.MOVIE_KEY, movie)
                     }
             }
+
+        private const val ERROR_ARGUMENT = "arguments가 없습니다."
     }
 }
