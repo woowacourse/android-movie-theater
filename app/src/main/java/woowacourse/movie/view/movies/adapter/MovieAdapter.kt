@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.AdvertisementItemBinding
+import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.view.movies.model.UiModel
 import woowacourse.movie.view.movies.viewholder.AdvertiseViewHolder
 import woowacourse.movie.view.movies.viewholder.MovieViewHolder
@@ -25,11 +27,13 @@ class MovieAdapter(
         viewType: Int,
     ): RecyclerView.ViewHolder {
         val inflater =
-            LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+            LayoutInflater.from(parent.context)
 
+        val movieItemBinding = MovieItemBinding.inflate(inflater, parent, false)
+        val advertisementItemBinding = AdvertisementItemBinding.inflate(inflater, parent, false)
         return when (viewType) {
-            VIEW_TYPE_ADVERTISEMENT -> AdvertiseViewHolder(inflater)
-            VIEW_TYPE_MOVIE -> MovieViewHolder(inflater, onClickBooking)
+            VIEW_TYPE_ADVERTISEMENT -> AdvertiseViewHolder(advertisementItemBinding)
+            VIEW_TYPE_MOVIE -> MovieViewHolder(movieItemBinding, onClickBooking)
             else -> throw IllegalArgumentException()
         }
     }
