@@ -21,14 +21,16 @@ import woowacourse.movie.domain.model.booking.Booking
 import woowacourse.movie.domain.model.booking.PeopleCount
 import woowacourse.movie.domain.model.movies.Movie
 import woowacourse.movie.view.StringFormatter
+import woowacourse.movie.view.ext.getSerializable
 import woowacourse.movie.view.ext.toDrawableResourceId
+import woowacourse.movie.view.movies.model.ScreeningInfo
 import woowacourse.movie.view.seat.SeatActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
 class BookingActivity : AppCompatActivity(), BookingContract.View {
-    private val presenter by lazy { BookingPresenter(this, MovieStore(), PeopleCount()) }
+    private lateinit var presenter: BookingContract.Presenter
     private val movieTitleTextView: TextView by lazy { findViewById(R.id.tv_title) }
     private val timeSpinner: Spinner by lazy { findViewById(R.id.sp_time) }
     private val dateSpinner: Spinner by lazy { findViewById(R.id.sp_date) }
@@ -39,9 +41,12 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         enableEdgeToEdge()
         setContentView(R.layout.activity_booking)
 
-        val movieIdx = intent.getIntExtra(KEY_MOVIE, NO_MOVIE)
+        val screeningInfo = intent.getSerializable(KEY_SCREENING, ScreeningInfo::class.java)
 
-        initView(movieIdx)
+        presenter = BookingPresenter(this, MovieStore(), PeopleCount(), screeningInfo)
+
+        initView()
+
         savedInstanceState?.let {
             presenter.restorePeopleCount(it.getInt(KEY_PEOPLE_COUNT))
             val savedTimePosition = it.getInt(KEY_SELECTED_TIME_POSITION)
@@ -49,7 +54,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         }
     }
 
-    private fun initView(movieId: Int) {
+    private fun initView() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -57,26 +62,39 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        presenter.loadMovieDetail(movieId)
+        presenter.loadMovieDetail()
         presenter.loadPeopleCount()
 
         initButtonListener()
     }
 
-    override fun showMovieDetail(movie: Movie) {
+    override fun showMovieDetail(
+        movie: Movie,
+        screeningTimes: List<LocalDateTime>,
+    ) {
         with(movie) {
-            val (startDate, endDate) = releaseDate
             initTitleView(title)
             initPosterView(posterResource)
-            initReleaseDateView(startDate, endDate)
+
             initRunningTimeView(runningTime)
-            presenter.loadScreeningDate(startDate, endDate, LocalDateTime.now())
-            presenter.loadScreeningTime(dateSpinner.selectedItem as LocalDate, LocalDateTime.now())
+//            presenter.loadScreeningTime(dateSpinner.selectedItem as LocalDate, LocalDateTime.now())
         }
     }
 
     override fun showPeopleCount(count: Int) {
         peopleCountTextView.text = count.toString()
+    }
+
+    override fun showScreeningPeriod(
+        startDate: LocalDate,
+        endDate: LocalDate,
+    ) {
+        val movieReleaseDateView = findViewById<TextView>(R.id.tv_screening_period)
+        movieReleaseDateView.text =
+            getString(R.string.text_date_period).format(
+                StringFormatter.dotDateFormat(startDate),
+                StringFormatter.dotDateFormat(endDate),
+            )
     }
 
     override fun showScreeningDate(screeningBookingDates: List<LocalDate>) {
@@ -124,18 +142,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         moviePosterView.setImageResource(imgName.toDrawableResourceId(this@BookingActivity))
     }
 
-    private fun initReleaseDateView(
-        startDate: LocalDate,
-        endDate: LocalDate,
-    ) {
-        val movieReleaseDateView = findViewById<TextView>(R.id.tv_screening_period)
-        movieReleaseDateView.text =
-            getString(R.string.text_date_period).format(
-                StringFormatter.dotDateFormat(startDate),
-                StringFormatter.dotDateFormat(endDate),
-            )
-    }
-
     private fun initRunningTimeView(runningTime: Int) {
         val movieRunningTimeView = findViewById<TextView>(R.id.tv_running_time)
         movieRunningTimeView.text =
@@ -155,7 +161,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
                 title = movieTitleTextView.text.toString(),
                 bookingDate = dateSpinner.selectedItem.toString(),
                 bookingTime = timeSpinner.selectedItem.toString(),
-                count = peopleCountTextView.text.toString(),
+                peopleCount = peopleCountTextView.text.toString(),
             )
         }
     }
@@ -179,7 +185,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     companion object {
-        const val KEY_MOVIE = "MOVIE_ID"
+        const val KEY_SCREENING = "MOVIE_SCREENING"
 
         private const val NO_MOVIE = -1
         private const val MAX_SEAT = 20
@@ -189,10 +195,10 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
         fun newIntent(
             context: Context,
-            movieId: Int,
+            screeningInfo: ScreeningInfo,
         ): Intent =
             Intent(context, BookingActivity::class.java).apply {
-                putExtra(KEY_MOVIE, movieId)
+                putExtra(KEY_SCREENING, screeningInfo)
             }
     }
 }

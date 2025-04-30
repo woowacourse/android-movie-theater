@@ -8,9 +8,17 @@ import java.time.LocalTime
 
 interface BookingContract {
     interface View {
-        fun showMovieDetail(movie: Movie)
+        fun showMovieDetail(
+            movie: Movie,
+            screeningTimes: List<LocalDateTime>,
+        )
 
         fun showPeopleCount(count: Int)
+
+        fun showScreeningPeriod(
+            startDate: LocalDate,
+            endDate: LocalDate,
+        )
 
         fun showScreeningDate(screeningBookingDates: List<LocalDate>)
 
@@ -22,13 +30,12 @@ interface BookingContract {
     }
 
     interface Presenter {
-        fun loadMovieDetail(index: Int)
+        fun loadMovieDetail()
 
         fun loadPeopleCount()
 
         fun loadScreeningDate(
-            startDate: LocalDate,
-            endDate: LocalDate,
+            screeningDateTime: List<LocalDateTime>,
             now: LocalDateTime,
         )
 
