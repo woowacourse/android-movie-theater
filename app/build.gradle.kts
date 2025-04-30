@@ -44,6 +44,9 @@ android {
             excludes += "win32-x86*/**"
         }
     }
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
