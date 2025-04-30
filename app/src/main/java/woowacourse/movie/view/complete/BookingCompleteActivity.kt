@@ -4,12 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.StringFormatter
@@ -18,12 +19,13 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
+    private lateinit var binding: ActivityBookingCompleteBinding
     private lateinit var presenter: BookingCompleteContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_booking_complete)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
 
         val ticket = intent.getSerializable(KEY_TICKET, Ticket::class.java)
         presenter = BookingCompletePresenter(this, ticket)
@@ -53,8 +55,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     }
 
     private fun initBookingMovieTitleView(title: String) {
-        val movieTitleView = findViewById<TextView>(R.id.tv_title)
-        movieTitleView.text = title
+        binding.tvTitle.text = title
     }
 
     private fun initBookingScheduleView(
@@ -65,25 +66,25 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         val scheduleFormat =
             getString(R.string.text_booking_schedule).format(formattedBookingDate, bookingTime)
 
-        findViewById<TextView>(R.id.tv_schedule).text = scheduleFormat
+        binding.tvSchedule.text = scheduleFormat
     }
 
     private fun initBookingSeatView(seats: Set<Seat>) {
-        findViewById<TextView>(R.id.tv_seat).text = seatToLabel(seats)
+        binding.tvSeat.text = seatToLabel(seats)
     }
 
     private fun initTheaterNameView(theaterName: String) {
-        findViewById<TextView>(R.id.tv_theater_name).text = theaterName
+        binding.tvTheaterName.text = theaterName
     }
 
     private fun initBookingPeopleCountView(peopleCount: Int) {
-        findViewById<TextView>(R.id.tv_people_count).text =
+        binding.tvPeopleCount.text =
             getString(R.string.text_general_people_count).format(peopleCount)
     }
 
     private fun initBookingTicketPriceView(ticketPrice: Int) {
         val priceFormat = StringFormatter.thousandFormat(ticketPrice)
-        findViewById<TextView>(R.id.tv_price).text =
+        binding.tvPrice.text =
             getString(R.string.text_on_site_payment).format(priceFormat)
     }
 
