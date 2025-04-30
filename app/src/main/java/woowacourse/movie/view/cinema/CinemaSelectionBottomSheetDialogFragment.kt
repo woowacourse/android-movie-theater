@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.R
 import woowacourse.movie.contract.cinema.CinemaSelectionContract
+import woowacourse.movie.databinding.FragmentCinemaSelectionBottomSheetDialogBinding
 import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
@@ -20,8 +19,9 @@ import woowacourse.movie.view.util.ErrorMessage
 class CinemaSelectionBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
     CinemaSelectionContract.View {
-    private lateinit var cinemasView: RecyclerView
-    private var cinemaAdapter: CinemaAdapter? = null
+    private lateinit var binding: FragmentCinemaSelectionBottomSheetDialogBinding
+
+    var cinemaAdapter: CinemaAdapter? = null
     private var presenter: CinemaSelectionPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,20 +42,18 @@ class CinemaSelectionBottomSheetDialogFragment :
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? =
-        inflater.inflate(
-            R.layout.fragment_cinema_selection_bottom_sheet_dialog,
-            container,
-            false,
-        )
+    ): View {
+        binding =
+            FragmentCinemaSelectionBottomSheetDialogBinding.inflate(inflater, container, false)
+        binding.cinemaSelection = this
+        return binding.root
+    }
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        cinemasView = view.findViewById(R.id.recycler_view_cinema_selection)
-        cinemasView.adapter = cinemaAdapter
         presenter?.presentCinemas() ?: error(ErrorMessage("presenter").notProvided())
     }
 
