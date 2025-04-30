@@ -11,7 +11,6 @@ class TheaterTest {
         val theater = Theater("선릉", MovieFixture.THEATER_MOVIES, MovieFixture.THEATER_TIMETABLE)
         val movie = MovieFixture.THEATER_MOVIE
 
-
         val actual = theater.isShowing(movie)
 
         Assertions.assertThat(actual).isTrue
@@ -43,6 +42,5 @@ class TheaterTest {
         val movie = MovieFixture.THEATER_MOVIE_IS_NOT
 
         assertThrows<IllegalArgumentException> { theater.movieTimeTable(movie) }
-
     }
 }

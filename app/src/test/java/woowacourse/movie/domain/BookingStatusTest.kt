@@ -4,7 +4,6 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import woowacourse.movie.domain.seat.BookingSeats
-import woowacourse.movie.domain.seat.Seat
 import woowacourse.movie.fixture.MovieFixture
 import java.time.LocalDateTime
 
