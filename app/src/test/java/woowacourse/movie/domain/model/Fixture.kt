@@ -5,7 +5,7 @@ import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.model.ReservationInfo
 import woowacourse.movie.model.Seats
-import woowacourse.movie.model.Theater
+import woowacourse.movie.model.TheaterUIModel
 import java.time.LocalDate
 
 val dummyMovie =
@@ -23,6 +23,7 @@ val dummyTicket =
         LocalDate.of(2025, 4, 1),
         "14:00",
         3,
+        "선릉",
     )
 
 val dummyReservationInfo =
@@ -32,6 +33,7 @@ val dummyReservationInfo =
         "14:00",
         Seats.create(),
         20000,
+        "선릉",
     )
-val dummyTheater =
-    Theater("선릉", listOf(dummyMovie))
+val dummyUIModel =
+    TheaterUIModel("선릉", dummyMovie, 1)

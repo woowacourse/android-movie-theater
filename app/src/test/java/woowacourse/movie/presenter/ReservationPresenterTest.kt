@@ -10,7 +10,7 @@ import io.mockk.verifySequence
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.dummyMovie
+import woowacourse.movie.domain.model.dummyUIModel
 import woowacourse.movie.view.reservation.reservation.ReservationContract
 import woowacourse.movie.view.reservation.reservation.ReservationPresenter
 import java.time.LocalDate
@@ -42,7 +42,7 @@ class ReservationPresenterTest {
         } just Runs
 
         // when: 영화 목록을 조회하면
-        presenter.fetchData { dummyMovie }
+        presenter.fetchData { dummyUIModel }
 
         // then: 영화 정보를 설정한다
         verify { view.showMovieInfo(any(), any(), any(), any(), any()) }
@@ -69,7 +69,7 @@ class ReservationPresenterTest {
         every { view.updateTimeAdapter(capture(timetableSlot)) } just Runs
 
         // when
-        presenter.fetchData { dummyMovie }
+        presenter.fetchData { dummyUIModel }
         presenter.selectDate(now)
 
         // then
@@ -90,7 +90,7 @@ class ReservationPresenterTest {
         every { view.showMovieInfo(any(), any(), any(), any(), any()) } just Runs
         every { view.showTicketCount(capture(countSlot)) } just Runs
 
-        presenter.fetchData { dummyMovie }
+        presenter.fetchData { dummyUIModel }
         presenter.plusTicketCount()
 
         verify { view.showTicketCount(any()) }
@@ -104,7 +104,7 @@ class ReservationPresenterTest {
         every { view.showMovieInfo(any(), any(), any(), any(), any()) } just Runs
         every { view.showTicketCount(capture(countSlot)) } just Runs
 
-        presenter.fetchData { dummyMovie }
+        presenter.fetchData { dummyUIModel }
         presenter.plusTicketCount()
         presenter.minusTicketCount()
 
