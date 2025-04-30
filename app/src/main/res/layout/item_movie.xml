@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="movie"
+            type="woowacourse.movie.domain.model.movie.Movie" />
+
+        <variable
+            name="handler"
+            type="woowacourse.movie.ui.adapter.ClickListener" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -8,10 +20,10 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/imageview_poster"
             android:layout_width="80dp"
             android:layout_height="120dp"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="10dp"
+            app:posterImage="@{movie.title}" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -20,30 +32,30 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textview_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:text="@{movie.title}"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textview_screeningdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{String.format(@string/date_text, movie.startScreeningDate, movie.endScreeningDate)}"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/textview_runningtime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{String.format(@string/runningTime_text, movie.runningTime)}"
                 android:textSize="14sp" />
 
             <Button
-                android:id="@+id/button_book"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:onClick="@{() -> handler.onClick(movie)}"
                 android:text="@string/reservation_text" />
 
         </LinearLayout>

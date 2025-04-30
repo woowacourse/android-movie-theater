@@ -70,7 +70,7 @@ class BookingActivity :
         binding.textviewTitle.text = movie.title
         binding.textviewScreeningdate.text =
             getString(R.string.date_text, movie.startScreeningDate, movie.endScreeningDate)
-        binding.textviewRunningtime.text = getString(R.string.runningTime_text, movie.runningTime.toString())
+        binding.textviewRunningtime.text = getString(R.string.runningTime_text, movie.runningTime)
     }
 
     override fun showBookableDates(dates: List<LocalDate>) {
