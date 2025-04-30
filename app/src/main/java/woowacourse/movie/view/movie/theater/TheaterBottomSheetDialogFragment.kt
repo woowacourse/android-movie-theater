@@ -15,8 +15,8 @@ import woowacourse.movie.model.MovieDao
 import woowacourse.movie.model.Theater
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.compatParcelable
-import woowacourse.movie.view.movie.MovieClickListener
 import woowacourse.movie.view.movie.MoviesActivity
+import woowacourse.movie.view.movie.TheaterClickListener
 import woowacourse.movie.view.reservation.reservation.ReservationFragment
 
 class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
@@ -70,9 +70,12 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         val recyclerView = binding.rvTheater
         theaterAdapter =
             TheaterAdapter(
-                object : MovieClickListener {
-                    override fun onReservationClick(movie: Movie) {
-                        navigateToReservation(movie)
+                object : TheaterClickListener {
+                    override fun onTheaterClick(
+                        movie: Movie,
+                        theaterName: String,
+                    ) {
+                        navigateToReservation(movie, theaterName)
                     }
                 },
                 movie,
@@ -87,8 +90,15 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         )
     }
 
-    private fun navigateToReservation(movie: Movie) {
-        val bundle = bundleOf(Extras.MovieData.MOVIE_KEY to movie)
+    private fun navigateToReservation(
+        movie: Movie,
+        theaterName: String,
+    ) {
+        val bundle =
+            bundleOf(
+                Extras.MovieData.MOVIE_KEY to movie,
+                Extras.TheaterData.THEATER_KEY to theaterName,
+            )
         parentFragmentManager.setFragmentResult("requestKey", bundle)
 
         (requireActivity() as? MoviesActivity)?.replaceFragment(ReservationFragment())

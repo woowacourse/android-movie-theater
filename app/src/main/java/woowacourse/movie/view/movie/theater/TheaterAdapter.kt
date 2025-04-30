@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Theater
-import woowacourse.movie.view.movie.MovieClickListener
+import woowacourse.movie.view.movie.TheaterClickListener
 
 class TheaterAdapter(
-    private val clickListener: MovieClickListener,
+    private val clickListener: TheaterClickListener,
     val movie: Movie,
 ) : ListAdapter<Theater, RecyclerView.ViewHolder>(TheaterDiffUtil) {
     override fun onCreateViewHolder(
