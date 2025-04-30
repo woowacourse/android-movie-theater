@@ -110,6 +110,24 @@ val DUMMY_THEATERS =
                                 seat = Seats(),
                             ),
                             MovieSchedule(
+                                movie = DUMMY_MOVIES[1],
+                                screeningDateTime =
+                                    ScreeningDateTime(
+                                        screeningDate = LocalDate.of(2025, 5, 1),
+                                        screeningTime = LocalTime.of(12, 0),
+                                    ),
+                                seat = Seats(),
+                            ),
+                            MovieSchedule(
+                                movie = DUMMY_MOVIES[1],
+                                screeningDateTime =
+                                    ScreeningDateTime(
+                                        screeningDate = LocalDate.of(2025, 5, 1),
+                                        screeningTime = LocalTime.of(23, 0),
+                                    ),
+                                seat = Seats(),
+                            ),
+                            MovieSchedule(
                                 movie = DUMMY_MOVIES[2],
                                 screeningDateTime =
                                     ScreeningDateTime(
@@ -139,6 +157,15 @@ val DUMMY_THEATERS =
                                     ScreeningDateTime(
                                         screeningDate = LocalDate.of(2025, 6, 1),
                                         screeningTime = LocalTime.of(19, 0),
+                                    ),
+                                seat = Seats(),
+                            ),
+                            MovieSchedule(
+                                movie = DUMMY_MOVIES[3],
+                                screeningDateTime =
+                                    ScreeningDateTime(
+                                        screeningDate = LocalDate.of(2025, 6, 1),
+                                        screeningTime = LocalTime.of(22, 0),
                                     ),
                                 seat = Seats(),
                             ),
