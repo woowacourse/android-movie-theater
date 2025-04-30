@@ -9,8 +9,6 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.domain.model.ScreeningInfo
 
-//import woowacourse.movie.domain.model.Theater
-
 class TheaterAdapter(
     private val items: List<ScreeningInfo>,
     private val onClick: (ScreeningInfo) -> Unit,
@@ -21,7 +19,13 @@ class TheaterAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): TheaterViewHolder {
-        binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_theater, parent, false)
+        binding =
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_theater,
+                parent,
+                false,
+            )
         return TheaterViewHolder(parent.context, binding, onClick)
     }
 
@@ -39,10 +43,10 @@ class TheaterAdapter(
         private val binding: ItemTheaterBinding,
         private val onClick: (ScreeningInfo) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(item: ScreeningInfo) {
             binding.textviewTheaterName.text = item.theater
-            binding.textviewScreeningTime.text = context.getString(R.string.theater_text, item.times.size)
+            binding.textviewScreeningTime.text =
+                context.getString(R.string.theater_text, item.times.size)
             binding.constraintlayoutTheater.setOnClickListener {
                 onClick(item)
             }

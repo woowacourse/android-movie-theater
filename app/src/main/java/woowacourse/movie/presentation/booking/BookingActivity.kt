@@ -23,12 +23,14 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Locale
 
-class BookingActivity : BaseActivity(), BookingContract.View {
+class BookingActivity :
+    BaseActivity(),
+    BookingContract.View {
     override val layoutRes: Int
         get() = R.layout.activity_booking
 
     private lateinit var presenter: BookingPresenter
-    private lateinit var movie: Movie
+    private lateinit var screeningInfo: ScreeningInfo
     private var dateItemPosition: Int = DEFAULT_POSITION
     private var timeItemPosition: Int = DEFAULT_POSITION
     private val dateSpinner: Spinner by lazy { findViewById(R.id.spinner_date) }
@@ -39,7 +41,7 @@ class BookingActivity : BaseActivity(), BookingContract.View {
         super.onCreate(savedInstanceState)
         if (!fetchMovieFromIntent()) return
         setupScreen(layoutRes)
-        presenter = BookingPresenter(this, movie)
+        presenter = BookingPresenter(this, screeningInfo)
         presenter.onViewCreated()
     }
 
@@ -151,7 +153,7 @@ class BookingActivity : BaseActivity(), BookingContract.View {
             finish()
             return false
         }
-        movie = data.movie
+        screeningInfo = data
         return true
     }
 

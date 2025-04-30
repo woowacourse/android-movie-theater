@@ -4,6 +4,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.model.ScreeningInfo
 import woowacourse.movie.domain.model.movie.Movie
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -16,15 +17,22 @@ class BookingPresenterTest {
     private val testMovie =
         Movie(
             "test",
-            LocalDate.of(2025, 4, 29),
-            LocalDate.of(2025, 4, 30),
+            LocalDate.of(2025, 5, 5),
+            LocalDate.of(2025, 5, 6),
             100,
+        )
+
+    private val testScreeningInfo =
+        ScreeningInfo(
+            "잠실 극장",
+            testMovie,
+            listOf(10, 12, 14, 17, 20, 22).map { LocalTime.of(it, 0) },
         )
 
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = BookingPresenter(view, testMovie)
+        presenter = BookingPresenter(view, testScreeningInfo)
     }
 
     @Test
@@ -32,8 +40,8 @@ class BookingPresenterTest {
         // Given
         val expected =
             listOf(
-                LocalDate.of(2025, 4, 29),
-                LocalDate.of(2025, 4, 30),
+                LocalDate.of(2025, 5, 5),
+                LocalDate.of(2025, 5, 6),
             )
 
         // When
@@ -82,7 +90,7 @@ class BookingPresenterTest {
     @Test
     fun `선택 완료 버튼을 누르면 티켓을 생성하고 화면을 이동한다`() {
         // Given
-        val date = LocalDate.of(2025, 4, 29)
+        val date = LocalDate.of(2025, 5, 6)
         val time = LocalTime.of(12, 0)
         presenter.onDateSelected(date)
         presenter.onTimeSelected(time)

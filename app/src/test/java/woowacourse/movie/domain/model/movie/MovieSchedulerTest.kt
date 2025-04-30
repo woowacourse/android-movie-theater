@@ -38,7 +38,11 @@ class MovieSchedulerTest {
     @Test
     fun `현재 이후의 예매 가능한 시간들을 반환한다`() {
         // When
-        val bookableTimes = movieScheduler.getBookableTimes(LocalDate.now())
+        val bookableTimes =
+            movieScheduler.getBookableTimes(
+                LocalDate.now(),
+                screeningTimes = listOf(10, 12, 14, 17, 20, 22).map { LocalTime.of(it, 0) },
+            )
 
         // Then
         assertSoftly(bookableTimes) {
