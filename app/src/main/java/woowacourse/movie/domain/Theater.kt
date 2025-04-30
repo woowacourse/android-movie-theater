@@ -19,8 +19,7 @@ data class Theater(
 
                 val todayFilter =
                     ScheduleTime(
-                        totalShowings?.scheduleTime?.afterCurrentTimeSchedule(currentTime)
-                            ?: emptyList(),
+                        totalShowings?.scheduleTime?.times ?: emptyList(),
                     )
 
                 Showings(theater.name, todayFilter)
