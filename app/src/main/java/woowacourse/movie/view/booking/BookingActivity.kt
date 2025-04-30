@@ -74,7 +74,10 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
             initPosterView(posterResource)
 
             initRunningTimeView(runningTime)
-            presenter.loadScreeningTime(binding.spDate.selectedItem as LocalDate, LocalDateTime.now())
+            presenter.loadScreeningTime(
+                binding.spDate.selectedItem as LocalDate,
+                LocalDateTime.now(),
+            )
         }
     }
 
@@ -86,8 +89,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         startDate: LocalDate,
         endDate: LocalDate,
     ) {
-        val movieReleaseDateView = findViewById<TextView>(R.id.tv_screening_period)
-        movieReleaseDateView.text =
+        binding.tvScreeningPeriod.text =
             getString(R.string.text_date_period).format(
                 StringFormatter.dotDateFormat(startDate),
                 StringFormatter.dotDateFormat(endDate),
