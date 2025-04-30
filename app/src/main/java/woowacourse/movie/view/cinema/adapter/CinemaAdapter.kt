@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemCinemaBinding
 import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
@@ -34,8 +34,13 @@ class CinemaAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): CinemaViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cinema, parent, false)
-        return CinemaViewHolder(view, onClickItem)
+        val binding: ItemCinemaBinding =
+            ItemCinemaBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false,
+            )
+        return CinemaViewHolder(binding, onClickItem)
     }
 
     override fun onBindViewHolder(
