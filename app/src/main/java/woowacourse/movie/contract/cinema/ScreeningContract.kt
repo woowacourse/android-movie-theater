@@ -11,7 +11,7 @@ interface ScreeningContract {
     }
 
     interface View {
-        fun setScreeningContents(screenings: List<ScreeningContent>)
+        fun setScreeningContents(screeningContents: List<ScreeningContent>)
 
         fun showCinemas(screening: Screening)
     }
