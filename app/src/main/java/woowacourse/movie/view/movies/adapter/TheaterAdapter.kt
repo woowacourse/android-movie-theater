@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.R
-import woowacourse.movie.domain.Theater
+import woowacourse.movie.domain.Showings
 import woowacourse.movie.view.movies.OnTheaterEventListener
 
 class TheaterAdapter(
     private val eventListener: OnTheaterEventListener,
-) : ListAdapter<Theater, TheaterViewHolder>(TheaterItemDiffCallback) {
+) : ListAdapter<Showings, TheaterViewHolder>(TheaterItemDiffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -31,17 +31,17 @@ class TheaterAdapter(
 
     companion object {
         private val TheaterItemDiffCallback =
-            object : DiffUtil.ItemCallback<Theater>() {
+            object : DiffUtil.ItemCallback<Showings>() {
                 override fun areItemsTheSame(
-                    oldItem: Theater,
-                    newItem: Theater,
+                    oldItem: Showings,
+                    newItem: Showings,
                 ): Boolean {
                     return oldItem == newItem
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: Theater,
-                    newItem: Theater,
+                    oldItem: Showings,
+                    newItem: Showings,
                 ): Boolean {
                     return oldItem == newItem
                 }

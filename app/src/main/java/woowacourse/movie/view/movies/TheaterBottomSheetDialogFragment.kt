@@ -8,17 +8,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.Schedule
-import woowacourse.movie.domain.ScheduleTime
+import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.Theater
-import woowacourse.movie.domain.movietime.Date
 import woowacourse.movie.view.movies.adapter.TheaterAdapter
-import java.time.LocalDate
-import java.time.LocalDateTime
+import java.time.LocalTime
 
 class TheaterBottomSheetDialogFragment(
     val eventListener: OnBottomSheetDialogEventListener,
 ) : BottomSheetDialogFragment() {
+    private var movie: Movie? = null
+
+    private var showings: List<Showings>? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,76 +35,28 @@ class TheaterBottomSheetDialogFragment(
         super.onViewCreated(view, savedInstanceState)
         val recyclerView: RecyclerView = view.findViewById(R.id.lv_theater_category)
 
-        showMoviesScreen(recyclerView)
+        movie = arguments?.getSerializable("movie") as? Movie?
+        showings = movie?.let { Theater.findTheatersShowingMovie(it.title, LocalTime.now()) }
+
+        if (movie == null) {
+            throw IllegalArgumentException()
+        } else {
+            showTheaterList(recyclerView)
+        }
     }
 
-    private fun showMoviesScreen(recyclerView: RecyclerView) {
+    private fun showTheaterList(recyclerView: RecyclerView) {
         val theaterAdapter: TheaterAdapter =
             TheaterAdapter(
                 object : OnTheaterEventListener {
-                    override fun onClickReservation(theater: Theater) {
-                        eventListener.onClick(theater)
+                    override fun onClickReservation(showings: Showings) {
+                        eventListener.onClick(showings)
                         dismiss()
                     }
                 },
             )
 
-        val theaters =
-            listOf(
-                Theater(
-                    "선릉점",
-                    Schedule(
-                        Movie(
-                            R.drawable.harry,
-                            "해리 포터",
-                            Date(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 4, 30)),
-                            152,
-                        ),
-                        ScheduleTime(
-                            listOf(
-                                LocalDateTime.of(2025, 1, 1, 1, 0),
-                                LocalDateTime.of(2025, 1, 1, 5, 0),
-                            ),
-                        ),
-                    ),
-                ),
-                Theater(
-                    "잠실점",
-                    Schedule(
-                        Movie(
-                            R.drawable.harry,
-                            "해리 포터",
-                            Date(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 4, 30)),
-                            152,
-                        ),
-                        ScheduleTime(
-                            listOf(
-                                LocalDateTime.of(2025, 1, 1, 1, 0),
-                                LocalDateTime.of(2025, 1, 1, 5, 0),
-                            ),
-                        ),
-                    ),
-                ),
-                Theater(
-                    "강남점",
-                    Schedule(
-                        Movie(
-                            R.drawable.harry,
-                            "해리 포터",
-                            Date(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 4, 30)),
-                            152,
-                        ),
-                        ScheduleTime(
-                            listOf(
-                                LocalDateTime.of(2025, 1, 1, 1, 0),
-                                LocalDateTime.of(2025, 1, 1, 5, 0),
-                            ),
-                        ),
-                    ),
-                ),
-            )
-
         recyclerView.adapter = theaterAdapter
-        theaterAdapter.submitList(theaters)
+        theaterAdapter.submitList(showings)
     }
 }

@@ -1,7 +1,7 @@
 package woowacourse.movie.view.movies
 
-import woowacourse.movie.domain.Theater
+import woowacourse.movie.domain.Showings
 
 interface OnTheaterEventListener {
-    fun onClickReservation(theater: Theater)
+    fun onClickReservation(showings: Showings)
 }
