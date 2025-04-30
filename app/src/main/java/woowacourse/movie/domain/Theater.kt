@@ -32,7 +32,7 @@ data class Theater(
                     "선릉 극장",
                     listOf(
                         Schedule(
-                            "스타워즈",
+                            "어거스트 러쉬",
                             ScheduleTime(
                                 listOf(
                                     LocalTime.of(9, 0),
