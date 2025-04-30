@@ -11,7 +11,7 @@ data class ScreeningDate(
 
     fun bookingDates(today: LocalDate): List<LocalDate> {
         val start = getStartDate(today)
-        return screenings.filter { !it.isBefore(start) }
+        return screenings.filter { !it.isBefore(start) }.distinct()
     }
 
     private fun getStartDate(other: LocalDate): LocalDate {
