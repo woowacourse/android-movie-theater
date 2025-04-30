@@ -6,6 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.sample.DUMMY_MOVIES
 import woowacourse.movie.ui.booking.contract.BookingContract
 import woowacourse.movie.ui.booking.presenter.BookingPresenter
 import java.time.LocalDate
@@ -22,9 +23,8 @@ class BookingPresenterTest {
         view = mockk(relaxed = true)
         presenter = BookingPresenter(view)
 
-        dummyMovie = Movie.DUMMY_MOVIES.first()
+        dummyMovie = DUMMY_MOVIES.first()
 
-        every { view.getMovie() } returns dummyMovie
         every { view.getSelectedDate() } returns dummySelectedDate
     }
 
@@ -41,9 +41,9 @@ class BookingPresenterTest {
     }
 
     @Test
-    fun `뷰에서 영화를 받아올 수 있다`() {
-        presenter.loadMovie()
-        verify { view.getMovie() }
+    fun `뷰에서 극장을 받아올 수 있다`() {
+        presenter.loadTheater()
+        verify { view.getTheater() }
     }
 
     @Test
