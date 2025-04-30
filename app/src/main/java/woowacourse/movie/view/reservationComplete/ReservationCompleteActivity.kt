@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import woowacourse.movie.MainActivity
 import woowacourse.movie.R
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.ticket.MovieTicket
@@ -18,7 +19,6 @@ import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.mapper.Formatter.localDateToUI
 import woowacourse.movie.view.mapper.Formatter.movieTimeToUI
 import woowacourse.movie.view.mapper.Formatter.priceToUI
-import woowacourse.movie.view.movies.MoviesActivity
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.seatsToUI
 import java.time.LocalDate
 
@@ -53,7 +53,7 @@ class ReservationCompleteActivity :
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    startActivity(MoviesActivity.getIntent(this@ReservationCompleteActivity))
+                    startActivity(MainActivity.getIntent(this@ReservationCompleteActivity))
                     finish()
                 }
             },
@@ -61,7 +61,7 @@ class ReservationCompleteActivity :
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        startActivity(MoviesActivity.getIntent(this))
+        startActivity(MainActivity.getIntent(this))
         finish()
         return super.onSupportNavigateUp()
     }
