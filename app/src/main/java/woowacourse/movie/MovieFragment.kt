@@ -1,14 +1,14 @@
 package woowacourse.movie
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import woowacourse.movie.databinding.ActivityMovieBinding
+import woowacourse.movie.databinding.FragmentMovieBinding
 import woowacourse.movie.movie.MovieContract
 import woowacourse.movie.movie.MoviePresenter
 import woowacourse.movie.movie.MovieUiModel
@@ -18,26 +18,27 @@ import woowacourse.movie.movie.TheaterFragment.Companion.KEY_THEATERS
 import woowacourse.movie.movie.TheaterUiModel
 import woowacourse.movie.movie.adapter.MovieAdapter
 
-class MovieActivity : AppCompatActivity(), MovieContract.View {
-    private lateinit var presenter: MovieContract.Presenter
-    private lateinit var binding: ActivityMovieBinding
+class MovieFragment : Fragment(), MovieContract.View {
+    private lateinit var presenter: MoviePresenter
+    private lateinit var binding: FragmentMovieBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie)
-        setUpUi()
-
-        presenter = MoviePresenter(this)
-        presenter.initializeData(intent)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie, container, false)
+        return binding.root
     }
 
-    private fun setUpUi() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
+        presenter = MoviePresenter(this)
+        presenter.initializeData()
     }
 
     override fun setupMovieList(movies: List<MovieUiModel>) {
@@ -47,11 +48,11 @@ class MovieActivity : AppCompatActivity(), MovieContract.View {
             }
         val recyclerView = binding.recyclerViewLayout
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     override fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun showTheaterDialog(
@@ -65,6 +66,6 @@ class MovieActivity : AppCompatActivity(), MovieContract.View {
         bundle.putParcelable(KEY_MOVIE, movie)
         fragment.arguments = bundle
 
-        fragment.show(supportFragmentManager, fragment.tag)
+        fragment.show(parentFragmentManager, fragment.tag)
     }
 }

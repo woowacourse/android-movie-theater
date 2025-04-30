@@ -29,7 +29,7 @@ import woowacourse.movie.movie.adapter.MovieAdapter
 import java.time.LocalDate
 
 class MainActivityTest {
-    private lateinit var scenario: ActivityScenario<MovieActivity>
+    private lateinit var scenario: ActivityScenario<MainActivity>
     private val movieList = mockMovieList().map { it.toUiModel() }
 
     @Before
@@ -37,7 +37,7 @@ class MainActivityTest {
         Intents.init()
 
         val intent =
-            Intent(ApplicationProvider.getApplicationContext(), MovieActivity::class.java).apply {
+            Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java).apply {
                 putExtra("movieData", ArrayList(movieList))
             }
 

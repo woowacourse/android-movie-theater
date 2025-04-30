@@ -1,7 +1,5 @@
 package woowacourse.movie.movie
 
-import android.content.Intent
-
 interface MovieContract {
     interface View {
         fun setupMovieList(movies: List<MovieUiModel>)
@@ -15,7 +13,7 @@ interface MovieContract {
     }
 
     interface Presenter {
-        fun initializeData(intent: Intent)
+        fun initializeData()
 
         fun setTheaters(movie: MovieUiModel)
     }

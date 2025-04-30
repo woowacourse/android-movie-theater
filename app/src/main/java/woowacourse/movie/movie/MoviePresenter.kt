@@ -1,8 +1,5 @@
 package woowacourse.movie.movie
 
-import android.content.Intent
-import woowacourse.movie.BookingDetailActivity
-import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Movie
@@ -16,18 +13,7 @@ class MoviePresenter(
 ) : MovieContract.Presenter {
     val theater = mockTheaterList()
 
-    override fun initializeData(intent: Intent) {
-        val movie =
-            IntentCompat.getParcelableExtra(
-                intent,
-                BookingDetailActivity.Companion.KEY_MOVIE_DATA,
-                MovieUiModel::class.java,
-            )
-
-        if (movie == null) {
-            view.showToast("기본 영화 목록을 불러왔습니다.")
-        }
-
+    override fun initializeData() {
         val movies = getReservableMovies().map { it.toUiModel() }
         view.setupMovieList(movies)
     }

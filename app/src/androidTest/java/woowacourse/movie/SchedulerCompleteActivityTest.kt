@@ -94,7 +94,7 @@ class SchedulerCompleteActivityTest {
         onView(withId(R.id.tv_seats)).check(
             matches(
                 allOf(
-                    withText("A1,C1"),
+                    withText("A1, C1"),
                     isDisplayed(),
                 ),
             ),
@@ -115,6 +115,7 @@ class SchedulerCompleteActivityTest {
 
     private fun mockBookingResult(): Ticket {
         return Ticket(
+            theater = "선릉",
             title = "해리 포터와 마법사의 돌",
             headCount = HeadCount(2),
             selectedDate = LocalDate.of(2028, 10, 13),

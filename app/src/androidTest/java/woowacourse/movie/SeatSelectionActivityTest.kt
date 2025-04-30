@@ -264,7 +264,10 @@ class SeatSelectionActivityTest {
             .check(matches(allOf(withText("일반 2명"), isDisplayed())))
 
         onView(withId(R.id.tv_seats))
-            .check(matches(allOf(withText("A1,C1"), isDisplayed())))
+            .check(matches(allOf(withText("A1, C1"), isDisplayed())))
+
+        onView(withId(R.id.tv_complete_theater))
+            .check(matches(allOf(withText("선릉 극장"), isDisplayed())))
 
         onView(withId(R.id.tv_booking_amount))
             .check(
@@ -276,6 +279,7 @@ class SeatSelectionActivityTest {
 
     private fun mockTicket(): Ticket {
         return Ticket(
+            theater = "선릉",
             title = "해리 포터와 마법사의 돌",
             headCount = HeadCount(2),
             selectedDate = LocalDate.of(2028, 10, 13),
