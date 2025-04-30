@@ -2,6 +2,7 @@ package woowacourse.movie.view.reservation.detail
 
 import android.os.Bundle
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.Ticket
 import java.time.LocalDateTime
 
@@ -13,13 +14,16 @@ class ReservationPresent(
     private var selectedTimePosition = DEFAULT_TIME_POSITION
     private lateinit var movie: Movie
 
-    override fun fetchData(movie: Movie) {
+    override fun fetchData(
+        movie: Movie,
+        showings: Showings,
+    ) {
         this.movie = movie
         view.showCount(count)
         view.showMovieReservationScreen(this.movie)
         view.setCountButtons()
         view.setReservationButton()
-        view.showSpinnerData(this.movie, selectedDatePosition)
+        view.showSpinnerData(this.movie, selectedDatePosition, showings)
     }
 
     override fun onSaveState(outState: Bundle) {

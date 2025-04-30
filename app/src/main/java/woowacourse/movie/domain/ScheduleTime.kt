@@ -1,6 +1,8 @@
 package woowacourse.movie.domain
 
 import java.io.Serializable
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 data class ScheduleTime(
@@ -8,5 +10,15 @@ data class ScheduleTime(
 ) : Serializable {
     fun afterCurrentTimeSchedule(currentTime: LocalTime): List<LocalTime> {
         return times.filter { it > currentTime }
+    }
+
+    fun afterCurrentDateSchedule(
+        date: LocalDateTime,
+        currentDateTime: LocalDateTime,
+    ): List<LocalTime> {
+        if (LocalDate.of(date.year, date.month, date.dayOfMonth) == currentDateTime.toLocalDate()) {
+            return times.filter { it > currentDateTime.toLocalTime() }
+        }
+        return times
     }
 }

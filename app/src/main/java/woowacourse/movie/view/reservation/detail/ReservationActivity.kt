@@ -21,7 +21,6 @@ import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movietime.MovieSchedule
-import woowacourse.movie.domain.movietime.ScreeningTime
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.reservation.seat.ReservationSeatActivity
 import java.time.LocalDate
@@ -78,7 +77,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         if (movie == null || showings == null) {
             showErrorInvalidMovie()
         } else {
-            present.fetchData(movie)
+            present.fetchData(movie, showings)
         }
     }
 
@@ -101,8 +100,9 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     override fun showSpinnerData(
         movie: Movie,
         selectedDatePosition: Int,
+        showings: Showings,
     ) {
-        setDateSpinner(movie, LocalDate.now(), spinnerTime)
+        setDateSpinner(movie, LocalDate.now(), spinnerTime, showings)
 
         spinnerDate.setSelection(selectedDatePosition)
     }
@@ -164,6 +164,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         movie: Movie,
         localDate: LocalDate,
         spinnerTime: Spinner,
+        showings: Showings,
     ) {
         val movieSchedule = MovieSchedule(movie.date)
         val currentDateSpinner = movieSchedule.selectableDates(localDate)
@@ -185,7 +186,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
                 ) {
                     val selectedDate = currentDateSpinner[position]
                     present.resetSelectedTimePosition(position)
-                    setTimeSpinner(spinnerTime, selectedDate)
+                    setTimeSpinner(spinnerTime, selectedDate, showings)
                     present.selectedDate(position)
                 }
 
@@ -196,8 +197,13 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     private fun setTimeSpinner(
         spinner: Spinner,
         localDate: LocalDate,
+        showings: Showings,
     ) {
-        val currentTimeTable = ScreeningTime(localDate, LocalDateTime.now()).selectableTimes()
+        val currentTimeTable =
+            showings.showings.afterCurrentDateSchedule(
+                localDate.atStartOfDay(),
+                LocalDateTime.now(),
+            )
         spinner.adapter =
             ArrayAdapter(
                 this,

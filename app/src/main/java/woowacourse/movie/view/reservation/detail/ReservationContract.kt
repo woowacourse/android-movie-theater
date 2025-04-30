@@ -2,12 +2,16 @@ package woowacourse.movie.view.reservation.detail
 
 import android.os.Bundle
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.Ticket
 import java.time.LocalDateTime
 
 interface ReservationContract {
     interface Presenter {
-        fun fetchData(movie: Movie)
+        fun fetchData(
+            movie: Movie,
+            showings: Showings,
+        )
 
         fun onSaveState(outState: Bundle)
 
@@ -42,6 +46,7 @@ interface ReservationContract {
         fun showSpinnerData(
             movie: Movie,
             selectedDatePosition: Int,
+            showings: Showings,
         )
 
         fun setTimeSelection(position: Int)
