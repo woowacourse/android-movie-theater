@@ -8,7 +8,7 @@ data class Theater(
     val name: String,
     val movieSchedules: List<MovieSchedule>,
 ) : Serializable {
-    fun movieSchedulesByMovie(
+    fun theaterByMovie(
         movie: Movie,
         date: LocalDate,
         time: LocalTime,

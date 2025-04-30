@@ -14,7 +14,7 @@ class Theaters(
     ): Theaters {
         val filteredTheaters: List<Theater> =
             theaters.map { theater ->
-                theater.movieSchedulesByMovie(movie, date, time)
+                theater.theaterByMovie(movie, date, time)
             }
         return Theaters(filteredTheaters)
     }
