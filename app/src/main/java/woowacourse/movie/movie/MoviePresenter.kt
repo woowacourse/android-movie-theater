@@ -41,7 +41,7 @@ class MoviePresenter(
 
         val domainTheaters = theater.filter { it.schedules.map { it.movie }.contains(domainMovie) }
 
-        view.showTheaterDialog(ArrayList(domainTheaters.map { it.toUiModel() }), movie)
+        view.showTheaterDialog(ArrayList(domainTheaters.map { it.toUiModel(domainMovie) }), movie)
     }
 
     private fun mockTheaterList(): List<Theater> {
@@ -58,7 +58,17 @@ class MoviePresenter(
                                 screeningEndDate = LocalDate.of(2025, 4, 25),
                                 runningTime = 152,
                             ),
-                            listOf(LocalTime.of(11, 0)),
+                            listOf(LocalTime.of(11, 0), LocalTime.of(12, 0)),
+                        ),
+                        Schedule(
+                            Movie(
+                                title = "해리 포터와 불의 잔",
+                                imageSource = "harry_potter4.png",
+                                screeningStartDate = LocalDate.of(2025, 6, 1),
+                                screeningEndDate = LocalDate.of(2025, 6, 30),
+                                runningTime = 157,
+                            ),
+                            listOf(LocalTime.of(12, 0)),
                         ),
                     ),
             ),

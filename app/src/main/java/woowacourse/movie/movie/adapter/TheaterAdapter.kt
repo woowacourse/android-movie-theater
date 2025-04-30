@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.movie.MovieUiModel
 import woowacourse.movie.movie.TheaterUiModel
 
 class TheaterAdapter(
     private val theaters: List<TheaterUiModel>,
+    private val movie: MovieUiModel,
     private val onSelectClick: (TheaterUiModel) -> Unit,
 ) : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
     override fun onCreateViewHolder(
@@ -31,7 +33,7 @@ class TheaterAdapter(
         val context = holder.itemView.context
 
         holder.place.text = context.getString(R.string.theater_place, theater.place)
-        holder.count.text = context.getString(R.string.theater_movie_count, theater.schedules.map { it.screeningTimes }.size)
+        holder.count.text = context.getString(R.string.theater_movie_count, theater.schedule.screeningTimes.size)
         holder.button.setOnClickListener {
             onSelectClick(theater)
         }

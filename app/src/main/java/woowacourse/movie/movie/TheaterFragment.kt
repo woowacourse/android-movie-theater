@@ -38,7 +38,7 @@ class TheaterFragment : BottomSheetDialogFragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.rv_theater)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter =
-            TheaterAdapter(theaters) { theater ->
+            TheaterAdapter(theaters, initMovie()) { theater ->
                 parentFragmentManager.commit {
                     setReorderingAllowed(true)
                     val intent =

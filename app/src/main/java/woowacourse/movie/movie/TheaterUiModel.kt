@@ -6,5 +6,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class TheaterUiModel(
     val place: String,
-    val schedules: List<ScheduleUiModel>,
+    val schedule: ScheduleUiModel,
 ) : Parcelable

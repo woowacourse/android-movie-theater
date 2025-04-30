@@ -1,18 +1,19 @@
 package woowacourse.movie.mapper
 
+import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Theater
 import woowacourse.movie.movie.TheaterUiModel
 
-fun Theater.toUiModel(): TheaterUiModel {
+fun Theater.toUiModel(movie: Movie): TheaterUiModel {
     return TheaterUiModel(
         place = place,
-        schedules = schedules.map { it.toUiModel() },
+        schedule = schedules.find { it.movie == movie }!!.toUiModel(),
     )
 }
 
 fun TheaterUiModel.toDomain(): Theater {
     return Theater(
         place = place,
-        schedules = schedules.map { it.toDomain() },
+        schedules = listOf(schedule.toDomain()),
     )
 }
