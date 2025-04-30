@@ -1,10 +1,8 @@
 package woowacourse.movie.ui.movielist.presenter
 
-import woowacourse.movie.domain.model.Advertisement
-import woowacourse.movie.domain.model.Advertisement.Companion.DUMMY_ADS
-import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.Movie.Companion.DUMMY_MOVIES
 import woowacourse.movie.domain.model.MovieListItem
+import woowacourse.movie.sample.DUMMY_ADS
+import woowacourse.movie.sample.DUMMY_MOVIES
 import woowacourse.movie.ui.movielist.contract.MovieListContract
 
 class MovieListPresenter(

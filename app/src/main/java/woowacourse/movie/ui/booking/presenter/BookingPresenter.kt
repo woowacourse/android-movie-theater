@@ -2,9 +2,9 @@ package woowacourse.movie.ui.booking.presenter
 
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.Movie.Companion.DUMMY_MOVIES
-import woowacourse.movie.domain.model.ScreeningDate
-import woowacourse.movie.domain.model.ScreeningTime
+import woowacourse.movie.domain.model.ScreeningPeriod
+import woowacourse.movie.domain.model.ScreeningTimeItems
+import woowacourse.movie.sample.DUMMY_MOVIES
 import woowacourse.movie.ui.booking.contract.BookingContract
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -53,17 +53,17 @@ class BookingPresenter(
     override fun setupDateSpinner() {
         val (startDate, endDate) = movie.releaseDate
         val screeningBookingDates: List<LocalDate> =
-            ScreeningDate(startDate, endDate).bookingDates(LocalDate.now())
+            ScreeningPeriod(startDate, endDate).bookingDates(LocalDate.now())
 
         bookingView.setDateSpinner(screeningBookingDates, selectedDatePosition)
     }
 
     override fun setupTimeSpinner() {
         val selectedDate = bookingView.getSelectedDate()
-        val screeningTimes =
-            ScreeningTime().getAvailableScreeningTimes(LocalDateTime.now(), selectedDate)
+        val screeningTimesItems =
+            ScreeningTimeItems().getAvailableScreeningTimes(LocalDateTime.now(), selectedDate)
 
-        bookingView.setTimeSpinner(screeningTimes, selectedTimePosition)
+        bookingView.setTimeSpinner(screeningTimesItems, selectedTimePosition)
     }
 
     override fun setSelectedDatePosition(position: Int) {
