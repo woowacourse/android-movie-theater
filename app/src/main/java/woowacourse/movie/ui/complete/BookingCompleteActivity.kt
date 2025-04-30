@@ -51,17 +51,19 @@ class BookingCompleteActivity :
         val movieNameTextView: TextView = findViewById(R.id.tv_title)
         val releaseDateTextView: TextView = findViewById(R.id.tv_release_date)
         val headcountTextView: TextView = findViewById(R.id.tv_headcount)
+        headcountTextView.isSelected = true
 
         with(bookedTicket) {
             releaseDateTextView.text = StringFormatter.dateTimeFormat(dateTime)
             movieNameTextView.text = movieName
             headcountTextView.text =
-                getString(R.string.text_headcount_with_seats).format(
+                getString(R.string.text_headcount_with_seats_and_theater).format(
                     headcount.count,
                     seats.seats
                         .map { it.toText() }
                         .sorted()
                         .joinToString(),
+                    theaterName,
                 )
         }
     }
