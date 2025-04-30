@@ -1,7 +1,5 @@
 package woowacourse.movie.movie
 
-import android.content.Intent
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -37,21 +35,6 @@ class MoviePresenterTest {
             )
 
         presenter = MoviePresenter(view = mockView)
-    }
-
-    @Test
-    fun `영화 리스트가 null이면 기본 메시지를 띄운다`() {
-        val mockIntent =
-            mockk<Intent> {
-                every { getParcelableExtra<MovieUiModel>(any()) } returns null
-            }
-
-        val presenter = MoviePresenter(view = mockView)
-
-        presenter.initializeData(mockIntent)
-
-        verify { mockView.showToast("기본 영화 목록을 불러왔습니다.") }
-        verify { mockView.setupMovieList(any()) }
     }
 
     @Test

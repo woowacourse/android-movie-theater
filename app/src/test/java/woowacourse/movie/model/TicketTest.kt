@@ -14,6 +14,7 @@ class TicketTest {
     fun `예매한 영화 제목은 비어있을 수 없다`() {
         assertThrows<IllegalArgumentException> {
             Ticket(
+                theater = "선릉",
                 "",
                 HeadCount(0),
                 LocalDate.of(2025, 4, 17),
@@ -24,6 +25,7 @@ class TicketTest {
 
         assertDoesNotThrow {
             Ticket(
+                theater = "선릉",
                 "해리포터",
                 HeadCount(0),
                 LocalDate.of(2025, 4, 17),
@@ -37,6 +39,7 @@ class TicketTest {
     fun `예매 인원에 맞는 금액을 계산한다`() {
         val ticket =
             Ticket(
+                theater = "선릉",
                 "해리포터",
                 HeadCount(0),
                 LocalDate.of(2025, 4, 17),
@@ -54,7 +57,8 @@ class TicketTest {
     fun `예매 인원과  좌석별 등급에 맞는 금액을 계산한다`() {
         val seats = Seats(listOf(Seat("A1", true), Seat("A2", true)))
         val ticket =
-            Ticket("해리포터", HeadCount(2), LocalDate.of(2025, 4, 17), LocalTime.of(11, 0), seats)
+
+            Ticket(theater = "선릉", "해리포터", HeadCount(2), LocalDate.of(2025, 4, 17), LocalTime.of(11, 0), seats)
         val expected = 20000
 
         val actual = ticket.amount
@@ -66,7 +70,7 @@ class TicketTest {
     fun `예매 인원과 좌석별 등급에 맞는 금액을 계산한다`() {
         val seats = Seats(listOf(Seat("A1", true), Seat("A2", true)))
         val ticket =
-            Ticket("해리포터", HeadCount(2), LocalDate.of(2025, 4, 17), LocalTime.of(11, 0), seats)
+            Ticket(theater = "선릉", "해리포터", HeadCount(2), LocalDate.of(2025, 4, 17), LocalTime.of(11, 0), seats)
         val expected = 20000
 
         val actual = ticket.amount
@@ -78,7 +82,7 @@ class TicketTest {
     fun `예매 인원과 좌석별 등급에 맞는 금액을 계산한다2`() {
         val seats = Seats(listOf(Seat("C1", true), Seat("A2", true)))
         val ticket =
-            Ticket("해리포터", HeadCount(2), LocalDate.of(2025, 4, 17), LocalTime.of(11, 0), seats)
+            Ticket(theater = "선릉", "해리포터", HeadCount(2), LocalDate.of(2025, 4, 17), LocalTime.of(11, 0), seats)
         val expected = 25000
 
         val actual = ticket.amount
@@ -90,6 +94,7 @@ class TicketTest {
     fun `예매 인원이 0보다 큰 지 비교한다`() {
         val ticket =
             Ticket(
+                theater = "선릉",
                 "해리포터",
                 HeadCount(1),
                 LocalDate.of(2025, 4, 17),
@@ -102,6 +107,7 @@ class TicketTest {
 
         val ticket2 =
             Ticket(
+                theater = "선릉",
                 "해리포터",
                 HeadCount(0),
                 LocalDate.of(2025, 4, 17),
@@ -117,6 +123,7 @@ class TicketTest {
         val seat = Seat("A1")
         val ticket =
             Ticket(
+                theater = "선릉",
                 "해리포터",
                 HeadCount(2),
                 LocalDate.of(2025, 4, 17),
@@ -137,6 +144,7 @@ class TicketTest {
         val seat = Seat("A1")
         val ticket =
             Ticket(
+                theater = "선릉",
                 "해리포터",
                 HeadCount(2),
                 LocalDate.of(2025, 4, 17),

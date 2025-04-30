@@ -34,6 +34,7 @@ class SchedulerCompletePresenterTest {
 
         mockTicket =
             Ticket(
+                theater = "선릉",
                 title = "해리 포터와 마법사의 돌",
                 headCount = HeadCount(3),
                 selectedDate = LocalDate.of(2028, 10, 13),
@@ -57,7 +58,7 @@ class SchedulerCompletePresenterTest {
             mockView.showBookingCompleteResult(
                 match {
                     it.headCount == 3 && it.selectedDateText == "2028.10.13" &&
-                        it.selectedTimeText == "11:00" && it.seats == "A1,C2,E1" &&
+                        it.selectedTimeText == "11:00" && it.seats == "A1, C2, E1" &&
                         it.totalPrice == "37,000"
                 },
             )

@@ -26,6 +26,7 @@ class SeatSelectionPresenterTest {
 
         mockTicket =
             Ticket(
+                theater = "선릉",
                 title = "해리 포터와 마법사의 돌",
                 headCount = HeadCount(3),
                 selectedDate = LocalDate.of(2028, 10, 13),
