@@ -86,13 +86,13 @@ class CinemaSelectionBottomSheetDialogFragment :
 
     companion object {
         fun newInstance(screening: Screening): CinemaSelectionBottomSheetDialogFragment {
-            val args =
+            val arguments =
                 Bundle().apply {
                     putSerializable(ARGUMENT_SCREENING, screening)
                 }
 
             val fragment = CinemaSelectionBottomSheetDialogFragment()
-            fragment.arguments = args
+            fragment.arguments = arguments
             return fragment
         }
 
