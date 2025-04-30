@@ -6,7 +6,6 @@ import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.swipeUp
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -102,16 +101,13 @@ class ReservationDetailFragmentTest {
 
     @Test
     fun `화면을_회전해도_데이터가_유지된다`() {
-        scenario.onFragment {
-            it.requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        }
-
-        onView(withId(R.id.main))
-            .perform(swipeUp())
-
         onView(withId(R.id.btn_reservation_count_plus))
             .perform(click())
             .perform(click())
+
+        scenario.onFragment {
+            it.requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        }
 
         onView(withId(R.id.tv_reservation_count))
             .check(matches(withText("3")))
