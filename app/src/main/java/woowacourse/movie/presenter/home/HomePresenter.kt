@@ -1,11 +1,11 @@
-package woowacourse.movie.presenter.movies
+package woowacourse.movie.presenter.home
 
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.theater.MovieScreeningInfoByTheaters
 
-class MoviesPresenter(
-    private val view: MoviesContracts.View,
-) : MoviesContracts.Presenter {
+class HomePresenter(
+    private val view: HomeContracts.View,
+) : HomeContracts.Presenter {
     private lateinit var movieScreeningInfoByTheaters: MovieScreeningInfoByTheaters
 
     override fun initView() {

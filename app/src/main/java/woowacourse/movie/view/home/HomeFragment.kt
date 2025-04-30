@@ -12,15 +12,15 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.theater.MovieScreeningInfoByTheaters
-import woowacourse.movie.presenter.movies.MoviesContracts
-import woowacourse.movie.presenter.movies.MoviesPresenter
+import woowacourse.movie.presenter.home.HomeContracts
+import woowacourse.movie.presenter.home.HomePresenter
 import woowacourse.movie.view.home.theater.TheaterBottomSheetDialogFragment
 
 class HomeFragment :
     Fragment(),
-    MoviesContracts.View {
+    HomeContracts.View {
     private lateinit var binding: FragmentHomeBinding
-    private val presenter: MoviesContracts.Presenter = MoviesPresenter(this)
+    private val presenter: HomeContracts.Presenter = HomePresenter(this)
     private lateinit var movieAdapter: MovieAdapter
 
     override fun onCreateView(

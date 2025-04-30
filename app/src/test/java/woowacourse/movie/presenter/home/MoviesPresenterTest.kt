@@ -1,4 +1,4 @@
-package woowacourse.movie.presenter.movies
+package woowacourse.movie.presenter.home
 
 import io.kotest.core.spec.style.AnnotationSpec.After
 import io.mockk.Runs
@@ -11,13 +11,13 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class MoviesPresenterTest {
-    private lateinit var presenter: MoviesPresenter
-    private lateinit var view: MoviesContracts.View
+    private lateinit var presenter: HomePresenter
+    private lateinit var view: HomeContracts.View
 
     @BeforeEach
     fun setup() {
         view = mockk()
-        presenter = MoviesPresenter(view)
+        presenter = HomePresenter(view)
     }
 
     @Test

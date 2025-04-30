@@ -1,9 +1,9 @@
-package woowacourse.movie.presenter.movies
+package woowacourse.movie.presenter.home
 
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.theater.MovieScreeningInfoByTheaters
 
-interface MoviesContracts {
+interface HomeContracts {
     interface View {
         fun showMovies(movies: List<Movie>)
 
