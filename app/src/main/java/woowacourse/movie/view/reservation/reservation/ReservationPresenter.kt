@@ -15,19 +15,20 @@ class ReservationPresenter(
 ) : ReservationContract.Presenter {
     private lateinit var reservationState: ReservationState
 
-    override fun fetchData(getMovie: () -> Movie?) {
-        val result = getMovie()
-        if (result == null) {
+    override fun fetchData(getMovie: () -> Pair<Movie?, String?>) {
+        val (movieData, theaterName) = getMovie()
+        if (movieData == null || theaterName.isNullOrBlank()) {
             view.showErrorDialog()
             return
         }
 
         reservationState =
             ReservationState(
-                movie = result,
-                movieDate = MovieDate(result.startDate, result.endDate),
+                movie = movieData,
+                movieDate = MovieDate(movieData.startDate, movieData.endDate),
                 movieTime = MovieTime(),
                 ticketCount = TicketCount(),
+                theaterName = theaterName,
             )
 
         updateMovieInfo()
@@ -80,6 +81,7 @@ class ReservationPresenter(
                 date = reservationState.movieDate.value,
                 time = ReservationUiFormatter.movieTimeToUI(reservationState.movieTime.value),
                 count = reservationState.ticketCount.value,
+                theaterName = reservationState.theaterName,
             )
         onCreated(ticket)
     }

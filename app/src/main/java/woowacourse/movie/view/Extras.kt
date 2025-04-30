@@ -5,6 +5,10 @@ object Extras {
         const val MOVIE_KEY = "movie_data"
     }
 
+    object TheaterData {
+        const val THEATER_KEY = "theater_name"
+    }
+
     object ReservationData {
         const val TICKET_COUNT_KEY = "ticket_count"
     }

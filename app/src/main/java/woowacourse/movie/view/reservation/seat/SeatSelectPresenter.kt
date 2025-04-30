@@ -49,6 +49,7 @@ class SeatSelectPresenter(
                 time = movieTicket.time,
                 seats = selectedSeats,
                 price = selectedSeats.totalPrice,
+                theaterName = movieTicket.theaterName,
             )
         onCreated(reservationInfo)
     }

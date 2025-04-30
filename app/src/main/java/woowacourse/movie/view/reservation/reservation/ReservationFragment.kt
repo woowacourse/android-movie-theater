@@ -58,7 +58,8 @@ class ReservationFragment :
 
         parentFragmentManager.setFragmentResultListener("requestKey", this) { _, bundle ->
             val movie = bundle.compatParcelable<Movie>(Extras.MovieData.MOVIE_KEY)
-            presenter.fetchData { movie }
+            val theaterName = bundle.getString(Extras.TheaterData.THEATER_KEY)
+            presenter.fetchData { Pair(movie, theaterName) }
         }
 
         setupButtonClickListener()

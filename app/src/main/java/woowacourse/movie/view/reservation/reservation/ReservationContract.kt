@@ -29,7 +29,7 @@ interface ReservationContract {
     }
 
     interface Presenter {
-        fun fetchData(getMovie: () -> Movie?)
+        fun fetchData(getMovie: () -> Pair<Movie?, String?>)
 
         fun initDateAdapter()
 

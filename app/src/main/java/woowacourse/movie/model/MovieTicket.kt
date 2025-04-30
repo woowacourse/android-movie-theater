@@ -10,4 +10,5 @@ data class MovieTicket(
     val date: LocalDate,
     val time: String,
     val count: Int,
+    val theaterName: String,
 ) : Parcelable

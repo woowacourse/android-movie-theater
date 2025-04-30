@@ -60,6 +60,7 @@ class ReservationCompleteActivity :
                     .labels()
                     .sorted()
                     .joinToString(),
+                reservationInfo.theaterName,
             )
         ticketPriceTextView.text =
             resources.getString(
