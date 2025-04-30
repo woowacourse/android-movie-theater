@@ -11,6 +11,6 @@ class Theater(
             return 0
         }
         val endDate = movies.find { it == movie }?.endDate ?: LocalDate.now()
-        return MovieTime().getTotalTimeSlotCount(this, movie, endDate)
+        return MovieDao().getTotalTimeSlotCount(this, movie, endDate)
     }
 }

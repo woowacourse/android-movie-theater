@@ -10,6 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.model.Movie
+import woowacourse.movie.model.MovieDao
 import woowacourse.movie.model.Theater
 import woowacourse.movie.view.movie.MovieClickListener
 import woowacourse.movie.view.reservation.reservation.ReservationFragment
@@ -68,13 +69,14 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 //                        navigateToReservation(movie)
                     }
                 },
+                movie,
             )
         recyclerView.adapter = theaterAdapter
         theaterAdapter.submitList(
             listOf(
-                Theater("선릉", emptyList()),
-                Theater("강남", emptyList()),
-                Theater("잠실", emptyList()),
+                Theater("선릉", MovieDao().getMovies("선릉")),
+                Theater("강남", MovieDao().getMovies("강남")),
+                Theater("잠실", MovieDao().getMovies("잠실")),
             ),
         )
     }
