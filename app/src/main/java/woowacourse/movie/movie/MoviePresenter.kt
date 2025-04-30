@@ -55,10 +55,10 @@ class MoviePresenter(
                                 title = "해리 포터와 마법사의 돌",
                                 imageSource = "harry_potter.png",
                                 screeningStartDate = LocalDate.of(2025, 4, 1),
-                                screeningEndDate = LocalDate.of(2025, 4, 25),
+                                screeningEndDate = LocalDate.of(2025, 5, 30),
                                 runningTime = 152,
                             ),
-                            listOf(LocalTime.of(11, 0), LocalTime.of(12, 0)),
+                            listOf(LocalTime.of(11, 0), LocalTime.of(15, 0)),
                         ),
                         Schedule(
                             Movie(
@@ -78,7 +78,14 @@ class MoviePresenter(
                     mockMovieList().map {
                         Schedule(
                             it,
-                            screeningTimes = listOf(LocalTime.of(11, 0)),
+                            screeningTimes =
+                                listOf(
+                                    LocalTime.of(11, 0),
+                                    LocalTime.of(12, 0),
+                                    LocalTime.of(13, 0),
+                                    LocalTime.of(16, 0),
+                                    LocalTime.of(23, 0),
+                                ),
                         )
                     },
             ),
@@ -88,7 +95,14 @@ class MoviePresenter(
                     mockMovieList().map {
                         Schedule(
                             it,
-                            screeningTimes = listOf(LocalTime.of(11, 0)),
+                            screeningTimes =
+                                listOf(
+                                    LocalTime.of(11, 0),
+                                    LocalTime.of(12, 0),
+                                    LocalTime.of(13, 0),
+                                    LocalTime.of(16, 0),
+                                    LocalTime.of(23, 0),
+                                ),
                         )
                     },
             ),
@@ -101,21 +115,21 @@ class MoviePresenter(
                 title = "해리 포터와 마법사의 돌",
                 imageSource = "harry_potter.png",
                 screeningStartDate = LocalDate.of(2025, 4, 1),
-                screeningEndDate = LocalDate.of(2025, 4, 25),
+                screeningEndDate = LocalDate.of(2025, 5, 30),
                 runningTime = 152,
             ),
             Movie(
                 title = "해리 포터와 비밀의 방",
                 imageSource = "harry_potter2.png",
                 screeningStartDate = LocalDate.of(2025, 4, 1),
-                screeningEndDate = LocalDate.of(2025, 4, 28),
+                screeningEndDate = LocalDate.of(2025, 4, 30),
                 runningTime = 162,
             ),
             Movie(
                 title = "해리 포터와 아즈카반의 죄수",
                 imageSource = "harry_potter3.png",
                 screeningStartDate = LocalDate.of(2025, 5, 1),
-                screeningEndDate = LocalDate.of(2025, 5, 31),
+                screeningEndDate = LocalDate.of(2025, 5, 30),
                 runningTime = 141,
             ),
             Movie(
@@ -129,7 +143,7 @@ class MoviePresenter(
                 title = "스타 이즈 본",
                 imageSource = "star_is_born.jpg",
                 screeningStartDate = LocalDate.of(2025, 4, 19),
-                screeningEndDate = LocalDate.of(2025, 5, 25),
+                screeningEndDate = LocalDate.of(2025, 5, 30),
                 runningTime = 135,
             ),
         )

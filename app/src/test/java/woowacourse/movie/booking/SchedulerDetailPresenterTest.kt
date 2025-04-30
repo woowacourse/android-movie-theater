@@ -17,7 +17,7 @@ import woowacourse.movie.util.Formatter.formatTimeWithMidnight24
 import java.time.LocalDate
 import java.time.LocalTime
 
-class BookingDetailPresenterTest {
+class SchedulerDetailPresenterTest {
     private lateinit var presenter: BookingDetailPresenter
     private lateinit var mockView: BookingDetailContract.View
     private lateinit var mockMovie: Movie

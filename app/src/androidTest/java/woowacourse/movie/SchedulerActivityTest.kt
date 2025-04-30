@@ -28,7 +28,7 @@ import woowacourse.movie.model.Movie
 import java.time.LocalDate
 import java.time.LocalTime
 
-class BookingActivityTest {
+class SchedulerActivityTest {
     private lateinit var scenario: ActivityScenario<BookingDetailActivity>
 
     @Before

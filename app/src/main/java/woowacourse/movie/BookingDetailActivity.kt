@@ -22,6 +22,7 @@ import woowacourse.movie.booking.detail.listener.ScreeningDateSelectedListener
 import woowacourse.movie.booking.detail.listener.ScreeningTimeSelectedListener
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.movie.MovieUiModel
+import woowacourse.movie.movie.TheaterUiModel
 import woowacourse.movie.util.Formatter.formatDateDotSeparated
 import java.time.LocalDate
 import java.time.LocalTime
@@ -36,7 +37,8 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
         setUpUi()
 
         val movieData = requireMovieOrFinish()
-        presenter = BookingDetailPresenter(this, movieData)
+        val theaterData = requireTheaterOrFinish()
+        presenter = BookingDetailPresenter(this, movieData, theaterData)
 
         if (savedInstanceState != null) {
             val headCount = savedInstanceState.getInt(KEY_HEAD_COUNT)
@@ -67,6 +69,15 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
                 Log.e(TAG, "인텐트에 영화 예매 정보(KEY_MOVIE_DATA)가 없습니다")
                 showToastErrorAndFinish(getString(R.string.booking_toast_message))
                 throw IllegalStateException("Movie 데이터가 없어서 Activity를 종료했습니다")
+            }
+    }
+
+    private fun requireTheaterOrFinish(): TheaterUiModel {
+        return IntentCompat.getParcelableExtra(intent, KEY_THEATER_DATA, TheaterUiModel::class.java)
+            ?: run {
+                Log.e(TAG, "인텐트에 극장 정보(KEY_THEATER_DATA)가 없습니다")
+                showToastErrorAndFinish(getString(R.string.booking_toast_message))
+                throw IllegalStateException("Theater 데이터가 없어서 Activity를 종료했습니다")
             }
     }
 

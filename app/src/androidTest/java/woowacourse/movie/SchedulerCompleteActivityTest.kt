@@ -20,7 +20,7 @@ import woowacourse.movie.model.Ticket
 import java.time.LocalDate
 import java.time.LocalTime
 
-class BookingCompleteActivityTest {
+class SchedulerCompleteActivityTest {
     private lateinit var scenario: ActivityScenario<BookingCompleteActivity>
 
     @Before

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalTime
 
-class BookingTest {
+class SchedulerTest {
     private lateinit var movie: Movie
 
     @BeforeEach
@@ -27,7 +27,7 @@ class BookingTest {
 
     @Test
     fun `상영일자에 맞는 상영일들을 가져온다`() {
-        val booking = Booking(movie, LocalDate.of(2025, 4, 20), LocalTime.of(8, 0))
+        val booking = Scheduler(movie, LocalDate.of(2025, 4, 20), LocalTime.of(8, 0))
         val expected =
             localDates(
                 "2025-04-20",
@@ -45,7 +45,7 @@ class BookingTest {
 
     @Test
     fun `현재 시간을 기준으로 예매 가능한 시간들을 가져온다`() {
-        val booking = Booking(movie, LocalDate.of(2025, 4, 10), LocalTime.of(8, 0))
+        val booking = Scheduler(movie, LocalDate.of(2025, 4, 10), LocalTime.of(8, 0))
         val expected =
             localTimes("09:00", "11:00", "13:00", "15:00", "17:00", "19:00", "21:00", "23:00")
 
@@ -56,7 +56,7 @@ class BookingTest {
 
     @Test
     fun `주말인 경우에 해당하는 시간들을 가져온다`() {
-        val booking = Booking(movie, LocalDate.of(2025, 4, 20), LocalTime.of(8, 0))
+        val booking = Scheduler(movie, LocalDate.of(2025, 4, 20), LocalTime.of(8, 0))
         val expected =
             localTimes("10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00", "24:00")
 
@@ -67,7 +67,7 @@ class BookingTest {
 
     @Test
     fun `평일인 경우에 해당하는 시간들을 가져온다`() {
-        val booking = Booking(movie, LocalDate.of(2025, 4, 18), LocalTime.of(8, 0))
+        val booking = Scheduler(movie, LocalDate.of(2025, 4, 18), LocalTime.of(8, 0))
         val expected =
             localTimes("09:00", "11:00", "13:00", "15:00", "17:00", "19:00", "21:00", "23:00")
 

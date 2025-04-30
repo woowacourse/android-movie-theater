@@ -15,7 +15,7 @@ import woowacourse.movie.model.Ticket
 import java.time.LocalDate
 import java.time.LocalTime
 
-class BookingCompletePresenterTest {
+class SchedulerCompletePresenterTest {
     private lateinit var presenter: BookingCompletePresenter
     private lateinit var mockView: BookingCompleteContract.View
     private lateinit var mockTicket: Ticket

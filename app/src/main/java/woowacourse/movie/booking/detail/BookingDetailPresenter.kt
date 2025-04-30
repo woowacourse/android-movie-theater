@@ -2,44 +2,46 @@ package woowacourse.movie.booking.detail
 
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toUiModel
-import woowacourse.movie.model.Booking
 import woowacourse.movie.model.HeadCount
+import woowacourse.movie.model.Scheduler
 import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.movie.MovieUiModel
+import woowacourse.movie.movie.TheaterUiModel
 import java.time.LocalDate
 import java.time.LocalTime
 
 class BookingDetailPresenter(
     private val view: BookingDetailContract.View,
     private val movie: MovieUiModel,
+    private val theater: TheaterUiModel,
 ) : BookingDetailContract.Presenter {
     private lateinit var ticket: Ticket
-    private lateinit var booking: Booking
+    private lateinit var scheduler: Scheduler
 
     override fun initializeData() {
-        booking = Booking(movie.toDomain())
+        scheduler = Scheduler(movie.toDomain(), theater.schedule.screeningTimes)
 
         view.showMovieInfo(movie)
         view.showTicket(ticket.toUiModel())
         view.showScreeningDates(
-            dates = booking.screeningPeriods(),
+            dates = scheduler.screeningPeriods(),
             selected = ticket.selectedDate,
         )
         view.showScreeningTimes(
-            times = booking.screeningTimes(ticket.selectedDate),
+            times = scheduler.screeningTimes(ticket.selectedDate),
             selected = ticket.selectedTime,
         )
     }
 
     override fun selectDate(date: LocalDate) {
         ticket = ticket.updateDate(date)
-        val times = booking.screeningTimes(date)
+        val times = scheduler.screeningTimes(date)
 
         if (times.isEmpty()) {
             val nextDate = date.plusDays(1)
             ticket = ticket.updateDate(nextDate)
-            val nextTimes = booking.screeningTimes(nextDate)
+            val nextTimes = scheduler.screeningTimes(nextDate)
             nextTimes.firstOrNull()?.let {
                 ticket = ticket.updateTime(it)
             }
@@ -56,7 +58,7 @@ class BookingDetailPresenter(
         if (ticket.selectedTime == time) return
 
         ticket = ticket.updateTime(time)
-        view.showScreeningTimes(booking.screeningTimes(ticket.selectedDate), ticket.selectedTime)
+        view.showScreeningTimes(scheduler.screeningTimes(ticket.selectedDate), ticket.selectedTime)
         view.showTicket(ticket.toUiModel())
     }
 
