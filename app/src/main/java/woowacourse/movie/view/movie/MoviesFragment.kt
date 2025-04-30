@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMoviesBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.view.movie.adapter.MovieAdapter
-import woowacourse.movie.view.reservation.reservation.ReservationFragment
+import woowacourse.movie.view.movie.theater.TheaterBottomSheetDialogFragment
 
 class MoviesFragment :
     Fragment(),
@@ -61,10 +60,12 @@ class MoviesFragment :
     }
 
     override fun navigateToReservation(movie: Movie) {
-        val bundle = bundleOf("movieKey" to movie)
-        parentFragmentManager.setFragmentResult("requestKey", bundle)
-
-        (requireActivity() as? MoviesActivity)?.replaceFragment(ReservationFragment())
+//        val bundle = bundleOf("movieKey" to movie)
+//        parentFragmentManager.setFragmentResult("requestKey", bundle)
+//
+//        (requireActivity() as? MoviesActivity)?.replaceFragment(ReservationFragment())
+        val bottomSheet = TheaterBottomSheetDialogFragment.newInstance(movie)
+        bottomSheet.show(parentFragmentManager, "theater_sheet")
     }
 
     private fun setupMovieAdapter() {

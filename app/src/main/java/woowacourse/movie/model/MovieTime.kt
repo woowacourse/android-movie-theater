@@ -22,7 +22,7 @@ class MovieTime {
         return count
     }
 
-    private fun getScreenTimes(
+    fun getScreenTimes(
         theaterName: String,
         movieName: String,
     ): List<Int> {

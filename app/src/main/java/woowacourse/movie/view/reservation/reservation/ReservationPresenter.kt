@@ -8,7 +8,6 @@ import woowacourse.movie.model.ReservationState
 import woowacourse.movie.model.TicketCount
 import woowacourse.movie.view.ReservationUiFormatter
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 class ReservationPresenter(
     val view: ReservationContract.View,
@@ -42,7 +41,7 @@ class ReservationPresenter(
     }
 
     override fun selectDate(date: LocalDate) {
-        val timeTable = reservationState.movieTime.getTimeTable(LocalDateTime.now(), date)
+        val timeTable = reservationState.movieTime.getScreenTimes("선릉","라라랜드")
         reservationState.movieDate.updateDate(date)
         updateReservationState(movieDate = reservationState.movieDate)
         view.updateTimeAdapter(
@@ -54,10 +53,7 @@ class ReservationPresenter(
 
     override fun selectTime(position: Int) {
         val timeTable =
-            reservationState.movieTime.getTimeTable(
-                LocalDateTime.now(),
-                reservationState.movieDate.value,
-            )
+            reservationState.movieTime.getScreenTimes("선릉","라라랜드")
         reservationState.movieTime.updateTime(timeTable[position])
         updateReservationState(movieTime = reservationState.movieTime)
     }

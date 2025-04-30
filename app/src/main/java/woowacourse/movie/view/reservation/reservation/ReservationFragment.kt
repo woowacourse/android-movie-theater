@@ -2,7 +2,6 @@ package woowacourse.movie.view.reservation.reservation
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import com.google.android.material.R.layout
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationBinding
@@ -63,7 +61,6 @@ class ReservationFragment :
         }
 
         setupButtonClickListener()
-
     }
 
     override fun onResume() {
