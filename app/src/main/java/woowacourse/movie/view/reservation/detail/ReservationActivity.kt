@@ -18,6 +18,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movietime.MovieSchedule
 import woowacourse.movie.domain.movietime.ScreeningTime
@@ -55,20 +56,20 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         plusButton = findViewById(R.id.btn_plus_button)
         minusButton = findViewById(R.id.btn_minus_button)
 
-        val movie: Movie? =
+        val theater: Theater? =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getSerializableExtra(KEY_MOVIE, Movie::class.java)
+                intent.getSerializableExtra(KET_THEATER, Theater::class.java)
             } else {
-                intent.getSerializableExtra(KEY_MOVIE) as? Movie
+                intent.getSerializableExtra(KET_THEATER) as? Theater
             }
-        checkMovie(movie)
+        checkTheater(theater)
     }
 
-    private fun checkMovie(movie: Movie?) {
-        if (movie == null) {
+    private fun checkTheater(theater: Theater?) {
+        if (theater == null) {
             showErrorInvalidMovie()
         } else {
-            present.fetchData(movie)
+            present.fetchData(theater.schedule.movie)
         }
     }
 
@@ -134,7 +135,11 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
             val selectedDate: LocalDate = spinnerDate.selectedItem as LocalDate
             val selectedTime: LocalTime? = spinnerTime.selectedItem as? LocalTime?
             if (selectedTime == null) {
-                Toast.makeText(this, getString(R.string.message_not_allowed_time), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.message_not_allowed_time),
+                    Toast.LENGTH_SHORT,
+                ).show()
                 return@setOnClickListener
             }
             present.createTicket(LocalDateTime.of(selectedDate, selectedTime))
@@ -214,16 +219,16 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     companion object {
-        private const val KEY_MOVIE = "movie"
+        private const val KET_THEATER = "THEATER"
         private const val DATE_PATTERN = "yyyy.M.d"
 
         fun newIntent(
             context: Context,
-            movie: Movie?,
+            theater: Theater?,
         ): Intent =
             Intent(context, ReservationActivity::class.java).putExtra(
-                KEY_MOVIE,
-                movie,
+                KET_THEATER,
+                theater,
             )
     }
 }

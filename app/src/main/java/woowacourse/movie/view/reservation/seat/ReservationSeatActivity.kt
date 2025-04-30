@@ -160,7 +160,8 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
         ticket: Ticket,
         seats: Seats,
     ) {
-        val intent = ReservationCompleteActivity.newIntent(this@ReservationSeatActivity, ticket, seats)
+        val intent =
+            ReservationCompleteActivity.newIntent(this@ReservationSeatActivity, ticket, seats)
         startActivity(intent)
     }
 
