@@ -3,6 +3,7 @@ package woowacourse.movie.presentation.view.reservation.detail
 import woowacourse.movie.presentation.model.MovieUiModel
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.ScreenUiModel
+import woowacourse.movie.presentation.model.TheaterUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -11,6 +12,7 @@ interface ReservationDetailContract {
     interface Presenter {
         fun fetchData(
             movie: MovieUiModel,
+            theater: TheaterUiModel,
             initCount: Int? = null,
             dateTime: LocalDateTime? = null,
         )

@@ -12,6 +12,7 @@ import woowacourse.movie.presentation.extension.toDateTimeFormatter
 import woowacourse.movie.presentation.model.MovieUiModel
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.ScreenUiModel
+import woowacourse.movie.presentation.model.TheaterUiModel
 import woowacourse.movie.presentation.util.DialogInfo
 import woowacourse.movie.presentation.view.reservation.seat.ReservationSeatFragment
 import java.time.LocalDate
@@ -53,7 +54,9 @@ class ReservationDetailFragment :
 
         val movie = arguments.getParcelableCompat<MovieUiModel>(BUNDLE_KEY_MOVIE)
         val (count, dateTime) = restoreReservationData(savedInstanceState)
-        presenter.fetchData(movie, count, dateTime)
+        val theater = arguments.getParcelableCompat<TheaterUiModel>(BUNDLE_KEY_THEATER)
+
+        presenter.fetchData(movie, theater, count, dateTime)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -92,12 +95,13 @@ class ReservationDetailFragment :
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        val movie = arguments.getParcelableCompat<MovieUiModel>(BUNDLE_KEY_MOVIE)
-        presenter.fetchData(movie)
-    }
+//    override fun onResume() {
+//        super.onResume()
+//
+//        val movie = arguments.getParcelableCompat<MovieUiModel>(BUNDLE_KEY_MOVIE)
+//        val theater = arguments.getParcelableCompat<TheaterUiModel>(BUNDLE_KEY_THEATER)
+//        presenter.fetchData(movie, theater)
+//    }
 
     override fun updateDates(
         dates: List<LocalDate>,
@@ -183,13 +187,21 @@ class ReservationDetailFragment :
 
     companion object {
         private const val BUNDLE_KEY_MOVIE = "movie"
+        private const val BUNDLE_KEY_THEATER = "theater"
         private const val RESTORE_BUNDLE_KEY_RESERVATION_DATETIME = "reservation_datetime"
         private const val RESTORE_BUNDLE_KEY_RESERVATION_NUMBER = "reservation_number"
         private const val SPINNER_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm"
 
-        fun newInstance(movie: MovieUiModel): ReservationDetailFragment =
+        //        fun newInstance(movie: MovieUiModel): ReservationDetailFragment =
+//            ReservationDetailFragment().apply {
+//                arguments = bundleOf(BUNDLE_KEY_MOVIE to movie)
+//            }
+        fun newInstance(
+            movie: MovieUiModel,
+            theater: TheaterUiModel,
+        ): ReservationDetailFragment =
             ReservationDetailFragment().apply {
-                arguments = bundleOf(BUNDLE_KEY_MOVIE to movie)
+                arguments = bundleOf(BUNDLE_KEY_MOVIE to movie, BUNDLE_KEY_THEATER to theater)
             }
     }
 }

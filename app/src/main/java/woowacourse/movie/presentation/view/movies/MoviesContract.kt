@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.view.movies
 
-import woowacourse.movie.domain.model.cinema.Theater
 import woowacourse.movie.presentation.model.MovieUiModel
+import woowacourse.movie.presentation.model.TheatersUiModel
 
 interface MoviesContract {
     interface Presenter {
@@ -13,6 +13,9 @@ interface MoviesContract {
     interface View {
         fun showScreen(movies: List<MovieUiModel>)
 
-        fun showAvailableTheatersAndCount(tmp: Map<Theater, Int>)
+        fun showAvailableTheatersAndCount(
+            movie: MovieUiModel,
+            times: TheatersUiModel,
+        )
     }
 }

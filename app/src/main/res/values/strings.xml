@@ -18,6 +18,9 @@
     <string name="reservation_count_limit_reached_message">예매 가능한 최대 인원 입니다.</string>
     <string name="invalid_reservation_datetime_message">예약 날짜 및 시간을 선택해 주세요</string>
 
+    <!-- 영화관 선택 -->
+    <string name="item_theater_available_reservation_time_count">%d개의 상영 시간</string>
+
     <!-- 좌석 선택 화면 -->
     <string name="reservation_select_seats_screen">SCREEN</string>
     <string name="reservation_select_seats_confirm">확인</string>
