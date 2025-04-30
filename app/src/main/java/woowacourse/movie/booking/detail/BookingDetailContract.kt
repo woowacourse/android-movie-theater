@@ -8,8 +8,6 @@ interface BookingDetailContract {
     interface View {
         fun showMovieInfo(movie: MovieUiModel)
 
-        fun showTicket(result: TicketUiModel)
-
         fun showScreeningDates(
             dates: List<LocalDate>,
             selected: LocalDate,
@@ -23,6 +21,8 @@ interface BookingDetailContract {
         fun startSeatSelectionActivity(result: TicketUiModel)
 
         fun showToastErrorAndFinish(message: String)
+
+        fun showHeadCount()
     }
 
     interface Presenter {
@@ -39,6 +39,8 @@ interface BookingDetailContract {
         fun selectDate(date: LocalDate)
 
         fun selectTime(time: LocalTime)
+
+        fun getHeadCount(): Int
 
         fun increaseHeadCount()
 

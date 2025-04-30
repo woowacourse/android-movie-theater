@@ -3,15 +3,12 @@ package woowacourse.movie
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.SeatSelectionActivity.Companion.KEY_TICKET
 import woowacourse.movie.booking.detail.BookingDetailContract
 import woowacourse.movie.booking.detail.BookingDetailPresenter
@@ -20,20 +17,22 @@ import woowacourse.movie.booking.detail.adapter.ScreeningDateSpinnerAdapter
 import woowacourse.movie.booking.detail.adapter.ScreeningTimeSpinnerAdapter
 import woowacourse.movie.booking.detail.listener.ScreeningDateSelectedListener
 import woowacourse.movie.booking.detail.listener.ScreeningTimeSelectedListener
+import woowacourse.movie.databinding.ActivityBookingDetailBinding
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.movie.MovieUiModel
 import woowacourse.movie.movie.TheaterUiModel
-import woowacourse.movie.util.Formatter.formatDateDotSeparated
 import java.time.LocalDate
 import java.time.LocalTime
 
 class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     private lateinit var presenter: BookingDetailContract.Presenter
+    private lateinit var binding: ActivityBookingDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_booking)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_detail)
+        binding.detail = this
         setUpUi()
 
         val movieData = requireMovieOrFinish()
@@ -56,7 +55,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     }
 
     private fun setUpUi() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -87,41 +86,28 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     }
 
     override fun showMovieInfo(movie: MovieUiModel) {
-        val moviePoster = findViewById<ImageView>(R.id.img_booking_poster)
-        val bookingTitle = findViewById<TextView>(R.id.tv_booking_title)
-        val bookingScreenDate = findViewById<TextView>(R.id.tv_booking_screening_date)
-        val bookingRunningTime = findViewById<TextView>(R.id.tv_booking_running_time)
-
-        val screeningPeriod =
-            getString(
-                R.string.screening_date_period,
-                formatDateDotSeparated(movie.screeningStartDate),
-                formatDateDotSeparated(movie.screeningEndDate),
-            )
-        val runningTimeText = getString(R.string.minute_text, movie.runningTime)
-
-        bookingTitle.text = movie.title
-        moviePoster.setImageResource(movie.imageSource)
-        bookingScreenDate.text = screeningPeriod
-        bookingRunningTime.text = runningTimeText
+        binding.movie = movie
     }
 
-    override fun showTicket(result: TicketUiModel) {
-        val headCountText = findViewById<TextView>(R.id.tv_people_count)
-        val btnPlus = findViewById<Button>(R.id.btn_plus)
-        val btnMinus = findViewById<Button>(R.id.btn_minus)
+    fun decreaseHeadCount() {
+        presenter.decreaseHeadCount()
+        showHeadCount()
+    }
 
-        headCountText.text = result.headCount.toString()
+    fun increaseHeadCount() {
+        presenter.increaseHeadCount()
+        showHeadCount()
+    }
 
-        btnPlus.setOnClickListener { presenter.increaseHeadCount() }
-        btnMinus.setOnClickListener { presenter.decreaseHeadCount() }
+    override fun showHeadCount() {
+        binding.tvPeopleCount.text = presenter.getHeadCount().toString()
     }
 
     override fun showScreeningDates(
         dates: List<LocalDate>,
         selected: LocalDate,
     ) {
-        val dateSpinner = findViewById<Spinner>(R.id.spinner_screening_date)
+        val dateSpinner = binding.spinnerScreeningDate
         dateSpinner.adapter = ScreeningDateSpinnerAdapter(this, dates)
 
         val position = dates.indexOf(selected)
@@ -141,7 +127,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
         times: List<LocalTime>,
         selected: LocalTime,
     ) {
-        val timeSpinner = findViewById<Spinner>(R.id.spinner_screening_time)
+        val timeSpinner = binding.spinnerScreeningTime
         timeSpinner.adapter = ScreeningTimeSpinnerAdapter(this, times)
 
         val position = times.indexOf(selected)
@@ -158,7 +144,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     }
 
     private fun initReserveConfirm() {
-        val btnReserveConfirm = findViewById<Button>(R.id.btn_selection_confirm)
+        val btnReserveConfirm = binding.btnSelectionConfirm
         btnReserveConfirm.setOnClickListener {
             presenter.confirmReservation()
         }

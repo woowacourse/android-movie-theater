@@ -17,14 +17,15 @@ class BookingDetailPresenter(
     private val movie: MovieUiModel,
     private val theater: TheaterUiModel,
 ) : BookingDetailContract.Presenter {
-    private lateinit var ticket: Ticket
+    lateinit var ticket: Ticket
+        private set
     private lateinit var scheduler: Scheduler
 
     override fun initializeData() {
         scheduler = Scheduler(movie.toDomain(), theater.schedule.screeningTimes)
 
         view.showMovieInfo(movie)
-        view.showTicket(ticket.toUiModel())
+        view.showHeadCount()
         view.showScreeningDates(
             dates = scheduler.screeningPeriods(),
             selected = ticket.selectedDate,
@@ -51,8 +52,6 @@ class BookingDetailPresenter(
             ticket = ticket.updateTime(times.first())
             view.showScreeningTimes(times, ticket.selectedTime)
         }
-
-        view.showTicket(ticket.toUiModel())
     }
 
     override fun selectTime(time: LocalTime) {
@@ -60,17 +59,16 @@ class BookingDetailPresenter(
 
         ticket = ticket.updateTime(time)
         view.showScreeningTimes(scheduler.screeningTimes(ticket.selectedDate), ticket.selectedTime)
-        view.showTicket(ticket.toUiModel())
     }
+
+    override fun getHeadCount(): Int = ticket.headCount.value
 
     override fun increaseHeadCount() {
         ticket = ticket.plusHeadCount()
-        view.showTicket(ticket.toUiModel())
     }
 
     override fun decreaseHeadCount() {
         if (ticket.isHeadCountValid()) ticket = ticket.minusHeadCount()
-        view.showTicket(ticket.toUiModel())
     }
 
     override fun confirmReservation() {
