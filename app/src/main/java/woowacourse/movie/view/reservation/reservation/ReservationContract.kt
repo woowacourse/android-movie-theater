@@ -1,7 +1,7 @@
 package woowacourse.movie.view.reservation.reservation
 
-import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieTicket
+import woowacourse.movie.model.TheaterUIModel
 import java.time.LocalDate
 
 interface ReservationContract {
@@ -29,7 +29,7 @@ interface ReservationContract {
     }
 
     interface Presenter {
-        fun fetchData(getMovie: () -> Pair<Movie?, String?>)
+        fun fetchData(getMovie: () -> TheaterUIModel?)
 
         fun initDateAdapter()
 

@@ -13,6 +13,7 @@ import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieDao
 import woowacourse.movie.model.Theater
+import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.compatParcelable
 import woowacourse.movie.view.movie.MoviesActivity
@@ -71,11 +72,8 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         theaterAdapter =
             TheaterAdapter(
                 object : TheaterClickListener {
-                    override fun onTheaterClick(
-                        movie: Movie,
-                        theaterName: String,
-                    ) {
-                        navigateToReservation(movie, theaterName)
+                    override fun onTheaterClick(theaterUIModel: TheaterUIModel) {
+                        navigateToReservation(theaterUIModel)
                     }
                 },
                 movie,
@@ -90,14 +88,10 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         )
     }
 
-    private fun navigateToReservation(
-        movie: Movie,
-        theaterName: String,
-    ) {
+    private fun navigateToReservation(theaterUIModel: TheaterUIModel) {
         val bundle =
             bundleOf(
-                Extras.MovieData.MOVIE_KEY to movie,
-                Extras.TheaterData.THEATER_KEY to theaterName,
+                Extras.TheaterData.THEATER_UI_MODEL_KEY to theaterUIModel,
             )
         parentFragmentManager.setFragmentResult("requestKey", bundle)
 

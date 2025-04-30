@@ -1,11 +1,11 @@
 package woowacourse.movie.view.reservation.reservation
 
-import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieDao
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.model.MovieTime
 import woowacourse.movie.model.ReservationState
+import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.model.TicketCount
 import woowacourse.movie.view.ReservationUiFormatter
 import java.time.LocalDate
@@ -15,20 +15,20 @@ class ReservationPresenter(
 ) : ReservationContract.Presenter {
     private lateinit var reservationState: ReservationState
 
-    override fun fetchData(getMovie: () -> Pair<Movie?, String?>) {
-        val (movieData, theaterName) = getMovie()
-        if (movieData == null || theaterName.isNullOrBlank()) {
+    override fun fetchData(getMovie: () -> TheaterUIModel?) {
+        val theaterUIModel = getMovie()
+        if (theaterUIModel == null) {
             view.showErrorDialog()
             return
         }
 
         reservationState =
             ReservationState(
-                movie = movieData,
-                movieDate = MovieDate(movieData.startDate, movieData.endDate),
+                movie = theaterUIModel.movie,
+                movieDate = MovieDate(theaterUIModel.movie.startDate, theaterUIModel.movie.endDate),
                 movieTime = MovieTime(),
                 ticketCount = TicketCount(),
-                theaterName = theaterName,
+                theaterName = theaterUIModel.name,
             )
 
         updateMovieInfo()

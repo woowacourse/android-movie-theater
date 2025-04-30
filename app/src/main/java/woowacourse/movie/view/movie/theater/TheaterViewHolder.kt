@@ -5,8 +5,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.model.Movie
-import woowacourse.movie.model.Theater
+import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.movie.TheaterClickListener
 
 class TheaterViewHolder(
@@ -17,19 +16,16 @@ class TheaterViewHolder(
     private val theaterNameTextView: TextView = view.findViewById(R.id.tv_theater_name)
     private val timeslotTextView: TextView = view.findViewById(R.id.tv_time_slot)
 
-    fun bind(
-        theater: Theater,
-        movie: Movie,
-    ) {
+    fun bind(theaterUIModel: TheaterUIModel) {
         theaterNameTextView.text =
-            itemView.context.getString(R.string.bottom_sheet_dialog_theater_name, theater.name)
+            itemView.context.getString(R.string.bottom_sheet_dialog_theater_name, theaterUIModel.name)
         timeslotTextView.text =
             itemView.context.getString(
                 R.string.bottom_sheet_dialog_time_slot,
-                theater.getTotalTimeSlotCount(movie),
+                theaterUIModel.timeSlotCount,
             )
         layoutTheater.setOnClickListener {
-            clickListener.onTheaterClick(movie, theater.name)
+            clickListener.onTheaterClick(theaterUIModel)
         }
     }
 }

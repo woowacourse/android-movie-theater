@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.R.layout
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationBinding
-import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieTicket
+import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.compatParcelable
 import woowacourse.movie.view.movie.MoviesActivity
@@ -57,9 +57,8 @@ class ReservationFragment :
         super.onViewCreated(view, savedInstanceState)
 
         parentFragmentManager.setFragmentResultListener("requestKey", this) { _, bundle ->
-            val movie = bundle.compatParcelable<Movie>(Extras.MovieData.MOVIE_KEY)
-            val theaterName = bundle.getString(Extras.TheaterData.THEATER_KEY)
-            presenter.fetchData { Pair(movie, theaterName) }
+            val theaterUiModel = bundle.compatParcelable<TheaterUIModel>(Extras.TheaterData.THEATER_UI_MODEL_KEY)
+            presenter.fetchData { theaterUiModel }
         }
 
         setupButtonClickListener()

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Theater
+import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.movie.TheaterClickListener
 
 class TheaterAdapter(
@@ -26,6 +27,7 @@ class TheaterAdapter(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
-        (holder as TheaterViewHolder).bind(getItem(position), movie)
+        val theater = (getItem(position))
+        (holder as TheaterViewHolder).bind(TheaterUIModel(theater.name, movie, theater.getTotalTimeSlotCount(movie)))
     }
 }
