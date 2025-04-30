@@ -12,12 +12,14 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.contract.reservation.ReservationContract
 import woowacourse.movie.domain.reservation.Screening
+import woowacourse.movie.domain.reservation.ShowtimePolicy
 import woowacourse.movie.presenter.reservation.ReservationPresenter
 import woowacourse.movie.view.reservation.Poster.posterId
 import woowacourse.movie.view.util.ErrorMessage
@@ -48,6 +50,7 @@ class ReservationActivity :
         presenter?.getItemPosition()?.let { outState.putInt(TIME_ITEM_POSITION, it) }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -57,7 +60,6 @@ class ReservationActivity :
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         initPresenter(
             savedInstanceState?.getInt(TICKET_COUNT),
             savedInstanceState?.getInt(TIME_ITEM_POSITION),
@@ -269,14 +271,19 @@ class ReservationActivity :
         private const val CAUSE_SCREENING = "screening"
 
         private const val EXTRA_SCREENING = "woowacourse.movie.EXTRA_SCREENING"
+        private const val EXTRA_CINEMA_NAME = "woowacourse.movie.EXTRA_CINEMA_NAME"
+        private const val EXTRA_SHOWTIME_POLICY = "woowacourse.movie.EXTRA_SHOWTIME_POLICY"
 
         fun newIntent(
             context: Context,
             screening: Screening,
+            cinemaName: String,
+            showtimePolicy: ShowtimePolicy,
         ): Intent =
             Intent(context, ReservationActivity::class.java).putExtra(
                 EXTRA_SCREENING,
                 screening,
-            )
+            ).putExtra(EXTRA_CINEMA_NAME, cinemaName)
+                .putExtra(EXTRA_SHOWTIME_POLICY, showtimePolicy)
     }
 }

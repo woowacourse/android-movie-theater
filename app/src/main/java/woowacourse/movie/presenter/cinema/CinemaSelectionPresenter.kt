@@ -5,6 +5,7 @@ import woowacourse.movie.data.cinema.CinemaData
 import woowacourse.movie.data.cinema.LocalCinemaData
 import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.Screening
+import woowacourse.movie.domain.reservation.ShowtimePolicy
 
 class CinemaSelectionPresenter(
     private val view: CinemaSelectionContract.View,
@@ -19,7 +20,10 @@ class CinemaSelectionPresenter(
         view.setCinemas(reservableCinemas)
     }
 
-    override fun onSelectCinema() {
-        view.navigateToReservationScreen(screening)
+    override fun onSelectCinema(
+        cinemaName: String,
+        showtimePolicy: ShowtimePolicy,
+    ) {
+        view.navigateToReservationScreen(screening, cinemaName, showtimePolicy)
     }
 }

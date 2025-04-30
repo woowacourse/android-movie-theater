@@ -5,7 +5,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.reservation.Movie
 import woowacourse.movie.domain.reservation.Screening
+import woowacourse.movie.domain.reservation.ShowtimePolicy
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 class CinemaTest {
@@ -28,7 +30,12 @@ class CinemaTest {
             Cinema(
                 "선릉 극장",
                 listOf(screening),
-                showtimePolicy = { _ -> listOf(LocalTime.of(22, 0)) },
+                showtimePolicy =
+                    object : ShowtimePolicy() {
+                        override fun showtimes(current: LocalDateTime): List<LocalTime> {
+                            return listOf(LocalTime.of(22, 0))
+                        }
+                    },
             )
     }
 

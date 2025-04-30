@@ -1,15 +1,16 @@
 package woowacourse.movie.domain.reservation
 
+import java.io.Serializable
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-fun interface ShowtimePolicy {
-    fun showtimes(current: LocalDateTime): List<LocalTime>
+abstract class ShowtimePolicy : Serializable {
+    abstract fun showtimes(current: LocalDateTime): List<LocalTime>
 }
 
-class DefaultShowtimePolicy(private val date: LocalDate) : ShowtimePolicy {
+class DefaultShowtimePolicy(private val date: LocalDate) : ShowtimePolicy() {
     override fun showtimes(current: LocalDateTime): List<LocalTime> {
         if (date == current.toLocalDate()) {
             if (date.isHoliday) {
