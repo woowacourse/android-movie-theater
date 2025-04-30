@@ -26,7 +26,7 @@ val DUMMY_MOVIES =
             R.drawable.harry_potter_one,
             ScreeningPeriod(
                 LocalDate.of(2025, 4, 1),
-                LocalDate.of(2025, 4, 30),
+                LocalDate.of(2025, 5, 30),
             ),
             152,
         ),
@@ -35,7 +35,7 @@ val DUMMY_MOVIES =
             R.drawable.harry_potter_two,
             ScreeningPeriod(
                 LocalDate.of(2025, 4, 1),
-                LocalDate.of(2025, 4, 28),
+                LocalDate.of(2025, 5, 28),
             ),
             162,
         ),
@@ -90,7 +90,7 @@ val DUMMY_THEATERS =
                                 screeningDateTime =
                                     ScreeningDateTime(
                                         screeningDate = LocalDate.of(2025, 5, 3),
-                                        screeningTime = LocalTime.of(20, 0),
+                                        screeningTime = LocalTime.of(22, 0),
                                     ),
                                 seat = Seats(),
                             ),
