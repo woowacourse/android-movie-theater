@@ -10,7 +10,7 @@ class ScheduleTimeTest {
         // given
         val scheduleTime =
             ScheduleTime(
-                time = listOf(LocalDateTime.of(2025, 1, 1, 1, 0), LocalDateTime.of(2025, 1, 1, 5, 0)),
+                times = listOf(LocalDateTime.of(2025, 1, 1, 1, 0), LocalDateTime.of(2025, 1, 1, 5, 0)),
             )
         // when
         val actual = scheduleTime.afterCurrentTimeSchedule(currentTime = LocalDateTime.of(2025, 1, 1, 3, 0))
