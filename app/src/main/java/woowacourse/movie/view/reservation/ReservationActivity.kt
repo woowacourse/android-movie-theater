@@ -6,23 +6,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityReservationBinding
+import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.theater.MovieScreeningInfoByTheater
 import woowacourse.movie.presenter.reservation.ReservationContract
 import woowacourse.movie.presenter.reservation.ReservationPresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.extension.showShortToast
-import woowacourse.movie.view.mapper.Formatter.localDateToUI
 import woowacourse.movie.view.seatSelection.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalTime
@@ -30,22 +27,12 @@ import java.time.LocalTime
 class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     private val presenter: ReservationContract.Presenter = ReservationPresenter(this)
     private lateinit var timeSpinnerAdapter: TimeSpinnerAdapter
-
-    private val ticketCountTextView: TextView by lazy { findViewById(R.id.tv_reservation_ticket_count) }
-    private val posterImageView: ImageView by lazy { findViewById(R.id.iv_reservation_poster) }
-    private val movieTitleTextView: TextView by lazy { findViewById(R.id.tv_reservation_title) }
-    private val screeningDateTextView: TextView by lazy { findViewById(R.id.tv_reservation_screening_date) }
-    private val runningTimeTextView: TextView by lazy { findViewById(R.id.tv_reservation_running_time) }
-    private val dateSpinner: Spinner by lazy { findViewById(R.id.spinner_reservation_date) }
-    private val timeSpinner: Spinner by lazy { findViewById(R.id.spinner_reservation_time) }
-    private val plusButton: Button by lazy { findViewById(R.id.btn_reservation_plus_ticket_count) }
-    private val minusButton: Button by lazy { findViewById(R.id.btn_reservation_minus_ticket_count) }
-    private val completeButton: Button by lazy { findViewById(R.id.btn_reservation_select_complete) }
+    private lateinit var binding: ActivityReservationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_reservation)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -65,15 +52,15 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     private fun setupClickListener() {
-        minusButton.setOnClickListener {
+        binding.btnReservationMinusTicketCount.setOnClickListener {
             presenter.decreaseTicketCount()
         }
 
-        plusButton.setOnClickListener {
+        binding.btnReservationPlusTicketCount.setOnClickListener {
             presenter.increaseTicketCount()
         }
 
-        completeButton.setOnClickListener {
+        binding.btnReservationSelectComplete.setOnClickListener {
             presenter.onMovieToReserveRequest()
         }
     }
@@ -85,7 +72,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
                 com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
                 dates,
             )
-        dateSpinner.apply {
+        binding.spinnerReservationDate.apply {
             adapter = dateAdapter
             onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
@@ -105,7 +92,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     private fun setupTimeAdapter() {
         timeSpinnerAdapter = TimeSpinnerAdapter(this, mutableListOf())
-        timeSpinner.apply {
+        binding.spinnerReservationTime.apply {
             adapter = timeSpinnerAdapter
             onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
@@ -126,9 +113,18 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(TICKET_COUNT_DATA_KEY, ticketCountTextView.text.toString().toInt())
-        outState.putInt(TICKET_DATE_POSITION_DATA_KEY, dateSpinner.selectedItemPosition)
-        outState.putInt(MOVIE_TIME_POSITION_DATA_KEY, timeSpinner.selectedItemPosition)
+        outState.putInt(
+            TICKET_COUNT_DATA_KEY,
+            binding.tvReservationTicketCount.text.toString().toInt(),
+        )
+        outState.putInt(
+            TICKET_DATE_POSITION_DATA_KEY,
+            binding.spinnerReservationDate.selectedItemPosition,
+        )
+        outState.putInt(
+            MOVIE_TIME_POSITION_DATA_KEY,
+            binding.spinnerReservationTime.selectedItemPosition,
+        )
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -148,38 +144,11 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     override fun showTicketCount(count: Int) {
-        ticketCountTextView.text = count.toString()
+        binding.tvReservationTicketCount.text = count.toString()
     }
 
-    override fun showTitle(title: String) {
-        movieTitleTextView.text = title
-    }
-
-    override fun showScreeningDate(
-        startDate: LocalDate,
-        endDate: LocalDate,
-    ) {
-        val startDateFormat: String = localDateToUI(startDate)
-        val endDateFormat: String = localDateToUI(endDate)
-        screeningDateTextView.text =
-            resources.getString(
-                R.string.movie_screening_date,
-                startDateFormat,
-                endDateFormat,
-            )
-    }
-
-    override fun showPoster(poster: Int) {
-        val poster =
-            AppCompatResources.getDrawable(
-                this,
-                poster,
-            )
-        posterImageView.setImageDrawable(poster)
-    }
-
-    override fun showRunningTime(runningTime: Int) {
-        runningTimeTextView.text = getString(R.string.movie_running_time).format(runningTime)
+    override fun showMovieInfo(movie: Movie) {
+        binding.movie = movie
     }
 
     override fun showErrorToastMessage(message: String) {
@@ -195,11 +164,11 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     override fun showSelectedDate(position: Int) {
-        dateSpinner.setSelection(position)
+        binding.spinnerReservationDate.setSelection(position)
     }
 
     override fun showSelectedTime(position: Int) {
-        timeSpinner.setSelection(position)
+        binding.spinnerReservationTime.setSelection(position)
     }
 
     companion object {

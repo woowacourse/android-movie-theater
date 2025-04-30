@@ -32,10 +32,7 @@ class ReservationPresenter(
     }
 
     private fun updateView(movie: Movie) {
-        view.showTitle(movie.title)
-        view.showPoster(movie.poster)
-        view.showRunningTime(movie.runningTime)
-        view.showScreeningDate(movie.startDate, movie.endDate)
+        view.showMovieInfo(movie)
         view.showTicketCount(ticketCount.value)
         view.setupDateAdapter(movieDate.getDateTable(LocalDate.now()))
         view.updateTimes(movieTimes.screeningTimes.map { it.value })

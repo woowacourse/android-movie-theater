@@ -7,7 +7,11 @@ import woowacourse.movie.view.mapper.Formatter.localDateToUI
 import java.time.LocalDate
 
 @BindingAdapter("android:startDate", "android:endDate", requireAll = true)
-fun formatLocalDate(textView: TextView, startDate: LocalDate, endDate: LocalDate) {
+fun formatLocalDate(
+    textView: TextView,
+    startDate: LocalDate,
+    endDate: LocalDate,
+) {
     val startDate: String = localDateToUI(startDate)
     val endDate: String = localDateToUI(endDate)
 
@@ -15,6 +19,9 @@ fun formatLocalDate(textView: TextView, startDate: LocalDate, endDate: LocalDate
 }
 
 @BindingAdapter("android:imageRes")
-fun setImage(imageView: ImageView, resId: Int) {
+fun setImage(
+    imageView: ImageView,
+    resId: Int,
+) {
     imageView.setImageResource(resId)
 }

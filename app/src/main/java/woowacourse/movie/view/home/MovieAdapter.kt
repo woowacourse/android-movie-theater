@@ -31,7 +31,7 @@ class MovieAdapter(
                         inflater,
                         R.layout.item_movie,
                         parent,
-                        false
+                        false,
                     )
                 val holder = MovieViewHolder(movieBinding)
                 holder.button.setOnClickListener {
