@@ -13,6 +13,7 @@ import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookingSeatBinding
 import woowacourse.movie.domain.BookingStatus
+import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.seat.Seat
 import woowacourse.movie.helper.BuildVersion
 import woowacourse.movie.helper.CustomClickListenerHelper.setOnSingleClickListener
@@ -22,6 +23,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     private lateinit var binding: MovieBookingSeatBinding
     private lateinit var presenter: MovieBookingSeatPresenter
     private lateinit var bookingStatus: BookingStatus
+    private lateinit var theater: Theater
     private var price: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +39,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
 
         bookingStatus =
             BuildVersion().getParcelableClass(intent, KEY_BOOKING_SEAT, BookingStatus::class)
+        theater = BuildVersion().getParcelableClass(intent, KEY_THEATER, Theater::class)
         presenter = MovieBookingSeatPresenter(this@MovieBookingSeatActivity)
         presenter.loadBookingStatus(bookingStatus)
         initSeatTable()
@@ -83,17 +86,18 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
                 dialog.cancel()
             }
             .setPositiveButton(getString(R.string.okay)) { _, _ ->
-                navigateToMovieBooked(bookingStatus)
+                navigateToMovieBooked(bookingStatus, theater)
             }
             .show()
             .setCancelable(false)
     }
 
-    override fun navigateToMovieBooked(bookingStatus: BookingStatus) {
+    override fun navigateToMovieBooked(bookingStatus: BookingStatus, theater: Theater) {
         val intent =
             MovieBookedActivity.Companion.movieBookedIntent(
                 this@MovieBookingSeatActivity,
                 bookingStatus,
+                theater
             )
         startActivity(intent)
         finish()
@@ -123,13 +127,17 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
 
     companion object {
         private const val KEY_BOOKING_SEAT = "bookingSeat"
+        private const val KEY_THEATER = "theater"
 
         fun movieBookingSeatIntent(
             otherActivity: AppCompatActivity,
             bookingStatus: BookingStatus,
+            theater: Theater
         ): Intent {
             return Intent(otherActivity, MovieBookingSeatActivity::class.java)
-                .apply { putExtra(KEY_BOOKING_SEAT, bookingStatus) }
+                .apply { putExtra(KEY_BOOKING_SEAT, bookingStatus)
+                    putExtra(KEY_THEATER, theater)}
+
         }
     }
 }

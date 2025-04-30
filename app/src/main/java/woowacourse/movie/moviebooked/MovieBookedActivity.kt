@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookedBinding
 import woowacourse.movie.domain.BookingStatus
+import woowacourse.movie.domain.Theater
 import woowacourse.movie.helper.BuildVersion
 import woowacourse.movie.helper.LocalDateHelper.toDotFormat
 
@@ -37,10 +38,11 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
                 KEY_BOOKING_STATUS,
                 BookingStatus::class,
             )
-        presenter.loadBookedStatus(bookingStatus)
+        val theater = BuildVersion().getParcelableClass(intent, KEY_THEATER, Theater::class)
+        presenter.loadBookedStatus(bookingStatus, theater)
     }
 
-    override fun showBookedStatus(bookingStatus: BookingStatus) {
+    override fun showBookedStatus(bookingStatus: BookingStatus, theater: Theater) {
         binding.movieTitle.text = bookingStatus.movie.title
         binding.bookingDateTime.text =
             binding.bookingDateTime.context.getString(
@@ -57,6 +59,10 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
                 R.string.total_price,
                 bookingStatus.calculateTicketPrices(),
             )
+        binding.bookingTheaterName.text = binding.bookingTheaterName.context.getString(
+            R.string.booked_theater_name,
+            theater.name
+        )
         val seatsText =
             bookingStatus.seat.seats.joinToString(", ") { seat ->
                 val rowChar = 'A' + seat.row.value
@@ -68,13 +74,18 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
 
     companion object {
         private const val KEY_BOOKING_STATUS = "bookingStatus"
+        private const val KEY_THEATER = "theater"
 
         fun movieBookedIntent(
             otherActivity: AppCompatActivity,
             bookingStatus: BookingStatus,
+            theater: Theater
         ): Intent {
             return Intent(otherActivity, MovieBookedActivity::class.java)
-                .apply { putExtra(KEY_BOOKING_STATUS, bookingStatus) }
+                .apply {
+                    putExtra(KEY_BOOKING_STATUS, bookingStatus)
+                    putExtra(KEY_THEATER, theater)
+                }
         }
     }
 }

@@ -25,6 +25,7 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
     private lateinit var binding: MovieBookingBinding
     private lateinit var presenter: MovieBookingPresenter
     private lateinit var movie: Movie
+    private lateinit var theater: Theater
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +42,11 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
                 intent,
                 KEY_MOVIE, Movie::class,
             )
+        theater = BuildVersion().getParcelableClass(
+            intent,
+            KEY_THEATER, Theater::class
+        )
+
         presenter = MovieBookingPresenter(this@MovieBookingActivity)
         presenter.loadMovie(movie)
 
@@ -79,6 +85,7 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
             MovieBookingSeatActivity.Companion.movieBookingSeatIntent(
                 this@MovieBookingActivity,
                 bookingStatus,
+                theater
             )
         startActivity(intent)
     }
