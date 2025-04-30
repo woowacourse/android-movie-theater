@@ -16,6 +16,7 @@ class SeatsPresenterTest {
     private val movieTicket =
         MovieTicket(
             "Test",
+            "선릉 극장",
             LocalDateTime.of(2025, 12, 31, 12, 0),
             1,
         )
@@ -33,7 +34,7 @@ class SeatsPresenterTest {
 
         // Then
         verify { view.initSeats() }
-        verify { view.showMovieTitle(movieTicket.title) }
+        verify { view.showMovieTitle(movieTicket.movieTitle) }
         verify { view.updateAmount(movieTicket.amount) }
     }
 
@@ -92,7 +93,7 @@ class SeatsPresenterTest {
         verify {
             view.navigateToSummary(
                 match {
-                    it.title == movieTicket.title &&
+                    it.movieTitle == movieTicket.movieTitle &&
                         it.screeningDateTime == movieTicket.screeningDateTime &&
                         it.headCount == movieTicket.headCount &&
                         it.seats == listOf(seat) &&

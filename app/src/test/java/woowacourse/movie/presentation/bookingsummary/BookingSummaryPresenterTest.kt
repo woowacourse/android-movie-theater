@@ -13,7 +13,8 @@ class BookingSummaryPresenterTest {
 
     private val testTicket =
         MovieTicket(
-            title = "test",
+            movieTitle = "test",
+            theaterName = "선릉 극장",
             screeningDateTime = LocalDateTime.of(2025, 4, 30, 12, 0),
             headCount = 2,
         )

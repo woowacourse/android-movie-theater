@@ -17,12 +17,14 @@ import woowacourse.movie.presentation.booking.BookingActivity
 import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
+@Suppress("ktlint:standard:function-naming")
 class BookingSummaryActivityTest {
     @Before
     fun setUp() {
         val ticket =
             MovieTicket(
                 "Test",
+                "선릉 극장",
                 LocalDateTime.of(2025, 12, 31, 12, 0),
                 2,
                 27000,

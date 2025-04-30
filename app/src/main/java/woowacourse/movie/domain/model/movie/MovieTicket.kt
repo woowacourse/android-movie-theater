@@ -5,16 +5,15 @@ import java.io.Serializable
 import java.time.LocalDateTime
 
 data class MovieTicket(
-    val title: String,
+    val movieTitle: String,
+    val theaterName: String,
     val screeningDateTime: LocalDateTime,
     val headCount: Int,
     val amount: Int = DEFAULT_AMOUNT,
     val seats: List<Seat> = emptyList(),
 ) : Serializable {
     init {
-        require(screeningDateTime.isAfter(LocalDateTime.now())) {
-            DATETIME_ERROR
-        }
+        require(screeningDateTime.isAfter(LocalDateTime.now())) { DATETIME_ERROR }
     }
 
     companion object {

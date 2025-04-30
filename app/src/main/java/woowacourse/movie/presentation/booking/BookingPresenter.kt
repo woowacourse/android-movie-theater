@@ -56,7 +56,8 @@ class BookingPresenter(
     override fun onConfirmClicked() {
         val ticket =
             MovieTicket(
-                title = screeningInfo.movie.title,
+                movieTitle = screeningInfo.movie.title,
+                theaterName = screeningInfo.theater,
                 screeningDateTime = LocalDateTime.of(selectedDate, selectedTime),
                 headCount = headCount.value,
             )

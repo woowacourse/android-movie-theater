@@ -13,7 +13,7 @@ class SeatsPresenter(
 
     override fun onViewCreated() {
         view.initSeats()
-        view.showMovieTitle(movieTicket.title)
+        view.showMovieTitle(movieTicket.movieTitle)
         view.updateAmount(movieTicket.amount)
     }
 
@@ -42,7 +42,8 @@ class SeatsPresenter(
     override fun onConfirmClicked() {
         val movieTicket =
             MovieTicket(
-                title = this.movieTicket.title,
+                movieTitle = this.movieTicket.movieTitle,
+                theaterName = this.movieTicket.theaterName,
                 screeningDateTime = this.movieTicket.screeningDateTime,
                 headCount = this.movieTicket.headCount,
                 amount = selectedSeats.getTotalPrice(),

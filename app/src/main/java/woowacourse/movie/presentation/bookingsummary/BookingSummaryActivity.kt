@@ -13,7 +13,9 @@ import woowacourse.movie.ui.util.TicketUiFormatter.formatHeadCount
 import woowacourse.movie.ui.util.intentSerializable
 import woowacourse.movie.ui.util.toUi
 
-class BookingSummaryActivity : BaseActivity(), BookingSummaryContract.View {
+class BookingSummaryActivity :
+    BaseActivity(),
+    BookingSummaryContract.View {
     override val layoutRes: Int
         get() = R.layout.activity_bookingsummary
 
@@ -33,14 +35,16 @@ class BookingSummaryActivity : BaseActivity(), BookingSummaryContract.View {
         val title = findViewById<TextView>(R.id.textview_title)
         val screeningDateTime = findViewById<TextView>(R.id.textview_screeningdatetime)
         val headCount = findViewById<TextView>(R.id.textview_headcount)
+        val theaterName = findViewById<TextView>(R.id.textview_theater_name)
         val seats = findViewById<TextView>(R.id.textview_seats)
         val amount = findViewById<TextView>(R.id.textview_amount)
 
         notice.text = String.format(getString(R.string.cancel_notice), CANCELABLE_TIME)
-        title.text = ticket.title
+        title.text = ticket.movieTitle
         screeningDateTime.text = formatDateTime(ticket.screeningDateTime)
         headCount.text = formatHeadCount(getString(R.string.headCount_message), ticket.headCount)
-        seats.text = String.format(getString(R.string.delimiter), ticket.seats.toUi())
+        seats.text = ticket.seats.toUi()
+        theaterName.text = ticket.theaterName
         amount.text = formatAmount(getString(R.string.summary_amount_message), ticket.amount)
     }
 

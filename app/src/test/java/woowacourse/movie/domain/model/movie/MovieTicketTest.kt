@@ -15,6 +15,7 @@ class MovieTicketTest {
         movieTicket =
             MovieTicket(
                 "승부",
+                "선릉 극장",
                 LocalDateTime.of(2025, 5, 1, 11, 0),
                 3,
             )
@@ -24,7 +25,7 @@ class MovieTicketTest {
     fun `제목, 상영날짜, 인원을 가진다`() {
         // Then
         assertSoftly(movieTicket) {
-            title shouldBe "승부"
+            movieTitle shouldBe "승부"
             screeningDateTime shouldBe LocalDateTime.of(2025, 5, 1, 11, 0)
             headCount shouldBe 3
         }
@@ -39,6 +40,7 @@ class MovieTicketTest {
         shouldThrow<IllegalArgumentException> {
             MovieTicket(
                 "Test",
+                "선릉 극장",
                 beforeTime,
                 2,
             )
