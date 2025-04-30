@@ -9,6 +9,7 @@ import woowacourse.movie.presentation.base.BaseFragment
 import woowacourse.movie.presentation.model.MovieUiModel
 import woowacourse.movie.presentation.model.TheaterUiModel
 import woowacourse.movie.presentation.model.TheatersUiModel
+import woowacourse.movie.presentation.view.MovieTheaterActivity
 import woowacourse.movie.presentation.view.movies.adapter.OnMovieEventListener
 import woowacourse.movie.presentation.view.movies.dialog.TheaterBottomSheetDialogFragment
 import woowacourse.movie.presentation.view.reservation.detail.ReservationDetailFragment
@@ -18,6 +19,12 @@ class MoviesFragment :
     MoviesContract.View {
     private val presenter: MoviesPresenter by lazy { MoviesPresenter(this) }
     private val views: MoviesViews by lazy { MoviesViews(requireContext(), binding) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        (requireActivity() as? MovieTheaterActivity)?.setVisibleBottomNavigation(true)
+    }
 
     override fun onViewCreated(
         view: View,

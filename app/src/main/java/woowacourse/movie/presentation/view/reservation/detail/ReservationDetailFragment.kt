@@ -14,6 +14,7 @@ import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.ScreenUiModel
 import woowacourse.movie.presentation.model.TheaterUiModel
 import woowacourse.movie.presentation.util.DialogInfo
+import woowacourse.movie.presentation.view.MovieTheaterActivity
 import woowacourse.movie.presentation.view.reservation.seat.ReservationSeatFragment
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -41,6 +42,12 @@ class ReservationDetailFragment :
                 parentFragmentManager.popBackStack()
             },
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        (requireActivity() as? MovieTheaterActivity)?.setVisibleBottomNavigation(false)
     }
 
     override fun onViewCreated(
