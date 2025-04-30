@@ -14,9 +14,9 @@ data class Cinema(
 
     fun showtimes(
         screening: Screening,
-        date: LocalDate,
+        date: LocalDate?,
     ): List<LocalTime> {
-        val showtimes = screening.showtimes(date, showtimePolicy)
-        return showtimes
+        if (date == null) return screening.showtimes(showtimePolicy)
+        return screening.showtimes(date, showtimePolicy)
     }
 }

@@ -24,7 +24,12 @@ class CinemaTest {
                 LocalDate.of(2025, 4, 1),
                 LocalDate.of(2025, 4, 28),
             )
-        cinema = Cinema(listOf(screening), showtimePolicy = { _, _ -> listOf(LocalTime.of(22, 0)) })
+        cinema =
+            Cinema(
+                "선릉 극장",
+                listOf(screening),
+                showtimePolicy = { _ -> listOf(LocalTime.of(22, 0)) },
+            )
     }
 
     @Test

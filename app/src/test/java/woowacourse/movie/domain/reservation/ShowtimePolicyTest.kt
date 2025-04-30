@@ -1,7 +1,6 @@
 package woowacourse.movie.domain.reservation
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -12,16 +11,14 @@ class ShowtimePolicyTest {
     private val holiday = LocalDate.of(2025, 4, 27)
     private val workday = LocalDate.of(2025, 4, 28)
 
-    @BeforeEach
-    fun setUp() {
-        showtimePolicy = DefaultShowtimePolicy()
-    }
-
     @Test
     fun `주말에는 오전 9시부터 자정(24시)까지 두 시간 간격으로 상영한다`() {
+        // given
+        showtimePolicy = DefaultShowtimePolicy(holiday)
+
         // when
         val showtimes: List<LocalTime> =
-            showtimePolicy.showtimes(holiday, LocalDateTime.of(holiday, LocalTime.of(8, 0)))
+            showtimePolicy.showtimes(LocalDateTime.of(holiday, LocalTime.of(8, 0)))
 
         // then
         assertThat(showtimes).isEqualTo(
@@ -40,9 +37,12 @@ class ShowtimePolicyTest {
 
     @Test
     fun `평일에는 오전 10시부터 자정(24시)까지 두 시간 간격으로 상영한다`() {
+        // given
+        showtimePolicy = DefaultShowtimePolicy(workday)
+
         // when
         val showtimes: List<LocalTime> =
-            showtimePolicy.showtimes(workday, LocalDateTime.of(holiday, LocalTime.of(8, 0)))
+            showtimePolicy.showtimes(LocalDateTime.of(holiday, LocalTime.of(8, 0)))
 
         // then
         assertThat(showtimes).isEqualTo(

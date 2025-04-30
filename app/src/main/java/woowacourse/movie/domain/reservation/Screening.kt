@@ -26,10 +26,12 @@ data class Screening(
 
     fun availableDates(): List<LocalDate> = dates.filterNot { date -> date.isBefore(current.toLocalDate()) }
 
+    fun showtimes(showTimePolicy: ShowtimePolicy): List<LocalTime> = showTimePolicy.showtimes(current)
+
     fun showtimes(
         date: LocalDate,
-        showTimePolicy: ShowtimePolicy = DefaultShowtimePolicy(),
-    ): List<LocalTime> = showTimePolicy.showtimes(date, current)
+        showTimePolicy: ShowtimePolicy = DefaultShowtimePolicy(date),
+    ): List<LocalTime> = showTimePolicy.showtimes(current)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

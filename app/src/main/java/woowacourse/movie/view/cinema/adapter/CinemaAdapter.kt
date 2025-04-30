@@ -6,24 +6,26 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.R
 import woowacourse.movie.domain.cinema.Cinema
+import woowacourse.movie.domain.reservation.Screening
 
-class CinemaAdapter(private val onClickItem: () -> Unit) : ListAdapter<Cinema, CinemaViewHolder>(
-    object : DiffUtil.ItemCallback<Cinema>() {
-        override fun areItemsTheSame(
-            oldItem: Cinema,
-            newItem: Cinema,
-        ): Boolean {
-            return oldItem === newItem
-        }
+class CinemaAdapter(private val screening: Screening, private val onClickItem: () -> Unit) :
+    ListAdapter<Cinema, CinemaViewHolder>(
+        object : DiffUtil.ItemCallback<Cinema>() {
+            override fun areItemsTheSame(
+                oldItem: Cinema,
+                newItem: Cinema,
+            ): Boolean {
+                return oldItem === newItem
+            }
 
-        override fun areContentsTheSame(
-            oldItem: Cinema,
-            newItem: Cinema,
-        ): Boolean {
-            return oldItem == newItem
-        }
-    },
-) {
+            override fun areContentsTheSame(
+                oldItem: Cinema,
+                newItem: Cinema,
+            ): Boolean {
+                return oldItem == newItem
+            }
+        },
+    ) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -36,6 +38,6 @@ class CinemaAdapter(private val onClickItem: () -> Unit) : ListAdapter<Cinema, C
         holder: CinemaViewHolder,
         position: Int,
     ) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), screening)
     }
 }

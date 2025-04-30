@@ -6,17 +6,11 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 fun interface ShowtimePolicy {
-    fun showtimes(
-        date: LocalDate,
-        current: LocalDateTime,
-    ): List<LocalTime>
+    fun showtimes(current: LocalDateTime): List<LocalTime>
 }
 
-class DefaultShowtimePolicy : ShowtimePolicy {
-    override fun showtimes(
-        date: LocalDate,
-        current: LocalDateTime,
-    ): List<LocalTime> {
+class DefaultShowtimePolicy(private val date: LocalDate) : ShowtimePolicy {
+    override fun showtimes(current: LocalDateTime): List<LocalTime> {
         if (date == current.toLocalDate()) {
             if (date.isHoliday) {
                 return holidayShowtimes(current.toLocalTime())

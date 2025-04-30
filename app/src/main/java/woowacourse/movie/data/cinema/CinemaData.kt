@@ -18,7 +18,7 @@ class LocalCinemaData(
             Cinema(
                 "선릉 극장",
                 screeningData.value,
-                { _, current: LocalDateTime ->
+                { current: LocalDateTime ->
                     listOf(LocalTime.of(13, 0), LocalTime.of(17, 0))
                         .filter { showtime: LocalTime -> showtime.isBefore(current.toLocalTime()) }
                         .sorted()
@@ -27,7 +27,7 @@ class LocalCinemaData(
             Cinema(
                 "잠실 극장",
                 screeningData.value,
-                { _, current ->
+                { current ->
                     listOf(LocalTime.of(9, 0), LocalTime.of(10, 0))
                         .filter { showtime: LocalTime -> showtime.isBefore(current.toLocalTime()) }
                         .sorted()
@@ -36,7 +36,7 @@ class LocalCinemaData(
             Cinema(
                 "강남 극장",
                 screeningData.value,
-                { _, current ->
+                { current ->
                     listOf(
                         LocalTime.of(10, 0),
                         LocalTime.of(15, 0),

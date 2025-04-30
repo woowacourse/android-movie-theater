@@ -19,14 +19,17 @@ class CinemaSelectionBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
     CinemaSelectionContract.View {
     private lateinit var cinemasView: RecyclerView
-    private val cinemaAdapter =
-        CinemaAdapter(
-            onClickItem = { presenter.onSelectCinema(arguments.screening ?: error("")) },
-        )
+    private var cinemaAdapter: CinemaAdapter? = null
     private val presenter = CinemaSelectionPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        cinemaAdapter =
+            CinemaAdapter(
+                screening = arguments.screening ?: error(""),
+                onClickItem =
+                    { presenter.onSelectCinema(arguments.screening ?: error("")) },
+            )
     }
 
     override fun onCreateView(
@@ -51,7 +54,7 @@ class CinemaSelectionBottomSheetDialogFragment :
     }
 
     override fun setCinemas(cinemas: List<Cinema>) {
-        cinemaAdapter.submitList(cinemas)
+        cinemaAdapter?.submitList(cinemas) ?: error("")
     }
 
     override fun navigateToReservationScreen(screening: Screening) {
