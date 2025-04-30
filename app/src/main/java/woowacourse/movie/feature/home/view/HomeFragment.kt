@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.Screenings
 import woowacourse.movie.feature.TheatersDialogFragment
@@ -20,6 +21,7 @@ import woowacourse.movie.feature.model.MovieUiModel
 class HomeFragment :
     Fragment(),
     HomeContract.View {
+    private lateinit var binding: FragmentHomeBinding
     private val presenter: HomeContract.Presenter by lazy { HomePresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +32,10 @@ class HomeFragment :
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? = inflater.inflate(R.layout.fragment_home, container, false)
+    ): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(
         view: View,
@@ -43,7 +48,7 @@ class HomeFragment :
     override fun showMovies(movies: List<MovieUiModel>) {
         val moviesAdapter = MoviesAdapter { movie -> presenter.selectMovieForBooking(movie) }
         moviesAdapter.submitList(Item.from(movies))
-        view?.findViewById<RecyclerView>(R.id.rv_home_movies)?.adapter = moviesAdapter
+        binding.moviesAdapter = moviesAdapter
     }
 
     override fun showTheaters(screenings: Screenings) {
