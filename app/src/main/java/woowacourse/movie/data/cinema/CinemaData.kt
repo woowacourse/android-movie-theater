@@ -3,7 +3,8 @@ package woowacourse.movie.data.cinema
 import woowacourse.movie.data.reservation.LocalScreeningData
 import woowacourse.movie.data.reservation.ScreeningData
 import woowacourse.movie.domain.cinema.Cinema
-import woowacourse.movie.domain.reservation.DefaultShowtimePolicy
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 interface CinemaData {
     val value: List<Cinema>
@@ -17,17 +18,34 @@ class LocalCinemaData(
             Cinema(
                 "선릉 극장",
                 screeningData.value,
-                DefaultShowtimePolicy(),
+                { _, current: LocalDateTime ->
+                    listOf(LocalTime.of(13, 0), LocalTime.of(17, 0))
+                        .filter { showtime: LocalTime -> showtime.isBefore(current.toLocalTime()) }
+                        .sorted()
+                },
             ),
             Cinema(
                 "잠실 극장",
                 screeningData.value,
-                DefaultShowtimePolicy(),
+                { _, current ->
+                    listOf(LocalTime.of(9, 0), LocalTime.of(10, 0))
+                        .filter { showtime: LocalTime -> showtime.isBefore(current.toLocalTime()) }
+                        .sorted()
+                },
             ),
             Cinema(
                 "강남 극장",
                 screeningData.value,
-                DefaultShowtimePolicy(),
+                { _, current ->
+                    listOf(
+                        LocalTime.of(10, 0),
+                        LocalTime.of(15, 0),
+                        LocalTime.of(14, 0),
+                        LocalTime.of(16, 0),
+                    )
+                        .filter { showtime: LocalTime -> !showtime.isAfter(current.toLocalTime()) }
+                        .sorted()
+                },
             ),
         )
 }
