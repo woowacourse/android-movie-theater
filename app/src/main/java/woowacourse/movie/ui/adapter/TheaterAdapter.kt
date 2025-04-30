@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -11,7 +10,7 @@ import woowacourse.movie.domain.model.ScreeningInfo
 
 class TheaterAdapter(
     private val items: List<ScreeningInfo>,
-    private val onClick: (ScreeningInfo) -> Unit,
+    private val onClickTheater: (ScreeningInfo) -> Unit,
 ) : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -24,7 +23,7 @@ class TheaterAdapter(
                 parent,
                 false,
             )
-        return TheaterViewHolder(parent.context, binding, onClick)
+        return TheaterViewHolder(binding, onClickTheater)
     }
 
     override fun getItemCount(): Int = items.size
@@ -37,17 +36,12 @@ class TheaterAdapter(
     }
 
     class TheaterViewHolder(
-        private val context: Context,
         private val binding: ItemTheaterBinding,
-        private val onClick: (ScreeningInfo) -> Unit,
+        private val onClickTheater: (ScreeningInfo) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ScreeningInfo) {
-            binding.textviewTheaterName.text = item.theater
-            binding.textviewScreeningTime.text =
-                context.getString(R.string.theater_text, item.times.size)
-            binding.constraintlayoutTheater.setOnClickListener {
-                onClick(item)
-            }
+            binding.screeningInfo = item
+            binding.handler = ClickListener<ScreeningInfo> { onClickTheater(it) }
         }
     }
 }

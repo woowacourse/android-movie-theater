@@ -4,16 +4,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="screeningInfo"
+            type="woowacourse.movie.domain.model.ScreeningInfo" />
+
+        <variable
+            name="handler"
+            type="woowacourse.movie.ui.adapter.ClickListener" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintlayout_theater"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{() -> handler.onClick(screeningInfo)}"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/textview_theater_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{screeningInfo.theater}"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -21,9 +33,9 @@
             tools:text="선릉 극장" />
 
         <TextView
-            android:id="@+id/textview_screening_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{String.format(@string/theater_text, screeningInfo.times.size)}"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_theater_name"
