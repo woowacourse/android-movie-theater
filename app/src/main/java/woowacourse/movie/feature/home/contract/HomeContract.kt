@@ -1,10 +1,10 @@
-package woowacourse.movie.feature.movies.contract
+package woowacourse.movie.feature.home.contract
 
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.Screenings
 import woowacourse.movie.feature.model.MovieUiModel
 
-interface MoviesContract {
+interface HomeContract {
     interface View {
         fun showMovies(movies: List<MovieUiModel>)
 

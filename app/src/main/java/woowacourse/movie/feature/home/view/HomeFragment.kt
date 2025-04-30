@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.movies.view
+package woowacourse.movie.feature.home.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,16 +11,16 @@ import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.Screenings
 import woowacourse.movie.feature.TheatersDialogFragment
 import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity
+import woowacourse.movie.feature.home.contract.HomeContract
+import woowacourse.movie.feature.home.presenter.HomePresenter
+import woowacourse.movie.feature.home.view.adapter.Item
+import woowacourse.movie.feature.home.view.adapter.MoviesAdapter
 import woowacourse.movie.feature.model.MovieUiModel
-import woowacourse.movie.feature.movies.contract.MoviesContract
-import woowacourse.movie.feature.movies.presenter.MoviesPresenter
-import woowacourse.movie.feature.movies.view.adapter.Item
-import woowacourse.movie.feature.movies.view.adapter.MoviesAdapter
 
 class HomeFragment :
     Fragment(),
-    MoviesContract.View {
-    private val presenter: MoviesContract.Presenter by lazy { MoviesPresenter(this) }
+    HomeContract.View {
+    private val presenter: HomeContract.Presenter by lazy { HomePresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.movies.view.adapter
+package woowacourse.movie.feature.home.view.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 

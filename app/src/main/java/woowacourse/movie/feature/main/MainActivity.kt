@@ -11,7 +11,7 @@ import com.google.android.material.navigation.NavigationBarView
 import woowacourse.movie.R
 import woowacourse.movie.feature.BookingHistoryFragment
 import woowacourse.movie.feature.SettingFragment
-import woowacourse.movie.feature.movies.view.HomeFragment
+import woowacourse.movie.feature.home.view.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
