@@ -2,6 +2,7 @@ package woowacourse.movie.model.theater
 
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.Movie.Companion.posterImages
+import woowacourse.movie.model.movie.MovieTime
 import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalTime
@@ -52,7 +53,8 @@ data class MovieScreeningInfoByTheaters(
                 val movieId = ((index - 1) % 50) + 1L
                 val poster = posterImages[(index - 1) % posterImages.size]
                 val theaterName = theaters[index % theaters.size]
-                val screeningTimes = screeningTimesSamples[index % screeningTimesSamples.size]
+                val screeningTimes =
+                    screeningTimesSamples[index % screeningTimesSamples.size].map { MovieTime(it) }
 
                 MovieScreeningInfoByTheater(
                     theater = Theater(name = theaterName),
