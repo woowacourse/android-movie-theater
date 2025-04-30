@@ -9,7 +9,6 @@ class MovieViewHolder(
     onClickBooking: (Int) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     private var mId: Int = NO_ID
-    private val context = itemView.context
 
     init {
         binding.btnBooking.setOnClickListener { onClickBooking(mId) }

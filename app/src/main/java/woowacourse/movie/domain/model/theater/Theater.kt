@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 class Theater(
     val name: String,
-    val movieSchedules: List<Screening>,
+    private val movieSchedules: List<Screening>,
 ) {
     fun screeningTimeCount(movieId: Int) = movieSchedules.count { it.movieId == movieId }
 
