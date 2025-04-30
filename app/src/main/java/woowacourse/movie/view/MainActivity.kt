@@ -38,13 +38,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initBottomNavigation() {
+        binding.bottomNavMenu.selectedItemId = R.id.menu_fragment_home
+
         binding.bottomNavMenu.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_fragment_home -> {
                     supportFragmentManager.commit {
                         setReorderingAllowed(true)
                         replace(R.id.main_fragment_container, HomeFragment())
-                        addToBackStack(null)
                     }
                     return@setOnItemSelectedListener true
                 }
@@ -53,7 +54,6 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.commit {
                         setReorderingAllowed(true)
                         replace(R.id.main_fragment_container, HistoryFragment())
-                        addToBackStack(null)
                     }
                     return@setOnItemSelectedListener true
                 }
@@ -62,7 +62,6 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.commit {
                         setReorderingAllowed(true)
                         replace(R.id.main_fragment_container, SettingFragment())
-                        addToBackStack(null)
                     }
                     return@setOnItemSelectedListener true
                 }
