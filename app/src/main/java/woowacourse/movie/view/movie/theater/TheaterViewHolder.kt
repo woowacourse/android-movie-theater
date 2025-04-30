@@ -19,7 +19,12 @@ class TheaterViewHolder(
         theater: Theater,
         movie: Movie,
     ) {
-        theaterNameTextView.text = theater.name
-        timeslotTextView.text = "${theater.getTotalTimeSlotCount(movie)}개의 상영 시간"
+        theaterNameTextView.text =
+            itemView.context.getString(R.string.bottom_sheet_dialog_theater_name, theater.name)
+        timeslotTextView.text =
+            itemView.context.getString(
+                R.string.bottom_sheet_dialog_time_slot,
+                theater.getTotalTimeSlotCount(movie),
+            )
     }
 }
