@@ -2,6 +2,7 @@ package woowacourse.movie.domain.model
 
 data class BookingInfo(
     val movie: Movie,
+    val theater: Theater,
     private var date: MovieDate = movie.startDate,
     private var time: MovieTime = MovieTime(),
     private val seats: MovieSeats = MovieSeats(),

@@ -36,6 +36,7 @@ fun MovieUiModel.toDomain(): Movie =
 fun BookingInfo.toUi(): BookingInfoUiModel =
     BookingInfoUiModel(
         movie = movie.toUi(),
+        theater = theater,
         date = selectedDate.toUi(),
         movieTime = selectedTime.toUi(),
         ticketCount = currentTicketCount,
@@ -46,6 +47,7 @@ fun BookingInfo.toUi(): BookingInfoUiModel =
 fun BookingInfoUiModel.toDomain(): BookingInfo =
     BookingInfo(
         movie = movie.toDomain(),
+        theater = theater,
         date = date.toDomain(),
         time = movieTime.toDomain(),
         seats = MovieSeats(selectedSeats.map { it.toDomain() }.toSet()),

@@ -42,12 +42,15 @@ class BookingCompleteActivity :
                 bookingInfo.date.toString(),
                 bookingInfo.movieTime.toString(),
             )
-        findViewById<TextView>(R.id.tv_booking_complete_ticket_count).text =
-            getString(R.string.booking_complete_ticket_count, bookingInfo.ticketCount)
+        findViewById<TextView>(R.id.tv_booking_complete_count_seat_theater).text =
+            getString(
+                R.string.booking_complete_ticket_count_seat_theater,
+                bookingInfo.ticketCount,
+                bookingInfo.selectedSeats.joinToString { it.toLabel() },
+                bookingInfo.theater.name,
+            )
         findViewById<TextView>(R.id.tv_booking_complete_ticket_total_price).text =
             getString(R.string.booking_complete_ticket_total_price, ticketTotalPrice)
-        findViewById<TextView>(R.id.tv_booking_complete_ticket_seats).text =
-            bookingInfo.selectedSeats.joinToString(", ") { it.toLabel() }
     }
 
     override fun navigateToBack() {

@@ -19,7 +19,7 @@ class BookingDetailPresenter(
     private lateinit var bookingInfo: BookingInfo
 
     override fun prepareBookingInfo(screening: Screening) {
-        bookingInfo = BookingInfo(screening.movie)
+        bookingInfo = BookingInfo(screening.movie, screening.theater)
         bookingInfo.updateMovieTime(screening.times.first())
 
         val movieDates =
