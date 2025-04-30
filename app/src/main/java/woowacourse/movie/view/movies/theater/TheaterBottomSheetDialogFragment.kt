@@ -22,12 +22,13 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.bottom_sheet_fragment_theater,
-            container,
-            false,
-        )
+        binding =
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.bottom_sheet_fragment_theater,
+                container,
+                false,
+            )
 
         return binding.root
     }
@@ -40,10 +41,11 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
         arguments?.getSerializableExtraData<MovieScreeningInfoByTheaters>("theaters")
 
-        theaterAdapter = TheaterAdapter(
-            movieScreeningInfoByTheaters = MovieScreeningInfoByTheater.values,
-            ::navigateToReservation
-        )
+        theaterAdapter =
+            TheaterAdapter(
+                movieScreeningInfoByTheaters = MovieScreeningInfoByTheater.values,
+                ::navigateToReservation,
+            )
         binding.theaters.adapter = theaterAdapter
     }
 

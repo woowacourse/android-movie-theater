@@ -38,4 +38,3 @@ inline fun <reified T : Serializable> Bundle.getSerializableExtraData(key: Strin
             )
         }
     }
-

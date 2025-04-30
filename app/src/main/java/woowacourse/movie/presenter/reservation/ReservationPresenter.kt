@@ -16,7 +16,8 @@ class ReservationPresenter(
     private var ticketCount = TicketCount()
     private val movieDate by lazy {
         MovieDate(
-            movieScreeningInfoByTheater.movie.startDate, movieScreeningInfoByTheater.movie.endDate
+            movieScreeningInfoByTheater.movie.startDate,
+            movieScreeningInfoByTheater.movie.endDate,
         )
     }
     private val movieTime by lazy { MovieTime() }
@@ -52,13 +53,14 @@ class ReservationPresenter(
     }
 
     override fun onMovieToReserveRequest() {
-        val movieToReserve = MovieToReserve(
-            id = movieScreeningInfoByTheater.movie.id,
-            title = movieScreeningInfoByTheater.movie.title,
-            movieDate = movieDate,
-            movieTime = movieTime,
-            ticketCount = ticketCount,
-        )
+        val movieToReserve =
+            MovieToReserve(
+                id = movieScreeningInfoByTheater.movie.id,
+                title = movieScreeningInfoByTheater.movie.title,
+                movieDate = movieDate,
+                movieTime = movieTime,
+                ticketCount = ticketCount,
+            )
         view.showSeatSelectionView(movieToReserve)
     }
 

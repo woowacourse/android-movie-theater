@@ -10,7 +10,10 @@ class TheaterAdapter(
     private val movieScreeningInfoByTheaters: List<MovieScreeningInfoByTheater>,
     private val onTheaterClick: (MovieScreeningInfoByTheater) -> Unit,
 ) : RecyclerView.Adapter<TheaterViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheaterViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): TheaterViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val theaterBinding = ItemTheaterBinding.inflate(inflater, parent, false)
         return TheaterViewHolder(theaterBinding, onTheaterClick)
@@ -18,7 +21,10 @@ class TheaterAdapter(
 
     override fun getItemCount(): Int = movieScreeningInfoByTheaters.size
 
-    override fun onBindViewHolder(holder: TheaterViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: TheaterViewHolder,
+        position: Int,
+    ) {
         holder.bind(movieScreeningInfoByTheaters[position])
     }
 }

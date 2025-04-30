@@ -8,7 +8,6 @@ class TheaterViewHolder(
     private val binding: ItemTheaterBinding,
     private val onTheaterClick: (MovieScreeningInfoByTheater) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
-
     fun bind(movieScreeningInfoByTheater: MovieScreeningInfoByTheater) {
         binding.movieScreeningInfoByTheater = movieScreeningInfoByTheater
 

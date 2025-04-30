@@ -8,6 +8,7 @@ class MoviesPresenter(
     private val view: MoviesContracts.View,
 ) : MoviesContracts.Presenter {
     private lateinit var movieScreeningInfoByTheaters: List<MovieScreeningInfoByTheater>
+
     override fun initView() {
         view.showMovies(Movie.values)
     }
