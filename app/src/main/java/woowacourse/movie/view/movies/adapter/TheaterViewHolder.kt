@@ -26,6 +26,6 @@ class TheaterViewHolder(
     fun bind(theater: Theater) {
         this.theater = theater
         theaterNameTextView.text = theater.name
-        theaterTimeTextView.text = theater.schedule.scheduleTime.time.size.toString()
+        theaterTimeTextView.text = theater.schedule.scheduleTime.times.size.toString()
     }
 }
