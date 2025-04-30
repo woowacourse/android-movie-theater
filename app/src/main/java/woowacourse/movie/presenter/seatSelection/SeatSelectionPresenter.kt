@@ -60,6 +60,7 @@ class SeatSelectionPresenter(
                 movieDate = movieToReserve.movieDate.value,
                 movieTime = movieToReserve.movieTime,
                 seats = seats.toList(),
+                theater = movieToReserve.theater,
             )
         view.showReservationCompleteView(movieTicket)
     }

@@ -7,6 +7,7 @@ import woowacourse.movie.model.movie.MovieDate
 import woowacourse.movie.model.movie.MovieTime
 import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.seat.Seat
+import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.model.ticket.TicketCount
 import java.time.LocalDate
@@ -31,6 +32,7 @@ val MOVIE_TO_RESERVE: MovieToReserve =
         ),
         MovieTime(),
         TicketCount(2),
+        Theater("JAY 극장"),
     )
 
 val MOVIE_TICKET_B1_C3: MovieTicket =
@@ -39,6 +41,7 @@ val MOVIE_TICKET_B1_C3: MovieTicket =
         LocalDate.of(2025, 4, 1),
         MovieTime(),
         listOf(Seat(1, 0), Seat(2, 2)),
+        Theater("JAY 극장"),
     )
 
 val fakeContext: Context = ApplicationProvider.getApplicationContext()

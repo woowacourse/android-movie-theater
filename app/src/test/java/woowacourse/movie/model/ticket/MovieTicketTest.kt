@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import woowacourse.movie.model.movie.MovieTime
 import woowacourse.movie.model.seat.Seat
+import woowacourse.movie.model.theater.Theater
 import java.time.LocalDate
 
 class MovieTicketTest {
@@ -16,6 +17,7 @@ class MovieTicketTest {
                 movieDate = LocalDate.of(2025, 4, 22),
                 movieTime = MovieTime(),
                 seats = listOf(Seat(0, 0), Seat(1, 1), Seat(2, 2), Seat(4, 0)),
+                theater = Theater("JAY 극장"),
             )
 
         // when
