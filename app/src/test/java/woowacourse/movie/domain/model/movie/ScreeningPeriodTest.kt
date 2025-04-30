@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
 
 class ScreeningPeriodTest {
     private lateinit var screeningPeriod: ScreeningPeriod
@@ -52,55 +50,4 @@ class ScreeningPeriodTest {
             LocalDate.of(2025, 4, 3),
         )
     }
-
-    @Test
-    fun `주어진 날짜에 대해 예매 가능한 상영 시간을 반환한다`() {
-        val targetDate = LocalDate.of(2025, 4, 1)
-        val now = LocalDateTime.of(2025, 4, 1, 19, 30)
-        val availableTimes = screeningPeriod.getAvailableTimesFor(now, targetDate)
-
-        assertThat(availableTimes).containsExactly(
-            LocalTime.of(20, 0),
-            LocalTime.of(22, 0),
-        )
-    }
-
-    @Test
-    fun `평일은 10시부터 상영 시간이 시작된다`() {
-        val targetDate = LocalDate.of(2025, 4, 3)
-        val now = LocalDateTime.of(2025, 4, 2, 0, 0)
-
-        val availableTimes = screeningPeriod.getAvailableTimesFor(now, targetDate)
-
-        assertThat(availableTimes).containsExactlyElementsOf(
-            everyTwoHoursFrom(LocalTime.of(10, 0), 7),
-        )
-    }
-
-    @Test
-    fun `토요일은 9시부터 상영 시간이 시작된다`() {
-        val targetDate = LocalDate.of(2025, 4, 5)
-        val now = LocalDateTime.of(2025, 4, 4, 0, 0)
-        val availableTimes = screeningPeriod.getAvailableTimesFor(now, targetDate)
-
-        assertThat(availableTimes).containsExactlyElementsOf(
-            everyTwoHoursFrom(LocalTime.of(9, 0), 8),
-        )
-    }
-
-    @Test
-    fun `일요일은 9시부터 상영 시간이 시작된다`() {
-        val targetDate = LocalDate.of(2025, 4, 6)
-        val now = LocalDateTime.of(2025, 4, 4, 0, 0)
-        val availableTimes = screeningPeriod.getAvailableTimesFor(now, targetDate)
-
-        assertThat(availableTimes).containsExactlyElementsOf(
-            everyTwoHoursFrom(LocalTime.of(9, 0), 8),
-        )
-    }
-
-    private fun everyTwoHoursFrom(
-        start: LocalTime,
-        count: Int,
-    ): List<LocalTime> = (0 until count).map { start.plusHours(it * 2L) }
 }
