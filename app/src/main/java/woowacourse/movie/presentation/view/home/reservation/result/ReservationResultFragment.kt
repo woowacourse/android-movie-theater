@@ -2,7 +2,6 @@ package woowacourse.movie.presentation.view.home.reservation.result
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -31,7 +30,6 @@ class ReservationResultFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setBackPressedDispatcher()
 
         val ticketBundle =
             arguments.getParcelableCompat<TicketBundleUiModel>(BUNDLE_KEY_TICKET_BUNDLE)
@@ -47,17 +45,6 @@ class ReservationResultFragment :
 
     override fun onHomePressed() {
         navigateToMoviesScreen()
-    }
-
-    private fun setBackPressedDispatcher() {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    navigateToMoviesScreen()
-                }
-            },
-        )
     }
 
     private fun navigateToMoviesScreen() {

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
@@ -18,31 +19,52 @@ import woowacourse.movie.presentation.view.home.reservation.detail.ReservationDe
 class ReservationActivity : BaseActivity<ActivityReservationBinding>(R.layout.activity_reservation) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setupActionBar()
+        setupBackPressedHandler()
 
-        if (savedInstanceState == null) navigateToReservationDetailScreen()
+        if (savedInstanceState == null) {
+            navigateToInitialScreen()
+        }
+    }
+
+    private fun setupActionBar() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun setupBackPressedHandler() {
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() = handleBackPressed()
+            },
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            if (isLastScreen()) {
-                finish()
-                return true
-            }
-
-            supportFragmentManager.popBackStack()
+            handleBackPressed()
+            return true
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun isLastScreen(): Boolean = supportFragmentManager.fragments.reversed().firstOrNull() is HomeButtonHandler
+    private fun handleBackPressed() {
+        if (shouldFinishActivity()) {
+            finish()
+        } else {
+            supportFragmentManager.popBackStack()
+        }
+    }
 
-    private fun navigateToReservationDetailScreen() {
+    private fun shouldFinishActivity(): Boolean {
+        val fragments = supportFragmentManager.fragments.reversed()
+        return fragments.firstOrNull() is HomeButtonHandler || supportFragmentManager.backStackEntryCount <= 1
+    }
+
+    private fun navigateToInitialScreen() {
         val movie = intent.getParcelableCompat<MovieUiModel>(BUNDLE_KEY_MOVIE)
         val theater = intent.getParcelableCompat<TheaterUiModel>(BUNDLE_KEY_THEATER)
-
-        val fragment = ReservationDetailFragment.newInstance(movie, theater)
-        navigateToScreen(fragment)
+        navigateToScreen(ReservationDetailFragment.newInstance(movie, theater))
     }
 
     private fun navigateToScreen(fragment: Fragment) {
