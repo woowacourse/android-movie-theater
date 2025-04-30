@@ -1,12 +1,12 @@
 package woowacourse.movie.domain
 
 import java.io.Serializable
-import java.time.LocalDateTime
+import java.time.LocalTime
 
 data class ScheduleTime(
-    val times: List<LocalDateTime>,
+    val times: List<LocalTime>,
 ) : Serializable {
-    fun afterCurrentTimeSchedule(currentTime: LocalDateTime): List<LocalDateTime> {
+    fun afterCurrentTimeSchedule(currentTime: LocalTime): List<LocalTime> {
         return times.filter { it > currentTime }
     }
 }
