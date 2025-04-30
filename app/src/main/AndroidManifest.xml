@@ -14,16 +14,16 @@
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.seats.SeatsActivityDataBinding"
+            android:name=".presentation.seats.SeatsActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.booking.BookingActivityDataBinding"
+            android:name=".presentation.booking.BookingActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.bookingsummary.BookingSummaryActivityDataBinding"
+            android:name=".presentation.bookingsummary.BookingSummaryActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivityDataBinding"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

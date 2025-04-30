@@ -13,7 +13,7 @@ import woowacourse.movie.ui.util.TicketUiFormatter.formatHeadCount
 import woowacourse.movie.ui.util.intentSerializable
 import woowacourse.movie.ui.util.toUi
 
-class BookingSummaryActivityDataBinding :
+class BookingSummaryActivity :
     DataBindingBaseActivity<ActivityBookingsummaryBinding>(),
     BookingSummaryContract.View {
     override val layoutRes: Int

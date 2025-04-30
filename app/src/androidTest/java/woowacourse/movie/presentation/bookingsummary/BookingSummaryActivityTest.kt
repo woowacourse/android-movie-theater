@@ -13,7 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.movie.MovieTicket
-import woowacourse.movie.presentation.booking.BookingActivityDataBinding
+import woowacourse.movie.presentation.booking.BookingActivity
 import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
@@ -33,12 +33,12 @@ class BookingSummaryActivityTest {
         val intent =
             Intent(
                 ApplicationProvider.getApplicationContext(),
-                BookingSummaryActivityDataBinding::class.java,
+                BookingSummaryActivity::class.java,
             ).apply {
                 putExtra("Ticket", ticket)
             }
 
-        ActivityScenario.launch<BookingActivityDataBinding>(intent)
+        ActivityScenario.launch<BookingActivity>(intent)
     }
 
     @Test

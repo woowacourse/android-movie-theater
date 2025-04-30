@@ -20,12 +20,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.movie.Movie
-import woowacourse.movie.presentation.seats.SeatsActivityDataBinding
+import woowacourse.movie.presentation.seats.SeatsActivity
 import java.time.LocalDate
 
 @RunWith(AndroidJUnit4::class)
 class BookingActivityTest {
-    private lateinit var activityScenario: ActivityScenario<BookingActivityDataBinding>
+    private lateinit var activityScenario: ActivityScenario<BookingActivity>
 
     @Before
     fun setUp() {
@@ -42,7 +42,7 @@ class BookingActivityTest {
         val intent =
             Intent(
                 ApplicationProvider.getApplicationContext(),
-                BookingActivityDataBinding::class.java,
+                BookingActivity::class.java,
             ).apply {
                 putExtra("Movie", movie)
             }
@@ -131,7 +131,7 @@ class BookingActivityTest {
         onView(withId(R.id.button_select))
             .perform(click())
 
-        intended(hasComponent(SeatsActivityDataBinding::class.java.name))
+        intended(hasComponent(SeatsActivity::class.java.name))
 
         intended(
             allOf(

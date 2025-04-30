@@ -23,7 +23,7 @@ import java.time.LocalDateTime
 @RunWith(AndroidJUnit4::class)
 @Suppress("ktlint:standard:function-naming")
 class SeatsActivityTest {
-    private lateinit var activityScenario: ActivityScenario<SeatsActivityDataBinding>
+    private lateinit var activityScenario: ActivityScenario<SeatsActivity>
 
     @Before
     fun setUp() {
@@ -38,7 +38,7 @@ class SeatsActivityTest {
         val intent =
             Intent(
                 ApplicationProvider.getApplicationContext(),
-                SeatsActivityDataBinding::class.java,
+                SeatsActivity::class.java,
             ).apply {
                 putExtra("Ticket", ticket)
             }

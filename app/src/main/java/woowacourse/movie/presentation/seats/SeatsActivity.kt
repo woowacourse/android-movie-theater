@@ -11,14 +11,14 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
-import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivityDataBinding
+import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
 import woowacourse.movie.ui.DataBindingBaseActivity
 import woowacourse.movie.ui.constant.IntentKeys
 import woowacourse.movie.ui.util.TicketUiFormatter
 import woowacourse.movie.ui.util.intentSerializable
 import java.io.Serializable
 
-class SeatsActivityDataBinding : DataBindingBaseActivity<ActivitySeatsBinding>(), SeatsContract.View {
+class SeatsActivity : DataBindingBaseActivity<ActivitySeatsBinding>(), SeatsContract.View {
     override val layoutRes: Int
         get() = R.layout.activity_seats
 
@@ -101,7 +101,7 @@ class SeatsActivityDataBinding : DataBindingBaseActivity<ActivitySeatsBinding>()
 
     override fun navigateToSummary(ticket: MovieTicket) {
         val intent =
-            Intent(this, BookingSummaryActivityDataBinding::class.java).apply {
+            Intent(this, BookingSummaryActivity::class.java).apply {
                 putExtra(IntentKeys.TICKET, ticket)
             }
         startActivity(intent)
