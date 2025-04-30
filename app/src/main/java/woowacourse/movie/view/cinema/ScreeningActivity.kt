@@ -20,8 +20,6 @@ class ScreeningActivity :
     AppCompatActivity(),
     ScreeningContract.View {
     private val presenter: ScreeningContract.Presenter = ScreeningPresenter(this)
-    private val cinemaSelectionBottomSheetDialogFragment =
-        CinemaSelectionBottomSheetDialogFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +30,6 @@ class ScreeningActivity :
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        cinemaSelectionBottomSheetDialogFragment.show(
-            supportFragmentManager,
-            cinemaSelectionBottomSheetDialogFragment.tag,
-        )
 
         presenter.presentScreeningContents()
     }
@@ -45,6 +39,8 @@ class ScreeningActivity :
     }
 
     override fun showCinemas(screening: Screening) {
+        val dialog = CinemaSelectionBottomSheetDialogFragment.newInstance(screening)
+        dialog.show(supportFragmentManager, dialog.tag)
     }
 
     private fun initListView(screeningContents: List<ScreeningContent>) {
