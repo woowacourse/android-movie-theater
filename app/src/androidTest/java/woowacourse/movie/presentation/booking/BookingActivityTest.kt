@@ -19,9 +19,11 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.domain.model.ScreeningInfo
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.presentation.seats.SeatsActivity
 import java.time.LocalDate
+import java.time.LocalTime
 
 @RunWith(AndroidJUnit4::class)
 class BookingActivityTest {
@@ -39,12 +41,18 @@ class BookingActivityTest {
                 100,
             )
 
+        val screeningInfo = ScreeningInfo(
+            "선릉 극장",
+            movie,
+            listOf(15, 17, 19).map { LocalTime.of(it, 0) }
+        )
+
         val intent =
             Intent(
                 ApplicationProvider.getApplicationContext(),
                 BookingActivity::class.java,
             ).apply {
-                putExtra("Movie", movie)
+                putExtra("ScreeningInfo", screeningInfo)
             }
 
         activityScenario = ActivityScenario.launch(intent)
