@@ -15,6 +15,8 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMoviesBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.view.Extras
+import woowacourse.movie.view.ReservationListFragment
+import woowacourse.movie.view.SettingFragment
 import woowacourse.movie.view.movie.adapter.MovieAdapter
 import woowacourse.movie.view.reservation.reservation.ReservationActivity
 

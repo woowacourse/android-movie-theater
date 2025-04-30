@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movie.theater
+package woowacourse.movie.view.theater
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,7 +15,6 @@ import woowacourse.movie.model.Theater
 import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.compatParcelable
-import woowacourse.movie.view.movie.TheaterClickListener
 import woowacourse.movie.view.reservation.reservation.ReservationActivity
 
 class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {

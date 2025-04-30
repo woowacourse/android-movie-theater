@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movie
+package woowacourse.movie.view.theater
 
 import woowacourse.movie.model.TheaterUIModel
 

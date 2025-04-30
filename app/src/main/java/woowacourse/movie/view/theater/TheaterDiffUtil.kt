@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movie.theater
+package woowacourse.movie.view.theater
 
 import androidx.recyclerview.widget.DiffUtil
 import woowacourse.movie.model.Theater

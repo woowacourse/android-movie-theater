@@ -10,7 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMoviesBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.view.movie.adapter.MovieAdapter
-import woowacourse.movie.view.movie.theater.TheaterBottomSheetDialogFragment
+import woowacourse.movie.view.theater.TheaterBottomSheetDialogFragment
 
 class MoviesFragment :
     Fragment(),

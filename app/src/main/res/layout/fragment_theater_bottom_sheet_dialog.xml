@@ -7,7 +7,7 @@
 
         <variable
             name="fragmentBottomSheet"
-            type="woowacourse.movie.view.movie.theater.TheaterBottomSheetDialogFragment" />
+            type="woowacourse.movie.view.theater.TheaterBottomSheetDialogFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
