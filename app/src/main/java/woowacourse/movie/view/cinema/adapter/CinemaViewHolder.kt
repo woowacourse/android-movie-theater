@@ -7,8 +7,10 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.Screening
 
-class CinemaViewHolder(private val view: View, private val onClick: () -> Unit) :
-    RecyclerView.ViewHolder(view) {
+class CinemaViewHolder(
+    private val view: View,
+    private val onClick: () -> Unit,
+) : RecyclerView.ViewHolder(view) {
     private val nameView = view.findViewById<TextView>(R.id.text_view_item_cinema_name)
     private val showtimeCountView =
         view.findViewById<TextView>(R.id.text_view_item_cinema_showtime_count)
@@ -19,7 +21,7 @@ class CinemaViewHolder(private val view: View, private val onClick: () -> Unit) 
     ) {
         view.setOnClickListener { onClick() }
         nameView.text = cinema.name
-        val showtimesCount = cinema.showtimes(screening, null).size
+        val showtimesCount = cinema.showtimeCount(screening)
         showtimeCountView.text =
             view.context.getString(R.string.item_cinema_showtime_count, showtimesCount)
     }

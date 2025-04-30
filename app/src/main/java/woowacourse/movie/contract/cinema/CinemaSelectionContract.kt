@@ -7,7 +7,7 @@ interface CinemaSelectionContract {
     interface Presenter {
         fun presentCinemas()
 
-        fun onSelectCinema(screening: Screening)
+        fun onSelectCinema()
     }
 
     interface View {

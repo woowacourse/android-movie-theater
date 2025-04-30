@@ -18,32 +18,31 @@ class LocalCinemaData(
             Cinema(
                 "선릉 극장",
                 screeningData.value,
-                { current: LocalDateTime ->
+                showtimePolicy = { current: LocalDateTime ->
                     listOf(LocalTime.of(13, 0), LocalTime.of(17, 0))
-                        .filter { showtime: LocalTime -> showtime.isBefore(current.toLocalTime()) }
+                        .filter { showtime: LocalTime -> showtime.isAfter(current.toLocalTime()) }
                         .sorted()
                 },
             ),
             Cinema(
                 "잠실 극장",
                 screeningData.value,
-                { current ->
+                showtimePolicy = { current ->
                     listOf(LocalTime.of(9, 0), LocalTime.of(10, 0))
-                        .filter { showtime: LocalTime -> showtime.isBefore(current.toLocalTime()) }
+                        .filter { showtime: LocalTime -> showtime.isAfter(current.toLocalTime()) }
                         .sorted()
                 },
             ),
             Cinema(
                 "강남 극장",
                 screeningData.value,
-                { current ->
+                showtimePolicy = { current ->
                     listOf(
                         LocalTime.of(10, 0),
                         LocalTime.of(15, 0),
                         LocalTime.of(14, 0),
                         LocalTime.of(16, 0),
-                    )
-                        .filter { showtime: LocalTime -> !showtime.isAfter(current.toLocalTime()) }
+                    ).filter { showtime: LocalTime -> !showtime.isBefore(current.toLocalTime()) }
                         .sorted()
                 },
             ),

@@ -12,9 +12,11 @@ data class Cinema(
 ) {
     val screenings = _screenings.map { it.copy() }
 
+    fun showtimeCount(screening: Screening) = showtimes(screening).size
+
     fun showtimes(
         screening: Screening,
-        date: LocalDate?,
+        date: LocalDate? = null,
     ): List<LocalTime> {
         if (date == null) return screening.showtimes(showtimePolicy)
         return screening.showtimes(date, showtimePolicy)

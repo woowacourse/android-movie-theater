@@ -14,21 +14,25 @@ import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.presenter.cinema.CinemaSelectionPresenter
 import woowacourse.movie.view.cinema.adapter.CinemaAdapter
 import woowacourse.movie.view.reservation.ReservationActivity
+import woowacourse.movie.view.util.ErrorMessage
 
 class CinemaSelectionBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
     CinemaSelectionContract.View {
     private lateinit var cinemasView: RecyclerView
     private var cinemaAdapter: CinemaAdapter? = null
-    private val presenter = CinemaSelectionPresenter(this)
+    private var presenter: CinemaSelectionPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val screening = arguments.screening ?: error(ErrorMessage("screening").notProvided())
+        presenter = CinemaSelectionPresenter(this, screening)
         cinemaAdapter =
             CinemaAdapter(
-                screening = arguments.screening ?: error(""),
-                onClickItem =
-                    { presenter.onSelectCinema(arguments.screening ?: error("")) },
+                screening = screening,
+                onClickItem = {
+                    presenter?.onSelectCinema() ?: error(ErrorMessage("presenter").notProvided())
+                },
             )
     }
 
@@ -50,11 +54,11 @@ class CinemaSelectionBottomSheetDialogFragment :
         super.onViewCreated(view, savedInstanceState)
         cinemasView = view.findViewById(R.id.recycler_view_cinema_selection)
         cinemasView.adapter = cinemaAdapter
-        presenter.presentCinemas()
+        presenter?.presentCinemas() ?: error(ErrorMessage("presenter").notProvided())
     }
 
     override fun setCinemas(cinemas: List<Cinema>) {
-        cinemaAdapter?.submitList(cinemas) ?: error("")
+        cinemaAdapter?.submitList(cinemas) ?: error(ErrorMessage("cinemaAdapter").notProvided())
     }
 
     override fun navigateToReservationScreen(screening: Screening) {
