@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationBarView
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.view.home.HomeFragment
+import woowacourse.movie.view.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
                 when (item.itemId) {
                     R.id.bottom_navigation_reservation_details -> {}
                     R.id.bottom_navigation_home -> selectedFragment = HomeFragment()
-                    R.id.bottom_navigation_setting -> {}
+                    R.id.bottom_navigation_setting -> selectedFragment = SettingFragment()
                 }
                 selectedFragment?.let {
                     supportFragmentManager.beginTransaction()
