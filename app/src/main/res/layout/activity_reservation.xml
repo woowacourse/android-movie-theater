@@ -38,7 +38,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,7 @@
                     android:id="@+id/btn_reservation_minus_ticket_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="32dp"
                     android:onClick="@{()->presenter.minusTicketCount()}"
                     android:text="@string/reservation_btn_minus"
                     android:textSize="28sp"

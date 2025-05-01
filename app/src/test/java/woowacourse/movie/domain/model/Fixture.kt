@@ -35,5 +35,6 @@ val dummyReservationInfo =
         20000,
         "선릉",
     )
+
 val dummyUIModel =
     TheaterUIModel("선릉", dummyMovie, 1)

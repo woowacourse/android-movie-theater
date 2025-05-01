@@ -43,7 +43,6 @@ class TheaterBottomSheetDialogFragment :
                 container,
                 false,
             )
-        binding.fragmentBottomSheet = this
         return binding.root
     }
 
