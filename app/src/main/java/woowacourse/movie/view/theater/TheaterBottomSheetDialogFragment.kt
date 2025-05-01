@@ -25,7 +25,7 @@ class TheaterBottomSheetDialogFragment :
         TheaterAdapter(
             object : TheaterClickListener {
                 override fun onTheaterClick(theaterUIModel: TheaterUIModel) {
-                    checkTimeSlotCountZero(theaterUIModel)
+                    onTheaterClicked(theaterUIModel)
                 }
             },
         )
@@ -76,7 +76,7 @@ class TheaterBottomSheetDialogFragment :
         binding.rvTheater.adapter = theaterAdapter
     }
 
-    private fun checkTimeSlotCountZero(theaterUIModel: TheaterUIModel) {
+    private fun onTheaterClicked(theaterUIModel: TheaterUIModel) {
         if (theaterUIModel.timeSlotCount == 0) {
             Toast
                 .makeText(
