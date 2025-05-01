@@ -102,10 +102,11 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/headCount_seats_layout"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="80dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/screening_layout">
 
                     <TextView

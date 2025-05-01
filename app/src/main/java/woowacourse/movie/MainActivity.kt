@@ -23,12 +23,11 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             binding.bottomNavigation.selectedItemId = R.id.menu_home
             supportFragmentManager.commit {
-                setReorderingAllowed(true)
                 add(R.id.fragment_view, MovieFragment())
             }
         }
 
-        switchFragment()
+        initBottomNav()
     }
 
     private fun setUpUi() {
@@ -39,34 +38,32 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_view, fragment)
-        fragmentTransaction.commit()
-    }
+    private fun initBottomNav() {
+        val homeFragment = MovieFragment()
+        val settingFragment = SettingFragment()
+        val reservationListFragment = ReservationListFragment()
 
-    private fun switchFragment() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_home -> {
-                    replaceFragment(MovieFragment())
-                    true
+                    replaceFragment(homeFragment)
                 }
 
                 R.id.menu_setting -> {
-                    replaceFragment(SettingFragment())
-                    true
+                    replaceFragment(settingFragment)
                 }
 
                 R.id.menu_reserve_list -> {
-                    replaceFragment(ReservationListFragment())
-                    true
-                }
-
-                else -> {
-                    false
+                    replaceFragment(reservationListFragment)
                 }
             }
+            true
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.commit {
+            replace(R.id.fragment_view, fragment)
         }
     }
 }
