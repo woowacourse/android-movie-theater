@@ -32,9 +32,6 @@
         <activity
             android:name=".view.complete.BookingCompleteActivity"
             android:exported="false" />
-        <activity
-            android:name=".view.movies.MovieListActivity"
-            android:exported="false" />
     </application>
 
 </manifest>
