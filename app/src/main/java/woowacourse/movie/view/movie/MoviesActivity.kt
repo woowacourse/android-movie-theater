@@ -8,21 +8,18 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMoviesBinding
 import woowacourse.movie.view.ReservationListFragment
 import woowacourse.movie.view.SettingFragment
 
 class MoviesActivity : AppCompatActivity() {
-    private val bnView: BottomNavigationView by lazy { findViewById(R.id.bottom_navigation_view) }
+    private lateinit var binding: ActivityMoviesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val binding: ActivityMoviesBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_movies)
-        binding.main = this
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movies)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.cl_main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -36,8 +33,8 @@ class MoviesActivity : AppCompatActivity() {
             }
         }
 
-        bnView.selectedItemId = R.id.fragment_movies
-        bnView.setOnItemSelectedListener {
+        binding.bottomNavigationView.selectedItemId = R.id.fragment_movies
+        binding.bottomNavigationView.setOnItemSelectedListener {
             val fragment =
                 when (it.itemId) {
                     R.id.fragment_movies -> MoviesFragment()
