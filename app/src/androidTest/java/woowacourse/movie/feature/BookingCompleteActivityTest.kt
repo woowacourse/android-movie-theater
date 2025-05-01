@@ -36,13 +36,8 @@ class BookingCompleteActivityTest {
                                 startDate = MovieDate(2025, 4, 1),
                                 endDate = MovieDate(2025, 4, 25),
                                 runningTime = 152,
-                                availableTheaters =
-                                    listOf(
-                                        TheaterName("선릉", listOf(MovieTime(9, 0), MovieTime(12, 0), MovieTime(15, 0))),
-                                        TheaterName("잠실", listOf(MovieTime(10, 0), MovieTime(13, 0))),
-                                        TheaterName("강남", listOf(MovieTime(11, 0), MovieTime(14, 0), MovieTime(17, 0), MovieTime(20, 0))),
-                                    ),
                             ),
+                        theaterName = "혜화",
                         date = MovieDate(2025, 4, 1),
                         time = MovieTime(9, 0),
                         seats = MovieSeats(setOf(MovieSeat(1, 1), MovieSeat(2, 2))),
@@ -60,7 +55,7 @@ class BookingCompleteActivityTest {
 
     @Test
     fun 선택된_좌석_정보가_출력된다() {
-        onView(withId(R.id.tv_booking_complete_ticket_seats))
-            .check(matches(withText("A1, B2")))
+        onView(withId(R.id.tv_booking_complete_count_seat_theater))
+            .check(matches(withText("일반 2명ㅣA1, B2ㅣ혜화 극장")))
     }
 }

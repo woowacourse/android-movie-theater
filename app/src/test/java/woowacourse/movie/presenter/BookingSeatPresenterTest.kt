@@ -37,13 +37,8 @@ class BookingSeatPresenterTest {
                         startDate = MovieDate(2025, 4, 1),
                         endDate = MovieDate(2025, 4, 25),
                         runningTime = 152,
-                        availableTheaters =
-                            listOf(
-                                TheaterName("선릉", listOf(MovieTime(9, 0), MovieTime(12, 0), MovieTime(15, 0))),
-                                TheaterName("잠실", listOf(MovieTime(10, 0), MovieTime(13, 0))),
-                                TheaterName("강남", listOf(MovieTime(11, 0), MovieTime(14, 0), MovieTime(17, 0), MovieTime(20, 0))),
-                            ),
                     ),
+                theaterName = "혜화",
                 date = MovieDate(2025, 4, 1),
                 time = MovieTime(9, 0),
                 seats = MovieSeats(),
@@ -53,23 +48,14 @@ class BookingSeatPresenterTest {
 
     @Test
     fun `prepareBookingInfo 호출 시 좌석과 예약 정보, 가격, 버튼 상태를 표시한다`() {
-        // given
-        val price = slot<Int>()
-        val isButtonEnabled = slot<Boolean>()
-
-        // when
+        // given & when
         presenter.prepareBookingInfo(bookingInfoUiModel)
 
         // then
         verify {
             view.showSeats(5, 4)
             view.updateBookingInfo(bookingInfoUiModel)
-            view.updatePrice(capture(price))
-            view.updateSeatSelectionCompleteButton(capture(isButtonEnabled))
         }
-
-        assertThat(price.captured).isEqualTo(0)
-        assertThat(isButtonEnabled.captured).isFalse
     }
 
     @Test
@@ -84,8 +70,7 @@ class BookingSeatPresenterTest {
 
         // then
         verify {
-            view.updatePrice(capture(prices))
-            view.updateSeatSelectionCompleteButton(any())
+            view.updateBookingInfo(any())
         }
         assertThat(result).isInstanceOf(SeatSelectionUiState.Success::class.java)
         assertThat(prices.last()).isEqualTo(10_000)

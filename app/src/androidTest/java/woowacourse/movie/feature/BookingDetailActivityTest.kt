@@ -13,10 +13,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.hamcrest.CoreMatchers.anything
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.MOVIE_UI_MODEL_01
 import woowacourse.movie.R
 import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity
 import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity.Companion.newIntent
+import woowacourse.movie.feature.model.ScreeningUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class BookingDetailActivityTest {
@@ -27,8 +27,7 @@ class BookingDetailActivityTest {
         val intent =
             newIntent(
                 context = getApplicationContext(),
-                movie = MOVIE_UI_MODEL_01.copy(),
-                theater = MOVIE_UI_MODEL_01.copy().availableTheaters.first(),
+                screening = ScreeningUiModel(),
             )
 
         activityScenario = ActivityScenario.launch(intent)
