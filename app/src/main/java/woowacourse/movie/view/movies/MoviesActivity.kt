@@ -1,12 +1,13 @@
 package woowacourse.movie.view.movies
 
 import android.os.Bundle
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.view.base.BaseActivity
-import woowacourse.movie.view.reservation.ReservationActivity
+import woowacourse.movie.view.movies.cinema.CinemaSeclectionFragment
 
 class MoviesActivity :
     BaseActivity(R.layout.activity_movies),
@@ -25,8 +26,10 @@ class MoviesActivity :
                 movies,
                 object : OnMovieEventListener {
                     override fun onReserveButtonClick(movie: Movie) {
-                        val intent = ReservationActivity.newIntent(this@MoviesActivity, movie)
-                        startActivity(intent)
+                        supportFragmentManager.commit {
+                            setReorderingAllowed(true)
+                            add(R.id.fragment_container_view, CinemaSeclectionFragment.newInstance(movie.screening))
+                        }
                     }
                 },
             )
