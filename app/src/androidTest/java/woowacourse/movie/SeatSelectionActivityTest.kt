@@ -22,13 +22,11 @@ import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import woowacourse.movie.booking.complete.BookingCompleteActivity
 import woowacourse.movie.booking.detail.BookingDetailActivity
+import woowacourse.movie.fixture.HARRY_POTTER
+import woowacourse.movie.fixture.SEOLLEUNG
+import woowacourse.movie.fixture.createTicket
 import woowacourse.movie.mapper.toUiModel
-import woowacourse.movie.model.HeadCount
-import woowacourse.movie.model.Seats
-import woowacourse.movie.model.Ticket
 import woowacourse.movie.seat.SeatSelectionActivity
-import java.time.LocalDate
-import java.time.LocalTime
 
 class SeatSelectionActivityTest {
     private lateinit var scenario: ActivityScenario<BookingDetailActivity>
@@ -37,13 +35,13 @@ class SeatSelectionActivityTest {
     fun setUp() {
         Intents.init()
 
-        val movie = mockTicket().toUiModel()
+        val ticket = createTicket(SEOLLEUNG, listOf(), 2).toUiModel()
         val intent =
             Intent(
                 ApplicationProvider.getApplicationContext(),
                 SeatSelectionActivity::class.java,
             ).apply {
-                putExtra("ticketUiData", movie)
+                putExtra("ticketUiData", ticket)
             }
 
         scenario = ActivityScenario.launch(intent)
@@ -60,7 +58,7 @@ class SeatSelectionActivityTest {
         onView(withId(R.id.tv_seat_movie_title)).check(
             matches(
                 allOf(
-                    withText("해리 포터와 마법사의 돌"),
+                    withText(HARRY_POTTER),
                     isDisplayed(),
                 ),
             ),
@@ -251,7 +249,7 @@ class SeatSelectionActivityTest {
             .check(
                 matches(
                     allOf(
-                        withText("해리 포터와 마법사의 돌"),
+                        withText(HARRY_POTTER),
                         isDisplayed(),
                     ),
                 ),
@@ -278,16 +276,5 @@ class SeatSelectionActivityTest {
                     allOf(withText("25,000원 (현장 결제)"), isDisplayed()),
                 ),
             )
-    }
-
-    private fun mockTicket(): Ticket {
-        return Ticket(
-            theater = "선릉",
-            title = "해리 포터와 마법사의 돌",
-            headCount = HeadCount(2),
-            selectedDate = LocalDate.of(2028, 10, 13),
-            selectedTime = LocalTime.of(11, 0),
-            seats = Seats(emptyList()),
-        )
     }
 }

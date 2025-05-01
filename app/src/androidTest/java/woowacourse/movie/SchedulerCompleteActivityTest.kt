@@ -13,13 +13,12 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.booking.complete.BookingCompleteActivity
+import woowacourse.movie.fixture.HARRY_POTTER
+import woowacourse.movie.fixture.SEAT_A1
+import woowacourse.movie.fixture.SEAT_C1
+import woowacourse.movie.fixture.SEOLLEUNG
+import woowacourse.movie.fixture.createTicket
 import woowacourse.movie.mapper.toUiModel
-import woowacourse.movie.model.HeadCount
-import woowacourse.movie.model.Seat
-import woowacourse.movie.model.Seats
-import woowacourse.movie.model.Ticket
-import java.time.LocalDate
-import java.time.LocalTime
 
 class SchedulerCompleteActivityTest {
     private lateinit var scenario: ActivityScenario<BookingCompleteActivity>
@@ -31,7 +30,7 @@ class SchedulerCompleteActivityTest {
                 ApplicationProvider.getApplicationContext(),
                 BookingCompleteActivity::class.java,
             ).apply {
-                putExtra("bookingResult", mockBookingResult().toUiModel())
+                putExtra("bookingResult", createTicket(SEOLLEUNG, listOf(SEAT_A1, SEAT_C1)).toUiModel())
             }
 
         scenario = ActivityScenario.launch(intent)
@@ -47,7 +46,7 @@ class SchedulerCompleteActivityTest {
         onView(withId(R.id.tv_complete_title)).check(
             matches(
                 allOf(
-                    withText("해리 포터와 마법사의 돌"),
+                    withText(HARRY_POTTER),
                     isDisplayed(),
                 ),
             ),
@@ -111,17 +110,6 @@ class SchedulerCompleteActivityTest {
                     isDisplayed(),
                 ),
             ),
-        )
-    }
-
-    private fun mockBookingResult(): Ticket {
-        return Ticket(
-            theater = "선릉",
-            title = "해리 포터와 마법사의 돌",
-            headCount = HeadCount(2),
-            selectedDate = LocalDate.of(2028, 10, 13),
-            selectedTime = LocalTime.of(11, 0),
-            seats = Seats(listOf(Seat("A1", true), Seat("C1", true))),
         )
     }
 }

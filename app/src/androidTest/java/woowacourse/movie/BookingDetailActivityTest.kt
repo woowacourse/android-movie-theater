@@ -24,11 +24,12 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.booking.detail.BookingDetailActivity
+import woowacourse.movie.fixture.HARRY_POTTER
+import woowacourse.movie.fixture.SEOLLEUNG
+import woowacourse.movie.fixture.createMovie
+import woowacourse.movie.fixture.createTheater
 import woowacourse.movie.mapper.toUiModel
-import woowacourse.movie.model.Movie
-import woowacourse.movie.model.Schedule
 import woowacourse.movie.seat.SeatSelectionActivity
-import woowacourse.movie.ui.model.TheaterUiModel
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -39,14 +40,14 @@ class BookingDetailActivityTest {
     fun setUp() {
         Intents.init()
 
-        val movie = mockMovie().toUiModel()
-        val theater = mockTheater()
+        val movie = createMovie(HARRY_POTTER)
+        val theater = createTheater(SEOLLEUNG, movie)
         val intent =
             Intent(
                 ApplicationProvider.getApplicationContext(),
                 BookingDetailActivity::class.java,
             ).apply {
-                putExtra("movieData", movie)
+                putExtra("movieData", movie.toUiModel())
                 putExtra("theaterData", theater)
             }
 
@@ -82,7 +83,7 @@ class BookingDetailActivityTest {
         onView(withId(R.id.tv_booking_title)).check(
             matches(
                 allOf(
-                    withText("해리 포터와 마법사의 돌"),
+                    withText(HARRY_POTTER),
                     isDisplayed(),
                 ),
             ),
@@ -220,39 +221,10 @@ class BookingDetailActivityTest {
             .check(
                 matches(
                     allOf(
-                        withText("해리 포터와 마법사의 돌"),
+                        withText(HARRY_POTTER),
                         isDisplayed(),
                     ),
                 ),
             )
-
-//        onView(withId(R.id.tv_complete_screening_date))
-//            .check(matches(allOf(withText("2028.10.13"), isDisplayed())))
-//
-//        onView(withId(R.id.tv_complete_screening_time))
-//            .check(matches(allOf(withText("11:00"), isDisplayed())))
-//
-//        onView(withId(R.id.tv_head_count))
-//            .check(matches(allOf(withText("일반 1명"), isDisplayed())))
-//
-//        onView(withId(R.id.tv_booking_amount))
-//            .check(matches(allOf(withText("13,000원 (현장 결제)"), isDisplayed())))
-    }
-
-    private fun mockMovie(): Movie {
-        return Movie(
-            imageSource = "harry_potter.png",
-            title = "해리 포터와 마법사의 돌",
-            runningTime = 152,
-            screeningStartDate = LocalDate.of(2028, 10, 11),
-            screeningEndDate = LocalDate.of(2028, 10, 25),
-        )
-    }
-
-    private fun mockTheater(): TheaterUiModel {
-        return TheaterUiModel(
-            place = "선릉",
-            schedule = Schedule(movie = mockMovie(), screeningTimes = listOf(LocalTime.of(11, 0), LocalTime.of(12, 0))).toUiModel(),
-        )
     }
 }
