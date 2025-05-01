@@ -11,9 +11,9 @@ import woowacourse.movie.view.movies.model.toUiModel
 class MovieListPresenter(
     private val view: MovieListContract.View,
     private val movieStore: MovieStore,
-    private val theaterStore: TheaterStore,
+    theaterStore: TheaterStore,
 ) : MovieListContract.Presenter {
-    val theaters = theaterStore.createTheaters()
+    private val theaters = theaterStore.createTheaters()
 
     override fun loadUiData() {
         val items = mutableListOf<UiModel>()
