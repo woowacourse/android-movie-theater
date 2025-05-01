@@ -6,13 +6,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
+import woowacourse.movie.R.id.fcv_main
+import woowacourse.movie.R.id.item_booking_history
+import woowacourse.movie.R.id.item_home
+import woowacourse.movie.R.id.item_setting
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.feature.bookinghistory.BookingHistoryFragment
 import woowacourse.movie.feature.home.view.HomeFragment
 import woowacourse.movie.feature.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
-    private val binding: ActivityMainBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_main) }
+    private val binding: ActivityMainBinding by lazy {
+        DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_main,
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,37 +29,33 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add(R.id.fcv_main, HomeFragment())
+                add(fcv_main, HomeFragment())
             }
         }
 
-        binding.bottomNavMain.selectedItemId = R.id.item_home
+        binding.bottomNavMain.selectedItemId = item_home
+        setupNavigationItemClickListener()
+    }
+
+    private fun setupNavigationItemClickListener() {
         binding.bottomNavMain.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.item_booking_history -> {
-                    replaceFragment(BookingHistoryFragment())
-                    true
-                }
+                item_booking_history -> replaceFragment(BookingHistoryFragment())
 
-                R.id.item_home -> {
-                    replaceFragment(HomeFragment())
-                    true
-                }
+                item_home -> replaceFragment(HomeFragment())
 
-                R.id.item_setting -> {
-                    replaceFragment(SettingFragment())
-                    true
-                }
+                item_setting -> replaceFragment(SettingFragment())
 
                 else -> false
             }
+            true
         }
     }
 
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fcv_main, fragment)
+            .replace(fcv_main, fragment)
             .commit()
     }
 }
