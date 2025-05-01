@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.view.base.BaseActivity
 import woowacourse.movie.view.extension.getParcelableCompat
@@ -15,7 +16,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class ReservationResultActivity :
-    BaseActivity(R.layout.activity_reservation_result),
+    BaseActivity<ActivityReservationResultBinding>(R.layout.activity_reservation_result),
     ReservationResultContract.View {
     val presenter = ReservationResultPresenter(this)
 

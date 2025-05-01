@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.domain.model.ReservationCount
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Screening
@@ -25,7 +26,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class ReservationActivity :
-    BaseActivity(R.layout.activity_reservation),
+    BaseActivity<ActivityReservationBinding>(R.layout.activity_reservation),
     ReservationContract.View {
     private val presenter = ReservationPresenter(this)
     private var shouldIgnoreNextSelection = false
