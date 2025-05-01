@@ -16,7 +16,7 @@ data class Theater(
 
     fun movieTimeTable(movie: Movie): List<LocalTime> {
         val title = Title(movie.title)
-        val movieTimeTable = this.timeTable[title] ?: throw IllegalArgumentException()
+        val movieTimeTable = this.timeTable[title] ?: emptyList()
         return movieTimeTable
     }
 }
