@@ -1,29 +1,27 @@
 package woowacourse.movie.view.movies.adapter
 
-import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.movietime.Date
 import woowacourse.movie.view.movies.OnMovieEventListener
 import java.time.format.DateTimeFormatter
 
 class MovieViewHolder(
-    view: View,
     eventListener: OnMovieEventListener,
-) : RecyclerView.ViewHolder(view) {
-    private val movieImage: ImageView = view.findViewById(R.id.iv_movie_image)
-    private val movieTitle: TextView = view.findViewById(R.id.tv_movie_title)
-    private val movieDate: TextView = view.findViewById(R.id.tv_movie_date)
-    private val movieTime: TextView = view.findViewById(R.id.tv_movie_time)
-    private val reserveButton: Button = view.findViewById(R.id.btn_reserve)
+    binding: MovieItemBinding,
+) : RecyclerView.ViewHolder(binding.root) {
     private var movie: Movie? = null
+    private val movieImage: ImageView = binding.ivMovieImage
+    private val movieTitle: TextView = binding.tvMovieTitle
+    private val movieDate: TextView = binding.tvMovieDate
+    private val movieTime: TextView = binding.tvMovieTime
 
     init {
-        reserveButton.setOnClickListener {
+        binding.btnReserve.setOnClickListener {
             movie?.let { eventListener.onClickShowTheater(it) }
         }
     }

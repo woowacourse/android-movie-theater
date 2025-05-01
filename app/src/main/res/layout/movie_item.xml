@@ -1,59 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="10dp">
 
-    <ImageView
-        android:id="@+id/iv_movie_image"
-        android:layout_width="100dp"
-        android:layout_height="120dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    </ImageView>
+    <data>
+
+        <variable
+            name="movie"
+            type="woowacourse.movie.domain.Movie" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="10dp"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <TextView
-            android:id="@+id/tv_movie_title"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/iv_movie_image"
+            android:layout_width="100dp"
+            android:layout_height="120dp">
+
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="영화 제목"
-            android:textSize="20sp"
-            android:textStyle="bold">
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical">
 
-        </TextView>
+            <TextView
+                android:id="@+id/tv_movie_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="@string/movie_title">
 
-        <TextView
-            android:id="@+id/tv_movie_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="상영일:">
+            </TextView>
 
-        </TextView>
+            <TextView
+                android:id="@+id/tv_movie_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{}"
+                tools:text="@string/movieDate">
 
-        <TextView
-            android:id="@+id/tv_movie_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="러닝타임:">
+            </TextView>
 
-        </TextView>
+            <TextView
 
-        <Button
-            android:id="@+id/btn_reserve"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:text="지금 예매">
+                android:id="@+id/tv_movie_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/movieTime">
 
-        </Button>
+            </TextView>
 
+
+            <Button
+                android:id="@+id/btn_reserve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:text="@string/reservation_now">
+
+            </Button>
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>
