@@ -36,7 +36,7 @@ class CinemaSeclectionFragment : BottomSheetDialogFragment() {
                             ReservationActivity
                                 .newIntent(
                                     it,
-                                    screening.movie,
+                                    screening,
                                 ).let(
                                     requireActivity()::startActivity,
                                 )

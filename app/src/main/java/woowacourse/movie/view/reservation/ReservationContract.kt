@@ -1,13 +1,13 @@
 package woowacourse.movie.view.reservation
 
-import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.ReservationInfo
+import woowacourse.movie.domain.model.Screening
 import java.time.LocalDate
 import java.time.LocalTime
 
 interface ReservationContract {
     interface View {
-        fun showMovieDetail(movie: Movie)
+        fun showMovieDetail(screening: Screening)
 
         fun updateReservationCount(count: Int)
 
@@ -30,7 +30,7 @@ interface ReservationContract {
 
     interface Presenter {
         fun loadData(
-            movie: Movie?,
+            screening: Screening?,
             count: Int? = null,
             dateTime: String? = null,
         )

@@ -13,9 +13,9 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.ReservationCount
 import woowacourse.movie.domain.model.ReservationInfo
+import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.view.base.BaseActivity
 import woowacourse.movie.view.extension.getParcelableCompat
 import woowacourse.movie.view.reservation.seat.SeatSelectionActivity
@@ -57,11 +57,11 @@ class ReservationActivity :
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val movie = intent?.getParcelableCompat<Movie>(BUNDLE_KEY_MOVIE)
+        val screening = intent?.getParcelableCompat<Screening>(BUNDLE_KEY_MOVIE)
         val count = savedInstanceState?.getInt(RESTORE_BUNDLE_KEY_RESERVATION_NUMBER)
         val reservationDateTime =
             savedInstanceState?.getString(RESTORE_BUNDLE_KEY_RESERVATION_DATETIME)
-        presenter.loadData(movie, count, reservationDateTime)
+        presenter.loadData(screening, count, reservationDateTime)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -89,8 +89,8 @@ class ReservationActivity :
         }
     }
 
-    override fun showMovieDetail(movie: Movie) {
-        setMovieInfo(movie)
+    override fun showMovieDetail(screening: Screening) {
+        setMovieInfo(screening)
         setupDateSpinner()
         setupListener()
     }
@@ -183,22 +183,23 @@ class ReservationActivity :
         )
     }
 
-    private fun setMovieInfo(movie: Movie) {
+    private fun setMovieInfo(screening: Screening) {
         val formatter =
             DateTimeFormatter.ofPattern(getString(R.string.movie_screening_period_format))
-        findViewById<ImageView>(R.id.iv_reservation_poster).setImageResource(movie.poster.toInt())
-        findViewById<TextView>(R.id.tv_reservation_title).text = movie.title
+        findViewById<ImageView>(R.id.iv_reservation_poster).setImageResource(screening.movie.poster.toInt())
+        findViewById<TextView>(R.id.tv_reservation_title).text = screening.movie.title
         findViewById<TextView>(R.id.tv_screening_period).text =
             getString(
                 R.string.movie_date,
-                movie.startDate.format(formatter),
-                movie.endDate
+                screening.movie.startDate.format(formatter),
+                screening.movie.endDate
                     .format(formatter),
             )
         findViewById<TextView>(R.id.tv_reservation_running_time).text =
             getString(
                 R.string.running_time,
-                movie.runningTime.minute.toString(),
+                screening.movie.runningTime.minute
+                    .toString(),
             )
     }
 
@@ -236,11 +237,11 @@ class ReservationActivity :
 
         fun newIntent(
             context: Context,
-            movie: Movie,
+            screening: Screening,
         ): Intent =
             Intent(context, ReservationActivity::class.java).putExtra(
                 BUNDLE_KEY_MOVIE,
-                movie,
+                screening,
             )
     }
 }

@@ -1,8 +1,8 @@
 package woowacourse.movie.view.reservation
 
-import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.ReservationCount
 import woowacourse.movie.domain.model.ReservationInfo
+import woowacourse.movie.domain.model.Screening
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -11,33 +11,33 @@ import java.time.format.DateTimeFormatter
 class ReservationPresenter(
     private val view: ReservationContract.View,
 ) : ReservationContract.Presenter {
-    private var movie: Movie? = null
+    private var screening: Screening? = null
     private var reservationCount: ReservationCount = ReservationCount()
 
     override fun loadData(
-        movie: Movie?,
+        screening: Screening?,
         count: Int?,
         dateTime: String?,
     ) {
-        this.movie = movie
+        this.screening = screening
 
-        if (this.movie == null) {
+        if (this.screening == null) {
             // 다이얼로그 노출
             return
         }
 
-        this.movie?.let { view.showMovieDetail(it) }
+        this.screening?.let { view.showMovieDetail(it) }
 
         count?.let { reservationCount = ReservationCount(it) }
         dateTime?.let { dateTimeStr ->
             val formatter = DateTimeFormatter.ofPattern(SPINNER_DATETIME_FORMAT)
             val realDateTime = LocalDateTime.parse(dateTimeStr, formatter)
-            val times = movie?.screening?.get(1)?.screeningTimes ?: throw IllegalArgumentException()
+            val times = screening?.screeningTimes ?: throw IllegalArgumentException()
 
             view.updateTimeSet(times, realDateTime.toLocalTime())
         }
 
-        this.movie?.let {
+        this.screening?.let {
             view.updateReservationCount(reservationCount.value)
         }
     }
@@ -53,10 +53,10 @@ class ReservationPresenter(
     }
 
     override fun selectDate(date: LocalDate) {
-        val times = movie?.screening?.get(1)?.screeningTimes ?: throw IllegalArgumentException()
+        val times = screening?.screeningTimes ?: throw IllegalArgumentException()
         times.ifEmpty {
             val nextDate = date.plusDays(1)
-            val dates = movie?.getAvailableDates(LocalDateTime.of(nextDate, LocalTime.of(0, 0))) ?: emptyList()
+            val dates = screening?.movie?.getAvailableDates(LocalDateTime.of(nextDate, LocalTime.of(0, 0))) ?: emptyList()
             if (dates.isEmpty()) {
                 view.notifyUnavailableDate()
                 return
@@ -64,7 +64,7 @@ class ReservationPresenter(
             view.updateDateSet(dates, nextDate)
         }
 
-        val temp = movie?.getAvailableDates(LocalDateTime.now()) ?: emptyList()
+        val temp = screening?.movie?.getAvailableDates(LocalDateTime.now()) ?: emptyList()
         view.updateDateSet(temp)
         view.updateTimeSet(times)
     }
@@ -80,7 +80,7 @@ class ReservationPresenter(
 
         val reservationInfo =
             ReservationInfo(
-                title = movie?.title ?: "",
+                title = screening?.movie?.title ?: "",
                 reservationDateTime = LocalDateTime.of(reservationDate, reservationTime),
                 reservationCount = reservationCount,
             )
