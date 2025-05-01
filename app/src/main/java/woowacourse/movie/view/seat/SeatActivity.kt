@@ -79,8 +79,8 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         binding.tvPrice.text = getString(R.string.text_korea_unit).format(formattedPrice)
     }
 
-    override fun setConfirmButtonEnabled(enabled: Boolean) {
-        binding.btnBooking.isEnabled = enabled
+    override fun setConfirmButtonEnabled(clickable: Boolean) {
+        binding.btnBooking.isEnabled = clickable
     }
 
     override fun moveToBookingComplete(ticket: Ticket) {

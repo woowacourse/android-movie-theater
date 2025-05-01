@@ -7,7 +7,7 @@ interface SeatContract {
     interface View {
         fun showBookingInformation(title: String)
 
-        fun showSeat(seat: Set<Seat>)
+        fun showSeat(seats: Set<Seat>)
 
         fun showToast(peopleCount: Int)
 
