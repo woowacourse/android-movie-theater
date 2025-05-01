@@ -16,7 +16,7 @@ class MovieTicketTest {
             MovieTicket(
                 "승부",
                 "선릉 극장",
-                LocalDateTime.of(2025, 5, 1, 11, 0),
+                LocalDateTime.of(2025, 5, 30, 11, 0),
                 3,
             )
     }
@@ -26,7 +26,7 @@ class MovieTicketTest {
         // Then
         assertSoftly(movieTicket) {
             movieTitle shouldBe "승부"
-            screeningDateTime shouldBe LocalDateTime.of(2025, 5, 1, 11, 0)
+            screeningDateTime shouldBe LocalDateTime.of(2025, 5, 30, 11, 0)
             headCount shouldBe 3
         }
     }

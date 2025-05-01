@@ -17,7 +17,7 @@ class MovieSchedulerTest {
         movieScheduler =
             MovieScheduler(
                 LocalDate.of(2025, 4, 16),
-                LocalDate.of(2025, 4, 30),
+                LocalDate.of(2025, 5, 30),
             )
     }
 
