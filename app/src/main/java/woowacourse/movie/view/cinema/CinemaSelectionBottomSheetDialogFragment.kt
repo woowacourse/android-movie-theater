@@ -19,7 +19,8 @@ import woowacourse.movie.view.util.ErrorMessage
 class CinemaSelectionBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
     CinemaSelectionContract.View {
-    private lateinit var binding: FragmentCinemaSelectionBottomSheetDialogBinding
+    private var _binding: FragmentCinemaSelectionBottomSheetDialogBinding? = null
+    private val binding get() = _binding ?: error(ErrorMessage("_binding").notProvided())
 
     var cinemaAdapter: CinemaAdapter? = null
     private var presenter: CinemaSelectionPresenter? = null
@@ -43,7 +44,7 @@ class CinemaSelectionBottomSheetDialogFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
+        _binding =
             FragmentCinemaSelectionBottomSheetDialogBinding.inflate(inflater, container, false)
         binding.cinemaSelection = this
         return binding.root
@@ -55,6 +56,11 @@ class CinemaSelectionBottomSheetDialogFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         presenter?.presentCinemas() ?: error(ErrorMessage("presenter").notProvided())
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun setCinemas(cinemas: List<Cinema>) {

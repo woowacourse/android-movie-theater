@@ -12,9 +12,12 @@ import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ScreeningContent
 import woowacourse.movie.presenter.cinema.ScreeningPresenter
 import woowacourse.movie.view.cinema.adapter.ScreeningAdapter
+import woowacourse.movie.view.util.ErrorMessage
 
 class HomeFragment : Fragment(), ScreeningContract.View {
-    private lateinit var binding: FragmentHomeBinding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding ?: error(ErrorMessage("_binding").notProvided())
+
     private val presenter: ScreeningContract.Presenter = ScreeningPresenter(this)
 
     override fun onCreateView(
@@ -22,7 +25,7 @@ class HomeFragment : Fragment(), ScreeningContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -32,6 +35,11 @@ class HomeFragment : Fragment(), ScreeningContract.View {
     ) {
         super.onViewCreated(view, savedInstanceState)
         presenter.presentScreeningContents()
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun setScreeningContents(screeningContents: List<ScreeningContent>) {
