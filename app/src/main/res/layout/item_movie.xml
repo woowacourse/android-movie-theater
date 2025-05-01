@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="itemMovie"
             type="woowacourse.movie.presentation.model.MovieUiModel" />
@@ -19,22 +20,23 @@
             android:id="@+id/iv_poster"
             android:layout_width="76dp"
             android:layout_height="match_parent"
+            android:background="@color/teal_200"
             android:contentDescription="@string/movie_poster"
             app:imgRes="@{itemMovie.poster}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/teal_200" />
+            tools:src="@drawable/harrypotter" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
+            android:text="@{itemMovie.title}"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:text = "@{itemMovie.title}"
             app:layout_constraintBottom_toTopOf="@id/tv_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_poster"
@@ -48,9 +50,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:text="@{String.format(@string/movie_date, itemMovie.screeningPeriod.formatedStartDate(@string/movie_screening_period_format) , itemMovie.screeningPeriod.formatedEndDate(@string/movie_screening_period_format))}"
             android:textColor="@color/black"
             android:textSize="12sp"
-            android:text="@{String.format(@string/movie_date, itemMovie.screeningPeriod.startDate , itemMovie.screeningPeriod.endDate)}"
             app:layout_constraintBottom_toTopOf="@id/tv_running_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_title"
@@ -61,9 +63,9 @@
             android:id="@+id/tv_running_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@{String.format(@string/running_time, itemMovie.runningTime)}"
             android:textColor="@color/black"
             android:textSize="12sp"
-            android:text = "@{String.format(@string/running_time, String.valueOf(itemMovie.runningTime))}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_title"
