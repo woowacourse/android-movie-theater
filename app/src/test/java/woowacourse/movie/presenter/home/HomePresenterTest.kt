@@ -10,7 +10,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class MoviesPresenterTest {
+class HomePresenterTest {
     private lateinit var presenter: HomePresenter
     private lateinit var view: HomeContracts.View
 
@@ -42,6 +42,18 @@ class MoviesPresenterTest {
 
         // then:
         verify { view.showAdvertisement(any()) }
+    }
+
+    @Test
+    fun `영화를 클릭하면 극장들이 보인다`() {
+        // given
+        every { view.showTheaters(any()) } just Runs
+
+        // when
+        presenter.onTheaterRequested(1L)
+
+        // then
+        verify { view.showTheaters(any()) }
     }
 
     @After
