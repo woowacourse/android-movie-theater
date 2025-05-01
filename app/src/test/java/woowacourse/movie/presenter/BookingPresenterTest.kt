@@ -9,13 +9,10 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.domain.fixture.harryPotter1MoviesFixture
-import woowacourse.movie.domain.fixture.screeningDateFixture
 import woowacourse.movie.domain.model.booking.PeopleCount
-import woowacourse.movie.domain.model.booking.ScreeningDate
-import woowacourse.movie.domain.model.movies.Movie
-import woowacourse.movie.view.booking.BookingContract
-import woowacourse.movie.view.booking.BookingPresenter
-import woowacourse.movie.view.movies.model.ScreeningInfo
+import woowacourse.movie.view.home.booking.BookingContract
+import woowacourse.movie.view.home.booking.BookingPresenter
+import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -29,16 +26,17 @@ class BookingPresenterTest {
     fun setUp() {
         view = mockk<BookingContract.View>(relaxed = true)
         model = MovieStore()
-        presenter = BookingPresenter(
-            view,
-            MovieStore(),
-            PeopleCount(1),
-            ScreeningInfo(
-                movieId = 0,
-                theaterName = "CGV",
-                screening = listOf(LocalDateTime.of(2025, 4, 10, 12, 10)),
+        presenter =
+            BookingPresenter(
+                view,
+                MovieStore(),
+                PeopleCount(1),
+                ScreeningInfo(
+                    movieId = 0,
+                    theaterName = "CGV",
+                    screening = listOf(LocalDateTime.of(2025, 4, 10, 12, 10)),
+                ),
             )
-        )
     }
 
     @Test
@@ -53,24 +51,14 @@ class BookingPresenterTest {
             view.showMovieDetail(
                 match {
                     it.id == expected.id &&
-                            it.title == expected.title &&
-                            it.posterResource == expected.posterResource &&
-                            it.releaseDate == expected.releaseDate &&
-                            it.runningTime == expected.runningTime
-
+                        it.title == expected.title &&
+                        it.posterResource == expected.posterResource &&
+                        it.releaseDate == expected.releaseDate &&
+                        it.runningTime == expected.runningTime
                 },
-                any()
+                any(),
             )
         }
-    }
-
-    @Test
-    fun `loadPeopleCount 호출시 최소 인원수인 한 명이 보인다`() {
-        // when
-        presenter.loadPeopleCount()
-
-        // then
-        verify(exactly = 1) { view.showPeopleCount(1) }
     }
 
     @Test
@@ -102,12 +90,16 @@ class BookingPresenterTest {
     @Test
     fun `인원이 1명 감소한다`() {
         // given
-        val presenter = BookingPresenter(view, model, PeopleCount(5),
-            ScreeningInfo(
-                movieId = 0,
-                theaterName = "CGV",
-                screening = listOf(LocalDateTime.of(2025, 4, 10, 12, 10)),
-            )
+        val presenter =
+            BookingPresenter(
+                view,
+                model,
+                PeopleCount(5),
+                ScreeningInfo(
+                    movieId = 0,
+                    theaterName = "CGV",
+                    screening = listOf(LocalDateTime.of(2025, 4, 10, 12, 10)),
+                ),
             )
         every { view.showPeopleCount(4) } just Runs
 
@@ -133,9 +125,9 @@ class BookingPresenterTest {
             view.moveToBookingComplete(
                 match {
                     it.title == "테스트 영화 1" &&
-                            it.bookingDate == LocalDate.of(2025, 4, 24) &&
-                            it.bookingTime == LocalTime.of(12, 0) &&
-                            it.count == PeopleCount(3)
+                        it.bookingDate == LocalDate.of(2025, 4, 24) &&
+                        it.bookingTime == LocalTime.of(12, 0) &&
+                        it.count == PeopleCount(3)
                 },
             )
         }

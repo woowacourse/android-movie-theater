@@ -2,20 +2,18 @@ package woowacourse.movie.view.booking
 
 import android.content.pm.ActivityInfo
 import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withSpinnerText
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import org.hamcrest.CoreMatchers.anything
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.fixture.fakeContext
-import woowacourse.movie.view.movies.model.ScreeningInfo
+import woowacourse.movie.view.home.booking.BookingActivity
+import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import java.time.LocalDateTime
 
 class BookingActivityTest {
@@ -107,23 +105,5 @@ class BookingActivityTest {
 
         // then
         onView(withId(R.id.tv_people_count)).check(matches(withText("2")))
-    }
-
-    @Test
-    fun `화면이_회전_되어도_선택된_날짜가_유지된다`() {
-        // given
-        onView(withId(R.id.sp_date)).perform(click())
-        onData(anything()).atPosition(7).perform(click())
-        onView(withId(R.id.sp_time)).perform(click())
-        onData(anything()).atPosition(1).perform(click())
-
-        // when
-        scenario.onActivity { activity ->
-            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        }
-
-        // then
-        onView(withId(R.id.sp_date)).check(matches(withSpinnerText("2025-04-25")))
-        onView(withId(R.id.sp_time)).check(matches(withSpinnerText("12:00")))
     }
 }

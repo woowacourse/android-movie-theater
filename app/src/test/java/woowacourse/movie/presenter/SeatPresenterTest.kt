@@ -11,8 +11,8 @@ import woowacourse.movie.domain.model.seat.Column
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.Seats
-import woowacourse.movie.view.seat.SeatContract
-import woowacourse.movie.view.seat.SeatPresenter
+import woowacourse.movie.view.home.seat.SeatContract
+import woowacourse.movie.view.home.seat.SeatPresenter
 import java.time.LocalDate
 import java.time.LocalTime
 

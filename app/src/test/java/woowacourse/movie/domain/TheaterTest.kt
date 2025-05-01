@@ -46,9 +46,9 @@ class TheaterTest {
         assertEquals(
             excepted,
             listOf(
-                screeningFixtureWithMovieId1,
-                screeningFixtureWithMovieId1,
-                screeningFixtureWithMovieId1,
+                screeningFixtureWithMovieId1.screenTime,
+                screeningFixtureWithMovieId1.screenTime,
+                screeningFixtureWithMovieId1.screenTime,
             ),
         )
     }

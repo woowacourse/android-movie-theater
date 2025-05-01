@@ -24,13 +24,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.seat.SeatActivity"
+            android:name=".view.home.seat.SeatActivity"
             android:exported="false" />
         <activity
-            android:name=".view.booking.BookingActivity"
+            android:name=".view.home.booking.BookingActivity"
             android:exported="false" />
         <activity
-            android:name=".view.complete.BookingCompleteActivity"
+            android:name=".view.home.complete.BookingCompleteActivity"
             android:exported="false" />
     </application>
 

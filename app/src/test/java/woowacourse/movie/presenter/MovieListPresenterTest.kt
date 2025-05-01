@@ -7,17 +7,16 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.domain.model.movies.Movie
-import woowacourse.movie.view.movies.MovieListContract
-import woowacourse.movie.view.movies.MovieListPresenter
-import woowacourse.movie.view.movies.model.UiModel
+import woowacourse.movie.view.home.movies.MovieListContract
+import woowacourse.movie.view.home.movies.MovieListPresenter
+import woowacourse.movie.view.home.movies.model.UiModel
 
 class MovieListPresenterTest {
-    private lateinit var view: MovieListContract.View
+    private val view: MovieListContract.View = mockk<MovieListContract.View>(relaxed = true)
     private lateinit var model: List<Movie>
 
     @BeforeEach
     fun setUp() {
-        view = mockk<MovieListContract.View>(relaxed = true)
         model = MovieStore().getAll()
     }
 

@@ -13,16 +13,17 @@ val screeningDateFixture =
             LocalDate.of(2025, 5, 4),
         ),
     )
-val harryPotter1MoviesFixture = Movie(
-    0,
-    "해리 포터와 마법사의 돌",
-    "harry_potter_1",
-    ScreeningDate(
-        listOf(
-            LocalDate.of(2025, 5, 1),
-            LocalDate.of(2025, 5, 2),
-            LocalDate.of(2025, 5, 3),
-        )
-    ),
-    152,
-)
+val harryPotter1MoviesFixture =
+    Movie(
+        0,
+        "해리 포터와 마법사의 돌",
+        "harry_potter_1",
+        ScreeningDate(
+            listOf(
+                LocalDate.of(2025, 5, 1),
+                LocalDate.of(2025, 5, 2),
+                LocalDate.of(2025, 5, 3),
+            ),
+        ),
+        152,
+    )

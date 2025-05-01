@@ -14,7 +14,8 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.model.booking.Booking
 import woowacourse.movie.domain.model.booking.PeopleCount
 import woowacourse.movie.fixture.fakeContext
-import woowacourse.movie.view.seat.SeatActivity.Companion.newIntent
+import woowacourse.movie.view.home.seat.SeatActivity
+import woowacourse.movie.view.home.seat.SeatActivity.Companion.newIntent
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -31,6 +32,7 @@ class SeatActivityTest {
                     bookingDate = LocalDate.parse("2025-04-01"),
                     bookingTime = LocalTime.parse("12:00"),
                     count = PeopleCount(2),
+                    theaterName = "선릉 극장",
                 ),
             )
         ActivityScenario.launch<SeatActivity>(intent)
