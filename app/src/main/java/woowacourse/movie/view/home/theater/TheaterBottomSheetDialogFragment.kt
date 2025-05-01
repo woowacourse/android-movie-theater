@@ -10,18 +10,25 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.BottomSheetFragmentTheaterBinding
 import woowacourse.movie.model.theater.TheaterMovieSchedule
 import woowacourse.movie.model.theater.TheaterMovieSchedules
+import woowacourse.movie.presenter.theater.TheaterContracts
+import woowacourse.movie.presenter.theater.TheaterPresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.reservation.ReservationActivity
 
-class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
+class TheaterBottomSheetDialogFragment :
+    BottomSheetDialogFragment(),
+    TheaterContracts.View {
     private lateinit var binding: BottomSheetFragmentTheaterBinding
     private lateinit var theaterAdapter: TheaterAdapter
+    private lateinit var presenter: TheaterContracts.Presenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        presenter = TheaterPresenter(this)
+
         binding =
             DataBindingUtil.inflate(
                 inflater,
@@ -39,19 +46,31 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupAdapter()
+        presenter.updateTheaterMovieSchedules(
+            arguments?.getSerializableExtraData<TheaterMovieSchedules>(
+                THEATER_KEY,
+            ) ?: return,
+        )
+    }
+
+    private fun setupAdapter() {
         if (::theaterAdapter.isInitialized.not()) {
             theaterAdapter =
                 TheaterAdapter(
-                    arguments?.getSerializableExtraData<TheaterMovieSchedules>(THEATER_KEY)?.value
-                        ?: emptyList(),
-                    ::navigateToReservation,
+                    emptyList(),
+                    { presenter.onReservationRequested(it) },
                 )
         }
 
         binding.theaters.adapter = theaterAdapter
     }
 
-    private fun navigateToReservation(theaterMovieSchedule: TheaterMovieSchedule) {
+    override fun showTheaterMovieSchedule(theaterMovieSchedules: TheaterMovieSchedules) {
+        theaterAdapter.updateTheaterMovieSchedules(theaterMovieSchedules.value)
+    }
+
+    override fun showReservationView(theaterMovieSchedule: TheaterMovieSchedule) {
         val intent = ReservationActivity.getIntent(requireContext(), theaterMovieSchedule)
         startActivity(intent)
         dismiss()

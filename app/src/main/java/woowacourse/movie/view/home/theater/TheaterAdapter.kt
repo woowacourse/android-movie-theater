@@ -9,9 +9,11 @@ import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.model.theater.TheaterMovieSchedule
 
 class TheaterAdapter(
-    private val theaterMovieSchedules: List<TheaterMovieSchedule>,
+    theaterMovieScheduleItems: List<TheaterMovieSchedule>,
     private val onTheaterClick: (TheaterMovieSchedule) -> Unit,
 ) : RecyclerView.Adapter<TheaterViewHolder>() {
+    private var theaterMovieSchedules: List<TheaterMovieSchedule> = theaterMovieScheduleItems
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -34,5 +36,10 @@ class TheaterAdapter(
         position: Int,
     ) {
         holder.bind(theaterMovieSchedules[position])
+    }
+
+    fun updateTheaterMovieSchedules(newItems: List<TheaterMovieSchedule>) {
+        theaterMovieSchedules = newItems
+        notifyDataSetChanged()
     }
 }
