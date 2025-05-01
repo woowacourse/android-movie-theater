@@ -6,8 +6,8 @@ import java.time.LocalDate
 data class ScreeningDate(
     val screenings: List<LocalDate>,
 ) : Serializable {
-    val startDate: LocalDate = screenings.first()
-    val endDate: LocalDate = screenings.last()
+    val startDate: LocalDate get() = screenings.first()
+    val endDate: LocalDate get() = screenings.last()
 
     fun bookingDates(today: LocalDate): List<LocalDate> {
         val start = getStartDate(today)
