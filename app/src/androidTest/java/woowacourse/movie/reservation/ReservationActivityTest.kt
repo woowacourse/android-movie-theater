@@ -99,15 +99,12 @@ class ReservationActivityTest {
 
         onView(withId(R.id.spinner_reservation_screening_time)).perform(click())
 
-        val hours = listOf(9, 11, 13, 15, 17, 19, 21, 23)
-        for (hour in hours) {
-            onData(
-                allOf(
-                    `is`(instanceOf(LocalTime::class.java)),
-                    `is`(LocalTime.of(hour, 0, 0)),
-                ),
-            ).check(matches(isDisplayed()))
-        }
+        onData(
+            allOf(
+                `is`(instanceOf(LocalTime::class.java)),
+                `is`(LocalTime.of(22, 0)),
+            ),
+        ).check(matches(isDisplayed()))
     }
 
     @Test
