@@ -31,23 +31,21 @@ class BookingDetailPresenter(
     }
 
     override fun setUpTicket() {
-        scheduler = Scheduler(movie.toDomain(), theater.schedule.screeningTimes)
-
         view.showMovieInfo(movie)
         view.showHeadCount()
         view.showScreeningDates(
-            dates = scheduler.screeningPeriods(),
+            dates = Scheduler.screeningPeriods(movie.toDomain()),
             selected = ticket.selectedDate,
         )
         view.showScreeningTimes(
-            times = scheduler.screeningTimes(ticket.selectedDate),
+            times = Scheduler.screeningTimes(ticket.selectedDate, theater.schedule.screeningTimes),
             selected = ticket.selectedTime,
         )
     }
 
     override fun selectDate(date: LocalDate) {
         ticket = ticket.updateDate(date)
-        val times = scheduler.screeningTimes(date)
+        val times = Scheduler.screeningTimes(date, theater.schedule.screeningTimes)
 
         if (times.isEmpty()) {
             val nextDate = date.plusDays(1)
@@ -63,7 +61,7 @@ class BookingDetailPresenter(
         if (ticket.selectedTime == time) return
 
         ticket = ticket.updateTime(time)
-        view.showScreeningTimes(scheduler.screeningTimes(ticket.selectedDate), ticket.selectedTime)
+        view.showScreeningTimes(Scheduler.screeningTimes(ticket.selectedDate, theater.schedule.screeningTimes), ticket.selectedTime)
     }
 
     override fun increaseHeadCount() {

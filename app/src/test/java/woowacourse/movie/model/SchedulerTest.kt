@@ -8,7 +8,6 @@ import java.time.LocalTime
 
 class SchedulerTest {
     private lateinit var movie: Movie
-    private lateinit var scheduler: Scheduler
 
     @BeforeEach
     fun setUp() {
@@ -17,18 +16,8 @@ class SchedulerTest {
                 imageSource = "harry_potter.png",
                 title = "해리 포터와 마법사의 돌",
                 runningTime = 152,
-                screeningStartDate = LocalDate.of(2025, 4, 1),
-                screeningEndDate = LocalDate.of(2025, 4, 25),
-            )
-
-        scheduler =
-            Scheduler(
-                movie,
-                listOf(
-                    LocalTime.of(11, 0),
-                    LocalTime.of(12, 0),
-                ),
-                LocalDate.of(2025, 4, 20), LocalTime.of(8, 0),
+                screeningStartDate = LocalDate.of(2025, 5, 10),
+                screeningEndDate = LocalDate.of(2025, 5, 15),
             )
     }
 
@@ -36,15 +25,15 @@ class SchedulerTest {
     fun `상영일자에 맞는 상영일들을 가져온다`() {
         val expected =
             localDates(
-                "2025-04-20",
-                "2025-04-21",
-                "2025-04-22",
-                "2025-04-23",
-                "2025-04-24",
-                "2025-04-25",
+                "2025-05-10",
+                "2025-05-11",
+                "2025-05-12",
+                "2025-05-13",
+                "2025-05-14",
+                "2025-05-15",
             )
 
-        val actual = scheduler.screeningPeriods()
+        val actual = Scheduler.screeningPeriods(movie)
 
         Assertions.assertThat(actual).isEqualTo(expected)
     }
@@ -54,7 +43,7 @@ class SchedulerTest {
         val expected =
             localTimes("11:00", "12:00")
 
-        val actual = scheduler.screeningTimes(LocalDate.of(2025, 4, 10))
+        val actual = Scheduler.screeningTimes(LocalDate.of(2025, 4, 10), expected)
 
         Assertions.assertThat(actual).isEqualTo(expected)
     }
