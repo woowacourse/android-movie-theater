@@ -6,12 +6,12 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.booking.complete.BookingCompleteContract
 import woowacourse.movie.booking.complete.BookingCompletePresenter
-import woowacourse.movie.booking.detail.TicketUiModel
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Seat
 import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
+import woowacourse.movie.ui.model.TicketUiModel
 import java.time.LocalDate
 import java.time.LocalTime
 

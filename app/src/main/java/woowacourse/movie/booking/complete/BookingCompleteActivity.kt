@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.booking.complete
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,11 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
-import woowacourse.movie.booking.complete.BookingCompleteContract
-import woowacourse.movie.booking.complete.BookingCompletePresenter
-import woowacourse.movie.booking.detail.TicketUiModel
+import woowacourse.movie.MainActivity
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.mapper.IntentCompat
+import woowacourse.movie.ui.model.TicketUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
     private lateinit var presenter: BookingCompleteContract.Presenter

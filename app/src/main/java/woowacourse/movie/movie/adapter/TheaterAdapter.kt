@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.TheaterItemBinding
-import woowacourse.movie.movie.TheaterUiModel
+import woowacourse.movie.ui.model.TheaterUiModel
 
 class TheaterAdapter(
     private val theaters: List<TheaterUiModel>,

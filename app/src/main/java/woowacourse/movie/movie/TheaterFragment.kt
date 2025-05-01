@@ -12,12 +12,14 @@ import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.BookingDetailActivity
-import woowacourse.movie.BookingDetailActivity.Companion.KEY_MOVIE_DATA
-import woowacourse.movie.BookingDetailActivity.Companion.KEY_THEATER_DATA
 import woowacourse.movie.R
+import woowacourse.movie.booking.detail.BookingDetailActivity
+import woowacourse.movie.booking.detail.BookingDetailActivity.Companion.KEY_MOVIE_DATA
+import woowacourse.movie.booking.detail.BookingDetailActivity.Companion.KEY_THEATER_DATA
 import woowacourse.movie.databinding.FragmentTheaterBinding
 import woowacourse.movie.movie.adapter.TheaterAdapter
+import woowacourse.movie.ui.model.MovieUiModel
+import woowacourse.movie.ui.model.TheaterUiModel
 
 class TheaterFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentTheaterBinding

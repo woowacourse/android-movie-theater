@@ -20,10 +20,13 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
+import woowacourse.movie.booking.complete.BookingCompleteActivity
+import woowacourse.movie.booking.detail.BookingDetailActivity
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
+import woowacourse.movie.seat.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalTime
 

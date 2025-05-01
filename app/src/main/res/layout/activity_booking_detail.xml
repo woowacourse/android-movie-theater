@@ -7,18 +7,18 @@
 
         <variable
             name="movie"
-            type="woowacourse.movie.movie.MovieUiModel" />
+            type="woowacourse.movie.ui.model.MovieUiModel" />
 
         <variable
             name="detail"
-            type="woowacourse.movie.BookingDetailActivity" />
+            type="woowacourse.movie.booking.detail.BookingDetailActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".BookingDetailActivity">
+        tools:context=".booking.detail.BookingDetailActivity">
 
         <ScrollView
             android:layout_width="match_parent"

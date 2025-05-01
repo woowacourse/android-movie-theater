@@ -12,6 +12,7 @@ import org.hamcrest.CoreMatchers.allOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import woowacourse.movie.booking.complete.BookingCompleteActivity
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Seat

@@ -23,10 +23,12 @@ import org.hamcrest.CoreMatchers.`is`
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import woowacourse.movie.booking.detail.BookingDetailActivity
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Schedule
-import woowacourse.movie.movie.TheaterUiModel
+import woowacourse.movie.seat.SeatSelectionActivity
+import woowacourse.movie.ui.model.TheaterUiModel
 import java.time.LocalDate
 import java.time.LocalTime
 

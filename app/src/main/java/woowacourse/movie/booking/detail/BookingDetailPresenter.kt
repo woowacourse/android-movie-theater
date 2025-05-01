@@ -6,8 +6,9 @@ import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Scheduler
 import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
-import woowacourse.movie.movie.MovieUiModel
-import woowacourse.movie.movie.TheaterUiModel
+import woowacourse.movie.ui.model.MovieUiModel
+import woowacourse.movie.ui.model.TheaterUiModel
+import woowacourse.movie.ui.model.TicketUiModel
 import woowacourse.movie.util.Formatter.formatStringDateDotSeparated
 import woowacourse.movie.util.Formatter.formatStringTimeWithMidnight24
 import java.time.LocalDate

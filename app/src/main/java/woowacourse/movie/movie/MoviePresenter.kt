@@ -5,6 +5,7 @@ import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Schedule
 import woowacourse.movie.model.Theater
+import woowacourse.movie.ui.model.MovieUiModel
 import java.time.LocalDate
 import java.time.LocalTime
 

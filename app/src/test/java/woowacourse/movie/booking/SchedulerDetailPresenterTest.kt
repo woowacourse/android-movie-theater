@@ -12,8 +12,8 @@ import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Schedule
 import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
-import woowacourse.movie.movie.MovieUiModel
-import woowacourse.movie.movie.TheaterUiModel
+import woowacourse.movie.ui.model.MovieUiModel
+import woowacourse.movie.ui.model.TheaterUiModel
 import woowacourse.movie.util.Formatter.formatDateDotSeparated
 import woowacourse.movie.util.Formatter.formatTimeWithMidnight24
 import java.time.LocalDate

@@ -2,7 +2,7 @@ package woowacourse.movie.mapper
 
 import woowacourse.movie.R
 import woowacourse.movie.model.Movie
-import woowacourse.movie.movie.MovieUiModel
+import woowacourse.movie.ui.model.MovieUiModel
 
 fun Movie.toUiModel(): MovieUiModel {
     return MovieUiModel(

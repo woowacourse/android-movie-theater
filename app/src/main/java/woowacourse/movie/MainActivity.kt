@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityMovieBinding
+import woowacourse.movie.movie.MovieFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieBinding

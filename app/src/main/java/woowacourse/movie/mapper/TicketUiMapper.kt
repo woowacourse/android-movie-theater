@@ -1,10 +1,10 @@
 package woowacourse.movie.mapper
 
-import woowacourse.movie.booking.detail.TicketUiModel
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Seat
 import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
+import woowacourse.movie.ui.model.TicketUiModel
 import woowacourse.movie.util.Formatter.formatDateDotSeparated
 import woowacourse.movie.util.Formatter.formatMoney
 import woowacourse.movie.util.Formatter.formatStringDateDotSeparated

@@ -1,5 +1,8 @@
 package woowacourse.movie.movie
 
+import woowacourse.movie.ui.model.MovieUiModel
+import woowacourse.movie.ui.model.TheaterUiModel
+
 interface MovieContract {
     interface View {
         fun setupMovieList(movies: List<MovieUiModel>)

@@ -1,9 +1,9 @@
-package woowacourse.movie
+package woowacourse.movie.util
 
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import woowacourse.movie.util.Formatter.formatDateDotSeparated
+import woowacourse.movie.R
 import java.time.LocalDate
 
 object BindingAdapter {
@@ -14,8 +14,8 @@ object BindingAdapter {
         screeningStartDate: LocalDate,
         screeningEndDate: LocalDate,
     ) {
-        val formattedStartDate = formatDateDotSeparated(screeningStartDate)
-        val formattedEndDate = formatDateDotSeparated(screeningEndDate)
+        val formattedStartDate = Formatter.formatDateDotSeparated(screeningStartDate)
+        val formattedEndDate = Formatter.formatDateDotSeparated(screeningEndDate)
         val formattedPeriod = textView.context.getString(R.string.screening_date_period, formattedStartDate, formattedEndDate)
 
         textView.text = formattedPeriod

@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.booking.detail
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,18 +9,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
-import woowacourse.movie.SeatSelectionActivity.Companion.KEY_TICKET
-import woowacourse.movie.booking.detail.BookingDetailContract
-import woowacourse.movie.booking.detail.BookingDetailPresenter
-import woowacourse.movie.booking.detail.TicketUiModel
+import woowacourse.movie.R
 import woowacourse.movie.booking.detail.adapter.ScreeningDateSpinnerAdapter
 import woowacourse.movie.booking.detail.adapter.ScreeningTimeSpinnerAdapter
 import woowacourse.movie.booking.detail.listener.ScreeningDateSelectedListener
 import woowacourse.movie.booking.detail.listener.ScreeningTimeSelectedListener
 import woowacourse.movie.databinding.ActivityBookingDetailBinding
 import woowacourse.movie.mapper.IntentCompat
-import woowacourse.movie.movie.MovieUiModel
-import woowacourse.movie.movie.TheaterUiModel
+import woowacourse.movie.seat.SeatSelectionActivity
+import woowacourse.movie.ui.model.MovieUiModel
+import woowacourse.movie.ui.model.TheaterUiModel
+import woowacourse.movie.ui.model.TicketUiModel
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -153,7 +152,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     override fun startSeatSelectionActivity(ticket: TicketUiModel) {
         val intent =
             Intent(this, SeatSelectionActivity::class.java).apply {
-                putExtra(KEY_TICKET, ticket)
+                putExtra(SeatSelectionActivity.Companion.KEY_TICKET, ticket)
             }
         startActivity(intent)
     }

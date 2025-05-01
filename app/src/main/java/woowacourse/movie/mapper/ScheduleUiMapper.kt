@@ -1,7 +1,7 @@
 package woowacourse.movie.mapper
 
 import woowacourse.movie.model.Schedule
-import woowacourse.movie.movie.ScheduleUiModel
+import woowacourse.movie.ui.model.ScheduleUiModel
 
 fun Schedule.toUiModel(): ScheduleUiModel {
     return ScheduleUiModel(

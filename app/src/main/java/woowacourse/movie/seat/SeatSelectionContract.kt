@@ -2,7 +2,7 @@ package woowacourse.movie.seat
 
 import android.content.Context
 import android.widget.TextView
-import woowacourse.movie.booking.detail.TicketUiModel
+import woowacourse.movie.ui.model.TicketUiModel
 
 interface SeatSelectionContract {
     interface View {

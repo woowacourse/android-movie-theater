@@ -1,6 +1,7 @@
 package woowacourse.movie.booking.detail
 
-import woowacourse.movie.movie.MovieUiModel
+import woowacourse.movie.ui.model.MovieUiModel
+import woowacourse.movie.ui.model.TicketUiModel
 import java.time.LocalDate
 import java.time.LocalTime
 

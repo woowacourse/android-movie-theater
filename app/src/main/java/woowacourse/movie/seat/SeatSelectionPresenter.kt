@@ -1,11 +1,11 @@
 package woowacourse.movie.seat
 
 import android.widget.TextView
-import woowacourse.movie.booking.detail.TicketUiModel
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Seat
 import woowacourse.movie.model.Ticket
+import woowacourse.movie.ui.model.TicketUiModel
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,

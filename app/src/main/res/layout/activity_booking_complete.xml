@@ -6,13 +6,13 @@
     <data>
         <variable
             name="ticket"
-            type="woowacourse.movie.booking.detail.TicketUiModel" />
+            type="woowacourse.movie.ui.model.TicketUiModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".BookingCompleteActivity">
+        tools:context=".booking.complete.BookingCompleteActivity">
 
         <ScrollView
             android:layout_width="match_parent"

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="ticket"
-            type="woowacourse.movie.booking.detail.TicketUiModel" />
+            type="woowacourse.movie.ui.model.TicketUiModel" />
 
     </data>
 
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/seat_selection_background"
-        tools:context=".SeatSelectionActivity">
+        tools:context=".seat.SeatSelectionActivity">
 
         <TextView
             android:id="@+id/tv_screen"
