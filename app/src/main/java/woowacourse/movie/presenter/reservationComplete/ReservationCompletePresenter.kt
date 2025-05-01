@@ -6,9 +6,6 @@ class ReservationCompletePresenter(
     private val view: ReservationCompleteContracts.View,
 ) : ReservationCompleteContracts.Presenter {
     override fun updateTicketData(movieTicket: MovieTicket) {
-        view.showTitle(movieTicket.title)
-        view.showTimestamp(movieTicket.movieDate, movieTicket.movieTime.value)
-        view.showSeatTheaterInfo(movieTicket.seats, movieTicket.theater.name)
-        view.showPrice(movieTicket.price())
+        view.showMovieTicket(movieTicket)
     }
 }
