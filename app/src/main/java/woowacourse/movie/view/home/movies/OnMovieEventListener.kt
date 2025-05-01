@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movies
+package woowacourse.movie.view.home.movies
 
 import woowacourse.movie.domain.Movie
 

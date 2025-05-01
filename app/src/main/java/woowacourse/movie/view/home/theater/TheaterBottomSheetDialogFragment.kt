@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movies
+package woowacourse.movie.view.home.theater
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,8 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.Theater
-import woowacourse.movie.view.movies.adapter.TheaterAdapter
+import woowacourse.movie.view.home.movies.OnBottomSheetDialogEventListener
+import woowacourse.movie.view.home.movies.adapter.TheaterAdapter
 
 class TheaterBottomSheetDialogFragment(
     val eventListener: OnBottomSheetDialogEventListener,

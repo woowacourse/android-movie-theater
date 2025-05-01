@@ -12,12 +12,10 @@ import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.MovieItem
 import woowacourse.movie.domain.Showings
-import woowacourse.movie.view.movies.HomeContract
-import woowacourse.movie.view.movies.HomePresenter
-import woowacourse.movie.view.movies.OnBottomSheetDialogEventListener
-import woowacourse.movie.view.movies.OnMovieEventListener
-import woowacourse.movie.view.movies.TheaterBottomSheetDialogFragment
-import woowacourse.movie.view.movies.adapter.MovieAdapter
+import woowacourse.movie.view.home.movies.OnBottomSheetDialogEventListener
+import woowacourse.movie.view.home.movies.OnMovieEventListener
+import woowacourse.movie.view.home.movies.adapter.MovieAdapter
+import woowacourse.movie.view.home.theater.TheaterBottomSheetDialogFragment
 import woowacourse.movie.view.reservation.detail.ReservationActivity
 
 class HomeFragment : Fragment(), HomeContract.View {

@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movies.adapter
+package woowacourse.movie.view.home.movies.adapter
 
 import android.view.View
 import android.widget.ImageView
@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.domain.Showings
-import woowacourse.movie.view.movies.OnTheaterEventListener
+import woowacourse.movie.view.home.theater.OnTheaterEventListener
 import java.time.LocalDateTime
 
 class TheaterViewHolder(
