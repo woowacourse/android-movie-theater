@@ -14,7 +14,7 @@ class TheaterViewHolder(
         count: Int,
     ) {
         binding.model = item
-        binding.btnSelect.setOnClickListener {
+        binding.root.setOnClickListener {
             onClick(item)
         }
         binding.screeningTimes.text =
