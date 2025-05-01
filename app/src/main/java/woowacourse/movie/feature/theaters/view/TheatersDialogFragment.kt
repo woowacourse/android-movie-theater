@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
+import woowacourse.movie.databinding.DialogFragmentTheatersBinding
 import woowacourse.movie.feature.model.ScreeningUiModel
 import woowacourse.movie.feature.theaters.view.adapter.TheaterAdapter
 
@@ -15,6 +16,7 @@ class TheatersDialogFragment(
     navigateToBookingDetail: (ScreeningUiModel) -> Unit,
 ) : BottomSheetDialogFragment() {
     private val theaterAdapter: TheaterAdapter by lazy { TheaterAdapter(screenings, navigateToBookingDetail) }
+    private lateinit var binding: DialogFragmentTheatersBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,7 +24,8 @@ class TheatersDialogFragment(
         savedInstanceState: Bundle?,
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.dialog_fragment_theaters, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_fragment_theaters, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(
@@ -30,7 +33,7 @@ class TheatersDialogFragment(
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<RecyclerView>(R.id.rv_theaters).adapter = theaterAdapter
+        binding.theaterAdapter = theaterAdapter
     }
 
     companion object {
