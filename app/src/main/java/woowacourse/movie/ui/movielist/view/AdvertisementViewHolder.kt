@@ -1,17 +1,13 @@
 package woowacourse.movie.ui.movielist.view
 
-import android.view.View
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.AdvertisementItemBinding
 import woowacourse.movie.domain.model.Advertisement
 
 class AdvertisementViewHolder(
-    itemView: View,
-) : RecyclerView.ViewHolder(itemView) {
-    val advertisementImage: ImageView = itemView.findViewById(R.id.img_advertisement)
-
+    private val itemBinding: AdvertisementItemBinding,
+) : RecyclerView.ViewHolder(itemBinding.root) {
     fun bind(item: Advertisement) {
-        advertisementImage.setImageResource(item.image)
+        itemBinding.advertisement = item
     }
 }

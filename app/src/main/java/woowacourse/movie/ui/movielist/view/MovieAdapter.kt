@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.AdvertisementItemBinding
 import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieListItem
@@ -42,15 +42,13 @@ class MovieAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
         if (viewType == VIEW_TYPE_MOVIE) {
-            val inflater = LayoutInflater.from(parent.context)
-            val itemBinding = MovieItemBinding.inflate(inflater, parent, false)
-            return MovieViewHolder(itemBinding, onClickBooking)
+            val movieItemBinding = MovieItemBinding.inflate(inflater, parent, false)
+            return MovieViewHolder(movieItemBinding, onClickBooking)
         }
-
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.advertisement_item, parent, false)
-        return AdvertisementViewHolder(view)
+        val advertisementBinding = AdvertisementItemBinding.inflate(inflater, parent, false)
+        return AdvertisementViewHolder(advertisementBinding)
     }
 
     override fun onBindViewHolder(
