@@ -16,6 +16,7 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Headcount
+import woowacourse.movie.fixture.THEATER_MEGA_BOX
 import woowacourse.movie.fixture.fakeContext
 import java.time.LocalDateTime
 
@@ -28,6 +29,7 @@ class BookingSeatActivityTest {
                 "해리 포터와 마법사의 돌",
                 LocalDateTime.of(2025, 5, 1, 12, 0),
                 Headcount(2),
+                THEATER_MEGA_BOX,
             )
         ActivityScenario.launch<BookingSeatActivity>(intent)
     }
