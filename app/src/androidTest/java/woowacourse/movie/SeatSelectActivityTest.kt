@@ -25,6 +25,7 @@ class SeatSelectActivityTest {
             LocalDate.of(2025, 4, 1),
             "18:00",
             2,
+            "선릉",
         )
     private val fakeContext: Context = ApplicationProvider.getApplicationContext()
 

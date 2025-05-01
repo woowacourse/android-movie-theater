@@ -15,11 +15,11 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.model.Movie
 import woowacourse.movie.view.Extras
-import woowacourse.movie.view.reservation.reservation.ReservationFragment
+import woowacourse.movie.view.reservation.reservation.ReservationActivity
 import java.time.LocalDate
 
-class ReservationFragmentTest {
-    private lateinit var scenario: ActivityScenario<ReservationFragment>
+class ReservationActivityTest {
+    private lateinit var scenario: ActivityScenario<ReservationActivity>
     private val fakeMovie =
         Movie(
             "라라랜드",
@@ -34,7 +34,7 @@ class ReservationFragmentTest {
     fun setUp() {
         scenario =
             ActivityScenario.launch(
-                Intent(fakeContext, ReservationFragment::class.java).putExtra(
+                Intent(fakeContext, ReservationActivity::class.java).putExtra(
                     Extras.MovieData.MOVIE_KEY,
                     fakeMovie,
                 ),
@@ -47,7 +47,7 @@ class ReservationFragmentTest {
         val intent =
             Intent(
                 fakeContext,
-                ReservationFragment::class.java,
+                ReservationActivity::class.java,
             ).putExtra(Extras.MovieData.MOVIE_KEY, wrongTypeIntent)
         scenario = ActivityScenario.launch(intent)
 
@@ -87,7 +87,7 @@ class ReservationFragmentTest {
         val intent =
             Intent(
                 fakeContext,
-                ReservationFragment::class.java,
+                ReservationActivity::class.java,
             ).putExtra(Extras.MovieData.MOVIE_KEY, fakeMovie)
         scenario = ActivityScenario.launch(intent)
 

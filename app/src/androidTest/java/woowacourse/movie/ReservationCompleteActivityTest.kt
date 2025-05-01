@@ -25,6 +25,7 @@ class ReservationCompleteActivityTest {
             "18:00",
             Seats.create(),
             25000,
+            "선릉",
         )
     private val fakeContext: Context = ApplicationProvider.getApplicationContext()
 
