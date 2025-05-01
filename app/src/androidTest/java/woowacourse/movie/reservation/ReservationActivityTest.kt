@@ -17,6 +17,7 @@ import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.domain.reservation.Movie
 import woowacourse.movie.domain.reservation.Screening
+import woowacourse.movie.domain.reservation.ShowtimePolicy
 import woowacourse.movie.view.reservation.ReservationActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -39,6 +40,12 @@ class ReservationActivityTest {
                     end = LocalDate.of(2025, 4, 21),
                     current = LocalDateTime.of(2025, 4, 19, 8, 0),
                 ),
+                "선릉 극장",
+                object : ShowtimePolicy() {
+                    override fun showtimes(current: LocalDateTime): List<LocalTime> {
+                        return emptyList()
+                    }
+                },
             ),
         )
 
