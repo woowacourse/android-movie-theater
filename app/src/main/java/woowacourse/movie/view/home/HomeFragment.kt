@@ -71,16 +71,14 @@ class HomeFragment : Fragment(), HomeContract.View {
         navigate: (Showings) -> Unit,
     ) {
         val dialog =
-            TheaterBottomSheetDialogFragment(
+            TheaterBottomSheetDialogFragment.newInstance(
+                movie,
                 object : OnBottomSheetDialogEventListener {
                     override fun onClick(showings: Showings) {
                         navigateToReservation(movie, showings)
                     }
                 },
             )
-        val bundle = Bundle()
-        bundle.putSerializable("movie", movie)
-        dialog.arguments = bundle
         dialog.show(childFragmentManager, "TheaterBottomSheetDialog")
     }
 

@@ -32,7 +32,7 @@ class TheaterBottomSheetDialogFragment(
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView: RecyclerView = view.findViewById(R.id.lv_theater_category)
+        val recyclerView: RecyclerView = view.findViewById(R.id.rv_theater_category)
 
         movie = arguments?.getSerializable("movie") as? Movie?
         showings = movie?.let { Theater.findTheatersShowingMovie(it.title) }
@@ -57,5 +57,19 @@ class TheaterBottomSheetDialogFragment(
 
         recyclerView.adapter = theaterAdapter
         theaterAdapter.submitList(showings)
+    }
+
+    companion object {
+        fun newInstance(
+            movie: Movie,
+            eventListener: OnBottomSheetDialogEventListener,
+        ): TheaterBottomSheetDialogFragment {
+            return TheaterBottomSheetDialogFragment(eventListener).apply {
+                arguments =
+                    Bundle().apply {
+                        putSerializable("movie", movie)
+                    }
+            }
+        }
     }
 }

@@ -53,6 +53,16 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        presenter.onSaveState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        presenter.onRestoreState(savedInstanceState)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> onBackPressedDispatcher.onBackPressed()
