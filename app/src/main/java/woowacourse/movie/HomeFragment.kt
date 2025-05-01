@@ -4,37 +4,93 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import woowacourse.movie.data.MovieStore
+import woowacourse.movie.data.TheaterStore
+import woowacourse.movie.databinding.FragmentHomeBinding
+import woowacourse.movie.domain.model.theater.Theaters
+import woowacourse.movie.view.booking.BookingActivity
+import woowacourse.movie.view.movies.MovieListContract
+import woowacourse.movie.view.movies.MovieListPresenter
+import woowacourse.movie.view.movies.adapter.MovieAdapter
+import woowacourse.movie.view.movies.bottomsheet.TheaterBottomSheet
+import woowacourse.movie.view.movies.model.ScreeningInfo
+import woowacourse.movie.view.movies.model.UiModel
 
-class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
+class HomeFragment : Fragment(R.layout.fragment_home), MovieListContract.View {
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+    private val presenter: MovieListContract.Presenter by lazy {
+        MovieListPresenter(this, MovieStore(), TheaterStore())
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
+
+    private fun initView() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+        presenter.loadUiData()
+    }
+
+    override fun showMovieList(movieList: List<UiModel>) {
+        val rv = binding.rv
+        val adapter =
+            MovieAdapter(
+                itemsList = movieList,
+                onClickBooking = {
+                    presenter.loadTheaters(it)
+                },
+            )
+        rv.layoutManager = LinearLayoutManager(requireContext())
+        rv.adapter = adapter
+    }
+
+    override fun showTheaterBottomSheet(
+        movieId: Int,
+        theaters: Theaters,
+    ) {
+        TheaterBottomSheet(
+            theaters,
+            movieId,
+            onclick = {
+                presenter.loadMovieScreening(movieId, it)
+            },
+        ).show(childFragmentManager, THEATER_BOTTOM_SHEET)
+    }
+
+    override fun moveToBooking(screening: ScreeningInfo) {
+        val intent = BookingActivity.newIntent(requireContext(), screening)
+        startActivity(intent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance(
-            param1: String,
-            param2: String,
-        ) = HomeFragment().apply {
-            arguments =
-                Bundle().apply {
-                }
-        }
+        private const val THEATER_BOTTOM_SHEET = "BOTTOM_SHEET"
     }
 }

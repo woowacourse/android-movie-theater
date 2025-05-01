@@ -23,7 +23,6 @@ class MovieListPresenter(
                 items.add(Advertisement().toUiModel())
             }
         }
-
         view.showMovieList(items)
     }
 

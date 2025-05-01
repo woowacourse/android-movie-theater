@@ -6,7 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import woowacourse.movie.BookingHistoryFragment
+import woowacourse.movie.HomeFragment
 import woowacourse.movie.R
+import woowacourse.movie.SettingFragment
 import woowacourse.movie.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -25,5 +29,36 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             binding.navigation.selectedItemId = R.id.fragment_container_view
         }
+
+        val historyFragment = BookingHistoryFragment()
+        val homeFragment = HomeFragment()
+        val settingFragment = SettingFragment()
+
+        binding.navigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.action_history -> {
+                    replaceFragment(historyFragment)
+                    true
+                }
+
+                R.id.action_home -> {
+                    replaceFragment(homeFragment)
+                    true
+                }
+
+                R.id.action_setting -> {
+                    replaceFragment(settingFragment)
+                    true
+                }
+
+                else -> return@setOnItemSelectedListener false
+            }
+        }
+    }
+
+    fun replaceFragment(fragment: Fragment) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container_view, fragment)
+        fragmentTransaction.commit()
     }
 }
