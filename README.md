@@ -56,7 +56,7 @@
 - [X] 홈 화면 Fragment 구현
 - [X] 설정 화면 Fragment 구현
 - [X] bottomNavigationBar 구현
-- [ ] MovieActivity 구현
+- [X] MovieActivity 구현
 
 ## 리팩토링할 부분
 - [ ] 좌석 선택 화면에서 선택한 인원 수만큼 좌석을 선택할 수 있게 변경한다.
