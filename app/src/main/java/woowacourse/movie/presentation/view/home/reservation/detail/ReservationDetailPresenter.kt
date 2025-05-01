@@ -83,9 +83,8 @@ class ReservationDetailPresenter(
 
         val selectedDate = getValidSelectedDate(selectedDateTime, availableDates)
         val availableTimes = selectedDate?.let { getAvailableTimesFor(it) }.orEmpty()
-        val selectedDateTimeToShow = selectedDate?.atTime(availableTimes.firstOrNull() ?: LocalTime.MIN)
 
-        view.updateDates(availableDates, availableTimes, selectedDateTimeToShow)
+        view.updateDates(availableDates, availableTimes, selectedDateTime)
     }
 
     private fun getValidSelectedDate(

@@ -1,12 +1,11 @@
 package woowacourse.movie.domain.model.movie
 
-import java.io.Serializable
 import java.time.LocalDate
 
 data class ScreeningPeriod(
     val startDate: LocalDate,
     val endDate: LocalDate,
-) : Serializable {
+) {
     init {
         require(!startDate.isAfter(endDate)) {
             INVALID_DATE_RANGE_MESSAGE.format(startDate, endDate)

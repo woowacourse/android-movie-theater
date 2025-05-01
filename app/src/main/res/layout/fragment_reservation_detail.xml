@@ -1,8 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="movie"
+            type="woowacourse.movie.presentation.model.MovieUiModel" />
+
+        <variable
+            name="reservationCount"
+            type="Integer" />
+
+        <variable
+            name="isEnabled"
+            type="Boolean" />
+
+        <variable
+            name="dates"
+            type="java.util.List&lt;java.time.LocalDate>" />
+
+        <variable
+            name="selectedDate"
+            type="java.time.LocalDate" />
+
+        <variable
+            name="times"
+            type="java.util.List&lt;java.time.LocalTime>" />
+
+        <variable
+            name="selectedTime"
+            type="java.time.LocalTime" />
 
     </data>
 
@@ -25,7 +54,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/movie_poster"
                 android:scaleType="centerCrop"
-                tools:src="@drawable/harrypotter" />
+                android:src="@drawable/harrypotter" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,6 +68,7 @@
                     android:id="@+id/tv_reservation_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{movie.title}"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold"
@@ -49,6 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="29dp"
+                    android:text="@{String.format(@string/movie_date, movie.screeningPeriod.formatedStartDate(@string/movie_screening_period_format), movie.screeningPeriod.formatedEndDate(@string/movie_screening_period_format))}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     tools:text="상영일: 2025.4.1 ~ 2025.4.25" />
@@ -57,6 +88,7 @@
                     android:id="@+id/tv_reservation_running_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{String.format(@string/running_time, movie.runningTime)}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     tools:text="러닝타임: 152분" />
@@ -71,7 +103,9 @@
                         android:id="@+id/spinner_reservation_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        app:items="@{dates}"
+                        app:selectedItem="@{selectedDate}" />
 
                     <Space
                         android:layout_width="20dp"
@@ -81,7 +115,9 @@
                         android:id="@+id/spinner_reservation_time"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        app:items="@{times}"
+                        app:selectedItem="@{selectedTime}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -96,6 +132,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:enabled="@{isEnabled}"
                         android:text="@string/reservation_count_minus"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -106,6 +143,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
+                        android:text="@{String.valueOf(reservationCount)}"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         tools:text="1" />
