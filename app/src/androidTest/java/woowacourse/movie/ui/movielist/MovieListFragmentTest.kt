@@ -8,14 +8,15 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.ui.movielist.view.MovieListActivity
+import woowacourse.movie.ui.MovieBookingActivity
 
-class MovieListActivityTest {
+class MovieListFragmentTest {
     @get:Rule
-    val activityRule = ActivityScenarioRule(MovieListActivity::class.java)
+    val activityRule = ActivityScenarioRule(MovieBookingActivity::class.java)
 
     @Test
     fun `리사이클러뷰가_화면에_출력된다`() {
-        onView(withId(R.id.movies_recycler_view)).check(matches(isDisplayed()))
+        onView(withId(R.id.movies_recycler_view))
+            .check(matches(isDisplayed()))
     }
 }
