@@ -19,20 +19,34 @@ class MoviesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setupBinding()
+        setupWindowInsets()
+        initFragment(savedInstanceState)
+        setupBottomNavigation()
+    }
+
+    private fun setupBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movies)
+    }
+
+    private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.clMain) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
 
+    private fun initFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 replace(R.id.fcv_main, MoviesFragment())
             }
         }
+    }
 
+    private fun setupBottomNavigation() {
         binding.bottomNavigationView.selectedItemId = R.id.fragment_movies
         binding.bottomNavigationView.setOnItemSelectedListener {
             val fragment =
@@ -42,7 +56,6 @@ class MoviesActivity : AppCompatActivity() {
                     R.id.fragment_setting -> SettingFragment()
                     else -> throw IllegalArgumentException(ERROR_INVALID_FRAGMENT)
                 }
-
             replaceFragment(fragment)
             true
         }
@@ -52,7 +65,6 @@ class MoviesActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.fcv_main, fragment)
-            addToBackStack(null)
         }
     }
 

@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="reservationState"
             type="woowacourse.movie.model.ReservationState" />
+
         <variable
             name="presenter"
             type="woowacourse.movie.view.reservation.reservation.ReservationPresenter" />
@@ -104,10 +106,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:onClick="@{()->presenter.minusTicketCount()}"
                     android:text="@string/reservation_btn_minus"
                     android:textSize="28sp"
                     android:textStyle="bold"
-                    android:onClick="@{()->presenter.minusTicketCount()}"
                     app:layout_constraintStart_toStartOf="@id/spinner_reservation_date"
                     app:layout_constraintTop_toBottomOf="@id/spinner_reservation_date" />
 
@@ -115,18 +117,21 @@
                     android:id="@+id/btn_reservation_plus_ticket_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{()-> presenter.plusTicketCount()}"
                     android:text="@string/reservation_btn_plus"
                     android:textSize="28sp"
                     android:textStyle="bold"
-                    android:onClick="@{()-> presenter.plusTicketCount()}"
                     app:layout_constraintEnd_toEndOf="@id/spinner_reservation_time"
                     app:layout_constraintTop_toBottomOf="@id/spinner_reservation_time"
                     app:layout_constraintTop_toTopOf="@id/btn_reservation_minus_ticket_count" />
 
                 <TextView
                     android:id="@+id/tv_reservation_ticket_count"
-                    android:layout_width="15dp"
+                    android:layout_width="0dp"
                     android:layout_height="22dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
                     android:text="@{String.valueOf(presenter.reservationState.ticketCount)}"
                     android:textColor="@color/black"
                     android:textSize="20sp"
@@ -134,7 +139,7 @@
                     app:layout_constraintEnd_toStartOf="@id/btn_reservation_plus_ticket_count"
                     app:layout_constraintStart_toEndOf="@id/btn_reservation_minus_ticket_count"
                     app:layout_constraintTop_toTopOf="@id/btn_reservation_minus_ticket_count"
-                    tools:text="1" />
+                    tools:text="100" />
 
                 <Button
                     android:id="@+id/btn_reservation_select_complete"

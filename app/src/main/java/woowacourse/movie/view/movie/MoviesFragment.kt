@@ -39,9 +39,6 @@ class MoviesFragment :
                 container,
                 false,
             )
-
-        binding.fragmentMovies = this
-
         return binding.root
     }
 
