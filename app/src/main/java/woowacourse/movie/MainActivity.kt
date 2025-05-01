@@ -26,20 +26,24 @@ class MainActivity : DataBindingBaseActivity<ActivityMainBinding>() {
     }
 
     private fun setBottomNavigationView() {
+        val bookingListFragment = BookingListFragment()
+        val moviesFragment = MoviesFragment()
+        val settingsFragment = SettingsFragment()
+
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_list -> {
-                    replaceFragment(BookingListFragment())
+                    replaceFragment(bookingListFragment)
                     true
                 }
 
                 R.id.action_home -> {
-                    replaceFragment(MoviesFragment())
+                    replaceFragment(moviesFragment)
                     true
                 }
 
                 R.id.action_settings -> {
-                    replaceFragment(SettingsFragment())
+                    replaceFragment(settingsFragment)
                     true
                 }
 
