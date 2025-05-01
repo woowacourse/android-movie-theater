@@ -81,6 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:isPayed="@{true}"
             android:ticketPrice="@{movieTicket.price()}"
             android:textColor="@color/black"
             android:textSize="20sp"

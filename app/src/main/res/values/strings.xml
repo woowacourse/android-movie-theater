@@ -28,7 +28,7 @@
     <!-- 좌석 선택 페이지 -->
     <string name="seat_selection_screen">SCREEN</string>
     <string name="seat_selection_complete_button">확인</string>
-    <string name="seat_selection_ticket_price">%d원</string>
+    <string name="seat_selection_ticket_price">%s원</string>
 
     <!-- 바텀 네비게이션 -->
     <string name="bottom_navigation_reservation_details">예매 내역</string>

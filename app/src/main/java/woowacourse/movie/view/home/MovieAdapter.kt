@@ -83,7 +83,6 @@ class MovieAdapter(
     override fun getItemId(position: Int): Long = position.toLong()
 
     companion object {
-        private const val AD_POSITION_INTERVAL = 3
         private const val AD_POSITION_MULTIPLE = 4
         private val MOVIE_ITEM_TYPE = R.layout.item_movie
         private val AD_ITEM_TYPE = R.layout.item_advertisement

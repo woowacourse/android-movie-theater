@@ -66,15 +66,25 @@ fun setTheaterInfo(
         )
 }
 
-@BindingAdapter("android:ticketPrice")
+@BindingAdapter("android:ticketPrice", "android:isPayed", requireAll = true)
 fun setFormatTicketPrice(
     textView: TextView,
     ticketPrice: Int,
+    isPayed: Boolean,
 ) {
     val formatPrice: String = priceToUI(ticketPrice)
 
-    textView.text =
-        textView.context.getString(
-            R.string.reservation_complete_ticket_price, formatPrice,
-        )
+    if (isPayed) {
+        textView.text =
+            textView.context.getString(
+                R.string.reservation_complete_ticket_price,
+                formatPrice,
+            )
+    } else {
+        textView.text =
+            textView.context.getString(
+                R.string.seat_selection_ticket_price,
+                formatPrice,
+            )
+    }
 }
