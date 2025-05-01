@@ -42,9 +42,7 @@ class ReservationActivityTest {
                 ),
                 "선릉 극장",
                 object : ShowtimePolicy() {
-                    override fun showtimes(current: LocalDateTime): List<LocalTime> {
-                        return emptyList()
-                    }
+                    override fun showtimes(current: LocalDateTime): List<LocalTime> = listOf(LocalTime.of(22, 0))
                 },
             ),
         )
@@ -114,9 +112,11 @@ class ReservationActivityTest {
 
     @Test
     fun `사용자는_인원_날짜_선택_후에_좌석을_고를_수_있다`() {
+        // when
         onView(withId(R.id.btn_reservation_select_complete))
             .perform(click())
 
+        // then
         onView(withId(R.id.layout_seat_selection))
             .check(matches(isDisplayed()))
     }
