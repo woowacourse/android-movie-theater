@@ -25,7 +25,7 @@ class ReservationSeatViews(
         screen: ScreenUiModel,
         selectedSeats: List<SeatUiModel>,
     ) {
-        binding.tvSeatsMovieTitle.text = reservationInfo.title
+        // binding.tvSeatsMovieTitle.text = reservationInfo.title
         renderSeatLayout(screen, selectedSeats)
     }
 
@@ -38,8 +38,7 @@ class ReservationSeatViews(
     }
 
     fun updateTotalPrice(price: Int) {
-        binding.tvSeatsTotalPrice.text =
-            context.getString(R.string.reservation_select_total_price_format, price)
+        binding.money = price
     }
 
     fun updateSeatState(seat: SeatUiModel) {

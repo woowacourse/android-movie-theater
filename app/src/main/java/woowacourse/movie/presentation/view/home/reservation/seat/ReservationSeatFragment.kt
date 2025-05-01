@@ -48,6 +48,7 @@ class ReservationSeatFragment :
             arguments.getParcelableCompat<ReservationInfoUiModel>(BUNDLE_KEY_RESERVATION_INFO)
         val restoredSeats =
             savedInstanceState?.getParcelableCompat<ScreenUiModel>(BUNDLE_RESTORE_KEY_SEATS)
+        binding.reservationInfo = reservationInfo
         presenter.fetchData(reservationInfo, screen, restoredSeats)
     }
 
