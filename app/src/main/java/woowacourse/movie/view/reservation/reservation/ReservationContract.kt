@@ -26,6 +26,8 @@ interface ReservationContract {
         fun updateTimeAdapter(times: List<String>)
 
         fun navigateToSeatSelect(ticket: MovieTicket)
+
+        fun showToast(stringResId: Int)
     }
 
     interface Presenter {

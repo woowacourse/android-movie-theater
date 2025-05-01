@@ -209,6 +209,10 @@ class ReservationActivity :
         startActivity(intent)
     }
 
+    override fun showToast(stringResId: Int) {
+        Toast.makeText(this, getString(stringResId), Toast.LENGTH_SHORT).show()
+    }
+
     private fun setupSavedData(savedInstanceState: Bundle?) {
         val savedCount = savedInstanceState?.getInt(Extras.ReservationData.TICKET_COUNT_KEY) ?: 1
         presenter.restoreTicketCount(savedCount)

@@ -13,10 +13,12 @@
     <string name="reservation_error_dialog_message">유효하지 않은 영화입니다</string>
     <string name="reservation_error_dialog_confirm">뒤로 가기</string>
     <string name="reservation_error_empty_selected_movie_time">상영 시간이 선택되지 않았습니다</string>
+    <string name="reservation_info_minimum_ticket_count">최소 1장의 티켓을 선택해주세요</string>
     <string name="reservation_btn_minus">-</string>
     <string name="reservation_btn_plus">+</string>
     <string name="reservation_btn_select_complete">선택 완료</string>
     <string name="reservation_ticket_count_default">1</string>
+
 
     <string name="seat_select_screen">Screen</string>
     <string name="seat_select_error_count">최대 %d개의 좌석만 선택할 수 있어요</string>
