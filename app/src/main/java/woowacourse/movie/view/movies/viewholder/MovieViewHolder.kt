@@ -6,22 +6,12 @@ import woowacourse.movie.view.movies.model.UiModel.MovieUiModel
 
 class MovieViewHolder(
     private val binding: MovieItemBinding,
-    onClickBooking: (Int) -> Unit,
+    private val onClickBooking: (Int) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private var mId: Int = NO_ID
-
-    init {
-        binding.btnBooking.setOnClickListener { onClickBooking(mId) }
-    }
-
     fun bind(item: MovieUiModel) {
-        with(item) {
-            mId = id
-            binding.model = item
+        with(binding) {
+            model = item
+            btnBooking.setOnClickListener { onClickBooking(item.id) }
         }
-    }
-
-    companion object {
-        private const val NO_ID: Int = -1
     }
 }
