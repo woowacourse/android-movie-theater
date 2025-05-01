@@ -43,7 +43,7 @@ class MoviesActivity : AppCompatActivity() {
                     R.id.fragment_movies -> MoviesFragment()
                     R.id.fragment_list -> ReservationListFragment()
                     R.id.fragment_setting -> SettingFragment()
-                    else -> throw IllegalArgumentException("알 수 없는 프래그먼트 입니다")
+                    else -> throw IllegalArgumentException(ERROR_INVALID_FRAGMENT)
                 }
 
             replaceFragment(fragment)
@@ -57,5 +57,9 @@ class MoviesActivity : AppCompatActivity() {
             replace(R.id.fcv_main, fragment)
             addToBackStack(null)
         }
+    }
+
+    companion object {
+        private const val ERROR_INVALID_FRAGMENT = "알 수 없는 프래그먼트 입니다"
     }
 }
