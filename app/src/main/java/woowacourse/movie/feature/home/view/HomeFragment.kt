@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
-import woowacourse.movie.feature.TheatersDialogFragment
 import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity
 import woowacourse.movie.feature.home.contract.HomeContract
 import woowacourse.movie.feature.home.presenter.HomePresenter
@@ -16,6 +15,7 @@ import woowacourse.movie.feature.home.view.adapter.Item
 import woowacourse.movie.feature.home.view.adapter.MoviesAdapter
 import woowacourse.movie.feature.model.MovieUiModel
 import woowacourse.movie.feature.model.ScreeningUiModel
+import woowacourse.movie.feature.theaters.view.TheatersDialogFragment
 
 class HomeFragment :
     Fragment(),

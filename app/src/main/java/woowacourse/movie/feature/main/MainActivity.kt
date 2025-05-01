@@ -7,9 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.feature.BookingHistoryFragment
-import woowacourse.movie.feature.SettingFragment
+import woowacourse.movie.feature.bookinghistory.BookingHistoryFragment
 import woowacourse.movie.feature.home.view.HomeFragment
+import woowacourse.movie.feature.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_main) }

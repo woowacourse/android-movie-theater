@@ -1,4 +1,4 @@
-package woowacourse.movie.feature
+package woowacourse.movie.feature.theaters.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.feature.model.ScreeningUiModel
+import woowacourse.movie.feature.theaters.view.adapter.TheaterAdapter
 
 class TheatersDialogFragment(
     screenings: List<ScreeningUiModel>,

@@ -1,4 +1,4 @@
-package woowacourse.movie.feature
+package woowacourse.movie.feature.theaters.view.adapter
 
 import android.view.View
 import android.widget.ImageView
