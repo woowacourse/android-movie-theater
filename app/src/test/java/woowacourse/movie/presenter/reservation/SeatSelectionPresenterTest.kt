@@ -27,6 +27,7 @@ class SeatSelectionPresenterTest {
                     count = 2,
                     showtime = LocalDateTime.of(2025, 4, 15, 11, 0),
                 ),
+                "선릉 극장",
                 selectedSeats = emptySet(),
             )
     }
@@ -66,6 +67,7 @@ class SeatSelectionPresenterTest {
                     count = 2,
                     showtime = LocalDateTime.of(2025, 4, 15, 11, 0),
                 ),
+                "선릉 극장",
                 selectedSeats = setOf(Seat.Companion(1, 1)),
             )
         every { view.setPrice(10000) } just Runs
@@ -102,6 +104,7 @@ class SeatSelectionPresenterTest {
                     count = 2,
                     showtime = LocalDateTime.of(2025, 4, 15, 11, 0),
                 ),
+                "선릉 극장",
                 selectedSeats = setOf(Seat.Companion(1, 1)),
             )
 
@@ -151,6 +154,7 @@ class SeatSelectionPresenterTest {
                 2,
                 LocalDateTime.of(2025, 4, 15, 11, 0),
                 setOf(),
+                "선릉 극장",
             )
         } just Runs
 
@@ -164,6 +168,7 @@ class SeatSelectionPresenterTest {
                 2,
                 LocalDateTime.of(2025, 4, 15, 11, 0),
                 setOf(),
+                "선릉 극장",
             )
         }
     }

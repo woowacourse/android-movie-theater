@@ -29,6 +29,7 @@ class TicketPresenterTest {
                     showtime = LocalDateTime.of(2025, 4, 15, 11, 0),
                 ),
                 setOf(Seat(1, 1), Seat(2, 2)),
+                "선릉 극장",
                 FakeCancelTimePolicy(15),
             )
     }
@@ -72,13 +73,13 @@ class TicketPresenterTest {
     @Test
     fun `예약 인원을 표시한다`() {
         // given
-        every { view.setCount(2, setOf(Seat(1, 1), Seat(2, 2))) } just Runs
+        every { view.setCount(2, setOf(Seat(1, 1), Seat(2, 2)), "선릉 극장") } just Runs
 
         // when
         presenter.presentCount()
 
         // then
-        verify { view.setCount(2, setOf(Seat(1, 1), Seat(2, 2))) }
+        verify { view.setCount(2, setOf(Seat(1, 1), Seat(2, 2)), "선릉 극장") }
     }
 
     @Test

@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.contract.reservation.ReservationContract
 import woowacourse.movie.domain.reservation.Movie
 import woowacourse.movie.domain.reservation.Screening
+import woowacourse.movie.domain.reservation.ShowtimePolicy
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 class ReservationPresenterTest {
@@ -32,6 +34,13 @@ class ReservationPresenterTest {
                     LocalDate.of(2025, 4, 1),
                     LocalDate.of(2025, 4, 25),
                 ),
+                showtimePolicy =
+                    object : ShowtimePolicy() {
+                        override fun showtimes(current: LocalDateTime): List<LocalTime> {
+                            return emptyList()
+                        }
+                    },
+                "선릉 극장",
             )
     }
 
@@ -124,34 +133,18 @@ class ReservationPresenterTest {
         // given
         every {
             view.setTimes(
-                listOf(
-                    LocalTime.of(10, 0),
-                    LocalTime.of(12, 0),
-                    LocalTime.of(14, 0),
-                    LocalTime.of(16, 0),
-                    LocalTime.of(18, 0),
-                    LocalTime.of(20, 0),
-                    LocalTime.of(22, 0),
-                ),
+                emptyList(),
                 0,
             )
         } just Runs
 
         // when
-        presenter.presentTimes(LocalDate.of(2024, 4, 24))
+        presenter.presentTimes(LocalDateTime.of(2024, 4, 24, 8, 0))
 
         // then
         verify {
             view.setTimes(
-                listOf(
-                    LocalTime.of(10, 0),
-                    LocalTime.of(12, 0),
-                    LocalTime.of(14, 0),
-                    LocalTime.of(16, 0),
-                    LocalTime.of(18, 0),
-                    LocalTime.of(20, 0),
-                    LocalTime.of(22, 0),
-                ),
+                emptyList(),
                 0,
             )
         }
@@ -184,6 +177,12 @@ class ReservationPresenterTest {
                     LocalDate.of(2025, 4, 1),
                     LocalDate.of(2025, 4, 25),
                 ),
+                object : ShowtimePolicy() {
+                    override fun showtimes(current: LocalDateTime): List<LocalTime> {
+                        return emptyList()
+                    }
+                },
+                "선릉 극장",
                 ticketCount = 3,
             )
         every { view.setTicketCount(2) } just Runs
