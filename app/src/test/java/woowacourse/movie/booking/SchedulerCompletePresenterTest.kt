@@ -44,14 +44,12 @@ class SchedulerCompletePresenterTest {
 
         mockTicketUiData = mockTicket.toUiModel()
 
-        presenter = BookingCompletePresenter(view = mockView, ticket = mockTicketUiData)
+        presenter = BookingCompletePresenter(view = mockView)
     }
 
     @Test
     fun `영화 예매 정보를 화면에 표시할 수 있다`() {
-        presenter = BookingCompletePresenter(view = mockView, ticket = mockTicketUiData)
-
-        presenter.initializeData()
+        presenter.initializeData(mockTicketUiData)
 
         verify { mockView.showBookingCompleteResult(mockTicketUiData) }
         verify {

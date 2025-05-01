@@ -35,15 +35,12 @@ class SeatSelectionPresenterTest {
             )
 
         mockTicketUiData = mockTicket.toUiModel()
-
-        presenter = SeatSelectionPresenter(view = mockView, ticket = mockTicketUiData)
+        presenter = SeatSelectionPresenter(mockView)
     }
 
     @Test
     fun `티켓을_바탕으로_View에_초기_데이터를_보여준다`() {
-        presenter = SeatSelectionPresenter(view = mockView, ticket = mockTicketUiData)
-
-        presenter.initializeData()
+        presenter.initializeData(mockTicketUiData)
 
         verify { mockView.showTicket(mockTicketUiData) }
     }
@@ -53,7 +50,7 @@ class SeatSelectionPresenterTest {
         val seatTextView = mockk<TextView>(relaxed = true)
         every { seatTextView.text.toString() } returns "A1"
 
-        presenter.initializeData()
+        presenter.initializeData(mockTicketUiData)
         presenter.onSeatClicked(seatTextView)
 
         verify { mockView.showSeatState(seatTextView, isSelected = true) }
@@ -63,7 +60,7 @@ class SeatSelectionPresenterTest {
 
     @Test
     fun `예약버튼_클릭시_예약_다이얼로그를_표시한다`() {
-        presenter.initializeData()
+        presenter.initializeData(mockTicketUiData)
 
         presenter.onButtonClicked()
 

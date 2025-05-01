@@ -58,12 +58,12 @@ class SchedulerDetailPresenterTest {
 
         mockMovieUiData = mockMovie.toUiModel()
 
-        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
+        presenter = BookingDetailPresenter(view = mockView)
+        presenter.initializeData(mockMovieUiData, mockTheaterUiData)
     }
 
     @Test
     fun `영화가 주어지면 View에 초기 데이터를 보여준다`() {
-        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
         presenter.createDefaultTicket()
         presenter.setUpTicket()
 
@@ -76,7 +76,6 @@ class SchedulerDetailPresenterTest {
 
     @Test
     fun `영화가 주어졌을 때 날짜를 선택하면 Ticket에 해당 날짜가 반영되어 화면에 표시된다`() {
-        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
         presenter.createDefaultTicket()
         presenter.setUpTicket()
 
@@ -88,7 +87,6 @@ class SchedulerDetailPresenterTest {
 
     @Test
     fun `+버튼을 누르면 인원수가 0인 경우에 1명씩 추가됨을 화면에 표시한다`() {
-        presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
         presenter.createDefaultTicket()
         presenter.setUpTicket()
 
