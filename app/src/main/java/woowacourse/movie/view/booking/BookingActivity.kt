@@ -43,12 +43,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
         presenter = BookingPresenter(this, MovieStore(), PeopleCount(), screeningInfo)
         initView()
-
-        savedInstanceState?.let {
-            presenter.restorePeopleCount(it.getInt(KEY_PEOPLE_COUNT))
-            val savedTimePosition = it.getInt(KEY_SELECTED_TIME_POSITION)
-            binding.spTime.setSelection(savedTimePosition)
-        }
     }
 
     private fun initView() {
@@ -181,6 +175,16 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
         outState.putInt(KEY_PEOPLE_COUNT, binding.tvPeopleCount.text.toString().toInt())
         outState.putInt(KEY_SELECTED_TIME_POSITION, binding.spTime.selectedItemPosition)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        
+        with(savedInstanceState) {
+            presenter.restorePeopleCount(getInt(KEY_PEOPLE_COUNT))
+            val savedTimePosition = getInt(KEY_SELECTED_TIME_POSITION)
+            binding.spTime.setSelection(savedTimePosition)
+        }
     }
 
     companion object {
