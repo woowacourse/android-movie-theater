@@ -23,7 +23,6 @@ class TheatersDialogFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_fragment_theaters, container, false)
         return binding.root
     }

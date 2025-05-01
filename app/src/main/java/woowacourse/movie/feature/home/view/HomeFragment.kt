@@ -23,10 +23,6 @@ class HomeFragment :
     private lateinit var binding: FragmentHomeBinding
     private val presenter: HomeContract.Presenter by lazy { HomePresenter(this) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
