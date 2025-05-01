@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieDate
 import woowacourse.movie.domain.model.MovieTime
+import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.feature.bookingdetail.contract.BookingDetailContract
 import woowacourse.movie.feature.bookingdetail.presenter.BookingDetailPresenter
 import woowacourse.movie.feature.mapper.toUi
 import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.model.MovieDateUiModel
-import woowacourse.movie.feature.model.MovieTimeUiModel
 import woowacourse.movie.feature.model.MovieUiModel
 import woowacourse.movie.feature.model.ScreeningUiModel
 
@@ -47,7 +47,17 @@ class BookingDetailPresenterTest {
                 movieTime = MovieTime(10, 0).toUi(),
             )
 
-        screeningUiModel = ScreeningUiModel(movieUiModel, "혜화", listOf(MovieTimeUiModel(10, 0)))
+        screeningUiModel =
+            Screening(
+                Movie(
+                    title = "레디 플레이어 원",
+                    startDate = MovieDate(2025, 5, 1),
+                    endDate = MovieDate(2025, 5, 10),
+                    runningTime = 148,
+                ),
+                "혜화",
+                listOf(MovieTime(10, 0)),
+            ).toUi()
     }
 
     @Test

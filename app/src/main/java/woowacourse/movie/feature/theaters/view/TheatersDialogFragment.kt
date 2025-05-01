@@ -11,7 +11,7 @@ import woowacourse.movie.databinding.DialogFragmentTheatersBinding
 import woowacourse.movie.feature.model.ScreeningUiModel
 import woowacourse.movie.feature.theaters.view.adapter.TheaterAdapter
 
-class TheatersDialogFragment(
+open class TheatersDialogFragment(
     screenings: List<ScreeningUiModel>,
     navigateToBookingDetail: (ScreeningUiModel) -> Unit,
 ) : BottomSheetDialogFragment() {
