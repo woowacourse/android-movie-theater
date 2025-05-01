@@ -15,7 +15,7 @@ import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
 
 class MovieFragment : Fragment(), MovieContract.View {
-    private lateinit var presenter: MoviePresenter
+    private val presenter = MoviePresenter(this)
     private lateinit var binding: FragmentMovieBinding
 
     override fun onCreateView(
@@ -33,7 +33,6 @@ class MovieFragment : Fragment(), MovieContract.View {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = MoviePresenter(this)
         presenter.initializeData()
     }
 

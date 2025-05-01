@@ -24,7 +24,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
-    private lateinit var presenter: BookingDetailContract.Presenter
+    private val presenter = BookingDetailPresenter(this)
     private lateinit var binding: ActivityBookingDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,9 +34,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
         binding.detail = this
         setUpUi()
 
-        val movieData = requireMovieOrFinish()
-        val theaterData = requireTheaterOrFinish()
-        presenter = BookingDetailPresenter(this, movieData, theaterData)
+        presenter.initializeData(requireMovieOrFinish(), requireTheaterOrFinish())
 
         if (savedInstanceState != null) {
             val headCount = savedInstanceState.getInt(KEY_HEAD_COUNT)
@@ -46,8 +44,8 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
         } else {
             presenter.createDefaultTicket()
         }
+        presenter.setUpTicket()
 
-        presenter.initializeData()
         initReserveConfirm()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

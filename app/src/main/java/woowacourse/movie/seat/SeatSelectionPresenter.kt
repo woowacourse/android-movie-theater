@@ -9,11 +9,10 @@ import woowacourse.movie.ui.model.TicketUiModel
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
-    private val ticket: TicketUiModel,
 ) : SeatSelectionContract.Presenter {
     private lateinit var domainTicket: Ticket
 
-    override fun initializeData() {
+    override fun initializeData(ticket: TicketUiModel) {
         domainTicket = ticket.toDomain()
         view.showTicket(ticket)
     }

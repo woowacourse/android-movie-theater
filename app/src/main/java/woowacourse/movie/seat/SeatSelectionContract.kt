@@ -23,7 +23,7 @@ interface SeatSelectionContract {
     }
 
     interface Presenter {
-        fun initializeData()
+        fun initializeData(ticket: TicketUiModel)
 
         fun onSeatClicked(seat: TextView)
 

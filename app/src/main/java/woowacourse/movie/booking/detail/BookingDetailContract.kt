@@ -1,6 +1,7 @@
 package woowacourse.movie.booking.detail
 
 import woowacourse.movie.ui.model.MovieUiModel
+import woowacourse.movie.ui.model.TheaterUiModel
 import woowacourse.movie.ui.model.TicketUiModel
 import java.time.LocalDate
 import java.time.LocalTime
@@ -27,7 +28,12 @@ interface BookingDetailContract {
     }
 
     interface Presenter {
-        fun initializeData()
+        fun initializeData(
+            movie: MovieUiModel,
+            theater: TheaterUiModel,
+        )
+
+        fun setUpTicket()
 
         fun createDefaultTicket()
 

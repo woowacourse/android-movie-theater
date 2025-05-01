@@ -17,7 +17,9 @@ import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.ui.model.TicketUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
-    private lateinit var presenter: BookingCompleteContract.Presenter
+    private val presenter = BookingCompletePresenter(this)
+
+//    private lateinit var presenter: BookingCompleteContract.Presenter
     private lateinit var binding: ActivityBookingCompleteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,9 +28,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
         setUpUi()
 
-        val bookingResult = requireResultOrFinish()
-        presenter = BookingCompletePresenter(this, bookingResult)
-        presenter.initializeData()
+        presenter.initializeData(requireTicketOrFinish())
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -41,7 +41,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         }
     }
 
-    private fun requireResultOrFinish(): TicketUiModel {
+    private fun requireTicketOrFinish(): TicketUiModel {
         return IntentCompat.getParcelableExtra(
             intent,
             KEY_BOOKING_RESULT,

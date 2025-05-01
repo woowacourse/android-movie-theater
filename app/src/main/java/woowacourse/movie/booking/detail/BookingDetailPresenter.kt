@@ -16,13 +16,21 @@ import java.time.LocalTime
 
 class BookingDetailPresenter(
     private val view: BookingDetailContract.View,
-    private val movie: MovieUiModel,
-    private val theater: TheaterUiModel,
 ) : BookingDetailContract.Presenter {
+    private lateinit var movie: MovieUiModel
+    private lateinit var theater: TheaterUiModel
     private lateinit var ticket: Ticket
     private lateinit var scheduler: Scheduler
 
-    override fun initializeData() {
+    override fun initializeData(
+        movie: MovieUiModel,
+        theater: TheaterUiModel,
+    ) {
+        this.movie = movie
+        this.theater = theater
+    }
+
+    override fun setUpTicket() {
         scheduler = Scheduler(movie.toDomain(), theater.schedule.screeningTimes)
 
         view.showMovieInfo(movie)

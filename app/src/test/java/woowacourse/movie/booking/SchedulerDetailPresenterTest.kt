@@ -65,7 +65,7 @@ class SchedulerDetailPresenterTest {
     fun `영화가 주어지면 View에 초기 데이터를 보여준다`() {
         presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
         presenter.createDefaultTicket()
-        presenter.initializeData()
+        presenter.setUpTicket()
 
         verify { mockView.showMovieInfo(mockMovieUiData) }
         verify { mockView.showHeadCount() }
@@ -78,7 +78,7 @@ class SchedulerDetailPresenterTest {
     fun `영화가 주어졌을 때 날짜를 선택하면 Ticket에 해당 날짜가 반영되어 화면에 표시된다`() {
         presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
         presenter.createDefaultTicket()
-        presenter.initializeData()
+        presenter.setUpTicket()
 
         val selectedDate = LocalDate.of(2028, 10, 13)
         presenter.selectDate(selectedDate)
@@ -90,7 +90,7 @@ class SchedulerDetailPresenterTest {
     fun `+버튼을 누르면 인원수가 0인 경우에 1명씩 추가됨을 화면에 표시한다`() {
         presenter = BookingDetailPresenter(view = mockView, movie = mockMovieUiData, theater = mockTheaterUiData)
         presenter.createDefaultTicket()
-        presenter.initializeData()
+        presenter.setUpTicket()
 
         // 평일임
         val selectedDate = LocalDate.of(2028, 10, 13)
@@ -108,7 +108,7 @@ class SchedulerDetailPresenterTest {
         val selectedDate = LocalDate.of(2028, 10, 13)
         val selectedTime = LocalTime.of(23, 0)
         presenter.createDefaultTicket()
-        presenter.initializeData()
+        presenter.setUpTicket()
 
         presenter.selectDate(selectedDate)
         presenter.selectTime(selectedTime)
@@ -133,7 +133,7 @@ class SchedulerDetailPresenterTest {
     @Test
     fun `인원수가 10명인 경우 -버튼을 누르면 인원수가 줄어든다`() {
         presenter.restoreTicketData(10, "2028.10.13", "11:00")
-        presenter.initializeData()
+        presenter.setUpTicket()
 
         presenter.decreaseHeadCount()
         val currentTicket = presenter.getCurrentTicketUiModel()
@@ -145,7 +145,7 @@ class SchedulerDetailPresenterTest {
     @Test
     fun `저장된 인원 수가 있으면 복원된다`() {
         presenter.restoreTicketData(10, "2028.10.13", "11:00")
-        presenter.initializeData()
+        presenter.setUpTicket()
 
         val currentTicket = presenter.getCurrentTicketUiModel()
         verify { mockView.showHeadCount() }

@@ -22,7 +22,7 @@ import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.ui.model.TicketUiModel
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
-    private lateinit var presenter: SeatSelectionContract.Presenter
+    private val presenter = SeatSelectionPresenter(this)
     private lateinit var binding: ActivitySeatSelectionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +31,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
         setUi()
 
-        val ticket = requireResultOrFinish()
-        presenter = SeatSelectionPresenter(this, ticket)
-        presenter.initializeData()
+        presenter.initializeData(requireTicketOrFinish())
 
         setupSeatClickListeners()
         setupConfirmButton()
@@ -49,7 +47,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
     }
 
-    private fun requireResultOrFinish(): TicketUiModel {
+    private fun requireTicketOrFinish(): TicketUiModel {
         return IntentCompat.getParcelableExtra(
             intent,
             KEY_TICKET,

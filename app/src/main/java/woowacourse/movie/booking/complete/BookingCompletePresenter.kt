@@ -4,9 +4,11 @@ import woowacourse.movie.ui.model.TicketUiModel
 
 class BookingCompletePresenter(
     private val view: BookingCompleteContract.View,
-    private val ticket: TicketUiModel,
 ) : BookingCompleteContract.Presenter {
-    override fun initializeData() {
+    private lateinit var ticket: TicketUiModel
+
+    override fun initializeData(ticket: TicketUiModel) {
+        this.ticket = ticket
         view.showBookingCompleteResult(ticket)
     }
 }
