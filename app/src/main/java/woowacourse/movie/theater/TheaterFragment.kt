@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
@@ -40,7 +39,6 @@ class TheaterFragment : BottomSheetDialogFragment() {
         val theaters = initTheaters()
 
         val recyclerView: RecyclerView = binding.rvTheater
-        recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter =
             TheaterAdapter(theaters) { theater ->
                 parentFragmentManager.commit {
