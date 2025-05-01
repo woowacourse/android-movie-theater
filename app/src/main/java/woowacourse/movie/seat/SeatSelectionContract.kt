@@ -1,6 +1,5 @@
 package woowacourse.movie.seat
 
-import android.content.Context
 import android.widget.TextView
 import woowacourse.movie.ui.model.TicketUiModel
 
@@ -18,8 +17,6 @@ interface SeatSelectionContract {
         fun setButtonEnabled(enabled: Boolean)
 
         fun showBookingAlertDialog(ticket: TicketUiModel)
-
-        fun getContext(): Context
     }
 
     interface Presenter {

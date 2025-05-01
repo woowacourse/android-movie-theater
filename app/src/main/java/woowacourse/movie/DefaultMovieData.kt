@@ -53,7 +53,7 @@ object DefaultMovieData {
                     },
             ),
             Theater(
-                place = "강남",
+                place = "진짜 너무너무너무너무너무너무 긴",
                 schedules =
                     mockMovieList().map {
                         Schedule(
@@ -104,6 +104,41 @@ object DefaultMovieData {
             ),
             Movie(
                 title = "스타 이즈 본",
+                imageSource = "star_is_born.jpg",
+                screeningStartDate = LocalDate.of(2025, 4, 19),
+                screeningEndDate = LocalDate.of(2025, 5, 30),
+                runningTime = 135,
+            ),
+            Movie(
+                title = "해리 포터와 마법사의 돌2",
+                imageSource = "harry_potter.png",
+                screeningStartDate = LocalDate.of(2025, 4, 1),
+                screeningEndDate = LocalDate.of(2025, 5, 30),
+                runningTime = 152,
+            ),
+            Movie(
+                title = "해리 포터와 비밀의 방2",
+                imageSource = "harry_potter2.png",
+                screeningStartDate = LocalDate.of(2025, 4, 1),
+                screeningEndDate = LocalDate.of(2025, 4, 30),
+                runningTime = 162,
+            ),
+            Movie(
+                title = "해리 포터와 아즈카반의 죄수2",
+                imageSource = "harry_potter3.png",
+                screeningStartDate = LocalDate.of(2025, 5, 1),
+                screeningEndDate = LocalDate.of(2025, 5, 30),
+                runningTime = 141,
+            ),
+            Movie(
+                title = "해리 포터와 불의 잔2",
+                imageSource = "harry_potter4.png",
+                screeningStartDate = LocalDate.of(2025, 6, 1),
+                screeningEndDate = LocalDate.of(2025, 6, 30),
+                runningTime = 157,
+            ),
+            Movie(
+                title = "스타 이즈 본2",
                 imageSource = "star_is_born.jpg",
                 screeningStartDate = LocalDate.of(2025, 4, 19),
                 screeningEndDate = LocalDate.of(2025, 5, 30),

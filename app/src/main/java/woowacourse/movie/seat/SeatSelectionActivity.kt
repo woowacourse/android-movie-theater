@@ -1,6 +1,5 @@
 package woowacourse.movie.seat
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -131,8 +130,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             }
         startActivity(intent)
     }
-
-    override fun getContext(): Context = this
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
