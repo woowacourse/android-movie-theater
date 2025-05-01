@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="movie"
+            type="woowacourse.movie.domain.model.movie.Movie" />
+    </data>
 
     <ScrollView
         android:id="@+id/main"
@@ -18,18 +24,19 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:orientation="vertical"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintDimensionRatio="1:2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintDimensionRatio="1:2">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/imageview_poster"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    app:posterImage="@{movie.title}" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -42,22 +49,25 @@
                         android:id="@+id/textview_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
+                        android:paddingBottom="20dp"
+                        android:text="@{movie.title}"
                         android:textSize="32sp"
-                        android:paddingBottom="20dp" />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textview_screeningdate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="@{String.format(@string/date_text, movie.startScreeningDate, movie.endScreeningDate)}"
                         android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/textview_runningtime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:paddingBottom="40dp" />
+                        android:paddingBottom="40dp"
+                        android:text="@{String.format(@string/runningTime_text, movie.runningTime)}"
+                        android:textSize="20sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -80,9 +90,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:padding="10dp">
 
                         <Button
                             android:id="@+id/button_decrease"

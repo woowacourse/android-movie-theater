@@ -14,7 +14,6 @@ import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.presentation.seats.SeatsActivity
 import woowacourse.movie.ui.DataBindingBaseActivity
 import woowacourse.movie.ui.constant.IntentKeys
-import woowacourse.movie.ui.util.PosterMapper
 import woowacourse.movie.ui.util.intentSerializable
 import java.time.LocalDate
 import java.time.LocalTime
@@ -66,11 +65,7 @@ class BookingActivity :
     }
 
     override fun showMovie(movie: Movie) {
-        binding.imageviewPoster.setImageResource(PosterMapper.convertTitleToResId(movie.title))
-        binding.textviewTitle.text = movie.title
-        binding.textviewScreeningdate.text =
-            getString(R.string.date_text, movie.startScreeningDate, movie.endScreeningDate)
-        binding.textviewRunningtime.text = getString(R.string.runningTime_text, movie.runningTime)
+        binding.movie = movie
     }
 
     override fun showBookableDates(dates: List<LocalDate>) {
