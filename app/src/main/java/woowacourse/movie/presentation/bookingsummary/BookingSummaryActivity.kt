@@ -7,11 +7,7 @@ import woowacourse.movie.databinding.ActivityBookingsummaryBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.ui.DataBindingBaseActivity
 import woowacourse.movie.ui.constant.IntentKeys
-import woowacourse.movie.ui.util.TicketUiFormatter.formatAmount
-import woowacourse.movie.ui.util.TicketUiFormatter.formatDateTime
-import woowacourse.movie.ui.util.TicketUiFormatter.formatHeadCount
 import woowacourse.movie.ui.util.intentSerializable
-import woowacourse.movie.ui.util.toUi
 
 class BookingSummaryActivity :
     DataBindingBaseActivity<ActivityBookingsummaryBinding>(),
@@ -33,13 +29,8 @@ class BookingSummaryActivity :
     }
 
     override fun showTicket(ticket: MovieTicket) {
+        binding.ticket = ticket
         binding.textviewNotice.text = String.format(getString(R.string.cancel_notice), CANCELABLE_TIME)
-        binding.textviewTitle.text = ticket.movieTitle
-        binding.textviewScreeningdatetime.text = formatDateTime(ticket.screeningDateTime)
-        binding.textviewHeadcount.text = formatHeadCount(getString(R.string.headCount_message), ticket.headCount)
-        binding.textviewSeats.text = ticket.seats.toUi()
-        binding.textviewTheaterName.text = ticket.theaterName
-        binding.textviewAmount.text = formatAmount(getString(R.string.summary_amount_message), ticket.amount)
     }
 
     private fun fetchTicketFromIntent(): Boolean {
