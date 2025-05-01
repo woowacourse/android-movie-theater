@@ -3,15 +3,12 @@ package woowacourse.movie.presentation.view.home.reservation.result
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationResultBinding
 import woowacourse.movie.presentation.base.BaseFragment
 import woowacourse.movie.presentation.base.HomeButtonHandler
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.model.TicketBundleUiModel
-import woowacourse.movie.presentation.view.home.movies.MoviesFragment
 
 class ReservationResultFragment :
     BaseFragment<FragmentReservationResultBinding>(R.layout.fragment_reservation_result),
@@ -41,18 +38,6 @@ class ReservationResultFragment :
         cancellationTime: Int,
     ) {
         views.bindReservationResult(ticketBundle, cancellationTime)
-    }
-
-    override fun onHomePressed() {
-        navigateToMoviesScreen()
-    }
-
-    private fun navigateToMoviesScreen() {
-        parentFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        parentFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.fragment_container_view, MoviesFragment())
-        }
     }
 
     companion object {
