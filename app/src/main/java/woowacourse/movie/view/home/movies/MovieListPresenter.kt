@@ -27,7 +27,8 @@ class MovieListPresenter(
     }
 
     override fun loadTheaters(movieId: Int) {
-        view.showTheaterBottomSheet(movieId, theaters)
+        val bookingAbleTheater = theaters.bookingAbleTheater(movieId)
+        view.showTheaterBottomSheet(movieId, bookingAbleTheater)
     }
 
     override fun loadMovieScreening(

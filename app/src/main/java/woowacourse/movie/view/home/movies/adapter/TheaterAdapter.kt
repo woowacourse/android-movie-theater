@@ -31,6 +31,7 @@ class TheaterAdapter(
         position: Int,
     ) {
         val item = items[position]
+
         holder.bind(item, item.screeningTimeCount(movieId))
     }
 }
