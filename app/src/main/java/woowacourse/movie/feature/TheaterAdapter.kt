@@ -4,12 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Screening
-import woowacourse.movie.domain.model.Screenings
+import woowacourse.movie.feature.model.ScreeningUiModel
 
 class TheaterAdapter(
-    private val items: Screenings,
-    private val onBookingClick: (Screening) -> Unit,
+    private val items: List<ScreeningUiModel>,
+    private val onBookingClick: (ScreeningUiModel) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -23,9 +22,9 @@ class TheaterAdapter(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
-        val item = items.value[position]
-        (holder as TheaterViewHolder).bind(item, onBookingClick)
+        val item: ScreeningUiModel = items[position]
+        (holder as TheaterViewHolder).bind(item) { onBookingClick(item) }
     }
 
-    override fun getItemCount(): Int = items.value.size
+    override fun getItemCount(): Int = items.size
 }

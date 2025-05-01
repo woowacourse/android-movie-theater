@@ -6,9 +6,8 @@
     tools:context=".feature.bookingcomplete.view.BookingCompleteActivity">
 
     <data>
-
         <variable
-            name="booking_info"
+            name="bookingInfo"
             type="woowacourse.movie.feature.model.BookingInfoUiModel" />
     </data>
 
@@ -37,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:text="@{booking_info.movie.title}"
+            android:text="@{bookingInfo.movie.title}"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@{@string/booking_complete_movie_date_time(booking_info.date.toString(), booking_info.movieTime.toString())}"
+            android:text="@{@string/booking_complete_movie_date_time(bookingInfo.date.toString(), bookingInfo.movieTime.toString())}"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +65,7 @@
             android:layout_marginTop="80dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{@string/booking_complete_ticket_count_seat_theater(booking_info.ticketCount, booking_info.getSelectedSeatsText(), booking_info.theater.name)}"
+            android:text="@{@string/booking_complete_ticket_count_seat_theater(bookingInfo.ticketCount, bookingInfo.getSelectedSeatsText(), bookingInfo.theaterName)}"
             android:textAlignment="center"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="@{@string/booking_complete_ticket_total_price(booking_info.getTotalPriceText())}"
+            android:text="@{@string/booking_complete_ticket_total_price(bookingInfo.getTotalPriceText())}"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

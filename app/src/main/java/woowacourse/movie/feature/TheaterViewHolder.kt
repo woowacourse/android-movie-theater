@@ -5,7 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Screening
+import woowacourse.movie.feature.model.ScreeningUiModel
 
 class TheaterViewHolder(
     private val view: View,
@@ -15,11 +15,11 @@ class TheaterViewHolder(
     private val bookingButton: ImageView = view.findViewById(R.id.iv_theater_arrow)
 
     fun bind(
-        screening: Screening,
-        onBookingClick: (Screening) -> Unit,
+        screening: ScreeningUiModel,
+        onBookingClick: () -> Unit,
     ) {
-        name.text = view.context.getString(R.string.theater_name, screening.theater.name)
-        time.text = view.context.getString(R.string.theater_movie_time, screening.timesCount)
-        bookingButton.setOnClickListener { onBookingClick(screening) }
+        name.text = view.context.getString(R.string.theater_name, screening.theaterName)
+        time.text = view.context.getString(R.string.theater_movie_time, screening.times.size)
+        bookingButton.setOnClickListener { onBookingClick() }
     }
 }

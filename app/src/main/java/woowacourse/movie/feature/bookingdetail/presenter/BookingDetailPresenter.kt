@@ -12,14 +12,16 @@ import woowacourse.movie.feature.mapper.toUi
 import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.model.MovieDateUiModel
 import woowacourse.movie.feature.model.MovieTimeUiModel
+import woowacourse.movie.feature.model.ScreeningUiModel
 
 class BookingDetailPresenter(
     private val view: BookingDetailContract.View,
 ) : Presenter {
     private lateinit var bookingInfo: BookingInfo
 
-    override fun prepareBookingInfo(screening: Screening) {
-        bookingInfo = BookingInfo(screening.movie, screening.theater)
+    override fun prepareBookingInfo(screeningUiModel: ScreeningUiModel) {
+        val screening: Screening = screeningUiModel.toDomain()
+        bookingInfo = BookingInfo(screening.movie, screening.theaterName)
         bookingInfo.updateMovieTime(screening.times.first())
 
         val movieDates =

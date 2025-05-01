@@ -1,15 +1,11 @@
 package woowacourse.movie.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
 data class Movie(
     val title: String,
     val startDate: MovieDate,
     val endDate: MovieDate,
     val runningTime: Int,
-) : Parcelable {
+) {
     companion object {
         val movie0 = Movie("해리 포터와 마법사의 돌", MovieDate(2025, 4, 1), MovieDate(2025, 4, 25), 152)
         val movie1 = Movie("해리 포터와 비밀의 방", MovieDate(2025, 4, 1), MovieDate(2025, 4, 28), 162)

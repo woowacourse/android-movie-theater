@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingDetailBinding
-import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.feature.bookingdetail.contract.BookingDetailContract
 import woowacourse.movie.feature.bookingdetail.presenter.BookingDetailPresenter
 import woowacourse.movie.feature.bookingdetail.view.adapter.DateAdapter
@@ -19,6 +18,7 @@ import woowacourse.movie.feature.bookingseat.view.BookingSeatActivity
 import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.model.MovieDateUiModel
 import woowacourse.movie.feature.model.MovieTimeUiModel
+import woowacourse.movie.feature.model.ScreeningUiModel
 import woowacourse.movie.util.getExtra
 
 class BookingDetailActivity :
@@ -38,7 +38,7 @@ class BookingDetailActivity :
         setupTicketCountClickListeners()
         setupSelectCompleteClickListener()
         presenter.prepareBookingInfo(
-            intent.getExtra(SCREENING_KEY) ?: throw IllegalArgumentException(),
+            intent.getExtra(SCREENING_KEY) ?: ScreeningUiModel(),
         )
     }
 
@@ -137,7 +137,7 @@ class BookingDetailActivity :
 
         fun newIntent(
             context: Context,
-            screening: Screening,
+            screening: ScreeningUiModel,
         ): Intent =
             Intent(context, BookingDetailActivity::class.java).apply {
                 putExtra(SCREENING_KEY, screening)

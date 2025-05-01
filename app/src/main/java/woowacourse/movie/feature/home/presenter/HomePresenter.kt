@@ -15,10 +15,10 @@ class HomePresenter(
     }
 
     override fun selectMovieForBooking(movie: MovieUiModel) {
-        view.showTheaters(screenings.getMovieScreenings(movie.title))
+        view.showTheaters(screenings.getMovieScreenings(movie.title).toUi())
     }
 
     override fun selectTheater(screening: Screening) {
-        view.navigateToBookingDetail(screening)
+        view.navigateToBookingDetail(screening.toUi())
     }
 }

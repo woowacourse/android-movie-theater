@@ -8,8 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
-import woowacourse.movie.domain.model.Screening
-import woowacourse.movie.domain.model.Screenings
 import woowacourse.movie.feature.TheatersDialogFragment
 import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity
 import woowacourse.movie.feature.home.contract.HomeContract
@@ -17,6 +15,7 @@ import woowacourse.movie.feature.home.presenter.HomePresenter
 import woowacourse.movie.feature.home.view.adapter.Item
 import woowacourse.movie.feature.home.view.adapter.MoviesAdapter
 import woowacourse.movie.feature.model.MovieUiModel
+import woowacourse.movie.feature.model.ScreeningUiModel
 
 class HomeFragment :
     Fragment(),
@@ -51,13 +50,13 @@ class HomeFragment :
         binding.moviesAdapter = moviesAdapter
     }
 
-    override fun showTheaters(screenings: Screenings) {
+    override fun showTheaters(screenings: List<ScreeningUiModel>) {
         TheatersDialogFragment(screenings) { screening ->
             navigateToBookingDetail(screening)
         }.show(childFragmentManager, TheatersDialogFragment.TAG)
     }
 
-    override fun navigateToBookingDetail(screening: Screening) {
+    override fun navigateToBookingDetail(screening: ScreeningUiModel) {
         val intent = BookingDetailActivity.newIntent(requireContext(), screening)
         startActivity(intent)
     }

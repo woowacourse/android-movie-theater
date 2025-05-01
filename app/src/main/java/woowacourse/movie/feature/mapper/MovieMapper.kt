@@ -6,6 +6,8 @@ import woowacourse.movie.domain.model.MovieDate
 import woowacourse.movie.domain.model.MovieSeat
 import woowacourse.movie.domain.model.MovieSeats
 import woowacourse.movie.domain.model.MovieTime
+import woowacourse.movie.domain.model.Screening
+import woowacourse.movie.domain.model.Screenings
 import woowacourse.movie.domain.model.SeatType
 import woowacourse.movie.domain.model.TicketCount
 import woowacourse.movie.feature.model.BookingInfoUiModel
@@ -13,6 +15,7 @@ import woowacourse.movie.feature.model.MovieDateUiModel
 import woowacourse.movie.feature.model.MovieSeatUiModel
 import woowacourse.movie.feature.model.MovieTimeUiModel
 import woowacourse.movie.feature.model.MovieUiModel
+import woowacourse.movie.feature.model.ScreeningUiModel
 import woowacourse.movie.feature.model.SeatTypeUiModel
 import woowacourse.movie.resource.getPosterImage
 
@@ -36,7 +39,7 @@ fun MovieUiModel.toDomain(): Movie =
 fun BookingInfo.toUi(): BookingInfoUiModel =
     BookingInfoUiModel(
         movie = movie.toUi(),
-        theater = theater,
+        theaterName = theaterName,
         date = selectedDate.toUi(),
         movieTime = selectedTime.toUi(),
         ticketCount = currentTicketCount,
@@ -48,7 +51,7 @@ fun BookingInfo.toUi(): BookingInfoUiModel =
 fun BookingInfoUiModel.toDomain(): BookingInfo =
     BookingInfo(
         movie = movie.toDomain(),
-        theater = theater,
+        theaterName = theaterName,
         date = date.toDomain(),
         time = movieTime.toDomain(),
         seats = MovieSeats(selectedSeats.map { it.toDomain() }.toSet()),
@@ -92,3 +95,9 @@ fun SeatTypeUiModel.toDomain(row: Int): SeatType =
         SeatTypeUiModel.RANK_B -> SeatType.RANK_B
         SeatTypeUiModel.NONE -> SeatType.from(row)
     }
+
+fun Screening.toUi(): ScreeningUiModel = ScreeningUiModel(movie.toUi(), theaterName, times.map { it.toUi() })
+
+fun ScreeningUiModel.toDomain(): Screening = Screening(movie.toDomain(), theaterName, times.map { it.toDomain() })
+
+fun Screenings.toUi(): List<ScreeningUiModel> = value.map { it.toUi() }
