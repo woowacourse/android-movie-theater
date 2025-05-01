@@ -9,16 +9,16 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.Showings
-import woowacourse.movie.domain.Theater
+import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.home.movies.OnBottomSheetDialogEventListener
 import woowacourse.movie.view.home.movies.adapter.TheaterAdapter
 
 class TheaterBottomSheetDialogFragment(
     val eventListener: OnBottomSheetDialogEventListener,
-) : BottomSheetDialogFragment() {
-    private var movie: Movie? = null
-
-    private var showings: List<Showings>? = null
+) : BottomSheetDialogFragment(), TheaterContract.View {
+    private val presenter: TheaterContract.Presenter by lazy {
+        TheaterPresenter(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,19 +33,25 @@ class TheaterBottomSheetDialogFragment(
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView: RecyclerView = view.findViewById(R.id.rv_theater_category)
 
-        movie = arguments?.getSerializable("movie") as? Movie?
-        showings = movie?.let { Theater.findTheatersShowingMovie(it.title) }
+        val movie = arguments?.getSerializable("movie") as? Movie?
 
         if (movie == null) {
-            throw IllegalArgumentException()
+            handleInvalidTicket()
         } else {
-            showTheaterList(recyclerView)
+            presenter.fetchData(movie)
         }
     }
 
-    private fun showTheaterList(recyclerView: RecyclerView) {
+    override fun handleInvalidTicket() {
+        DialogFactory().showError(requireContext()) {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    override fun showTheaterList(showings: List<Showings>) {
+        val recyclerView: RecyclerView? = view?.findViewById(R.id.rv_theater_category)
+
         val theaterAdapter: TheaterAdapter =
             TheaterAdapter(
                 object : OnTheaterEventListener {
@@ -56,7 +62,7 @@ class TheaterBottomSheetDialogFragment(
                 },
             )
 
-        recyclerView.adapter = theaterAdapter
+        recyclerView?.adapter = theaterAdapter
         theaterAdapter.submitList(showings)
     }
 
