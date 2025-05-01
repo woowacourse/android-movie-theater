@@ -13,7 +13,7 @@ class SeatsTest {
         val seats = Seats(mutableSetOf(Seat(Position(0, 0)), Seat(Position(1, 1))))
         // when
         val actual = seats.reservationPrice()
-        val expected = 27000
+        val expected = 20000
         // then
         assertThat(actual).isEqualTo(expected)
     }
