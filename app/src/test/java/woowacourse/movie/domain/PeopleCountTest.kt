@@ -30,7 +30,7 @@ class PeopleCountTest {
     }
 
     @Test
-    fun `인원수가 한명보다 적으면 거짓을 반환한다`() {
+    fun `인원수가 한명보다 적으면 감소되지 않는다`() {
         // given
         val peopleCount = PeopleCount(1)
 
