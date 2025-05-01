@@ -4,8 +4,8 @@ import woowacourse.movie.domain.model.movie.Movie
 import java.io.Serializable
 import java.time.LocalTime
 
-data class ScreeningInfo(
+data class Screening(
     val theater: String,
     val movie: Movie,
-    val times: List<LocalTime>
+    val times: List<LocalTime>,
 ) : Serializable

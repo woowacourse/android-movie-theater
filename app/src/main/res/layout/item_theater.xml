@@ -8,11 +8,11 @@
 
         <variable
             name="screeningInfo"
-            type="woowacourse.movie.domain.model.ScreeningInfo" />
+            type="woowacourse.movie.domain.model.Screening" />
 
         <variable
             name="handler"
-            type="woowacourse.movie.ui.adapter.ClickListener" />
+            type="woowacourse.movie.common.adapter.ClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:src="@drawable/baseline_keyboard_arrow_right_24"
+            android:src="@drawable/ic_arrow_right"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

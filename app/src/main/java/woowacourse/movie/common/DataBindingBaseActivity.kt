@@ -1,4 +1,4 @@
-package woowacourse.movie.ui
+package woowacourse.movie.common
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import woowacourse.movie.R
 
-abstract class DataBindingBaseActivity<T: ViewDataBinding> : AppCompatActivity() {
+abstract class DataBindingBaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     abstract val layoutRes: Int @LayoutRes get
     abstract var binding: T
 

@@ -4,7 +4,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.ScreeningInfo
+import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.movie.Movie
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -22,8 +22,8 @@ class BookingPresenterTest {
             100,
         )
 
-    private val testScreeningInfo =
-        ScreeningInfo(
+    private val testScreening =
+        Screening(
             "잠실 극장",
             testMovie,
             listOf(10, 12, 14, 17, 20, 22).map { LocalTime.of(it, 0) },
@@ -32,7 +32,7 @@ class BookingPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = BookingPresenter(view, testScreeningInfo)
+        presenter = BookingPresenter(view, testScreening)
     }
 
     @Test

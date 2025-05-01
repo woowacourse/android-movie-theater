@@ -10,8 +10,9 @@ import woowacourse.movie.R
 import woowacourse.movie.data.MovieData
 import woowacourse.movie.databinding.FragmentMoviesBinding
 import woowacourse.movie.domain.model.movie.Movie
+import woowacourse.movie.presentation.movies.adapter.MovieAdapter
+import woowacourse.movie.presentation.movies.adapter.MovieListItem
 import woowacourse.movie.presentation.theater.TheaterFragment
-import woowacourse.movie.ui.adapter.MovieAdapter
 
 class MoviesFragment :
     Fragment(),
@@ -41,12 +42,12 @@ class MoviesFragment :
         presenter.onViewCreated()
     }
 
-    override fun showMovies(moviesItems: List<MoviesItem>) {
+    override fun showMovies(movieListItems: List<MovieListItem>) {
         val adapter =
             MovieAdapter {
                 presenter.onMovieClicked(it)
             }
-        adapter.submitList(moviesItems)
+        adapter.submitList(movieListItems)
         binding.recyclerviewMovies.adapter = adapter
     }
 

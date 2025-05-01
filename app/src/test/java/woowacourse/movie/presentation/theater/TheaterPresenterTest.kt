@@ -5,7 +5,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieData
-import woowacourse.movie.domain.model.ScreeningInfo
+import woowacourse.movie.domain.model.Screening
 import java.time.LocalTime
 
 class TheaterPresenterTest {
@@ -31,16 +31,17 @@ class TheaterPresenterTest {
     @Test
     fun `극장을 선택하면 화면을 이동한다`() {
         // Given
-        val screeningInfo = ScreeningInfo(
-            "선릉 극장",
-            movie,
-            listOf(LocalTime.of(12, 0))
-        )
+        val screening =
+            Screening(
+                "선릉 극장",
+                movie,
+                listOf(LocalTime.of(12, 0)),
+            )
 
         // When
-        presenter.onTheaterClicked(screeningInfo)
+        presenter.onTheaterClicked(screening)
 
         // Then
-        verify { view.navigateToBooking(screeningInfo) }
+        verify { view.navigateToBooking(screening) }
     }
 }

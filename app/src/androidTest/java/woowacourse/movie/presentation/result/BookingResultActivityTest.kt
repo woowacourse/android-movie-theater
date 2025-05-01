@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.bookingsummary
+package woowacourse.movie.presentation.result
 
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
@@ -18,7 +18,7 @@ import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
 @Suppress("ktlint:standard:function-naming")
-class BookingSummaryActivityTest {
+class BookingResultActivityTest {
     @Before
     fun setUp() {
         val ticket =
@@ -33,7 +33,7 @@ class BookingSummaryActivityTest {
         val intent =
             Intent(
                 ApplicationProvider.getApplicationContext(),
-                BookingSummaryActivity::class.java,
+                BookingResultActivity::class.java,
             ).apply {
                 putExtra("Ticket", ticket)
             }

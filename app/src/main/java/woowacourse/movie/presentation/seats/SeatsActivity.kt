@@ -8,17 +8,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.common.DataBindingBaseActivity
+import woowacourse.movie.common.constant.IntentKeys
+import woowacourse.movie.common.util.TicketUiFormatter
+import woowacourse.movie.common.util.intentSerializable
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
-import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
-import woowacourse.movie.ui.DataBindingBaseActivity
-import woowacourse.movie.ui.constant.IntentKeys
-import woowacourse.movie.ui.util.TicketUiFormatter
-import woowacourse.movie.ui.util.intentSerializable
+import woowacourse.movie.presentation.result.BookingResultActivity
 import java.io.Serializable
 
-class SeatsActivity : DataBindingBaseActivity<ActivitySeatsBinding>(), SeatsContract.View {
+class SeatsActivity :
+    DataBindingBaseActivity<ActivitySeatsBinding>(),
+    SeatsContract.View {
     override val layoutRes: Int
         get() = R.layout.activity_seats
 
@@ -48,13 +50,15 @@ class SeatsActivity : DataBindingBaseActivity<ActivitySeatsBinding>(), SeatsCont
     }
 
     override fun initSeats() {
-        binding.tablelayoutSeats.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, row ->
-            row.children.filterIsInstance<TextView>().forEachIndexed { colIndex, view ->
-                val seat = presenter.getSeat(colIndex, rowIndex)
-                view.tag = seat
-                setSeatClickListener(view, seat)
+        binding.tablelayoutSeats.children
+            .filterIsInstance<TableRow>()
+            .forEachIndexed { rowIndex, row ->
+                row.children.filterIsInstance<TextView>().forEachIndexed { colIndex, view ->
+                    val seat = presenter.getSeat(colIndex, rowIndex)
+                    view.tag = seat
+                    setSeatClickListener(view, seat)
+                }
             }
-        }
     }
 
     override fun showMovieTitle(title: String) {
@@ -71,7 +75,8 @@ class SeatsActivity : DataBindingBaseActivity<ActivitySeatsBinding>(), SeatsCont
     }
 
     override fun updateAmount(amount: Int) {
-        binding.textviewAmount.text = TicketUiFormatter.formatAmount(getString(R.string.amount_message), amount)
+        binding.textviewAmount.text =
+            TicketUiFormatter.formatAmount(getString(R.string.amount_message), amount)
     }
 
     override fun updateSelectedSeats(seats: List<Seat>) {
@@ -79,7 +84,13 @@ class SeatsActivity : DataBindingBaseActivity<ActivitySeatsBinding>(), SeatsCont
             row.children.filterIsInstance<TextView>().forEach seat@{ seatView ->
                 val seat = seatView.tag as? Seat ?: return@seat
                 seatView.setBackgroundColor(
-                    if (presenter.isSelectedSeat(seat)) getColor(R.color.selected_seat) else getColor(R.color.white),
+                    if (presenter.isSelectedSeat(seat)) {
+                        getColor(R.color.selected_seat)
+                    } else {
+                        getColor(
+                            R.color.white,
+                        )
+                    },
                 )
             }
         }
@@ -101,7 +112,7 @@ class SeatsActivity : DataBindingBaseActivity<ActivitySeatsBinding>(), SeatsCont
 
     override fun navigateToSummary(ticket: MovieTicket) {
         val intent =
-            Intent(this, BookingSummaryActivity::class.java).apply {
+            Intent(this, BookingResultActivity::class.java).apply {
                 putExtra(IntentKeys.TICKET, ticket)
             }
         startActivity(intent)
@@ -134,7 +145,8 @@ class SeatsActivity : DataBindingBaseActivity<ActivitySeatsBinding>(), SeatsCont
 
     private fun initConfirmDialog() {
         confirmDialog =
-            AlertDialog.Builder(this)
+            AlertDialog
+                .Builder(this)
                 .setTitle(getString(R.string.dialog_title))
                 .setMessage(getString(R.string.dialog_message))
                 .setPositiveButton(getString(R.string.complete)) { _, _ -> presenter.onConfirmClicked() }

@@ -20,7 +20,7 @@
             android:name=".presentation.booking.BookingActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.bookingsummary.BookingSummaryActivity"
+            android:name=".presentation.result.BookingResultActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.booking
 
 import woowacourse.movie.domain.model.HeadCount
-import woowacourse.movie.domain.model.ScreeningInfo
+import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.movie.MovieScheduler
 import woowacourse.movie.domain.model.movie.MovieTicket
 import java.time.LocalDate
@@ -10,21 +10,21 @@ import java.time.LocalTime
 
 class BookingPresenter(
     private val view: BookingContract.View,
-    private val screeningInfo: ScreeningInfo,
+    private val screening: Screening,
 ) : BookingContract.Presenter {
     private var selectedDate: LocalDate? = null
     private var selectedTime: LocalTime? = null
     private var headCount: HeadCount = HeadCount()
     private val movieScheduler: MovieScheduler by lazy {
         MovieScheduler(
-            screeningInfo.movie.startScreeningDate,
-            screeningInfo.movie.endScreeningDate,
+            screening.movie.startScreeningDate,
+            screening.movie.endScreeningDate,
         )
     }
 
     override fun onViewCreated() {
         view.initBooking()
-        view.showMovie(screeningInfo.movie)
+        view.showMovie(screening.movie)
         view.showBookableDates(movieScheduler.getBookableDates())
         view.updateHeadCount(headCount.value)
     }
@@ -34,7 +34,7 @@ class BookingPresenter(
         view.showBookableTimes(
             movieScheduler.getBookableTimes(
                 selectedDate,
-                screeningTimes = screeningInfo.times,
+                screeningTimes = screening.times,
             ),
         )
     }
@@ -56,8 +56,8 @@ class BookingPresenter(
     override fun onConfirmClicked() {
         val ticket =
             MovieTicket(
-                movieTitle = screeningInfo.movie.title,
-                theaterName = screeningInfo.theater,
+                movieTitle = screening.movie.title,
+                theaterName = screening.theater,
                 screeningDateTime = LocalDateTime.of(selectedDate, selectedTime),
                 headCount = headCount.value,
             )

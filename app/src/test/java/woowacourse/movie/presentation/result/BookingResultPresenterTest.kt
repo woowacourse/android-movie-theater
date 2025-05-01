@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.bookingsummary
+package woowacourse.movie.presentation.result
 
 import io.mockk.mockk
 import io.mockk.verify
@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.movie.MovieTicket
 import java.time.LocalDateTime
 
-class BookingSummaryPresenterTest {
-    private lateinit var view: BookingSummaryContract.View
-    private lateinit var presenter: BookingSummaryContract.Presenter
+class BookingResultPresenterTest {
+    private lateinit var view: BookingResultContract.View
+    private lateinit var presenter: BookingResultContract.Presenter
 
     private val testTicket =
         MovieTicket(
@@ -22,7 +22,7 @@ class BookingSummaryPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = BookingSummaryPresenter(view, testTicket)
+        presenter = BookingResultPresenter(view, testTicket)
     }
 
     @Test

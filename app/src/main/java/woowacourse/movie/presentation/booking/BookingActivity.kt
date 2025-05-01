@@ -7,14 +7,14 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import woowacourse.movie.R
+import woowacourse.movie.common.DataBindingBaseActivity
+import woowacourse.movie.common.constant.IntentKeys
+import woowacourse.movie.common.util.intentSerializable
 import woowacourse.movie.databinding.ActivityBookingBinding
-import woowacourse.movie.domain.model.ScreeningInfo
+import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.presentation.seats.SeatsActivity
-import woowacourse.movie.ui.DataBindingBaseActivity
-import woowacourse.movie.ui.constant.IntentKeys
-import woowacourse.movie.ui.util.intentSerializable
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Locale
@@ -28,7 +28,7 @@ class BookingActivity :
     override lateinit var binding: ActivityBookingBinding
 
     private lateinit var presenter: BookingContract.Presenter
-    private lateinit var screeningInfo: ScreeningInfo
+    private lateinit var screening: Screening
     private var dateItemPosition: Int = DEFAULT_POSITION
     private var timeItemPosition: Int = DEFAULT_POSITION
 
@@ -36,7 +36,7 @@ class BookingActivity :
         super.onCreate(savedInstanceState)
         if (!fetchMovieFromIntent()) return
         setupScreen()
-        presenter = BookingPresenter(this, screeningInfo)
+        presenter = BookingPresenter(this, screening)
         presenter.onViewCreated()
     }
 
@@ -133,13 +133,13 @@ class BookingActivity :
     }
 
     private fun fetchMovieFromIntent(): Boolean {
-        val data = intent.intentSerializable(IntentKeys.SCREENING_INFO, ScreeningInfo::class.java)
+        val data = intent.intentSerializable(IntentKeys.SCREENING_INFO, Screening::class.java)
         if (data == null) {
             Toast.makeText(this, MOVIE_INTENT_ERROR, Toast.LENGTH_SHORT).show()
             finish()
             return false
         }
-        screeningInfo = data
+        screening = data
         return true
     }
 

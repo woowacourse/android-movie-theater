@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.util
+package woowacourse.movie.common.util
 
 import woowacourse.movie.domain.model.seat.Seat
 import java.time.LocalDateTime
@@ -13,24 +13,19 @@ object TicketUiFormatter {
     fun formatHeadCount(
         message: String,
         headCount: Int,
-    ): String {
-        return String.format(message, headCount)
-    }
+    ): String = String.format(message, headCount)
 
     fun formatAmount(
         message: String,
         value: Int,
-    ): String {
-        return String.format(message, value.formatWithComma())
-    }
+    ): String = String.format(message, value.formatWithComma())
 
     private fun Int.formatWithComma(): String = "%,d".format(this)
 }
 
-fun List<Seat>.toUi(): String {
-    return this.joinToString(", ") { seat ->
+fun List<Seat>.toUi(): String =
+    this.joinToString(", ") { seat ->
         val row = 'A' + seat.seatPosition.y
         val col = seat.seatPosition.x + 1
         "$row$col"
     }
-}

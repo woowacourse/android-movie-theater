@@ -19,13 +19,14 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.ScreeningInfo
+import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.presentation.seats.SeatsActivity
 import java.time.LocalDate
 import java.time.LocalTime
 
 @RunWith(AndroidJUnit4::class)
+@Suppress("ktlint:standard:function-naming")
 class BookingActivityTest {
     private lateinit var activityScenario: ActivityScenario<BookingActivity>
 
@@ -37,22 +38,23 @@ class BookingActivityTest {
             Movie(
                 "Test",
                 LocalDate.of(2025, 4, 17),
-                LocalDate.of(2025, 4, 30),
+                LocalDate.of(2025, 5, 30),
                 100,
             )
 
-        val screeningInfo = ScreeningInfo(
-            "선릉 극장",
-            movie,
-            listOf(15, 17, 19).map { LocalTime.of(it, 0) }
-        )
+        val screening =
+            Screening(
+                "선릉 극장",
+                movie,
+                listOf(15, 17, 19).map { LocalTime.of(it, 0) },
+            )
 
         val intent =
             Intent(
                 ApplicationProvider.getApplicationContext(),
                 BookingActivity::class.java,
             ).apply {
-                putExtra("ScreeningInfo", screeningInfo)
+                putExtra("ScreeningInfo", screening)
             }
 
         activityScenario = ActivityScenario.launch(intent)

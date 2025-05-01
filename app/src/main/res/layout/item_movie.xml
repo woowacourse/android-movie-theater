@@ -10,7 +10,7 @@
 
         <variable
             name="handler"
-            type="woowacourse.movie.ui.adapter.ClickListener" />
+            type="woowacourse.movie.common.adapter.ClickListener" />
     </data>
 
     <LinearLayout

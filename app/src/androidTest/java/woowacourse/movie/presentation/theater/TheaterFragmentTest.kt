@@ -13,16 +13,18 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.common.constant.IntentKeys
 import woowacourse.movie.data.MovieData
-import woowacourse.movie.ui.constant.IntentKeys
 
 @RunWith(AndroidJUnit4::class)
+@Suppress("ktlint:standard:function-naming")
 class TheaterFragmentTest {
     private val movie = MovieData.movie1
 
-    private val args = Bundle().apply {
-        putSerializable(IntentKeys.MOVIE, movie)
-    }
+    private val args =
+        Bundle().apply {
+            putSerializable(IntentKeys.MOVIE, movie)
+        }
 
     @Test
     fun 극장_목록이_출력된다() {

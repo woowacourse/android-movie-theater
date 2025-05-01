@@ -1,6 +1,8 @@
 package woowacourse.movie.domain.model
 
-class HeadCount(private var _value: Int = INITIAL_VALUE) {
+class HeadCount(
+    private var _value: Int = INITIAL_VALUE,
+) {
     val value: Int
         get() = _value
 

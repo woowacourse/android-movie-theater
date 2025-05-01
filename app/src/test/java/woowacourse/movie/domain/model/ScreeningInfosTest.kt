@@ -11,19 +11,21 @@ class ScreeningInfosTest {
     @Test
     fun `해당 영화의 상영 정보를 반환한다`() {
         // Given
-        val testMovie = Movie(
-            "Test",
-            LocalDate.of(2025, 4, 30),
-            LocalDate.of(2025, 5, 1),
-            100
-        )
-        val data = listOf(
-            ScreeningInfo(
-                "선릉 극장",
-                testMovie,
-                listOf(LocalTime.of(12, 0))
+        val testMovie =
+            Movie(
+                "Test",
+                LocalDate.of(2025, 4, 30),
+                LocalDate.of(2025, 5, 1),
+                100,
             )
-        )
+        val data =
+            listOf(
+                Screening(
+                    "선릉 극장",
+                    testMovie,
+                    listOf(LocalTime.of(12, 0)),
+                ),
+            )
         val screeningInfos = ScreeningInfos(data)
 
         // When

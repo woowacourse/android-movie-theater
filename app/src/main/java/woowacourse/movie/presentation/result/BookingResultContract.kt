@@ -1,8 +1,8 @@
-package woowacourse.movie.presentation.bookingsummary
+package woowacourse.movie.presentation.result
 
 import woowacourse.movie.domain.model.movie.MovieTicket
 
-interface BookingSummaryContract {
+interface BookingResultContract {
     interface View {
         fun showTicket(ticket: MovieTicket)
     }

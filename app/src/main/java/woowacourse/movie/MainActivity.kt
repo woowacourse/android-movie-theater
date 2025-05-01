@@ -3,11 +3,11 @@ package woowacourse.movie
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import woowacourse.movie.common.DataBindingBaseActivity
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.bookinglist.BookingListFragment
 import woowacourse.movie.presentation.movies.MoviesFragment
-import woowacourse.movie.presentation.setting.SettingFragment
-import woowacourse.movie.ui.DataBindingBaseActivity
+import woowacourse.movie.presentation.settings.SettingsFragment
 
 class MainActivity : DataBindingBaseActivity<ActivityMainBinding>() {
     override val layoutRes: Int
@@ -39,7 +39,7 @@ class MainActivity : DataBindingBaseActivity<ActivityMainBinding>() {
                 }
 
                 R.id.action_settings -> {
-                    replaceFragment(SettingFragment())
+                    replaceFragment(SettingsFragment())
                     true
                 }
 

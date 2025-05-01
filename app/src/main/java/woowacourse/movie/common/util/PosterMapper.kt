@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.util
+package woowacourse.movie.common.util
 
 import androidx.annotation.DrawableRes
 import woowacourse.movie.R

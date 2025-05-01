@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.adapter
+package woowacourse.movie.presentation.theater.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,12 +6,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterBinding
-import woowacourse.movie.domain.model.ScreeningInfo
+import woowacourse.movie.domain.model.Screening
 
 class TheaterAdapter(
-    private val items: List<ScreeningInfo>,
-    private val onClickTheater: (ScreeningInfo) -> Unit,
-) : RecyclerView.Adapter<TheaterAdapter.TheaterViewHolder>() {
+    private val items: List<Screening>,
+    private val onClickTheater: (Screening) -> Unit,
+) : RecyclerView.Adapter<TheaterViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -33,15 +33,5 @@ class TheaterAdapter(
         position: Int,
     ) {
         holder.bind(items[position])
-    }
-
-    class TheaterViewHolder(
-        private val binding: ItemTheaterBinding,
-        private val onClickTheater: (ScreeningInfo) -> Unit,
-    ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ScreeningInfo) {
-            binding.screeningInfo = item
-            binding.handler = ClickListener<ScreeningInfo> { onClickTheater(it) }
-        }
     }
 }

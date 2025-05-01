@@ -1,30 +1,30 @@
-package woowacourse.movie.presentation.bookingsummary
+package woowacourse.movie.presentation.result
 
 import android.os.Bundle
 import android.widget.Toast
 import woowacourse.movie.R
-import woowacourse.movie.databinding.ActivityBookingsummaryBinding
+import woowacourse.movie.common.DataBindingBaseActivity
+import woowacourse.movie.common.constant.IntentKeys
+import woowacourse.movie.common.util.intentSerializable
+import woowacourse.movie.databinding.ActivityBookingResultBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
-import woowacourse.movie.ui.DataBindingBaseActivity
-import woowacourse.movie.ui.constant.IntentKeys
-import woowacourse.movie.ui.util.intentSerializable
 
-class BookingSummaryActivity :
-    DataBindingBaseActivity<ActivityBookingsummaryBinding>(),
-    BookingSummaryContract.View {
+class BookingResultActivity :
+    DataBindingBaseActivity<ActivityBookingResultBinding>(),
+    BookingResultContract.View {
     override val layoutRes: Int
-        get() = R.layout.activity_bookingsummary
+        get() = R.layout.activity_booking_result
 
-    override lateinit var binding: ActivityBookingsummaryBinding
+    override lateinit var binding: ActivityBookingResultBinding
 
-    private lateinit var presenter: BookingSummaryPresenter
+    private lateinit var presenter: BookingResultPresenter
     private lateinit var ticket: MovieTicket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!fetchTicketFromIntent()) return
         setupScreen()
-        presenter = BookingSummaryPresenter(this, ticket)
+        presenter = BookingResultPresenter(this, ticket)
         presenter.onViewCreated()
     }
 

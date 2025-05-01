@@ -3,6 +3,7 @@ package woowacourse.movie.presentation.movies
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieData
 import woowacourse.movie.domain.model.movie.Movie
+import woowacourse.movie.presentation.movies.adapter.MovieListItem
 
 class MoviesPresenter(
     private val view: MoviesContract.View,
@@ -17,12 +18,12 @@ class MoviesPresenter(
         view.showTheaterSelectDialog(movie)
     }
 
-    private fun insertAdvertisement(movies: List<Movie>): List<MoviesItem> {
-        val result = mutableListOf<MoviesItem>()
+    private fun insertAdvertisement(movies: List<Movie>): List<MovieListItem> {
+        val result = mutableListOf<MovieListItem>()
         movies.forEachIndexed { index, movie ->
-            result.add(MoviesItem.MovieItem(movie))
+            result.add(MovieListItem.MovieItem(movie))
             if ((index + INDEX_INTERVAL) % ADS_INTERVAL == 0) {
-                result.add(MoviesItem.AdvertisementItem(R.drawable.advertisement))
+                result.add(MovieListItem.AdvertisementItem(R.drawable.advertisement))
             }
         }
         return result

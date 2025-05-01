@@ -8,19 +8,19 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
-import woowacourse.movie.databinding.FragmentTheaterSelectBinding
-import woowacourse.movie.domain.model.ScreeningInfo
+import woowacourse.movie.common.constant.IntentKeys
+import woowacourse.movie.common.util.bundleSerializable
+import woowacourse.movie.databinding.FragmentTheaterBinding
+import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.presentation.booking.BookingActivity
-import woowacourse.movie.ui.adapter.TheaterAdapter
-import woowacourse.movie.ui.constant.IntentKeys
-import woowacourse.movie.ui.util.bundleSerializable
+import woowacourse.movie.presentation.theater.adapter.TheaterAdapter
 
 class TheaterFragment :
     BottomSheetDialogFragment(),
     TheaterContract.View {
     private var movie: Movie? = null
-    private lateinit var binding: FragmentTheaterSelectBinding
+    private lateinit var binding: FragmentTheaterBinding
     private lateinit var presenter: TheaterContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class TheaterFragment :
         savedInstanceState: Bundle?,
     ): View {
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_theater_select, container, false)
+            DataBindingUtil.inflate(inflater, R.layout.fragment_theater, container, false)
         return binding.root
     }
 
@@ -49,17 +49,17 @@ class TheaterFragment :
         presenter.onViewCreated()
     }
 
-    override fun showTheaters(theaters: List<ScreeningInfo>) {
+    override fun showTheaters(theaters: List<Screening>) {
         binding.recyclerviewTheaters.adapter =
             TheaterAdapter(theaters) {
                 presenter.onTheaterClicked(it)
             }
     }
 
-    override fun navigateToBooking(screeningInfo: ScreeningInfo) {
+    override fun navigateToBooking(screening: Screening) {
         val intent =
             Intent(context, BookingActivity::class.java).apply {
-                putExtra(IntentKeys.SCREENING_INFO, screeningInfo)
+                putExtra(IntentKeys.SCREENING_INFO, screening)
             }
         startActivity(intent)
     }

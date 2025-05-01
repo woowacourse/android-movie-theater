@@ -1,16 +1,16 @@
-package woowacourse.movie.ui.adapter
+package woowacourse.movie.common.adapter
 
 import android.graphics.Bitmap
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
+import woowacourse.movie.common.util.PosterMapper
+import woowacourse.movie.common.util.TicketUiFormatter.formatAmount
+import woowacourse.movie.common.util.TicketUiFormatter.formatDateTime
+import woowacourse.movie.common.util.TicketUiFormatter.formatHeadCount
+import woowacourse.movie.common.util.toUi
 import woowacourse.movie.domain.model.seat.Seat
-import woowacourse.movie.ui.util.PosterMapper
-import woowacourse.movie.ui.util.TicketUiFormatter.formatAmount
-import woowacourse.movie.ui.util.TicketUiFormatter.formatDateTime
-import woowacourse.movie.ui.util.TicketUiFormatter.formatHeadCount
-import woowacourse.movie.ui.util.toUi
 import java.time.LocalDateTime
 
 @BindingAdapter("posterImage")
