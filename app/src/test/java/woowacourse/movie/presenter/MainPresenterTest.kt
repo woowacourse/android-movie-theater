@@ -8,6 +8,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.contract.MainContract
+import woowacourse.movie.view.MainActivity.Companion.SCREEN_ID_HOME
 import woowacourse.movie.view.MainActivity.Companion.SCREEN_ID_RESERVATION_HISTORY
 
 class MainPresenterTest {
@@ -30,5 +31,17 @@ class MainPresenterTest {
 
         // then
         verify { view.updateScreen(SCREEN_ID_RESERVATION_HISTORY) }
+    }
+
+    @Test
+    fun `하단의 네비게이션 뷰 통해 홈 화면으로 이동할 수 있다`() {
+        // given
+        every { view.updateScreen(SCREEN_ID_HOME) } just Runs
+
+        // when
+        presenter.presentScreen(SCREEN_ID_HOME)
+
+        // then
+        verify { view.updateScreen(SCREEN_ID_HOME) }
     }
 }
