@@ -14,12 +14,6 @@ class ReservationResultFragment :
     BaseFragment<FragmentReservationResultBinding>(R.layout.fragment_reservation_result),
     ReservationResultContract.View,
     HomeButtonHandler {
-    private val views: ReservationResultViews by lazy {
-        ReservationResultViews(
-            requireContext(),
-            binding,
-        )
-    }
     private val presenter: ReservationResultPresenter by lazy { ReservationResultPresenter(this) }
 
     override fun onViewCreated(
@@ -37,7 +31,8 @@ class ReservationResultFragment :
         ticketBundle: TicketBundleUiModel,
         cancellationTime: Int,
     ) {
-        views.bindReservationResult(ticketBundle, cancellationTime)
+        binding.ticket = ticketBundle
+        binding.cancellationTime = cancellationTime
     }
 
     companion object {
