@@ -6,14 +6,24 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 object Formatter {
-    fun formatDateDotSeparated(date: LocalDate): String = date.format(DateTimeFormatter.ofPattern("yyyy.M.d"))
+    val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.M.d")
+
+    fun formatDateDotSeparated(date: LocalDate): String = date.format(dateFormatter)
+
+    fun formatStringDateDotSeparated(date: String): LocalDate = LocalDate.parse(date, dateFormatter)
+
+    val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
     fun formatTimeWithMidnight24(time: LocalTime): String {
         return if (time == LocalTime.MIDNIGHT) {
             "24:00"
         } else {
-            time.format(DateTimeFormatter.ofPattern("HH:mm"))
+            time.format(timeFormatter)
         }
+    }
+
+    fun formatStringTimeWithMidnight24(time: String): LocalTime {
+        return LocalTime.parse(time, timeFormatter)
     }
 
     fun formatMoney(amount: Int): String = DecimalFormat("#,###").format(amount)

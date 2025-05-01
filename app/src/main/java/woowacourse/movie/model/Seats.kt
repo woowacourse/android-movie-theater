@@ -1,11 +1,10 @@
 package woowacourse.movie.model
 
-@JvmInline
-value class Seats(
+data class Seats(
     val values: List<Seat>,
 ) {
     init {
-        require(values.all { it.isSelected }) { "선택되지 않은 Seat은 포함될 수 없습니다" }
+        require(values.all { it.isSelected }) { ERROR_UNSELECTED_SEATS }
     }
 
     val amount: Int
@@ -30,5 +29,9 @@ value class Seats(
                 Seats(values + seat.copy(isSelected = true))
             }
         }
+    }
+
+    companion object {
+        private const val ERROR_UNSELECTED_SEATS = "선택되지 않은 Seat은 포함될 수 없습니다"
     }
 }

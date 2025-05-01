@@ -7,10 +7,9 @@ import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.util.Formatter.formatDateDotSeparated
 import woowacourse.movie.util.Formatter.formatMoney
+import woowacourse.movie.util.Formatter.formatStringDateDotSeparated
+import woowacourse.movie.util.Formatter.formatStringTimeWithMidnight24
 import woowacourse.movie.util.Formatter.formatTimeWithMidnight24
-import java.time.LocalDate
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 fun Ticket.toUiModel(): TicketUiModel {
     val selectedDateText = formatDateDotSeparated(selectedDate)
@@ -29,11 +28,8 @@ fun Ticket.toUiModel(): TicketUiModel {
 }
 
 fun TicketUiModel.toDomain(): Ticket {
-    val dateFormatter = DateTimeFormatter.ofPattern("yyyy.M.d")
-    val timeFormatter = DateTimeFormatter.ofPattern("kk:mm")
-
-    val selectedDate = LocalDate.parse(selectedDateText, dateFormatter)
-    val selectedTime = LocalTime.parse(selectedTimeText, timeFormatter)
+    val selectedDate = formatStringDateDotSeparated(selectedDateText)
+    val selectedTime = formatStringTimeWithMidnight24(selectedTimeText)
 
     val parsedSeats =
         if (seats.isBlank()) {

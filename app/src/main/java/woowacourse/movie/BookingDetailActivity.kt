@@ -65,18 +65,18 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     private fun requireMovieOrFinish(): MovieUiModel {
         return IntentCompat.getParcelableExtra(intent, KEY_MOVIE_DATA, MovieUiModel::class.java)
             ?: run {
-                Log.e(TAG, "인텐트에 영화 예매 정보(KEY_MOVIE_DATA)가 없습니다")
+                Log.e(TAG, ERROR_EMPTY_MOVIE_DATA)
                 showToastErrorAndFinish(getString(R.string.booking_toast_message))
-                throw IllegalStateException("Movie 데이터가 없어서 Activity를 종료했습니다")
+                throw IllegalStateException(ERROR_FINISH_ACTIVITY.format(KEY_MOVIE_DATA))
             }
     }
 
     private fun requireTheaterOrFinish(): TheaterUiModel {
         return IntentCompat.getParcelableExtra(intent, KEY_THEATER_DATA, TheaterUiModel::class.java)
             ?: run {
-                Log.e(TAG, "인텐트에 극장 정보(KEY_THEATER_DATA)가 없습니다")
+                Log.e(TAG, ERROR_EMPTY_THEATER_DATA)
                 showToastErrorAndFinish(getString(R.string.booking_toast_message))
-                throw IllegalStateException("Theater 데이터가 없어서 Activity를 종료했습니다")
+                throw IllegalStateException(ERROR_FINISH_ACTIVITY.format(KEY_THEATER_DATA))
             }
     }
 
@@ -176,6 +176,9 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
 
     companion object {
         private const val TAG = "BookingDetailActivity"
+        private const val ERROR_EMPTY_MOVIE_DATA = "인텐트에 영화 예매 정보(KEY_MOVIE_DATA)가 없습니다"
+        private const val ERROR_EMPTY_THEATER_DATA = "인텐트에 극장 정보(KEY_THEATER_DATA)가 없습니다"
+        private const val ERROR_FINISH_ACTIVITY = "%s 데이터가 없어서 Activity를 종료했습니다"
         const val KEY_MOVIE_DATA = "movieData"
         const val KEY_THEATER_DATA = "theaterData"
         private const val KEY_HEAD_COUNT = "HEAD_COUNT"

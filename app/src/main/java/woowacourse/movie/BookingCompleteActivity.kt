@@ -48,9 +48,9 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             TicketUiModel::class.java,
         )
             ?: run {
-                Log.e(TAG, "인텐트에 영화 예매 정보(KEY_BOOKING_RESULT)가 없습니다.")
+                Log.e(TAG, ERROR_EMPTY_BOOKING_RESULT_DATA)
                 showToastErrorAndFinish(getString(R.string.booking_toast_message))
-                throw IllegalStateException("Movie 데이터가 없어서 Activity를 종료했습니다")
+                throw IllegalStateException(ERROR_FINISH_ACTIVITY.format(KEY_BOOKING_RESULT))
             }
     }
 
@@ -79,6 +79,8 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
     companion object {
         private const val TAG = "BookingCompleteActivity"
+        private const val ERROR_EMPTY_BOOKING_RESULT_DATA = "인텐트에 영화 예매 정보(KEY_BOOKING_RESULT)가 없습니다."
+        private const val ERROR_FINISH_ACTIVITY = "%s 데이터가 없어서 Activity를 종료했습니다"
         const val KEY_BOOKING_RESULT = "bookingResult"
     }
 }
