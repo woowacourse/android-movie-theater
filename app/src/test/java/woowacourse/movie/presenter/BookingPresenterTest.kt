@@ -18,13 +18,12 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 class BookingPresenterTest {
-    private lateinit var view: BookingContract.View
+    private val view: BookingContract.View = mockk<BookingContract.View>(relaxed = true)
     private lateinit var model: MovieStore
     private lateinit var presenter: BookingPresenter
 
     @BeforeEach
     fun setUp() {
-        view = mockk<BookingContract.View>(relaxed = true)
         model = MovieStore()
         presenter =
             BookingPresenter(
