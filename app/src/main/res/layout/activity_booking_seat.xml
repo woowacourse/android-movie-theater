@@ -9,6 +9,10 @@
         <variable
             name="bookingInfo"
             type="woowacourse.movie.feature.model.BookingInfoUiModel" />
+
+        <variable
+            name="onSeatSelectCompleteClick"
+            type="kotlin.jvm.functions.Function0" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,6 +88,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_movie_seat_complete_background"
                 android:enabled="@{bookingInfo.isSeatAllSelected}"
+                android:onClick="@{() -> onSeatSelectCompleteClick.invoke()}"
                 android:minWidth="88dp"
                 android:padding="28dp"
                 android:text="@string/booking_seat_select_complete"

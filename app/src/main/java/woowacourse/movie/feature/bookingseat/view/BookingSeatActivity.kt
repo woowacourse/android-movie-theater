@@ -34,7 +34,7 @@ class BookingSeatActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setupSeatSelectCompleteClickListener()
+        binding.onSeatSelectCompleteClick = presenter::completeSeatSelection
         presenter.prepareBookingInfo(bookingInfo = intent.getExtra(BOOKING_INFO_KEY) ?: BookingInfoUiModel())
     }
 
@@ -143,12 +143,6 @@ class BookingSeatActivity :
             is SeatSelectionUiState.ExceedCountFailure -> {
                 Snackbar.make(button, getString(R.string.booking_seat_exceed_count_failure), Snackbar.LENGTH_SHORT).show()
             }
-        }
-    }
-
-    private fun setupSeatSelectCompleteClickListener() {
-        binding.tvBookingSeatSelectComplete.setOnClickListener {
-            presenter.completeSeatSelection()
         }
     }
 
