@@ -34,7 +34,7 @@ class BookingDetailPresenter(
         val movieTimes = screening.times.map { it.toUi().toString() }
         view.setupTimeView(movieTimes)
 
-        view.updateView(bookingInfo.toUi())
+        view.updateBookingInfo(bookingInfo.toUi())
     }
 
     override fun selectDate(date: String) {
@@ -49,12 +49,12 @@ class BookingDetailPresenter(
 
     override fun decreaseTicketCount() {
         bookingInfo.decreaseTicketCount()
-        view.updateView(bookingInfo.toUi())
+        view.updateBookingInfo(bookingInfo.toUi())
     }
 
     override fun increaseTicketCount() {
         bookingInfo.increaseTicketCount()
-        view.updateView(bookingInfo.toUi())
+        view.updateBookingInfo(bookingInfo.toUi())
     }
 
     override fun confirmBookingInfo() {
@@ -69,6 +69,6 @@ class BookingDetailPresenter(
 
     override fun loadBookingInfo(existBookingInfo: BookingInfoUiModel) {
         bookingInfo = existBookingInfo.toDomain()
-        view.updateView(existBookingInfo)
+        view.updateBookingInfo(existBookingInfo)
     }
 }

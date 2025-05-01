@@ -72,7 +72,7 @@ class BookingDetailPresenterTest {
         verify {
             view.setupDateView(capture(dates))
             view.setupTimeView(capture(times))
-            view.updateView(capture(bookingInfo))
+            view.updateBookingInfo(capture(bookingInfo))
         }
 
         assertThat(dates.captured.first()).isEqualTo(movieUiModel.startDate)
@@ -89,7 +89,7 @@ class BookingDetailPresenterTest {
         presenter.increaseTicketCount()
 
         // then
-        verify { view.updateView(any()) }
+        verify { view.updateBookingInfo(any()) }
     }
 
     @Test
@@ -101,7 +101,7 @@ class BookingDetailPresenterTest {
         presenter.decreaseTicketCount()
 
         // then
-        verify { view.updateView(any()) }
+        verify { view.updateBookingInfo(any()) }
     }
 
     @Test
@@ -148,6 +148,6 @@ class BookingDetailPresenterTest {
         presenter.loadBookingInfo(bookingInfoUiModel)
 
         // then
-        verify { view.updateView(bookingInfoUiModel) }
+        verify { view.updateBookingInfo(bookingInfoUiModel) }
     }
 }

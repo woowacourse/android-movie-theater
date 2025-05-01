@@ -61,7 +61,7 @@ class BookingDetailActivity :
         binding.spBookingDetailTime.adapter = timeAdapter
     }
 
-    override fun updateView(bookingInfo: BookingInfoUiModel) {
+    override fun updateBookingInfo(bookingInfo: BookingInfoUiModel) {
         binding.bookingInfo = bookingInfo
     }
 

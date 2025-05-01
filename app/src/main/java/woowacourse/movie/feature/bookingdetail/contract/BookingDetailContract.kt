@@ -10,7 +10,7 @@ interface BookingDetailContract {
 
         fun setupTimeView(times: List<String>)
 
-        fun updateView(bookingInfo: BookingInfoUiModel)
+        fun updateBookingInfo(bookingInfo: BookingInfoUiModel)
 
         fun navigateToBack()
 
