@@ -19,8 +19,8 @@ import java.time.LocalTime
 
 class CinemaSelectionPresenterTest {
     private lateinit var fakeCurrent: LocalDateTime
-    private lateinit var fakeShowtimePolicy1: ShowtimePolicy
-    private lateinit var fakeShowtimePolicy2: ShowtimePolicy
+    private lateinit var jamsilShowtimePolicy: ShowtimePolicy
+    private lateinit var gangnamShowtimePolicy: ShowtimePolicy
     private lateinit var fakeScreening: Screening
     private lateinit var jamsilCinema: Cinema
     private lateinit var gangnamCinema: Cinema
@@ -30,11 +30,11 @@ class CinemaSelectionPresenterTest {
     @BeforeEach
     fun setUp() {
         fakeCurrent = LocalDateTime.of(2025, 4, 2, 10, 0)
-        fakeShowtimePolicy1 =
+        jamsilShowtimePolicy =
             object : ShowtimePolicy() {
                 override fun showtimes(current: LocalDateTime): List<LocalTime> = listOf(LocalTime.of(9, 0))
             }
-        fakeShowtimePolicy2 =
+        gangnamShowtimePolicy =
             object : ShowtimePolicy() {
                 override fun showtimes(current: LocalDateTime): List<LocalTime> = emptyList()
             }
@@ -45,8 +45,8 @@ class CinemaSelectionPresenterTest {
                 LocalDate.of(2025, 4, 25),
                 fakeCurrent,
             )
-        jamsilCinema = Cinema("잠실 극장", listOf(fakeScreening), fakeShowtimePolicy1)
-        gangnamCinema = Cinema("강남 극장", listOf(fakeScreening), fakeShowtimePolicy2)
+        jamsilCinema = Cinema("잠실 극장", listOf(fakeScreening), jamsilShowtimePolicy)
+        gangnamCinema = Cinema("강남 극장", listOf(fakeScreening), gangnamShowtimePolicy)
         view = mockk()
         presenter =
             CinemaSelectionPresenter(
@@ -76,6 +76,30 @@ class CinemaSelectionPresenterTest {
                 listOf(
                     jamsilCinema,
                 ),
+            )
+        }
+    }
+
+    @Test
+    fun `극장을 선택할 수 있다`() {
+        // given
+        every {
+            view.navigateToReservationScreen(
+                screening = fakeScreening,
+                cinemaName = "잠실 극장",
+                showtimePolicy = jamsilShowtimePolicy,
+            )
+        } just Runs
+
+        // when
+        presenter.onSelectCinema("잠실 극장", jamsilShowtimePolicy)
+
+        // then
+        verify {
+            view.navigateToReservationScreen(
+                screening = fakeScreening,
+                cinemaName = "잠실 극장",
+                showtimePolicy = jamsilShowtimePolicy,
             )
         }
     }
