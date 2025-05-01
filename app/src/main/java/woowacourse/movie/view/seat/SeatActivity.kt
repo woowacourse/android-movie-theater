@@ -20,7 +20,6 @@ import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.StringFormatter
 import woowacourse.movie.view.complete.BookingCompleteActivity
 import woowacourse.movie.view.ext.getSerializable
-import woowacourse.movie.view.seat.manager.SeatView
 
 class SeatActivity : AppCompatActivity(), SeatContract.View {
     private lateinit var binding: ActivitySeatBinding
@@ -50,8 +49,8 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
 
     private fun initSeat() {
         seatView =
-            SeatView(binding.seatTable) { coordination ->
-                presenter.changeSeat(coordination)
+            SeatView(binding.seatTable) { seat ->
+                presenter.changeSeat(seat)
             }
         seatView.initSeats()
     }

@@ -90,8 +90,8 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
     private fun seatToLabel(seats: Set<Seat>): String {
         return seats.joinToString {
-            val rowLetter = ('A' + it.x - 1)
-            val columnNumber = it.y
+            val rowLetter = ('A' + it.x.value - 1)
+            val columnNumber = it.y.value
             "$rowLetter$columnNumber"
         }
     }
