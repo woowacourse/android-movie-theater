@@ -21,6 +21,7 @@ class HomeFragment :
     Fragment(),
     HomeContract.View {
     private lateinit var binding: FragmentHomeBinding
+    private val moviesAdapter by lazy { MoviesAdapter { movie -> presenter.selectMovieForBooking(movie) } }
     private val presenter: HomeContract.Presenter by lazy { HomePresenter(this) }
 
     override fun onCreateView(
@@ -41,7 +42,6 @@ class HomeFragment :
     }
 
     override fun showMovies(movies: List<MovieUiModel>) {
-        val moviesAdapter = MoviesAdapter { movie -> presenter.selectMovieForBooking(movie) }
         moviesAdapter.submitList(Item.from(movies))
         binding.moviesAdapter = moviesAdapter
     }
