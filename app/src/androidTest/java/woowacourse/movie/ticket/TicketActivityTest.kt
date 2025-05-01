@@ -49,7 +49,11 @@ class TicketActivityTest {
     fun `인원_수가_표시된다`() {
         Espresso
             .onView(ViewMatchers.withId(R.id.tv_ticket_description))
-            .check(ViewAssertions.matches(ViewMatchers.withText("일반 2명 | A1, B2")))
+            .check(
+                ViewAssertions.matches(
+                    ViewMatchers.withText("일반 2명 | A1, B2 | 선릉 극장,선릉 극장,선릉 극장,선릉 극장,선릉 극장,선릉 극장,선릉 극장,선릉 극장,선릉 극장,선릉 극장,선릉 극장"),
+                ),
+            )
     }
 
     @Test
