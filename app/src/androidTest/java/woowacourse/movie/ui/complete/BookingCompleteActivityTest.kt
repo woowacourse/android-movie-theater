@@ -32,6 +32,7 @@ class BookingCompleteActivityTest {
                             add(Seat(0, 0, TicketType.B_GRADE))
                             add(Seat(2, 3, TicketType.S_GRADE))
                         },
+                        "선릉 극장",
                     ),
                 )
             }
@@ -56,7 +57,7 @@ class BookingCompleteActivityTest {
     fun `예매_인원을_출력한다`() {
         Espresso
             .onView(withId(R.id.tv_headcount))
-            .check(matches(withText("일반 2명 | A1, C4")))
+            .check(matches(withText("일반 2명 | A1, C4 | 선릉 극장")))
     }
 
     @Test
