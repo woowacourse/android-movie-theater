@@ -57,7 +57,12 @@ class ReservationResultActivity :
         setupMovieDate(reservationInfo.reservationDateTime)
         setupReservationCount(reservationInfo.reservationCount.value)
         setupTotalPrice(reservationInfo.totalPrice())
+        // 좌석정보
     }
+
+//    private fun setupSeats() {
+//         val
+//    }
 
     private fun setupCancelDescription() {
         val tvCancelDescription = findViewById<TextView>(R.id.tv_cancel_description)

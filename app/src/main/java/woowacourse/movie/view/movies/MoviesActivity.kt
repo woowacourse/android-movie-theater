@@ -1,7 +1,6 @@
 package woowacourse.movie.view.movies
 
 import android.os.Bundle
-import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
@@ -26,10 +25,11 @@ class MoviesActivity :
                 movies,
                 object : OnMovieEventListener {
                     override fun onReserveButtonClick(movie: Movie) {
-                        supportFragmentManager.commit {
-                            setReorderingAllowed(true)
-                            add(R.id.fragment_container_view, CinemaSeclectionFragment.newInstance(movie.screening))
-                        }
+                        val instance =
+                            CinemaSeclectionFragment.newInstance(
+                                movie.screening,
+                            )
+                        instance.show(supportFragmentManager, "CinemaSelectionFragment")
                     }
                 },
             )

@@ -42,10 +42,19 @@ class CinemaViewHolder(
         screening: Screening,
         eventListener: OnCinemaSelectionListener,
     ) {
-        tvCinemaName.text = screening.cinema.name
-        tvScreeningTime.text = screening.screeningTimes.size.toString()
-        view.setOnClickListener {
-            eventListener.onReserveButtonClick(screening)
-        }
+        tvCinemaName.text =
+            view.context.getString(
+                R.string.cinema,
+                screening.cinema.name,
+            )
+        tvScreeningTime.text =
+            view.context.getString(
+                R.string.screenig_times,
+                screening.screeningTimes.size,
+            )
+        view
+            .setOnClickListener {
+                eventListener.onReserveButtonClick(screening)
+            }
     }
 }
