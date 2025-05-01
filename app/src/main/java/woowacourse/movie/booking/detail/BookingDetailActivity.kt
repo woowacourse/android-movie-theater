@@ -77,9 +77,11 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
             }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return super.onSupportNavigateUp()
+    private fun initReserveConfirm() {
+        val btnReserveConfirm = binding.btnSelectionConfirm
+        btnReserveConfirm.setOnClickListener {
+            presenter.confirmReservation()
+        }
     }
 
     override fun showMovieInfo(movie: MovieUiModel) {
@@ -140,13 +142,6 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
             )
     }
 
-    private fun initReserveConfirm() {
-        val btnReserveConfirm = binding.btnSelectionConfirm
-        btnReserveConfirm.setOnClickListener {
-            presenter.confirmReservation()
-        }
-    }
-
     override fun startSeatSelectionActivity(ticket: TicketUiModel) {
         val intent =
             Intent(this, SeatSelectionActivity::class.java).apply {
@@ -169,6 +164,11 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
         outState.putInt(KEY_HEAD_COUNT, ticketUiModel.headCount)
         outState.putString(KEY_SCREENING_DATE, ticketUiModel.selectedDateText)
         outState.putString(KEY_SCREENING_TIME, ticketUiModel.selectedTimeText)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
     }
 
     companion object {

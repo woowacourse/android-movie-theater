@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.booking.detail.BookingDetailActivity
+import woowacourse.movie.booking.detail.BookingDetailActivity.Companion.KEY_MOVIE_DATA
+import woowacourse.movie.booking.detail.BookingDetailActivity.Companion.KEY_THEATER_DATA
 import woowacourse.movie.databinding.FragmentTheaterBinding
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
@@ -45,11 +47,10 @@ class TheaterFragment : BottomSheetDialogFragment() {
                     setReorderingAllowed(true)
                     val intent =
                         Intent(activity, BookingDetailActivity::class.java).apply {
-                            putExtra(BookingDetailActivity.Companion.KEY_THEATER_DATA, theater)
-                            putExtra(BookingDetailActivity.Companion.KEY_MOVIE_DATA, initMovie())
+                            putExtra(KEY_THEATER_DATA, theater)
+                            putExtra(KEY_MOVIE_DATA, initMovie())
                         }
                     startActivity(intent)
-                    addToBackStack(null)
                     dismiss()
                 }
             }
