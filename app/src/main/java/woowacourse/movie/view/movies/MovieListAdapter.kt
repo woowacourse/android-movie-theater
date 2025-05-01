@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemMovieBinding
 
 class MovieListAdapter(
     private val items: List<MovieListItem>,
@@ -25,7 +26,12 @@ class MovieListAdapter(
         return when (viewType) {
             R.layout.item_movie -> {
                 view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-                MovieViewHolder(view)
+                val binding = ItemMovieBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                MovieViewHolder(view, binding)
             }
 
             R.layout.item_advertisement -> {

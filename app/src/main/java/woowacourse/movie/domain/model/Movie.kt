@@ -2,7 +2,6 @@ package woowacourse.movie.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.movie.data.DummyMovie
 import woowacourse.movie.data.DummyScreening
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -13,7 +12,7 @@ data class Movie(
     val title: String,
     val runningTime: RunningTime,
     val startDate: LocalDate,
-    val endDate: LocalDate
+    val endDate: LocalDate,
 ) : Parcelable {
     val screening: List<Screening>
         get() {
@@ -30,17 +29,17 @@ data class Movie(
         return dates.filterNot { it.isBefore(startDate) }
     }
 
-    fun findByMovie(movie:Movie):List<Screening> {
+    fun findByMovie(movie: Movie): List<Screening> {
         return DummyScreening.dummyScreenings.filter { it.movie == movie }
     }
 
-    fun screeningCinemas():List<Cinema> {
+    fun screeningCinemas(): List<Cinema> {
         return screening.map { screening ->
             screening.cinema
         }
     }
 
-    fun totalScreeningTimes(cinema: Cinema):Int {
-        return screening.find { it.cinema == cinema }?.screeningTimes?.size?:throw IllegalArgumentException()
+    fun totalScreeningTimes(cinema: Cinema): Int {
+        return screening.find { it.cinema == cinema }?.screeningTimes?.size ?: throw IllegalArgumentException()
     }
 }
