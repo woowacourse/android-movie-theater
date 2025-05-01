@@ -1,6 +1,6 @@
 package woowacourse.movie.model
 
-data class ReservationState(
+data class ReservationUIModel(
     val movie: Movie,
     val movieDate: MovieDate,
     val movieTime: MovieTime,

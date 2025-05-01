@@ -5,7 +5,7 @@ import woowacourse.movie.model.MovieDao
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.model.MovieTime
-import woowacourse.movie.model.ReservationState
+import woowacourse.movie.model.ReservationUIModel
 import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.model.TicketCount
 import woowacourse.movie.view.ReservationUiFormatter
@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 class ReservationPresenter(
     val view: ReservationContract.View,
 ) : ReservationContract.Presenter {
-    lateinit var reservationState: ReservationState
+    lateinit var reservationUIModel: ReservationUIModel
     private var currentTimeTable: List<Int> = emptyList()
     private val movieDao by lazy { MovieDao() }
     var isTimeSelected = false
@@ -27,8 +27,8 @@ class ReservationPresenter(
             return
         }
 
-        reservationState =
-            ReservationState(
+        reservationUIModel =
+            ReservationUIModel(
                 movie = theaterUIModel.movie,
                 movieDate = MovieDate(theaterUIModel.movie.startDate, theaterUIModel.movie.endDate),
                 movieTime = MovieTime(),
@@ -40,8 +40,8 @@ class ReservationPresenter(
     }
 
     override fun initDateAdapter() {
-        var duration = reservationState.movieDate.getDateTable(LocalDate.now())
-        if (duration.isEmpty()) duration = listOf(reservationState.movie.startDate)
+        var duration = reservationUIModel.movieDate.getDateTable(LocalDate.now())
+        if (duration.isEmpty()) duration = listOf(reservationUIModel.movie.startDate)
 
         view.updateDateAdapter(duration, 0)
         selectDate(duration[0])
@@ -50,13 +50,13 @@ class ReservationPresenter(
     override fun selectDate(date: LocalDate) {
         val now = LocalDateTime.now()
         val screenTimes =
-            movieDao.getScreenTimes(reservationState.theaterName, reservationState.movie.title)
+            movieDao.getScreenTimes(reservationUIModel.theaterName, reservationUIModel.movie.title)
         currentTimeTable = movieDao.getTimeTable(now, date, screenTimes)
         if (currentTimeTable.isEmpty()) {
             isTimeSelected = false
         }
-        reservationState.movieDate.updateDate(date)
-        updateReservationState(movieDate = reservationState.movieDate)
+        reservationUIModel.movieDate.updateDate(date)
+        updateReservationState(movieDate = reservationUIModel.movieDate)
         view.updateTimeAdapter(
             currentTimeTable.map {
                 ReservationUiFormatter.movieTimeToUI(it)
@@ -65,36 +65,36 @@ class ReservationPresenter(
     }
 
     override fun selectTime(position: Int) {
-        reservationState.movieTime.updateTime(currentTimeTable[position])
-        updateReservationState(movieTime = reservationState.movieTime)
+        reservationUIModel.movieTime.updateTime(currentTimeTable[position])
+        updateReservationState(movieTime = reservationUIModel.movieTime)
     }
 
     override fun plusTicketCount() {
         updateReservationState(
-            ticketCount = TicketCount(reservationState.ticketCount + 1),
+            ticketCount = TicketCount(reservationUIModel.ticketCount + 1),
         )
-        view.showTicketCount(reservationState.ticketCount)
+        view.showTicketCount(reservationUIModel.ticketCount)
     }
 
     override fun minusTicketCount() {
-        if (reservationState.ticketCount == 1) {
+        if (reservationUIModel.ticketCount == 1) {
             view.showToast(R.string.reservation_info_minimum_ticket_count)
             return
         }
         updateReservationState(
-            ticketCount = TicketCount(reservationState.ticketCount - 1),
+            ticketCount = TicketCount(reservationUIModel.ticketCount - 1),
         )
-        view.showTicketCount(reservationState.ticketCount)
+        view.showTicketCount(reservationUIModel.ticketCount)
     }
 
     override fun createTicket(onCreated: (MovieTicket) -> Unit) {
         val ticket =
             MovieTicket(
-                title = reservationState.movie.title,
-                date = reservationState.movieDate.value,
-                time = ReservationUiFormatter.movieTimeToUI(reservationState.movieTime.value),
-                count = reservationState.ticketCount,
-                theaterName = reservationState.theaterName,
+                title = reservationUIModel.movie.title,
+                date = reservationUIModel.movieDate.value,
+                time = ReservationUiFormatter.movieTimeToUI(reservationUIModel.movieTime.value),
+                count = reservationUIModel.ticketCount,
+                theaterName = reservationUIModel.theaterName,
             )
         onCreated(ticket)
     }
@@ -103,13 +103,13 @@ class ReservationPresenter(
         updateReservationState(
             ticketCount = TicketCount(count),
         )
-        view.showTicketCount(reservationState.ticketCount)
+        view.showTicketCount(reservationUIModel.ticketCount)
     }
 
-    fun currentTicketCount(): Int = reservationState.ticketCount
+    fun currentTicketCount(): Int = reservationUIModel.ticketCount
 
     private fun updateMovieInfo() {
-        val movie = reservationState.movie
+        val movie = reservationUIModel.movie
         view.showMovieInfo(
             posterResId = movie.poster,
             title = movie.title,
@@ -120,12 +120,12 @@ class ReservationPresenter(
     }
 
     private fun updateReservationState(
-        movieDate: MovieDate = reservationState.movieDate,
-        movieTime: MovieTime = reservationState.movieTime,
-        ticketCount: TicketCount = TicketCount(reservationState.ticketCount),
+        movieDate: MovieDate = reservationUIModel.movieDate,
+        movieTime: MovieTime = reservationUIModel.movieTime,
+        ticketCount: TicketCount = TicketCount(reservationUIModel.ticketCount),
     ) {
-        reservationState =
-            reservationState.copy(
+        reservationUIModel =
+            reservationUIModel.copy(
                 movieDate = movieDate,
                 movieTime = movieTime,
                 ticketCount = ticketCount.value,
