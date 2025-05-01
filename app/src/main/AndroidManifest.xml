@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
         <activity
-            android:name=".Main2Activity"
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main2">
             <intent-filter>
@@ -22,13 +22,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".movie.MovieActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
             android:name=".moviebooking.MovieBookingActivity"
-            android:parentActivityName=".movie.MovieActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".moviebookingseat.MovieBookingSeatActivity"
             android:parentActivityName=".moviebooking.MovieBookingActivity" />
