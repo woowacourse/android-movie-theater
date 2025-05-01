@@ -12,6 +12,7 @@
     <string name="reservation_error_dialog_title">에러 발생</string>
     <string name="reservation_error_dialog_message">유효하지 않은 영화입니다</string>
     <string name="reservation_error_dialog_confirm">뒤로 가기</string>
+    <string name="reservation_error_empty_selected_movie_time">상영 시간이 선택되지 않았습니다</string>
     <string name="reservation_btn_minus">-</string>
     <string name="reservation_btn_plus">+</string>
     <string name="reservation_btn_select_complete">선택 완료</string>

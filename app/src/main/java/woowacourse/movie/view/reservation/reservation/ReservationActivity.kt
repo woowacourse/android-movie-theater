@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -132,6 +131,7 @@ class ReservationActivity :
                         id: Long,
                     ) {
                         presenter.selectTime(position)
+                        presenter.isTimeSelected = true
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -187,7 +187,16 @@ class ReservationActivity :
     private fun setupCompleteButtonClick() {
         binding.btnReservationSelectComplete.setOnClickListener {
             presenter.createTicket { ticket ->
-                navigateToSeatSelect(ticket)
+                if (presenter.isTimeSelected) {
+                    navigateToSeatSelect(ticket)
+                } else {
+                    Toast
+                        .makeText(
+                            this,
+                            getString(R.string.reservation_error_empty_selected_movie_time),
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                }
             }
         }
     }

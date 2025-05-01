@@ -17,6 +17,7 @@ class ReservationPresenter(
     private lateinit var reservationState: ReservationState
     private var currentTimeTable: List<Int> = emptyList()
     private val movieDao by lazy { MovieDao() }
+    var isTimeSelected = false
 
     override fun fetchData(getMovie: () -> TheaterUIModel?) {
         val theaterUIModel = getMovie()
@@ -50,7 +51,9 @@ class ReservationPresenter(
         val screenTimes =
             movieDao.getScreenTimes(reservationState.theaterName, reservationState.movie.title)
         currentTimeTable = movieDao.getTimeTable(now, date, screenTimes)
-
+        if (currentTimeTable.isEmpty()) {
+            isTimeSelected = false
+        }
         reservationState.movieDate.updateDate(date)
         updateReservationState(movieDate = reservationState.movieDate)
         view.updateTimeAdapter(
