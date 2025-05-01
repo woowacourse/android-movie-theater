@@ -12,7 +12,7 @@ value class Screenings(
 ) {
     fun getMovieScreenings(movieTitle: String): Screenings =
         Screenings(
-            screenings.value.filter { screening ->
+            value.filter { screening ->
                 screening.movie.title == movieTitle
             },
         )
@@ -40,7 +40,12 @@ value class Screenings(
                     Screening(
                         movie0,
                         THEATER_NAME_2,
-                        listOf(MovieTime(11, 0), MovieTime(14, 0), MovieTime(17, 0), MovieTime(20, 0)),
+                        listOf(
+                            MovieTime(11, 0),
+                            MovieTime(14, 0),
+                            MovieTime(17, 0),
+                            MovieTime(20, 0),
+                        ),
                     ),
                     Screening(
                         movie1,
