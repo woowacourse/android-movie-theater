@@ -78,6 +78,7 @@
             android:id="@+id/tv_reservation_cinema"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="200dp"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -85,7 +86,9 @@
             app:layout_constraintTop_toTopOf="@+id/tv_reservation_count_info"
             app:layout_constraintStart_toEndOf="@+id/tv_reservation_seats"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="선릉 극장" />
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            tools:text="아주아주아주아주아주ㅏ우자ㅜ아주아주긴 극장" />
 
     <TextView
         android:id="@+id/tv_reservation_total_price"
