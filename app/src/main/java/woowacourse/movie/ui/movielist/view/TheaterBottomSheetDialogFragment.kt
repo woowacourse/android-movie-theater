@@ -11,13 +11,18 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.Theaters
 import woowacourse.movie.sample.DUMMY_MOVIES
-import woowacourse.movie.sample.DUMMY_THEATERS
 import woowacourse.movie.ui.booking.view.BookingActivity
+import woowacourse.movie.ui.movielist.contract.TheaterBottomSheetDialogContract
+import woowacourse.movie.ui.movielist.presenter.TheaterBottomSheetDialogPresenter
 import woowacourse.movie.utils.bundleSerializable
 
-class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
+class TheaterBottomSheetDialogFragment :
+    BottomSheetDialogFragment(),
+    TheaterBottomSheetDialogContract.View {
     private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
+    private val presenter = TheaterBottomSheetDialogPresenter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,17 +46,23 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+        val movie = restoreMovie()
+        presenter.loadAvailableTheaters(movie)
+    }
+
+    override fun showTheaters(theaters: Theaters) {
         val adapter =
             TheaterAdapter { theater ->
-                startBookingActivity(view, theater)
+                startBookingActivity(binding.root, theater)
             }
+        binding.theatersRecyclerView.adapter = adapter
+        adapter.submitList(theaters.theaters)
+    }
 
+    private fun restoreMovie(): Movie {
         val movie =
             arguments?.bundleSerializable("EXTRA_MOVIE", Movie::class.java) ?: DUMMY_MOVIES.first()
-
-        binding.theatersRecyclerView.adapter = adapter
-        val theaters = DUMMY_THEATERS.availableTheaters(movie)
-        adapter.submitList(theaters.theaters.toList())
+        return movie
     }
 
     private fun startBookingActivity(
