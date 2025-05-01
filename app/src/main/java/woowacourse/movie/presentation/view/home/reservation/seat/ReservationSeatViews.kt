@@ -33,7 +33,7 @@ class ReservationSeatViews(
         cachedSeatViews[seat]?.toggleSelection()
     }
 
-    fun findSelectedViews(): List<SeatUiModel> = cachedSeatViews.filterValues { it.isSelected() }.keys.toList()
+    fun findSelectedViews(): List<SeatUiModel> = cachedSeatViews.filterValues { it.isSeatSelected() }.keys.toList()
 
     private fun renderSeatLayout(
         seats: List<SeatUiModel>,
