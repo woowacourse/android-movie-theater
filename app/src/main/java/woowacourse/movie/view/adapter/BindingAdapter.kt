@@ -1,4 +1,4 @@
-package woowacourse.movie.view.mapper
+package woowacourse.movie.view.adapter
 
 import android.widget.ImageView
 import android.widget.TextView
