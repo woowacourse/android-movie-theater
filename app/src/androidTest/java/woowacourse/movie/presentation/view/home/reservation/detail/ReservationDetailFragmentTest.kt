@@ -13,10 +13,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.movie.ScreeningPeriod
 import woowacourse.movie.presentation.extension.toDateTimeFormatter
 import woowacourse.movie.presentation.model.MovieUiModel
 import woowacourse.movie.presentation.model.PosterUiModel
+import woowacourse.movie.presentation.model.ScreeningPeriodUiModel
 import woowacourse.movie.presentation.model.TheaterUiModel
 import woowacourse.movie.presentation.view.home.reservation.detail.ReservationDetailFragment
 import java.time.LocalDate
@@ -30,7 +30,7 @@ class ReservationDetailFragmentTest {
             1,
             "해리 포터와 마법사의 돌",
             PosterUiModel.Resource(R.drawable.harrypotter),
-            ScreeningPeriod(
+            ScreeningPeriodUiModel(
                 LocalDate.now(),
                 LocalDate.now().plusDays(1),
             ),
@@ -121,7 +121,7 @@ class ReservationDetailFragmentTest {
                     fakeMovie
                         .copy(
                             screeningPeriod =
-                                ScreeningPeriod(
+                                ScreeningPeriodUiModel(
                                     LocalDate.of(2025, 1, 1),
                                     LocalDate.of(2025, 1, 1),
                                 ),
