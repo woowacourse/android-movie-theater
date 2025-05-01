@@ -10,6 +10,7 @@ class ReservationInfo(
     val reservationDateTime: LocalDateTime,
     val reservationCount: ReservationCount,
     private val _seats: MutableList<Seat> = mutableListOf(),
+    val cinema: Cinema,
 ) : Parcelable {
     val seats: List<Seat> get() = _seats.toList()
 

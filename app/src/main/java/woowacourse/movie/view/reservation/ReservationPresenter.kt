@@ -83,6 +83,7 @@ class ReservationPresenter(
                 title = screening?.movie?.title ?: "",
                 reservationDateTime = LocalDateTime.of(reservationDate, reservationTime),
                 reservationCount = reservationCount,
+                cinema = screening?.cinema ?: throw IllegalArgumentException(),
             )
 
         view.navigateToSeatSelectionScreen(reservationInfo)
