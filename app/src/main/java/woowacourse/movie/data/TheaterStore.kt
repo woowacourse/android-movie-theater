@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 class TheaterStore {
-    private val timeSlots =
+    private val defaultTimeSlots =
         listOf(
             LocalTime.of(9, 0),
             LocalTime.of(13, 0),
@@ -22,9 +22,39 @@ class TheaterStore {
 
         val theaters =
             listOf(
-                Theater("선릉 극장", generateScreeningsForTheater(movies, listOf(0, 1, 2, 3, 4, 5, 6))),
-                Theater("잠실 극장", generateScreeningsForTheater(movies, listOf(0, 1, 2, 3, 4, 5, 6))),
-                Theater("강남 극장", generateScreeningsForTheater(movies, listOf(0, 1, 2, 4, 5, 6, 7))),
+                Theater(
+                    "선릉 극장",
+                    generateScreeningsForTheater(
+                        movies,
+                        listOf(0, 1, 2, 3, 5),
+                        listOf(
+                            LocalTime.of(10, 0),
+                            LocalTime.of(14, 0),
+                            LocalTime.of(18, 0),
+                        ),
+                    ),
+                ),
+                Theater(
+                    "잠실 극장",
+                    generateScreeningsForTheater(
+                        movies,
+                        listOf(1, 2, 4, 6, 7),
+                        listOf(
+                            LocalTime.of(9, 30),
+                            LocalTime.of(12, 0),
+                            LocalTime.of(19, 30),
+                            LocalTime.of(22, 0),
+                        ),
+                    ),
+                ),
+                Theater(
+                    "강남 극장",
+                    generateScreeningsForTheater(
+                        movies,
+                        listOf(1, 2, 5, 6, 7),
+                        defaultTimeSlots,
+                    ),
+                ),
             )
 
         return Theaters(theaters)
@@ -33,13 +63,17 @@ class TheaterStore {
     private fun generateScreeningsForTheater(
         movies: List<Movie>,
         theaterMovieIds: List<Int>,
+        theaterTimeSlots: List<LocalTime>,
     ): List<Screening> {
         return theaterMovieIds
             .mapNotNull { id -> movies.find { it.id == id } }
-            .flatMap { movie -> generateScreeningsForMovie(movie) }
+            .flatMap { movie -> generateScreeningsForMovie(movie, theaterTimeSlots) }
     }
 
-    private fun generateScreeningsForMovie(movie: Movie): List<Screening> {
+    private fun generateScreeningsForMovie(
+        movie: Movie,
+        timeSlots: List<LocalTime>,
+    ): List<Screening> {
         val dateRange = generateDateRange(movie.releaseDate.startDate, movie.releaseDate.endDate)
 
         return dateRange.flatMap { date ->
