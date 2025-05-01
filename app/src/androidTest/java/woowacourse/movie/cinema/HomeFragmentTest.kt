@@ -2,8 +2,10 @@ package woowacourse.movie.cinema
 
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions.scrollToPosition
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.domain.reservation.Advertisement
 import woowacourse.movie.domain.reservation.Movie
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.view.cinema.HomeFragment
@@ -32,6 +35,17 @@ class HomeFragmentTest {
                     LocalDate.of(2025, 4, 1),
                     LocalDate.of(2025, 4, 25),
                 ),
+                Screening(
+                    harryPotterPhilosopersStone,
+                    LocalDate.of(2025, 4, 1),
+                    LocalDate.of(2025, 4, 25),
+                ),
+                Screening(
+                    harryPotterPhilosopersStone,
+                    LocalDate.of(2025, 4, 1),
+                    LocalDate.of(2025, 4, 25),
+                ),
+                Advertisement(0),
             ),
         )
 
@@ -52,14 +66,14 @@ class HomeFragmentTest {
             .check(matches(isDisplayed()))
     }
 
-//    @Test
-//    fun `영화_목록에_영화가_세_번_노출될_때마다_광고가_한_번_노출된다`() {
-//        onView(ViewMatchers.withId(R.id.rv_screening_movies))
-//            .perform(scrollToPosition<RecyclerView.ViewHolder>(3))
-//
-//        onView(ViewMatchers.withId(R.id.iv_item_advertisement))
-//            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
-//    }
+    @Test
+    fun `영화_목록에_영화가_세_번_노출될_때마다_광고가_한_번_노출된다`() {
+        onView(ViewMatchers.withId(R.id.recycler_view_home_screening_movies))
+            .perform(scrollToPosition<RecyclerView.ViewHolder>(4))
+
+        onView(ViewMatchers.withId(R.id.iv_item_advertisement))
+            .check(matches(isDisplayed()))
+    }
 //
 //    @Test
 //    fun `상영_정보에는_영화_제목이_표시된다`() {
