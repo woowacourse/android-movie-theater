@@ -3,11 +3,11 @@ package woowacourse.movie.model
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import woowacourse.movie.SEAT_A1
-import woowacourse.movie.SEAT_A1_NOT_SELECTED
-import woowacourse.movie.SEAT_A2
-import woowacourse.movie.SEAT_C1
-import woowacourse.movie.SEAT_E1
+import woowacourse.movie.fixture.SEAT_A1
+import woowacourse.movie.fixture.SEAT_A1_NOT_SELECTED
+import woowacourse.movie.fixture.SEAT_A2
+import woowacourse.movie.fixture.SEAT_C1
+import woowacourse.movie.fixture.SEAT_E1
 
 class SeatsTest {
     @Test

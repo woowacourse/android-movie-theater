@@ -4,12 +4,12 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.HARRY_POTTER
-import woowacourse.movie.SEOLLEUNG
 import woowacourse.movie.booking.detail.BookingDetailContract
 import woowacourse.movie.booking.detail.BookingDetailPresenter
-import woowacourse.movie.createMovie
-import woowacourse.movie.createTicket
+import woowacourse.movie.fixture.HARRY_POTTER
+import woowacourse.movie.fixture.SEOLLEUNG
+import woowacourse.movie.fixture.createMovie
+import woowacourse.movie.fixture.createTicket
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Schedule

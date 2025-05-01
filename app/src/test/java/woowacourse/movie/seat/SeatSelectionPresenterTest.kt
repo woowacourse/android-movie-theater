@@ -6,8 +6,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.SEOLLEUNG
-import woowacourse.movie.createTicket
+import woowacourse.movie.fixture.SEOLLEUNG
+import woowacourse.movie.fixture.createTicket
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.ui.model.TicketUiModel

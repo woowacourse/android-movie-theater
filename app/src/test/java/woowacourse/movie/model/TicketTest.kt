@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
-import woowacourse.movie.SEAT_A1
-import woowacourse.movie.SEAT_A1_NOT_SELECTED
-import woowacourse.movie.SEAT_A2
-import woowacourse.movie.SEAT_C1
-import woowacourse.movie.SEOLLEUNG
-import woowacourse.movie.createTicket
+import woowacourse.movie.fixture.SEAT_A1
+import woowacourse.movie.fixture.SEAT_A1_NOT_SELECTED
+import woowacourse.movie.fixture.SEAT_A2
+import woowacourse.movie.fixture.SEAT_C1
+import woowacourse.movie.fixture.SEOLLEUNG
+import woowacourse.movie.fixture.createTicket
 import java.time.LocalDate
 import java.time.LocalTime
 

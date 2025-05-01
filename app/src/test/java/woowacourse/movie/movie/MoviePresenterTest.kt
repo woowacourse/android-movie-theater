@@ -4,9 +4,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.HARRY_POTTER
-import woowacourse.movie.STAR_IS_BORN
-import woowacourse.movie.createMovie
+import woowacourse.movie.fixture.HARRY_POTTER
+import woowacourse.movie.fixture.STAR_IS_BORN
+import woowacourse.movie.fixture.createMovie
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Movie
 

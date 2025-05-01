@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.fixture
 
 import woowacourse.movie.model.Movie
 import java.time.LocalDate
