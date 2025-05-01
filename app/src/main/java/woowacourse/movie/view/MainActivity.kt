@@ -7,6 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import woowacourse.movie.BookingHistoryFragment
 import woowacourse.movie.HomeFragment
 import woowacourse.movie.R
@@ -20,19 +21,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+
+        initView(savedInstanceState)
+    }
+
+    private fun initView(savedInstanceState: Bundle?) {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        if (savedInstanceState == null) {
-            binding.navigation.selectedItemId = R.id.fragment_container_view
-        }
-
         val historyFragment = BookingHistoryFragment()
         val homeFragment = HomeFragment()
         val settingFragment = SettingFragment()
+
+        if (savedInstanceState == null) {
+            replaceFragment(homeFragment)
+            binding.navigation.selectedItemId = R.id.action_home
+        }
 
         binding.navigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -56,9 +63,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun replaceFragment(fragment: Fragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container_view, fragment)
-        fragmentTransaction.commit()
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.commit {
+            replace(R.id.fragment_container_view, fragment)
+        }
     }
 }
