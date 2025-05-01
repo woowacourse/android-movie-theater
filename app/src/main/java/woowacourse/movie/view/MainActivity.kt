@@ -43,30 +43,16 @@ class MainActivity :
         }
         binding.main = this
         binding.bottomNavigationViewMain.setOnItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.item_menu_main_reservation_history -> {
-                    replaceWith(ReservationHistoryFragment())
+            val screenId: Int =
+                when (menuItem.itemId) {
+                    R.id.item_menu_main_reservation_history -> SCREEN_ID_RESERVATION_HISTORY
+                    R.id.item_menu_main_home -> SCREEN_ID_HOME
+                    R.id.item_menu_main_setting -> SCREEN_ID_SETTING
+                    else -> error(ErrorMessage("itemId").noSuch())
                 }
-
-                R.id.item_menu_main_home -> {
-                    replaceWith(HomeFragment())
-                }
-
-                R.id.item_menu_main_setting -> {
-                    replaceWith(SettingFragment())
-                }
-
-                else -> false
-            }
+            presenter.presentScreen(screenId)
+            true
         }
-    }
-
-    private fun replaceWith(fragment: Fragment): Boolean {
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.fragment_container_view_main, fragment)
-        }
-        return true
     }
 
     override fun updateScreen(screenId: Int) {
@@ -78,6 +64,13 @@ class MainActivity :
                 else -> error(ErrorMessage("screenId").noSuch())
             }
         replaceWith(fragment)
+    }
+
+    private fun replaceWith(fragment: Fragment) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.fragment_container_view_main, fragment)
+        }
     }
 
     companion object {
