@@ -66,3 +66,7 @@ class LocalCinemaData(
             ),
         )
 }
+
+class FakeCinemaData(
+    override val value: List<Cinema>,
+) : CinemaData
