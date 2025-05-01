@@ -25,7 +25,7 @@ class SeatSelectPresenter(
     }
 
     override fun seatSelect(seatId: String) {
-        if (selectedSeats.size >= movieTicket.count) {
+        if (selectedSeats.size == movieTicket.count && !selectedSeats.contains(seatId)) {
             view.showSeatCountError(movieTicket.count)
             return
         }
