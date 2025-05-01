@@ -19,12 +19,13 @@ class ReservationResultActivity :
     BaseActivity<ActivityReservationResultBinding>(R.layout.activity_reservation_result),
     ReservationResultContract.View {
     val presenter = ReservationResultPresenter(this)
+    lateinit var reservationInfo: ReservationInfo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val reservationInfo = intent.getParcelableCompat<ReservationInfo>(BUNDLE_KEY_RESERVATION_INFO)
+        reservationInfo = intent.getParcelableCompat<ReservationInfo>(BUNDLE_KEY_RESERVATION_INFO)
 
         presenter.loadReservationInfo(reservationInfo)
 
@@ -58,12 +59,27 @@ class ReservationResultActivity :
         setupMovieDate(reservationInfo.reservationDateTime)
         setupReservationCount(reservationInfo.reservationCount.value)
         setupTotalPrice(reservationInfo.totalPrice())
-        // 좌석정보
+        setupSeats()
+        setupCinema()
     }
 
-//    private fun setupSeats() {
-//         val
-//    }
+    private fun setupSeats() {
+        val tvReservationSeats = findViewById<TextView>(R.id.tv_reservation_seats)
+        tvReservationSeats.text =
+            getString(
+                R.string.seat_split_line,
+                reservationInfo.seats.joinToString(",") { it.row.toString() + it.column.toString() },
+            )
+    }
+
+    private fun setupCinema() {
+        val tvReservationCinema = findViewById<TextView>(R.id.tv_reservation_cinema)
+        tvReservationCinema.text =
+            getString(
+                R.string.cinema,
+                reservationInfo.cinema.name,
+            )
+    }
 
     private fun setupCancelDescription() {
         val tvCancelDescription = findViewById<TextView>(R.id.tv_cancel_description)
