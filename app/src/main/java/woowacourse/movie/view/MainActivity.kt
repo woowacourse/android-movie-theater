@@ -17,7 +17,9 @@ import woowacourse.movie.view.reservation.ReservationHistoryFragment
 import woowacourse.movie.view.setting.SettingFragment
 import woowacourse.movie.view.util.ErrorMessage
 
-class MainActivity : AppCompatActivity(), MainContract.View {
+class MainActivity :
+    AppCompatActivity(),
+    MainContract.View {
     private val presenter: MainContract.Presenter = MainPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +35,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        binding.bottomNavigationViewMain.selectedItemId = R.id.item_menu_main_home
+
         if (savedInstanceState == null) {
             presenter.presentScreen(SCREEN_ID_HOME)
         }
