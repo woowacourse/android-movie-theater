@@ -9,10 +9,3 @@ fun Schedule.toUiModel(): ScheduleUiModel {
         screeningTimes = screeningTimes,
     )
 }
-
-fun ScheduleUiModel.toDomain(): Schedule {
-    return Schedule(
-        movie = movie.toDomain(),
-        screeningTimes = screeningTimes,
-    )
-}

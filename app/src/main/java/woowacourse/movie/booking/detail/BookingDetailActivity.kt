@@ -17,6 +17,7 @@ import woowacourse.movie.booking.detail.listener.ScreeningTimeSelectedListener
 import woowacourse.movie.databinding.ActivityBookingDetailBinding
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.seat.SeatSelectionActivity
+import woowacourse.movie.seat.SeatSelectionActivity.Companion.KEY_TICKET
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
 import woowacourse.movie.ui.model.TicketUiModel
@@ -145,7 +146,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     override fun startSeatSelectionActivity(ticket: TicketUiModel) {
         val intent =
             Intent(this, SeatSelectionActivity::class.java).apply {
-                putExtra(SeatSelectionActivity.Companion.KEY_TICKET, ticket)
+                putExtra(KEY_TICKET, ticket)
             }
         startActivity(intent)
     }

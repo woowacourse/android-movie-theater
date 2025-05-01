@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.booking.complete.BookingCompleteActivity
+import woowacourse.movie.booking.complete.BookingCompleteActivity.Companion.KEY_BOOKING_RESULT
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.ui.model.TicketUiModel
@@ -126,7 +127,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun startBookingCompleteActivity(ticket: TicketUiModel) {
         val intent =
             Intent(this, BookingCompleteActivity::class.java).apply {
-                putExtra(BookingCompleteActivity.Companion.KEY_BOOKING_RESULT, ticket)
+                putExtra(KEY_BOOKING_RESULT, ticket)
             }
         startActivity(intent)
     }

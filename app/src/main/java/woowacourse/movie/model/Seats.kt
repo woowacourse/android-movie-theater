@@ -1,8 +1,6 @@
 package woowacourse.movie.model
 
-data class Seats(
-    val values: List<Seat>,
-) {
+data class Seats(val values: List<Seat>) {
     init {
         require(values.all { it.isSelected }) { ERROR_UNSELECTED_SEATS }
     }

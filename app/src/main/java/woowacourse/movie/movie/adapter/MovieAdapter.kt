@@ -10,7 +10,7 @@ import woowacourse.movie.ui.model.MovieUiModel
 
 class MovieAdapter(
     private val movieList: List<MovieUiModel>,
-    val onReserveClick: ReserveClickListener,
+    private val onReserveClick: ReserveClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int {
         val adCount = movieList.size / AD_FREQUENCY
