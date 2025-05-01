@@ -8,6 +8,7 @@ import woowacourse.movie.model.movie.MovieTime
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.view.mapper.Formatter.localDateToUI
+import woowacourse.movie.view.mapper.Formatter.priceToUI
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.seatsToUI
 import java.time.LocalDate
 
@@ -40,12 +41,11 @@ fun setFormatLocalDateTime(
     val formatMovieDate: String = localDateToUI(movieDate)
     val formatMovieTime: String = movieTime.value.toString()
 
-    textView.text =
-        textView.context.getString(
-            R.string.reservation_complete_ticket_timestamp,
-            formatMovieDate,
-            formatMovieTime,
-        )
+    textView.text = textView.context.getString(
+        R.string.reservation_complete_ticket_timestamp,
+        formatMovieDate,
+        formatMovieTime,
+    )
 }
 
 @BindingAdapter("android:seats", "android:theater", requireAll = true)
@@ -56,11 +56,22 @@ fun setTheaterInfo(
 ) {
     val formateSeats: String = seatsToUI(seats, ", ")
 
-    textView.text =
-        textView.context.getString(
-            R.string.reservation_complete_seat_theater_name_info,
-            seats.size,
-            formateSeats,
-            theater.name,
-        )
+    textView.text = textView.context.getString(
+        R.string.reservation_complete_seat_theater_name_info,
+        seats.size,
+        formateSeats,
+        theater.name,
+    )
+}
+
+@BindingAdapter("android:ticketPrice")
+fun setFormatTicketPrice(
+    textView: TextView,
+    ticketPrice: Int,
+) {
+    val formatPrice: String = priceToUI(ticketPrice)
+
+    textView.text = textView.context.getString(
+        R.string.reservation_complete_ticket_price, formatPrice
+    )
 }
