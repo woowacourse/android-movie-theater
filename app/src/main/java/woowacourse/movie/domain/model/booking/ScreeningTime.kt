@@ -10,7 +10,9 @@ class ScreeningTime(
     private val timeOnSelectedDate: List<LocalTime>,
 ) : Serializable {
     fun getAvailableScreeningTimes(selectedDate: LocalDate): List<LocalTime> {
-        if (selectedDate.isEqual(now.toLocalDate())) {
+        val isToday = selectedDate.isEqual(now.toLocalDate())
+
+        if (isToday) {
             return timeOnSelectedDate.filter { it.isAfter(now.toLocalTime()) }
         }
         return timeOnSelectedDate
