@@ -33,10 +33,6 @@
         <activity
             android:name=".ui.complete.BookingCompleteActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.movielist.view.MovieListActivity"
-            android:exported="false">
-        </activity>
     </application>
 
 </manifest>
