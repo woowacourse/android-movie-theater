@@ -9,7 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieBookingBinding
+import woowacourse.movie.ui.history.view.BookingHistoryFragment
 import woowacourse.movie.ui.movielist.view.MovieListFragment
+import woowacourse.movie.ui.settings.view.SettingsFragment
 
 class MovieBookingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieBookingBinding
@@ -45,6 +47,22 @@ class MovieBookingActivity : AppCompatActivity() {
                     supportFragmentManager.commit {
                         setReorderingAllowed(true)
                         replace(R.id.main_fragment_container_view, MovieListFragment())
+                    }
+                    true
+                }
+
+                R.id.navigation_history -> {
+                    supportFragmentManager.commit {
+                        setReorderingAllowed(true)
+                        replace(R.id.main_fragment_container_view, BookingHistoryFragment())
+                    }
+                    true
+                }
+
+                R.id.navigation_settings -> {
+                    supportFragmentManager.commit {
+                        setReorderingAllowed(true)
+                        replace(R.id.main_fragment_container_view, SettingsFragment())
                     }
                     true
                 }
