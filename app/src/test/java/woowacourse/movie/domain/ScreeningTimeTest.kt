@@ -52,7 +52,9 @@ class ScreeningTimeTest {
             )
 
         // given
-        val result = screeningTime.getAvailableScreeningTimes(LocalDate.of(2025, 4, 25))
+        val result = screeningTime.getAvailableScreeningTimes(
+            LocalDate.of(2025, 4, 25)
+        )
 
         // then
         assertEquals(

@@ -27,6 +27,7 @@ class SeatPresenterTest {
             bookingDate = LocalDate.now(),
             bookingTime = LocalTime.now(),
             count = PeopleCount(2),
+            theaterName = "CGV",
         )
 
     @BeforeEach

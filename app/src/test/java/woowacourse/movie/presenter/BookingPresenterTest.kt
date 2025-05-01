@@ -8,9 +8,14 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieStore
+import woowacourse.movie.domain.fixture.harryPotter1MoviesFixture
+import woowacourse.movie.domain.fixture.screeningDateFixture
 import woowacourse.movie.domain.model.booking.PeopleCount
+import woowacourse.movie.domain.model.booking.ScreeningDate
+import woowacourse.movie.domain.model.movies.Movie
 import woowacourse.movie.view.booking.BookingContract
 import woowacourse.movie.view.booking.BookingPresenter
+import woowacourse.movie.view.movies.model.ScreeningInfo
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -24,28 +29,37 @@ class BookingPresenterTest {
     fun setUp() {
         view = mockk<BookingContract.View>(relaxed = true)
         model = MovieStore()
-        presenter = BookingPresenter(view, MovieStore(), PeopleCount(1))
+        presenter = BookingPresenter(
+            view,
+            MovieStore(),
+            PeopleCount(1),
+            ScreeningInfo(
+                movieId = 0,
+                theaterName = "CGV",
+                screening = listOf(LocalDateTime.of(2025, 4, 10, 12, 10)),
+            )
+        )
     }
 
     @Test
     fun `영화 정보를 UI에 표시한다`() {
-        // given
-        val movieIndex = 0
-        val movie = model[movieIndex]
-
         // when
-        presenter.loadMovieDetail(movieIndex)
+        presenter.loadMovieDetail()
+
+        val expected = harryPotter1MoviesFixture
 
         // then
         verify {
             view.showMovieDetail(
                 match {
-                    it.id == movie.id &&
-                        it.title == movie.title &&
-                        it.posterResource == movie.posterResource &&
-                        it.releaseDate == movie.releaseDate &&
-                        it.runningTime == movie.runningTime
+                    it.id == expected.id &&
+                            it.title == expected.title &&
+                            it.posterResource == expected.posterResource &&
+                            it.releaseDate == expected.releaseDate &&
+                            it.runningTime == expected.runningTime
+
                 },
+                any()
             )
         }
     }
@@ -76,7 +90,7 @@ class BookingPresenterTest {
     fun `인원이 1명 증가한다`() {
         // given
         var count = 1
-        every { view.showPeopleCount(count) } just Runs
+        every { view.showPeopleCount(count) }
 
         // when
         presenter.increasePeopleCount(2)
@@ -88,7 +102,13 @@ class BookingPresenterTest {
     @Test
     fun `인원이 1명 감소한다`() {
         // given
-        val presenter = BookingPresenter(view, model, PeopleCount(5))
+        val presenter = BookingPresenter(view, model, PeopleCount(5),
+            ScreeningInfo(
+                movieId = 0,
+                theaterName = "CGV",
+                screening = listOf(LocalDateTime.of(2025, 4, 10, 12, 10)),
+            )
+            )
         every { view.showPeopleCount(4) } just Runs
 
         // when
@@ -113,65 +133,11 @@ class BookingPresenterTest {
             view.moveToBookingComplete(
                 match {
                     it.title == "테스트 영화 1" &&
-                        it.bookingDate == LocalDate.of(2025, 4, 24) &&
-                        it.bookingTime == LocalTime.of(12, 0) &&
-                        it.count == PeopleCount(3)
+                            it.bookingDate == LocalDate.of(2025, 4, 24) &&
+                            it.bookingTime == LocalTime.of(12, 0) &&
+                            it.count == PeopleCount(3)
                 },
             )
         }
-    }
-
-    @Test
-    fun `영화 상열 시작일과 종료일, 현재 날짜를 전달하면 상영 시작일과 종료일 사이의 날짜를 출력한다 `() {
-        // given
-        val start = LocalDate.of(2025, 4, 26)
-        val end = LocalDate.of(2025, 4, 28)
-        val now = LocalDateTime.of(2025, 4, 25, 12, 0, 0)
-
-        // when
-        presenter.loadScreeningDate(start, end, now)
-
-        // then
-        val expected =
-            listOf(
-                LocalDate.of(2025, 4, 26),
-                LocalDate.of(2025, 4, 27),
-                LocalDate.of(2025, 4, 28),
-            )
-        verify { view.showScreeningDate(expected) }
-    }
-
-    @Test
-    fun `오늘 날짜가 상영 시작을 지났다면 오늘 날짜부터 상영 종료일까지 출력한다`() {
-        // given
-        val start = LocalDate.of(2025, 4, 26)
-        val end = LocalDate.of(2025, 4, 28)
-        val now = LocalDateTime.of(2025, 4, 25, 12, 0, 0)
-
-        // when
-        presenter.loadScreeningDate(start, end, now)
-
-        // then
-        val expected =
-            listOf(
-                LocalDate.of(2025, 4, 26),
-                LocalDate.of(2025, 4, 27),
-                LocalDate.of(2025, 4, 28),
-            )
-        verify { view.showScreeningDate(expected) }
-    }
-
-    @Test
-    fun `현재 시간 이후의 상영 시간을 출력한다`() {
-        // given
-        val date = LocalDate.of(2025, 4, 25)
-        val now = LocalDateTime.of(2025, 4, 25, 20, 0, 0)
-
-        // when
-        presenter.loadScreeningTime(date, now)
-
-        // then
-        val expected = listOf(LocalTime.of(22, 0))
-        verify { view.showScreeningTime(expected) }
     }
 }

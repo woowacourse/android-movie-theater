@@ -13,27 +13,16 @@ val screeningDateFixture =
             LocalDate.of(2025, 5, 4),
         ),
     )
-val moviesFixture =
-    listOf(
-        Movie(
-            id = 0,
-            title = "Movie 1",
-            posterResource = "poster1",
-            releaseDate = screeningDateFixture,
-            runningTime = 120,
-        ),
-        Movie(
-            id = 1,
-            title = "Movie 2",
-            posterResource = "poster2",
-            releaseDate = screeningDateFixture,
-            runningTime = 120,
-        ),
-        Movie(
-            id = 2,
-            title = "Movie 3",
-            posterResource = "poster3",
-            releaseDate = screeningDateFixture,
-            runningTime = 120,
-        ),
-    )
+val harryPotter1MoviesFixture = Movie(
+    0,
+    "해리 포터와 마법사의 돌",
+    "harry_potter_1",
+    ScreeningDate(
+        listOf(
+            LocalDate.of(2025, 5, 1),
+            LocalDate.of(2025, 5, 2),
+            LocalDate.of(2025, 5, 3),
+        )
+    ),
+    152,
+)
