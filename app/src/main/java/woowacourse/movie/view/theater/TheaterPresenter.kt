@@ -7,11 +7,10 @@ import woowacourse.movie.model.TheaterUIModel
 
 class TheaterPresenter(
     val view: TheaterContract.View,
-    val movie: Movie,
 ) : TheaterContract.Presenter {
     private val movieDao: MovieDao by lazy { MovieDao() }
 
-    override fun fetchTheaters() {
+    override fun fetchTheaters(movie: Movie) {
         val theaterUIModels =
             movieDao
                 .getTheaterNames()

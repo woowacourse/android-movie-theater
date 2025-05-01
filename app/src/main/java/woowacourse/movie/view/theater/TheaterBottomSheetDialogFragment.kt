@@ -20,13 +20,7 @@ class TheaterBottomSheetDialogFragment :
     TheaterContract.View {
     private lateinit var theaterAdapter: TheaterAdapter
     private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
-    private val presenter: TheaterPresenter by lazy {
-        TheaterPresenter(
-            this,
-            requireArguments().compatParcelable(Extras.MovieData.MOVIE_KEY)
-                ?: error(ERROR_ARGUMENT),
-        )
-    }
+    private val presenter: TheaterPresenter by lazy { TheaterPresenter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,7 +44,10 @@ class TheaterBottomSheetDialogFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         setupTheaterAdapter()
-        presenter.fetchTheaters()
+        presenter.fetchTheaters(
+            requireArguments().compatParcelable(Extras.MovieData.MOVIE_KEY)
+                ?: error(ERROR_ARGUMENT),
+        )
     }
 
     override fun showTheaters(theaters: List<TheaterUIModel>) {

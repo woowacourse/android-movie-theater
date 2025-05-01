@@ -1,5 +1,6 @@
 package woowacourse.movie.view.theater
 
+import woowacourse.movie.model.Movie
 import woowacourse.movie.model.TheaterUIModel
 
 interface TheaterContract {
@@ -10,7 +11,7 @@ interface TheaterContract {
     }
 
     interface Presenter {
-        fun fetchTheaters()
+        fun fetchTheaters(movie: Movie)
 
         fun theaterSelected(theaterUIModel: TheaterUIModel)
     }
