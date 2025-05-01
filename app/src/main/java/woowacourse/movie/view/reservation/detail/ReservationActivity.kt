@@ -200,7 +200,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         showings: Showings,
     ) {
         val currentTimeTable =
-            showings.showings.afterCurrentDateSchedule(
+            showings.showings.afterCurrentSchedule(
                 localDate.atStartOfDay(),
                 LocalDateTime.now(),
             )

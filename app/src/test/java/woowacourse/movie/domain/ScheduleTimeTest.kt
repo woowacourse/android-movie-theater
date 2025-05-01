@@ -13,7 +13,7 @@ class ScheduleTimeTest {
                 times = listOf(LocalDateTime.of(2025, 1, 1, 1, 0), LocalDateTime.of(2025, 1, 1, 5, 0)),
             )
         // when
-        val actual = scheduleTime.afterCurrentTimeSchedule(currentTime = LocalDateTime.of(2025, 1, 1, 3, 0))
+        val actual = scheduleTime.afterCurrentSchedule(currentTime = LocalDateTime.of(2025, 1, 1, 3, 0))
         val expected = listOf(LocalDateTime.of(2025, 1, 1, 5, 0))
         // then
         assertThat(actual).isEqualTo(expected)
