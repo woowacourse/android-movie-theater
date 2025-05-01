@@ -40,8 +40,6 @@ interface BookingDetailContract {
 
         fun selectTime(time: LocalTime)
 
-        fun getHeadCount(): Int
-
         fun increaseHeadCount()
 
         fun decreaseHeadCount()

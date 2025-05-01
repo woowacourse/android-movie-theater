@@ -100,7 +100,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     }
 
     override fun showHeadCount() {
-        binding.tvPeopleCount.text = presenter.getHeadCount().toString()
+        binding.tvPeopleCount.text = presenter.getCurrentTicketUiModel().headCount.toString()
     }
 
     override fun showScreeningDates(

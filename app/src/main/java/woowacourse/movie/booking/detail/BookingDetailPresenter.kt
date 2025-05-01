@@ -42,11 +42,7 @@ class BookingDetailPresenter(
         if (times.isEmpty()) {
             val nextDate = date.plusDays(1)
             ticket = ticket.updateDate(nextDate)
-            val nextTimes = scheduler.screeningTimes(nextDate)
-            nextTimes.firstOrNull()?.let {
-                ticket = ticket.updateTime(it)
-            }
-            view.showScreeningTimes(nextTimes, ticket.selectedTime)
+            view.showScreeningTimes(theater.schedule.screeningTimes, ticket.selectedTime)
         } else {
             ticket = ticket.updateTime(times.first())
             view.showScreeningTimes(times, ticket.selectedTime)
@@ -59,8 +55,6 @@ class BookingDetailPresenter(
         ticket = ticket.updateTime(time)
         view.showScreeningTimes(scheduler.screeningTimes(ticket.selectedDate), ticket.selectedTime)
     }
-
-    override fun getHeadCount(): Int = ticket.headCount.value
 
     override fun increaseHeadCount() {
         ticket = ticket.plusHeadCount()
