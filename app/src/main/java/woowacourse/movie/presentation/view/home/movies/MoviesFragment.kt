@@ -7,6 +7,7 @@ import woowacourse.movie.databinding.FragmentMoviesBinding
 import woowacourse.movie.presentation.base.BaseFragment
 import woowacourse.movie.presentation.model.MovieUiModel
 import woowacourse.movie.presentation.model.TheatersUiModel
+import woowacourse.movie.presentation.view.home.movies.adapter.MoviesAdapter
 import woowacourse.movie.presentation.view.home.movies.adapter.OnMovieEventListener
 import woowacourse.movie.presentation.view.home.movies.dialog.TheaterBottomSheetDialogFragment
 
@@ -14,7 +15,6 @@ class MoviesFragment :
     BaseFragment<FragmentMoviesBinding>(R.layout.fragment_movies),
     MoviesContract.View {
     private val presenter: MoviesPresenter by lazy { MoviesPresenter(this) }
-    private val views: MoviesViews by lazy { MoviesViews(requireContext(), binding) }
 
     override fun onViewCreated(
         view: View,
@@ -22,18 +22,21 @@ class MoviesFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        views.bind(
-            object : OnMovieEventListener {
-                override fun onClick(movie: MovieUiModel) {
-                    presenter.availableTheatersAndCount(movie.id)
-                }
-            },
-        )
+        val moviesAdapter =
+            MoviesAdapter(
+                object : OnMovieEventListener {
+                    override fun onClick(movie: MovieUiModel) {
+                        presenter.availableTheatersAndCount(movie.id)
+                    }
+                },
+            )
+        binding.rvMovie.adapter = moviesAdapter
+
         presenter.fetchData()
     }
 
     override fun showScreen(movies: List<MovieUiModel>) {
-        views.updateMovies(movies)
+        binding.movieList = movies
     }
 
     override fun showAvailableTheatersAndCount(

@@ -25,7 +25,6 @@ data class ScreeningPeriod(
 
     companion object {
         private const val INTERVAL_DAY = 1L
-
         private const val INVALID_DATE_RANGE_MESSAGE =
             "시작 날짜는 종료 날짜 이후일 수 없습니다 (startDate: %s, endDate: %s)"
     }
