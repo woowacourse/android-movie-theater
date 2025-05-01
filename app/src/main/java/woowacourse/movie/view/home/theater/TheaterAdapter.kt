@@ -3,17 +3,27 @@ package woowacourse.movie.view.home.theater
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.model.theater.TheaterMovieSchedule
 
 class TheaterAdapter(
-    theaterMovieScheduleItems: List<TheaterMovieSchedule>,
     private val onTheaterClick: (TheaterMovieSchedule) -> Unit,
-) : RecyclerView.Adapter<TheaterViewHolder>() {
-    private var theaterMovieSchedules: List<TheaterMovieSchedule> = theaterMovieScheduleItems
+) : ListAdapter<TheaterMovieSchedule, TheaterViewHolder>(
+        object : DiffUtil.ItemCallback<TheaterMovieSchedule>() {
+            override fun areItemsTheSame(
+                oldItem: TheaterMovieSchedule,
+                newItem: TheaterMovieSchedule,
+            ): Boolean = oldItem.theater == newItem.theater
 
+            override fun areContentsTheSame(
+                oldItem: TheaterMovieSchedule,
+                newItem: TheaterMovieSchedule,
+            ): Boolean = oldItem == newItem
+        },
+    ) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -29,17 +39,10 @@ class TheaterAdapter(
         return TheaterViewHolder(theaterBinding, onTheaterClick)
     }
 
-    override fun getItemCount(): Int = theaterMovieSchedules.size
-
     override fun onBindViewHolder(
         holder: TheaterViewHolder,
         position: Int,
     ) {
-        holder.bind(theaterMovieSchedules[position])
-    }
-
-    fun updateTheaterMovieSchedules(newItems: List<TheaterMovieSchedule>) {
-        theaterMovieSchedules = newItems
-        notifyDataSetChanged()
+        holder.bind(getItem(position))
     }
 }
