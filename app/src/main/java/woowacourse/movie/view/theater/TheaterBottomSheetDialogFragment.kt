@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
@@ -69,11 +70,24 @@ class TheaterBottomSheetDialogFragment :
             TheaterAdapter(
                 object : TheaterClickListener {
                     override fun onTheaterClick(theaterUIModel: TheaterUIModel) {
-                        presenter.theaterSelected(theaterUIModel)
+                        checkTimeSlotCountZero(theaterUIModel)
                     }
                 },
             )
         recyclerView.adapter = theaterAdapter
+    }
+
+    private fun checkTimeSlotCountZero(theaterUIModel: TheaterUIModel) {
+        if (theaterUIModel.timeSlotCount == 0) {
+            Toast
+                .makeText(
+                    requireContext(),
+                    getString(R.string.bottom_sheet_dialog_error_empty_showing_movie),
+                    Toast.LENGTH_SHORT,
+                ).show()
+        } else {
+            presenter.theaterSelected(theaterUIModel)
+        }
     }
 
     companion object {
