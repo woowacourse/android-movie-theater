@@ -11,7 +11,6 @@ import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.view.movies.adapter.TheaterAdapter
-import java.time.LocalTime
 
 class TheaterBottomSheetDialogFragment(
     val eventListener: OnBottomSheetDialogEventListener,
@@ -36,7 +35,7 @@ class TheaterBottomSheetDialogFragment(
         val recyclerView: RecyclerView = view.findViewById(R.id.lv_theater_category)
 
         movie = arguments?.getSerializable("movie") as? Movie?
-        showings = movie?.let { Theater.findTheatersShowingMovie(it.title, LocalTime.now()) }
+        showings = movie?.let { Theater.findTheatersShowingMovie(it.title) }
 
         if (movie == null) {
             throw IllegalArgumentException()
