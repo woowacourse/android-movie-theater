@@ -1,4 +1,4 @@
-package woowacourse.movie.view.home
+package woowacourse.movie.view.home.movies
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,8 +12,6 @@ import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.model.theater.Theaters
 import woowacourse.movie.view.home.booking.BookingActivity
-import woowacourse.movie.view.home.movies.MovieListContract
-import woowacourse.movie.view.home.movies.MovieListPresenter
 import woowacourse.movie.view.home.movies.adapter.MovieAdapter
 import woowacourse.movie.view.home.movies.bottomsheet.TheaterBottomSheet
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
@@ -22,9 +20,7 @@ import woowacourse.movie.view.home.movies.model.UiModel
 class HomeFragment : Fragment(R.layout.fragment_home), MovieListContract.View {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val presenter: MovieListContract.Presenter by lazy {
-        MovieListPresenter(this, MovieStore(), TheaterStore())
-    }
+    private lateinit var presenter: MovieListContract.Presenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +36,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), MovieListContract.View {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.loadUiData()
+        presenter = MovieListPresenter(this, MovieStore(), TheaterStore())
     }
 
     override fun showMovieList(movieList: List<UiModel>) {

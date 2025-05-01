@@ -13,18 +13,10 @@ class MovieListPresenter(
     private val movieStore: MovieStore,
     theaterStore: TheaterStore,
 ) : MovieListContract.Presenter {
-    private val theaters = theaterStore.createTheaters()
-
-    override fun loadUiData() {
-        val items = mutableListOf<UiModel>()
-        movieStore.getAll().forEachIndexed { index, movie ->
-            items.add(movie.toUiModel())
-            if ((index + 1) % AD_DIVIDE_STANDARD == 0) {
-                items.add(Advertisement().toUiModel())
-            }
-        }
-        view.showMovieList(items)
+    init {
+        loadUiData()
     }
+    private val theaters = theaterStore.createTheaters()
 
     override fun loadTheaters(movieId: Int) {
         val bookingAbleTheater = theaters.bookingAbleTheater(movieId)
@@ -40,6 +32,17 @@ class MovieListPresenter(
         val screeningInfo = ScreeningInfo(movieId, theaterName, screeningTimes)
 
         view.moveToBooking(screeningInfo)
+    }
+
+    private fun loadUiData() {
+        val items = mutableListOf<UiModel>()
+        movieStore.getAll().forEachIndexed { index, movie ->
+            items.add(movie.toUiModel())
+            if ((index + 1) % AD_DIVIDE_STANDARD == 0) {
+                items.add(Advertisement().toUiModel())
+            }
+        }
+        view.showMovieList(items)
     }
 
     companion object {

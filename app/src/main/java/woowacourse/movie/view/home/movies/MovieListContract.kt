@@ -18,8 +18,6 @@ interface MovieListContract {
     }
 
     interface Presenter {
-        fun loadUiData()
-
         fun loadTheaters(movieId: Int)
 
         fun loadMovieScreening(
