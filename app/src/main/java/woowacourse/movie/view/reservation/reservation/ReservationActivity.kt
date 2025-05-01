@@ -5,18 +5,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.R.layout
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.Extras
@@ -28,13 +27,14 @@ import java.time.LocalDate
 class ReservationActivity :
     AppCompatActivity(),
     ReservationContract.View {
+    private lateinit var binding: ActivityReservationBinding
     private val reservationDialog by lazy { ReservationDialog() }
-    private val ticketCountTextView: TextView by lazy { findViewById(R.id.tv_reservation_ticket_count) }
     private val presenter: ReservationPresenter by lazy { ReservationPresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation)
         setContentView(R.layout.activity_reservation)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.sv_reservation)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -80,7 +80,7 @@ class ReservationActivity :
     }
 
     override fun showTicketCount(count: Int) {
-        ticketCountTextView.text = count.toString()
+        binding.tvReservationTicketCount.text = count.toString()
     }
 
     override fun updateDateAdapter(
@@ -94,7 +94,7 @@ class ReservationActivity :
                 duration,
             )
 
-        findViewById<Spinner>(R.id.spinner_reservation_date).apply {
+        binding.spinnerReservationDate.apply {
             adapter = dateAdapter
             setSelection(selected)
             onItemSelectedListener =
@@ -142,13 +142,13 @@ class ReservationActivity :
     }
 
     private fun setupPlusButtonClick() {
-        findViewById<Button>(R.id.btn_reservation_plus_ticket_count).setOnClickListener {
+        binding.btnReservationPlusTicketCount.setOnClickListener {
             presenter.plusTicketCount()
         }
     }
 
     private fun setupMinusButtonClick() {
-        findViewById<Button>(R.id.btn_reservation_minus_ticket_count).setOnClickListener {
+        binding.btnReservationMinusTicketCount.setOnClickListener {
             try {
                 presenter.minusTicketCount()
             } catch (e: IllegalArgumentException) {
@@ -169,27 +169,24 @@ class ReservationActivity :
         endDate: String,
         runningTime: Int,
     ) {
-        val posterImageView = findViewById<ImageView>(R.id.iv_reservation_poster)
         val poster =
             AppCompatResources.getDrawable(
                 this,
                 posterResId,
             )
-        posterImageView.setImageDrawable(poster)
+        binding.ivReservationPoster.setImageDrawable(poster)
 
-        val movieTitleTextView = findViewById<TextView>(R.id.tv_reservation_title)
-        movieTitleTextView.text = title
+        binding.tvReservationTitle.text = title
 
-        val screeningDateTextView = findViewById<TextView>(R.id.tv_reservation_screening_date)
-        screeningDateTextView.text =
+        binding.tvReservationScreeningDate.text =
             resources.getString(R.string.movie_screening_date, startDate, endDate)
 
-        val runningTimeTextView = findViewById<TextView>(R.id.tv_reservation_running_time)
-        runningTimeTextView.text = getString(R.string.movie_running_time).format(runningTime)
+        binding.tvReservationRunningTime.text =
+            getString(R.string.movie_running_time).format(runningTime)
     }
 
     private fun setupCompleteButtonClick() {
-        findViewById<Button>(R.id.btn_reservation_select_complete).setOnClickListener {
+        binding.btnReservationSelectComplete.setOnClickListener {
             presenter.createTicket { ticket ->
                 navigateToSeatSelect(ticket)
             }
