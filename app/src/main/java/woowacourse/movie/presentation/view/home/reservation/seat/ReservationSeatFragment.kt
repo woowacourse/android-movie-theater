@@ -48,7 +48,7 @@ class ReservationSeatFragment :
             arguments.getParcelableCompat<ReservationInfoUiModel>(BUNDLE_KEY_RESERVATION_INFO)
         val restoredSeats =
             savedInstanceState?.getParcelableCompat<ScreenUiModel>(BUNDLE_RESTORE_KEY_SEATS)
-        binding.reservationInfo = reservationInfo
+
         presenter.fetchData(reservationInfo, screen, restoredSeats)
     }
 
@@ -65,14 +65,15 @@ class ReservationSeatFragment :
         totalPrice: Int,
         canPublish: Boolean,
     ) {
-        views.setData(reservationInfo, screen, selectedSeats)
+        binding.reservationInfo = reservationInfo
+        views.setData(screen, selectedSeats)
         views.setEventListeners(
             { views.dialog.show(publishTicketConfirmationDialogInfo) },
             { seat -> presenter.updateSeat(seat) },
         )
 
         views.updateConfirmButton(canPublish)
-        views.updateTotalPrice(totalPrice)
+        updateMoney(totalPrice)
     }
 
     override fun updateSeatState(
@@ -81,8 +82,8 @@ class ReservationSeatFragment :
         canPublish: Boolean,
     ) {
         views.updateSeatState(selectedSeat)
-        views.updateTotalPrice(totalPrice)
         views.updateConfirmButton(canPublish)
+        updateMoney(totalPrice)
     }
 
     override fun notifyPublishedTickets(ticketBundle: TicketBundleUiModel) {
@@ -93,6 +94,10 @@ class ReservationSeatFragment :
             add(R.id.fragment_container_view, fragment)
             addToBackStack(null)
         }
+    }
+
+    private fun updateMoney(money: Int) {
+        binding.money = money
     }
 
     override fun notifySeatUpdateFailed(message: String) {

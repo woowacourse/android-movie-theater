@@ -6,7 +6,6 @@ import android.widget.TableRow
 import android.widget.TextView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationSeatBinding
-import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.ScreenUiModel
 import woowacourse.movie.presentation.model.SeatTypeUiModel
 import woowacourse.movie.presentation.model.SeatUiModel
@@ -21,11 +20,9 @@ class ReservationSeatViews(
     val dialog: CustomAlertDialog by lazy { CustomAlertDialog(context) }
 
     fun setData(
-        reservationInfo: ReservationInfoUiModel,
         screen: ScreenUiModel,
         selectedSeats: List<SeatUiModel>,
     ) {
-        // binding.tvSeatsMovieTitle.text = reservationInfo.title
         renderSeatLayout(screen, selectedSeats)
     }
 
@@ -35,10 +32,6 @@ class ReservationSeatViews(
     ) {
         cachedSeatViews.forEach { (seat, view) -> view.setupSeatClickListener(seat, onClickSeat) }
         binding.btnConfirm.setOnClickListener { onClickConfirm() }
-    }
-
-    fun updateTotalPrice(price: Int) {
-        binding.money = price
     }
 
     fun updateSeatState(seat: SeatUiModel) {
