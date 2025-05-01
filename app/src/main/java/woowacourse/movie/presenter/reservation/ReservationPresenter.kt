@@ -4,8 +4,8 @@ import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.MovieDate
 import woowacourse.movie.model.movie.MovieTime
 import woowacourse.movie.model.movie.MovieToReserve
-import woowacourse.movie.model.theater.MovieScreeningInfoByTheater
 import woowacourse.movie.model.theater.ScreeningInfo
+import woowacourse.movie.model.theater.TheaterMovieSchedule
 import woowacourse.movie.model.ticket.TicketCount
 import java.time.LocalDate
 import java.time.LocalTime
@@ -13,22 +13,22 @@ import java.time.LocalTime
 class ReservationPresenter(
     private val view: ReservationContract.View,
 ) : ReservationContract.Presenter {
-    private lateinit var movieScreeningInfoByTheater: MovieScreeningInfoByTheater
+    private lateinit var theaterMovieSchedule: TheaterMovieSchedule
     private var ticketCount = TicketCount()
     private val movieDate by lazy {
         MovieDate(
-            movieScreeningInfoByTheater.movie.startDate,
-            movieScreeningInfoByTheater.movie.endDate,
+            theaterMovieSchedule.movie.startDate,
+            theaterMovieSchedule.movie.endDate,
         )
     }
     private lateinit var movieTimes: ScreeningInfo
     private lateinit var selectedMovieTime: LocalTime
 
-    override fun updateMovieData(movieScreeningInfoByTheater: MovieScreeningInfoByTheater) {
-        this.movieScreeningInfoByTheater = movieScreeningInfoByTheater
-        this.movieTimes = movieScreeningInfoByTheater.screeningInfo
+    override fun updateMovieData(theaterMovieSchedule: TheaterMovieSchedule) {
+        this.theaterMovieSchedule = theaterMovieSchedule
+        this.movieTimes = theaterMovieSchedule.screeningInfo
         this.selectedMovieTime = movieTimes.screeningTimes[0].value
-        updateView(movieScreeningInfoByTheater.movie)
+        updateView(theaterMovieSchedule.movie)
     }
 
     private fun updateView(movie: Movie) {
@@ -56,12 +56,12 @@ class ReservationPresenter(
     override fun onMovieToReserveRequest() {
         val movieToReserve =
             MovieToReserve(
-                id = movieScreeningInfoByTheater.movie.id,
-                title = movieScreeningInfoByTheater.movie.title,
+                id = theaterMovieSchedule.movie.id,
+                title = theaterMovieSchedule.movie.title,
                 movieDate = movieDate,
                 movieTime = MovieTime(selectedMovieTime),
                 ticketCount = ticketCount,
-                theater = movieScreeningInfoByTheater.theater,
+                theater = theaterMovieSchedule.theater,
             )
         view.showSeatSelectionView(movieToReserve)
     }

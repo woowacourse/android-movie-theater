@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.model.movie.Movie
-import woowacourse.movie.model.theater.MovieScreeningInfoByTheaters
+import woowacourse.movie.model.theater.TheaterMovieSchedules
 import woowacourse.movie.presenter.home.HomeContracts
 import woowacourse.movie.presenter.home.HomePresenter
 import woowacourse.movie.view.home.theater.TheaterBottomSheetDialogFragment
@@ -63,9 +63,9 @@ class HomeFragment :
         movieAdapter.updateMovies(movies)
     }
 
-    override fun showTheaters(movieScreeningInfoByTheaters: MovieScreeningInfoByTheaters) {
+    override fun showTheaters(theaterMovieSchedules: TheaterMovieSchedules) {
         TheaterBottomSheetDialogFragment
-            .newInstance(movieScreeningInfoByTheaters)
+            .newInstance(theaterMovieSchedules)
             .show(parentFragmentManager, "jay")
     }
 

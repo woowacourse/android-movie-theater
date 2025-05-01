@@ -15,7 +15,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.MovieToReserve
-import woowacourse.movie.model.theater.MovieScreeningInfoByTheater
+import woowacourse.movie.model.theater.TheaterMovieSchedule
 import woowacourse.movie.presenter.reservation.ReservationContract
 import woowacourse.movie.presenter.reservation.ReservationPresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
@@ -24,7 +24,9 @@ import woowacourse.movie.view.seatSelection.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalTime
 
-class ReservationActivity : AppCompatActivity(), ReservationContract.View {
+class ReservationActivity :
+    AppCompatActivity(),
+    ReservationContract.View {
     private val presenter: ReservationContract.Presenter = ReservationPresenter(this)
     private lateinit var timeSpinnerAdapter: TimeSpinnerAdapter
     private lateinit var binding: ActivityReservationBinding
@@ -46,8 +48,8 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     private fun updateMovieToPresenter() {
-        val intentMovieData: MovieScreeningInfoByTheater =
-            intent.getSerializableExtraData<MovieScreeningInfoByTheater>(SCREENING_INFO_KEY)
+        val intentMovieData: TheaterMovieSchedule =
+            intent.getSerializableExtraData<TheaterMovieSchedule>(SCREENING_INFO_KEY)
         presenter.updateMovieData(intentMovieData)
     }
 
@@ -115,7 +117,9 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         super.onSaveInstanceState(outState)
         outState.putInt(
             TICKET_COUNT_DATA_KEY,
-            binding.tvReservationTicketCount.text.toString().toInt(),
+            binding.tvReservationTicketCount.text
+                .toString()
+                .toInt(),
         )
         outState.putInt(
             TICKET_DATE_POSITION_DATA_KEY,
@@ -179,11 +183,11 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
         fun getIntent(
             context: Context,
-            movieScreeningInfoByTheater: MovieScreeningInfoByTheater,
+            theaterMovieSchedule: TheaterMovieSchedule,
         ): Intent =
             Intent(
                 context,
                 ReservationActivity::class.java,
-            ).apply { putExtra(SCREENING_INFO_KEY, movieScreeningInfoByTheater) }
+            ).apply { putExtra(SCREENING_INFO_KEY, theaterMovieSchedule) }
     }
 }

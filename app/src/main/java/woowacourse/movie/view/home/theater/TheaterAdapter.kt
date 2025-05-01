@@ -6,11 +6,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterBinding
-import woowacourse.movie.model.theater.MovieScreeningInfoByTheater
+import woowacourse.movie.model.theater.TheaterMovieSchedule
 
 class TheaterAdapter(
-    private val movieScreeningInfoByTheaters: List<MovieScreeningInfoByTheater>,
-    private val onTheaterClick: (MovieScreeningInfoByTheater) -> Unit,
+    private val theaterMovieSchedules: List<TheaterMovieSchedule>,
+    private val onTheaterClick: (TheaterMovieSchedule) -> Unit,
 ) : RecyclerView.Adapter<TheaterViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,12 +27,12 @@ class TheaterAdapter(
         return TheaterViewHolder(theaterBinding, onTheaterClick)
     }
 
-    override fun getItemCount(): Int = movieScreeningInfoByTheaters.size
+    override fun getItemCount(): Int = theaterMovieSchedules.size
 
     override fun onBindViewHolder(
         holder: TheaterViewHolder,
         position: Int,
     ) {
-        holder.bind(movieScreeningInfoByTheaters[position])
+        holder.bind(theaterMovieSchedules[position])
     }
 }

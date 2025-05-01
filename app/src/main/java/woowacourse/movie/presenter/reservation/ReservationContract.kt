@@ -2,7 +2,7 @@ package woowacourse.movie.presenter.reservation
 
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.MovieToReserve
-import woowacourse.movie.model.theater.MovieScreeningInfoByTheater
+import woowacourse.movie.model.theater.TheaterMovieSchedule
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -26,7 +26,7 @@ interface ReservationContract {
     }
 
     interface Presenter {
-        fun updateMovieData(movieScreeningInfoByTheater: MovieScreeningInfoByTheater)
+        fun updateMovieData(theaterMovieSchedule: TheaterMovieSchedule)
 
         fun increaseTicketCount()
 

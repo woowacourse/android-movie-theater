@@ -7,10 +7,10 @@ import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalTime
 
-data class MovieScreeningInfoByTheaters(
-    val value: List<MovieScreeningInfoByTheater> = values,
+data class TheaterMovieSchedules(
+    val value: List<TheaterMovieSchedule> = values,
 ) : Serializable {
-    fun findMovieScreeningInfoByTheaterById(movieId: Long): List<MovieScreeningInfoByTheater> =
+    fun findMovieScreeningInfoByTheaterById(movieId: Long): List<TheaterMovieSchedule> =
         value.filter {
             it.movie.id == movieId
         }
@@ -56,7 +56,7 @@ data class MovieScreeningInfoByTheaters(
                 val screeningTimes =
                     screeningTimesSamples[index % screeningTimesSamples.size].map { MovieTime(it) }
 
-                MovieScreeningInfoByTheater(
+                TheaterMovieSchedule(
                     theater = Theater(name = theaterName),
                     movie =
                         Movie(

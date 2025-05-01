@@ -1,26 +1,26 @@
 package woowacourse.movie.presenter.home
 
 import woowacourse.movie.model.movie.Movie
-import woowacourse.movie.model.theater.MovieScreeningInfoByTheaters
+import woowacourse.movie.model.theater.TheaterMovieSchedules
 
 class HomePresenter(
     private val view: HomeContracts.View,
 ) : HomeContracts.Presenter {
-    private lateinit var movieScreeningInfoByTheaters: MovieScreeningInfoByTheaters
+    private lateinit var theaterMovieSchedules: TheaterMovieSchedules
 
     override fun initView() {
         view.showMovies(Movie.values)
     }
 
     override fun onTheaterRequested(movieId: Long) {
-        movieScreeningInfoByTheaters = MovieScreeningInfoByTheaters()
-        val movieScreeningInfoByTheaters =
-            MovieScreeningInfoByTheaters(
-                movieScreeningInfoByTheaters.findMovieScreeningInfoByTheaterById(
+        theaterMovieSchedules = TheaterMovieSchedules()
+        val theaterMovieSchedules =
+            TheaterMovieSchedules(
+                theaterMovieSchedules.findMovieScreeningInfoByTheaterById(
                     movieId,
                 ),
             )
-        view.showTheaters(movieScreeningInfoByTheaters)
+        view.showTheaters(theaterMovieSchedules)
     }
 
     override fun onAdvertisementRequested(url: String) {

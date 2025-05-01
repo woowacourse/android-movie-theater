@@ -8,8 +8,8 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.BottomSheetFragmentTheaterBinding
-import woowacourse.movie.model.theater.MovieScreeningInfoByTheater
-import woowacourse.movie.model.theater.MovieScreeningInfoByTheaters
+import woowacourse.movie.model.theater.TheaterMovieSchedule
+import woowacourse.movie.model.theater.TheaterMovieSchedules
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.reservation.ReservationActivity
 
@@ -39,17 +39,20 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        theaterAdapter =
-            TheaterAdapter(
-                arguments?.getSerializableExtraData<MovieScreeningInfoByTheaters>(THEATER_KEY)?.value
-                    ?: emptyList(),
-                ::navigateToReservation,
-            )
+        if (::theaterAdapter.isInitialized.not()) {
+            theaterAdapter =
+                TheaterAdapter(
+                    arguments?.getSerializableExtraData<TheaterMovieSchedules>(THEATER_KEY)?.value
+                        ?: emptyList(),
+                    ::navigateToReservation,
+                )
+        }
+
         binding.theaters.adapter = theaterAdapter
     }
 
-    private fun navigateToReservation(movieScreeningInfoByTheater: MovieScreeningInfoByTheater) {
-        val intent = ReservationActivity.getIntent(requireContext(), movieScreeningInfoByTheater)
+    private fun navigateToReservation(theaterMovieSchedule: TheaterMovieSchedule) {
+        val intent = ReservationActivity.getIntent(requireContext(), theaterMovieSchedule)
         startActivity(intent)
         dismiss()
     }
@@ -58,11 +61,11 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         private const val THEATER_KEY = "theater"
 
         @JvmStatic
-        fun newInstance(movieScreeningInfoByTheaters: MovieScreeningInfoByTheaters): TheaterBottomSheetDialogFragment =
+        fun newInstance(theaterMovieSchedules: TheaterMovieSchedules): TheaterBottomSheetDialogFragment =
             TheaterBottomSheetDialogFragment().apply {
                 arguments =
                     Bundle().apply {
-                        putSerializable(THEATER_KEY, movieScreeningInfoByTheaters)
+                        putSerializable(THEATER_KEY, theaterMovieSchedules)
                     }
             }
     }

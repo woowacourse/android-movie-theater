@@ -6,9 +6,9 @@ import woowacourse.movie.model.movie.MovieDate
 import woowacourse.movie.model.movie.MovieTime
 import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.seat.Seat
-import woowacourse.movie.model.theater.MovieScreeningInfoByTheater
 import woowacourse.movie.model.theater.ScreeningInfo
 import woowacourse.movie.model.theater.Theater
+import woowacourse.movie.model.theater.TheaterMovieSchedule
 import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.model.ticket.TicketCount
 import java.time.LocalDate
@@ -50,7 +50,7 @@ val MOVIE_TICKET_B1_C3: MovieTicket =
     )
 
 val MOVIE_SCREENING_INFO_BY_THEATER =
-    MovieScreeningInfoByTheater(
+    TheaterMovieSchedule(
         movie =
             Movie(
                 id = 1L,

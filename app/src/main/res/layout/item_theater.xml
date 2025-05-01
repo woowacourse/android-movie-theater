@@ -6,7 +6,7 @@
 
         <variable
             name="movieScreeningInfoByTheater"
-            type="woowacourse.movie.model.theater.MovieScreeningInfoByTheater" />
+            type="woowacourse.movie.model.theater.TheaterMovieSchedule" />
 
     </data>
 

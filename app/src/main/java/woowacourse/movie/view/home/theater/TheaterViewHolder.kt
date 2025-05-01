@@ -2,17 +2,17 @@ package woowacourse.movie.view.home.theater
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemTheaterBinding
-import woowacourse.movie.model.theater.MovieScreeningInfoByTheater
+import woowacourse.movie.model.theater.TheaterMovieSchedule
 
 class TheaterViewHolder(
     private val binding: ItemTheaterBinding,
-    private val onTheaterClick: (MovieScreeningInfoByTheater) -> Unit,
+    private val onTheaterClick: (TheaterMovieSchedule) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(movieScreeningInfoByTheater: MovieScreeningInfoByTheater) {
-        binding.movieScreeningInfoByTheater = movieScreeningInfoByTheater
+    fun bind(theaterMovieSchedule: TheaterMovieSchedule) {
+        binding.movieScreeningInfoByTheater = theaterMovieSchedule
 
         binding.theaterButton.setOnClickListener {
-            onTheaterClick.invoke(movieScreeningInfoByTheater)
+            onTheaterClick.invoke(theaterMovieSchedule)
         }
     }
 }
