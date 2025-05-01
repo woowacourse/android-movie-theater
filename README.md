@@ -55,7 +55,7 @@
 - [X] 예매 화면 Fragment 구현
 - [X] 홈 화면 Fragment 구현
 - [X] 설정 화면 Fragment 구현
-- [ ] bottomNavigationBar 구현
+- [X] bottomNavigationBar 구현
 - [ ] MovieActivity 구현
 
 ## 리팩토링할 부분
