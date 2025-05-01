@@ -24,7 +24,12 @@ import woowacourse.movie.util.getExtra
 class BookingDetailActivity :
     AppCompatActivity(),
     BookingDetailContract.View {
-    private val binding: ActivityBookingDetailBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_booking_detail) }
+    private val binding: ActivityBookingDetailBinding by lazy {
+        DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_booking_detail,
+        )
+    }
     private val presenter: BookingDetailPresenter by lazy { BookingDetailPresenter(this) }
     private lateinit var dateAdapter: DateAdapter
     private lateinit var timeAdapter: TimeAdapter
@@ -33,10 +38,9 @@ class BookingDetailActivity :
         super.onCreate(savedInstanceState)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setupBookingDetailClickListeners()
         setupDateSpinnerItemClickListener()
         setupTimeSpinnerItemClickListener()
-        setupTicketCountClickListeners()
-        setupSelectCompleteClickListener()
         presenter.prepareBookingInfo(
             intent.getExtra(SCREENING_KEY) ?: ScreeningUiModel(),
         )
@@ -77,8 +81,26 @@ class BookingDetailActivity :
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val bookingInfo: BookingInfoUiModel = savedInstanceState.getExtra(BOOKING_INFO_KEY) ?: BookingInfoUiModel()
+        val bookingInfo: BookingInfoUiModel =
+            savedInstanceState.getExtra(BOOKING_INFO_KEY) ?: BookingInfoUiModel()
         presenter.loadBookingInfo(bookingInfo)
+    }
+
+    private fun setupBookingDetailClickListeners() {
+        binding.onClick =
+            object : BookingDetailClickListener {
+                override fun onDecreaseTicketCountClick() {
+                    presenter.decreaseTicketCount()
+                }
+
+                override fun onIncreaseTicketCountClick() {
+                    presenter.increaseTicketCount()
+                }
+
+                override fun onSelectCompleteClick() {
+                    presenter.confirmBookingInfo()
+                }
+            }
     }
 
     private fun setupDateSpinnerItemClickListener() {
@@ -90,7 +112,8 @@ class BookingDetailActivity :
                     position: Int,
                     id: Long,
                 ) {
-                    val selectedDate = MovieDateUiModel.from(parent?.getItemAtPosition(position) as String)
+                    val selectedDate =
+                        MovieDateUiModel.from(parent?.getItemAtPosition(position) as String)
                     presenter.selectDate(selectedDate.toString())
                 }
 
@@ -107,28 +130,13 @@ class BookingDetailActivity :
                     position: Int,
                     id: Long,
                 ) {
-                    val selectedTime = MovieTimeUiModel.from(parent?.getItemAtPosition(position) as String)
+                    val selectedTime =
+                        MovieTimeUiModel.from(parent?.getItemAtPosition(position) as String)
                     presenter.selectTime(selectedTime.toString())
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit
             }
-    }
-
-    private fun setupTicketCountClickListeners() {
-        binding.btnBookingDetailCountDown.setOnClickListener {
-            presenter.decreaseTicketCount()
-        }
-
-        binding.btnBookingDetailCountUp.setOnClickListener {
-            presenter.increaseTicketCount()
-        }
-    }
-
-    private fun setupSelectCompleteClickListener() {
-        binding.btnBookingDetailSelectComplete.setOnClickListener {
-            presenter.confirmBookingInfo()
-        }
     }
 
     companion object {
