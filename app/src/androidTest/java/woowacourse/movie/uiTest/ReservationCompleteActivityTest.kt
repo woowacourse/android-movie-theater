@@ -31,9 +31,10 @@ class ReservationCompleteActivityTest {
             "해리 포터와 마법사의 돌",
             LocalDateTime.of(2025, 4, 21, 18, 0),
             2,
+            "선릉 극장",
         )
 
-    private val seats = Seats(mutableListOf(Seat(Position(0, 0))))
+    private val seats = Seats(mutableSetOf(Seat(Position(0, 0))))
 
     @Before
     fun setUp() {
@@ -74,8 +75,14 @@ class ReservationCompleteActivityTest {
     }
 
     @Test
+    fun `예매한_영화의_극장_이름을_보여준다`() {
+        onView(withId(R.id.tv_theater_name))
+            .check(matches(withText("선릉 극장")))
+    }
+
+    @Test
     fun `null값이_Intent된_경우_ErrorDialog를_띄운다`() {
-        val intent = ReservationActivity.newIntent(fakeContext, null)
+        val intent = ReservationActivity.newIntent(fakeContext, null, null)
         ActivityScenario.launch<ReservationCompleteActivity>(intent)
 
         onView(withText("오류가 생겼습니다.")).check(matches(isDisplayed()))

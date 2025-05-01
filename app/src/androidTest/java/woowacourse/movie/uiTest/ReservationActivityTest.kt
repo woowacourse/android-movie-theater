@@ -15,31 +15,44 @@ import org.junit.Test
 import org.junit.rules.TestName
 import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.ScheduleTime
+import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.movietime.Date
 import woowacourse.movie.uiTest.fixture.fakeContext
 import woowacourse.movie.view.reservation.detail.ReservationActivity
 import java.time.LocalDate
+import java.time.LocalTime
 
 class ReservationActivityTest {
     private lateinit var scenario: ActivityScenario<ReservationActivity>
     private lateinit var testName: String
+    private lateinit var movie: Movie
+    private lateinit var showings: Showings
 
     @get:Rule
     val nameRule = TestName()
 
-    private val movie =
-        Movie(
-            R.drawable.harry,
-            "해리 포터와 마법사의 돌",
-            Date(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 4, 25)),
-            152,
-        )
-
     @Before
     fun setUp() {
+        movie =
+            Movie(
+                R.drawable.harry,
+                "해리 포터와 마법사의 돌",
+                Date(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 4, 25)),
+                152,
+            )
+
+        showings =
+            Showings(
+                theaterName = "선릉 극장",
+                showings =
+                    ScheduleTime(
+                        times = listOf(LocalTime.of(1, 1)),
+                    ),
+            )
         testName = nameRule.methodName
         if (testName == "`null값이_Intent된_경우_ErrorDialog를_띄운다`") return
-        val intent = ReservationActivity.newIntent(fakeContext, movie)
+        val intent = ReservationActivity.newIntent(fakeContext, movie, showings)
         scenario = ActivityScenario.launch<ReservationActivity>(intent)
     }
 
@@ -113,7 +126,7 @@ class ReservationActivityTest {
 
     @Test
     fun `null값이_Intent된_경우_ErrorDialog를_띄운다`() {
-        val intent = ReservationActivity.newIntent(fakeContext, null)
+        val intent = ReservationActivity.newIntent(fakeContext, null, null)
         ActivityScenario.launch<ReservationActivity>(intent)
 
         onView(withText("오류가 생겼습니다.")).check(matches(isDisplayed()))
