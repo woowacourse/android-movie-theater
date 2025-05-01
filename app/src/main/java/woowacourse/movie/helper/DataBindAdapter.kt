@@ -2,7 +2,6 @@ package woowacourse.movie.helper
 
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.getString
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
 import woowacourse.movie.domain.seat.Seat

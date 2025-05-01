@@ -82,9 +82,9 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
         startActivity(intent)
     }
 
-    override fun showError(messageResId: Int) {
+    override fun showError(messageRes: Int) {
         AlertDialog.Builder(this)
-            .setMessage(getString(messageResId))
+            .setMessage(getString(messageRes))
             .setPositiveButton(R.string.error_dialog_okay, null)
             .show()
             .setCancelable(false)

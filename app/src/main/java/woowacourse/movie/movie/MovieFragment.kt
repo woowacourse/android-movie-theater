@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieBinding
 import woowacourse.movie.domain.Movie
+import androidx.core.net.toUri
 
 class MovieFragment : Fragment(), Movies.View {
     private lateinit var binding: FragmentMovieBinding
@@ -53,7 +54,7 @@ class MovieFragment : Fragment(), Movies.View {
     override fun navigateToAdPage() {
         val intent =
             Intent(Intent.ACTION_VIEW)
-        val uri = Uri.parse("https://www.woowacourse.io/")
+        val uri = "https://www.woowacourse.io/".toUri()
         intent.setData(uri)
         binding.root.context.startActivity(intent)
     }

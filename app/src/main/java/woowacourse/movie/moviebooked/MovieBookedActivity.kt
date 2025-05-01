@@ -48,7 +48,7 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
         binding.bookingStatus = bookingStatus
         binding.theater = theater
         val seatsText =
-            bookingStatus.seat.seats.joinToString(", ") { seat ->
+            bookingStatus.seat.seats.joinToString { seat ->
                 val rowChar = 'A' + seat.row.value
                 val colNumber = seat.col.value + 1
                 "$rowChar$colNumber"

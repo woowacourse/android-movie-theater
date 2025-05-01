@@ -29,7 +29,7 @@ class MovieBookingSeatPresenter(
         view.showTotalPrice(totalPrice)
     }
 
-    fun selectedAll() {
+    private fun selectedAll() {
         if (bookingStatus.seat.isSelectedAll()) view.updateButton()
     }
 

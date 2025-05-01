@@ -25,7 +25,6 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     private lateinit var presenter: MovieBookingSeatPresenter
     private lateinit var bookingStatus: BookingStatus
     private lateinit var theater: Theater
-    private var price: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +90,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
         theater: Theater,
     ) {
         val intent =
-            MovieBookedActivity.Companion.movieBookedIntent(
+            MovieBookedActivity.movieBookedIntent(
                 this@MovieBookingSeatActivity,
                 bookingStatus,
                 theater,
@@ -100,9 +99,9 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
         finish()
     }
 
-    override fun showError(messageResId: Int) {
+    override fun showError(messageRes: Int) {
         AlertDialog.Builder(this)
-            .setMessage(getString(messageResId))
+            .setMessage(getString(messageRes))
             .setPositiveButton(R.string.error_dialog_okay, null)
             .show()
             .setCancelable(false)
@@ -111,7 +110,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     private fun initSeatTable() {
         binding.seatTable.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, row ->
             row.children.filterIsInstance<TextView>().forEachIndexed { colIndex, seatTextView ->
-                val seat = Seat.Companion.of(rowIndex, colIndex)
+                val seat = Seat.of(rowIndex, colIndex)
                 seatTextView.apply {
                     tag = seat
                     setOnClickListener {

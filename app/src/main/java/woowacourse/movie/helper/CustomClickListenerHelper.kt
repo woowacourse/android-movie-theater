@@ -8,7 +8,7 @@ object CustomClickListenerHelper {
         intervalTime: Long = 1000,
         onSingleClick: (View) -> Unit,
     ) {
-        this.setOnClickListener { view ->
+        this.setOnClickListener {
             if (this.isClickable) {
                 onSingleClick(this)
                 this.isClickable = false

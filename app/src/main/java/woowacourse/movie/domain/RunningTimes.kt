@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 class RunningTimes(
-    val targetDate: LocalDate,
+    private val targetDate: LocalDate,
 ) {
     private fun isWeekdays(): Boolean {
         val dayOfWeek = targetDate.dayOfWeek

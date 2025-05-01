@@ -8,7 +8,7 @@ class MoviesPresenter(
     private val view: Movies.View,
 ) : Movies.Presenter {
     override fun loadMovies() {
-        val movies = woowacourse.movie.domain.Movies.Companion.value.toList()
+        val movies = woowacourse.movie.domain.Movies.value.toList()
         view.showMovies(movies)
     }
 
