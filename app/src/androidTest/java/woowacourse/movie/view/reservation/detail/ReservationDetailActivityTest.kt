@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.view.reservation.detail
 
 import android.content.Context
 import android.content.Intent
@@ -8,51 +8,42 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import org.junit.Test
+import woowacourse.movie.R
 import woowacourse.movie.model.Movie
+import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.Extras
-import woowacourse.movie.view.reservation.reservation.ReservationActivity
 import java.time.LocalDate
 
-class ReservationActivityTest {
-    private lateinit var scenario: ActivityScenario<ReservationActivity>
-    private val fakeMovie =
-        Movie(
-            "라라랜드",
-            R.drawable.lalaland,
-            LocalDate.of(2025, 4, 1),
-            LocalDate.of(2025, 4, 30),
-            123,
+class ReservationDetailActivityTest {
+    private lateinit var scenario: ActivityScenario<ReservationDetailActivity>
+    private val fakeUIModel: TheaterUIModel =
+        TheaterUIModel(
+            "선릉",
+            Movie(
+                "라라랜드",
+                R.drawable.lalaland,
+                LocalDate.of(2025, 4, 1),
+                LocalDate.of(2025, 4, 30),
+                123,
+            ),
+            2,
         )
+
     private val fakeContext: Context = ApplicationProvider.getApplicationContext()
 
     @Before
     fun setUp() {
         scenario =
             ActivityScenario.launch(
-                Intent(fakeContext, ReservationActivity::class.java).putExtra(
-                    Extras.MovieData.MOVIE_KEY,
-                    fakeMovie,
+                Intent(fakeContext, ReservationDetailActivity::class.java).putExtra(
+                    Extras.TheaterData.THEATER_UI_MODEL_KEY,
+                    fakeUIModel,
                 ),
             )
-    }
-
-    @Test
-    fun 영화_인텐트_타입이_movie가_아니면_에러_발생_다이얼로그를_띄운다() {
-        val wrongTypeIntent = "1"
-        val intent =
-            Intent(
-                fakeContext,
-                ReservationActivity::class.java,
-            ).putExtra(Extras.MovieData.MOVIE_KEY, wrongTypeIntent)
-        scenario = ActivityScenario.launch(intent)
-
-        onView(withText("에러 발생"))
-            .check(matches(isDisplayed()))
     }
 
     @Test
@@ -84,13 +75,6 @@ class ReservationActivityTest {
 
     @Test
     fun `화면을_회전해도_티켓_개수가_유지된다`() {
-        val intent =
-            Intent(
-                fakeContext,
-                ReservationActivity::class.java,
-            ).putExtra(Extras.MovieData.MOVIE_KEY, fakeMovie)
-        scenario = ActivityScenario.launch(intent)
-
         // when: 티켓 개수를 2 증가 시키고 가로모드로 회전했을 때
         onView(withId(R.id.btn_reservation_plus_ticket_count))
             .perform(click())

@@ -11,18 +11,18 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.dummyUIModel
-import woowacourse.movie.view.reservation.reservation.ReservationContract
-import woowacourse.movie.view.reservation.reservation.ReservationPresenter
+import woowacourse.movie.view.reservation.detail.ReservationDetailContract
+import woowacourse.movie.view.reservation.detail.ReservationDetailPresenter
 import java.time.LocalDate
 
-class ReservationPresenterTest {
-    private lateinit var presenter: ReservationContract.Presenter
-    private lateinit var view: ReservationContract.View
+class ReservationDetailPresenterTest {
+    private lateinit var presenter: ReservationDetailContract.Presenter
+    private lateinit var view: ReservationDetailContract.View
 
     @BeforeEach
     fun setUp() {
         view = mockk()
-        presenter = ReservationPresenter(view)
+        presenter = ReservationDetailPresenter(view)
     }
 
     @Test
@@ -79,7 +79,7 @@ class ReservationPresenterTest {
         }
 
         val expected =
-            listOf("10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00", "24:00")
+            listOf("11:00", "14:00", "17:00", "20:00")
         assertThat(timetableSlot.captured).isEqualTo(expected)
     }
 

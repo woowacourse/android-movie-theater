@@ -19,14 +19,14 @@ import woowacourse.movie.view.Extras
 import woowacourse.movie.view.ReservationUiFormatter
 import woowacourse.movie.view.getParcelableExtraCompat
 import woowacourse.movie.view.reservation.complete.ReservationCompleteActivity
-import woowacourse.movie.view.reservation.reservation.ReservationDialog
+import woowacourse.movie.view.reservation.detail.ReservationDetailDialog
 
 class SeatSelectActivity :
     AppCompatActivity(),
     SeatSelectContract.View {
     private lateinit var binding: ActivitySeatSelectBinding
     private val presenter: SeatSelectPresenter by lazy { SeatSelectPresenter(this) }
-    private val reservationDialog by lazy { ReservationDialog() }
+    private val reservationDialog by lazy { ReservationDetailDialog() }
     private val seatViews: MutableMap<String, TextView> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {

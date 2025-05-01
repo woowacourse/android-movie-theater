@@ -1,4 +1,4 @@
-package woowacourse.movie.view.reservation.reservation
+package woowacourse.movie.view.reservation.detail
 
 import android.content.Intent
 import android.os.Bundle
@@ -23,12 +23,12 @@ import woowacourse.movie.view.movie.MoviesActivity
 import woowacourse.movie.view.reservation.seat.SeatSelectActivity
 import java.time.LocalDate
 
-class ReservationActivity :
+class ReservationDetailActivity :
     AppCompatActivity(),
-    ReservationContract.View {
+    ReservationDetailContract.View {
     private lateinit var binding: ActivityReservationBinding
-    private val reservationDialog by lazy { ReservationDialog() }
-    private val presenter: ReservationPresenter by lazy { ReservationPresenter(this) }
+    private val reservationDialog by lazy { ReservationDetailDialog() }
+    private val presenter: ReservationDetailPresenter by lazy { ReservationDetailPresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

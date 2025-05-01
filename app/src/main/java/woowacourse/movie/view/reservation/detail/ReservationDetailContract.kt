@@ -1,10 +1,10 @@
-package woowacourse.movie.view.reservation.reservation
+package woowacourse.movie.view.reservation.detail
 
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.model.TheaterUIModel
 import java.time.LocalDate
 
-interface ReservationContract {
+interface ReservationDetailContract {
     interface View {
         fun showMovieInfo(
             posterResId: Int,

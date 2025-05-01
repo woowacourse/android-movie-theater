@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.view.reservation.complete
 
 import android.content.Context
 import android.content.Intent
@@ -9,11 +9,11 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import org.junit.Before
-import org.junit.jupiter.api.Test
+import org.junit.Test
+import woowacourse.movie.R
 import woowacourse.movie.model.ReservationInfo
 import woowacourse.movie.model.Seats
 import woowacourse.movie.view.Extras
-import woowacourse.movie.view.reservation.complete.ReservationCompleteActivity
 import java.time.LocalDate
 
 class ReservationCompleteActivityTest {
@@ -41,7 +41,7 @@ class ReservationCompleteActivityTest {
     }
 
     @Test
-    fun 영화_예매_정보가_화면에_표시된다() {
+    fun `영화_예매_정보가_화면에_표시된다`() {
         onView(withId(R.id.tv_reservation_complete_title))
             .check(matches(isDisplayed()))
     }

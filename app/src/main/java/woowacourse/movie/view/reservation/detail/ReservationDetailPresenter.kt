@@ -1,4 +1,4 @@
-package woowacourse.movie.view.reservation.reservation
+package woowacourse.movie.view.reservation.detail
 
 import woowacourse.movie.R
 import woowacourse.movie.model.MovieDao
@@ -12,9 +12,9 @@ import woowacourse.movie.view.ReservationUiFormatter
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class ReservationPresenter(
-    val view: ReservationContract.View,
-) : ReservationContract.Presenter {
+class ReservationDetailPresenter(
+    val view: ReservationDetailContract.View,
+) : ReservationDetailContract.Presenter {
     lateinit var reservationUIModel: ReservationUIModel
     private var currentTimeTable: List<Int> = emptyList()
     private val movieDao by lazy { MovieDao() }
@@ -32,7 +32,7 @@ class ReservationPresenter(
                 movie = theaterUIModel.movie,
                 movieDate = MovieDate(theaterUIModel.movie.startDate, theaterUIModel.movie.endDate),
                 movieTime = MovieTime(),
-                ticketCount = 1,
+                ticketCount = TicketCount().value,
                 theaterName = theaterUIModel.name,
             )
 

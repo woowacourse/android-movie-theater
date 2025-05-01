@@ -11,7 +11,7 @@
 
         <variable
             name="presenter"
-            type="woowacourse.movie.view.reservation.reservation.ReservationPresenter" />
+            type="woowacourse.movie.view.reservation.detail.ReservationDetailPresenter" />
 
     </data>
 
@@ -19,7 +19,7 @@
         android:id="@+id/sv_reservation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.reservation.reservation.ReservationFragment">
+        tools:context=".view.reservation.detail.ReservationFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

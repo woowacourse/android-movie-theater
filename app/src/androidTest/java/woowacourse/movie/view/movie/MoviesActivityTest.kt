@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.view.movie
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -12,7 +12,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.movie.view.movie.MoviesActivity
+import woowacourse.movie.R
 
 class MoviesActivityTest {
     @get:Rule
@@ -32,7 +32,7 @@ class MoviesActivityTest {
     }
 
     @Test
-    fun 설정_프래그먼트를_선택하면_설정_화면이_보여야_한다() {
+    fun `설정_프래그먼트를_선택하면_설정_화면이_보여야_한다`() {
         onView(withId(R.id.fragment_setting)).perform(click())
 
         onView(withText("설정화면 입니다"))

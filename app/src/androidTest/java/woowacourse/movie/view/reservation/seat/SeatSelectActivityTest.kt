@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.view.reservation.seat
 
 import android.content.Context
 import android.content.Intent
@@ -12,9 +12,9 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import org.junit.Test
+import woowacourse.movie.R
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.view.Extras
-import woowacourse.movie.view.reservation.seat.SeatSelectActivity
 import java.time.LocalDate
 
 class SeatSelectActivityTest {

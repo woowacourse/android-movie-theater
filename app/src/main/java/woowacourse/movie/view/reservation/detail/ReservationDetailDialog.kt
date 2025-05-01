@@ -1,11 +1,11 @@
-package woowacourse.movie.view.reservation.reservation
+package woowacourse.movie.view.reservation.detail
 
 import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 import woowacourse.movie.R
 
-class ReservationDialog {
+class ReservationDetailDialog {
     private var reservationDialog: AlertDialog? = null
 
     fun show(

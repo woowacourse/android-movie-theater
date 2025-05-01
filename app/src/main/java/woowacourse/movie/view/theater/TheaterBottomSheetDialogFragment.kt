@@ -14,7 +14,7 @@ import woowacourse.movie.model.Movie
 import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.compatParcelable
-import woowacourse.movie.view.reservation.reservation.ReservationActivity
+import woowacourse.movie.view.reservation.detail.ReservationDetailActivity
 
 class TheaterBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
@@ -65,7 +65,7 @@ class TheaterBottomSheetDialogFragment :
 
     override fun navigateToReservation(theaterUIModel: TheaterUIModel) {
         val intent =
-            Intent(requireContext(), ReservationActivity::class.java).apply {
+            Intent(requireContext(), ReservationDetailActivity::class.java).apply {
                 putExtra(Extras.TheaterData.THEATER_UI_MODEL_KEY, theaterUIModel)
             }
         startActivity(intent)

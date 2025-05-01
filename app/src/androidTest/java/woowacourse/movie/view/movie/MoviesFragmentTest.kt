@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.view.movie
 
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
@@ -6,7 +6,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import org.junit.jupiter.api.Test
-import woowacourse.movie.view.movie.MoviesFragment
+import woowacourse.movie.R
 
 class MoviesFragmentTest {
     @Test
