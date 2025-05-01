@@ -14,7 +14,9 @@ import woowacourse.movie.presenter.cinema.ScreeningPresenter
 import woowacourse.movie.view.cinema.adapter.ScreeningAdapter
 import woowacourse.movie.view.util.ErrorMessage
 
-class HomeFragment : Fragment(), ScreeningContract.View {
+class HomeFragment :
+    Fragment(),
+    ScreeningContract.View {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding ?: error(ErrorMessage("_binding").notProvided())
 
@@ -75,12 +77,9 @@ class HomeFragment : Fragment(), ScreeningContract.View {
         private const val ARGUMENT_SCREENING_CONTENTS =
             "woowacourse.movie.ARGUMENT_SCREENING_CONTENTS"
 
-        fun testInstance(screeningContents: List<ScreeningContent>) =
-            HomeFragment().apply {
-                arguments =
-                    Bundle().apply {
-                        putSerializable(ARGUMENT_SCREENING_CONTENTS, ArrayList(screeningContents))
-                    }
+        fun arguments(screeningContents: List<ScreeningContent>): Bundle =
+            Bundle().apply {
+                putSerializable(ARGUMENT_SCREENING_CONTENTS, ArrayList(screeningContents))
             }
     }
 }
