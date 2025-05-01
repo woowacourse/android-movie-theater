@@ -63,7 +63,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), MovieListContract.View {
                     presenter.loadTheaters(it)
                 },
             )
-        rv.layoutManager = LinearLayoutManager(requireContext())
         rv.adapter = adapter
     }
 

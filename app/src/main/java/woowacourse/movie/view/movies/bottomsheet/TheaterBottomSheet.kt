@@ -24,6 +24,5 @@ class TheaterBottomSheet(
 
         val theaterAdapter = TheaterAdapter(theaters, movieId, onclick)
         binding.rv.adapter = theaterAdapter
-        binding.rv.layoutManager = LinearLayoutManager(view.context)
     }
 }
