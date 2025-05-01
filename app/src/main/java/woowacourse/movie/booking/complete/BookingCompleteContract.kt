@@ -8,7 +8,7 @@ interface BookingCompleteContract {
     }
 
     interface View {
-        fun showBookingCompleteResult(result: TicketUiModel)
+        fun showBookingCompleteResult(ticket: TicketUiModel)
 
         fun showToastErrorAndFinish(message: String)
     }

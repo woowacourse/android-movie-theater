@@ -18,7 +18,7 @@ interface BookingDetailContract {
             selected: LocalTime,
         )
 
-        fun startSeatSelectionActivity(result: TicketUiModel)
+        fun startSeatSelectionActivity(ticket: TicketUiModel)
 
         fun showToastErrorAndFinish(message: String)
 

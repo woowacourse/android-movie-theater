@@ -17,7 +17,7 @@ interface SeatSelectionContract {
 
         fun setButtonEnabled(enabled: Boolean)
 
-        fun showBookingAlertDialog(result: TicketUiModel)
+        fun showBookingAlertDialog(ticket: TicketUiModel)
 
         fun getContext(): Context
     }

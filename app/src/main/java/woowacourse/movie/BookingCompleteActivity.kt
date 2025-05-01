@@ -54,8 +54,8 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             }
     }
 
-    override fun showBookingCompleteResult(ticketUiData: TicketUiModel) {
-        binding.ticket = ticketUiData
+    override fun showBookingCompleteResult(ticket: TicketUiModel) {
+        binding.ticket = ticket
     }
 
     override fun showToastErrorAndFinish(message: String) {

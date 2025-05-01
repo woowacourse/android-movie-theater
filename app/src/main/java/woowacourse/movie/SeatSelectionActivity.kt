@@ -81,8 +81,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
     }
 
-    override fun showTicket(ticketUiData: TicketUiModel) {
-        binding.ticket = ticketUiData
+    override fun showTicket(ticket: TicketUiModel) {
+        binding.ticket = ticket
     }
 
     override fun showSeatState(
@@ -113,12 +113,12 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
     }
 
-    override fun showBookingAlertDialog(result: TicketUiModel) {
+    override fun showBookingAlertDialog(ticket: TicketUiModel) {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.dig_title))
             .setMessage(getString(R.string.dig_message))
             .setPositiveButton(getString(R.string.dig_btn_positive_message)) { _, _ ->
-                startBookingCompleteActivity(result)
+                startBookingCompleteActivity(ticket)
             }
             .setNegativeButton(getString(R.string.dig_btn_negative_message)) { dialog, _ ->
                 dialog.dismiss()
@@ -127,10 +127,10 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             .show()
     }
 
-    private fun startBookingCompleteActivity(result: TicketUiModel) {
+    private fun startBookingCompleteActivity(ticket: TicketUiModel) {
         val intent =
             Intent(this, BookingCompleteActivity::class.java).apply {
-                putExtra(KEY_BOOKING_RESULT, result)
+                putExtra(KEY_BOOKING_RESULT, ticket)
             }
         startActivity(intent)
     }
