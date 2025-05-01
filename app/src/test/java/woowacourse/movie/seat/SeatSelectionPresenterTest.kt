@@ -6,13 +6,11 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.SEOLLEUNG
+import woowacourse.movie.createTicket
 import woowacourse.movie.mapper.toUiModel
-import woowacourse.movie.model.HeadCount
-import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.ui.model.TicketUiModel
-import java.time.LocalDate
-import java.time.LocalTime
 
 class SeatSelectionPresenterTest {
     private lateinit var presenter: SeatSelectionPresenter
@@ -24,15 +22,7 @@ class SeatSelectionPresenterTest {
     fun setUp() {
         mockView = mockk(relaxed = true)
 
-        mockTicket =
-            Ticket(
-                theater = "선릉",
-                title = "해리 포터와 마법사의 돌",
-                headCount = HeadCount(3),
-                selectedDate = LocalDate.of(2028, 10, 13),
-                selectedTime = LocalTime.of(11, 0),
-                seats = Seats(emptyList()),
-            )
+        mockTicket = createTicket(SEOLLEUNG, listOf(), 2)
 
         mockTicketUiData = mockTicket.toUiModel()
         presenter = SeatSelectionPresenter(mockView)

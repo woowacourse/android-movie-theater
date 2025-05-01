@@ -3,13 +3,18 @@ package woowacourse.movie.model
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import woowacourse.movie.SEAT_A1
+import woowacourse.movie.SEAT_A1_NOT_SELECTED
+import woowacourse.movie.SEAT_A2
+import woowacourse.movie.SEAT_C1
+import woowacourse.movie.SEAT_E1
 
 class SeatsTest {
     @Test
     fun `선택되지 않은 좌석이 포함될 수 없다`() {
         assertThrows<IllegalArgumentException> {
             Seats(
-                listOf(Seat("A1", false)),
+                listOf(SEAT_A1_NOT_SELECTED),
             )
         }
     }
@@ -19,9 +24,9 @@ class SeatsTest {
         val seats =
             Seats(
                 listOf(
-                    Seat("E1", true),
-                    Seat("A1", true),
-                    Seat("C1", true),
+                    SEAT_E1,
+                    SEAT_A1,
+                    SEAT_C1,
                 ),
             )
 
@@ -35,10 +40,10 @@ class SeatsTest {
             Seats(
                 emptyList(),
             )
-        val seat = Seat("A1")
+        val seat = SEAT_A1_NOT_SELECTED
         val newSeats = seats.toggle(seat, 3)
 
-        val expectedSeat = Seat("A1", true)
+        val expectedSeat = SEAT_A1
         val expected = Seats(listOf(expectedSeat))
         assertEquals(expected, newSeats)
     }
@@ -49,11 +54,11 @@ class SeatsTest {
         val seats =
             Seats(
                 listOf(
-                    Seat("E1", true),
-                    Seat("A1", true),
+                    SEAT_C1,
+                    SEAT_A2,
                 ),
             )
-        val seat = Seat("A3")
+        val seat = SEAT_A1_NOT_SELECTED
         val newSeats = seats.toggle(seat, headCount)
 
         val expected = seats
@@ -66,19 +71,19 @@ class SeatsTest {
         val seats =
             Seats(
                 listOf(
-                    Seat("E1", true),
-                    Seat("A1", true),
+                    SEAT_A2,
+                    SEAT_C1,
                 ),
             )
-        val seat = Seat("A3")
+        val seat = SEAT_A1_NOT_SELECTED
         val newSeats = seats.toggle(seat, headCount)
 
         val expected =
             Seats(
                 listOf(
-                    Seat("E1", true),
-                    Seat("A1", true),
-                    Seat("A3", true),
+                    SEAT_A2,
+                    SEAT_C1,
+                    SEAT_A1,
                 ),
             )
         assertEquals(expected, newSeats)

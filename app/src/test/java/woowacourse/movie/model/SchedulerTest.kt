@@ -3,6 +3,8 @@ package woowacourse.movie.model
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.HARRY_POTTER
+import woowacourse.movie.createMovie
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -12,13 +14,7 @@ class SchedulerTest {
     @BeforeEach
     fun setUp() {
         movie =
-            Movie(
-                imageSource = "harry_potter.png",
-                title = "해리 포터와 마법사의 돌",
-                runningTime = 152,
-                screeningStartDate = LocalDate.of(2025, 5, 10),
-                screeningEndDate = LocalDate.of(2025, 5, 15),
-            )
+            createMovie(HARRY_POTTER)
     }
 
     @Test

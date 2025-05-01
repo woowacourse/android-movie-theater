@@ -4,13 +4,15 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.HARRY_POTTER
+import woowacourse.movie.SEOLLEUNG
 import woowacourse.movie.booking.detail.BookingDetailContract
 import woowacourse.movie.booking.detail.BookingDetailPresenter
+import woowacourse.movie.createMovie
+import woowacourse.movie.createTicket
 import woowacourse.movie.mapper.toUiModel
-import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.Schedule
-import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
@@ -21,6 +23,8 @@ import java.time.LocalTime
 import kotlin.test.assertEquals
 
 class SchedulerDetailPresenterTest {
+    private val selectedDate = LocalDate.of(2028, 10, 13)
+    private val selectedTime = LocalTime.of(23, 0)
     private lateinit var presenter: BookingDetailPresenter
     private lateinit var mockView: BookingDetailContract.View
     private lateinit var mockMovie: Movie
@@ -31,24 +35,9 @@ class SchedulerDetailPresenterTest {
     @BeforeEach
     fun setUp() {
         mockView = mockk(relaxed = true)
-        mockMovie =
-            Movie(
-                title = "해리 포터와 마법사의 돌",
-                imageSource = "harry_potter.png",
-                screeningStartDate = LocalDate.of(2028, 10, 1),
-                screeningEndDate = LocalDate.of(2028, 10, 25),
-                runningTime = 150,
-            )
+        mockMovie = createMovie(HARRY_POTTER)
 
-        mockTicket =
-            Ticket(
-                theater = "선릉",
-                title = "해리 포터와 마법사의 돌",
-                headCount = HeadCount(2),
-                selectedDate = LocalDate.of(2028, 10, 13),
-                selectedTime = LocalTime.of(11, 0),
-                seats = Seats(emptyList()),
-            )
+        mockTicket = createTicket(SEOLLEUNG, listOf(), 2)
 
         mockTheaterUiData =
             TheaterUiModel(
@@ -79,7 +68,6 @@ class SchedulerDetailPresenterTest {
         presenter.createDefaultTicket()
         presenter.setUpTicket()
 
-        val selectedDate = LocalDate.of(2028, 10, 13)
         presenter.selectDate(selectedDate)
 
         verify { mockView.showScreeningTimes(any(), any()) }
@@ -90,9 +78,6 @@ class SchedulerDetailPresenterTest {
         presenter.createDefaultTicket()
         presenter.setUpTicket()
 
-        // 평일임
-        val selectedDate = LocalDate.of(2028, 10, 13)
-        val selectedTime = LocalTime.of(23, 0)
         presenter.selectDate(selectedDate)
         presenter.selectTime(selectedTime)
 
@@ -103,8 +88,6 @@ class SchedulerDetailPresenterTest {
 
     @Test
     fun `예매 확인버튼을 누르면 좌석 선택 화면으로 넘어간다`() {
-        val selectedDate = LocalDate.of(2028, 10, 13)
-        val selectedTime = LocalTime.of(23, 0)
         presenter.createDefaultTicket()
         presenter.setUpTicket()
 

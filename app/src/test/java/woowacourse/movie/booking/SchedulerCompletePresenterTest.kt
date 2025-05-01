@@ -4,16 +4,16 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.SEAT_A1
+import woowacourse.movie.SEAT_A2
+import woowacourse.movie.SEAT_C1
+import woowacourse.movie.SEOLLEUNG
 import woowacourse.movie.booking.complete.BookingCompleteContract
 import woowacourse.movie.booking.complete.BookingCompletePresenter
+import woowacourse.movie.createTicket
 import woowacourse.movie.mapper.toUiModel
-import woowacourse.movie.model.HeadCount
-import woowacourse.movie.model.Seat
-import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.ui.model.TicketUiModel
-import java.time.LocalDate
-import java.time.LocalTime
 
 class SchedulerCompletePresenterTest {
     private lateinit var presenter: BookingCompletePresenter
@@ -27,20 +27,12 @@ class SchedulerCompletePresenterTest {
 
         val seats =
             listOf(
-                Seat("A1", true),
-                Seat("C2", true),
-                Seat("E1", true),
+                SEAT_A1,
+                SEAT_A2,
+                SEAT_C1,
             )
 
-        mockTicket =
-            Ticket(
-                theater = "선릉",
-                title = "해리 포터와 마법사의 돌",
-                headCount = HeadCount(3),
-                selectedDate = LocalDate.of(2028, 10, 13),
-                selectedTime = LocalTime.of(11, 0),
-                seats = Seats(seats),
-            )
+        mockTicket = createTicket(SEOLLEUNG, seats)
 
         mockTicketUiData = mockTicket.toUiModel()
 
@@ -56,8 +48,8 @@ class SchedulerCompletePresenterTest {
             mockView.showBookingCompleteResult(
                 match {
                     it.headCount == 3 && it.selectedDateText == "2028.10.13" &&
-                        it.selectedTimeText == "11:00" && it.seats == "A1, C2, E1" &&
-                        it.totalPrice == "37,000"
+                        it.selectedTimeText == "11:00" && it.seats == "A1, A2, C1" &&
+                        it.totalPrice == "35,000"
                 },
             )
         }
