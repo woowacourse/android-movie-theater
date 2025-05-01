@@ -16,7 +16,7 @@ class HomePresenter(
         theaterMovieSchedules = TheaterMovieSchedules()
         val theaterMovieSchedules =
             TheaterMovieSchedules(
-                theaterMovieSchedules.findMovieScreeningInfoByTheaterById(
+                theaterMovieSchedules.findTheaterMovieSchedulesById(
                     movieId,
                 ),
             )

@@ -10,7 +10,7 @@ import java.time.LocalTime
 data class TheaterMovieSchedules(
     val value: List<TheaterMovieSchedule> = values,
 ) : Serializable {
-    fun findMovieScreeningInfoByTheaterById(movieId: Long): List<TheaterMovieSchedule> =
+    fun findTheaterMovieSchedulesById(movieId: Long): List<TheaterMovieSchedule> =
         value.filter {
             it.movie.id == movieId
         }
