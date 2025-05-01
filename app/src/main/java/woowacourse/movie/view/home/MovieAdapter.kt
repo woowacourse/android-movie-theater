@@ -3,16 +3,29 @@ package woowacourse.movie.view.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.model.movie.Movie
 
 class MovieAdapter(
-    private val movies: MutableList<Movie>,
     private val movieClickListener: MovieClickListener,
     private val advertisementClickListener: () -> Unit,
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : ListAdapter<Movie, RecyclerView.ViewHolder>(
+        object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(
+                oldItem: Movie,
+                newItem: Movie,
+            ): Boolean = oldItem.id == newItem.id
+
+            override fun areContentsTheSame(
+                oldItem: Movie,
+                newItem: Movie,
+            ): Boolean = oldItem == newItem
+        },
+    ) {
     override fun getItemViewType(position: Int): Int =
         when {
             (position + 1) % AD_POSITION_MULTIPLE == 0 -> AD_ITEM_TYPE
@@ -37,7 +50,7 @@ class MovieAdapter(
                 holder.button.setOnClickListener {
                     val position = holder.adapterPosition
                     val adjustedPosition = position - position / AD_POSITION_MULTIPLE
-                    val item = movies[adjustedPosition]
+                    val item = getItem(adjustedPosition)
                     movieClickListener.onReservationClick(item.id)
                 }
                 holder
@@ -61,21 +74,13 @@ class MovieAdapter(
         when (holder) {
             is MovieViewHolder -> {
                 val adjustedPosition = position - position / AD_POSITION_MULTIPLE
-                val item = movies[adjustedPosition]
+                val item = getItem(adjustedPosition)
                 holder.bind(item)
             }
         }
     }
 
     override fun getItemId(position: Int): Long = position.toLong()
-
-    override fun getItemCount(): Int = movies.size + (movies.size / AD_POSITION_INTERVAL)
-
-    fun updateMovies(newMovies: List<Movie>) {
-        movies.clear()
-        movies.addAll(newMovies)
-        notifyDataSetChanged()
-    }
 
     companion object {
         private const val AD_POSITION_INTERVAL = 3

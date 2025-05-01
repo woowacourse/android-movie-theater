@@ -45,7 +45,6 @@ class HomeFragment :
         if (::movieAdapter.isInitialized.not()) {
             movieAdapter =
                 MovieAdapter(
-                    movies = mutableListOf(),
                     movieClickListener =
                         object : MovieClickListener {
                             override fun onReservationClick(movieId: Long) {
@@ -60,7 +59,7 @@ class HomeFragment :
                 )
         }
         binding.rvMainMovies.adapter = movieAdapter
-        movieAdapter.updateMovies(movies)
+        movieAdapter.submitList(movies)
     }
 
     override fun showTheaters(theaterMovieSchedules: TheaterMovieSchedules) {
