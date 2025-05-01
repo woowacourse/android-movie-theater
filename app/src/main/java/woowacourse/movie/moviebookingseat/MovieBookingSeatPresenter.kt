@@ -14,7 +14,7 @@ class MovieBookingSeatPresenter(
     }
 
     override fun selectSeat(seat: Seat) {
-        if (seat !in bookingStatus.seat.seats) {
+        if (seat !in bookingStatus.seat.seats && bookingStatus.seat.seats.size < bookingStatus.memberCount ) {
             bookingStatus.seat.add(seat)
             view.updateSeat(seat, true)
         } else {
