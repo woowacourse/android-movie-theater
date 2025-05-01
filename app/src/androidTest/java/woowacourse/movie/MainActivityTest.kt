@@ -20,7 +20,7 @@ import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.fixture.HARRY_POTTER
-import woowacourse.movie.movie.adapter.MovieAdapter
+import woowacourse.movie.movie.adapter.AdViewHolder
 
 class MainActivityTest {
     @get:Rule
@@ -136,7 +136,7 @@ class MainActivityTest {
         val adPosition = 3
 
         onView(withId(R.id.recyclerView_layout))
-            .perform(RecyclerViewActions.scrollToPosition<MovieAdapter.AdViewHolder>(adPosition))
+            .perform(RecyclerViewActions.scrollToPosition<AdViewHolder>(adPosition))
 
         onView(
             allOf(
