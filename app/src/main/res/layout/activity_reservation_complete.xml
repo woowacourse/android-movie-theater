@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout_reservation_complete"
     android:layout_width="match_parent"
@@ -25,7 +26,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center|bottom"
-                android:paddingBottom="10sp"
+                android:paddingBottom="10dp"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 tools:text="@string/movie_cancel_deadline" />
@@ -61,51 +62,64 @@
                 android:textStyle="bold"
                 tools:text="@string/default_movie_date_time" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginTop="60dp">
 
-                <TextView
-                    android:id="@+id/tv_movie_personnel"
+                <HorizontalScrollView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="60sp"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    tools:text="@string/moviePersonnel" />
+                    android:scrollbars="none"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/tv_seat_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10sp"
-                    android:layout_marginTop="60sp"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    tools:text="@string/seat_list" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/tv_selected_theater_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10sp"
-                    android:layout_marginTop="60sp"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:ellipsize="marquee"
-                    android:singleLine="true"
-                    tools:text="@string/theater_name" />
+                        <TextView
+                            android:id="@+id/tv_movie_personnel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            tools:text="@string/moviePersonnel" />
 
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_seat_list"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            tools:text="@string/seat_list" />
+
+                        <TextView
+                            android:id="@+id/tv_selected_theater_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:ellipsize="marquee"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            tools:text="@string/theater_name" />
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/tv_movie_total_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30sp"
+                android:layout_marginTop="30dp"
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 tools:text="@string/movieTotalPrice" />
