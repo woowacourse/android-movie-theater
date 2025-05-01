@@ -48,14 +48,14 @@ class ReservationInfoTest {
     }
 
     @Test
-    fun `canPublish 호출 시 좌석 수와 예약 인원 수가 일치하면 true 를 반환한다`() {
+    fun `모든 인원에 대해 좌석을 선택해야 발권할 수 있다`() {
         fakeReservationInfo.updateSeats(Seat(0, 1, SeatType.B_CLASS))
         fakeReservationInfo.updateSeats(Seat(0, 2, SeatType.B_CLASS))
         assertThat(fakeReservationInfo.canPublish()).isTrue()
     }
 
     @Test
-    fun `canPublish 호출 시 좌석 수와 예약 인원 수가 다르면 false 를 반환한다`() {
+    fun `모든 인원에 대해 좌석을 선택하지 않으면 발권할 수 없다`() {
         assertThat(fakeReservationInfo.canPublish()).isFalse()
     }
 }

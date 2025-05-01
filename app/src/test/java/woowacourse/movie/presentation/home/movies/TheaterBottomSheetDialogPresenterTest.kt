@@ -7,9 +7,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.movie.ScreeningPeriod
 import woowacourse.movie.presentation.model.MovieUiModel
 import woowacourse.movie.presentation.model.PosterUiModel
+import woowacourse.movie.presentation.model.ScreeningPeriodUiModel
 import woowacourse.movie.presentation.model.TheaterUiModel
 import woowacourse.movie.presentation.model.TheatersUiModel
 import woowacourse.movie.presentation.view.home.movies.dialog.TheaterBottomSheetDialogContract
@@ -26,7 +26,7 @@ class TheaterBottomSheetDialogPresenterTest {
             id = 1,
             title = "해리포터",
             poster = PosterUiModel.Url(""),
-            screeningPeriod = ScreeningPeriod(LocalDate.now(), LocalDate.now().plusDays(2)),
+            screeningPeriod = ScreeningPeriodUiModel(LocalDate.now(), LocalDate.now().plusDays(2)),
             runningTime = 152,
         )
 

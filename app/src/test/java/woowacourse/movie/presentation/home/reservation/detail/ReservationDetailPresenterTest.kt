@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.movie.ScreeningPeriod
 import woowacourse.movie.presentation.fixture.dummyMovie
+import woowacourse.movie.presentation.model.ScreeningPeriodUiModel
 import woowacourse.movie.presentation.model.TheaterUiModel
 import woowacourse.movie.presentation.model.toModel
 import woowacourse.movie.presentation.model.toUiModel
@@ -124,7 +125,7 @@ class ReservationDetailPresenterTest {
         // Given: 상영 기간이 존재하지 않는 영화 데이터를 준비하고 View 설정을 한다.
         val fakeMovie =
             fakeMovie.copy(
-                screeningPeriod = ScreeningPeriod(LocalDate.MIN, LocalDate.MIN),
+                screeningPeriod = ScreeningPeriodUiModel(LocalDate.MIN, LocalDate.MIN),
             )
         every { view.showScreen(any()) } just Runs
         every { view.updateReservationCount(any(), any()) } just Runs

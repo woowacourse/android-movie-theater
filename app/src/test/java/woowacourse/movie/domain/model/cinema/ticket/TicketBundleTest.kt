@@ -17,7 +17,7 @@ class TicketBundleTest {
     ): Ticket = Ticket(title, reservationDateTime, seat, price)
 
     @Test
-    fun `TicketBundle 생성 시 정보들이 올바르게 설정된다`() {
+    fun `티켓 모음 생성 시 정보들이 올바르게 설정된다`() {
         val tickets =
             listOf(
                 createTicket(seat = Seat(1, 1, SeatType.S_CLASS)),

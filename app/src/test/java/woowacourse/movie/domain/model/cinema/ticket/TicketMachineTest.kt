@@ -33,7 +33,7 @@ class TicketMachineTest {
     }
 
     @Test
-    fun `publishTickets 호출 시 TicketBundle 이 올바르게 생성된다`() {
+    fun `티켓 출판시 티켓 모음이 올바르게 생성된다`() {
         val ticketBundle = ticketMachine.publishTickets(fakeReservationInfo)
 
         assertAll(
