@@ -1,5 +1,6 @@
 package woowacourse.movie.view.reservation.reservation
 
+import woowacourse.movie.R
 import woowacourse.movie.model.MovieDao
 import woowacourse.movie.model.MovieDate
 import woowacourse.movie.model.MovieTicket
@@ -14,7 +15,7 @@ import java.time.LocalDateTime
 class ReservationPresenter(
     val view: ReservationContract.View,
 ) : ReservationContract.Presenter {
-    private lateinit var reservationState: ReservationState
+    lateinit var reservationState: ReservationState
     private var currentTimeTable: List<Int> = emptyList()
     private val movieDao by lazy { MovieDao() }
     var isTimeSelected = false
@@ -31,7 +32,7 @@ class ReservationPresenter(
                 movie = theaterUIModel.movie,
                 movieDate = MovieDate(theaterUIModel.movie.startDate, theaterUIModel.movie.endDate),
                 movieTime = MovieTime(),
-                ticketCount = TicketCount(),
+                ticketCount = 1,
                 theaterName = theaterUIModel.name,
             )
 
@@ -70,16 +71,20 @@ class ReservationPresenter(
 
     override fun plusTicketCount() {
         updateReservationState(
-            ticketCount = reservationState.ticketCount.plus(1),
+            ticketCount = TicketCount(reservationState.ticketCount + 1),
         )
-        view.showTicketCount(reservationState.ticketCount.value)
+        view.showTicketCount(reservationState.ticketCount)
     }
 
     override fun minusTicketCount() {
+        if (reservationState.ticketCount == 1) {
+            view.showToast(R.string.reservation_info_minimum_ticket_count)
+            return
+        }
         updateReservationState(
-            ticketCount = reservationState.ticketCount.minus(1),
+            ticketCount = TicketCount(reservationState.ticketCount - 1),
         )
-        view.showTicketCount(reservationState.ticketCount.value)
+        view.showTicketCount(reservationState.ticketCount)
     }
 
     override fun createTicket(onCreated: (MovieTicket) -> Unit) {
@@ -88,7 +93,7 @@ class ReservationPresenter(
                 title = reservationState.movie.title,
                 date = reservationState.movieDate.value,
                 time = ReservationUiFormatter.movieTimeToUI(reservationState.movieTime.value),
-                count = reservationState.ticketCount.value,
+                count = reservationState.ticketCount,
                 theaterName = reservationState.theaterName,
             )
         onCreated(ticket)
@@ -98,10 +103,10 @@ class ReservationPresenter(
         updateReservationState(
             ticketCount = TicketCount(count),
         )
-        view.showTicketCount(reservationState.ticketCount.value)
+        view.showTicketCount(reservationState.ticketCount)
     }
 
-    fun currentTicketCount(): Int = reservationState.ticketCount.value
+    fun currentTicketCount(): Int = reservationState.ticketCount
 
     private fun updateMovieInfo() {
         val movie = reservationState.movie
@@ -117,13 +122,13 @@ class ReservationPresenter(
     private fun updateReservationState(
         movieDate: MovieDate = reservationState.movieDate,
         movieTime: MovieTime = reservationState.movieTime,
-        ticketCount: TicketCount = reservationState.ticketCount,
+        ticketCount: TicketCount = TicketCount(reservationState.ticketCount),
     ) {
         reservationState =
             reservationState.copy(
                 movieDate = movieDate,
                 movieTime = movieTime,
-                ticketCount = ticketCount,
+                ticketCount = ticketCount.value,
             )
     }
 }

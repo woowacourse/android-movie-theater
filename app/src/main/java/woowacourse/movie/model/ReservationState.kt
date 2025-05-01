@@ -4,6 +4,6 @@ data class ReservationState(
     val movie: Movie,
     val movieDate: MovieDate,
     val movieTime: MovieTime,
-    val ticketCount: TicketCount,
+    val ticketCount: Int,
     val theaterName: String,
 )
