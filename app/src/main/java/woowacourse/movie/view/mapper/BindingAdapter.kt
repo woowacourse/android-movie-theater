@@ -12,7 +12,7 @@ import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.seatsToUI
 import java.time.LocalDate
 
 @BindingAdapter("android:startDate", "android:endDate", requireAll = true)
-fun formatLocalDate(
+fun setFormatLocalDate(
     textView: TextView,
     startDate: LocalDate,
     endDate: LocalDate,
@@ -32,7 +32,7 @@ fun setImage(
 }
 
 @BindingAdapter("android:movieDate", "android:movieTime", requireAll = true)
-fun formatLocalDateTime(
+fun setFormatLocalDateTime(
     textView: TextView,
     movieDate: LocalDate,
     movieTime: MovieTime,
@@ -42,7 +42,9 @@ fun formatLocalDateTime(
 
     textView.text =
         textView.context.getString(
-            R.string.reservation_complete_ticket_timestamp, formatMovieDate, formatMovieTime,
+            R.string.reservation_complete_ticket_timestamp,
+            formatMovieDate,
+            formatMovieTime,
         )
 }
 
@@ -56,6 +58,9 @@ fun setTheaterInfo(
 
     textView.text =
         textView.context.getString(
-            R.string.reservation_complete_seat_theater_name_info, seats.size, formateSeats, theater.name,
+            R.string.reservation_complete_seat_theater_name_info,
+            seats.size,
+            formateSeats,
+            theater.name,
         )
 }
