@@ -9,12 +9,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
+import woowacourse.movie.contract.MainContract
 import woowacourse.movie.databinding.ActivityMainBinding
+import woowacourse.movie.presenter.MainPresenter
 import woowacourse.movie.view.cinema.HomeFragment
 import woowacourse.movie.view.reservation.ReservationHistoryFragment
 import woowacourse.movie.view.setting.SettingFragment
+import woowacourse.movie.view.util.ErrorMessage
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.View {
+    private val presenter: MainContract.Presenter = MainPresenter(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -29,10 +34,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add(R.id.fragment_container_view_main, HomeFragment())
-            }
+            presenter.presentScreen(SCREEN_ID_HOME)
         }
         binding.main = this
         binding.bottomNavigationViewMain.setOnItemSelectedListener { menuItem ->
@@ -60,5 +62,22 @@ class MainActivity : AppCompatActivity() {
             replace(R.id.fragment_container_view_main, fragment)
         }
         return true
+    }
+
+    override fun updateScreen(screenId: Int) {
+        val fragment =
+            when (screenId) {
+                SCREEN_ID_RESERVATION_HISTORY -> ReservationHistoryFragment()
+                SCREEN_ID_HOME -> HomeFragment()
+                SCREEN_ID_SETTING -> SettingFragment()
+                else -> error(ErrorMessage("screenId").noSuch())
+            }
+        replaceWith(fragment)
+    }
+
+    companion object {
+        const val SCREEN_ID_RESERVATION_HISTORY = 0
+        const val SCREEN_ID_HOME = 1
+        const val SCREEN_ID_SETTING = 2
     }
 }
