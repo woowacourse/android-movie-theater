@@ -10,7 +10,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatSelectBinding
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.model.ReservationInfo
 import woowacourse.movie.view.Extras
@@ -22,25 +24,22 @@ import woowacourse.movie.view.reservation.reservation.ReservationDialog
 class SeatSelectActivity :
     AppCompatActivity(),
     SeatSelectContract.View {
+    private lateinit var binding: ActivitySeatSelectBinding
     private val presenter: SeatSelectPresenter by lazy { SeatSelectPresenter(this) }
     private val reservationDialog by lazy { ReservationDialog() }
-    private val titleTextView: TextView by lazy { findViewById(R.id.tv_seat_select_movie_title) }
-    private val priceTextView: TextView by lazy { findViewById(R.id.tv_seat_select_total_price) }
-    private val confirmButton: TextView by lazy { findViewById(R.id.btn_seat_select_confirm) }
-    private val tl: TableLayout by lazy { findViewById(R.id.tl_seat) }
     private val seatViews: MutableMap<String, TextView> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_seat_select)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_select)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.sv_seat_select)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        setupSeatView(tl)
+        setupSeatView(binding.tlSeat)
         presenter.fetchData {
             intent?.getParcelableExtraCompat<MovieTicket>(Extras.TicketData.TICKET_KEY)
         }
@@ -57,8 +56,9 @@ class SeatSelectActivity :
         title: String,
         price: Int,
     ) {
-        titleTextView.text = title
-        priceTextView.text = getString(R.string.seat_select_ticket_price).format(price)
+        binding.tvSeatSelectMovieTitle.text = title
+        binding.tvSeatSelectTotalPrice.text =
+            getString(R.string.seat_select_ticket_price).format(price)
     }
 
     override fun showSeatCountError(count: Int) {
@@ -80,15 +80,15 @@ class SeatSelectActivity :
     }
 
     override fun showTotalPrice(totalPrice: Int) {
-        priceTextView.text =
+        binding.tvSeatSelectTotalPrice.text =
             getString(R.string.seat_select_ticket_price).format(
                 ReservationUiFormatter.priceToUI(totalPrice),
             )
     }
 
     override fun updateConfirmButtonEnabled(isEnabled: Boolean) {
-        confirmButton.isClickable = isEnabled
-        confirmButton.alpha = if (isEnabled) 1f else 0.1f
+        binding.btnSeatSelectConfirm.isClickable = isEnabled
+        binding.btnSeatSelectConfirm.alpha = if (isEnabled) 1f else 0.1f
     }
 
     override fun showReservationDialog(
@@ -136,7 +136,7 @@ class SeatSelectActivity :
     }
 
     private fun setupConfirmButton() {
-        confirmButton.apply {
+        binding.btnSeatSelectConfirm.apply {
             isClickable = false
             alpha = 0.1f
             setOnClickListener {
