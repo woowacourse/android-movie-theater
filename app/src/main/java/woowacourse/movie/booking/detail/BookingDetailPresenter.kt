@@ -20,7 +20,6 @@ class BookingDetailPresenter(
     private lateinit var movie: MovieUiModel
     private lateinit var theater: TheaterUiModel
     private lateinit var ticket: Ticket
-    private lateinit var scheduler: Scheduler
 
     override fun initializeData(
         movie: MovieUiModel,

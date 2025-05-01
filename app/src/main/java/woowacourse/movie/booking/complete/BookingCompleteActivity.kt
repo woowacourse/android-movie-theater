@@ -19,7 +19,6 @@ import woowacourse.movie.ui.model.TicketUiModel
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
     private val presenter = BookingCompletePresenter(this)
 
-//    private lateinit var presenter: BookingCompleteContract.Presenter
     private lateinit var binding: ActivityBookingCompleteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
