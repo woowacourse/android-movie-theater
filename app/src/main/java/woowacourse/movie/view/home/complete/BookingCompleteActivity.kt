@@ -40,7 +40,6 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             insets
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        presenter.loadTicket()
     }
 
     override fun showTicket(ticket: Ticket) {
