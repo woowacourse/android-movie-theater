@@ -7,4 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".ui.MovieBookingActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/main_fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="start"
+        app:itemIconSize="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/movie_booking_navigation_items" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

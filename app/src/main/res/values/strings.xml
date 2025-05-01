@@ -19,4 +19,7 @@
     <string name="text_confirm_btn">확인</string>
     <string name="text_screen">SCREEN</string>
     <string name="text_number_of_movie_schedule">%d개의 상영 시간</string>
+    <string name="text_booking_history">예매 내역</string>
+    <string name="text_home">홈</string>
+    <string name="text_settings">설정</string>
 </resources>
