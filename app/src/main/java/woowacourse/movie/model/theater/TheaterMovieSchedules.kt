@@ -8,12 +8,13 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 data class TheaterMovieSchedules(
-    val value: List<TheaterMovieSchedule> = values,
+    val value: Set<TheaterMovieSchedule> = values,
 ) : Serializable {
-    fun findTheaterMovieSchedulesById(movieId: Long): List<TheaterMovieSchedule> =
-        value.filter {
-            it.movie.id == movieId
-        }
+    fun findTheaterMovieSchedulesById(movieId: Long): Set<TheaterMovieSchedule> =
+        value
+            .filter {
+                it.movie.id == movieId
+            }.toSet()
 
     companion object {
         private val theaters =
@@ -48,30 +49,31 @@ data class TheaterMovieSchedules(
                 listOf(LocalTime.of(9, 30), LocalTime.of(12, 15), LocalTime.of(16, 45)),
             )
 
-        val values =
-            (1..1000).map { index ->
-                val movieId = ((index - 1) % 50) + 1L
-                val poster = posterImages[(index - 1) % posterImages.size]
-                val theaterName = theaters[index % theaters.size]
-                val screeningTimes =
-                    screeningTimesSamples[index % screeningTimesSamples.size].map { MovieTime(it) }
+        val values: Set<TheaterMovieSchedule> =
+            (1..1000)
+                .map { index ->
+                    val movieId = ((index - 1) % 50) + 1L
+                    val poster = posterImages[(index - 1) % posterImages.size]
+                    val theaterName = theaters[index % theaters.size]
+                    val screeningTimes =
+                        screeningTimesSamples[index % screeningTimesSamples.size].map { MovieTime(it) }
 
-                TheaterMovieSchedule(
-                    theater = Theater(name = theaterName),
-                    movie =
-                        Movie(
-                            id = movieId,
-                            title = "해리포터 $movieId",
-                            poster = poster,
-                            startDate = LocalDate.of(2025, 4, (movieId % 28 + 1).toInt()),
-                            endDate = LocalDate.of(2025, 5, (movieId % 28 + 1).toInt()),
-                            runningTime = 100 + (movieId % 60).toInt(),
-                        ),
-                    screeningInfo =
-                        ScreeningInfo(
-                            screeningTimes = screeningTimes,
-                        ),
-                )
-            }
+                    TheaterMovieSchedule(
+                        theater = Theater(name = theaterName),
+                        movie =
+                            Movie(
+                                id = movieId,
+                                title = "해리포터 $movieId",
+                                poster = poster,
+                                startDate = LocalDate.of(2025, 4, (movieId % 28 + 1).toInt()),
+                                endDate = LocalDate.of(2025, 5, (movieId % 28 + 1).toInt()),
+                                runningTime = 100 + (movieId % 60).toInt(),
+                            ),
+                        screeningInfo =
+                            ScreeningInfo(
+                                screeningTimes = screeningTimes,
+                            ),
+                    )
+                }.toSet()
     }
 }

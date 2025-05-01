@@ -64,7 +64,7 @@ class TheaterBottomSheetDialogFragment :
     }
 
     override fun showTheaterMovieSchedule(theaterMovieSchedules: TheaterMovieSchedules) {
-        theaterAdapter.submitList(theaterMovieSchedules.value)
+        theaterAdapter.submitList(theaterMovieSchedules.value.toList())
     }
 
     override fun showReservationView(theaterMovieSchedule: TheaterMovieSchedule) {

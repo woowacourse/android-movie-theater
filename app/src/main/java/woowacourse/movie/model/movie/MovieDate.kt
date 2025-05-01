@@ -3,7 +3,7 @@ package woowacourse.movie.model.movie
 import java.io.Serializable
 import java.time.LocalDate
 
-class MovieDate(
+data class MovieDate(
     private val startDate: LocalDate,
     private val endDate: LocalDate,
 ) : Serializable {
