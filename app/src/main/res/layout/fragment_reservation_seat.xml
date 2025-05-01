@@ -13,6 +13,10 @@
             name="money"
             type="Integer" />
 
+        <variable
+            name="canPublish"
+            type="Boolean" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -104,8 +108,8 @@
             android:id="@+id/btn_confirm"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:background="@color/gray_b7"
-            android:enabled="false"
+            android:background="@{canPublish ? @color/purple_62 : @color/gray_b7}"
+            android:enabled="@{canPublish}"
             android:text="@string/reservation_select_seats_confirm"
             android:textColor="@color/white"
             android:textSize="18sp"

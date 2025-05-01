@@ -12,30 +12,17 @@ import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.ScreenUiModel
 import woowacourse.movie.presentation.model.SeatUiModel
 import woowacourse.movie.presentation.model.TicketBundleUiModel
+import woowacourse.movie.presentation.util.CustomAlertDialog
 import woowacourse.movie.presentation.util.DialogInfo
 import woowacourse.movie.presentation.view.home.reservation.result.ReservationResultFragment
 
 class ReservationSeatFragment :
     BaseFragment<FragmentReservationSeatBinding>(R.layout.fragment_reservation_seat),
     ReservationSeatContract.View {
-    private val presenter: ReservationSeatPresenter by lazy { ReservationSeatPresenter(this) }
-    private val views: ReservationSeatViews by lazy {
-        ReservationSeatViews(
-            requireContext(),
-            binding,
-        )
-    }
-
-    private val publishTicketConfirmationDialogInfo: DialogInfo by lazy {
-        DialogInfo(
-            title = getString(R.string.reservation_dialog_title),
-            message = getString(R.string.reservation_dialog_message),
-            positiveButtonText = getString(R.string.reservation_dialog_positive),
-            negativeButtonText = getString(R.string.reservation_dialog_negative),
-            onClickPositiveButton = { presenter.publishTickets() },
-            onClickNegativeButton = { it.dismiss() },
-        )
-    }
+    private lateinit var presenter: ReservationSeatPresenter
+    private lateinit var views: ReservationSeatViews
+    private lateinit var publishDialogInfo: DialogInfo
+    private val dialog: CustomAlertDialog by lazy { CustomAlertDialog(requireContext()) }
 
     override fun onViewCreated(
         view: View,
@@ -43,7 +30,30 @@ class ReservationSeatFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val screen = arguments?.getParcelableCompat<ScreenUiModel>(BUNDLE_KEY_SCREEN)
+        initPresenterAndViews()
+        setupDialogInfo()
+        setupInitialData(savedInstanceState)
+    }
+
+    private fun initPresenterAndViews() {
+        presenter = ReservationSeatPresenter(this)
+        views = ReservationSeatViews(requireContext(), binding)
+    }
+
+    private fun setupDialogInfo() {
+        publishDialogInfo =
+            DialogInfo(
+                title = getString(R.string.reservation_dialog_title),
+                message = getString(R.string.reservation_dialog_message),
+                positiveButtonText = getString(R.string.reservation_dialog_positive),
+                negativeButtonText = getString(R.string.reservation_dialog_negative),
+                onClickPositiveButton = { presenter.publishTickets() },
+                onClickNegativeButton = { it.dismiss() },
+            )
+    }
+
+    private fun setupInitialData(savedInstanceState: Bundle?) {
+        val screen = arguments.getParcelableCompat<ScreenUiModel>(BUNDLE_KEY_SCREEN)
         val reservationInfo =
             arguments.getParcelableCompat<ReservationInfoUiModel>(BUNDLE_KEY_RESERVATION_INFO)
         val restoredSeats =
@@ -54,50 +64,39 @@ class ReservationSeatFragment :
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
-        outState.putParcelable(BUNDLE_RESTORE_KEY_SEATS, ScreenUiModel(views.findSelectedViews()))
+        val selectedSeats = views.findSelectedViews()
+        outState.putParcelable(BUNDLE_RESTORE_KEY_SEATS, ScreenUiModel(selectedSeats))
     }
 
     override fun showScreen(
         reservationInfo: ReservationInfoUiModel,
         screen: ScreenUiModel,
         selectedSeats: List<SeatUiModel>,
-        totalPrice: Int,
-        canPublish: Boolean,
     ) {
         binding.reservationInfo = reservationInfo
+        binding.btnConfirm.setOnClickListener { dialog.show(publishDialogInfo) }
         views.setData(screen, selectedSeats)
-        views.setEventListeners(
-            { views.dialog.show(publishTicketConfirmationDialogInfo) },
-            { seat -> presenter.updateSeat(seat) },
-        )
-
-        views.updateConfirmButton(canPublish)
-        updateMoney(totalPrice)
+        views.setSeatListeners { seat -> presenter.updateSeat(seat) }
     }
 
-    override fun updateSeatState(
-        selectedSeat: SeatUiModel,
-        totalPrice: Int,
-        canPublish: Boolean,
-    ) {
+    override fun updateSeatState(selectedSeat: SeatUiModel) {
         views.updateSeatState(selectedSeat)
-        views.updateConfirmButton(canPublish)
-        updateMoney(totalPrice)
+    }
+
+    override fun notifyTotalPrice(totalPrice: Int) {
+        binding.money = totalPrice
+    }
+
+    override fun notifyCanPublish(canPublish: Boolean) {
+        binding.canPublish = canPublish
     }
 
     override fun notifyPublishedTickets(ticketBundle: TicketBundleUiModel) {
-        val fragment = ReservationResultFragment.newInstance(ticketBundle)
-
         parentFragmentManager.commit {
             setReorderingAllowed(true)
-            add(R.id.fragment_container_view, fragment)
+            add(R.id.fragment_container_view, ReservationResultFragment.newInstance(ticketBundle))
             addToBackStack(null)
         }
-    }
-
-    private fun updateMoney(money: Int) {
-        binding.money = money
     }
 
     override fun notifySeatUpdateFailed(message: String) {
@@ -112,13 +111,12 @@ class ReservationSeatFragment :
         fun newInstance(
             reservationInfo: ReservationInfoUiModel,
             screen: ScreenUiModel,
-        ): ReservationSeatFragment =
-            ReservationSeatFragment().apply {
-                arguments =
-                    bundleOf(
-                        BUNDLE_KEY_SCREEN to screen,
-                        BUNDLE_KEY_RESERVATION_INFO to reservationInfo,
-                    )
-            }
+        ) = ReservationSeatFragment().apply {
+            arguments =
+                bundleOf(
+                    BUNDLE_KEY_SCREEN to screen,
+                    BUNDLE_KEY_RESERVATION_INFO to reservationInfo,
+                )
+        }
     }
 }

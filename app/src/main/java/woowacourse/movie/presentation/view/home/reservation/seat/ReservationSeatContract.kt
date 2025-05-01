@@ -23,15 +23,13 @@ interface ReservationSeatContract {
             reservationInfo: ReservationInfoUiModel,
             screen: ScreenUiModel,
             selectedSeats: List<SeatUiModel>,
-            totalPrice: Int,
-            canPublish: Boolean,
         )
 
-        fun updateSeatState(
-            selectedSeat: SeatUiModel,
-            totalPrice: Int,
-            canPublish: Boolean,
-        )
+        fun updateSeatState(selectedSeat: SeatUiModel)
+
+        fun notifyTotalPrice(totalPrice: Int)
+
+        fun notifyCanPublish(canPublish: Boolean)
 
         fun notifyPublishedTickets(ticketBundle: TicketBundleUiModel)
 
