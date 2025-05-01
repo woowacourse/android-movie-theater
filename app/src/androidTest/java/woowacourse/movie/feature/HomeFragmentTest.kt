@@ -34,7 +34,7 @@ class HomeFragmentTest {
         ).check(matches(withText("해리 포터와 마법사의 돌")))
     }
 
-    fun nthChildOf(
+    private fun nthChildOf(
         parentMatcher: Matcher<View>,
         childPosition: Int,
     ): Matcher<View> {

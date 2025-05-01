@@ -2,6 +2,8 @@ package woowacourse.movie.feature
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -24,9 +26,11 @@ import woowacourse.movie.feature.theaters.view.TheatersDialogFragment
 
 @Suppress("ktlint:standard:function-naming")
 class TheatersDialogFragmentTest {
+    val factory = createTheatersDialogFragmentFactory()
+
     @Before
     fun setup() {
-        launchFragmentInContainer<TestTheatersDialogFragment>()
+        launchFragmentInContainer<TheatersDialogFragment>(factory = factory)
     }
 
     @Test
@@ -49,7 +53,7 @@ class TheatersDialogFragmentTest {
         ).check(matches(withText("1개의 상영 시간")))
     }
 
-    fun nthChildOf(
+    private fun nthChildOf(
         parentMatcher: Matcher<View>,
         childPosition: Int,
     ): Matcher<View> {
@@ -65,21 +69,27 @@ class TheatersDialogFragmentTest {
         }
     }
 
-    private class TestTheatersDialogFragment :
-        TheatersDialogFragment(
-            screenings =
-                listOf(
-                    Screening(
-                        Movie(
-                            title = "레디 플레이어 원",
-                            startDate = MovieDate(2025, 5, 1),
-                            endDate = MovieDate(2025, 5, 10),
-                            runningTime = 148,
+    private fun createTheatersDialogFragmentFactory(): FragmentFactory =
+        object : FragmentFactory() {
+            override fun instantiate(
+                classLoader: ClassLoader,
+                className: String,
+            ): Fragment =
+                TheatersDialogFragment(
+                    screenings =
+                        listOf(
+                            Screening(
+                                Movie(
+                                    title = "레디 플레이어 원",
+                                    startDate = MovieDate(2025, 5, 1),
+                                    endDate = MovieDate(2025, 5, 10),
+                                    runningTime = 148,
+                                ),
+                                "혜화",
+                                listOf(MovieTime(10, 0)),
+                            ).toUi(),
                         ),
-                        "혜화",
-                        listOf(MovieTime(10, 0)),
-                    ).toUi(),
-                ),
-            navigateToBookingDetail = {},
-        )
+                    navigateToBookingDetail = {},
+                )
+        }
 }
