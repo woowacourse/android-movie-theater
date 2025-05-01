@@ -15,9 +15,17 @@ import woowacourse.movie.view.theater.TheaterBottomSheetDialogFragment
 class MoviesFragment :
     Fragment(),
     MovieContract.View {
-    private val presenter: MoviePresenter by lazy { MoviePresenter(this) }
-    private lateinit var moviesAdapter: MovieAdapter
     private lateinit var binding: FragmentMoviesBinding
+    private val presenter: MoviePresenter by lazy { MoviePresenter(this) }
+    private val moviesAdapter: MovieAdapter by lazy {
+        MovieAdapter(
+            object : MovieClickListener {
+                override fun onReservationClick(movie: Movie) {
+                    showBottomSheetDialog(movie)
+                }
+            },
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,16 +64,7 @@ class MoviesFragment :
     }
 
     private fun setupMovieAdapter() {
-        val recyclerView = binding.rvMovies
-        moviesAdapter =
-            MovieAdapter(
-                object : MovieClickListener {
-                    override fun onReservationClick(movie: Movie) {
-                        showBottomSheetDialog(movie)
-                    }
-                },
-            )
-        recyclerView.adapter = moviesAdapter
+        binding.rvMovies.adapter = moviesAdapter
     }
 
     companion object {

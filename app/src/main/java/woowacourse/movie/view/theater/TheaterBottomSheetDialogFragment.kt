@@ -19,9 +19,17 @@ import woowacourse.movie.view.reservation.reservation.ReservationActivity
 class TheaterBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
     TheaterContract.View {
-    private lateinit var theaterAdapter: TheaterAdapter
     private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
     private val presenter: TheaterPresenter by lazy { TheaterPresenter(this) }
+    private val theaterAdapter: TheaterAdapter by lazy {
+        TheaterAdapter(
+            object : TheaterClickListener {
+                override fun onTheaterClick(theaterUIModel: TheaterUIModel) {
+                    checkTimeSlotCountZero(theaterUIModel)
+                }
+            },
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,16 +73,7 @@ class TheaterBottomSheetDialogFragment :
     }
 
     private fun setupTheaterAdapter() {
-        val recyclerView = binding.rvTheater
-        theaterAdapter =
-            TheaterAdapter(
-                object : TheaterClickListener {
-                    override fun onTheaterClick(theaterUIModel: TheaterUIModel) {
-                        checkTimeSlotCountZero(theaterUIModel)
-                    }
-                },
-            )
-        recyclerView.adapter = theaterAdapter
+        binding.rvTheater.adapter = theaterAdapter
     }
 
     private fun checkTimeSlotCountZero(theaterUIModel: TheaterUIModel) {
