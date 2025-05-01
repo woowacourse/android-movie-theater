@@ -22,7 +22,7 @@ class ReservationCompletePresenterTest {
     }
 
     @Test
-    fun `영화 티켓을 업데이트 하면 영화 제목, 시간, 좌석, 가격이 보인다`() {
+    fun `영화 티켓을 업데이트 하면 영화 티켓에 대한 정보가 보인다`() {
         // given:
         every { view.showMovieTicket(any()) } just Runs
 
