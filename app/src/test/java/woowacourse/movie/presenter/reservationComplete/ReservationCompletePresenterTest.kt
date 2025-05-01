@@ -24,24 +24,13 @@ class ReservationCompletePresenterTest {
     @Test
     fun `영화 티켓을 업데이트 하면 영화 제목, 시간, 좌석, 가격이 보인다`() {
         // given:
-        every { view.showTitle(any()) } just Runs
-        every { view.showTimestamp(any(), any()) } just Runs
-        every { view.showSeatTheaterInfo(any(), any()) } just Runs
-        every { view.showPrice(any()) } just Runs
+        every { view.showMovieTicket(any()) } just Runs
 
         // when:
         presenter.updateTicketData(MOVIE_TICKET_B1_C3)
 
         // then:
-        verify { view.showTitle(MOVIE_TICKET_B1_C3.title) }
-        verify {
-            view.showTimestamp(
-                MOVIE_TICKET_B1_C3.movieDate,
-                MOVIE_TICKET_B1_C3.movieTime.value,
-            )
-        }
-        verify { view.showSeatTheaterInfo(MOVIE_TICKET_B1_C3.seats, "JAY 극장") }
-        verify { view.showPrice(MOVIE_TICKET_B1_C3.price()) }
+        verify { view.showMovieTicket(MOVIE_TICKET_B1_C3) }
     }
 
     @After

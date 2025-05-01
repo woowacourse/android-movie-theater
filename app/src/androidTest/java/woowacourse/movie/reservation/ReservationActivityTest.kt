@@ -10,8 +10,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.MOVIE
 import woowacourse.movie.R
+import woowacourse.movie.THEATER_MOVIE_SCHEDULE
 import woowacourse.movie.fakeContext
 import woowacourse.movie.view.reservation.ReservationActivity
 
@@ -26,7 +26,7 @@ class ReservationActivityTest {
                 fakeContext,
                 ReservationActivity::class.java,
             ).apply {
-                putExtra("data", MOVIE)
+                putExtra("data", THEATER_MOVIE_SCHEDULE)
             }
         ActivityScenario.launch<ReservationActivity>(intent)
     }
@@ -65,7 +65,7 @@ class ReservationActivityTest {
             Intent(
                 fakeContext,
                 ReservationActivity::class.java,
-            ).putExtra("data", MOVIE)
+            ).putExtra("data", THEATER_MOVIE_SCHEDULE)
         scenario = ActivityScenario.launch(intent)
 
         // when: 티켓 개수를 1증가 시키고 가로로 회전 시켰을 때
