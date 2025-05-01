@@ -4,8 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@JvmInline
-value class RunningTime(
+data class RunningTime(
     val minute: Int,
 ) : Parcelable {
     init {
