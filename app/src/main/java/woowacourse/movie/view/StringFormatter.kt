@@ -10,7 +10,7 @@ object StringFormatter {
     }
 
     fun thousandFormat(price: Int): String {
-        return THOUSAND_UNIT_FORMAT.format(price).format(price)
+        return THOUSAND_UNIT_FORMAT.format(price)
     }
 
     private const val DATE_TIME_DOT_FORMAT = "yyyy.M.d"
