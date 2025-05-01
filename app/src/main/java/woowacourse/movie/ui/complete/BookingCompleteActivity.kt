@@ -13,7 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Seat
-import woowacourse.movie.ui.movielist.view.MovieListFragment
+import woowacourse.movie.ui.MovieBookingActivity
 import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.intentSerializable
 
@@ -84,7 +84,7 @@ class BookingCompleteActivity :
 
     private fun moveToMovieListActivity() {
         val intent =
-            Intent(this, MovieListFragment::class.java).apply {
+            Intent(this, MovieBookingActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             }
         startActivity(intent)
