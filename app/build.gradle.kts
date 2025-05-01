@@ -65,6 +65,7 @@ dependencies {
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.kotest.runner.junit5)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.espresso.contrib)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.assertj.core)
@@ -74,4 +75,6 @@ dependencies {
     androidTestRuntimeOnly(libs.mannodermaus.junit5.runner)
     testImplementation(kotlin("test"))
     testImplementation(libs.mockk)
+    debugImplementation(libs.androidx.fragment.testing.manifest)
+    androidTestImplementation(libs.androidx.fragment.testing)
 }
