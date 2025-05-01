@@ -10,7 +10,7 @@ import java.time.LocalTime
 data class Screening(
     val screeningTimes: List<LocalTime>,
     val cinema: Cinema,
-    val movie: Movie
+    val movie: Movie,
 ) : Parcelable {
     fun getAvailableTimesFor(
         now: LocalDateTime,

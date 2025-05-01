@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemCinemaBinding
+import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.domain.model.Screening
 
 class CinemaSelectionAdapter(
@@ -25,8 +27,12 @@ class CinemaSelectionAdapter(
         viewType: Int,
     ): CinemaViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cinema, parent, false)
-
-        return CinemaViewHolder(view)
+        val binding = ItemCinemaBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return CinemaViewHolder(view, binding)
     }
 
     override fun getItemCount(): Int = items.size
@@ -34,27 +40,19 @@ class CinemaSelectionAdapter(
 
 class CinemaViewHolder(
     val view: View,
-) : ViewHolder(view) {
-    private val tvCinemaName = view.findViewById<TextView>(R.id.tv_cinema)
-    private val tvScreeningTime = view.findViewById<TextView>(R.id.tv_screening_time)
+    val binding: ItemCinemaBinding
+) : ViewHolder(binding.root) {
+
 
     fun bind(
         screening: Screening,
         eventListener: OnCinemaSelectionListener,
     ) {
-        tvCinemaName.text =
-            view.context.getString(
-                R.string.cinema,
-                screening.cinema.name,
-            )
-        tvScreeningTime.text =
-            view.context.getString(
-                R.string.screenig_times,
-                screening.screeningTimes.size,
-            )
-        view
+        binding.screening = screening
+        binding.root
             .setOnClickListener {
                 eventListener.onReserveButtonClick(screening)
             }
+        binding.executePendingBindings()
     }
 }
