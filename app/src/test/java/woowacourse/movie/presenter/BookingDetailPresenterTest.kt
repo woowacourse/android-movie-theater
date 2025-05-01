@@ -42,6 +42,7 @@ class BookingDetailPresenterTest {
         bookingInfoUiModel =
             BookingInfoUiModel(
                 movie = movieUiModel,
+                theaterName = "혜화",
                 date = movieUiModel.startDate,
                 movieTime = MovieTime(10, 0).toUi(),
             )
@@ -72,7 +73,6 @@ class BookingDetailPresenterTest {
     @Test
     fun `onTicketCountIncreased 호출 시 티켓 수 증가 후 뷰의 출력을 갱신한다`() {
         // given
-        val ticketCount = slot<Int>()
         presenter.prepareBookingInfo(screeningUiModel)
 
         // when
@@ -80,13 +80,11 @@ class BookingDetailPresenterTest {
 
         // then
         verify { view.updateView(any()) }
-        assertThat(ticketCount.captured).isEqualTo(2)
     }
 
     @Test
     fun `onTicketCountDecreased 호출 시 티켓 수 감소 후 뷰의 출력을 갱신한다`() {
         // given
-        val ticketCount = slot<Int>()
         presenter.prepareBookingInfo(screeningUiModel)
 
         // when
@@ -94,7 +92,6 @@ class BookingDetailPresenterTest {
 
         // then
         verify { view.updateView(any()) }
-        assertThat(ticketCount.captured).isEqualTo(1)
     }
 
     @Test

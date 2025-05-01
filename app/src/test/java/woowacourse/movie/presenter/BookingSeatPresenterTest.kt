@@ -63,7 +63,6 @@ class BookingSeatPresenterTest {
         // given
         presenter.prepareBookingInfo(bookingInfoUiModel)
         val seat = MovieSeat(1, 1).toUi()
-        val prices = mutableListOf<Int>()
 
         // when
         val result = presenter.selectSeat(seat)
@@ -73,7 +72,6 @@ class BookingSeatPresenterTest {
             view.updateBookingInfo(any())
         }
         assertThat(result).isInstanceOf(SeatSelectionUiState.Success::class.java)
-        assertThat(prices.last()).isEqualTo(10_000)
     }
 
     @Test

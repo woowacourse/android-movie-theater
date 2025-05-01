@@ -35,14 +35,14 @@ class MoviesPresenterTest {
     fun `selectMovieForBooking 호출 시 극장 목록을 보여준다`() {
         // given
         val movieUiModel = movies.first().toUi()
-        val screenings = screenings.toUi()
+        val screening = screenings.getMovieScreenings(movieUiModel.title).toUi()
 
         // when
         presenter.selectMovieForBooking(movieUiModel)
 
         // then
         verify {
-            view.showTheaters(screenings)
+            view.showTheaters(screening)
         }
     }
 }

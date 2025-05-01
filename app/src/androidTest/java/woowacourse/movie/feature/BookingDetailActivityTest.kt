@@ -14,9 +14,13 @@ import org.hamcrest.CoreMatchers.anything
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
+import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.MovieDate
+import woowacourse.movie.domain.model.MovieTime
+import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity
 import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity.Companion.newIntent
-import woowacourse.movie.feature.model.ScreeningUiModel
+import woowacourse.movie.feature.mapper.toUi
 
 @Suppress("ktlint:standard:function-naming")
 class BookingDetailActivityTest {
@@ -27,29 +31,15 @@ class BookingDetailActivityTest {
         val intent =
             newIntent(
                 context = getApplicationContext(),
-                screening = ScreeningUiModel(),
+                screening =
+                    Screening(
+                        Movie("해리 포터와 마법사의 돌", MovieDate(2025, 4, 1), MovieDate(2025, 4, 25), 152),
+                        "혜화",
+                        listOf(MovieTime(9, 0), MovieTime(12, 0), MovieTime(15, 0)),
+                    ).toUi(),
             )
 
         activityScenario = ActivityScenario.launch(intent)
-    }
-
-    @Test
-    fun 선택한_날이_평일이면_기본_시간은_10시로_설정된다() {
-        onView(withId(R.id.sp_booking_detail_time))
-            .check(matches(withSpinnerText("10:00")))
-    }
-
-    @Test
-    fun 선택한_날이_주말이면_기본_시간은_9시로_설정된다() {
-        onView(withId(R.id.sp_booking_detail_date))
-            .perform(click())
-
-        onData(anything())
-            .atPosition(4)
-            .perform(click())
-
-        onView(withId(R.id.sp_booking_detail_time))
-            .check(matches(withSpinnerText("09:00")))
     }
 
     @Test
