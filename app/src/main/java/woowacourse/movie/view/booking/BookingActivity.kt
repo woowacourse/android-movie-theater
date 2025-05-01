@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -54,7 +53,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         presenter.loadMovieDetail()
-        presenter.loadPeopleCount()
 
         initButtonListener()
     }
@@ -142,20 +140,18 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     private fun initButtonListener() {
-        val increaseBtn = findViewById<Button>(R.id.btn_increase)
-        val decreaseBtn = findViewById<Button>(R.id.btn_decrease)
-        val bookingBtn = findViewById<Button>(R.id.btn_booking_complete)
+        with(binding) {
+            btnIncrease.setOnClickListener { presenter.increasePeopleCount(MAX_SEAT) }
+            btnDecrease.setOnClickListener { presenter.decreasePeopleCount() }
 
-        increaseBtn.setOnClickListener { presenter.increasePeopleCount(MAX_SEAT) }
-        decreaseBtn.setOnClickListener { presenter.decreasePeopleCount() }
-
-        bookingBtn.setOnClickListener {
-            presenter.loadBooking(
-                title = binding.tvTitle.text.toString(),
-                bookingDate = binding.spDate.selectedItem.toString(),
-                bookingTime = binding.spTime.selectedItem.toString(),
-                peopleCount = binding.tvPeopleCount.text.toString(),
-            )
+            btnBookingComplete.setOnClickListener {
+                presenter.loadBooking(
+                    title = tvTitle.text.toString(),
+                    bookingDate = spDate.selectedItem.toString(),
+                    bookingTime = spTime.selectedItem.toString(),
+                    peopleCount = tvPeopleCount.text.toString(),
+                )
+            }
         }
     }
 
@@ -179,7 +175,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        
+
         with(savedInstanceState) {
             presenter.restorePeopleCount(getInt(KEY_PEOPLE_COUNT))
             val savedTimePosition = getInt(KEY_SELECTED_TIME_POSITION)

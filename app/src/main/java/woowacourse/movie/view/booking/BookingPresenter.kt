@@ -16,6 +16,10 @@ class BookingPresenter(
     private var count: PeopleCount,
     private val screeningInfo: ScreeningInfo,
 ) : BookingContract.Presenter {
+    init {
+        loadPeopleCount()
+    }
+
     override fun loadMovieDetail() {
         val screening = screeningInfo.screening
         val screeningDate = screening.map { it.toLocalDate() }
