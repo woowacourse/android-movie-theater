@@ -17,7 +17,7 @@ import woowacourse.movie.view.home.movies.bottomsheet.TheaterBottomSheet
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.home.movies.model.UiModel
 
-class HomeFragment : Fragment(R.layout.fragment_home), MovieListContract.View {
+class MovieListFragment : Fragment(R.layout.fragment_home), MovieListContract.View {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var presenter: MovieListContract.Presenter
