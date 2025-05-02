@@ -7,7 +7,7 @@
     <data>
         <variable
             name="model"
-            type="woowacourse.movie.view.home.movies.model.Item.AdvertiseItem" />
+            type="woowacourse.movie.view.home.movies.model.MovieRvItem.AdItem" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

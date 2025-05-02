@@ -1,17 +1,20 @@
 package woowacourse.movie.view.home.movies.viewholder
 
-import androidx.recyclerview.widget.RecyclerView
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import woowacourse.movie.databinding.MovieItemBinding
-import woowacourse.movie.view.home.movies.model.UiModel.MovieUiModel
+import woowacourse.movie.view.base.BaseViewHolder
+import woowacourse.movie.view.home.movies.model.MovieRvItem
 
 class MovieViewHolder(
-    private val binding: MovieItemBinding,
+    parent: ViewGroup,
+    @LayoutRes layoutId: Int,
     private val onClickBooking: (Int) -> Unit,
-) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(item: MovieUiModel) {
-        with(binding) {
-            model = item
-            btnBooking.setOnClickListener { onClickBooking(item.id) }
+) : BaseViewHolder<MovieRvItem.MovieItem>(parent, layoutId) {
+    override fun bind(movieRvItem: MovieRvItem.MovieItem) {
+        MovieItemBinding.bind(itemView).apply {
+            model = movieRvItem
+            btnBooking.setOnClickListener { onClickBooking(movieRvItem.id) }
         }
     }
 }

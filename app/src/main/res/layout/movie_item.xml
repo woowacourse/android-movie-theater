@@ -6,7 +6,7 @@
     <data>
         <variable
             name="model"
-            type="woowacourse.movie.view.home.movies.model.Item.MovieItem" />
+            type="woowacourse.movie.view.home.movies.model.MovieRvItem.MovieItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

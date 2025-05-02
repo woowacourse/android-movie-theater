@@ -2,20 +2,21 @@ package woowacourse.movie.view.home.movies.model
 
 import androidx.annotation.LayoutRes
 import woowacourse.movie.R
+import woowacourse.movie.view.bindingadapter.ImageSource
 
-sealed class Item(val viewType: ViewType) {
+sealed class MovieRvItem(val viewType: ViewType) {
     data class MovieItem(
         val id: Int,
         val title: String,
-        val imgName: String,
+        val imgName: ImageSource,
         val releaseStartDate: String,
         val releaseEndDate: String,
         val runningTime: Int,
-    ) : Item(ViewType.VIEW_TYPE_MOVIE)
+    ) : MovieRvItem(ViewType.VIEW_TYPE_MOVIE)
 
-    data class AdvertiseItem(
-        val imgResource: String,
-    ) : Item(ViewType.VIEW_TYPE_ADVERTISEMENT)
+    data class AdItem(
+        val imgResource: ImageSource,
+    ) : MovieRvItem(ViewType.VIEW_TYPE_ADVERTISEMENT)
 
     enum class ViewType(
         @LayoutRes val layoutRes: Int,

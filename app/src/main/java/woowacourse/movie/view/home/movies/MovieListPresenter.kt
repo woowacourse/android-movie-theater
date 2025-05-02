@@ -4,7 +4,7 @@ import woowacourse.movie.data.MovieStore
 import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.domain.model.ad.Advertisement
 import woowacourse.movie.domain.model.theater.Theater
-import woowacourse.movie.view.home.movies.model.Item
+import woowacourse.movie.view.home.movies.model.MovieRvItem
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.mapper.toItem
 
@@ -36,14 +36,14 @@ class MovieListPresenter(
     }
 
     private fun loadUiData() {
-        val items = mutableListOf<Item>()
+        val movieRvItems = mutableListOf<MovieRvItem>()
         movieStore.getAll().forEachIndexed { index, movie ->
-            items.add(movie.toItem())
+            movieRvItems.add(movie.toItem())
             if ((index + 1) % AD_DIVIDE_STANDARD == 0) {
-                items.add(Advertisement().toItem())
+                movieRvItems.add(Advertisement().toItem())
             }
         }
-        view.showMovieList(items)
+        view.showMovieList(movieRvItems)
     }
 
     companion object {
