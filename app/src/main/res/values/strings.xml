@@ -26,4 +26,8 @@
     <string name="list_icon_title">예매 내역</string>
     <string name="home_icon_title">홈</string>
     <string name="setting_icon_title">설정</string>
+
+    <string name="error_missing_movie_info">영화 정보를 불러올 수 없습니다. 다시 시도해주세요.</string>
+    <string name="error_missing_movie_seat">좌석 정보를 불러올 수 없습니다. 다시 시도해주세요.</string>
+    <string name="error_missing_booking_info">예매 정보를 불러올 수 없습니다. 다시 시도해주세요.</string>
 </resources>

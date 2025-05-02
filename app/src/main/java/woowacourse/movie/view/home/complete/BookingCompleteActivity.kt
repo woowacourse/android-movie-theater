@@ -14,7 +14,8 @@ import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.StringFormatter
-import woowacourse.movie.view.ext.getSerializable
+import woowacourse.movie.view.ext.getSerializableOrNull
+import woowacourse.movie.view.ext.showToastFromResource
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -27,8 +28,12 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
 
-        val ticket = intent.getSerializable(KEY_TICKET, Ticket::class.java)
-        presenter = BookingCompletePresenter(this, ticket)
+        intent.getSerializableOrNull(KEY_TICKET, Ticket::class.java)?.let {
+            presenter = BookingCompletePresenter(this, it)
+        } ?: run {
+            showToastFromResource(R.string.error_missing_booking_info)
+            finish()
+        }
 
         initView()
     }

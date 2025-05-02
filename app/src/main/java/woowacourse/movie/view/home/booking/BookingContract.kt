@@ -24,7 +24,7 @@ interface BookingContract {
 
         fun showScreeningTime(screeningBookingTimes: List<LocalTime>)
 
-        fun showToast()
+        fun guideNoBookingTime()
 
         fun moveToBookingComplete(booking: Booking)
     }

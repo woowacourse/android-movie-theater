@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -21,7 +20,8 @@ import woowacourse.movie.domain.model.booking.Booking
 import woowacourse.movie.domain.model.booking.PeopleCount
 import woowacourse.movie.domain.model.movies.Movie
 import woowacourse.movie.view.StringFormatter
-import woowacourse.movie.view.ext.getSerializable
+import woowacourse.movie.view.ext.getSerializableOrNull
+import woowacourse.movie.view.ext.showToastFromResource
 import woowacourse.movie.view.ext.toDrawableResourceId
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.home.seat.SeatActivity
@@ -38,10 +38,14 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking)
 
-        val screeningInfo = intent.getSerializable(KEY_SCREENING, ScreeningInfo::class.java)
-
-        presenter = BookingPresenter(this, MovieStore(), PeopleCount(), screeningInfo)
-        initView()
+        intent.getSerializableOrNull(KEY_SCREENING, ScreeningInfo::class.java)
+            ?.let {
+                presenter = BookingPresenter(this, MovieStore(), PeopleCount(), it)
+                initView()
+            } ?: run {
+            showToastFromResource(R.string.error_missing_movie_info)
+            finish()
+        }
     }
 
     private fun initView() {
@@ -115,8 +119,8 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         }
     }
 
-    override fun showToast() {
-        Toast.makeText(this, R.string.text_no_booking_time, Toast.LENGTH_LONG).show()
+    override fun guideNoBookingTime() {
+        showToastFromResource(R.string.text_no_booking_time)
     }
 
     override fun moveToBookingComplete(booking: Booking) {
