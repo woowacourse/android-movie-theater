@@ -2,12 +2,12 @@ package woowacourse.movie.view.home.movies
 
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.domain.model.theater.Theaters
+import woowacourse.movie.view.home.movies.model.Item
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
-import woowacourse.movie.view.home.movies.model.UiModel
 
 interface MovieListContract {
     interface View {
-        fun showMovieList(movieList: List<UiModel>)
+        fun showMovieList(movieList: List<Item>)
 
         fun showTheaterBottomSheet(
             movieId: Int,

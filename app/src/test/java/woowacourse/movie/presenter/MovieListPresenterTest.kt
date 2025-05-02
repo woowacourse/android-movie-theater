@@ -9,7 +9,7 @@ import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.domain.model.movies.Movie
 import woowacourse.movie.view.home.movies.MovieListContract
 import woowacourse.movie.view.home.movies.MovieListPresenter
-import woowacourse.movie.view.home.movies.model.UiModel
+import woowacourse.movie.view.home.movies.model.Item
 
 class MovieListPresenterTest {
     private val view: MovieListContract.View = mockk<MovieListContract.View>(relaxed = true)
@@ -27,10 +27,10 @@ class MovieListPresenterTest {
         verify {
             view.showMovieList(
                 match { uiModels ->
-                    uiModels[0] is UiModel.MovieUiModel &&
-                        uiModels[1] is UiModel.MovieUiModel &&
-                        uiModels[2] is UiModel.MovieUiModel &&
-                        uiModels[3] is UiModel.AdvertiseUiModel
+                    uiModels[0] is Item.MovieItem &&
+                        uiModels[1] is Item.MovieItem &&
+                        uiModels[2] is Item.MovieItem &&
+                        uiModels[3] is Item.AdvertiseItem
                 },
             )
         }

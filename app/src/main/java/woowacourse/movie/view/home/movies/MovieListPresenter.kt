@@ -4,9 +4,9 @@ import woowacourse.movie.data.MovieStore
 import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.domain.model.ad.Advertisement
 import woowacourse.movie.domain.model.theater.Theater
+import woowacourse.movie.view.home.movies.model.Item
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
-import woowacourse.movie.view.home.movies.model.UiModel
-import woowacourse.movie.view.home.movies.model.toUiModel
+import woowacourse.movie.view.mapper.toItem
 
 class MovieListPresenter(
     private val view: MovieListContract.View,
@@ -16,6 +16,7 @@ class MovieListPresenter(
     init {
         loadUiData()
     }
+
     private val theaters = theaterStore.createTheaters()
 
     override fun loadTheaters(movieId: Int) {
@@ -35,11 +36,11 @@ class MovieListPresenter(
     }
 
     private fun loadUiData() {
-        val items = mutableListOf<UiModel>()
+        val items = mutableListOf<Item>()
         movieStore.getAll().forEachIndexed { index, movie ->
-            items.add(movie.toUiModel())
+            items.add(movie.toItem())
             if ((index + 1) % AD_DIVIDE_STANDARD == 0) {
-                items.add(Advertisement().toUiModel())
+                items.add(Advertisement().toItem())
             }
         }
         view.showMovieList(items)
