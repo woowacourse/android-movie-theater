@@ -10,16 +10,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import woowacourse.movie.R
 
-abstract class DataBindingBaseActivity<T : ViewDataBinding> : AppCompatActivity() {
-    abstract val layoutRes: Int @LayoutRes get
-    abstract var binding: T
+abstract class BaseActivity<T : ViewDataBinding>(
+    @LayoutRes private val layoutRes: Int,
+) : AppCompatActivity() {
+    protected lateinit var binding: T
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupScreen()
+        setUpScreen()
     }
 
-    protected fun setupScreen() {
+    private fun setUpScreen() {
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, layoutRes)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

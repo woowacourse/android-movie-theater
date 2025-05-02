@@ -3,34 +3,29 @@ package woowacourse.movie.presentation.result
 import android.os.Bundle
 import android.widget.Toast
 import woowacourse.movie.R
-import woowacourse.movie.common.DataBindingBaseActivity
+import woowacourse.movie.common.BaseActivity
 import woowacourse.movie.common.constant.IntentKeys
 import woowacourse.movie.common.util.intentSerializable
 import woowacourse.movie.databinding.ActivityBookingResultBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 
 class BookingResultActivity :
-    DataBindingBaseActivity<ActivityBookingResultBinding>(),
+    BaseActivity<ActivityBookingResultBinding>(R.layout.activity_booking_result),
     BookingResultContract.View {
-    override val layoutRes: Int
-        get() = R.layout.activity_booking_result
-
-    override lateinit var binding: ActivityBookingResultBinding
-
-    private lateinit var presenter: BookingResultPresenter
+    private lateinit var presenter: BookingResultContract.Presenter
     private lateinit var ticket: MovieTicket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!fetchTicketFromIntent()) return
-        setupScreen()
         presenter = BookingResultPresenter(this, ticket)
         presenter.onViewCreated()
     }
 
     override fun showTicket(ticket: MovieTicket) {
         binding.ticket = ticket
-        binding.textviewNotice.text = String.format(getString(R.string.cancel_notice), CANCELABLE_TIME)
+        binding.textviewNotice.text =
+            String.format(getString(R.string.cancel_notice), CANCELABLE_TIME)
     }
 
     private fun fetchTicketFromIntent(): Boolean {

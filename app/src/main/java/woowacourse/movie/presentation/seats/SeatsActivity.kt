@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.common.DataBindingBaseActivity
+import woowacourse.movie.common.BaseActivity
 import woowacourse.movie.common.constant.IntentKeys
 import woowacourse.movie.common.util.TicketUiFormatter
 import woowacourse.movie.common.util.intentSerializable
@@ -19,19 +19,14 @@ import woowacourse.movie.presentation.result.BookingResultActivity
 import java.io.Serializable
 
 class SeatsActivity :
-    DataBindingBaseActivity<ActivitySeatsBinding>(),
+    BaseActivity<ActivitySeatsBinding>(R.layout.activity_seats),
     SeatsContract.View {
-    override val layoutRes: Int
-        get() = R.layout.activity_seats
-
-    override lateinit var binding: ActivitySeatsBinding
     private lateinit var movieTicket: MovieTicket
     private lateinit var presenter: SeatsContract.Presenter
     private var confirmDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupScreen()
         if (!fetchTicketFromIntent()) return
         presenter = SeatsPresenter(this, movieTicket)
         presenter.onViewCreated()

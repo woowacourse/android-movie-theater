@@ -7,7 +7,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import woowacourse.movie.R
-import woowacourse.movie.common.DataBindingBaseActivity
+import woowacourse.movie.common.BaseActivity
 import woowacourse.movie.common.constant.IntentKeys
 import woowacourse.movie.common.util.intentSerializable
 import woowacourse.movie.databinding.ActivityBookingBinding
@@ -20,13 +20,8 @@ import java.time.LocalTime
 import java.util.Locale
 
 class BookingActivity :
-    DataBindingBaseActivity<ActivityBookingBinding>(),
+    BaseActivity<ActivityBookingBinding>(R.layout.activity_booking),
     BookingContract.View {
-    override val layoutRes: Int
-        get() = R.layout.activity_booking
-
-    override lateinit var binding: ActivityBookingBinding
-
     private lateinit var presenter: BookingContract.Presenter
     private lateinit var screening: Screening
     private var dateItemPosition: Int = DEFAULT_POSITION
@@ -35,7 +30,6 @@ class BookingActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!fetchMovieFromIntent()) return
-        setupScreen()
         presenter = BookingPresenter(this, screening)
         presenter.onViewCreated()
     }

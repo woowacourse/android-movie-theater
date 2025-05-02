@@ -3,21 +3,15 @@ package woowacourse.movie
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import woowacourse.movie.common.DataBindingBaseActivity
+import woowacourse.movie.common.BaseActivity
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.bookinglist.BookingListFragment
 import woowacourse.movie.presentation.movies.MoviesFragment
 import woowacourse.movie.presentation.settings.SettingsFragment
 
-class MainActivity : DataBindingBaseActivity<ActivityMainBinding>() {
-    override val layoutRes: Int
-        get() = R.layout.activity_main
-
-    override lateinit var binding: ActivityMainBinding
-
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupScreen()
         setBottomNavigationView()
 
         if (savedInstanceState == null) {
