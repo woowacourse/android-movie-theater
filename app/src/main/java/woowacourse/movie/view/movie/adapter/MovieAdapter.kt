@@ -1,11 +1,11 @@
 package woowacourse.movie.view.movie.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.view.movie.MovieClickListener
 
@@ -33,8 +33,8 @@ class MovieAdapter(
 
         return when (viewType) {
             VIEW_TYPE_MOVIE -> {
-                val view = inflater.inflate(R.layout.item_movie, parent, false)
-                MovieViewHolder(view, clickListener)
+                val binding = ItemMovieBinding.inflate(inflater, parent, false)
+                MovieViewHolder(binding, clickListener)
             }
 
             VIEW_TYPE_AD -> {
@@ -50,12 +50,12 @@ class MovieAdapter(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
-        Log.d("madapter", "$currentList")
         when (holder) {
             is MovieViewHolder -> {
                 val moviePosition = getMoviePosition(position)
                 holder.bind(getItem(moviePosition))
             }
+
             is AdViewHolder -> holder.bind()
         }
     }

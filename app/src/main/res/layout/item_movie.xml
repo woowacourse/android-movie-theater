@@ -10,8 +10,8 @@
             type="woowacourse.movie.model.Movie" />
 
         <variable
-            name="moviesFragment"
-            type="woowacourse.movie.view.movie.MoviesFragment" />
+            name="movieClickListener"
+            type="woowacourse.movie.view.movie.MovieClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,6 +24,7 @@
             android:layout_width="76dp"
             android:layout_height="108dp"
             android:contentDescription="@null"
+            app:imgResPath="@{movie.poster}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/lalaland" />
@@ -33,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:text="@{movie.title}"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -45,27 +47,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@string/movie_screening_date"
             android:textColor="@color/black"
             android:textSize="12sp"
+            app:endDate="@{movie.endDate}"
             app:layout_constraintStart_toStartOf="@id/tv_movie_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_movie_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
+            app:startDate="@{movie.startDate}"
+            tools:text="@string/movie_screening_date" />
 
         <TextView
             android:id="@+id/tv_movie_running_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@string/movie_running_time"
+            android:text="@{String.format(@string/movie_running_time, movie.runningTime)}"
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@id/tv_movie_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_movie_screening_date" />
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_screening_date"
+            tools:text="@string/movie_running_time" />
 
         <Button
             android:id="@+id/btn_movie_reservation"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:onClick="@{() -> movieClickListener.onReservationClick(movie)}"
             android:paddingVertical="10dp"
             android:text="@string/movie_reservation"
             android:textSize="14sp"
