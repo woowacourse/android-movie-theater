@@ -22,9 +22,7 @@ class MovieListPresenterTest {
 
     @Test
     fun `영화 리스트를 로딩하면 영화와 광고가 포함된 리스트를 View에 전달한다`() {
-        val presenter = MovieListPresenter(view, MovieStore(), TheaterStore())
-
-        presenter.loadUiData()
+        MovieListPresenter(view, MovieStore(), TheaterStore())
 
         verify {
             view.showMovieList(

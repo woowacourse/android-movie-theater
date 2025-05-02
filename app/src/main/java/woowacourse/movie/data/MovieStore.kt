@@ -5,7 +5,7 @@ import woowacourse.movie.domain.model.movies.Movie
 import java.time.LocalDate
 
 class MovieStore {
-    val movies: MutableMap<Int, Movie> = mutableMapOf()
+    private val movies: MutableMap<Int, Movie> = mutableMapOf()
 
     init {
         initData()

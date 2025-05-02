@@ -91,7 +91,7 @@ class TheaterStore {
         end: LocalDate,
     ): List<LocalDate> {
         return generateSequence(start) { current ->
-            if (current.isBefore(end)) current.plusDays(1) else null
-        }.toList() + end
+            if (current < end) current.plusDays(1) else null
+        }.toList()
     }
 }

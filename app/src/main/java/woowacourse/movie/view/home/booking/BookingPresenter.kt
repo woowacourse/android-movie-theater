@@ -59,8 +59,7 @@ class BookingPresenter(
                 .getAvailableScreeningTimes(selectedDate)
 
         if (availableTimes.isEmpty()) {
-            view.showToast()
-            return
+            return view.guideNoBookingTime()
         }
         view.showScreeningTime(availableTimes)
     }
