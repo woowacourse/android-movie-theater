@@ -15,45 +15,46 @@
 
     </data>
 
-    <ScrollView
-        android:id="@+id/sv_reservation"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".view.reservation.detail.ReservationFragment">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/iv_reservation_poster"
-                android:layout_width="0dp"
-                android:layout_height="340dp"
-                android:contentDescription="@null"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/lalaland" />
+        <ScrollView
+            android:id="@+id/sv_reservation"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".view.reservation.detail.ReservationFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_reservation_poster">
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_reservation_poster"
+                    android:layout_width="0dp"
+                    android:layout_height="400dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitXY"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/lalaland" />
 
                 <TextView
                     android:id="@+id/tv_reservation_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_reservation_poster"
                     tools:text="라라랜드" />
 
                 <TextView
@@ -83,7 +84,6 @@
                     android:id="@+id/spinner_reservation_date"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="40dp"
                     android:layout_marginEnd="30dp"
                     android:layout_marginBottom="20dp"
@@ -95,7 +95,7 @@
                     android:id="@+id/spinner_reservation_time"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     app:layout_constraintBottom_toBottomOf="@+id/spinner_reservation_date"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/spinner_reservation_date"
@@ -145,15 +145,17 @@
                     android:id="@+id/btn_reservation_select_complete"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="20dp"
                     android:paddingVertical="12dp"
                     android:text="@string/reservation_btn_select_complete"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/btn_reservation_plus_ticket_count"
                     app:layout_constraintStart_toStartOf="@id/btn_reservation_minus_ticket_count"
                     app:layout_constraintTop_toBottomOf="@id/btn_reservation_minus_ticket_count" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
