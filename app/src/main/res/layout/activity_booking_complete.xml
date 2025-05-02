@@ -8,6 +8,7 @@
             name="ticket"
             type="woowacourse.movie.ui.model.TicketUiModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
