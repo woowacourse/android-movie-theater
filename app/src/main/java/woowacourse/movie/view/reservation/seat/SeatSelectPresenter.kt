@@ -54,7 +54,7 @@ class SeatSelectPresenter(
         onCreated(reservationInfo)
     }
 
-    override fun confirmClicked(
+    override fun confirmRequested(
         title: String,
         message: String,
     ) {

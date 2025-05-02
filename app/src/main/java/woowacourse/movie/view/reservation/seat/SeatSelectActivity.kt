@@ -140,7 +140,7 @@ class SeatSelectActivity :
             isClickable = false
             alpha = 0.1f
             setOnClickListener {
-                presenter.confirmClicked(
+                presenter.confirmRequested(
                     getString(R.string.reservation_dialog_title),
                     getString(R.string.reservation_dialog_message),
                 )
