@@ -16,7 +16,7 @@ object BindingAdapter {
     ) {
         val formattedStartDate = Formatter.formatDateDotSeparated(screeningStartDate)
         val formattedEndDate = Formatter.formatDateDotSeparated(screeningEndDate)
-        val formattedPeriod = textView.context.getString(R.string.screening_date_period, formattedStartDate, formattedEndDate)
+        val formattedPeriod = textView.context.getString(R.string.formatted_screening_date_period, formattedStartDate, formattedEndDate)
 
         textView.text = formattedPeriod
     }

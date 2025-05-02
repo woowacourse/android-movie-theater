@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@{@string/theater_place(theater.place)}"
+            android:text="@{@string/text_theater_place(theater.place)}"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@{@string/theater_movie_count(theater.schedule.screeningTimes.size())}"
+            android:text="@{@string/text_theater_movie_count(theater.schedule.screeningTimes.size())}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_theater_place"
             tools:text="3개의 상영 시간" />

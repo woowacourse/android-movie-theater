@@ -369,7 +369,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="@{@string/screening_selection_booking_amount(ticket.totalPrice)}"
+                android:text="@{@string/formatted_booking_amount(ticket.totalPrice)}"
                 android:textColor="#727272"
                 android:textSize="18sp"
                 android:textStyle="bold"
