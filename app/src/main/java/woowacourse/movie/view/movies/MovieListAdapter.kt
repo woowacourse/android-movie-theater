@@ -26,12 +26,13 @@ class MovieListAdapter(
         return when (viewType) {
             R.layout.item_movie -> {
                 view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-                val binding = ItemMovieBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-                MovieViewHolder(view, binding)
+                val binding =
+                    ItemMovieBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false,
+                    )
+                MovieViewHolder(binding)
             }
 
             R.layout.item_advertisement -> {

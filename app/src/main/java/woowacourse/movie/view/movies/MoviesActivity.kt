@@ -3,8 +3,8 @@ package woowacourse.movie.view.movies
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.databinding.ActivityMoviesBinding
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMoviesBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.view.base.BaseActivity
 import woowacourse.movie.view.movies.cinema.CinemaSeclectionFragment
