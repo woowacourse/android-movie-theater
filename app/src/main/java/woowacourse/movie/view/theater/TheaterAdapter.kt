@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.model.TheaterUIModel
 
 class TheaterAdapter(
@@ -15,8 +15,8 @@ class TheaterAdapter(
         viewType: Int,
     ): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.item_theater, parent, false)
-        return TheaterViewHolder(view, clickListener)
+        val binding = ItemTheaterBinding.inflate(inflater, parent, false)
+        return TheaterViewHolder(binding, clickListener)
     }
 
     override fun onBindViewHolder(
