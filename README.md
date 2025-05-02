@@ -35,8 +35,8 @@
 - [ ] SeatSelectionActivity | 버튼 비활성화 버그 수정
 - [ ] 매직 넘버 상수화
 - [ ] Scheduler | 현재 날짜 & 시간 고정되어 있는 버그 수정
-- [ ] Seat | 행 & 열로 좌석 구분하도록 변경
-- [ ] Seats | toggle 함수 고민
+- [x] Seat | 행 & 열로 좌석 구분하도록 변경
+- [x] Seats | toggle 함수 고민
 - [ ] MovieAdapter | 광고 삽입 로직 이동
 - [ ] Presenter | 반환값이 없도록 수정
-- [ ] layout | ConstraintLayout 중첩 구조 개선
+- [x] layout | ConstraintLayout 중첩 구조 개선
