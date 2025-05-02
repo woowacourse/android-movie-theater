@@ -95,7 +95,7 @@ class BookingDetailActivityTest {
         onView(withId(R.id.tv_booking_screening_date)).check(
             matches(
                 allOf(
-                    withText("2028.10.11 ~ 2028.10.25"),
+                    withText("상영일: 2028.10.11 ~ 2028.10.25"),
                     isDisplayed(),
                 ),
             ),
@@ -107,7 +107,7 @@ class BookingDetailActivityTest {
         onView(withId(R.id.tv_booking_running_time)).check(
             matches(
                 allOf(
-                    withText("152분"),
+                    withText("러닝타임: 152분"),
                     isDisplayed(),
                 ),
             ),

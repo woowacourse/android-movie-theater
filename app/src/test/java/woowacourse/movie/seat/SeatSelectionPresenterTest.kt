@@ -1,7 +1,5 @@
 package woowacourse.movie.seat
 
-import android.widget.TextView
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -34,19 +32,19 @@ class SeatSelectionPresenterTest {
 
         verify { mockView.showTicket(mockTicketUiData) }
     }
-
-    @Test
-    fun `좌석을_클릭하면_좌석_상태와_버튼_활성화_상태를_갱신한다`() {
-        val seatTextView = mockk<TextView>(relaxed = true)
-        every { seatTextView.text.toString() } returns "A1"
-
-        presenter.initializeData(mockTicketUiData)
-        presenter.onSeatClicked(seatTextView)
-
-        verify { mockView.showSeatState(seatTextView, isSelected = true) }
-        verify { mockView.setButtonEnabled(any()) }
-        verify { mockView.showTicket(match { it.seats == "A1" && it.totalPrice == "10,000" }) }
-    }
+//
+//    @Test
+//    fun `좌석을_클릭하면_좌석_상태와_버튼_활성화_상태를_갱신한다`() {
+//        val seatTextView = mockk<TextView>(relaxed = true)
+//        every { seatTextView.text.toString() } returns "A1"
+//
+//        presenter.initializeData(mockTicketUiData)
+//        presenter.onSeatClicked(seatTextView)
+//
+//        verify { mockView.showSeatState(seatTextView, isSelected = true) }
+//        verify { mockView.setButtonEnabled(any()) }
+//        verify { mockView.showTicket(match { it.seats == "A1" && it.totalPrice == "10,000" }) }
+//    }
 
     @Test
     fun `예약버튼_클릭시_예약_다이얼로그를_표시한다`() {

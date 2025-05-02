@@ -55,22 +55,10 @@ class SchedulerCompleteActivityTest {
 
     @Test
     fun `화면에_선택한_영화_상영일이_표시된다`() {
-        onView(withId(R.id.tv_complete_screening_date)).check(
+        onView(withId(R.id.tv_complete_screening_date_time)).check(
             matches(
                 allOf(
-                    withText("2028.10.13"),
-                    isDisplayed(),
-                ),
-            ),
-        )
-    }
-
-    @Test
-    fun `화면에_선택한_영화_상영시간이_표시된다`() {
-        onView(withId(R.id.tv_complete_screening_time)).check(
-            matches(
-                allOf(
-                    withText("11:00"),
+                    withText("2028.10.13 11:00"),
                     isDisplayed(),
                 ),
             ),
@@ -79,22 +67,10 @@ class SchedulerCompleteActivityTest {
 
     @Test
     fun `화면에_선택한_영화_예매인원이_표시된다`() {
-        onView(withId(R.id.tv_head_count)).check(
+        onView(withId(R.id.tv_ticket)).check(
             matches(
                 allOf(
-                    withText("일반 2명"),
-                    isDisplayed(),
-                ),
-            ),
-        )
-    }
-
-    @Test
-    fun `화면에_선택한_영화_예매좌석이_표시된다`() {
-        onView(withId(R.id.tv_seats)).check(
-            matches(
-                allOf(
-                    withText("A1, C1"),
+                    withText("일반 2명 | A1, C1 | 선릉 극장"),
                     isDisplayed(),
                 ),
             ),

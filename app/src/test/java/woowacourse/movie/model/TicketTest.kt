@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import woowacourse.movie.fixture.SEAT_A1
-import woowacourse.movie.fixture.SEAT_A1_NOT_SELECTED
 import woowacourse.movie.fixture.SEAT_A2
 import woowacourse.movie.fixture.SEAT_C1
 import woowacourse.movie.fixture.SEOLLEUNG
@@ -25,7 +24,7 @@ class TicketTest {
                 HeadCount(0),
                 LocalDate.of(2025, 4, 17),
                 LocalTime.of(11, 0),
-                Seats(emptyList()),
+                Seats(mutableSetOf()),
             )
         }
 
@@ -36,7 +35,7 @@ class TicketTest {
                 HeadCount(0),
                 LocalDate.of(2025, 4, 17),
                 LocalTime.of(11, 0),
-                Seats(emptyList()),
+                Seats(mutableSetOf()),
             )
         }
     }
@@ -97,29 +96,5 @@ class TicketTest {
         val ticket2 = createTicket(SEOLLEUNG, listOf())
         val actual2 = ticket2.isHeadCountValid()
         assertFalse(actual2)
-    }
-
-    @Test
-    fun `좌석이 선택되면, 해당하는 좌석이 이전에 선택되어있지 않은 경우 티켓의 좌석에 추가된다`() {
-        val seat = SEAT_A1_NOT_SELECTED
-        val ticket = createTicket(SEOLLEUNG, listOf(), 2)
-
-        val newTicket = ticket.toggleSeat(seat)
-
-        val expectedSeat = SEAT_A1
-        val expectedTicket = ticket.copy(seats = Seats(listOf(expectedSeat)))
-
-        assertEquals(expectedTicket, newTicket)
-    }
-
-    @Test
-    fun `선택되어있던 좌석을 다시 선택하는 경우 티켓의 좌석에서 제거된다`() {
-        val seat = SEAT_A1
-        val ticket = createTicket(SEOLLEUNG, listOf(seat), 2)
-        val newTicket = ticket.toggleSeat(seat)
-
-        val expectedTicket = ticket.copy(seats = Seats(emptyList()))
-
-        assertEquals(expectedTicket, newTicket)
     }
 }

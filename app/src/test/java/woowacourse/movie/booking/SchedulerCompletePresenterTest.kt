@@ -48,7 +48,8 @@ class SchedulerCompletePresenterTest {
             mockView.showBookingCompleteResult(
                 match {
                     it.headCount == 3 && it.selectedDateText == "2028.10.13" &&
-                        it.selectedTimeText == "11:00" && it.seats == "A1, A2, C1" &&
+                        it.selectedTimeText == "11:00" &&
+                        it.seats == setOf(SEAT_A1.toUiModel(), SEAT_A2.toUiModel(), SEAT_C1.toUiModel()) &&
                         it.totalPrice == "35,000"
                 },
             )

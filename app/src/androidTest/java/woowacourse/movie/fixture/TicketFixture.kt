@@ -7,11 +7,10 @@ import woowacourse.movie.model.Ticket
 import java.time.LocalDate
 import java.time.LocalTime
 
-val SEAT_A1_NOT_SELECTED = Seat("A1", false)
-val SEAT_A1 = Seat("A1", true)
-val SEAT_A2 = Seat("A2", true)
-val SEAT_C1 = Seat("C1", true)
-val SEAT_E1 = Seat("E1", true)
+val SEAT_A1 = Seat(0, 0)
+val SEAT_A2 = Seat(0, 1)
+val SEAT_C1 = Seat(2, 0)
+val SEAT_E1 = Seat(4, 0)
 
 fun createTicket(
     name: String,
@@ -24,5 +23,5 @@ fun createTicket(
         headCount = HeadCount(headCount),
         selectedDate = LocalDate.of(2028, 10, 13),
         selectedTime = LocalTime.of(11, 0),
-        seats = Seats(seats),
+        seats = Seats(seats.toMutableSet()),
     )

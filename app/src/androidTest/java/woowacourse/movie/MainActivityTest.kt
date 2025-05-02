@@ -87,7 +87,7 @@ class MainActivityTest {
                         hasDescendant(
                             allOf(
                                 withId(R.id.tv_movie_screening_date),
-                                withText("2025.4.1 ~ 2025.5.30"),
+                                withText("상영일: 2025.4.1 ~ 2025.5.30"),
                             ),
                         ),
                     ),
@@ -108,7 +108,7 @@ class MainActivityTest {
                         hasDescendant(
                             allOf(
                                 withId(R.id.tv_movie_running_time),
-                                withText("152분"),
+                                withText("러닝타임: 152분"),
                             ),
                         ),
                     ),

@@ -14,13 +14,8 @@ class SeatTest {
     }
 
     @Test
-    fun `좌석의 이름은 비어있을 수 없다`() {
-        assertThrows<NoSuchElementException> { Seat("") }
-    }
-
-    @Test
-    fun `좌석의 이름이 아닌 행을 넣을 수 없다`() {
-        assertThrows<IllegalArgumentException> { Seat("K1").grade }
-        assertThrows<IllegalArgumentException> { Seat("O1").grade }
+    fun `좌석의 열과 행은 최댓값을 초과할 수 없다`() {
+        assertThrows<IllegalArgumentException> { Seat(5, 5).grade }
+        assertThrows<IllegalArgumentException> { Seat(6, 8).grade }
     }
 }

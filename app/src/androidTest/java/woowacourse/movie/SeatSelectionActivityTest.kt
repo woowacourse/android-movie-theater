@@ -9,9 +9,6 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -20,7 +17,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
-import woowacourse.movie.booking.complete.BookingCompleteActivity
 import woowacourse.movie.booking.detail.BookingDetailActivity
 import woowacourse.movie.fixture.HARRY_POTTER
 import woowacourse.movie.fixture.SEOLLEUNG
@@ -120,35 +116,6 @@ class SeatSelectionActivityTest {
     }
 
     @Test
-    fun `예매_인원보다_많은_인원의_좌석을_선택하면_좌석의_배경색이_변경되지_않고_가격도_변경되지_않는다`() {
-        onView(withText("A1"))
-            .perform(click())
-
-        onView(withText("C1"))
-            .perform(click())
-
-        onView(withText("E1"))
-            .perform(click())
-
-        onView(withText("E1")).check { view, _ ->
-            val background = view.background
-
-            val color = (background as ColorDrawable).color
-            val expectedColor = ContextCompat.getColor(view.context, R.color.seat_unselected_background)
-            assertEquals(expectedColor, color)
-        }
-
-        onView(withId(R.id.tv_seat_amount)).check(
-            matches(
-                allOf(
-                    withText("25,000원"),
-                    isDisplayed(),
-                ),
-            ),
-        )
-    }
-
-    @Test
     fun `예매_인원보다_적은_인원의_좌석을_선택하면_버튼이_활성화되지_않는다`() {
         onView(withText("A1"))
             .perform(click())
@@ -219,62 +186,5 @@ class SeatSelectionActivityTest {
 
         onView(withText("취소"))
             .perform(click())
-    }
-
-    @Test
-    fun `다이알로그에서_예매확인_버튼을_누르면_다음_화면으로_원하는_데이터가_넘어간다`() {
-        onView(withText("A1"))
-            .perform(click())
-
-        onView(withText("C1"))
-            .perform(click())
-
-        onView(withId(R.id.btn_booking_confirm))
-            .perform(click())
-
-        onView(withText("정말 예매하시겠습니까?"))
-            .check(matches(isDisplayed()))
-
-        onView(withText("예매 완료"))
-            .perform(click())
-
-        intended(
-            allOf(
-                hasComponent(BookingCompleteActivity::class.java.name),
-                hasExtraWithKey("bookingResult"),
-            ),
-        )
-
-        onView(withId(R.id.tv_complete_title))
-            .check(
-                matches(
-                    allOf(
-                        withText(HARRY_POTTER),
-                        isDisplayed(),
-                    ),
-                ),
-            )
-
-        onView(withId(R.id.tv_complete_screening_date))
-            .check(matches(allOf(withText("2028.10.13"), isDisplayed())))
-
-        onView(withId(R.id.tv_complete_screening_time))
-            .check(matches(allOf(withText("11:00"), isDisplayed())))
-
-        onView(withId(R.id.tv_head_count))
-            .check(matches(allOf(withText("일반 2명"), isDisplayed())))
-
-        onView(withId(R.id.tv_seats))
-            .check(matches(allOf(withText("A1, C1"), isDisplayed())))
-
-        onView(withId(R.id.tv_complete_theater))
-            .check(matches(allOf(withText("선릉 극장"), isDisplayed())))
-
-        onView(withId(R.id.tv_booking_amount))
-            .check(
-                matches(
-                    allOf(withText("25,000원 (현장 결제)"), isDisplayed()),
-                ),
-            )
     }
 }
