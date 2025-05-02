@@ -21,17 +21,26 @@
         tools:context=".booking.detail.BookingDetailActivity">
 
         <ScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/select_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/img_booking_poster"
                     android:layout_width="0dp"
-                    android:layout_height="341dp"
+                    android:layout_height="360dp"
                     android:contentDescription="@null"
                     android:scaleType="centerCrop"
                     app:imageId="@{movie.imageSource}"
@@ -41,160 +50,123 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/harry_potter" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_booking_title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@{movie.title}"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/img_booking_poster">
+                    app:layout_constraintTop_toBottomOf="@id/img_booking_poster"
+                    tools:text="영화 제목" />
 
-                    <TextView
-                        android:id="@+id/tv_booking_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:text="@{movie.title}"
-                        android:textColor="@color/black"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="영화 제목" />
+                <TextView
+                    android:id="@+id/tv_booking_screening_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="29dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_marginHorizontal="20dp"
+                    app:endDate="@{movie.screeningEndDate}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_booking_title"
+                    app:startDate="@{movie.screeningStartDate}"
+                    tools:text="상영일: 2025.4.1 ~ 2025.4.28" />
 
-                    <TextView
-                        android:id="@+id/tv_booking_screening_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="29dp"
-                        android:text="@string/text_screening_date"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_booking_title" />
-
-                    <TextView
-                        android:id="@+id/tv_booking_screening_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="29dp"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        app:endDate="@{movie.screeningEndDate}"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_booking_screening_info"
-                        app:layout_constraintStart_toEndOf="@id/tv_booking_screening_info"
-                        app:layout_constraintTop_toBottomOf="@id/tv_booking_title"
-                        app:startDate="@{movie.screeningStartDate}"
-                        tools:text="영화 상영 기간" />
-
-                    <TextView
-                        android:id="@+id/tv_booking_running_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_running_time"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_booking_screening_info" />
-
-                    <TextView
-                        android:id="@+id/tv_booking_running_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="@{@string/formatted_minute_text(movie.runningTime)}"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_booking_running_info"
-                        app:layout_constraintStart_toEndOf="@id/tv_booking_running_info"
-                        app:layout_constraintTop_toBottomOf="@id/tv_booking_screening_info"
-                        tools:text="152분" />
-
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/spinner_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="37dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_booking_running_info">
-
-                        <Spinner
-                            android:id="@+id/spinner_screening_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                        <Spinner
-                            android:id="@+id/spinner_screening_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <Button
-                        android:onClick="@{() -> detail.decreaseHeadCount()}"
-                        android:id="@+id/btn_minus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="19dp"
-                        android:text="@string/btn_minus_text"
-                        android:textSize="25sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/spinner_layout" />
-
-                    <TextView
-                        android:id="@+id/tv_people_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/default_head_count"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@id/btn_plus"
-                        app:layout_constraintEnd_toStartOf="@id/btn_plus"
-                        app:layout_constraintStart_toEndOf="@id/btn_minus"
-                        app:layout_constraintTop_toTopOf="@id/btn_minus" />
-
-                    <Button
-                        android:onClick="@{()->detail.increaseHeadCount()}"
-                        android:id="@+id/btn_plus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="19dp"
-                        android:text="@string/btn_plus_text"
-                        android:textSize="25sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/spinner_layout" />
-
-                    <Button
-                        android:id="@+id/btn_selection_confirm"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/btn_select_complete"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/btn_plus" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_booking_running_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/text_running_time(movie.runningTime)}"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@id/tv_booking_screening_date"
+                    app:layout_constraintTop_toBottomOf="@id/tv_booking_screening_date"
+                    tools:text="러닝 타임: 152분" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/select_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scroll_view">
 
+            <Spinner
+                android:id="@+id/spinner_screening_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/btn_minus"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/spinner_screening_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/btn_plus"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/btn_minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19dp"
+                android:onClick="@{() -> detail.decreaseHeadCount()}"
+                android:text="@string/btn_minus_text"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinner_screening_date" />
+
+            <TextView
+                android:id="@+id/tv_people_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/default_head_count"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/btn_plus"
+                app:layout_constraintEnd_toStartOf="@id/btn_plus"
+                app:layout_constraintStart_toEndOf="@id/btn_minus"
+                app:layout_constraintTop_toTopOf="@id/btn_minus" />
+
+            <Button
+                android:id="@+id/btn_plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19dp"
+                android:onClick="@{()->detail.increaseHeadCount()}"
+                android:text="@string/btn_plus_text"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinner_screening_time" />
+
+            <Button
+                android:id="@+id/btn_selection_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/btn_select_complete"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_plus" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

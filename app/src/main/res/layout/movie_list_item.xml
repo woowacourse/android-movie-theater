@@ -44,53 +44,30 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="영화 제목" />
 
-
-        <TextView
-            android:id="@+id/tv_movie_screening_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:text="@string/text_screening_date"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@id/img_poster"
-            app:layout_constraintTop_toBottomOf="@+id/tv_movie_title" />
-
         <TextView
             android:id="@+id/tv_movie_screening_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
+            android:layout_marginStart="15dp"
             android:textColor="@color/black"
             android:textSize="12sp"
             app:endDate="@{movie.screeningEndDate}"
-            app:layout_constraintStart_toEndOf="@id/tv_movie_screening_info"
+            app:layout_constraintStart_toEndOf="@id/img_poster"
             app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
             app:startDate="@{movie.screeningStartDate}"
-            tools:text="영화 상영 기간" />
-
-        <TextView
-            android:id="@+id/tv_movie_running_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:text="@string/text_running_time"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@id/img_poster"
-            app:layout_constraintTop_toBottomOf="@+id/tv_movie_screening_info" />
+            tools:text="상영일: 2025.4.1 ~ 2025. 4.25 " />
 
         <TextView
             android:id="@+id/tv_movie_running_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:text="@{@string/formatted_minute_text(movie.runningTime)}"
+            android:layout_marginStart="15dp"
+            android:text="@{@string/text_running_time(movie.runningTime)}"
             android:textColor="@color/black"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@id/tv_movie_running_info"
-            app:layout_constraintTop_toBottomOf="@+id/tv_movie_screening_info"
-            tools:text="152분" />
+            app:layout_constraintStart_toEndOf="@id/img_poster"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_screening_date"
+            tools:text="러닝타임: 152분" />
 
         <Button
             android:id="@+id/btn_reserve"
