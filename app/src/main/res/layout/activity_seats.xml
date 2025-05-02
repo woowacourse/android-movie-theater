@@ -362,7 +362,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:includeFontPadding="false"
-                android:textColor="@color/grey"
+                android:textColor="@color/gray"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"

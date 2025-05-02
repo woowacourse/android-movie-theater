@@ -9,7 +9,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey">#FF727272</color>
+    <color name="gray">#FF5F5F5F</color>
     <color name="seats_background">#FFEAEAEA</color>
     <color name="screen_background">#FF494949</color>
     <color name="b_grade">#FF8E13EF</color>

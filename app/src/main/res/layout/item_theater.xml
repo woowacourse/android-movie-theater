@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -19,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> handler.onClick(screeningInfo)}"
-        android:padding="16dp">
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp">
 
         <TextView
             android:id="@+id/textview_theater_name"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:text="@{screeningInfo.theater}"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="선릉 극장" />
@@ -36,7 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{String.format(@string/theater_text, screeningInfo.times.size)}"
-            android:textSize="12sp"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textview_theater_name"
             tools:text="3개의 상영 시간" />
@@ -49,7 +50,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/grey" />
+            app:tint="@color/gray" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
