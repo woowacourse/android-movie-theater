@@ -28,3 +28,15 @@
 
 - [x] 각 영화관은 이름, 상영 가능한 영화 정보를 갖는다
 - [x] 각 영화는 이름, 상영일, 러닝타임, 상영 가능한 시간을 갖는다
+
+### TODO
+
+- [ ] SeatSelectionActivity | 화면 회전 시 데이터 복원
+- [ ] SeatSelectionActivity | 버튼 비활성화 버그 수정
+- [ ] 매직 넘버 상수화
+- [ ] Scheduler | 현재 날짜 & 시간 고정되어 있는 버그 수정
+- [ ] Seat | 행 & 열로 좌석 구분하도록 변경
+- [ ] Seats | toggle 함수 고민
+- [ ] MovieAdapter | 광고 삽입 로직 이동
+- [ ] Presenter | 반환값이 없도록 수정
+- [ ] layout | ConstraintLayout 중첩 구조 개선
