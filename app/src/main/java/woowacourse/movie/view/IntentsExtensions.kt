@@ -8,10 +8,13 @@ import android.os.Parcelable
 inline fun <reified T : Parcelable> Intent.getParcelableExtraCompat(key: String): T? =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getParcelableExtra(key, T::class.java)
-            ?: throw IllegalArgumentException(ERROR_NO_DATA.format(key))
+            ?: error(ERROR_NO_DATA.format(key))
     } else {
         @Suppress("DEPRECATION")
-        getParcelableExtra(key) as? T
+        getParcelableExtra(key)
+            as? T ?: error(
+            ERROR_NO_DATA.format(key),
+        )
     }
 
 inline fun <reified T : Parcelable> Bundle.compatParcelable(key: String): T? =
