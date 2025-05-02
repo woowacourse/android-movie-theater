@@ -117,7 +117,7 @@ class SeatSelectionActivity :
                 view.setTextColor(
                     ContextCompat.getColor(
                         view.context,
-                        R.color.purple_8E13EF,
+                        R.color.purple_8e13ef,
                     ),
                 )
 
@@ -125,7 +125,7 @@ class SeatSelectionActivity :
                 view.setTextColor(
                     ContextCompat.getColor(
                         view.context,
-                        R.color.green_19D358,
+                        R.color.green_19d358,
                     ),
                 )
 
@@ -133,7 +133,7 @@ class SeatSelectionActivity :
                 view.setTextColor(
                     ContextCompat.getColor(
                         view.context,
-                        R.color.blue_1B48E9,
+                        R.color.blue_1b48e9,
                     ),
                 )
         }

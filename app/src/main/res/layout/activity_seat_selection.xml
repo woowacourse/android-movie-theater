@@ -18,7 +18,7 @@
         android:id="@+id/seat_selection_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray_EAEAEA">
+        android:background="@color/gray_eaeaea">
 
         <TextView
             android:id="@+id/tv_seat_selection_screen"
