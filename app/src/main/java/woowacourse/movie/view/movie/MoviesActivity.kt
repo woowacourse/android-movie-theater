@@ -15,14 +15,19 @@ import woowacourse.movie.view.SettingFragment
 
 class MoviesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMoviesBinding
+    private val movieListFragment: ReservationListFragment by lazy { ReservationListFragment() }
+    private val moviesFragment: MoviesFragment by lazy { MoviesFragment() }
+    private val settingFragment: SettingFragment by lazy { SettingFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setupBinding()
         setupWindowInsets()
-        initFragment(savedInstanceState)
         setupBottomNavigation()
+        if (savedInstanceState == null) {
+            binding.bottomNavigationView.selectedItemId = R.id.fragment_movies
+        }
     }
 
     private fun setupBinding() {
@@ -37,23 +42,13 @@ class MoviesActivity : AppCompatActivity() {
         }
     }
 
-    private fun initFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace(R.id.fcv_main, MoviesFragment())
-            }
-        }
-    }
-
     private fun setupBottomNavigation() {
-        binding.bottomNavigationView.selectedItemId = R.id.fragment_movies
         binding.bottomNavigationView.setOnItemSelectedListener {
             val fragment =
                 when (it.itemId) {
-                    R.id.fragment_movies -> MoviesFragment()
-                    R.id.fragment_list -> ReservationListFragment()
-                    R.id.fragment_setting -> SettingFragment()
+                    R.id.fragment_movies -> moviesFragment
+                    R.id.fragment_list -> movieListFragment
+                    R.id.fragment_setting -> settingFragment
                     else -> throw IllegalArgumentException(ERROR_INVALID_FRAGMENT)
                 }
             replaceFragment(fragment)
