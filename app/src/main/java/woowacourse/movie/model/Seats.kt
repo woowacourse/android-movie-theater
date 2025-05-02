@@ -1,35 +1,21 @@
 package woowacourse.movie.model
 
-data class Seats(val values: List<Seat>) {
-    init {
-        require(values.all { it.isSelected }) { ERROR_UNSELECTED_SEATS }
-    }
+class Seats(values: MutableSet<Seat> = mutableSetOf()) {
+    private val _seats: MutableSet<Seat> = values
+    val seats: Set<Seat> get() = _seats.toSet()
 
     val amount: Int
-        get() = values.sumOf { it.grade.price }
+        get() = _seats.sumOf { it.grade.price }
 
-    fun toggle(
-        seat: Seat,
-        headCount: Int,
-    ): Seats {
-        val existingSeat = values.find { it.seatName == seat.seatName }
-
-        return if (existingSeat != null) {
-            Seats(
-                values.map {
-                    if (it.seatName == seat.seatName) it.copy(isSelected = false) else it
-                }.filter { it.isSelected },
-            )
-        } else {
-            if (values.count { it.isSelected } >= headCount) {
-                this
-            } else {
-                Seats(values + seat.copy(isSelected = true))
-            }
-        }
+    fun has(seat: Seat): Boolean {
+        return _seats.contains(seat)
     }
 
-    companion object {
-        private const val ERROR_UNSELECTED_SEATS = "선택되지 않은 Seat은 포함될 수 없습니다"
+    operator fun minus(seat: Seat) {
+        _seats.remove(seat)
+    }
+
+    operator fun plus(seat: Seat) {
+        _seats.add(seat)
     }
 }

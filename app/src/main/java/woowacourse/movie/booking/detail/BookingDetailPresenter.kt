@@ -93,7 +93,7 @@ class BookingDetailPresenter(
                 headCount = HeadCount(headCount),
                 selectedDate = screeningDate?.let { formatStringDateDotSeparated(it) } ?: LocalDate.now(),
                 selectedTime = screeningTime?.let { formatStringTimeWithMidnight24(it) } ?: LocalTime.now(),
-                seats = Seats(emptyList()),
+                seats = Seats(),
             )
     }
 
@@ -105,7 +105,7 @@ class BookingDetailPresenter(
                 headCount = HeadCount(0),
                 selectedDate = LocalDate.now(),
                 selectedTime = LocalTime.now(),
-                seats = Seats(emptyList()),
+                seats = Seats(),
             )
     }
 }

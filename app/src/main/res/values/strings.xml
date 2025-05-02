@@ -16,7 +16,7 @@
         취소가 가능합니다.</string>
 
     <string name="formatted_screening_date_time">%s %s</string>
-    <string name="formatted_screening_complete_ticket">일반 %d명 | %s | %s</string>
+    <string name="formatted_screening_complete_ticket">일반 %d명 | %s | %s 극장</string>
     <string name="formatted_booking_amount">%s원</string>
     <string name="formatted_complete_booking_amount">%s원 (현장 결제)</string>
 
@@ -26,4 +26,7 @@
     <string name="dig_btn_negative_message">취소</string>
 
     <string name="booking_toast_message">영화 정보를 불러올 수 없습니다</string>
+
+    <string name="seat_screen">SCREEN</string>
+    <string name="seat_point">%s%d</string>
 </resources>

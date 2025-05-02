@@ -11,5 +11,5 @@ data class TicketUiModel(
     val selectedDateText: String,
     val selectedTimeText: String,
     val totalPrice: String,
-    val seats: String,
+    val seats: Set<SeatUiModel>,
 ) : Parcelable

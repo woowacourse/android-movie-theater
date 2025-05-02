@@ -62,6 +62,9 @@
             tools:text="영화 상영시간" />
 
         <TextView
+            app:headCount="@{ticket.headCount}"
+            app:seats="@{ticket.seats}"
+            app:theater="@{ticket.theater}"
             android:id="@+id/tv_ticket"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -69,7 +72,6 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@{@string/formatted_screening_complete_ticket(ticket.headCount, ticket.seats, @string/text_theater_place(ticket.theater))}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"

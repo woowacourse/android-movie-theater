@@ -1,6 +1,5 @@
 package woowacourse.movie.seat
 
-import android.widget.TextView
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Seat
@@ -10,30 +9,35 @@ import woowacourse.movie.ui.model.TicketUiModel
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
 ) : SeatSelectionContract.Presenter {
-    private lateinit var domainTicket: Ticket
+    private lateinit var ticket: Ticket
 
     override fun initializeData(ticket: TicketUiModel) {
-        domainTicket = ticket.toDomain()
+        this.ticket = ticket.toDomain()
         view.showTicket(ticket)
     }
 
-    override fun onSeatClicked(seat: TextView) {
-        val seatName = seat.text.toString()
-        val domainSeat = Seat(seatName)
+    override fun onSeatClicked(
+        row: Int,
+        col: Int,
+    ) {
+        val seat = Seat(row, col)
 
-        domainTicket = domainTicket.toggleSeat(domainSeat)
+        if (ticket.hasSeat(seat)) {
+            ticket.unselectSeat(seat)
+        } else {
+            ticket.selectSeat(seat)
+        }
 
-        val isSelected = domainTicket.seats.values.any { it.seatName == seatName }
-        view.showSeatState(seat, isSelected)
+        view.showSeatState(seat.toUiModel())
 
-        val shouldEnableButton = domainTicket.seats.values.size == domainTicket.headCount.value
+        val shouldEnableButton = ticket.canReserve()
         view.setButtonEnabled(shouldEnableButton)
 
-        view.showTicket(domainTicket.toUiModel())
+        view.showTicket(ticket.toUiModel())
     }
 
     override fun onButtonClicked() {
-        val ticketUiModel = domainTicket.toUiModel()
+        val ticketUiModel = ticket.toUiModel()
         view.showBookingAlertDialog(ticketUiModel)
     }
 }

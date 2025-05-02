@@ -7,11 +7,11 @@ enum class SeatGrade(val price: Int) {
     ;
 
     companion object {
-        fun fromRow(rowChar: Char): SeatGrade {
-            return when (rowChar.uppercaseChar()) {
-                'A', 'B' -> B
-                'C', 'D' -> S
-                'E' -> A
+        fun fromRow(row: Int): SeatGrade {
+            return when (row) {
+                0, 1 -> B
+                2, 3 -> S
+                4 -> A
                 else -> throw IllegalArgumentException("지원하지 않는 행입니다")
             }
         }
