@@ -21,7 +21,7 @@ class MoviesFragment :
         MovieAdapter(
             object : MovieClickListener {
                 override fun onReservationClick(movie: Movie) {
-                    showBottomSheetDialog(movie)
+                    showTheaterInfo(movie)
                 }
             },
         )
@@ -55,7 +55,7 @@ class MoviesFragment :
         moviesAdapter.submitList(movies)
     }
 
-    override fun showBottomSheetDialog(movie: Movie) {
+    override fun showTheaterInfo(movie: Movie) {
         val bottomSheet = TheaterBottomSheetDialogFragment.newInstance(movie)
         bottomSheet.show(parentFragmentManager, BOTTOM_SHEET_TAG)
     }
