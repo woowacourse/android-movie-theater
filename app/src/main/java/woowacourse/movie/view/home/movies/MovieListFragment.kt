@@ -11,17 +11,21 @@ import woowacourse.movie.data.MovieStore
 import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.view.handler.MovieAdapterEventHandler
+import woowacourse.movie.view.handler.TheaterAdapterEventHandler
 import woowacourse.movie.view.home.booking.BookingActivity
 import woowacourse.movie.view.home.movies.adapter.MovieAdapter
+import woowacourse.movie.view.home.movies.adapter.TheaterAdapter
 import woowacourse.movie.view.home.movies.bottomsheet.TheaterBottomSheet
 import woowacourse.movie.view.home.movies.model.MovieRvItem
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
+import woowacourse.movie.view.home.movies.model.TheaterRvItem
 
 class MovieListFragment : Fragment(R.layout.fragment_home), MovieListContract.View {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var presenter: MovieListContract.Presenter
     private lateinit var movieAdapterEventHandler: MovieAdapter.Handler
+    private lateinit var theaterAdapterEventHandler: TheaterAdapter.Handler
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +43,8 @@ class MovieListFragment : Fragment(R.layout.fragment_home), MovieListContract.Vi
         super.onViewCreated(view, savedInstanceState)
         presenter = MovieListPresenter(this, MovieStore(), TheaterStore())
         movieAdapterEventHandler = MovieAdapterEventHandler(requireContext(), presenter)
+        theaterAdapterEventHandler = TheaterAdapterEventHandler(presenter)
+        presenter.loadUiData()
     }
 
     override fun showMovieList(movieList: List<MovieRvItem>) {
@@ -53,15 +59,15 @@ class MovieListFragment : Fragment(R.layout.fragment_home), MovieListContract.Vi
 
     override fun showTheaterBottomSheet(
         movieId: Int,
-        theaters: Theaters,
+        theaters: List<TheaterRvItem.TheaterItem>,
     ) {
         TheaterBottomSheet(
             theaters,
-            movieId,
-            onclick = {
-                presenter.loadMovieScreening(movieId, it)
-            },
-        ).show(childFragmentManager, THEATER_BOTTOM_SHEET)
+            theaterAdapterEventHandler,
+        ).show(
+            childFragmentManager,
+            THEATER_BOTTOM_SHEET,
+        )
     }
 
     override fun moveToBooking(screening: ScreeningInfo) {

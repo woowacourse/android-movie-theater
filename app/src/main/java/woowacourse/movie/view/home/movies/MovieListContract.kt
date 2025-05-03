@@ -1,9 +1,8 @@
 package woowacourse.movie.view.home.movies
 
-import woowacourse.movie.domain.model.theater.Theater
-import woowacourse.movie.domain.model.theater.Theaters
 import woowacourse.movie.view.home.movies.model.MovieRvItem
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
+import woowacourse.movie.view.home.movies.model.TheaterRvItem
 
 interface MovieListContract {
     interface View {
@@ -11,18 +10,23 @@ interface MovieListContract {
 
         fun showTheaterBottomSheet(
             movieId: Int,
-            theaters: Theaters,
+            theaters: List<TheaterRvItem.TheaterItem>,
         )
 
         fun moveToBooking(screening: ScreeningInfo)
     }
 
     interface Presenter {
-        fun loadTheaters(movieId: Int)
+        fun loadUiData()
+
+        fun loadTheaters(
+            movieId: Int,
+            formatter: String,
+        )
 
         fun loadMovieScreening(
             movieId: Int,
-            selectedTheater: Theater,
+            theaterName: String,
         )
     }
 }

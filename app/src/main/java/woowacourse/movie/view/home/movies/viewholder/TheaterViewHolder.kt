@@ -1,24 +1,27 @@
 package woowacourse.movie.view.home.movies.viewholder
 
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import woowacourse.movie.databinding.TheaterItemBinding
-import woowacourse.movie.domain.model.theater.Theater
+import woowacourse.movie.view.base.BaseViewHolder
+import woowacourse.movie.view.home.movies.model.TheaterRvItem
 
 class TheaterViewHolder(
-    private val binding: TheaterItemBinding,
-    private val onClick: (Theater) -> Unit,
-) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(
-        item: Theater,
-        count: Int,
-    ) {
-        binding.model = item
-        binding.root.setOnClickListener {
-            onClick(item)
+    parent: ViewGroup,
+    @LayoutRes layoutRes: Int,
+    private val handler: Handler,
+) : BaseViewHolder<TheaterRvItem.TheaterItem>(parent, layoutRes) {
+    override fun bind(item: TheaterRvItem.TheaterItem) {
+        TheaterItemBinding.bind(itemView).apply {
+            model = item
+            eventListener = handler
         }
-        binding.screeningTimes.text =
-            binding.root.context.getString(R.string.text_schedule_size)
-                .format(count)
+    }
+
+    interface Handler {
+        fun onSelectTheater(
+            theaterName: String,
+            movieId: Int,
+        )
     }
 }

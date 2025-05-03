@@ -3,7 +3,6 @@ package woowacourse.movie.view.home.movies
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.domain.model.ad.Advertisement
-import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.view.home.movies.model.MovieRvItem
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.mapper.toItem
@@ -13,29 +12,30 @@ class MovieListPresenter(
     private val movieStore: MovieStore,
     theaterStore: TheaterStore,
 ) : MovieListContract.Presenter {
-    init {
-        loadUiData()
-    }
-
     private val theaters = theaterStore.createTheaters()
 
-    override fun loadTheaters(movieId: Int) {
-        val bookingAbleTheater = theaters.bookingAbleTheater(movieId)
+    override fun loadTheaters(
+        movieId: Int,
+        formatter: String,
+    ) {
+        val bookingAbleTheater =
+            theaters.bookingAbleTheater(movieId).map { it.toItem(movieId, formatter) }
+
         view.showTheaterBottomSheet(movieId, bookingAbleTheater)
     }
 
     override fun loadMovieScreening(
         movieId: Int,
-        selectedTheater: Theater,
+        theaterName: String,
     ) {
-        val theaterName = selectedTheater.name
-        val screeningTimes = selectedTheater.getMovieScreening(movieId)
+        val screeningTimes = theaters.selectedMovieScreeningTimes(movieId, theaterName)
+
         val screeningInfo = ScreeningInfo(movieId, theaterName, screeningTimes)
 
         view.moveToBooking(screeningInfo)
     }
 
-    private fun loadUiData() {
+    override fun loadUiData() {
         val movieRvItems = mutableListOf<MovieRvItem>()
         movieStore.getAll().forEachIndexed { index, movie ->
             movieRvItems.add(movie.toItem())
