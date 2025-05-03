@@ -12,6 +12,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.domain.model.TheaterUIModel
 import woowacourse.movie.view.Extras
+import woowacourse.movie.view.compatParcelable
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.reservation.detail.ReservationDetailActivity
 
@@ -19,7 +20,12 @@ class TheaterBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
     TheaterContract.View {
     private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
-    private val presenter: TheaterPresenter by lazy { TheaterPresenter(this) }
+    private val presenter: TheaterPresenter by lazy {
+        val movie =
+            requireArguments().compatParcelable<MovieUiModel>(Extras.MovieData.MOVIE_KEY)
+                ?: error(ERROR_ARGUMENT)
+        TheaterPresenter(this, movie)
+    }
     private val theaterAdapter: TheaterAdapter by lazy {
         TheaterAdapter(
             object : TheaterClickListener {
@@ -51,10 +57,7 @@ class TheaterBottomSheetDialogFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         setupTheaterAdapter()
-//        presenter.fetchTheaters(
-//            requireArguments().compatParcelable(Extras.MovieData.MOVIE_KEY)
-//                ?: error(ERROR_ARGUMENT),
-//        )
+        presenter.fetchTheaters()
     }
 
     override fun showTheaters(theaters: List<TheaterUIModel>) {
