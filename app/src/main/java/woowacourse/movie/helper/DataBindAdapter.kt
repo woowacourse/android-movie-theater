@@ -42,7 +42,7 @@ fun setFormattedSeat(
     view.text =
         seats.joinToString(", ") { seat ->
             val rowChar = 'A' + seat.row.value
-            val colNumber = seat.col.value + 1
+            val colNumber = seat.column.value + 1
             "$rowChar$colNumber"
         }
 }

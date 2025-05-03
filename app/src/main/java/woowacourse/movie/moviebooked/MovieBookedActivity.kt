@@ -50,7 +50,7 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
         val seatsText =
             bookingStatus.seat.seats.joinToString { seat ->
                 val rowChar = 'A' + seat.row.value
-                val colNumber = seat.col.value + 1
+                val colNumber = seat.column.value + 1
                 "$rowChar$colNumber"
             }
         binding.bookingSeat.text = seatsText

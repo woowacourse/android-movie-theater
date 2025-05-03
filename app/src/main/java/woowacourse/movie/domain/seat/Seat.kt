@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Seat(
     val row: Row,
-    val col: Col,
+    val column: Column,
     val grade: SeatGrade,
 ) : Parcelable {
     fun price(): Int = grade.price
@@ -17,7 +17,7 @@ data class Seat(
             col: Int,
         ): Seat {
             val grade = gradeByRow(row)
-            return Seat(Row(row), Col(col), grade)
+            return Seat(Row(row), Column(col), grade)
         }
 
         private fun gradeByRow(row: Int): SeatGrade {

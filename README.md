@@ -69,5 +69,7 @@
 
 
 ## 1,2단계 변경 사항
-- [x] 매니페스트 오류 수정
+- [x] fix: 매니페스트 오류 수정
 - MovieActivity를 fragment로 변경하여 새로운 MainActivity를 만듦으로서 해당 사항 컴파일 에러 수정
+- [x] refactor: Col 대신 Column으로 변경
+- Column이라고 좀 더 명확하게 표현하도록 변경

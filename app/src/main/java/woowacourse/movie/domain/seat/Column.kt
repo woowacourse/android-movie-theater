@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @JvmInline
-value class Col(
+value class Column(
     val value: Int,
 ) : Parcelable {
     init {
