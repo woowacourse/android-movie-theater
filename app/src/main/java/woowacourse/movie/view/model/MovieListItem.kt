@@ -2,7 +2,7 @@ package woowacourse.movie.view.model
 
 import woowacourse.movie.view.base.BaseViewHolderItem
 
-sealed class MainItem(
+sealed class MovieListItem(
     itemViewType: ItemViewType,
 ) : BaseViewHolderItem {
     override val viewType: Int = itemViewType.ordinal

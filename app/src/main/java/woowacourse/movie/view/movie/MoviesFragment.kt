@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentMoviesBinding
-import woowacourse.movie.view.model.MainItem
+import woowacourse.movie.view.model.MovieListItem
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.movie.adapter.MovieAdapter
 import woowacourse.movie.view.theater.TheaterBottomSheetDialogFragment
@@ -37,7 +37,7 @@ class MoviesFragment :
         presenter.fetchMovies()
     }
 
-    override fun showMovies(items: List<MainItem>) {
+    override fun showMovies(items: List<MovieListItem>) {
         moviesAdapter.submitList(items)
     }
 
@@ -46,8 +46,8 @@ class MoviesFragment :
         bottomSheet.show(parentFragmentManager, BOTTOM_SHEET_TAG)
     }
 
-    override fun onMovieClicked(item: MovieUiModel) {
-        presenter.reservationSelected(item)
+    override fun onMovieClicked(movie: MovieUiModel) {
+        presenter.reservationSelected(movie)
     }
 
     private fun setupMovieAdapter() {

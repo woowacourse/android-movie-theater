@@ -10,5 +10,5 @@ data class MovieUiModel(
     val startDate: String,
     val endDate: String,
     val runningTime: Int,
-) : MainItem(ItemViewType.MOVIE_ITEM),
+) : MovieListItem(ItemViewType.MOVIE_ITEM),
     Parcelable

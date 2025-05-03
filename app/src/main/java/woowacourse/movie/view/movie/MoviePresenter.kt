@@ -5,7 +5,7 @@ import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieDao
 import woowacourse.movie.view.ReservationUiFormatter
 import woowacourse.movie.view.model.AdUiModel
-import woowacourse.movie.view.model.MainItem
+import woowacourse.movie.view.model.MovieListItem
 import woowacourse.movie.view.model.MovieUiModel
 
 class MoviePresenter(
@@ -21,7 +21,7 @@ class MoviePresenter(
         view.showTheaterInfo(movie)
     }
 
-    private fun generateMovieListWithAds(movies: List<MovieUiModel>): List<MainItem> =
+    private fun generateMovieListWithAds(movies: List<MovieUiModel>): List<MovieListItem> =
         movies.chunked(MOVIE_COUNT).flatMap { chunk ->
             chunk + AdUiModel(AD_NAME, R.drawable.advertisement)
         }

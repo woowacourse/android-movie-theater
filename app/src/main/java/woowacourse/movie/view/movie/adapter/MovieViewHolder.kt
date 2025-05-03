@@ -57,6 +57,6 @@ class MovieViewHolder(
     }
 
     interface Handler {
-        fun onMovieClicked(item: MovieUiModel)
+        fun onMovieClicked(movie: MovieUiModel)
     }
 }
