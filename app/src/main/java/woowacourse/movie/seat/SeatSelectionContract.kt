@@ -11,7 +11,7 @@ interface SeatSelectionContract {
 
         fun showToastErrorAndFinish(message: String)
 
-        fun setButtonEnabled(enabled: Boolean)
+        fun setButtonEnabled(shouldEnabled: Boolean)
 
         fun showBookingAlertDialog(ticket: TicketUiModel)
     }

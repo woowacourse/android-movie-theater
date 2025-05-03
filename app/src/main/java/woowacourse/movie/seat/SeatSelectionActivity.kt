@@ -107,11 +107,12 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         finish()
     }
 
-    override fun setButtonEnabled(enabled: Boolean) {
-        val confirmButton = findViewById<TextView>(R.id.btn_booking_confirm)
+    override fun setButtonEnabled(shouldEnabled: Boolean) {
+        val confirmButton = binding.btnBookingConfirm
         val colorRes =
-            if (enabled) R.color.btn_activate_background else R.color.btn_deactivate_background
+            if (shouldEnabled) R.color.btn_activate_background else R.color.btn_deactivate_background
         confirmButton.setBackgroundColor(ContextCompat.getColor(this, colorRes))
+        confirmButton.isEnabled = shouldEnabled
     }
 
     override fun showBookingAlertDialog(ticket: TicketUiModel) {
