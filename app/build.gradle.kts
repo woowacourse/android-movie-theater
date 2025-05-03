@@ -46,6 +46,10 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+    testOptions {
+        animationsDisabled = true
+    }
 }
 
 dependencies {

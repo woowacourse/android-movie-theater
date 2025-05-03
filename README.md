@@ -71,8 +71,16 @@
 ## 1,2단계 변경 사항
 - [x] fix: 매니페스트 오류 수정
 - MovieActivity를 fragment로 변경하여 새로운 MainActivity를 만듦으로서 해당 사항 컴파일 에러 수정
+
 - [x] refactor: Col 대신 Column으로 변경
 - Column이라고 좀 더 명확하게 표현하도록 변경
+
 - [x] test: 영화 취소 안내 메시지가 보이는지 확인하는 UI 테스트 코드 추가
 - Intent로 넘겨야 하는 Test Fixture 추가
 - AppCompatActivity -> Context로 변경
+
+- [x] refactor: MovieBookedActivity UI 테스트 코드 추가
+- 영화 제목, 영화 날짜와 시간, 인원 수, 좌석 정보, 티켓 총 가격이 보이는지 테스트 (극장 이름 제외)
+- 앱 수준 gradle에 테스트 옵션 애니메이션 false 추가
+- xml 아이템 ID에 booked 접미사 추가
+- isDisplayed 확장함수 추가

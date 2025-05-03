@@ -38,7 +38,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/notice_text"
+                        android:id="@+id/booked_notice_text"
                         style="@style/NoticeTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -56,13 +56,13 @@
                 android:background="@color/white">
 
                 <TextView
-                    android:id="@+id/movie_title"
+                    android:id="@+id/booked_movie_title"
                     style="@style/TitleTextStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="220dp"
                     android:paddingTop="50dp"
-                    app:layout_constraintBottom_toTopOf="@id/booking_date_time"
+                    app:layout_constraintBottom_toTopOf="@id/booked_date_time"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
                     tools:text="해리 포터와 마법사의 돌" />
 
                 <TextView
-                    android:id="@+id/booking_date_time"
+                    android:id="@+id/booked_date_time"
                     style="@style/SubTitleTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/movie_title"
+                    app:layout_constraintTop_toBottomOf="@id/booked_movie_title"
                     tools:text="2025.04.01 10:00" />
 
                 <LinearLayout
@@ -92,10 +92,10 @@
                     android:paddingHorizontal="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/booking_date_time">
+                    app:layout_constraintTop_toBottomOf="@id/booked_date_time">
 
                     <TextView
-                        android:id="@+id/member_count"
+                        android:id="@+id/booked_member_count"
                         style="@style/SubTitleTextStyle"
                         android:text="@{@string/member_count(booking_status.memberCount)}"
                         android:layout_width="wrap_content"
@@ -111,7 +111,7 @@
                         android:text=" | " />
 
                     <TextView
-                        android:id="@+id/booking_seat"
+                        android:id="@+id/booked_booking_seat"
                         style="@style/SubTitleTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
                         android:text=" | " />
 
                     <TextView
-                        android:id="@+id/booking_theater_name"
+                        android:id="@+id/booked_theater_name"
                         style="@style/SubTitleTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/movie_ticket_price"
+                    android:id="@+id/booked_ticket_price"
                     style="@style/SubTitleTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -147,8 +147,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/booking_date_time"
-
+                    app:layout_constraintTop_toBottomOf="@id/booked_date_time"
                     android:text="@{@string/total_price(booking_status.calculateTicketPrices())}"
                     tools:text="26,000원 (현장 결제)" />
 

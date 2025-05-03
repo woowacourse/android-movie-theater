@@ -54,7 +54,7 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
                 val colNumber = seat.column.value + 1
                 "$rowChar$colNumber"
             }
-        binding.bookingSeat.text = seatsText
+        binding.bookedBookingSeat.text = seatsText
     }
 
     companion object {
