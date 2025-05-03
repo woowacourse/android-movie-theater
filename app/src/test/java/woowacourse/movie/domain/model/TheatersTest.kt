@@ -26,7 +26,7 @@ class TheatersTest {
         val expectedMovieScheduleSizeOfOthers = 0
 
         // when
-        val actual: Theaters = theaters.availableTheatersSchedules(movie, date, time)
+        val actual: Theaters = theaters.bookableTheaters(movie, date, time)
 
         // then
         assertThat(actual.theaters[0].schedules.size).isEqualTo(

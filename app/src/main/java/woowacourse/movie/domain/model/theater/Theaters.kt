@@ -7,8 +7,8 @@ import java.time.LocalDateTime
 class Theaters(
     val theaters: List<Theater>,
 ) : Serializable {
-    fun availableTheatersSchedules(
+    fun bookableTheaters(
         movie: Movie,
         nowLocalDateTime: LocalDateTime = LocalDateTime.now(),
-    ): List<Pair<Movie, List<Schedule>>> = theaters.map { it.schedulesOf(movie, nowLocalDateTime) }
+    ): Theaters = Theaters(theaters.map { it.bookableTheater(movie, nowLocalDateTime) })
 }

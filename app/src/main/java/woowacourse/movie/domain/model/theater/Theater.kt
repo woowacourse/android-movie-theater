@@ -8,13 +8,14 @@ data class Theater(
     val name: String,
     val allSchedules: Map<Movie, List<Schedule>>,
 ) : Serializable {
-    fun schedulesOf(
+    fun bookableTheater(
         movie: Movie,
         nowLocalDateTime: LocalDateTime,
-    ): Pair<Movie, List<Schedule>> {
+    ): Theater {
         val schedules: List<Schedule>? = allSchedules[movie]
         val bookableSchedules: List<Schedule> =
             schedules?.mapNotNull { it.bookableSchedule(movie, nowLocalDateTime) } ?: emptyList()
-        return movie to bookableSchedules
+        val filteredSchedules: Map<Movie, List<Schedule>> = mapOf(movie to bookableSchedules)
+        return Theater(name, filteredSchedules)
     }
 }
