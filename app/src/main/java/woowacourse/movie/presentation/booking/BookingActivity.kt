@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.common.BaseActivity
-import woowacourse.movie.common.constant.IntentKeys
+import woowacourse.movie.common.IntentKeys
 import woowacourse.movie.common.util.intentSerializable
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.Screening
