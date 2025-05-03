@@ -1,44 +1,40 @@
 package woowacourse.movie.view
 
-import android.content.Context
-import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.LargeTest
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.DisplayName
 import woowacourse.movie.MovieFixture
+import woowacourse.movie.R
+import woowacourse.movie.domain.seat.Column
+import woowacourse.movie.domain.seat.Row
+import woowacourse.movie.domain.seat.Seat
+import woowacourse.movie.domain.seat.SeatGrade
 import woowacourse.movie.moviebooked.MovieBookedActivity
 
-@RunWith(AndroidJUnit4::class)
-@LargeTest
 class MovieBookedActivityTest {
-    private lateinit var scenario: ActivityScenario<MovieBookedActivity>
-
     @Before
     fun setUp() {
-        val fakeContext = ApplicationProvider.getApplicationContext<Context>()
-        val intent =
-            Intent(
-                fakeContext,
-                MovieBookedActivity::class.java,
-            ).apply {
-                putExtra("bookingStatus", MovieFixture.BOOKING_STATUS)
-            }
-        scenario = ActivityScenario.launch(intent)
+        val bookingStatus = MovieFixture.BOOKING_STATUS
+        val theater = MovieFixture.THEATER
+
+        bookingStatus.seat.add(Seat(Row(1), Column(1), SeatGrade.B))
+        bookingStatus.seat.add(Seat(Row(1), Column(2), SeatGrade.B))
+
+        val intent = MovieBookedActivity.movieBookedIntent(ApplicationProvider.getApplicationContext(), bookingStatus, theater)
+
+        ActivityScenario.launch<MovieBookedActivity>(intent)
     }
 
     @Test
-    fun 예약정보가_올바르게_표시된다() {
-        onView(withText(MovieFixture.HARRY_POTTER_TITLE)).check(matches(isDisplayed()))
-        onView(withText(MovieFixture.BOOKING_DATETIME)).check(matches(isDisplayed()))
-        onView(withText(MovieFixture.BOOKING_TICKET_COUNT)).check(matches(isDisplayed()))
-        onView(withText(MovieFixture.BOOKING_TICKET_PRICE)).check(matches(isDisplayed()))
+    @DisplayName("영화 취소 안내 메시지가 보여야 한다")
+    fun ticketCancelInfoIsDisplayed() {
+        onView(withId(R.id.notice_text))
+            .check(matches(withText("영화 상영 시작 시간 15분 전까지\n취소가 가능합니다.")))
     }
 }

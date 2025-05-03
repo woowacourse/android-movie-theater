@@ -73,3 +73,6 @@
 - MovieActivity를 fragment로 변경하여 새로운 MainActivity를 만듦으로서 해당 사항 컴파일 에러 수정
 - [x] refactor: Col 대신 Column으로 변경
 - Column이라고 좀 더 명확하게 표현하도록 변경
+- [x] test: 영화 취소 안내 메시지가 보이는지 확인하는 UI 테스트 코드 추가
+- Intent로 넘겨야 하는 Test Fixture 추가
+- AppCompatActivity -> Context로 변경
