@@ -65,110 +65,99 @@ val DUMMY_THEATERS =
             listOf(
                 Theater(
                     name = "CGV 강남",
-                    schedules =
-                        listOf(
-                            Schedule(
-                                movie = DUMMY_MOVIES[0],
-                                screeningTimeSchedule =
-                                    ScreeningTimeSchedule(
-                                        date = LocalDate.of(2025, 4, 10),
-                                        time = LocalTime.of(13, 0),
+                    allSchedules =
+                        mapOf(
+                            DUMMY_MOVIES[0] to
+                                listOf(
+                                    Schedule(
+                                        ScreeningTimeSchedule(
+                                            date = LocalDate.of(2025, 4, 10),
+                                            time =
+                                                listOf(
+                                                    LocalTime.of(13, 0),
+                                                    LocalTime.of(17, 0),
+                                                ),
+                                        ),
+                                        Seats(),
                                     ),
-                                seat = Seats(),
-                            ),
-                            Schedule(
-                                movie = DUMMY_MOVIES[1],
-                                screeningTimeSchedule =
-                                    ScreeningTimeSchedule(
-                                        date = LocalDate.of(2025, 4, 15),
-                                        time = LocalTime.of(16, 30),
+                                    Schedule(
+                                        ScreeningTimeSchedule(
+                                            date = LocalDate.of(2025, 4, 12),
+                                            time =
+                                                listOf(
+                                                    LocalTime.of(13, 0),
+                                                    LocalTime.of(17, 0),
+                                                ),
+                                        ),
+                                        Seats(),
                                     ),
-                                seat = Seats(),
-                            ),
-                            Schedule(
-                                movie = DUMMY_MOVIES[2],
-                                screeningTimeSchedule =
-                                    ScreeningTimeSchedule(
-                                        date = LocalDate.of(2025, 5, 3),
-                                        time = LocalTime.of(22, 0),
-                                    ),
-                                seat = Seats(),
-                            ),
+                                ),
                         ),
                 ),
                 Theater(
                     name = "롯데시네마 건대입구",
-                    schedules =
-                        listOf(
-                            Schedule(
-                                movie = DUMMY_MOVIES[1],
-                                screeningTimeSchedule =
-                                    ScreeningTimeSchedule(
-                                        date = LocalDate.of(2025, 4, 20),
-                                        time = LocalTime.of(12, 0),
+                    allSchedules =
+                        mapOf(
+                            DUMMY_MOVIES[1] to
+                                listOf(
+                                    Schedule(
+                                        ScreeningTimeSchedule(
+                                            date = LocalDate.of(2025, 4, 15),
+                                            time =
+                                                listOf(
+                                                    LocalTime.of(14, 0),
+                                                    LocalTime.of(18, 30),
+                                                ),
+                                        ),
+                                        Seats(),
                                     ),
-                                seat = Seats(),
-                            ),
-                            Schedule(
-                                movie = DUMMY_MOVIES[1],
-                                screeningTimeSchedule =
-                                    ScreeningTimeSchedule(
-                                        date = LocalDate.of(2025, 5, 1),
-                                        time = LocalTime.of(12, 0),
+                                ),
+                            DUMMY_MOVIES[2] to
+                                listOf(
+                                    Schedule(
+                                        ScreeningTimeSchedule(
+                                            date = LocalDate.of(2025, 5, 3),
+                                            time =
+                                                listOf(
+                                                    LocalTime.of(15, 0),
+                                                ),
+                                        ),
+                                        Seats(),
                                     ),
-                                seat = Seats(),
-                            ),
-                            Schedule(
-                                movie = DUMMY_MOVIES[1],
-                                screeningTimeSchedule =
-                                    ScreeningTimeSchedule(
-                                        date = LocalDate.of(2025, 5, 1),
-                                        time = LocalTime.of(23, 0),
-                                    ),
-                                seat = Seats(),
-                            ),
-                            Schedule(
-                                movie = DUMMY_MOVIES[2],
-                                screeningTimeSchedule =
-                                    ScreeningTimeSchedule(
-                                        date = LocalDate.of(2025, 5, 10),
-                                        time = LocalTime.of(18, 45),
-                                    ),
-                                seat = Seats(),
-                            ),
+                                ),
                         ),
                 ),
                 Theater(
                     name = "메가박스 코엑스",
-                    schedules =
-                        listOf(
-                            Schedule(
-                                movie = DUMMY_MOVIES[2],
-                                screeningTimeSchedule =
-                                    ScreeningTimeSchedule(
-                                        date = LocalDate.of(2025, 5, 5),
-                                        time = LocalTime.of(11, 30),
+                    allSchedules =
+                        mapOf(
+                            DUMMY_MOVIES[2] to
+                                listOf(
+                                    Schedule(
+                                        ScreeningTimeSchedule(
+                                            date = LocalDate.of(2025, 5, 5),
+                                            time =
+                                                listOf(
+                                                    LocalTime.of(12, 0),
+                                                    LocalTime.of(16, 0),
+                                                ),
+                                        ),
+                                        Seats(),
                                     ),
-                                seat = Seats(),
-                            ),
-                            Schedule(
-                                movie = DUMMY_MOVIES[3],
-                                screeningTimeSchedule =
-                                    ScreeningTimeSchedule(
-                                        date = LocalDate.of(2025, 6, 1),
-                                        time = LocalTime.of(19, 0),
+                                ),
+                            DUMMY_MOVIES[3] to
+                                listOf(
+                                    Schedule(
+                                        ScreeningTimeSchedule(
+                                            date = LocalDate.of(2025, 6, 1),
+                                            time =
+                                                listOf(
+                                                    LocalTime.of(13, 30),
+                                                ),
+                                        ),
+                                        Seats(),
                                     ),
-                                seat = Seats(),
-                            ),
-                            Schedule(
-                                movie = DUMMY_MOVIES[3],
-                                screeningTimeSchedule =
-                                    ScreeningTimeSchedule(
-                                        date = LocalDate.of(2025, 6, 1),
-                                        time = LocalTime.of(22, 0),
-                                    ),
-                                seat = Seats(),
-                            ),
+                                ),
                         ),
                 ),
             ),
