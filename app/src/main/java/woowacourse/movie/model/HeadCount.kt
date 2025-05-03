@@ -5,11 +5,10 @@ value class HeadCount(val value: Int) {
     fun plus(): HeadCount = HeadCount(value + 1)
 
     fun minus(): HeadCount {
-        if (isValid()) {
-            return HeadCount(value - 1)
-        }
-        return this
+        return if (value > MINIMUM_HEAD_COUNT_VALUE) HeadCount(value - 1) else this
     }
 
-    fun isValid(): Boolean = value > 0
+    companion object {
+        private const val MINIMUM_HEAD_COUNT_VALUE = 1
+    }
 }

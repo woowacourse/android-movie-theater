@@ -59,7 +59,13 @@ class BookingDetailPresenter(
         if (ticket.selectedTime == time) return
 
         ticket = ticket.updateTime(time)
-        view.showScreeningTimes(Scheduler.screeningTimes(ticket.selectedDate, theater.schedule.screeningTimes), ticket.selectedTime)
+        view.showScreeningTimes(
+            Scheduler.screeningTimes(
+                ticket.selectedDate,
+                theater.schedule.screeningTimes,
+            ),
+            ticket.selectedTime,
+        )
     }
 
     override fun increaseHeadCount() {
@@ -68,16 +74,12 @@ class BookingDetailPresenter(
     }
 
     override fun decreaseHeadCount() {
-        if (ticket.isHeadCountValid()) {
-            ticket = ticket.minusHeadCount()
-            view.showHeadCount(ticket.headCount.value)
-        }
+        ticket = ticket.minusHeadCount()
+        view.showHeadCount(ticket.headCount.value)
     }
 
     override fun confirmReservation() {
-        if (ticket.isHeadCountValid()) {
-            view.startSeatSelectionActivity(ticket.toUiModel())
-        }
+        view.startSeatSelectionActivity(ticket.toUiModel())
     }
 
     override fun restoreTicketData(
@@ -90,8 +92,12 @@ class BookingDetailPresenter(
                 theater = theater.place,
                 title = movie.title,
                 headCount = HeadCount(headCount),
-                selectedDate = screeningDate?.let { formatStringDateHyphenSeparated(it) } ?: LocalDate.now(),
-                selectedTime = screeningTime?.let { formatStringTimeWithMidnight24(it) } ?: LocalTime.now(),
+                selectedDate =
+                    screeningDate?.let { formatStringDateHyphenSeparated(it) }
+                        ?: LocalDate.now(),
+                selectedTime =
+                    screeningTime?.let { formatStringTimeWithMidnight24(it) }
+                        ?: LocalTime.now(),
                 seats = Seats(),
             )
     }
@@ -101,7 +107,7 @@ class BookingDetailPresenter(
             Ticket(
                 theater = theater.place,
                 title = movie.title,
-                headCount = HeadCount(0),
+                headCount = HeadCount(1),
                 selectedDate = LocalDate.now(),
                 selectedTime = LocalTime.now(),
                 seats = Seats(),

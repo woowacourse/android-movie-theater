@@ -63,13 +63,13 @@ class BookingDetailActivityTest {
     @Test
     fun `화면_회전시_인원수가_유지된다`() {
         onView(withId(R.id.btn_plus)).perform(click())
-        onView(withId(R.id.tv_people_count)).check(matches(withText("1")))
+        onView(withId(R.id.tv_people_count)).check(matches(withText("2")))
 
         scenario.onActivity {
             it.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
 
-        onView(withId(R.id.tv_people_count)).check(matches(withText("1")))
+        onView(withId(R.id.tv_people_count)).check(matches(withText("2")))
     }
 
     @Test
@@ -119,7 +119,7 @@ class BookingDetailActivityTest {
         onView(withId(R.id.tv_people_count)).check(
             matches(
                 allOf(
-                    withText("0"),
+                    withText("1"),
                     isDisplayed(),
                 ),
             ),
@@ -127,15 +127,15 @@ class BookingDetailActivityTest {
     }
 
     @Test
-    fun `minus_버튼을_눌렀을때_인원수가_0_이하면_변하지_않는다`() {
+    fun `minus_버튼을_눌렀을때_인원수가_1_이하면_변하지_않는다`() {
         onView(withId(R.id.tv_people_count))
-            .check(matches(withText("0")))
+            .check(matches(withText("1")))
 
         onView(withId(R.id.btn_minus))
             .perform(click())
 
         onView(withId(R.id.tv_people_count))
-            .check(matches(withText("0")))
+            .check(matches(withText("1")))
     }
 
     @Test
@@ -145,7 +145,7 @@ class BookingDetailActivityTest {
         onView(withId(R.id.tv_people_count)).check(
             matches(
                 allOf(
-                    withText("1"),
+                    withText("2"),
                     isDisplayed(),
                 ),
             ),
@@ -153,17 +153,17 @@ class BookingDetailActivityTest {
     }
 
     @Test
-    fun `minus_버튼을_눌렀을때_인원수가_1_이상이면_줄어든다`() {
+    fun `minus_버튼을_눌렀을때_인원수가_2_이상이면_줄어든다`() {
         onView(withId(R.id.btn_plus)).perform(click())
 
         onView(withId(R.id.tv_people_count))
-            .check(matches(withText("1")))
+            .check(matches(withText("2")))
 
         onView(withId(R.id.btn_minus))
             .perform(click())
 
         onView(withId(R.id.tv_people_count))
-            .check(matches(withText("0")))
+            .check(matches(withText("1")))
     }
 
     @Test

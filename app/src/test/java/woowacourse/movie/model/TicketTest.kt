@@ -1,8 +1,6 @@
 package woowacourse.movie.model
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -84,17 +82,5 @@ class TicketTest {
         val actual = ticket.amount
 
         assertEquals(expected, actual)
-    }
-
-    @Test
-    fun `예매 인원이 0보다 큰 지 비교한다`() {
-        val ticket = createTicket(SEOLLEUNG, listOf(SEAT_A1))
-
-        val actual = ticket.isHeadCountValid()
-        assertTrue(actual)
-
-        val ticket2 = createTicket(SEOLLEUNG, listOf())
-        val actual2 = ticket2.isHeadCountValid()
-        assertFalse(actual2)
     }
 }

@@ -104,7 +104,7 @@ class SchedulerDetailPresenterTest {
                 match {
                     it.selectedDateText == formattedDate &&
                         it.selectedTimeText == formattedTime &&
-                        it.headCount == 1
+                        it.headCount == 2
                 },
             )
         }

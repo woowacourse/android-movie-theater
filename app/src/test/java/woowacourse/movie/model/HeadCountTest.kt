@@ -1,8 +1,6 @@
 package woowacourse.movie.model
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class HeadCountTest {
@@ -31,14 +29,5 @@ class HeadCountTest {
 
         val expected = HeadCount(1)
         assertEquals(newHeadCount, expected)
-    }
-
-    @Test
-    fun `인원수에 따라 인원수 증가, 감소가 가능한지 판단할 수 있다`() {
-        val headCount = HeadCount(3)
-        val headCount2 = HeadCount(0)
-
-        assertTrue { headCount.isValid() }
-        assertFalse { headCount2.isValid() }
     }
 }

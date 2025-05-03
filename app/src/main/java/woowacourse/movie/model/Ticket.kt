@@ -26,8 +26,6 @@ data class Ticket(
 
     fun updateTime(time: LocalTime): Ticket = copy(selectedTime = time)
 
-    fun isHeadCountValid(): Boolean = headCount.isValid()
-
     fun hasSeat(seat: Seat): Boolean {
         return seats.has(seat)
     }
