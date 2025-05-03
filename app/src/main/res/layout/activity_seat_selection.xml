@@ -60,115 +60,115 @@
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="A1"
-                            android:textColor="@color/b_grade_text_color" />
+                            android:textColor="@color/b_grade_text_color"
+                            tools:text="A1" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="A2"
-                            android:textColor="@color/b_grade_text_color" />
+                            android:textColor="@color/b_grade_text_color"
+                            tools:text="A2" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="A3"
-                            android:textColor="@color/b_grade_text_color" />
+                            android:textColor="@color/b_grade_text_color"
+                            tools:text="A3" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="A4"
-                            android:textColor="@color/b_grade_text_color" />
+                            android:textColor="@color/b_grade_text_color"
+                            tools:text="A4" />
                     </TableRow>
 
                     <TableRow>
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="B1"
-                            android:textColor="@color/b_grade_text_color" />
+                            android:textColor="@color/b_grade_text_color"
+                            tools:text="B1" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="B2"
-                            android:textColor="@color/b_grade_text_color" />
+                            android:textColor="@color/b_grade_text_color"
+                            tools:text="B2" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="B3"
-                            android:textColor="@color/b_grade_text_color" />
+                            android:textColor="@color/b_grade_text_color"
+                            tools:text="B3" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="B4"
-                            android:textColor="@color/b_grade_text_color" />
+                            android:textColor="@color/b_grade_text_color"
+                            tools:text="B4" />
                     </TableRow>
 
                     <TableRow>
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="C1"
-                            android:textColor="@color/s_grade_text_color" />
+                            android:textColor="@color/s_grade_text_color"
+                            tools:text="C1" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="C2"
-                            android:textColor="@color/s_grade_text_color" />
+                            android:textColor="@color/s_grade_text_color"
+                            tools:text="C2" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="C3"
-                            android:textColor="@color/s_grade_text_color" />
+                            android:textColor="@color/s_grade_text_color"
+                            tools:text="C3" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="C4"
-                            android:textColor="@color/s_grade_text_color" />
+                            android:textColor="@color/s_grade_text_color"
+                            tools:text="C4" />
                     </TableRow>
 
                     <TableRow>
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="D1"
-                            android:textColor="@color/s_grade_text_color" />
+                            android:textColor="@color/s_grade_text_color"
+                            tools:text="D1" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="D2"
-                            android:textColor="@color/s_grade_text_color" />
+                            android:textColor="@color/s_grade_text_color"
+                            tools:text="D2" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="D3"
-                            android:textColor="@color/s_grade_text_color" />
+                            android:textColor="@color/s_grade_text_color"
+                            tools:text="D3" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="D4"
-                            android:textColor="@color/s_grade_text_color" />
+                            android:textColor="@color/s_grade_text_color"
+                            tools:text="D4" />
                     </TableRow>
 
                     <TableRow>
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="E1"
-                            android:textColor="@color/a_grade_text_color" />
+                            android:textColor="@color/a_grade_text_color"
+                            tools:text="E1" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="E2"
-                            android:textColor="@color/a_grade_text_color" />
+                            android:textColor="@color/a_grade_text_color"
+                            tools:text="E2" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="E3"
-                            android:textColor="@color/a_grade_text_color" />
+                            android:textColor="@color/a_grade_text_color"
+                            tools:text="E3" />
 
                         <TextView
                             style="@style/Seat"
-                            tools:text="E4"
-                            android:textColor="@color/a_grade_text_color" />
+                            android:textColor="@color/a_grade_text_color"
+                            tools:text="E4" />
 
                     </TableRow>
 
@@ -206,6 +206,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:freezesText="true"
                 android:text="@{@string/formatted_booking_amount(ticket.totalPrice)}"
                 android:textColor="#727272"
                 android:textSize="18sp"

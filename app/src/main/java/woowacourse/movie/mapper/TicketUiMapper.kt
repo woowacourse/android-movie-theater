@@ -36,6 +36,6 @@ fun TicketUiModel.toDomain(): Ticket {
         headCount = HeadCount(headCount),
         selectedDate = selectedDate,
         selectedTime = selectedTime,
-        seats = Seats(seats.map { it.toDomain() }.toMutableSet()),
+        seats = Seats(seats.map { it.toDomain() }.toSet()),
     )
 }

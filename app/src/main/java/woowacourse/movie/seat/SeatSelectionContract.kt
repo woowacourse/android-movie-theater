@@ -23,5 +23,7 @@ interface SeatSelectionContract {
         )
 
         fun onButtonClicked()
+
+        fun restoreSeats(selectedSeats: List<SeatUiModel>)
     }
 }

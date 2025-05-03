@@ -14,7 +14,7 @@ class SeatsTest {
     fun `선택된 좌석별 등급에 따라 총 예매가격을 계산한다`() {
         val seats =
             Seats(
-                mutableSetOf(
+                setOf(
                     SEAT_E1,
                     SEAT_A1,
                     SEAT_C1,
@@ -29,7 +29,7 @@ class SeatsTest {
     fun `해당 좌석을 이미 선택한 상태라면 true를 반환한다`() {
         val seats =
             Seats(
-                mutableSetOf(
+                setOf(
                     SEAT_A1,
                 ),
             )
@@ -43,7 +43,7 @@ class SeatsTest {
     fun `해당 좌석이 선택되지 않은 상태라면 false를 반환한다`() {
         val seats =
             Seats(
-                mutableSetOf(
+                setOf(
                     SEAT_A1,
                 ),
             )

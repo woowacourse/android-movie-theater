@@ -1,7 +1,7 @@
 package woowacourse.movie.model
 
-class Seats(values: MutableSet<Seat> = mutableSetOf()) {
-    private val _seats: MutableSet<Seat> = values
+class Seats(values: Set<Seat> = setOf()) {
+    private val _seats: MutableSet<Seat> = values.toMutableSet()
     val seats: Set<Seat> get() = _seats.toSet()
 
     val amount: Int

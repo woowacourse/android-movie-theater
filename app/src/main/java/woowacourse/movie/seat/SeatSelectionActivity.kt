@@ -71,7 +71,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun setupConfirmButton() {
-        val confirmButton = findViewById<TextView>(R.id.btn_booking_confirm)
+        val confirmButton = binding.btnBookingConfirm
         confirmButton.setOnClickListener {
             presenter.onButtonClicked()
         }
@@ -125,6 +125,37 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         startActivity(intent)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        val selectedColor = ContextCompat.getColor(this, R.color.seat_selected_background)
+
+        val selectedSeats =
+            seatViews
+                .filterValues { value -> (value.background as? ColorDrawable)?.color == selectedColor }
+                .keys
+
+        outState.putParcelableArrayList(KEY_SELECTED_SEATS, ArrayList(selectedSeats))
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        val selectedSeats: List<SeatUiModel> =
+            savedInstanceState.getParcelableArrayList(KEY_SELECTED_SEATS) ?: return
+        restoreSeats(selectedSeats)
+
+        presenter.restoreSeats(selectedSeats)
+    }
+
+    private fun restoreSeats(seats: List<SeatUiModel>) {
+        val selectedColor = ContextCompat.getColor(this, R.color.seat_selected_background)
+
+        seats.forEach { seat ->
+            seatViews[seat]?.setBackgroundColor(selectedColor)
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return super.onSupportNavigateUp()
@@ -132,5 +163,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
     companion object {
         const val KEY_TICKET = "ticketUiData"
+        private const val KEY_SELECTED_SEATS = "selectedSeats"
     }
 }

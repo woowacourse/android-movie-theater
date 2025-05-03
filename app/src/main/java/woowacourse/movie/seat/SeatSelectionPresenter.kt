@@ -3,7 +3,9 @@ package woowacourse.movie.seat
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Seat
+import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
+import woowacourse.movie.ui.model.SeatUiModel
 import woowacourse.movie.ui.model.TicketUiModel
 
 class SeatSelectionPresenter(
@@ -39,5 +41,11 @@ class SeatSelectionPresenter(
     override fun onButtonClicked() {
         val ticketUiModel = ticket.toUiModel()
         view.showBookingAlertDialog(ticketUiModel)
+    }
+
+    override fun restoreSeats(selectedSeats: List<SeatUiModel>) {
+        ticket = ticket.copy(seats = Seats(selectedSeats.map { it.toDomain() }.toSet()))
+        view.showTicket(ticket.toUiModel())
+        view.setButtonEnabled(ticket.canReserve())
     }
 }
