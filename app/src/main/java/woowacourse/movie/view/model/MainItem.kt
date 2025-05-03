@@ -1,4 +1,4 @@
-package woowacourse.movie.view.item
+package woowacourse.movie.view.model
 
 import woowacourse.movie.view.base.BaseViewHolderItem
 

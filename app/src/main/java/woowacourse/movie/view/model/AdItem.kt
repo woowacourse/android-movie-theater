@@ -1,4 +1,4 @@
-package woowacourse.movie.view.item
+package woowacourse.movie.view.model
 
 data class AdItem(
     override val name: String,

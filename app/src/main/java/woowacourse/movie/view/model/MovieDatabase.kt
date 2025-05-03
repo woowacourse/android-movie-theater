@@ -1,7 +1,7 @@
-package woowacourse.movie.model
+package woowacourse.movie.view.model
 
 import woowacourse.movie.R
-import woowacourse.movie.view.item.Movie
+import woowacourse.movie.domain.model.Movie
 import java.time.LocalDate
 
 object MovieDatabase {

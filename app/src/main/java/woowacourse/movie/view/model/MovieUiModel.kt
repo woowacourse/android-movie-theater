@@ -1,15 +1,14 @@
-package woowacourse.movie.view.item
+package woowacourse.movie.view.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import java.time.LocalDate
 
 @Parcelize
-data class Movie(
+data class MovieUiModel(
     override val name: String,
     val poster: Int,
-    val startDate: LocalDate,
-    val endDate: LocalDate,
+    val startDate: String,
+    val endDate: String,
     val runningTime: Int,
 ) : MainItem(ItemViewType.MOVIE_ITEM),
     Parcelable

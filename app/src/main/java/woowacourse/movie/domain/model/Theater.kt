@@ -1,6 +1,5 @@
-package woowacourse.movie.model
+package woowacourse.movie.domain.model
 
-import woowacourse.movie.view.item.Movie
 import java.time.LocalDate
 
 class Theater(
