@@ -7,12 +7,12 @@ import woowacourse.movie.view.home.movies.model.MovieRvItem
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.mapper.toItem
 
-class MovieListPresenter(
+class MovieListPresenter private constructor(
     private val view: MovieListContract.View,
     private val movieStore: MovieStore,
     theaterStore: TheaterStore,
 ) : MovieListContract.Presenter {
-    private val theaters = theaterStore.createTheaters()
+    private val theaters = theaterStore.theaters()
 
     override fun loadTheaters(
         movieId: Int,
@@ -47,6 +47,12 @@ class MovieListPresenter(
     }
 
     companion object {
+        fun initialize(view: MovieListContract.View): MovieListContract.Presenter {
+            val movieStore = MovieStore()
+            val theaterStore = TheaterStore(movieStore)
+            return MovieListPresenter(view, movieStore, theaterStore)
+        }
+
         private const val AD_DIVIDE_STANDARD = 3
     }
 }

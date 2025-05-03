@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieStore
-import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.view.handler.MovieAdapterEventHandler
 import woowacourse.movie.view.handler.TheaterAdapterEventHandler
@@ -41,7 +39,7 @@ class MovieListFragment : Fragment(R.layout.fragment_home), MovieListContract.Vi
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = MovieListPresenter(this, MovieStore(), TheaterStore())
+        presenter = MovieListPresenter.initialize(this)
         movieAdapterEventHandler = MovieAdapterEventHandler(requireContext(), presenter)
         theaterAdapterEventHandler = TheaterAdapterEventHandler(presenter)
         presenter.loadUiData()
