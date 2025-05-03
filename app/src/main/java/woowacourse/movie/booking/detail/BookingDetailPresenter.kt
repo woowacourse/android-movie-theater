@@ -8,8 +8,7 @@ import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
-import woowacourse.movie.ui.model.TicketUiModel
-import woowacourse.movie.util.Formatter.formatStringDateDotSeparated
+import woowacourse.movie.util.Formatter.formatStringDateHyphenSeparated
 import woowacourse.movie.util.Formatter.formatStringTimeWithMidnight24
 import java.time.LocalDate
 import java.time.LocalTime
@@ -31,7 +30,7 @@ class BookingDetailPresenter(
 
     override fun setUpTicket() {
         view.showMovieInfo(movie)
-        view.showHeadCount()
+        view.showHeadCount(ticket.headCount.value)
         view.showScreeningDates(
             dates = Scheduler.screeningPeriods(movie.toDomain()),
             selected = ticket.selectedDate,
@@ -65,20 +64,20 @@ class BookingDetailPresenter(
 
     override fun increaseHeadCount() {
         ticket = ticket.plusHeadCount()
+        view.showHeadCount(ticket.headCount.value)
     }
 
     override fun decreaseHeadCount() {
-        if (ticket.isHeadCountValid()) ticket = ticket.minusHeadCount()
+        if (ticket.isHeadCountValid()) {
+            ticket = ticket.minusHeadCount()
+            view.showHeadCount(ticket.headCount.value)
+        }
     }
 
     override fun confirmReservation() {
         if (ticket.isHeadCountValid()) {
             view.startSeatSelectionActivity(ticket.toUiModel())
         }
-    }
-
-    override fun getCurrentTicketUiModel(): TicketUiModel {
-        return ticket.toUiModel()
     }
 
     override fun restoreTicketData(
@@ -91,7 +90,7 @@ class BookingDetailPresenter(
                 theater = theater.place,
                 title = movie.title,
                 headCount = HeadCount(headCount),
-                selectedDate = screeningDate?.let { formatStringDateDotSeparated(it) } ?: LocalDate.now(),
+                selectedDate = screeningDate?.let { formatStringDateHyphenSeparated(it) } ?: LocalDate.now(),
                 selectedTime = screeningTime?.let { formatStringTimeWithMidnight24(it) } ?: LocalTime.now(),
                 seats = Seats(),
             )

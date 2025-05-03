@@ -22,7 +22,7 @@ interface BookingDetailContract {
 
         fun startSeatSelectionActivity(ticket: TicketUiModel)
 
-        fun showHeadCount()
+        fun showHeadCount(headCount: Int)
     }
 
     interface Presenter {
@@ -50,7 +50,5 @@ interface BookingDetailContract {
         fun decreaseHeadCount()
 
         fun confirmReservation()
-
-        fun getCurrentTicketUiModel(): TicketUiModel
     }
 }

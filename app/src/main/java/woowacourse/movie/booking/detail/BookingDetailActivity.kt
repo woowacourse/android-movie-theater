@@ -79,16 +79,14 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
 
     fun decreaseHeadCount() {
         presenter.decreaseHeadCount()
-        showHeadCount()
     }
 
     fun increaseHeadCount() {
         presenter.increaseHeadCount()
-        showHeadCount()
     }
 
-    override fun showHeadCount() {
-        binding.tvPeopleCount.text = presenter.getCurrentTicketUiModel().headCount.toString()
+    override fun showHeadCount(headCount: Int) {
+        binding.tvPeopleCount.text = headCount.toString()
     }
 
     override fun showScreeningDates(
@@ -139,11 +137,9 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        val ticketUiModel = presenter.getCurrentTicketUiModel()
-
-        outState.putInt(KEY_HEAD_COUNT, ticketUiModel.headCount)
-        outState.putString(KEY_SCREENING_DATE, ticketUiModel.selectedDateText)
-        outState.putString(KEY_SCREENING_TIME, ticketUiModel.selectedTimeText)
+        outState.putInt(KEY_HEAD_COUNT, binding.tvPeopleCount.text.toString().toInt())
+        outState.putString(KEY_SCREENING_DATE, binding.spinnerScreeningDate.selectedItem.toString())
+        outState.putString(KEY_SCREENING_TIME, binding.spinnerScreeningTime.selectedItem.toString())
     }
 
     override fun onSupportNavigateUp(): Boolean {
