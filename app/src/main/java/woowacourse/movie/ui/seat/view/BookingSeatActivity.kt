@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.seat
+package woowacourse.movie.ui.seat.view
 
 import android.app.AlertDialog
 import android.content.Context
@@ -22,7 +22,9 @@ import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.sample.DUMMY_THEATERS
-import woowacourse.movie.ui.complete.BookingCompleteActivity
+import woowacourse.movie.ui.complete.view.BookingCompleteActivity
+import woowacourse.movie.ui.seat.contract.BookingSeatContract
+import woowacourse.movie.ui.seat.presenter.BookingSeatPresenter
 import woowacourse.movie.utils.StringFormatter.thousandFormat
 import woowacourse.movie.utils.intentSerializable
 import java.time.LocalDateTime

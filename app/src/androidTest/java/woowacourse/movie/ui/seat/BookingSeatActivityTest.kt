@@ -18,6 +18,7 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.fixture.THEATER_MEGA_BOX
 import woowacourse.movie.fixture.fakeContext
+import woowacourse.movie.ui.seat.view.BookingSeatActivity
 import java.time.LocalDateTime
 
 class BookingSeatActivityTest {

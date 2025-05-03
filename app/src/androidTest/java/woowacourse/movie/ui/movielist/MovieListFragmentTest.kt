@@ -8,11 +8,11 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.ui.MovieBookingActivity
+import woowacourse.movie.ui.MainActivity
 
 class MovieListFragmentTest {
     @get:Rule
-    val activityRule = ActivityScenarioRule(MovieBookingActivity::class.java)
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     fun `리사이클러뷰가_화면에_출력된다`() {

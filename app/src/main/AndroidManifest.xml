@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
         <activity
-            android:name=".ui.MovieBookingActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,13 +25,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.seat.BookingSeatActivity"
+            android:name=".ui.seat.view.BookingSeatActivity"
             android:exported="false" />
         <activity
             android:name=".ui.booking.view.BookingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.complete.BookingCompleteActivity"
+            android:name=".ui.complete.view.BookingCompleteActivity"
             android:exported="false" />
     </application>
 

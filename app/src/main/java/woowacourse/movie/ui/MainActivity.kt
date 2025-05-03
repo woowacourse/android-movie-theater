@@ -13,7 +13,7 @@ import woowacourse.movie.ui.history.view.BookingHistoryFragment
 import woowacourse.movie.ui.movielist.view.MovieListFragment
 import woowacourse.movie.ui.settings.view.SettingsFragment
 
-class MovieBookingActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieBookingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +22,7 @@ class MovieBookingActivity : AppCompatActivity() {
 
         binding =
             DataBindingUtil.setContentView(
-                this@MovieBookingActivity,
+                this@MainActivity,
                 R.layout.activity_movie_booking,
             )
 

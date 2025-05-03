@@ -9,8 +9,8 @@ import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
-import woowacourse.movie.ui.complete.BookingCompleteContract
-import woowacourse.movie.ui.complete.BookingCompletePresenter
+import woowacourse.movie.ui.complete.contract.BookingCompleteContract
+import woowacourse.movie.ui.complete.presenter.BookingCompletePresenter
 import java.time.LocalDateTime
 
 class BookingCompletePresenterTest {

@@ -10,9 +10,9 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
 
-class MovieBookingActivityTest {
+class MainActivityTest {
     @get:Rule
-    val rule = ActivityScenarioRule(MovieBookingActivity::class.java)
+    val rule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     fun `네비게이션_바가_존재한다`() {
