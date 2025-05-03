@@ -10,7 +10,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class BookingPresenter(
+class BookingPresenter private constructor(
     private val view: BookingContract.View,
     private val movies: MovieStore,
     private var count: PeopleCount,
@@ -95,5 +95,19 @@ class BookingPresenter(
             )
 
         view.moveToBookingComplete(booking)
+    }
+
+    companion object {
+        fun initialize(
+            view: BookingContract.View,
+            screeningInfo: ScreeningInfo,
+        ): BookingPresenter {
+            return BookingPresenter(
+                view,
+                MovieStore(),
+                PeopleCount(),
+                screeningInfo,
+            )
+        }
     }
 }

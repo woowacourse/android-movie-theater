@@ -40,7 +40,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
         intent.getSerializableOrNull(KEY_SCREENING, ScreeningInfo::class.java)
             ?.let {
-                presenter = BookingPresenter(this, MovieStore(), PeopleCount(), it)
+                presenter = BookingPresenter.initialize(this, it)
                 initView()
             } ?: run {
             showToastFromResource(R.string.error_missing_movie_info)
