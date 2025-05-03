@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMoviesBinding
-import woowacourse.movie.view.model.AdItem
 import woowacourse.movie.view.model.MainItem
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.movie.adapter.MovieAdapter
@@ -39,16 +37,8 @@ class MoviesFragment :
         presenter.fetchMovies()
     }
 
-    override fun showMovies(movies: List<MovieUiModel>) {
-        val mixedItems = mutableListOf<MainItem>()
-        val movieChunks = movies.chunked(3)
-
-        for (chunk in movieChunks) {
-            mixedItems.addAll(chunk)
-            mixedItems.add(AdItem("광고", R.drawable.advertisement))
-        }
-
-        moviesAdapter.submitList(mixedItems)
+    override fun showMovies(items: List<MainItem>) {
+        moviesAdapter.submitList(items)
     }
 
     override fun showTheaterInfo(movie: MovieUiModel) {

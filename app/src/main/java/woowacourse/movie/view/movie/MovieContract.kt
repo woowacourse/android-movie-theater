@@ -1,10 +1,11 @@
 package woowacourse.movie.view.movie
 
+import woowacourse.movie.view.model.MainItem
 import woowacourse.movie.view.model.MovieUiModel
 
 interface MovieContract {
     interface View {
-        fun showMovies(movies: List<MovieUiModel>)
+        fun showMovies(items: List<MainItem>)
 
         fun showTheaterInfo(movie: MovieUiModel)
     }

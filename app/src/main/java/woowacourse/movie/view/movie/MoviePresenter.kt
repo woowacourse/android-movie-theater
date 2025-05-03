@@ -1,8 +1,11 @@
 package woowacourse.movie.view.movie
 
+import woowacourse.movie.R
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieDao
 import woowacourse.movie.view.ReservationUiFormatter
+import woowacourse.movie.view.model.AdUiModel
+import woowacourse.movie.view.model.MainItem
 import woowacourse.movie.view.model.MovieUiModel
 
 class MoviePresenter(
@@ -10,12 +13,18 @@ class MoviePresenter(
 ) : MovieContract.Presenter {
     override fun fetchMovies() {
         val movies = MovieDao().getShowingMovies().map { it.toUiModel() }
-        view.showMovies(movies)
+        val items = generateMovieListWithAds(movies)
+        view.showMovies(items)
     }
 
     override fun reservationSelected(movie: MovieUiModel) {
         view.showTheaterInfo(movie)
     }
+
+    private fun generateMovieListWithAds(movies: List<MovieUiModel>): List<MainItem> =
+        movies.chunked(MOVIE_COUNT).flatMap { chunk ->
+            chunk + AdUiModel(AD_NAME, R.drawable.advertisement)
+        }
 
     private fun Movie.toUiModel(): MovieUiModel =
         MovieUiModel(
@@ -25,4 +34,9 @@ class MoviePresenter(
             endDate = ReservationUiFormatter.localDateToUI(this.endDate),
             runningTime = this.runningTime,
         )
+
+    companion object {
+        private const val MOVIE_COUNT = 3
+        private const val AD_NAME = "광고"
+    }
 }
