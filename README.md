@@ -38,5 +38,5 @@
 - [x] Seat | 행 & 열로 좌석 구분하도록 변경
 - [x] Seats | toggle 함수 고민
 - [x] MovieAdapter | 광고 삽입 로직 이동
-- [ ] Presenter | 반환값이 없도록 수정
+- [x] Presenter | 반환값이 없도록 수정
 - [x] layout | ConstraintLayout 중첩 구조 개선
