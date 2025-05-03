@@ -22,8 +22,6 @@ interface BookingDetailContract {
 
         fun startSeatSelectionActivity(ticket: TicketUiModel)
 
-        fun showToastErrorAndFinish(message: String)
-
         fun showHeadCount()
     }
 

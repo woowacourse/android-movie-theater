@@ -2,7 +2,6 @@ package woowacourse.movie.booking.detail
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -61,18 +60,10 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
 
     private fun requireMovieOrFinish(): MovieUiModel {
         return IntentCompat.getParcelableExtra(intent, KEY_MOVIE_DATA, MovieUiModel::class.java)
-            ?: run {
-                showToastErrorAndFinish(getString(R.string.booking_toast_message))
-                throw IllegalStateException(ERROR_FINISH_ACTIVITY.format(KEY_MOVIE_DATA))
-            }
     }
 
     private fun requireTheaterOrFinish(): TheaterUiModel {
         return IntentCompat.getParcelableExtra(intent, KEY_THEATER_DATA, TheaterUiModel::class.java)
-            ?: run {
-                showToastErrorAndFinish(getString(R.string.booking_toast_message))
-                throw IllegalStateException(ERROR_FINISH_ACTIVITY.format(KEY_THEATER_DATA))
-            }
     }
 
     private fun initReserveConfirm() {
@@ -148,11 +139,6 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
         startActivity(intent)
     }
 
-    override fun showToastErrorAndFinish(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-        finish()
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
@@ -170,7 +156,6 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
 
     companion object {
         private const val INVALID_POSITION_VALUE = -1
-        private const val ERROR_FINISH_ACTIVITY = "%s 데이터가 없어서 Activity를 종료했습니다"
         const val KEY_MOVIE_DATA = "movieData"
         const val KEY_THEATER_DATA = "theaterData"
         private const val KEY_HEAD_COUNT = "HEAD_COUNT"

@@ -5,7 +5,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.TableRow
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -55,10 +54,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             KEY_TICKET,
             TicketUiModel::class.java,
         )
-            ?: run {
-                showToastErrorAndFinish(getString(R.string.booking_toast_message))
-                throw IllegalStateException(ERROR_FINISH_ACTIVITY.format(KEY_TICKET))
-            }
     }
 
     private fun setupSeatClickListeners() {
@@ -100,11 +95,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
     }
 
-    override fun showToastErrorAndFinish(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-        finish()
-    }
-
     override fun setButtonEnabled(shouldEnabled: Boolean) {
         val confirmButton = binding.btnBookingConfirm
         val colorRes =
@@ -141,7 +131,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     companion object {
-        private const val ERROR_FINISH_ACTIVITY = "%s 데이터가 없어서 Activity를 종료했습니다"
         const val KEY_TICKET = "ticketUiData"
     }
 }

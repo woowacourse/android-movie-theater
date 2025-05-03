@@ -7,8 +7,6 @@ interface MovieContract {
     interface View {
         fun setupMovieList(movies: List<MovieListItem>)
 
-        fun showToast(message: String)
-
         fun showTheaterDialog(
             theaters: ArrayList<TheaterUiModel>,
             movie: MovieUiModel,

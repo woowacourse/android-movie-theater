@@ -3,7 +3,6 @@ package woowacourse.movie.booking.complete
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -45,19 +44,10 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             KEY_BOOKING_RESULT,
             TicketUiModel::class.java,
         )
-            ?: run {
-                showToastErrorAndFinish(getString(R.string.booking_toast_message))
-                throw IllegalStateException(ERROR_FINISH_ACTIVITY.format(KEY_BOOKING_RESULT))
-            }
     }
 
     override fun showBookingCompleteResult(ticket: TicketUiModel) {
         binding.ticket = ticket
-    }
-
-    override fun showToastErrorAndFinish(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -74,7 +64,6 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     }
 
     companion object {
-        private const val ERROR_FINISH_ACTIVITY = "%s 데이터가 없어서 Activity를 종료했습니다"
         const val KEY_BOOKING_RESULT = "bookingResult"
     }
 }
