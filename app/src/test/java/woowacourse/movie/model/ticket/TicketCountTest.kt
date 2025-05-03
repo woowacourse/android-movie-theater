@@ -36,4 +36,13 @@ class TicketCountTest {
         // then
         Assertions.assertThat(ticketCount - 1).isEqualTo(expected)
     }
+
+    @Test
+    fun `티켓 개수가 1이고 1을 뺄 경우 에러를 발생시킨다`() {
+        // given
+        val ticketCount = TicketCount(1)
+        // when
+        // then
+        assertThrows<IllegalArgumentException> { ticketCount - 1 }
+    }
 }
