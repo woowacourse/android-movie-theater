@@ -7,6 +7,10 @@
         <variable
             name="model"
             type="woowacourse.movie.view.home.movies.model.MovieRvItem.MovieItem" />
+        
+        <variable
+            name="eventListener"
+            type="woowacourse.movie.view.home.movies.viewholder.MovieViewHolder.Handler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -98,6 +102,7 @@
             android:layout_height="match_parent"
             android:text="@string/text_booking"
             android:textStyle="bold"
+            android:onClick="@{() -> eventListener.onClickBooking(model.id)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

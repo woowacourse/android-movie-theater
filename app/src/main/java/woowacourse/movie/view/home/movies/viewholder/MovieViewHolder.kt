@@ -9,12 +9,16 @@ import woowacourse.movie.view.home.movies.model.MovieRvItem
 class MovieViewHolder(
     parent: ViewGroup,
     @LayoutRes layoutId: Int,
-    private val onClickBooking: (Int) -> Unit,
+    private val handler: Handler,
 ) : BaseViewHolder<MovieRvItem.MovieItem>(parent, layoutId) {
     override fun bind(movieRvItem: MovieRvItem.MovieItem) {
         MovieItemBinding.bind(itemView).apply {
             model = movieRvItem
-            btnBooking.setOnClickListener { onClickBooking(movieRvItem.id) }
+            eventListener = handler
         }
+    }
+
+    interface Handler {
+        fun onClickBooking(movieId: Int)
     }
 }

@@ -10,7 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.databinding.FragmentHomeBinding
-import woowacourse.movie.domain.model.theater.Theaters
+import woowacourse.movie.view.handler.MovieAdapterEventHandler
 import woowacourse.movie.view.home.booking.BookingActivity
 import woowacourse.movie.view.home.movies.adapter.MovieAdapter
 import woowacourse.movie.view.home.movies.bottomsheet.TheaterBottomSheet
@@ -21,6 +21,7 @@ class MovieListFragment : Fragment(R.layout.fragment_home), MovieListContract.Vi
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var presenter: MovieListContract.Presenter
+    private lateinit var movieAdapterEventHandler: MovieAdapter.Handler
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +38,7 @@ class MovieListFragment : Fragment(R.layout.fragment_home), MovieListContract.Vi
     ) {
         super.onViewCreated(view, savedInstanceState)
         presenter = MovieListPresenter(this, MovieStore(), TheaterStore())
+        movieAdapterEventHandler = MovieAdapterEventHandler(requireContext(), presenter)
     }
 
     override fun showMovieList(movieList: List<MovieRvItem>) {
@@ -44,9 +46,7 @@ class MovieListFragment : Fragment(R.layout.fragment_home), MovieListContract.Vi
         val adapter =
             MovieAdapter(
                 movieRvItems = movieList,
-                onClickBooking = {
-                    presenter.loadTheaters(it)
-                },
+                handler = movieAdapterEventHandler,
             )
         rv.adapter = adapter
     }
