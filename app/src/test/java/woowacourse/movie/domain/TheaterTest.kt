@@ -25,7 +25,7 @@ class TheaterTest {
         val theater = suwonTheaterFixture
 
         // given
-        val excepted = theater.getMovieScreening(1)
+        val excepted = theater.getMovieScreening(2)
 
         // then
         assertEquals(

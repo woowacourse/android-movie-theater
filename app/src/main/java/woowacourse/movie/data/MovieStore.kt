@@ -1,6 +1,5 @@
 package woowacourse.movie.data
 
-import woowacourse.movie.domain.model.booking.ScreeningDate
 import woowacourse.movie.domain.model.movies.Movie
 import java.time.LocalDate
 
@@ -12,73 +11,71 @@ class MovieStore {
     }
 
     private fun initData() {
-        fun createScreeningDate(
-            start: LocalDate,
-            days: Long,
-        ): ScreeningDate {
-            val dates = (0 until days).map { start.plusDays(it) }
-            return ScreeningDate(dates)
-        }
-
-        val baseDate = LocalDate.of(2025, 5, 1)
-
         val movieList =
             listOf(
                 Movie(
-                    0,
-                    "해리 포터와 마법사의 돌",
-                    "harry_potter_1",
-                    createScreeningDate(baseDate, 3),
-                    152,
+                    id = 0,
+                    title = "해리 포터와 마법사의 돌",
+                    posterResource = "harry_potter_1",
+                    screeningStartDate = LocalDate.of(2025, 5, 1),
+                    screeningEndDate = LocalDate.of(2025, 6, 5),
+                    runningTime = 152,
                 ),
                 Movie(
-                    1,
-                    "해리 포터와 비밀의 방",
-                    "harry_potter_2",
-                    createScreeningDate(baseDate, 5),
-                    162,
+                    id = 1,
+                    title = "해리 포터와 비밀의 방",
+                    posterResource = "harry_potter_2",
+                    screeningStartDate = LocalDate.of(2025, 5, 3),
+                    screeningEndDate = LocalDate.of(2025, 6, 7),
+                    runningTime = 162,
                 ),
                 Movie(
-                    2,
-                    "해리 포터와 아즈카반의 죄수",
-                    "harry_potter_3",
-                    createScreeningDate(baseDate, 4),
-                    141,
+                    id = 2,
+                    title = "해리 포터와 아즈카반의 죄수",
+                    posterResource = "harry_potter_3",
+                    screeningStartDate = LocalDate.of(2025, 5, 5),
+                    screeningEndDate = LocalDate.of(2025, 6, 10),
+                    runningTime = 141,
                 ),
                 Movie(
-                    3,
-                    "해리 포터와 불의 잔",
-                    "harry_potter_4",
-                    createScreeningDate(baseDate, 6),
-                    157,
+                    id = 3,
+                    title = "해리 포터와 불의 잔",
+                    posterResource = "harry_potter_4",
+                    screeningStartDate = LocalDate.of(2025, 5, 7),
+                    screeningEndDate = LocalDate.of(2025, 6, 12),
+                    runningTime = 157,
                 ),
                 Movie(
-                    4,
-                    "해리 포터와 불사조 기사단",
-                    "harry_potter_5",
-                    createScreeningDate(baseDate, 7),
-                    157,
+                    id = 4,
+                    title = "해리 포터와 불사조 기사단",
+                    posterResource = "harry_potter_5",
+                    screeningStartDate = LocalDate.of(2025, 5, 9),
+                    screeningEndDate = LocalDate.of(2025, 6, 15),
+                    runningTime = 157,
                 ),
                 Movie(
-                    5,
-                    "해리 포터와 혼혈 왕자",
-                    "harry_potter_6",
-                    createScreeningDate(baseDate, 5),
-                    157,
+                    id = 5,
+                    title = "해리 포터와 혼혈 왕자",
+                    posterResource = "harry_potter_6",
+                    screeningStartDate = LocalDate.of(2025, 5, 11),
+                    screeningEndDate = LocalDate.of(2025, 6, 18),
+                    runningTime = 157,
                 ),
                 Movie(
-                    6,
-                    "해리 포터와 죽음의 성물 1부",
-                    "harry_potter_7",
-                    createScreeningDate(baseDate, 4),
-                    157,
+                    id = 6,
+                    title = "해리 포터와 죽음의 성물 1부",
+                    posterResource = "harry_potter_7",
+                    screeningStartDate = LocalDate.of(2025, 5, 13),
+                    screeningEndDate = LocalDate.of(2025, 6, 20),
+                    runningTime = 157,
                 ),
                 Movie(
-                    7,
-                    "해리 포터와 죽음의 성물 2부",
-                    "harry_potter_8",
-                    createScreeningDate(baseDate, 3),
-                    157,
+                    id = 7,
+                    title = "해리 포터와 죽음의 성물 2부",
+                    posterResource = "harry_potter_8",
+                    screeningStartDate = LocalDate.of(2025, 5, 15),
+                    screeningEndDate = LocalDate.of(2025, 6, 22),
+                    runningTime = 157,
                 ),
             )
 
