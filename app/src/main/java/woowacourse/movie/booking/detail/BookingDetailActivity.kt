@@ -30,7 +30,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_detail)
-        binding.detail = this
+        binding.detail = presenter
         setUpUi()
 
         presenter.initializeData(requireMovieOrFinish(), requireTheaterOrFinish())
@@ -75,14 +75,6 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
 
     override fun showMovieInfo(movie: MovieUiModel) {
         binding.movie = movie
-    }
-
-    fun decreaseHeadCount() {
-        presenter.decreaseHeadCount()
-    }
-
-    fun increaseHeadCount() {
-        presenter.increaseHeadCount()
     }
 
     override fun showHeadCount(headCount: Int) {

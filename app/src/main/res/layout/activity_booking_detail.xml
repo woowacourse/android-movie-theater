@@ -11,7 +11,7 @@
 
         <variable
             name="detail"
-            type="woowacourse.movie.booking.detail.BookingDetailActivity" />
+            type="woowacourse.movie.booking.detail.BookingDetailContract.Presenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
