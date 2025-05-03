@@ -6,10 +6,6 @@ import woowacourse.movie.domain.model.theater.Theater
 interface MovieListContract {
     interface Presenter {
         fun loadMovieList()
-
-        fun getMovieList(): List<MovieListItem.MovieItem>
-
-        fun getAdvertisementList(): List<MovieListItem.AdItem>
     }
 
     interface View {
