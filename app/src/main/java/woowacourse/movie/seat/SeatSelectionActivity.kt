@@ -3,7 +3,6 @@ package woowacourse.movie.seat
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
@@ -19,6 +18,9 @@ import woowacourse.movie.booking.complete.BookingCompleteActivity
 import woowacourse.movie.booking.complete.BookingCompleteActivity.Companion.KEY_BOOKING_RESULT
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.mapper.IntentCompat
+import woowacourse.movie.model.seat.Col
+import woowacourse.movie.model.seat.Row
+import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.ui.model.TicketUiModel
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
@@ -61,19 +63,22 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun setupSeatClickListeners() {
-        val tableLayout = findViewById<TableLayout>(R.id.seat_table)
+        forEachSeat { row, col, seatView ->
+            seatView.setOnClickListener {
+                presenter.onSeatClicked(Seat(Row(row), Col(col)))
+            }
+        }
+    }
 
-        for (i in 0 until tableLayout.childCount) {
-            val row = tableLayout.getChildAt(i)
-            if (row is TableRow) {
-                for (j in 0 until row.childCount) {
-                    val seatView = row.getChildAt(j)
-                    if (seatView is TextView) {
-                        seatView.setOnClickListener {
-                            presenter.onSeatClicked(seatView)
-                        }
-                    }
-                }
+    private fun forEachSeat(action: (row: Int, col: Int, seatView: TextView) -> Unit) {
+        val tableLayout = binding.seatTable
+
+        for (rowIndex in 0 until tableLayout.childCount) {
+            val row = tableLayout.getChildAt(rowIndex) as? TableRow ?: continue
+
+            for (colIndex in 0 until row.childCount) {
+                val seat = row.getChildAt(colIndex) as? TextView ?: continue
+                action(rowIndex, colIndex, seat)
             }
         }
     }
@@ -90,12 +95,22 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     override fun showSeatState(
-        seat: TextView,
+        seat: Seat,
         isSelected: Boolean,
     ) {
+        val tableLayout = binding.seatTable
+
+        val rowView = tableLayout.getChildAt(seat.row.value) as? TableRow ?: return
+        val seatView = rowView.getChildAt(seat.col.value) as? TextView ?: return
+
         val colorRes =
-            if (isSelected) R.color.seat_selected_background else R.color.seat_unselected_background
-        seat.setBackgroundColor(ContextCompat.getColor(this, colorRes))
+            if (isSelected) {
+                R.color.seat_selected_background
+            } else {
+                R.color.seat_unselected_background
+            }
+
+        seatView.setBackgroundColor(ContextCompat.getColor(this, colorRes))
     }
 
     override fun showToastErrorAndFinish(message: String) {

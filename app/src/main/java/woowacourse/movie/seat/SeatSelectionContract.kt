@@ -1,6 +1,6 @@
 package woowacourse.movie.seat
 
-import android.widget.TextView
+import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.ui.model.TicketUiModel
 
 interface SeatSelectionContract {
@@ -8,7 +8,7 @@ interface SeatSelectionContract {
         fun showTicket(ticket: TicketUiModel)
 
         fun showSeatState(
-            seat: TextView,
+            seat: Seat,
             isSelected: Boolean,
         )
 
@@ -22,7 +22,7 @@ interface SeatSelectionContract {
     interface Presenter {
         fun initializeData(ticket: TicketUiModel)
 
-        fun onSeatClicked(seat: TextView)
+        fun onSeatClicked(seat: Seat)
 
         fun onButtonClicked()
     }

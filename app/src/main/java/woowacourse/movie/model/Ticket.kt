@@ -1,5 +1,7 @@
 package woowacourse.movie.model
 
+import woowacourse.movie.model.seat.Seat
+import woowacourse.movie.model.seat.Seats
 import java.time.LocalDate
 import java.time.LocalTime
 

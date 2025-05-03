@@ -1,4 +1,4 @@
-package woowacourse.movie.model
+package woowacourse.movie.model.seat
 
 data class Seats(val values: List<Seat>) {
     init {
@@ -12,12 +12,14 @@ data class Seats(val values: List<Seat>) {
         seat: Seat,
         headCount: Int,
     ): Seats {
-        val existingSeat = values.find { it.seatName == seat.seatName }
+        val row = seat.row
+        val col = seat.col
+        val existingSeat = values.find { it.col == col && it.row == row }
 
         return if (existingSeat != null) {
             Seats(
                 values.map {
-                    if (it.seatName == seat.seatName) it.copy(isSelected = false) else it
+                    if (it.col == col && it.row == row) it.copy(isSelected = false) else it
                 }.filter { it.isSelected },
             )
         } else {

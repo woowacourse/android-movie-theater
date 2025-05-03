@@ -4,8 +4,8 @@ import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Scheduler
-import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
+import woowacourse.movie.model.seat.Seats
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
 import woowacourse.movie.ui.model.TicketUiModel

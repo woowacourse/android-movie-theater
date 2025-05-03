@@ -1,9 +1,11 @@
 package woowacourse.movie.mapper
 
 import woowacourse.movie.model.HeadCount
-import woowacourse.movie.model.Seat
-import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
+import woowacourse.movie.model.seat.Col
+import woowacourse.movie.model.seat.Row
+import woowacourse.movie.model.seat.Seat
+import woowacourse.movie.model.seat.Seats
 import woowacourse.movie.ui.model.TicketUiModel
 import woowacourse.movie.util.Formatter.formatDateDotSeparated
 import woowacourse.movie.util.Formatter.formatMoney
@@ -23,7 +25,7 @@ fun Ticket.toUiModel(): TicketUiModel {
         selectedDateText = selectedDateText,
         selectedTimeText = selectedTimeText,
         totalPrice = amountText,
-        seats = seats.values.joinToString(", ") { it.seatName },
+        seats = seats.values.joinToString(",") { it.toSeatLabel() },
     )
 }
 
@@ -36,7 +38,13 @@ fun TicketUiModel.toDomain(): Ticket {
             emptyList()
         } else {
             seats.split(", ").map { seatName ->
-                Seat(seatName = seatName, isSelected = true)
+                val rowChar = seatName.first()
+                val colNumber = seatName.substring(1).toInt()
+
+                val rowIndex = rowChar - 'A'
+                val colIndex = colNumber - 1
+
+                Seat(row = Row(rowIndex), col = Col(colIndex), isSelected = true)
             }
         }
 
