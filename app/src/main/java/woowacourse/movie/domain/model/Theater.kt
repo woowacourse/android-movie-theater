@@ -1,5 +1,7 @@
 package woowacourse.movie.domain.model
 
+import woowacourse.movie.view.model.MovieUiModel
+import woowacourse.movie.view.model.toDomainModel
 import java.time.LocalDate
 
 class Theater(
@@ -14,3 +16,10 @@ class Theater(
         return MovieDao().getTotalTimeSlotCount(this, movie, endDate)
     }
 }
+
+fun Theater.toUiModel(movie: MovieUiModel): TheaterUIModel =
+    TheaterUIModel(
+        name = this.name,
+        movie = movie,
+        timeSlotCount = this.getTotalTimeSlotCount(movie.toDomainModel()),
+    )
