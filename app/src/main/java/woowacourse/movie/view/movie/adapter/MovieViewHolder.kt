@@ -1,15 +1,16 @@
 package woowacourse.movie.view.movie.adapter
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemMovieBinding
-import woowacourse.movie.model.Movie
 import woowacourse.movie.view.ReservationUiFormatter
-import woowacourse.movie.view.movie.MovieClickListener
+import woowacourse.movie.view.base.BaseViewHolder
+import woowacourse.movie.view.item.Movie
 import java.time.LocalDate
 
 @BindingAdapter("imgResPath")
@@ -36,15 +37,28 @@ fun setScreeningDate(
 }
 
 class MovieViewHolder(
-    private val binding: ItemMovieBinding,
-    clickListener: MovieClickListener,
-) : RecyclerView.ViewHolder(binding.root) {
+    parent: ViewGroup,
+    private val handler: Handler,
+) : BaseViewHolder<Movie, ItemMovieBinding>(
+        ItemMovieBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false,
+        ),
+    ) {
     init {
-        binding.movieClickListener = clickListener
+        binding.btnMovieReservation.setOnClickListener {
+            handler.onMovieClicked(item)
+        }
     }
 
-    fun bind(movie: Movie) {
-        binding.movie = movie
+    override fun bind(item: Movie) {
+        super.bind(item)
+        binding.movie = item
         binding.executePendingBindings()
+    }
+
+    interface Handler {
+        fun onMovieClicked(item: Movie)
     }
 }

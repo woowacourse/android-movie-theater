@@ -50,7 +50,7 @@ class ReservationDetailPresenter(
     override fun selectDate(date: LocalDate) {
         val now = LocalDateTime.now()
         val screenTimes =
-            movieDao.getScreenTimes(reservationUIModel.theaterName, reservationUIModel.movie.title)
+            movieDao.getScreenTimes(reservationUIModel.theaterName, reservationUIModel.movie.name)
         currentTimeTable = movieDao.getTimeTable(now, date, screenTimes)
         if (currentTimeTable.isEmpty()) {
             isTimeSelected = false
@@ -90,7 +90,7 @@ class ReservationDetailPresenter(
     override fun createTicket(onCreated: (MovieTicket) -> Unit) {
         val ticket =
             MovieTicket(
-                title = reservationUIModel.movie.title,
+                title = reservationUIModel.movie.name,
                 date = reservationUIModel.movieDate.value,
                 time = ReservationUiFormatter.movieTimeToUI(reservationUIModel.movieTime.value),
                 count = reservationUIModel.ticketCount,
@@ -112,7 +112,7 @@ class ReservationDetailPresenter(
         val movie = reservationUIModel.movie
         view.showMovieInfo(
             posterResId = movie.poster,
-            title = movie.title,
+            title = movie.name,
             startDate = ReservationUiFormatter.localDateToUI(movie.startDate),
             endDate = ReservationUiFormatter.localDateToUI(movie.endDate),
             runningTime = movie.runningTime,

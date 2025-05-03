@@ -10,10 +10,10 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
-import woowacourse.movie.model.Movie
 import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.compatParcelable
+import woowacourse.movie.view.item.Movie
 import woowacourse.movie.view.reservation.detail.ReservationDetailActivity
 
 class TheaterBottomSheetDialogFragment :

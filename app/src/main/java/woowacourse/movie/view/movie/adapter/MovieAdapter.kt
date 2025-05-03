@@ -1,72 +1,22 @@
 package woowacourse.movie.view.movie.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
-import woowacourse.movie.databinding.ItemMovieBinding
-import woowacourse.movie.model.Movie
-import woowacourse.movie.view.movie.MovieClickListener
+import androidx.viewbinding.ViewBinding
+import woowacourse.movie.view.base.BaseListAdapter
+import woowacourse.movie.view.base.BaseViewHolder
+import woowacourse.movie.view.item.MainItem
 
 class MovieAdapter(
-    private val clickListener: MovieClickListener,
-) : ListAdapter<Movie, RecyclerView.ViewHolder>(MoviesDiffUtil) {
-    override fun getItemCount(): Int {
-        val movieCount = super.getItemCount()
-        val adCount = movieCount / MOVIE_COUNT
-        return movieCount + adCount
-    }
-
-    override fun getItemViewType(position: Int): Int =
-        if ((position + 1) % AD_INTERVAL == 0) {
-            VIEW_TYPE_AD
-        } else {
-            VIEW_TYPE_MOVIE
-        }
-
+    private val handler: Handler,
+) : BaseListAdapter<MainItem, BaseViewHolder<MainItem, ViewBinding>>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
+    ): BaseViewHolder<MainItem, ViewBinding> =
+        when (MainItem.ItemViewType.entries[viewType]) {
+            MainItem.ItemViewType.MOVIE_ITEM -> MovieViewHolder(parent, handler)
+            MainItem.ItemViewType.AD_ITEM -> AdViewHolder(parent)
+        } as BaseViewHolder<MainItem, ViewBinding>
 
-        return when (viewType) {
-            VIEW_TYPE_MOVIE -> {
-                val binding = ItemMovieBinding.inflate(inflater, parent, false)
-                MovieViewHolder(binding, clickListener)
-            }
-
-            VIEW_TYPE_AD -> {
-                val view = inflater.inflate(R.layout.item_advertisement, parent, false)
-                AdViewHolder(view)
-            }
-
-            else -> throw IllegalArgumentException(ERROR_INVALID_VIEWTYPE)
-        }
-    }
-
-    override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        position: Int,
-    ) {
-        when (holder) {
-            is MovieViewHolder -> {
-                val moviePosition = getMoviePosition(position)
-                holder.bind(getItem(moviePosition))
-            }
-
-            is AdViewHolder -> holder.bind()
-        }
-    }
-
-    private fun getMoviePosition(adapterPosition: Int): Int = adapterPosition - (adapterPosition / AD_INTERVAL)
-
-    companion object {
-        private const val VIEW_TYPE_MOVIE = 0
-        private const val VIEW_TYPE_AD = 1
-        private const val MOVIE_COUNT = 3
-        private const val AD_INTERVAL = 4
-        private const val ERROR_INVALID_VIEWTYPE = "지원하지 않는 viewType입니다."
-    }
+    interface Handler : MovieViewHolder.Handler
 }

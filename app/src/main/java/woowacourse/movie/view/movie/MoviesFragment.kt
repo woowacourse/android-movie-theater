@@ -4,41 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMoviesBinding
-import woowacourse.movie.model.Movie
+import woowacourse.movie.view.item.AdItem
+import woowacourse.movie.view.item.MainItem
+import woowacourse.movie.view.item.Movie
 import woowacourse.movie.view.movie.adapter.MovieAdapter
 import woowacourse.movie.view.theater.TheaterBottomSheetDialogFragment
 
 class MoviesFragment :
     Fragment(),
-    MovieContract.View {
+    MovieContract.View,
+    MovieAdapter.Handler {
     private lateinit var binding: FragmentMoviesBinding
-    private val presenter: MoviePresenter by lazy { MoviePresenter(this) }
-    private val moviesAdapter: MovieAdapter by lazy {
-        MovieAdapter(
-            object : MovieClickListener {
-                override fun onReservationClick(movie: Movie) {
-                    showTheaterInfo(movie)
-                }
-            },
-        )
-    }
+    private val presenter: MovieContract.Presenter by lazy { MoviePresenter(this) }
+    private val moviesAdapter: MovieAdapter by lazy { MovieAdapter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_movies,
-                container,
-                false,
-            )
+        binding = FragmentMoviesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -52,12 +40,24 @@ class MoviesFragment :
     }
 
     override fun showMovies(movies: List<Movie>) {
-        moviesAdapter.submitList(movies)
+        val mixedItems = mutableListOf<MainItem>()
+        val movieChunks = movies.chunked(3)
+
+        for (chunk in movieChunks) {
+            mixedItems.addAll(chunk)
+            mixedItems.add(AdItem("광고", R.drawable.advertisement))
+        }
+
+        moviesAdapter.submitList(mixedItems)
     }
 
     override fun showTheaterInfo(movie: Movie) {
         val bottomSheet = TheaterBottomSheetDialogFragment.newInstance(movie)
         bottomSheet.show(parentFragmentManager, BOTTOM_SHEET_TAG)
+    }
+
+    override fun onMovieClicked(item: Movie) {
+        presenter.reservationSelected(item)
     }
 
     private fun setupMovieAdapter() {

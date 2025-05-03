@@ -2,6 +2,7 @@ package woowacourse.movie.model
 
 import woowacourse.movie.model.MovieDatabase.movies
 import woowacourse.movie.model.MovieDatabase.screenings
+import woowacourse.movie.view.item.Movie
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -16,7 +17,7 @@ class MovieDao {
         val result = mutableSetOf<Movie>()
         getTheaterNames().forEach { theaterName ->
             getMovies(theaterName).forEach { movie ->
-                val screenTimes = getScreenTimes(theaterName, movie.title)
+                val screenTimes = getScreenTimes(theaterName, movie.name)
                 if (today == movie.endDate) {
                     if (screenTimes.any { time -> time > currentHour }) {
                         result.add(movie)
@@ -50,7 +51,7 @@ class MovieDao {
         var date = now.toLocalDate()
         var count = 0
         while (!date.isAfter(endDate)) {
-            count += getTimeTable(now, date, getScreenTimes(theater.name, movie.title)).size
+            count += getTimeTable(now, date, getScreenTimes(theater.name, movie.name)).size
             date = date.plusDays(1)
         }
         return count

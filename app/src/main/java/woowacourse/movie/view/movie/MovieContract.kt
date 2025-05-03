@@ -1,6 +1,6 @@
 package woowacourse.movie.view.movie
 
-import woowacourse.movie.model.Movie
+import woowacourse.movie.view.item.Movie
 
 interface MovieContract {
     interface View {
@@ -11,5 +11,7 @@ interface MovieContract {
 
     interface Presenter {
         fun fetchMovies()
+
+        fun reservationSelected(movie: Movie)
     }
 }

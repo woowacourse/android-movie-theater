@@ -7,11 +7,7 @@
 
         <variable
             name="movie"
-            type="woowacourse.movie.model.Movie" />
-
-        <variable
-            name="movieClickListener"
-            type="woowacourse.movie.view.movie.MovieClickListener" />
+            type="woowacourse.movie.view.item.Movie" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="@{movie.title}"
+            android:text="@{movie.name}"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -70,14 +66,13 @@
         <Button
             android:id="@+id/btn_movie_reservation"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:onClick="@{() -> movieClickListener.onReservationClick(movie)}"
-            android:paddingVertical="10dp"
+            android:layout_height="wrap_content"
             android:text="@string/movie_reservation"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_running_time" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
