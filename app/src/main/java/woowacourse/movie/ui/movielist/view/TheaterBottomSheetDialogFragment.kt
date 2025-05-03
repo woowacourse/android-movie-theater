@@ -28,7 +28,7 @@ class TheaterBottomSheetDialogFragment :
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(
                 inflater,
@@ -69,7 +69,7 @@ class TheaterBottomSheetDialogFragment :
         view: View,
         theater: Theater,
     ) {
-        if (theater.schedules.isNotEmpty()) {
+        if (theater.allSchedules.isNotEmpty()) {
             startActivity(BookingActivity.newIntent(view.context, theater))
             parentFragmentManager.commit {
                 remove(this@TheaterBottomSheetDialogFragment)

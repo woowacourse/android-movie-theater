@@ -14,7 +14,7 @@ class TheaterBottomSheetDialogPresenter(
     override fun loadEntireTheaters(): Theaters = DUMMY_THEATERS
 
     override fun loadAvailableTheaters(movie: Movie) {
-        availableTheaters = entireTheaters.availableTheatersSchedules(movie)
+        availableTheaters = entireTheaters.bookableTheaters(movie)
         view.showTheaters(availableTheaters)
     }
 }

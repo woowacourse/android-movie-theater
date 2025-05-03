@@ -18,4 +18,7 @@ data class Theater(
         val filteredSchedules: Map<Movie, List<Schedule>> = mapOf(movie to bookableSchedules)
         return Theater(name, filteredSchedules)
     }
+
+    fun isBookable() {
+    }
 }
