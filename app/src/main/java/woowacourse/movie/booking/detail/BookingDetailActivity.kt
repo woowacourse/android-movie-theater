@@ -111,7 +111,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
         dateSpinner.adapter = ScreeningDateSpinnerAdapter(this, dates)
 
         val position = dates.indexOf(selected)
-        if (position != -1) {
+        if (position != INVALID_POSITION_VALUE) {
             dateSpinner.setSelection(position)
         }
 
@@ -131,7 +131,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
         timeSpinner.adapter = ScreeningTimeSpinnerAdapter(this, times)
 
         val position = times.indexOf(selected)
-        if (position != -1) {
+        if (position != INVALID_POSITION_VALUE) {
             timeSpinner.setSelection(position)
         }
 
@@ -173,6 +173,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     }
 
     companion object {
+        private const val INVALID_POSITION_VALUE = -1
         private const val TAG = "BookingDetailActivity"
         private const val ERROR_EMPTY_MOVIE_DATA = "인텐트에 영화 예매 정보(KEY_MOVIE_DATA)가 없습니다"
         private const val ERROR_EMPTY_THEATER_DATA = "인텐트에 극장 정보(KEY_THEATER_DATA)가 없습니다"

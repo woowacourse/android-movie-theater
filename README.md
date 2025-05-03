@@ -33,7 +33,7 @@
 
 - [ ] SeatSelectionActivity | 화면 회전 시 데이터 복원
 - [x] SeatSelectionActivity | 버튼 비활성화 버그 수정
-- [ ] 매직 넘버 상수화
+- [x] 매직 넘버 상수화
 - [ ] Scheduler | 현재 날짜 & 시간 고정되어 있는 버그 수정
 - [x] Seat | 행 & 열로 좌석 구분하도록 변경
 - [x] Seats | toggle 함수 고민
