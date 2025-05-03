@@ -4,8 +4,10 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 object Scheduler {
-    private val today: LocalDate = LocalDate.now()
-    private val currentTime: LocalTime = LocalTime.now()
+    private val today: LocalDate
+        get() = LocalDate.now()
+    private val currentTime: LocalTime
+        get() = LocalTime.now()
 
     fun screeningPeriods(movie: Movie): List<LocalDate> {
         val startDate =
