@@ -8,8 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieListBinding
-import woowacourse.movie.domain.model.MovieListItem
-import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.item.MovieListItem
+import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.ui.booking.view.BookingActivity
 import woowacourse.movie.ui.movielist.contract.MovieListContract
 import woowacourse.movie.ui.movielist.presenter.MovieListPresenter

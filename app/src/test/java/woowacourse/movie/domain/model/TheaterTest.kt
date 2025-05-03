@@ -2,6 +2,7 @@ package woowacourse.movie.domain.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.model.theater.Theater
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -13,7 +14,7 @@ class TheaterTest {
         val theater =
             Theater(
                 name = "선릉 극장",
-                movieSchedules =
+                schedules =
                     listOf(
                         SCHEDULE_HARRY_PHILOSOPHERS_STONE_2025_04_10_1300,
                         SCHEDULE_HARRY_PHILOSOPHERS_STONE_2025_04_15_1630,

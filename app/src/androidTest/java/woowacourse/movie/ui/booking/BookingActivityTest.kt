@@ -18,8 +18,8 @@ import org.hamcrest.CoreMatchers.anything
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.ScreeningPeriod
+import woowacourse.movie.domain.model.movie.Movie
+import woowacourse.movie.domain.model.movie.ScreeningPeriod
 import woowacourse.movie.fixture.fakeContext
 import woowacourse.movie.ui.booking.view.BookingActivity
 import java.time.LocalDate

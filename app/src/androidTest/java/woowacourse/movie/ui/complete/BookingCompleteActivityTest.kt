@@ -9,11 +9,11 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.BookedTicket
-import woowacourse.movie.domain.model.Headcount
-import woowacourse.movie.domain.model.Seat
-import woowacourse.movie.domain.model.Seats
-import woowacourse.movie.domain.model.TicketType
+import woowacourse.movie.domain.model.movie.Headcount
+import woowacourse.movie.domain.model.movie.TicketType
+import woowacourse.movie.domain.model.theater.BookedTicket
+import woowacourse.movie.domain.model.theater.Seat
+import woowacourse.movie.domain.model.theater.Seats
 import woowacourse.movie.fixture.fakeContext
 import woowacourse.movie.ui.complete.view.BookingCompleteActivity
 import java.time.LocalDateTime

@@ -5,10 +5,10 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.BookedTicket
-import woowacourse.movie.domain.model.Headcount
-import woowacourse.movie.domain.model.Seat
-import woowacourse.movie.domain.model.Seats
+import woowacourse.movie.domain.model.movie.Headcount
+import woowacourse.movie.domain.model.theater.BookedTicket
+import woowacourse.movie.domain.model.theater.Seat
+import woowacourse.movie.domain.model.theater.Seats
 import woowacourse.movie.ui.complete.contract.BookingCompleteContract
 import woowacourse.movie.ui.complete.presenter.BookingCompletePresenter
 import java.time.LocalDateTime

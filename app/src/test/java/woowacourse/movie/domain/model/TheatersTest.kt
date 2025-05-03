@@ -2,6 +2,7 @@ package woowacourse.movie.domain.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.model.theater.Theaters
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -25,16 +26,16 @@ class TheatersTest {
         val expectedMovieScheduleSizeOfOthers = 0
 
         // when
-        val actual: Theaters = theaters.availableTheaters(movie, date, time)
+        val actual: Theaters = theaters.availableTheatersSchedules(movie, date, time)
 
         // then
-        assertThat(actual.theaters[0].movieSchedules.size).isEqualTo(
+        assertThat(actual.theaters[0].schedules.size).isEqualTo(
             expectedMovieScheduleSizeOfGangNam,
         )
-        assertThat(actual.theaters[1].movieSchedules.size).isEqualTo(
+        assertThat(actual.theaters[1].schedules.size).isEqualTo(
             expectedMovieScheduleSizeOfOthers,
         )
-        assertThat(actual.theaters[2].movieSchedules.size).isEqualTo(
+        assertThat(actual.theaters[2].schedules.size).isEqualTo(
             expectedMovieScheduleSizeOfOthers,
         )
     }

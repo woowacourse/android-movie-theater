@@ -5,8 +5,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.Headcount
-import woowacourse.movie.domain.model.Seat
+import woowacourse.movie.domain.model.movie.Headcount
+import woowacourse.movie.domain.model.theater.Seat
 import woowacourse.movie.ui.seat.contract.BookingSeatContract
 import woowacourse.movie.ui.seat.presenter.BookingSeatPresenter
 

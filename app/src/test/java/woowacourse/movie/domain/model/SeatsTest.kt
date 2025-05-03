@@ -2,6 +2,9 @@ package woowacourse.movie.domain.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.model.movie.TicketType
+import woowacourse.movie.domain.model.theater.Seat
+import woowacourse.movie.domain.model.theater.Seats
 
 class SeatsTest {
     @Test

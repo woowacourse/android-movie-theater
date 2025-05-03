@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.TheaterItemBinding
-import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.theater.Theater
 
 class TheaterAdapter(
     private val onClickTheater: (Theater) -> Unit,
@@ -15,16 +15,12 @@ class TheaterAdapter(
             override fun areItemsTheSame(
                 oldItem: Theater,
                 newItem: Theater,
-            ): Boolean {
-                return oldItem.name == newItem.name
-            }
+            ): Boolean = oldItem.name == newItem.name
 
             override fun areContentsTheSame(
                 oldItem: Theater,
                 newItem: Theater,
-            ): Boolean {
-                return oldItem == newItem
-            }
+            ): Boolean = oldItem == newItem
         },
     ) {
     override fun onCreateViewHolder(

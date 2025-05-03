@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.booking.presenter
 
-import woowacourse.movie.domain.model.Headcount
-import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.movie.Headcount
+import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.sample.DUMMY_THEATERS
 import woowacourse.movie.ui.booking.contract.BookingContract
 import java.time.LocalDate
@@ -37,7 +37,7 @@ class BookingPresenter(
     override fun loadTheater(): Theater = bookingView.getTheater() ?: DUMMY_THEATERS.theaters.first()
 
     override fun refreshMovieInfo() {
-        bookingView.setMovieInfoViews(theater.movieSchedules[0].movie)
+        bookingView.setMovieInfoViews(theater.schedules[0].movie)
     }
 
     override fun setHeadcount(headcount: Headcount) {
@@ -50,16 +50,16 @@ class BookingPresenter(
 
     override fun setupDateSpinner() {
         val screeningDateTime: List<LocalDate> =
-            theater.movieSchedules.map { it.screeningDateTime.screeningDate }
+            theater.schedules.map { it.screeningTimeSchedule.date }
         bookingView.setDateSpinner(screeningDateTime, selectedDatePosition)
     }
 
     override fun setupTimeSpinner() {
         val selectedDate = bookingView.getSelectedDate()
         val screeningTimesItems =
-            theater.movieSchedules
-                .filter { it.screeningDateTime.screeningDate.isEqual(selectedDate) }
-                .map { it.screeningDateTime.screeningTime }
+            theater.schedules
+                .filter { it.screeningTimeSchedule.date.isEqual(selectedDate) }
+                .map { it.screeningTimeSchedule.time }
         bookingView.setTimeSpinner(screeningTimesItems, selectedTimePosition)
     }
 
@@ -75,7 +75,7 @@ class BookingPresenter(
 
     override fun completeBooking() {
         bookingView.startBookingSeatActivity(
-            theater.movieSchedules[0].movie.title,
+            theater.schedules[0].movie.title,
             selectedDateTime,
             headcount,
             theater,

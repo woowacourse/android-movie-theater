@@ -1,5 +1,6 @@
-package woowacourse.movie.domain.model
+package woowacourse.movie.domain.model.theater
 
+import woowacourse.movie.domain.model.movie.Headcount
 import java.io.Serializable
 import java.time.LocalDateTime
 

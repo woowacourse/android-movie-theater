@@ -2,6 +2,7 @@ package woowacourse.movie.domain.model
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.model.movie.DayType
 import java.time.LocalDate
 
 class DayTypeTest {

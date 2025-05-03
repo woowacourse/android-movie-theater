@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.movielist.presenter
 
-import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.Theaters
+import woowacourse.movie.domain.model.movie.Movie
+import woowacourse.movie.domain.model.theater.Theaters
 import woowacourse.movie.sample.DUMMY_THEATERS
 import woowacourse.movie.ui.movielist.contract.TheaterBottomSheetDialogContract
 
@@ -11,12 +11,10 @@ class TheaterBottomSheetDialogPresenter(
     private val entireTheaters: Theaters by lazy { loadEntireTheaters() }
     private lateinit var availableTheaters: Theaters
 
-    override fun loadEntireTheaters(): Theaters {
-        return DUMMY_THEATERS
-    }
+    override fun loadEntireTheaters(): Theaters = DUMMY_THEATERS
 
     override fun loadAvailableTheaters(movie: Movie) {
-        availableTheaters = entireTheaters.availableTheaters(movie)
+        availableTheaters = entireTheaters.availableTheatersSchedules(movie)
         view.showTheaters(availableTheaters)
     }
 }

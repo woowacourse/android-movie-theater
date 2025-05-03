@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.complete.contract
 
-import woowacourse.movie.domain.model.BookedTicket
+import woowacourse.movie.domain.model.theater.BookedTicket
 
 interface BookingCompleteContract {
     interface Presenter {

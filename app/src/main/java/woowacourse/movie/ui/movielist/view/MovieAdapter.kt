@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.AdvertisementItemBinding
 import woowacourse.movie.databinding.MovieItemBinding
-import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.MovieListItem
-import woowacourse.movie.domain.model.MovieListItem.AdItem
-import woowacourse.movie.domain.model.MovieListItem.MovieItem
+import woowacourse.movie.domain.model.item.MovieListItem
+import woowacourse.movie.domain.model.item.MovieListItem.AdItem
+import woowacourse.movie.domain.model.item.MovieListItem.MovieItem
+import woowacourse.movie.domain.model.movie.Movie
 
 class MovieAdapter(
     private val onClickBooking: (Movie) -> Unit,

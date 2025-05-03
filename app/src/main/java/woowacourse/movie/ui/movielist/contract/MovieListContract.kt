@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.movielist.contract
 
-import woowacourse.movie.domain.model.MovieListItem
-import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.item.MovieListItem
+import woowacourse.movie.domain.model.theater.Theater
 
 interface MovieListContract {
     interface Presenter {

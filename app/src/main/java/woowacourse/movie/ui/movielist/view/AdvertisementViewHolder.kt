@@ -2,7 +2,7 @@ package woowacourse.movie.ui.movielist.view
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.AdvertisementItemBinding
-import woowacourse.movie.domain.model.Advertisement
+import woowacourse.movie.domain.model.item.Advertisement
 
 class AdvertisementViewHolder(
     private val itemBinding: AdvertisementItemBinding,

@@ -9,9 +9,9 @@ import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
-import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.Theater
-import woowacourse.movie.domain.model.Theaters
+import woowacourse.movie.domain.model.movie.Movie
+import woowacourse.movie.domain.model.theater.Theater
+import woowacourse.movie.domain.model.theater.Theaters
 import woowacourse.movie.sample.DUMMY_MOVIES
 import woowacourse.movie.ui.booking.view.BookingActivity
 import woowacourse.movie.ui.movielist.contract.TheaterBottomSheetDialogContract
@@ -69,7 +69,7 @@ class TheaterBottomSheetDialogFragment :
         view: View,
         theater: Theater,
     ) {
-        if (theater.movieSchedules.isNotEmpty()) {
+        if (theater.schedules.isNotEmpty()) {
             startActivity(BookingActivity.newIntent(view.context, theater))
             parentFragmentManager.commit {
                 remove(this@TheaterBottomSheetDialogFragment)

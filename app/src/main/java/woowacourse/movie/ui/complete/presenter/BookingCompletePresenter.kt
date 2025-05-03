@@ -1,8 +1,8 @@
 package woowacourse.movie.ui.complete.presenter
 
-import woowacourse.movie.domain.model.BookedTicket
-import woowacourse.movie.domain.model.Headcount
-import woowacourse.movie.domain.model.Seats
+import woowacourse.movie.domain.model.movie.Headcount
+import woowacourse.movie.domain.model.theater.BookedTicket
+import woowacourse.movie.domain.model.theater.Seats
 import woowacourse.movie.ui.complete.contract.BookingCompleteContract
 import java.time.LocalDateTime
 

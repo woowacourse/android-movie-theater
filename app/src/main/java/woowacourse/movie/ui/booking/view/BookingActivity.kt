@@ -14,9 +14,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
-import woowacourse.movie.domain.model.Headcount
-import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.movie.Headcount
+import woowacourse.movie.domain.model.movie.Movie
+import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.ui.booking.contract.BookingContract
 import woowacourse.movie.ui.booking.presenter.BookingPresenter
 import woowacourse.movie.ui.seat.view.BookingSeatActivity

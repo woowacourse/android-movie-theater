@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.BookedTicket
-import woowacourse.movie.domain.model.Seat
+import woowacourse.movie.domain.model.theater.BookedTicket
+import woowacourse.movie.domain.model.theater.Seat
 import woowacourse.movie.ui.MainActivity
 import woowacourse.movie.ui.complete.contract.BookingCompleteContract
 import woowacourse.movie.ui.complete.presenter.BookingCompletePresenter

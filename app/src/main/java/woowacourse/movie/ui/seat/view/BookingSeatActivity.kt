@@ -16,11 +16,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.BookedTicket
-import woowacourse.movie.domain.model.Headcount
-import woowacourse.movie.domain.model.Seat
-import woowacourse.movie.domain.model.Seats
-import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.movie.Headcount
+import woowacourse.movie.domain.model.theater.BookedTicket
+import woowacourse.movie.domain.model.theater.Seat
+import woowacourse.movie.domain.model.theater.Seats
+import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.sample.DUMMY_THEATERS
 import woowacourse.movie.ui.complete.view.BookingCompleteActivity
 import woowacourse.movie.ui.seat.contract.BookingSeatContract
@@ -180,8 +180,7 @@ class BookingSeatActivity :
             .setMessage(description)
             .setPositiveButton(getString(R.string.text_booking_dialog_positive_button)) { _, _ ->
                 bookingSeatPresenter.completeBookingSeat()
-            }
-            .setNegativeButton(getString(R.string.text_booking_dialog_negative_button)) { dialog, _ ->
+            }.setNegativeButton(getString(R.string.text_booking_dialog_negative_button)) { dialog, _ ->
                 dialog.dismiss()
             }.setCancelable(false)
             .show()

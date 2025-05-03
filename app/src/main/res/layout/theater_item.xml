@@ -7,7 +7,7 @@
 
         <variable
             name="theater"
-            type="woowacourse.movie.domain.model.Theater" />
+            type="woowacourse.movie.domain.model.theater.Theater" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +35,7 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/tv_theater_name"
             app:layout_constraintTop_toBottomOf="@id/tv_theater_name"
-            android:text="@{@string/text_number_of_movie_schedule(theater.movieSchedules.size())}"
+            android:text="@{@string/text_number_of_movie_schedule(theater.schedules.size())}"
             tools:text="3개의 상영 시간" />
 
         <ImageView
