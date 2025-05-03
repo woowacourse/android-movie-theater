@@ -1,7 +1,7 @@
 package woowacourse.movie
 
 import woowacourse.movie.model.Movie
-import woowacourse.movie.model.Schedule
+import woowacourse.movie.model.ScreeningInfo
 import woowacourse.movie.model.Theater
 import java.time.LocalDate
 import java.time.LocalTime
@@ -11,9 +11,9 @@ object DefaultMovieData {
         return listOf(
             Theater(
                 place = "선릉",
-                schedules =
+                screeningInfos =
                     listOf(
-                        Schedule(
+                        ScreeningInfo(
                             Movie(
                                 title = "해리 포터와 마법사의 돌",
                                 imageSource = "harry_potter.png",
@@ -23,7 +23,7 @@ object DefaultMovieData {
                             ),
                             listOf(LocalTime.of(11, 0), LocalTime.of(15, 0)),
                         ),
-                        Schedule(
+                        ScreeningInfo(
                             Movie(
                                 title = "해리 포터와 불의 잔",
                                 imageSource = "harry_potter4.png",
@@ -37,9 +37,9 @@ object DefaultMovieData {
             ),
             Theater(
                 place = "잠실",
-                schedules =
+                screeningInfos =
                     mockMovieList().map {
-                        Schedule(
+                        ScreeningInfo(
                             it,
                             screeningTimes =
                                 listOf(
@@ -54,9 +54,9 @@ object DefaultMovieData {
             ),
             Theater(
                 place = "진짜 너무너무너무너무너무너무 긴",
-                schedules =
+                screeningInfos =
                     mockMovieList().map {
-                        Schedule(
+                        ScreeningInfo(
                             it,
                             screeningTimes =
                                 listOf(

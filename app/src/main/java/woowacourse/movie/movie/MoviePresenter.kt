@@ -28,13 +28,13 @@ class MoviePresenter(
     }
 
     private fun getReservableMovies(): List<Movie> {
-        return theater.map { it.schedules }.flatten().map { it.movie }.distinct()
+        return theater.map { it.screeningInfos }.flatten().map { it.movie }.distinct()
     }
 
     override fun setTheaters(movie: MovieUiModel) {
         val domainMovie = movie.toDomain()
 
-        val domainTheaters = theater.filter { it.schedules.map { it.movie }.contains(domainMovie) }
+        val domainTheaters = theater.filter { it.screeningInfos.map { it.movie }.contains(domainMovie) }
 
         view.showTheaterDialog(ArrayList(domainTheaters.map { it.toUiModel(domainMovie) }), movie)
     }

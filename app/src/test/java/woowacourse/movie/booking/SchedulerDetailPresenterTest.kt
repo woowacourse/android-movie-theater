@@ -12,7 +12,7 @@ import woowacourse.movie.fixture.createMovie
 import woowacourse.movie.fixture.createTicket
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Movie
-import woowacourse.movie.model.Schedule
+import woowacourse.movie.model.ScreeningInfo
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
@@ -41,7 +41,7 @@ class SchedulerDetailPresenterTest {
         mockTheaterUiData =
             TheaterUiModel(
                 place = "선릉",
-                schedule = Schedule(mockMovie, listOf(LocalTime.of(23, 0), LocalTime.of(11, 0))).toUiModel(),
+                schedule = ScreeningInfo(mockMovie, listOf(LocalTime.of(23, 0), LocalTime.of(11, 0))).toUiModel(),
             )
 
         mockMovieUiData = mockMovie.toUiModel()
