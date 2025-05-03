@@ -1,5 +1,6 @@
 package woowacourse.movie.seat
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -15,7 +16,6 @@ import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.booking.complete.BookingCompleteActivity
-import woowacourse.movie.booking.complete.BookingCompleteActivity.Companion.KEY_BOOKING_RESULT
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.ui.model.SeatUiModel
@@ -118,10 +118,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun startBookingCompleteActivity(ticket: TicketUiModel) {
-        val intent =
-            Intent(this, BookingCompleteActivity::class.java).apply {
-                putExtra(KEY_BOOKING_RESULT, ticket)
-            }
+        val intent = BookingCompleteActivity.newIntent(this, ticket)
         startActivity(intent)
     }
 
@@ -162,7 +159,15 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     companion object {
-        const val KEY_TICKET = "ticketUiData"
-        private const val KEY_SELECTED_SEATS = "selectedSeats"
+        private const val KEY_TICKET = "TICKET_DATA"
+        private const val KEY_SELECTED_SEATS = "SELECTED_SEATS_DATA"
+
+        fun newIntent(
+            context: Context,
+            ticket: TicketUiModel,
+        ): Intent =
+            Intent(context, SeatSelectionActivity::class.java).apply {
+                putExtra(KEY_TICKET, ticket)
+            }
     }
 }

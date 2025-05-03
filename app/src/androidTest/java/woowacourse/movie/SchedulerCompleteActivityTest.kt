@@ -30,7 +30,7 @@ class SchedulerCompleteActivityTest {
                 ApplicationProvider.getApplicationContext(),
                 BookingCompleteActivity::class.java,
             ).apply {
-                putExtra("bookingResult", createTicket(SEOLLEUNG, listOf(SEAT_A1, SEAT_C1)).toUiModel())
+                putExtra("BOOKING_RESULT_DATA", createTicket(SEOLLEUNG, listOf(SEAT_A1, SEAT_C1)).toUiModel())
             }
 
         scenario = ActivityScenario.launch(intent)

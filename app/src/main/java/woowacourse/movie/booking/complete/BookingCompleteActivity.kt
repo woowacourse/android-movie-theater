@@ -1,5 +1,6 @@
 package woowacourse.movie.booking.complete
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -64,6 +65,14 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     }
 
     companion object {
-        const val KEY_BOOKING_RESULT = "bookingResult"
+        private const val KEY_BOOKING_RESULT = "BOOKING_RESULT_DATA"
+
+        fun newIntent(
+            context: Context,
+            ticket: TicketUiModel,
+        ): Intent =
+            Intent(context, BookingCompleteActivity::class.java).apply {
+                putExtra(KEY_BOOKING_RESULT, ticket)
+            }
     }
 }

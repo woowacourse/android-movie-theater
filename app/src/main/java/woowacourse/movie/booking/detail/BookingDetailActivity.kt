@@ -1,5 +1,6 @@
 package woowacourse.movie.booking.detail
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -15,7 +16,6 @@ import woowacourse.movie.booking.detail.listener.ScreeningTimeSelectedListener
 import woowacourse.movie.databinding.ActivityBookingDetailBinding
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.seat.SeatSelectionActivity
-import woowacourse.movie.seat.SeatSelectionActivity.Companion.KEY_TICKET
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
 import woowacourse.movie.ui.model.TicketUiModel
@@ -132,10 +132,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     }
 
     override fun startSeatSelectionActivity(ticket: TicketUiModel) {
-        val intent =
-            Intent(this, SeatSelectionActivity::class.java).apply {
-                putExtra(KEY_TICKET, ticket)
-            }
+        val intent = SeatSelectionActivity.newIntent(this, ticket)
         startActivity(intent)
     }
 
@@ -156,10 +153,20 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
 
     companion object {
         private const val INVALID_POSITION_VALUE = -1
-        const val KEY_MOVIE_DATA = "movieData"
-        const val KEY_THEATER_DATA = "theaterData"
+        private const val KEY_MOVIE_DATA = "MOVIE_DATA"
+        private const val KEY_THEATER_DATA = "THEATER_DATA"
         private const val KEY_HEAD_COUNT = "HEAD_COUNT"
         private const val KEY_SCREENING_DATE = "SCREENING_DATE"
         private const val KEY_SCREENING_TIME = "SCREENING_TIME"
+
+        fun newIntent(
+            context: Context,
+            movie: MovieUiModel,
+            theater: TheaterUiModel,
+        ): Intent =
+            Intent(context, BookingDetailActivity::class.java).apply {
+                putExtra(KEY_MOVIE_DATA, movie)
+                putExtra(KEY_THEATER_DATA, theater)
+            }
     }
 }

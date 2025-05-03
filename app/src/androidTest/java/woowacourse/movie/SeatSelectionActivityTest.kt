@@ -37,7 +37,7 @@ class SeatSelectionActivityTest {
                 ApplicationProvider.getApplicationContext(),
                 SeatSelectionActivity::class.java,
             ).apply {
-                putExtra("ticketUiData", ticket)
+                putExtra("TICKET_DATA", ticket)
             }
 
         scenario = ActivityScenario.launch(intent)

@@ -47,8 +47,8 @@ class BookingDetailActivityTest {
                 ApplicationProvider.getApplicationContext(),
                 BookingDetailActivity::class.java,
             ).apply {
-                putExtra("movieData", movie.toUiModel())
-                putExtra("theaterData", theater)
+                putExtra("MOVIE_DATA", movie.toUiModel())
+                putExtra("THEATER_DATA", theater)
             }
 
         scenario = ActivityScenario.launch(intent)
@@ -213,7 +213,7 @@ class BookingDetailActivityTest {
         intended(
             allOf(
                 hasComponent(SeatSelectionActivity::class.java.name),
-                hasExtraWithKey("ticketUiData"),
+                hasExtraWithKey("TICKET_DATA"),
             ),
         )
 
