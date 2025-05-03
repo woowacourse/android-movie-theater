@@ -9,7 +9,7 @@ interface SeatSelectionContract {
 
         fun showSeatState(seat: SeatUiModel)
 
-        fun setButtonEnabled(shouldEnabled: Boolean)
+        fun updateCanBook(canBook: Boolean)
 
         fun showBookingAlertDialog(ticket: TicketUiModel)
     }
@@ -17,12 +17,12 @@ interface SeatSelectionContract {
     interface Presenter {
         fun initializeData(ticket: TicketUiModel)
 
-        fun onSeatClicked(
+        fun updateSeats(
             row: Int,
             col: Int,
         )
 
-        fun onButtonClicked()
+        fun completeBooking()
 
         fun restoreSeats(selectedSeats: List<SeatUiModel>)
     }

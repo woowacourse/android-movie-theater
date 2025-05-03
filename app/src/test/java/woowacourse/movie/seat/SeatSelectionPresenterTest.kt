@@ -50,7 +50,7 @@ class SeatSelectionPresenterTest {
     fun `예약버튼_클릭시_예약_다이얼로그를_표시한다`() {
         presenter.initializeData(mockTicketUiData)
 
-        presenter.onButtonClicked()
+        presenter.completeBooking()
 
         verify { mockView.showBookingAlertDialog(any()) }
     }

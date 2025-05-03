@@ -64,7 +64,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
                     seatViews[SeatUiModel(rowIndex, colIndex)] = view
 
                     view.setOnClickListener {
-                        presenter.onSeatClicked(rowIndex, colIndex)
+                        presenter.updateSeats(rowIndex, colIndex)
                     }
                 }
         }
@@ -73,7 +73,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     private fun setupConfirmButton() {
         val confirmButton = binding.btnBookingConfirm
         confirmButton.setOnClickListener {
-            presenter.onButtonClicked()
+            presenter.completeBooking()
         }
     }
 
@@ -95,12 +95,12 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
     }
 
-    override fun setButtonEnabled(shouldEnabled: Boolean) {
+    override fun updateCanBook(canBook: Boolean) {
         val confirmButton = binding.btnBookingConfirm
         val colorRes =
-            if (shouldEnabled) R.color.btn_activate_background else R.color.btn_deactivate_background
+            if (canBook) R.color.btn_activate_background else R.color.btn_deactivate_background
         confirmButton.setBackgroundColor(ContextCompat.getColor(this, colorRes))
-        confirmButton.isEnabled = shouldEnabled
+        confirmButton.isEnabled = canBook
     }
 
     override fun showBookingAlertDialog(ticket: TicketUiModel) {

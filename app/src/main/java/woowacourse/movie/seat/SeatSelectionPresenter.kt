@@ -18,7 +18,7 @@ class SeatSelectionPresenter(
         view.showTicket(ticket)
     }
 
-    override fun onSeatClicked(
+    override fun updateSeats(
         row: Int,
         col: Int,
     ) {
@@ -32,13 +32,17 @@ class SeatSelectionPresenter(
 
         view.showSeatState(seat.toUiModel())
 
+        updateBookingState()
+    }
+
+    private fun updateBookingState() {
         val shouldEnableButton = ticket.canReserve()
-        view.setButtonEnabled(shouldEnableButton)
+        view.updateCanBook(shouldEnableButton)
 
         view.showTicket(ticket.toUiModel())
     }
 
-    override fun onButtonClicked() {
+    override fun completeBooking() {
         val ticketUiModel = ticket.toUiModel()
         view.showBookingAlertDialog(ticketUiModel)
     }
@@ -46,6 +50,6 @@ class SeatSelectionPresenter(
     override fun restoreSeats(selectedSeats: List<SeatUiModel>) {
         ticket = ticket.copy(seats = Seats(selectedSeats.map { it.toDomain() }.toSet()))
         view.showTicket(ticket.toUiModel())
-        view.setButtonEnabled(ticket.canReserve())
+        view.updateCanBook(ticket.canReserve())
     }
 }

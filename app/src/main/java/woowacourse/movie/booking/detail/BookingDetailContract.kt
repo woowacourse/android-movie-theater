@@ -20,9 +20,9 @@ interface BookingDetailContract {
             selected: LocalTime,
         )
 
-        fun startSeatSelectionActivity(ticket: TicketUiModel)
-
         fun showHeadCount(headCount: Int)
+
+        fun startSeatSelectionActivity(ticket: TicketUiModel)
     }
 
     interface Presenter {
