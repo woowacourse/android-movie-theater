@@ -1,0 +1,20 @@
+package woowacourse.movie.domain.model
+
+import woowacourse.movie.domain.model.movie.Movie
+import woowacourse.movie.domain.model.seat.Seat
+import woowacourse.movie.domain.model.seat.Seats
+import java.io.Serializable
+import java.time.LocalDateTime
+import java.time.LocalTime
+
+data class Ticket(
+    val movie: Movie,
+    val theater: String,
+    val showtime: LocalDateTime = LocalDateTime.of(movie.startScreeningDate, LocalTime.MIDNIGHT),
+    val headCount: HeadCount = HeadCount(),
+    val seats: Seats = Seats(),
+) : Serializable {
+    fun totalPrice(): Int = seats.totalPrice()
+
+    fun contains(seat: Seat): Boolean = seats.contains(seat)
+}

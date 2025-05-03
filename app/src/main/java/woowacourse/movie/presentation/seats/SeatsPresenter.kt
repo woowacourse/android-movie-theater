@@ -2,7 +2,6 @@ package woowacourse.movie.presentation.seats
 
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
-import woowacourse.movie.domain.model.seat.SeatPosition
 import woowacourse.movie.domain.model.seat.SelectedSeats
 
 class SeatsPresenter(
@@ -18,12 +17,9 @@ class SeatsPresenter(
     }
 
     override fun getSeat(
-        x: Int,
-        y: Int,
-    ): Seat {
-        val seatPosition = SeatPosition(x, y)
-        return Seat(seatPosition)
-    }
+        row: Int,
+        col: Int,
+    ): Seat = Seat(row, col)
 
     override fun getSelectedSeats(): List<Seat> = selectedSeats.value
 
@@ -32,7 +28,7 @@ class SeatsPresenter(
     override fun onSeatClicked(seat: Seat) {
         runCatching {
             selectedSeats.updateSelection(seat)
-            view.updateAmount(selectedSeats.getTotalPrice())
+            view.updateAmount(selectedSeats.totalPrice())
             view.updateConfirmButtonEnabled(selectedSeats.isFull())
         }.onFailure {
             view.showToast(it.message ?: it.stackTraceToString())
@@ -44,9 +40,9 @@ class SeatsPresenter(
             MovieTicket(
                 movieTitle = this.movieTicket.movieTitle,
                 theaterName = this.movieTicket.theaterName,
-                screeningDateTime = this.movieTicket.screeningDateTime,
+                showtime = this.movieTicket.showtime,
                 headCount = this.movieTicket.headCount,
-                amount = selectedSeats.getTotalPrice(),
+                amount = selectedSeats.totalPrice(),
                 seats = selectedSeats.value,
             )
         view.navigateToSummary(movieTicket)
@@ -55,7 +51,7 @@ class SeatsPresenter(
     override fun onConfigurationChanged(seats: List<Seat>) {
         selectedSeats = SelectedSeats(movieTicket.headCount, seats.toMutableSet())
         view.updateSelectedSeats(selectedSeats.value)
-        view.updateAmount(selectedSeats.getTotalPrice())
+        view.updateAmount(selectedSeats.totalPrice())
         view.updateConfirmButtonEnabled(selectedSeats.isFull())
     }
 }

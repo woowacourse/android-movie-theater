@@ -26,8 +26,8 @@ interface SeatsContract {
         fun onViewCreated()
 
         fun getSeat(
-            x: Int,
-            y: Int,
+            row: Int,
+            col: Int,
         ): Seat
 
         fun getSelectedSeats(): List<Seat>

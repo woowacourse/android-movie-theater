@@ -25,7 +25,7 @@ object TicketUiFormatter {
 
 fun List<Seat>.toUi(): String =
     this.joinToString(", ") { seat ->
-        val row = 'A' + seat.seatPosition.y
-        val col = seat.seatPosition.x + 1
+        val row = 'A' + seat.row
+        val col = seat.col + 1
         "$row$col"
     }

@@ -1,42 +1,46 @@
 package woowacourse.movie.presentation.booking
 
+import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.movie.Movie
-import woowacourse.movie.domain.model.movie.MovieTicket
 import java.time.LocalDate
 import java.time.LocalTime
 
 interface BookingContract {
     interface View {
-        fun initBooking()
-
         fun showMovie(movie: Movie)
 
-        fun showBookableDates(dates: List<LocalDate>)
+        fun showHeadCount(count: Int)
 
-        fun showBookableTimes(times: List<LocalTime>)
+        fun updateDecreaseButtonState(isEnabled: Boolean)
 
-        fun updateHeadCount(count: Int)
+        fun updateIncreaseButtonState(isEnabled: Boolean)
 
-        fun navigateToSeats(ticket: MovieTicket)
+        fun showBookableDates(
+            dates: List<LocalDate>,
+            selectedDate: LocalDate,
+        )
+
+        fun showBookableTimes(
+            times: List<LocalTime>,
+            selectedTime: LocalTime,
+        )
+
+        fun navigateToSeats(ticket: Ticket)
     }
 
     interface Presenter {
-        fun onViewCreated()
+        fun loadBooking()
 
-        fun onDateSelected(selectedDate: LocalDate)
+        fun onDateSelected(date: LocalDate)
 
-        fun onTimeSelected(selectedTime: LocalTime)
+        fun onTimeSelected(time: LocalTime)
 
-        fun onIncreaseHeadCount()
+        fun increaseHeadCount()
 
-        fun onDecreaseHeadCount()
+        fun decreaseHeadCount()
 
-        fun onConfirmClicked()
+        fun confirmBooking()
 
-        fun onConfigurationChanged(
-            count: Int?,
-            date: LocalDate?,
-            time: LocalTime?,
-        )
+        fun restoreTicket(ticket: Ticket)
     }
 }

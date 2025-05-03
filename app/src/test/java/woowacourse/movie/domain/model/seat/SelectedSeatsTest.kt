@@ -17,8 +17,8 @@ class SelectedSeatsTest {
     @Test
     fun `인원 수만큼 좌석을 선택할 수 있다`() {
         // Given
-        val seat1 = Seat(SeatPosition(1, 1))
-        val seat2 = Seat(SeatPosition(2, 2))
+        val seat1 = Seat(1, 1)
+        val seat2 = Seat(2, 2)
 
         // When
         selectedSeats.updateSelection(seat1)
@@ -31,7 +31,7 @@ class SelectedSeatsTest {
     @Test
     fun `이미 선택된 좌석을 다시 선택할 경우 제거한다`() {
         // Given
-        val seat1 = Seat(SeatPosition(1, 1))
+        val seat1 = Seat(1, 1)
         selectedSeats.updateSelection(seat1)
 
         // When
@@ -45,9 +45,9 @@ class SelectedSeatsTest {
     @Test
     fun `인원 수를 초과하여 좌석을 선택할 수 없다`() {
         // Given
-        val seat1 = Seat(SeatPosition(1, 1))
-        val seat2 = Seat(SeatPosition(2, 2))
-        val seat3 = Seat(SeatPosition(3, 3))
+        val seat1 = Seat(1, 1)
+        val seat2 = Seat(2, 2)
+        val seat3 = Seat(3, 3)
 
         // When
         selectedSeats.updateSelection(seat1)
@@ -61,14 +61,14 @@ class SelectedSeatsTest {
     @Test
     fun `선택된 좌석들의 총 금액을 계산한다`() {
         // Given
-        val seat1 = Seat(SeatPosition(1, 1))
-        val seat2 = Seat(SeatPosition(2, 2))
+        val seat1 = Seat(1, 1)
+        val seat2 = Seat(2, 2)
 
         // When
         selectedSeats.updateSelection(seat1)
         selectedSeats.updateSelection(seat2)
 
         // Then
-        selectedSeats.getTotalPrice() shouldBe 25000
+        selectedSeats.totalPrice() shouldBe 25000
     }
 }

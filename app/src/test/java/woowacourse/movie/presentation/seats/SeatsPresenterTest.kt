@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
-import woowacourse.movie.domain.model.seat.SeatPosition
 import java.time.LocalDateTime
 
 class SeatsPresenterTest {
@@ -41,7 +40,7 @@ class SeatsPresenterTest {
     @Test
     fun `좌석을 선택하면 좌석을 추가하고 금액을 갱신한다`() {
         // Given
-        val seat = Seat(SeatPosition(1, 1))
+        val seat = Seat(1, 1)
 
         // When
         presenter.onSeatClicked(seat)
@@ -54,7 +53,7 @@ class SeatsPresenterTest {
     @Test
     fun `선택한 좌석을 재선택하면 좌석을 제거하고 금액을 갱신한다`() {
         // Given
-        val seat = Seat(SeatPosition(1, 1))
+        val seat = Seat(1, 1)
         presenter.onSeatClicked(seat)
 
         // When
@@ -68,8 +67,8 @@ class SeatsPresenterTest {
     @Test
     fun `인원수가 충족됐을 때 좌석을 선택할 경우 좌석을 추가하지 않고 토스트를 출력한다`() {
         // Given
-        val seat1 = Seat(SeatPosition(1, 1))
-        val seat2 = Seat(SeatPosition(2, 2))
+        val seat1 = Seat(1, 1)
+        val seat2 = Seat(2, 2)
 
         // When
         presenter.onSeatClicked(seat1)
@@ -83,7 +82,7 @@ class SeatsPresenterTest {
     @Test
     fun `예매 버튼을 누르면 티켓을 생성하고 화면을 이동한다`() {
         // Given
-        val seat = Seat(SeatPosition(1, 1))
+        val seat = Seat(1, 1)
         presenter.onSeatClicked(seat)
 
         // When
@@ -94,7 +93,7 @@ class SeatsPresenterTest {
             view.navigateToSummary(
                 match {
                     it.movieTitle == movieTicket.movieTitle &&
-                        it.screeningDateTime == movieTicket.screeningDateTime &&
+                        it.showtime == movieTicket.showtime &&
                         it.headCount == movieTicket.headCount &&
                         it.seats == listOf(seat) &&
                         it.amount == 10000

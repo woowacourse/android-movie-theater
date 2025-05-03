@@ -7,13 +7,13 @@ import java.time.LocalDateTime
 data class MovieTicket(
     val movieTitle: String,
     val theaterName: String,
-    val screeningDateTime: LocalDateTime,
+    val showtime: LocalDateTime,
     val headCount: Int,
     val amount: Int = DEFAULT_AMOUNT,
     val seats: List<Seat> = emptyList(),
 ) : Serializable {
     init {
-        require(screeningDateTime.isAfter(LocalDateTime.now())) { DATETIME_ERROR }
+        require(showtime.isAfter(LocalDateTime.now())) { DATETIME_ERROR }
     }
 
     companion object {

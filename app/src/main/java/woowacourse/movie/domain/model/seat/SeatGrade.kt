@@ -3,17 +3,17 @@ package woowacourse.movie.domain.model.seat
 enum class SeatGrade(
     val price: Int,
 ) {
-    B(10_000),
-    A(12_000),
     S(15_000),
+    A(12_000),
+    B(10_000),
     ;
 
     companion object {
-        fun from(colIndex: Int): SeatGrade =
-            when (colIndex) {
-                0, 1 -> B
+        fun of(row: Int): SeatGrade =
+            when (row) {
                 2, 3 -> S
                 4 -> A
+                0, 1 -> B
                 else -> throw IllegalArgumentException(GRADE_ERROR)
             }
 

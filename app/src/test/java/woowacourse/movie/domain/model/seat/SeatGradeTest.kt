@@ -12,8 +12,8 @@ class SeatGradeTest {
         val seat2 = 1
 
         // When
-        val grade1 = SeatGrade.from(seat1)
-        val grade2 = SeatGrade.from(seat2)
+        val grade1 = SeatGrade.of(seat1)
+        val grade2 = SeatGrade.of(seat2)
 
         // Then
         assertSoftly {
@@ -29,8 +29,8 @@ class SeatGradeTest {
         val seat2 = 3
 
         // When
-        val grade1 = SeatGrade.from(seat1)
-        val grade2 = SeatGrade.from(seat2)
+        val grade1 = SeatGrade.of(seat1)
+        val grade2 = SeatGrade.of(seat2)
 
         // Then
         assertSoftly {
@@ -45,7 +45,7 @@ class SeatGradeTest {
         val seat = 4
 
         // When
-        val grade = SeatGrade.from(seat)
+        val grade = SeatGrade.of(seat)
 
         // Then
         grade shouldBe SeatGrade.A

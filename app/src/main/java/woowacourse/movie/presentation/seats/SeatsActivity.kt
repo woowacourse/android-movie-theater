@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.seats
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TableRow
@@ -13,6 +14,7 @@ import woowacourse.movie.common.IntentKeys
 import woowacourse.movie.common.util.TicketUiFormatter
 import woowacourse.movie.common.util.intentSerializable
 import woowacourse.movie.databinding.ActivitySeatsBinding
+import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.presentation.result.BookingResultActivity
@@ -49,7 +51,7 @@ class SeatsActivity :
             .filterIsInstance<TableRow>()
             .forEachIndexed { rowIndex, row ->
                 row.children.filterIsInstance<TextView>().forEachIndexed { colIndex, view ->
-                    val seat = presenter.getSeat(colIndex, rowIndex)
+                    val seat = presenter.getSeat(rowIndex, colIndex)
                     view.tag = seat
                     setSeatClickListener(view, seat)
                 }
@@ -128,7 +130,7 @@ class SeatsActivity :
     }
 
     private fun fetchTicketFromIntent(): Boolean {
-        val data = intent.intentSerializable(IntentKeys.TICKET, MovieTicket::class.java)
+        val data = intent.intentSerializable(EXTRA_TICKET, MovieTicket::class.java)
         if (data == null) {
             Toast.makeText(this, TICKET_INTENT_ERROR, Toast.LENGTH_SHORT).show()
             finish()
@@ -151,6 +153,15 @@ class SeatsActivity :
     }
 
     companion object {
+        fun newIntent(
+            context: Context,
+            ticket: Ticket,
+        ): Intent =
+            Intent(context, SeatsActivity::class.java).apply {
+                putExtra(EXTRA_TICKET, ticket)
+            }
+
+        private const val EXTRA_TICKET = "ticket"
         private const val TICKET_INTENT_ERROR = "[ERROR] 예매 정보에 대한 키 값이 올바르지 않습니다."
         private const val SEATS_KEY = "Seats"
     }

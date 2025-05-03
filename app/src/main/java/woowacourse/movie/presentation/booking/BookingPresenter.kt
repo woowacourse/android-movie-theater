@@ -1,9 +1,8 @@
 package woowacourse.movie.presentation.booking
 
-import woowacourse.movie.domain.model.HeadCount
 import woowacourse.movie.domain.model.Screening
+import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.movie.MovieScheduler
-import woowacourse.movie.domain.model.movie.MovieTicket
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -12,9 +11,8 @@ class BookingPresenter(
     private val view: BookingContract.View,
     private val screening: Screening,
 ) : BookingContract.Presenter {
-    private var selectedDate: LocalDate? = null
-    private var selectedTime: LocalTime? = null
-    private var headCount: HeadCount = HeadCount()
+    private var _ticket = Ticket(screening.movie, screening.theater)
+    val ticket: Ticket get() = _ticket
     private val movieScheduler: MovieScheduler by lazy {
         MovieScheduler(
             screening.movie.startScreeningDate,
@@ -22,56 +20,47 @@ class BookingPresenter(
         )
     }
 
-    override fun onViewCreated() {
-        view.initBooking()
-        view.showMovie(screening.movie)
-        view.showBookableDates(movieScheduler.getBookableDates())
-        view.updateHeadCount(headCount.value)
+    override fun loadBooking() {
+        view.showMovie(_ticket.movie)
+        updateHeadCount()
+        view.showBookableDates(movieScheduler.getBookableDates(), ticket.showtime.toLocalDate())
     }
 
-    override fun onDateSelected(selectedDate: LocalDate) {
-        this.selectedDate = selectedDate
+    override fun onDateSelected(date: LocalDate) {
+        _ticket = _ticket.copy(showtime = LocalDateTime.of(date, _ticket.showtime.toLocalTime()))
+
         view.showBookableTimes(
-            movieScheduler.getBookableTimes(
-                selectedDate,
-                screeningTimes = screening.times,
-            ),
+            movieScheduler.getBookableTimes(date, screeningTimes = screening.times),
+            _ticket.showtime.toLocalTime(),
         )
     }
 
-    override fun onTimeSelected(selectedTime: LocalTime) {
-        this.selectedTime = selectedTime
+    override fun onTimeSelected(time: LocalTime) {
+        _ticket = _ticket.copy(showtime = LocalDateTime.of(_ticket.showtime.toLocalDate(), time))
     }
 
-    override fun onIncreaseHeadCount() {
-        headCount.increase()
-        view.updateHeadCount(headCount.value)
+    override fun increaseHeadCount() {
+        _ticket = _ticket.copy(headCount = _ticket.headCount + 1)
+        updateHeadCount()
     }
 
-    override fun onDecreaseHeadCount() {
-        headCount.decrease()
-        view.updateHeadCount(headCount.value)
+    override fun decreaseHeadCount() {
+        _ticket = _ticket.copy(headCount = _ticket.headCount - 1)
+        updateHeadCount()
     }
 
-    override fun onConfirmClicked() {
-        val ticket =
-            MovieTicket(
-                movieTitle = screening.movie.title,
-                theaterName = screening.theater,
-                screeningDateTime = LocalDateTime.of(selectedDate, selectedTime),
-                headCount = headCount.value,
-            )
+    override fun confirmBooking() {
         view.navigateToSeats(ticket)
     }
 
-    override fun onConfigurationChanged(
-        count: Int?,
-        date: LocalDate?,
-        time: LocalTime?,
-    ) {
-        count?.let { headCount = HeadCount(it) }
-        selectedDate = date
-        selectedTime = time
-        view.updateHeadCount(headCount.value)
+    override fun restoreTicket(ticket: Ticket) {
+        _ticket = ticket
+        loadBooking()
+    }
+
+    private fun updateHeadCount() {
+        view.showHeadCount(_ticket.headCount.value)
+        view.updateDecreaseButtonState(_ticket.headCount.isMinimum().not())
+        view.updateIncreaseButtonState(_ticket.headCount.isMaximum().not())
     }
 }

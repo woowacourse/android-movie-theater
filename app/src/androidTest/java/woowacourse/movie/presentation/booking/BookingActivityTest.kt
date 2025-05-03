@@ -54,7 +54,7 @@ class BookingActivityTest {
                 ApplicationProvider.getApplicationContext(),
                 BookingActivity::class.java,
             ).apply {
-                putExtra("ScreeningInfo", screening)
+                putExtra("screening", screening)
             }
 
         activityScenario = ActivityScenario.launch(intent)

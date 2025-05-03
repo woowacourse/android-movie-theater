@@ -63,7 +63,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:formattedDateTime="@{ticket.screeningDateTime}"
+                    app:formattedDateTime="@{ticket.showtime}"
                     tools:text="2025.4.15 11:00" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat

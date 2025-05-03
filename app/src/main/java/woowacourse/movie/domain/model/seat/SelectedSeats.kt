@@ -21,7 +21,7 @@ class SelectedSeats(
         }
     }
 
-    fun getTotalPrice(): Int = _seats.sumOf { it.grade.price }
+    fun totalPrice(): Int = _seats.sumOf { it.grade.price }
 
     fun isFull(): Boolean = _seats.size == headCount
 

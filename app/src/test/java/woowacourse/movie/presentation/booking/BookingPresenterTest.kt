@@ -45,13 +45,13 @@ class BookingPresenterTest {
             )
 
         // When
-        presenter.onViewCreated()
+        presenter.loadBooking()
 
         // Then
         verify { view.initBooking() }
         verify { view.showMovie(testMovie) }
         verify { view.showBookableDates(expected) }
-        verify { view.updateHeadCount(1) }
+        verify { view.showHeadCount(1) }
     }
 
     @Test
@@ -69,22 +69,22 @@ class BookingPresenterTest {
     @Test
     fun `증가 버튼을 누르면 예매 인원을 증가시키고 출력한다`() {
         // When
-        presenter.onIncreaseHeadCount()
+        presenter.increaseHeadCount()
 
         // Then
-        verify { view.updateHeadCount(2) }
+        verify { view.showHeadCount(2) }
     }
 
     @Test
     fun `현재 인원이 2 이상일 때 감소 버튼을 누르면 예매 인원을 감소시키고 출력한다`() {
         // Given
-        presenter.onIncreaseHeadCount()
+        presenter.increaseHeadCount()
 
         // When
-        presenter.onDecreaseHeadCount()
+        presenter.decreaseHeadCount()
 
         // Then
-        verify { view.updateHeadCount(1) }
+        verify { view.showHeadCount(1) }
     }
 
     @Test
@@ -96,14 +96,14 @@ class BookingPresenterTest {
         presenter.onTimeSelected(time)
 
         // When
-        presenter.onConfirmClicked()
+        presenter.confirmBooking()
 
         // Then
         verify {
             view.navigateToSeats(
                 match {
                     it.movieTitle == testMovie.title &&
-                        it.screeningDateTime == LocalDateTime.of(date, time) &&
+                        it.showtime == LocalDateTime.of(date, time) &&
                         it.headCount == 1
                 },
             )
