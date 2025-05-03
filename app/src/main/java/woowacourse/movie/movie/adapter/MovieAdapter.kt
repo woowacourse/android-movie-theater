@@ -7,18 +7,18 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.R
 import woowacourse.movie.databinding.AdBannerItemBinding
 import woowacourse.movie.databinding.MovieListItemBinding
-import woowacourse.movie.movie.MovieListItem
+import woowacourse.movie.ui.model.MovieFeedUiModel
 
 class MovieAdapter(
-    private val items: List<MovieListItem>,
+    private val items: List<MovieFeedUiModel>,
     private val onReserveClick: ReserveClickListener,
 ) : RecyclerView.Adapter<ViewHolder>() {
     override fun getItemCount(): Int = items.size
 
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
-            is MovieListItem.MovieItem -> R.layout.movie_list_item
-            is MovieListItem.AdvertisementItem -> R.layout.ad_banner_item
+            is MovieFeedUiModel.MovieItem -> R.layout.movie_list_item
+            is MovieFeedUiModel.AdvertisementItem -> R.layout.ad_banner_item
         }
     }
 
@@ -48,8 +48,8 @@ class MovieAdapter(
         val item = items[position]
 
         when (holder) {
-            is MovieViewHolder -> holder.bind((item as MovieListItem.MovieItem).movie)
-            is AdViewHolder -> holder.binding(item as MovieListItem.AdvertisementItem)
+            is MovieViewHolder -> holder.bind((item as MovieFeedUiModel.MovieItem).movie)
+            is AdViewHolder -> holder.binding(item as MovieFeedUiModel.AdvertisementItem)
         }
     }
 

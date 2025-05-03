@@ -12,6 +12,7 @@ import woowacourse.movie.movie.adapter.MovieAdapter
 import woowacourse.movie.theater.TheaterFragment
 import woowacourse.movie.theater.TheaterFragment.Companion.KEY_MOVIE
 import woowacourse.movie.theater.TheaterFragment.Companion.KEY_THEATERS
+import woowacourse.movie.ui.model.MovieFeedUiModel
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
 
@@ -37,7 +38,7 @@ class MovieFragment : Fragment(), MovieContract.View {
         presenter.initializeData()
     }
 
-    override fun setupMovieList(movies: List<MovieListItem>) {
+    override fun setupMovieList(movies: List<MovieFeedUiModel>) {
         val adapter =
             MovieAdapter(movies) { movie ->
                 presenter.setTheaters(movie)
