@@ -10,9 +10,11 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.domain.fixture.harryPotter1MoviesFixture
 import woowacourse.movie.domain.model.booking.PeopleCount
+import woowacourse.movie.view.bindingadapter.ImageSource
 import woowacourse.movie.view.home.booking.BookingContract
 import woowacourse.movie.view.home.booking.BookingPresenter
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
+import woowacourse.movie.view.uiModel.MovieUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -43,16 +45,21 @@ class BookingPresenterTest {
         // when
         presenter.loadMovieDetail()
 
-        val expected = harryPotter1MoviesFixture
+        val expected =
+            MovieUiModel(
+                title = "해리 포터와 마법사의 돌",
+                posterResource = ImageSource.Resource(harryPotter1MoviesFixture.posterResource),
+                screeningStartDate = "2025.4.10",
+                screeningEndDate = "2025.5.4",
+                runningTime = "152",
+            )
 
         // then
         verify {
             view.showMovieDetail(
                 match {
-                    it.id == expected.id &&
-                        it.title == expected.title &&
+                    it.title == expected.title &&
                         it.posterResource == expected.posterResource &&
-                        it.releaseDate == expected.releaseDate &&
                         it.runningTime == expected.runningTime
                 },
                 any(),

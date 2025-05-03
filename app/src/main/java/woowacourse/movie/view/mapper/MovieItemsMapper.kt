@@ -11,8 +11,8 @@ fun Movie.toItem(): MovieRvItem.MovieItem {
         id = id,
         title = title,
         imgName = ImageSource.Resource(posterResource),
-        releaseStartDate = StringFormatter.dotDateFormat(releaseDate.startDate),
-        releaseEndDate = StringFormatter.dotDateFormat(releaseDate.endDate),
+        releaseStartDate = StringFormatter.dotDateFormat(screeningStartDate),
+        releaseEndDate = StringFormatter.dotDateFormat(screeningEndDate),
         runningTime = runningTime,
     )
 }

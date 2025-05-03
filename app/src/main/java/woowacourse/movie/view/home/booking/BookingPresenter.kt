@@ -6,6 +6,7 @@ import woowacourse.movie.domain.model.booking.PeopleCount
 import woowacourse.movie.domain.model.booking.ScreeningDate
 import woowacourse.movie.domain.model.booking.ScreeningTime
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
+import woowacourse.movie.view.mapper.toUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -21,15 +22,8 @@ class BookingPresenter private constructor(
     }
 
     override fun loadMovieDetail() {
-        val screening = screeningInfo.screening
-        val screeningDate = screening.map { it.toLocalDate() }
-
-        val screeningBookingDates = ScreeningDate(screeningDate)
-
         loadScreeningDate(screeningInfo.screening, LocalDateTime.now())
-
-        view.showScreeningPeriod(screeningBookingDates.startDate, screeningBookingDates.endDate)
-        view.showMovieDetail(movies[screeningInfo.movieId], screening)
+        view.showMovieDetail(movies[screeningInfo.movieId].toUiModel(), screeningInfo.screening)
     }
 
     override fun loadPeopleCount() {

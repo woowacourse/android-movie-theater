@@ -1,7 +1,7 @@
 package woowacourse.movie.view.home.booking
 
 import woowacourse.movie.domain.model.booking.Booking
-import woowacourse.movie.domain.model.movies.Movie
+import woowacourse.movie.view.uiModel.MovieUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -9,16 +9,11 @@ import java.time.LocalTime
 interface BookingContract {
     interface View {
         fun showMovieDetail(
-            movie: Movie,
+            movie: MovieUiModel,
             screeningTimes: List<LocalDateTime>,
         )
 
         fun showPeopleCount(count: Int)
-
-        fun showScreeningPeriod(
-            startDate: LocalDate,
-            endDate: LocalDate,
-        )
 
         fun showScreeningDate(screeningBookingDates: List<LocalDate>)
 

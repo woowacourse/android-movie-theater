@@ -2,6 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="model"
+            type="woowacourse.movie.view.uiModel.MovieUiModel" />
+    </data>
     
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -26,6 +32,7 @@
 
                 <ImageView
                     android:id="@+id/img_movie_poster"
+                    imageFromName="@{model.posterResource}"
                     android:layout_width="match_parent"
                     android:layout_height="380dp"
                     android:adjustViewBounds="true"
@@ -34,6 +41,7 @@
 
                 <TextView
                     android:id="@+id/tv_title"
+                    android:text="@{model.title}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="10dp"
@@ -60,6 +68,7 @@
 
                     <TextView
                         android:id="@+id/tv_screening_period"
+                        android:text="@{String.format(@string/text_date_period, model.screeningStartDate, model.screeningEndDate)}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -85,6 +94,7 @@
 
                     <TextView
                         android:id="@+id/tv_running_time"
+                        android:text="@{String.valueOf(model.runningTime)}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"

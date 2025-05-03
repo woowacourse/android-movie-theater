@@ -7,24 +7,20 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieStore
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.booking.Booking
-import woowacourse.movie.domain.model.booking.PeopleCount
-import woowacourse.movie.domain.model.movies.Movie
-import woowacourse.movie.view.StringFormatter
 import woowacourse.movie.view.ext.getSerializableOrNull
 import woowacourse.movie.view.ext.showToastFromResource
 import woowacourse.movie.view.ext.toDrawableResourceId
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.home.seat.SeatActivity
+import woowacourse.movie.view.uiModel.MovieUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -62,14 +58,11 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     override fun showMovieDetail(
-        movie: Movie,
+        movie: MovieUiModel,
         screeningTimes: List<LocalDateTime>,
     ) {
+        binding.model = movie
         with(movie) {
-            initTitleView(title)
-            initPosterView(posterResource)
-
-            initRunningTimeView(runningTime)
             presenter.loadScreeningTime(
                 binding.spDate.selectedItem as LocalDate,
                 LocalDateTime.now(),
@@ -79,17 +72,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
     override fun showPeopleCount(count: Int) {
         binding.tvPeopleCount.text = count.toString()
-    }
-
-    override fun showScreeningPeriod(
-        startDate: LocalDate,
-        endDate: LocalDate,
-    ) {
-        binding.tvScreeningPeriod.text =
-            getString(R.string.text_date_period).format(
-                StringFormatter.dotDateFormat(startDate),
-                StringFormatter.dotDateFormat(endDate),
-            )
     }
 
     override fun showScreeningDate(screeningBookingDates: List<LocalDate>) {
@@ -128,19 +110,9 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         startActivity(intent)
     }
 
-    private fun initTitleView(title: String) {
-        binding.tvTitle.text = title
-    }
-
     private fun initPosterView(imgName: String) {
         val moviePosterView = findViewById<ImageView>(R.id.img_movie_poster)
         moviePosterView.setImageResource(imgName.toDrawableResourceId(this@BookingActivity))
-    }
-
-    private fun initRunningTimeView(runningTime: Int) {
-        val movieRunningTimeView = findViewById<TextView>(R.id.tv_running_time)
-        movieRunningTimeView.text =
-            getString(R.string.text_running_time_ㅡminute_unit).format(runningTime)
     }
 
     private fun initButtonListener() {
