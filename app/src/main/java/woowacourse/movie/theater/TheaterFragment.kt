@@ -48,19 +48,21 @@ class TheaterFragment : BottomSheetDialogFragment() {
 
     private fun initTheaters(): ArrayList<TheaterUiModel> {
         val theaters: ArrayList<TheaterUiModel>? = arguments?.getParcelableArrayList(KEY_THEATERS)
-        if (theaters == null) dismiss()
-
-        return theaters!!
+        return theaters ?: run {
+            dismiss()
+            throw IllegalArgumentException(ERROR_NOT_FOUND_DATA.format(KEY_THEATERS))
+        }
     }
 
     private fun initMovie(): MovieUiModel {
-        val movie: MovieUiModel? = arguments?.getParcelable(KEY_MOVIE)
-        if (movie == null) dismiss()
-
-        return movie!!
+        return arguments?.getParcelable(KEY_MOVIE) ?: run {
+            dismiss()
+            throw IllegalArgumentException(ERROR_NOT_FOUND_DATA.format(KEY_MOVIE))
+        }
     }
 
     companion object {
+        private const val ERROR_NOT_FOUND_DATA = "%s 데이터를 찾을 수 없습니다"
         const val KEY_THEATERS = "THEATERS_DATA"
         const val KEY_MOVIE = "MOVIE_DATA"
     }
