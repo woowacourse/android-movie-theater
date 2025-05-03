@@ -20,7 +20,6 @@ import woowacourse.movie.util.Formatter.formatDateDotSeparated
 import woowacourse.movie.util.Formatter.formatTimeWithMidnight24
 import java.time.LocalDate
 import java.time.LocalTime
-import kotlin.test.assertEquals
 
 class SchedulerDetailPresenterTest {
     private val selectedDate = LocalDate.of(2028, 10, 13)
@@ -57,7 +56,7 @@ class SchedulerDetailPresenterTest {
         presenter.setUpTicket()
 
         verify { mockView.showMovieInfo(mockMovieUiData) }
-        verify { mockView.showHeadCount() }
+        verify { mockView.showHeadCount(any()) }
 
         verify { mockView.showScreeningDates(any(), any()) }
         verify { mockView.showScreeningTimes(any(), any()) }
@@ -83,7 +82,7 @@ class SchedulerDetailPresenterTest {
 
         presenter.increaseHeadCount()
 
-        verify { mockView.showHeadCount() }
+        verify { mockView.showHeadCount(any()) }
     }
 
     @Test
@@ -113,24 +112,19 @@ class SchedulerDetailPresenterTest {
 
     @Test
     fun `인원수가 10명인 경우 -버튼을 누르면 인원수가 줄어든다`() {
-        presenter.restoreTicketData(10, "2028.10.13", "11:00")
+        presenter.restoreTicketData(10, "2028-10-13", "11:00")
         presenter.setUpTicket()
 
         presenter.decreaseHeadCount()
-        val currentTicket = presenter.getCurrentTicketUiModel()
 
-        verify { mockView.showHeadCount() }
-        assertEquals(currentTicket.headCount, 9)
+        verify { mockView.showHeadCount(9) }
     }
 
     @Test
     fun `저장된 인원 수가 있으면 복원된다`() {
-        presenter.restoreTicketData(10, "2028.10.13", "11:00")
+        presenter.restoreTicketData(10, "2028-10-13", "11:00")
         presenter.setUpTicket()
 
-        val currentTicket = presenter.getCurrentTicketUiModel()
-        verify { mockView.showHeadCount() }
-
-        assertEquals(currentTicket.headCount, 10)
+        verify { mockView.showHeadCount(10) }
     }
 }
