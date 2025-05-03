@@ -6,8 +6,7 @@ import woowacourse.movie.ui.model.MovieUiModel
 
 fun Movie.toUiModel(): MovieUiModel {
     return MovieUiModel(
-        imageSource = getImageResIdFromUrl(imageSource),
-        imageUrl = imageSource,
+        imageSource = getImageResIdFromUrl(title),
         title = title,
         screeningStartDate = screeningStartDate,
         screeningEndDate = screeningEndDate,
@@ -17,7 +16,6 @@ fun Movie.toUiModel(): MovieUiModel {
 
 fun MovieUiModel.toDomain(): Movie {
     return Movie(
-        imageSource = imageUrl,
         title = title,
         screeningStartDate = screeningStartDate,
         screeningEndDate = screeningEndDate,
@@ -32,9 +30,14 @@ private fun getImageResIdFromUrl(imageUrl: String): Int {
 
 private val imageNameToResIdMap =
     mapOf(
-        "harry_potter" to R.drawable.harry_potter,
-        "harry_potter2" to R.drawable.harry_potter2,
-        "harry_potter3" to R.drawable.harry_potter3,
-        "harry_potter4" to R.drawable.harry_potter4,
-        "star_is_born" to R.drawable.star_is_born,
+        "해리 포터와 마법사의 돌" to R.drawable.harry_potter,
+        "해리 포터와 비밀의 방" to R.drawable.harry_potter2,
+        "해리 포터와 아즈카반의 죄수" to R.drawable.harry_potter3,
+        "해리 포터와 불의 잔" to R.drawable.harry_potter4,
+        "스타 이즈 본" to R.drawable.star_is_born,
+        "해리 포터와 마법사의 돌2" to R.drawable.harry_potter,
+        "해리 포터와 비밀의 방2" to R.drawable.harry_potter2,
+        "해리 포터와 아즈카반의 죄수2" to R.drawable.harry_potter3,
+        "해리 포터와 불의 잔2" to R.drawable.harry_potter4,
+        "스타 이즈 본2" to R.drawable.star_is_born,
     )

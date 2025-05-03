@@ -3,7 +3,6 @@ package woowacourse.movie.model
 import java.time.LocalDate
 
 data class Movie(
-    val imageSource: String,
     val title: String,
     val screeningStartDate: LocalDate,
     val screeningEndDate: LocalDate,
