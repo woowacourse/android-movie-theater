@@ -1,6 +1,5 @@
 package woowacourse.movie.data
 
-import woowacourse.movie.domain.model.movies.Movie
 import woowacourse.movie.domain.model.theater.Screening
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.domain.model.theater.Theaters
@@ -8,90 +7,119 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class TheaterStore {
-    private val defaultTimeSlots =
-        listOf(
-            LocalTime.of(9, 0),
-            LocalTime.of(13, 0),
-            LocalTime.of(17, 0),
-            LocalTime.of(21, 0),
-        )
-
-    fun createTheaters(): Theaters {
-        val movies = MovieStore().getAll()
-
-        val theaters =
+class TheaterStore(
+    private val movies: MovieStore,
+) {
+    fun theaters() =
+        Theaters(
             listOf(
                 Theater(
-                    "선릉 극장",
-                    generateScreeningsForTheater(
-                        movies,
-                        listOf(0, 1, 2, 3, 5),
-                        listOf(
-                            LocalTime.of(10, 0),
-                            LocalTime.of(14, 0),
-                            LocalTime.of(18, 0),
+                    name = "선릉 극장",
+                    movieSchedules =
+                        generateScreenings(
+                            theaterStartDate = LocalDate.of(2025, 5, 4),
+                            screeningDays = 40,
+                            openTime = LocalTime.of(8, 0),
+                            closeTime = LocalTime.of(23, 0),
                         ),
-                    ),
                 ),
                 Theater(
-                    "잠실 극장",
-                    generateScreeningsForTheater(
-                        movies,
-                        listOf(1, 2, 4, 6, 7),
-                        listOf(
-                            LocalTime.of(9, 30),
-                            LocalTime.of(12, 0),
-                            LocalTime.of(19, 30),
-                            LocalTime.of(22, 0),
+                    name = "잠실 극장",
+                    movieSchedules =
+                        generateScreenings(
+                            theaterStartDate = LocalDate.of(2025, 5, 1),
+                            screeningDays = 30,
+                            openTime = LocalTime.of(8, 0),
+                            closeTime = LocalTime.of(23, 0),
                         ),
-                    ),
                 ),
                 Theater(
-                    "강남 극장",
-                    generateScreeningsForTheater(
-                        movies,
-                        listOf(1, 2, 5, 6, 7),
-                        defaultTimeSlots,
-                    ),
+                    name = "잠실 극장",
+                    movieSchedules =
+                        generateScreenings(
+                            theaterStartDate = LocalDate.of(2025, 5, 1),
+                            screeningDays = 30,
+                            openTime = LocalTime.of(7, 0),
+                            closeTime = LocalTime.of(23, 0),
+                        ),
                 ),
-            )
+            ),
+        )
 
-        return Theaters(theaters)
-    }
-
-    private fun generateScreeningsForTheater(
-        movies: List<Movie>,
-        theaterMovieIds: List<Int>,
-        theaterTimeSlots: List<LocalTime>,
+    private fun generateScreenings(
+        theaterStartDate: LocalDate,
+        screeningDays: Long,
+        openTime: LocalTime,
+        closeTime: LocalTime,
     ): List<Screening> {
-        return theaterMovieIds
-            .mapNotNull { id -> movies.find { it.id == id } }
-            .flatMap { movie -> generateScreeningsForMovie(movie, theaterTimeSlots) }
-    }
+        val theaterEndDate = theaterStartDate.plusDays(screeningDays)
 
-    private fun generateScreeningsForMovie(
-        movie: Movie,
-        timeSlots: List<LocalTime>,
-    ): List<Screening> {
-        val dateRange = generateDateRange(movie.releaseDate.startDate, movie.releaseDate.endDate)
+        return movies.getAll().flatMap { movie ->
+            val actualStart = maxOf(theaterStartDate, movie.screeningStartDate)
+            val actualEnd = minOf(theaterEndDate, movie.screeningEndDate)
 
-        return dateRange.flatMap { date ->
-            timeSlots.map { time ->
-                Screening(
-                    movieId = movie.id,
-                    screenTime = LocalDateTime.of(date, time),
-                )
-            }
+            if (actualStart > actualEnd) return@flatMap emptyList()
+
+            val dateRange = generateDateRange(actualStart, actualEnd)
+
+            val timeSlot = generateTimeSlots(movie.runningTime, openTime, closeTime)
+
+            generateDateSlot(movie.id, dateRange, timeSlot)
         }
     }
 
     private fun generateDateRange(
         start: LocalDate,
-        end: LocalDate,
+        endInclusive: LocalDate,
     ): List<LocalDate> {
-        return generateSequence(start) { current ->
-            if (current < end) current.plusDays(1) else null
-        }.toList()
+        val dates = mutableListOf<LocalDate>()
+        var current = start
+        while (!current.isAfter(endInclusive)) {
+            dates.add(current)
+            current = current.plusDays(1)
+        }
+        return dates
+    }
+
+    private fun generateDateSlot(
+        movieId: Int,
+        dateRange: List<LocalDate>,
+        timeSlot: List<LocalTime>,
+    ): List<Screening> {
+        return dateRange.flatMap { date ->
+            generateScreenings(movieId, date, timeSlot)
+        }
+    }
+
+    private fun generateScreenings(
+        movieId: Int,
+        date: LocalDate,
+        timeSlot: List<LocalTime>,
+    ): List<Screening> {
+        return timeSlot.map { time ->
+            Screening(movieId, LocalDateTime.of(date, time))
+        }
+    }
+
+    private fun generateTimeSlots(
+        movieRunningTime: Int,
+        openTime: LocalTime,
+        closeTime: LocalTime,
+    ): List<LocalTime> {
+        val slots = mutableListOf<LocalTime>()
+
+        val totalScreeningTime = movieRunningTime + MOVIE_SCREENING_INTERVAL
+        val latestStartTime = closeTime.minusMinutes(totalScreeningTime)
+
+        var current = openTime
+        while (current <= latestStartTime) {
+            slots.add(current)
+            current = current.plusMinutes(totalScreeningTime)
+        }
+        return slots
+    }
+
+    companion object {
+        private const val MOVIE_SCREENING_INTERVAL = 30L
     }
 }
