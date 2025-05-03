@@ -1,7 +1,7 @@
 package woowacourse.movie.view.theater
 
 import androidx.recyclerview.widget.DiffUtil
-import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.domain.model.TheaterUIModel
 
 object TheaterDiffUtil : DiffUtil.ItemCallback<TheaterUIModel>() {
     override fun areItemsTheSame(

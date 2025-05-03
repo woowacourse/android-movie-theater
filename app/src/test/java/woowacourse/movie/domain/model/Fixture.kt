@@ -1,11 +1,6 @@
 package woowacourse.movie.domain.model
 
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.ReservationInfo
-import woowacourse.movie.model.Seats
-import woowacourse.movie.model.TheaterUIModel
-import woowacourse.movie.view.item.Movie
 import java.time.LocalDate
 
 val dummyMovie =

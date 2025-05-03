@@ -1,17 +1,17 @@
 package woowacourse.movie.view.movie
 
-import woowacourse.movie.view.item.Movie
+import woowacourse.movie.view.model.MovieUiModel
 
 interface MovieContract {
     interface View {
-        fun showMovies(movies: List<Movie>)
+        fun showMovies(movies: List<MovieUiModel>)
 
-        fun showTheaterInfo(movie: Movie)
+        fun showTheaterInfo(movie: MovieUiModel)
     }
 
     interface Presenter {
         fun fetchMovies()
 
-        fun reservationSelected(movie: Movie)
+        fun reservationSelected(movie: MovieUiModel)
     }
 }

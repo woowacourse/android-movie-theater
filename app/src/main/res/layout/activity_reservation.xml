@@ -7,7 +7,7 @@
 
         <variable
             name="reservationState"
-            type="woowacourse.movie.model.ReservationUIModel" />
+            type="woowacourse.movie.domain.model.ReservationUIModel" />
 
         <variable
             name="presenter"

@@ -7,7 +7,7 @@
 
         <variable
             name="theater"
-            type="woowacourse.movie.model.TheaterUIModel" />
+            type="woowacourse.movie.domain.model.TheaterUIModel" />
 
         <variable
             name="theaterClickListener"

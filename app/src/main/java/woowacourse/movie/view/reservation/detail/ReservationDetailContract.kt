@@ -1,7 +1,7 @@
 package woowacourse.movie.view.reservation.detail
 
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.domain.model.MovieTicket
+import woowacourse.movie.domain.model.TheaterUIModel
 import java.time.LocalDate
 
 interface ReservationDetailContract {

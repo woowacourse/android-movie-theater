@@ -1,6 +1,6 @@
 package woowacourse.movie.view.reservation.complete
 
-import woowacourse.movie.model.ReservationInfo
+import woowacourse.movie.domain.model.ReservationInfo
 
 interface ReservationCompleteContract {
     interface View {

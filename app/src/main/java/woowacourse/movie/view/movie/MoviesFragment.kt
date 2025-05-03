@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMoviesBinding
-import woowacourse.movie.view.item.AdItem
-import woowacourse.movie.view.item.MainItem
-import woowacourse.movie.view.item.Movie
+import woowacourse.movie.view.model.AdItem
+import woowacourse.movie.view.model.MainItem
+import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.movie.adapter.MovieAdapter
 import woowacourse.movie.view.theater.TheaterBottomSheetDialogFragment
 
@@ -39,7 +39,7 @@ class MoviesFragment :
         presenter.fetchMovies()
     }
 
-    override fun showMovies(movies: List<Movie>) {
+    override fun showMovies(movies: List<MovieUiModel>) {
         val mixedItems = mutableListOf<MainItem>()
         val movieChunks = movies.chunked(3)
 
@@ -51,12 +51,12 @@ class MoviesFragment :
         moviesAdapter.submitList(mixedItems)
     }
 
-    override fun showTheaterInfo(movie: Movie) {
+    override fun showTheaterInfo(movie: MovieUiModel) {
         val bottomSheet = TheaterBottomSheetDialogFragment.newInstance(movie)
         bottomSheet.show(parentFragmentManager, BOTTOM_SHEET_TAG)
     }
 
-    override fun onMovieClicked(item: Movie) {
+    override fun onMovieClicked(item: MovieUiModel) {
         presenter.reservationSelected(item)
     }
 

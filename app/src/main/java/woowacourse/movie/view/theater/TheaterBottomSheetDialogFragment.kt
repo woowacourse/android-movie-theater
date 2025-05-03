@@ -10,10 +10,9 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
-import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.domain.model.TheaterUIModel
 import woowacourse.movie.view.Extras
-import woowacourse.movie.view.compatParcelable
-import woowacourse.movie.view.item.Movie
+import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.reservation.detail.ReservationDetailActivity
 
 class TheaterBottomSheetDialogFragment :
@@ -52,10 +51,10 @@ class TheaterBottomSheetDialogFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         setupTheaterAdapter()
-        presenter.fetchTheaters(
-            requireArguments().compatParcelable(Extras.MovieData.MOVIE_KEY)
-                ?: error(ERROR_ARGUMENT),
-        )
+//        presenter.fetchTheaters(
+//            requireArguments().compatParcelable(Extras.MovieData.MOVIE_KEY)
+//                ?: error(ERROR_ARGUMENT),
+//        )
     }
 
     override fun showTheaters(theaters: List<TheaterUIModel>) {
@@ -89,7 +88,7 @@ class TheaterBottomSheetDialogFragment :
     }
 
     companion object {
-        fun newInstance(movie: Movie): TheaterBottomSheetDialogFragment =
+        fun newInstance(movie: MovieUiModel): TheaterBottomSheetDialogFragment =
             TheaterBottomSheetDialogFragment().apply {
                 arguments =
                     Bundle().apply {

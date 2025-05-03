@@ -12,11 +12,10 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.R.layout
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.domain.model.MovieTicket
+import woowacourse.movie.domain.model.TheaterUIModel
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.getParcelableExtraCompat
 import woowacourse.movie.view.movie.MoviesActivity

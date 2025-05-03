@@ -9,8 +9,8 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.dummyReservationInfo
-import woowacourse.movie.model.ReservationInfo
 import woowacourse.movie.view.reservation.complete.ReservationCompleteContract
 import woowacourse.movie.view.reservation.complete.ReservationCompletePresenter
 

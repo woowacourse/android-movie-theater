@@ -8,10 +8,8 @@ import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemMovieBinding
-import woowacourse.movie.view.ReservationUiFormatter
 import woowacourse.movie.view.base.BaseViewHolder
-import woowacourse.movie.view.item.Movie
-import java.time.LocalDate
+import woowacourse.movie.view.model.MovieUiModel
 
 @BindingAdapter("imgResPath")
 fun setImageViewResourcePath(
@@ -24,14 +22,14 @@ fun setImageViewResourcePath(
 @BindingAdapter(value = ["startDate", "endDate"])
 fun setScreeningDate(
     view: TextView,
-    startDate: LocalDate,
-    endDate: LocalDate,
+    startDate: String,
+    endDate: String,
 ) {
     val text =
         view.context.getString(
             R.string.movie_screening_date,
-            ReservationUiFormatter.localDateToUI(startDate),
-            ReservationUiFormatter.localDateToUI(endDate),
+            startDate,
+            endDate,
         )
     view.text = text
 }
@@ -39,7 +37,7 @@ fun setScreeningDate(
 class MovieViewHolder(
     parent: ViewGroup,
     private val handler: Handler,
-) : BaseViewHolder<Movie, ItemMovieBinding>(
+) : BaseViewHolder<MovieUiModel, ItemMovieBinding>(
         ItemMovieBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -52,13 +50,13 @@ class MovieViewHolder(
         }
     }
 
-    override fun bind(item: Movie) {
+    override fun bind(item: MovieUiModel) {
         super.bind(item)
         binding.movie = item
         binding.executePendingBindings()
     }
 
     interface Handler {
-        fun onMovieClicked(item: Movie)
+        fun onMovieClicked(item: MovieUiModel)
     }
 }

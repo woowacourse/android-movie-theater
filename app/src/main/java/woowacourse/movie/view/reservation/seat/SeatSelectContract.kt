@@ -1,7 +1,7 @@
 package woowacourse.movie.view.reservation.seat
 
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.ReservationInfo
+import woowacourse.movie.domain.model.MovieTicket
+import woowacourse.movie.domain.model.ReservationInfo
 
 interface SeatSelectContract {
     interface View {

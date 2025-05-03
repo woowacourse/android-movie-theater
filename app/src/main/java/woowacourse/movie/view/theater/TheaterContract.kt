@@ -1,7 +1,7 @@
 package woowacourse.movie.view.theater
 
-import woowacourse.movie.model.TheaterUIModel
-import woowacourse.movie.view.item.Movie
+import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.TheaterUIModel
 
 interface TheaterContract {
     interface View {

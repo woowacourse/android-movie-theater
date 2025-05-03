@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import woowacourse.movie.databinding.ItemAdvertisementBinding
 import woowacourse.movie.view.base.BaseViewHolder
-import woowacourse.movie.view.item.AdItem
+import woowacourse.movie.view.model.AdItem
 
 class AdViewHolder(
     parent: ViewGroup,

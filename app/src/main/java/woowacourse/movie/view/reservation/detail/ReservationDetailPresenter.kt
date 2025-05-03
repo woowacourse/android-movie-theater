@@ -1,13 +1,13 @@
 package woowacourse.movie.view.reservation.detail
 
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieDao
-import woowacourse.movie.model.MovieDate
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.MovieTime
-import woowacourse.movie.model.ReservationUIModel
-import woowacourse.movie.model.TheaterUIModel
-import woowacourse.movie.model.TicketCount
+import woowacourse.movie.domain.model.MovieDao
+import woowacourse.movie.domain.model.MovieDate
+import woowacourse.movie.domain.model.MovieTicket
+import woowacourse.movie.domain.model.MovieTime
+import woowacourse.movie.domain.model.ReservationUIModel
+import woowacourse.movie.domain.model.TheaterUIModel
+import woowacourse.movie.domain.model.TicketCount
 import woowacourse.movie.view.ReservationUiFormatter
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -27,21 +27,21 @@ class ReservationDetailPresenter(
             return
         }
 
-        reservationUIModel =
-            ReservationUIModel(
-                movie = theaterUIModel.movie,
-                movieDate = MovieDate(theaterUIModel.movie.startDate, theaterUIModel.movie.endDate),
-                movieTime = MovieTime(),
-                ticketCount = TicketCount().value,
-                theaterName = theaterUIModel.name,
-            )
+//        reservationUIModel =
+//            ReservationUIModel(
+//                movie = theaterUIModel.movie,
+//                movieDate = MovieDate(theaterUIModel.movie.startDate, theaterUIModel.movie.endDate),
+//                movieTime = MovieTime(),
+//                ticketCount = TicketCount().value,
+//                theaterName = theaterUIModel.name,
+//            )
 
         updateMovieInfo()
     }
 
     override fun initDateAdapter() {
         var duration = reservationUIModel.movieDate.getDateTable(LocalDate.now())
-        if (duration.isEmpty()) duration = listOf(reservationUIModel.movie.startDate)
+//        if (duration.isEmpty()) duration = listOf(reservationUIModel.movie.startDate)
 
         view.updateDateAdapter(duration, 0)
         selectDate(duration[0])
@@ -109,14 +109,14 @@ class ReservationDetailPresenter(
     fun currentTicketCount(): Int = reservationUIModel.ticketCount
 
     private fun updateMovieInfo() {
-        val movie = reservationUIModel.movie
-        view.showMovieInfo(
-            posterResId = movie.poster,
-            title = movie.name,
-            startDate = ReservationUiFormatter.localDateToUI(movie.startDate),
-            endDate = ReservationUiFormatter.localDateToUI(movie.endDate),
-            runningTime = movie.runningTime,
-        )
+//        val movie = reservationUIModel.movie
+//        view.showMovieInfo(
+//            posterResId = movie.poster,
+//            title = movie.name,
+//            startDate = ReservationUiFormatter.localDateToUI(movie.startDate),
+//            endDate = ReservationUiFormatter.localDateToUI(movie.endDate),
+//            runningTime = movie.runningTime,
+//        )
     }
 
     private fun updateReservationState(
