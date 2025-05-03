@@ -3,7 +3,6 @@ package woowacourse.movie.seat
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
@@ -57,7 +56,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             TicketUiModel::class.java,
         )
             ?: run {
-                Log.e(TAG, ERROR_EMPTY_TICKET_DATA)
                 showToastErrorAndFinish(getString(R.string.booking_toast_message))
                 throw IllegalStateException(ERROR_FINISH_ACTIVITY.format(KEY_TICKET))
             }
@@ -143,8 +141,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     companion object {
-        private const val TAG = "SeatSelectionActivity"
-        private const val ERROR_EMPTY_TICKET_DATA = "인텐트에 영화 예매 정보(KEY_TICKET)가 없습니다."
         private const val ERROR_FINISH_ACTIVITY = "%s 데이터가 없어서 Activity를 종료했습니다"
         const val KEY_TICKET = "ticketUiData"
     }

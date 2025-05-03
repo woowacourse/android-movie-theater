@@ -2,7 +2,6 @@ package woowacourse.movie.booking.detail
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -63,7 +62,6 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     private fun requireMovieOrFinish(): MovieUiModel {
         return IntentCompat.getParcelableExtra(intent, KEY_MOVIE_DATA, MovieUiModel::class.java)
             ?: run {
-                Log.e(TAG, ERROR_EMPTY_MOVIE_DATA)
                 showToastErrorAndFinish(getString(R.string.booking_toast_message))
                 throw IllegalStateException(ERROR_FINISH_ACTIVITY.format(KEY_MOVIE_DATA))
             }
@@ -72,7 +70,6 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     private fun requireTheaterOrFinish(): TheaterUiModel {
         return IntentCompat.getParcelableExtra(intent, KEY_THEATER_DATA, TheaterUiModel::class.java)
             ?: run {
-                Log.e(TAG, ERROR_EMPTY_THEATER_DATA)
                 showToastErrorAndFinish(getString(R.string.booking_toast_message))
                 throw IllegalStateException(ERROR_FINISH_ACTIVITY.format(KEY_THEATER_DATA))
             }
@@ -152,7 +149,6 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     }
 
     override fun showToastErrorAndFinish(message: String) {
-        Log.d(TAG, message)
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         finish()
     }
@@ -174,9 +170,6 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
 
     companion object {
         private const val INVALID_POSITION_VALUE = -1
-        private const val TAG = "BookingDetailActivity"
-        private const val ERROR_EMPTY_MOVIE_DATA = "인텐트에 영화 예매 정보(KEY_MOVIE_DATA)가 없습니다"
-        private const val ERROR_EMPTY_THEATER_DATA = "인텐트에 극장 정보(KEY_THEATER_DATA)가 없습니다"
         private const val ERROR_FINISH_ACTIVITY = "%s 데이터가 없어서 Activity를 종료했습니다"
         const val KEY_MOVIE_DATA = "movieData"
         const val KEY_THEATER_DATA = "theaterData"
