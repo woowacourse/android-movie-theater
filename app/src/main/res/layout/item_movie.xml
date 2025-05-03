@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="@{String.format(@string/date_text, StringFormatter.date(movie.startScreeningDate), StringFormatter.date(movie.endScreeningDate))}"
+                android:text="@{String.format(@string/date_text, StringFormatter.date(movie.startDate), StringFormatter.date(movie.endDate))}"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 tools:text="상영일: 2025.4.1 ~ 2025.4.25" />

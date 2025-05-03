@@ -5,7 +5,7 @@ import java.time.LocalDate
 
 data class Movie(
     val title: String,
-    val startScreeningDate: LocalDate,
-    val endScreeningDate: LocalDate,
+    val startDate: LocalDate,
+    val endDate: LocalDate,
     val runningTime: Int,
 ) : Serializable

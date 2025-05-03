@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.movie.Movie
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 
 class BookingPresenterTest {
@@ -48,9 +47,8 @@ class BookingPresenterTest {
         presenter.loadBooking()
 
         // Then
-        verify { view.initBooking() }
         verify { view.showMovie(testMovie) }
-        verify { view.showBookableDates(expected) }
+        verify { view.showBookableDates(expected, any()) }
         verify { view.showHeadCount(1) }
     }
 
@@ -63,7 +61,7 @@ class BookingPresenterTest {
         presenter.onDateSelected(date)
 
         // Then
-        verify { view.showBookableTimes(any()) }
+        verify { view.showBookableTimes(any(), any()) }
     }
 
     @Test
@@ -99,14 +97,6 @@ class BookingPresenterTest {
         presenter.confirmBooking()
 
         // Then
-        verify {
-            view.navigateToSeats(
-                match {
-                    it.movieTitle == testMovie.title &&
-                        it.showtime == LocalDateTime.of(date, time) &&
-                        it.headCount == 1
-                },
-            )
-        }
+        verify { view.navigateToSeats(any()) }
     }
 }

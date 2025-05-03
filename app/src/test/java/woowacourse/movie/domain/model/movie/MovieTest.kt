@@ -18,8 +18,8 @@ class MovieTest {
 
         assertSoftly(movie) {
             title shouldBe "승부"
-            startScreeningDate shouldBe LocalDate.of(2025, 3, 26)
-            endScreeningDate shouldBe LocalDate.of(2025, 3, 27)
+            startDate shouldBe LocalDate.of(2025, 3, 26)
+            endDate shouldBe LocalDate.of(2025, 3, 27)
             runningTime shouldBe 115
         }
     }

@@ -1,4 +1,4 @@
-package woowacourse.movie.domain.model.movie
+package woowacourse.movie.domain.model
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.inspectors.forAll
@@ -6,6 +6,7 @@ import io.kotest.matchers.collections.shouldNotBeEmpty
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.model.movie.Movie
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -16,8 +17,16 @@ class MovieSchedulerTest {
     fun setUp() {
         movieScheduler =
             MovieScheduler(
-                LocalDate.of(2025, 4, 16),
-                LocalDate.of(2025, 5, 30),
+                Screening(
+                    "선릉 극장",
+                    Movie(
+                        "승부",
+                        LocalDate.of(2025, 3, 26),
+                        LocalDate.of(2025, 3, 27),
+                        115,
+                    ),
+                    listOf(1, 2, 20, 22).map { LocalTime.of(it, 0) },
+                ),
             )
     }
 
@@ -38,11 +47,7 @@ class MovieSchedulerTest {
     @Test
     fun `현재 이후의 예매 가능한 시간들을 반환한다`() {
         // When
-        val bookableTimes =
-            movieScheduler.getBookableTimes(
-                LocalDate.now(),
-                screeningTimes = listOf(10, 12, 14, 17, 20, 22).map { LocalTime.of(it, 0) },
-            )
+        val bookableTimes = movieScheduler.getBookableTimes(LocalDate.now())
 
         // Then
         assertSoftly(bookableTimes) {

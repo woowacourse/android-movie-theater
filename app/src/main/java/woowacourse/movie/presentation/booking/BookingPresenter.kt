@@ -1,24 +1,20 @@
 package woowacourse.movie.presentation.booking
 
+import woowacourse.movie.domain.model.MovieScheduler
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.domain.model.movie.MovieScheduler
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
 class BookingPresenter(
     private val view: BookingContract.View,
-    private val screening: Screening,
+    screening: Screening,
 ) : BookingContract.Presenter {
     private var _ticket = Ticket(screening.movie, screening.theater)
     val ticket: Ticket get() = _ticket
-    private val movieScheduler: MovieScheduler by lazy {
-        MovieScheduler(
-            screening.movie.startScreeningDate,
-            screening.movie.endScreeningDate,
-        )
-    }
+
+    private val movieScheduler = MovieScheduler(screening)
 
     override fun loadBooking() {
         view.showMovie(_ticket.movie)
@@ -30,7 +26,7 @@ class BookingPresenter(
         _ticket = _ticket.copy(showtime = LocalDateTime.of(date, _ticket.showtime.toLocalTime()))
 
         view.showBookableTimes(
-            movieScheduler.getBookableTimes(date, screeningTimes = screening.times),
+            movieScheduler.getBookableTimes(date),
             _ticket.showtime.toLocalTime(),
         )
     }

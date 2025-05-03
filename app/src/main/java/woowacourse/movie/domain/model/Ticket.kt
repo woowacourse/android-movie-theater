@@ -10,7 +10,7 @@ import java.time.LocalTime
 data class Ticket(
     val movie: Movie,
     val theater: String,
-    val showtime: LocalDateTime = LocalDateTime.of(movie.startScreeningDate, LocalTime.MIDNIGHT),
+    val showtime: LocalDateTime = LocalDateTime.of(movie.startDate, LocalTime.MIDNIGHT),
     val headCount: HeadCount = HeadCount(),
     val seats: Seats = Seats(),
 ) : Serializable {
