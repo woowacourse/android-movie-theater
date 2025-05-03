@@ -50,7 +50,7 @@ class MovieListPresenterTest {
         val movie = testMovies[0]
 
         // When
-        presenter.onMovieClicked(movie)
+        presenter.selectTheater(movie)
 
         // Then
         verify { view.showTheaterList(movie) }

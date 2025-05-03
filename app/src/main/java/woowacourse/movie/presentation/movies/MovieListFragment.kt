@@ -43,16 +43,16 @@ class MovieListFragment :
         presenter.loadMovieList()
     }
 
-    override fun showMovieList(movieListItems: List<MovieListItem>) {
+    override fun showMovieList(items: List<MovieListItem>) {
         val adapter =
             MovieAdapter(
-                items = movieListItems,
+                items = items,
                 clickListener =
                     object : MovieListClickListener {
-                        override fun onClickMovie(item: Movie) = presenter.onMovieClicked(item)
+                        override fun onClickMovie(item: Movie) = presenter.selectTheater(item)
                     },
             )
-        binding.recyclerviewMovies.adapter = adapter
+        binding.adapter = adapter
     }
 
     override fun showTheaterList(movie: Movie) {

@@ -13,7 +13,7 @@ class MovieListPresenter(
         view.showMovieList(insertAdvertisement(movies))
     }
 
-    override fun onMovieClicked(movie: Movie) {
+    override fun selectTheater(movie: Movie) {
         view.showTheaterList(movie)
     }
 

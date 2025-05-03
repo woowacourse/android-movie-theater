@@ -5,7 +5,7 @@ import woowacourse.movie.presentation.movies.adapter.MovieListItem
 
 interface MovieListContract {
     interface View {
-        fun showMovieList(movieListItems: List<MovieListItem>)
+        fun showMovieList(items: List<MovieListItem>)
 
         fun showTheaterList(movie: Movie)
     }
@@ -13,6 +13,6 @@ interface MovieListContract {
     interface Presenter {
         fun loadMovieList()
 
-        fun onMovieClicked(movie: Movie)
+        fun selectTheater(movie: Movie)
     }
 }

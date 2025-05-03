@@ -9,7 +9,7 @@ class AdsViewHolder(
     private val binding: ItemAdsBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind() {
-        binding.adImage =
+        binding.image =
             BitmapFactory.decodeResource(binding.root.resources, R.drawable.advertisement)
     }
 }
