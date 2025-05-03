@@ -9,10 +9,10 @@ import woowacourse.movie.data.MovieData
 import woowacourse.movie.domain.model.movie.Movie
 import java.time.LocalDate
 
-class MoviesPresenterTest {
-    private lateinit var view: MoviesContract.View
+class MovieListPresenterTest {
+    private lateinit var view: MovieListContract.View
     private lateinit var movieData: MovieData
-    private lateinit var presenter: MoviesContract.Presenter
+    private lateinit var presenter: MovieListContract.Presenter
 
     private val testMovies =
         listOf(
@@ -28,7 +28,7 @@ class MoviesPresenterTest {
     fun setUp() {
         view = mockk(relaxed = true)
         movieData = mockk()
-        presenter = MoviesPresenter(view, movieData)
+        presenter = MovieListPresenter(view, movieData)
     }
 
     @Test
@@ -37,11 +37,11 @@ class MoviesPresenterTest {
         every { movieData.getData() } returns testMovies
 
         // When
-        presenter.onViewCreated()
+        presenter.loadMovieList()
 
         // Then
         verify { movieData.getData() }
-        verify { view.showMovies(any()) }
+        verify { view.showMovieList(any()) }
     }
 
     @Test
@@ -53,6 +53,6 @@ class MoviesPresenterTest {
         presenter.onMovieClicked(movie)
 
         // Then
-        verify { view.showTheaterSelectDialog(movie) }
+        verify { view.showTheaterList(movie) }
     }
 }

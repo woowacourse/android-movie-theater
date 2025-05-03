@@ -1,21 +1,20 @@
 package woowacourse.movie.presentation.movies
 
-import woowacourse.movie.R
 import woowacourse.movie.data.MovieData
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.presentation.movies.adapter.MovieListItem
 
-class MoviesPresenter(
-    private val view: MoviesContract.View,
+class MovieListPresenter(
+    private val view: MovieListContract.View,
     private val movieData: MovieData,
-) : MoviesContract.Presenter {
-    override fun onViewCreated() {
-        val screeningMovies = movieData.getData()
-        view.showMovies(insertAdvertisement(screeningMovies))
+) : MovieListContract.Presenter {
+    override fun loadMovieList() {
+        val movies = movieData.getData()
+        view.showMovieList(insertAdvertisement(movies))
     }
 
     override fun onMovieClicked(movie: Movie) {
-        view.showTheaterSelectDialog(movie)
+        view.showTheaterList(movie)
     }
 
     private fun insertAdvertisement(movies: List<Movie>): List<MovieListItem> {
@@ -23,7 +22,7 @@ class MoviesPresenter(
         movies.forEachIndexed { index, movie ->
             result.add(MovieListItem.MovieItem(movie))
             if ((index + INDEX_INTERVAL) % ADS_INTERVAL == 0) {
-                result.add(MovieListItem.AdvertisementItem(R.drawable.advertisement))
+                result.add(MovieListItem.AdsItem())
             }
         }
         return result

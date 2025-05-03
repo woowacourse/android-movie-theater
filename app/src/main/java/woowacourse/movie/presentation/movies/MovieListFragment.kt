@@ -8,21 +8,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieData
-import woowacourse.movie.databinding.FragmentMoviesBinding
+import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.presentation.movies.adapter.MovieAdapter
+import woowacourse.movie.presentation.movies.adapter.MovieListClickListener
 import woowacourse.movie.presentation.movies.adapter.MovieListItem
 import woowacourse.movie.presentation.theater.TheaterFragment
 
-class MoviesFragment :
+class MovieListFragment :
     Fragment(),
-    MoviesContract.View {
-    private lateinit var binding: FragmentMoviesBinding
-    private lateinit var presenter: MoviesContract.Presenter
+    MovieListContract.View {
+    private lateinit var binding: FragmentMovieListBinding
+    private lateinit var presenter: MovieListContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = MoviesPresenter(this, MovieData)
+        presenter = MovieListPresenter(this, MovieData)
     }
 
     override fun onCreateView(
@@ -30,7 +31,7 @@ class MoviesFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list, container, false)
         return binding.root
     }
 
@@ -39,19 +40,22 @@ class MoviesFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.onViewCreated()
+        presenter.loadMovieList()
     }
 
-    override fun showMovies(movieListItems: List<MovieListItem>) {
+    override fun showMovieList(movieListItems: List<MovieListItem>) {
         val adapter =
-            MovieAdapter {
-                presenter.onMovieClicked(it)
-            }
-        adapter.submitList(movieListItems)
+            MovieAdapter(
+                items = movieListItems,
+                clickListener =
+                    object : MovieListClickListener {
+                        override fun onClickMovie(item: Movie) = presenter.onMovieClicked(item)
+                    },
+            )
         binding.recyclerviewMovies.adapter = adapter
     }
 
-    override fun showTheaterSelectDialog(movie: Movie) {
+    override fun showTheaterList(movie: Movie) {
         val theaterFragment = TheaterFragment.newInstance(movie)
         theaterFragment.show(childFragmentManager, theaterFragment.tag)
     }

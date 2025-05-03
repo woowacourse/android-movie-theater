@@ -1,5 +1,5 @@
 package woowacourse.movie.common.adapter
 
-fun interface ClickListener<T> {
+fun interface ItemClickListener<T> {
     fun onClick(item: T)
 }

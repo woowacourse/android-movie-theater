@@ -3,10 +3,10 @@ package woowacourse.movie.presentation.movies.adapter
 import android.graphics.BitmapFactory
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.databinding.ItemAdvertisementBinding
+import woowacourse.movie.databinding.ItemAdsBinding
 
-class AdvertisementViewHolder(
-    private val binding: ItemAdvertisementBinding,
+class AdsViewHolder(
+    private val binding: ItemAdsBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind() {
         binding.adImage =

@@ -1,17 +1,28 @@
 package woowacourse.movie.presentation.movies.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.common.adapter.ClickListener
+import woowacourse.movie.common.adapter.ItemClickListener
 import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.domain.model.movie.Movie
 
 class MovieViewHolder(
     private val binding: ItemMovieBinding,
-    private val onClickMovie: (Movie) -> Unit,
+    clickListener: ClickListener,
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(item: Movie) {
-        binding.movie = item
-        binding.handler = ClickListener<Movie> { onClickMovie(it) }
+    private lateinit var currentItem: Movie
+
+    init {
+        binding.handler = ItemClickListener<Movie> { clickListener.onClickMovie(currentItem) }
+    }
+
+    fun bind(item: MovieListItem.MovieItem) {
+        val movie = item.movie
+        currentItem = movie
+        binding.movie = movie
         binding.executePendingBindings()
+    }
+
+    interface ClickListener {
+        fun onClickMovie(item: Movie)
     }
 }

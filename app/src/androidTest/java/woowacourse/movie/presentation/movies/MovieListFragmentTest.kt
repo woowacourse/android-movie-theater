@@ -15,10 +15,10 @@ import woowacourse.movie.R
 
 @RunWith(AndroidJUnit4::class)
 @Suppress("ktlint:standard:function-naming")
-class MoviesFragmentTest {
+class MovieListFragmentTest {
     @Test
     fun 영화_목록이_출력된다() {
-        launchFragmentInContainer<MoviesFragment>()
+        launchFragmentInContainer<MovieListFragment>()
 
         onView(withId(R.id.recyclerview_movies))
             .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))

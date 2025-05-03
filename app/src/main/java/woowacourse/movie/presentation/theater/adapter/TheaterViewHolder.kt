@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.theater.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.common.adapter.ClickListener
+import woowacourse.movie.common.adapter.ItemClickListener
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.domain.model.Screening
 
@@ -11,7 +11,7 @@ class TheaterViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Screening) {
         binding.screeningInfo = item
-        binding.handler = ClickListener<Screening> { onClickTheater(it) }
+        binding.handler = ItemClickListener<Screening> { onClickTheater(it) }
         binding.executePendingBindings()
     }
 }

@@ -8,6 +8,10 @@
         <variable
             name="adImage"
             type="android.graphics.Bitmap" />
+
+        <variable
+            name="handler"
+            type="woowacourse.movie.common.adapter.ItemClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
