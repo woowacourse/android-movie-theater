@@ -4,6 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import woowacourse.movie.domain.model.Movie
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Parcelize
 data class MovieUiModel(
@@ -19,7 +20,9 @@ fun MovieUiModel.toDomainModel(): Movie =
     Movie(
         title = this.name,
         poster = this.poster,
-        startDate = LocalDate.parse(this.startDate),
-        endDate = LocalDate.parse(this.endDate),
+        startDate = this.startDate.toLocalDate(),
+        endDate = this.endDate.toLocalDate(),
         runningTime = this.runningTime,
     )
+
+fun String.toLocalDate(pattern: String = "yyyy.MM.dd"): LocalDate = LocalDate.parse(this, DateTimeFormatter.ofPattern(pattern))
