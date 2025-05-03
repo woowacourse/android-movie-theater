@@ -5,8 +5,7 @@ import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.domain.model.Movie
 
 class MovieViewHolder(
-//    val view: View,
-    val binding: ItemMovieBinding,
+    private val binding: ItemMovieBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(
         movie: Movie,

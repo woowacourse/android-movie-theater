@@ -1,11 +1,11 @@
 package woowacourse.movie.view.movies
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdvertisementBinding
 import woowacourse.movie.databinding.ItemMovieBinding
 
 class MovieListAdapter(
@@ -21,11 +21,9 @@ class MovieListAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): ViewHolder {
-        val view: View
-        return when (viewType) {
+    ): ViewHolder =
+        when (viewType) {
             R.layout.item_movie -> {
-                view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
                 val binding =
                     ItemMovieBinding.inflate(
                         LayoutInflater.from(parent.context),
@@ -36,12 +34,16 @@ class MovieListAdapter(
             }
 
             R.layout.item_advertisement -> {
-                view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-                AdViewHolder(view)
+                val binding =
+                    ItemAdvertisementBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false,
+                    )
+                AdViewHolder(binding)
             }
             else -> throw IllegalArgumentException()
         }
-    }
 
     override fun getItemCount(): Int = items.size
 
