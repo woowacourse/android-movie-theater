@@ -3,67 +3,57 @@ package woowacourse.movie.movie.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.R
 import woowacourse.movie.databinding.AdBannerItemBinding
 import woowacourse.movie.databinding.MovieListItemBinding
-import woowacourse.movie.ui.model.MovieUiModel
+import woowacourse.movie.movie.MovieListItem
 
 class MovieAdapter(
-    private val movieList: List<MovieUiModel>,
+    private val items: List<MovieListItem>,
     private val onReserveClick: ReserveClickListener,
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    override fun getItemCount(): Int {
-        val adCount = movieList.size / AD_FREQUENCY
-        return movieList.size + adCount
-    }
+) : RecyclerView.Adapter<ViewHolder>() {
+    override fun getItemCount(): Int = items.size
 
     override fun getItemViewType(position: Int): Int {
-        return if ((position + 1) % (AD_FREQUENCY + 1) == 0) TYPE_AD else TYPE_MOVIE
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
+        return when (items[position]) {
+            is MovieListItem.MovieItem -> R.layout.movie_list_item
+            is MovieListItem.AdvertisementItem -> R.layout.ad_banner_item
+        }
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): RecyclerView.ViewHolder {
+    ): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            TYPE_AD -> {
-                val binding = AdBannerItemBinding.inflate(inflater, parent, false)
-                AdViewHolder(binding)
-            }
-
-            else -> {
+            R.layout.movie_list_item -> {
                 val binding = MovieListItemBinding.inflate(inflater, parent, false)
                 MovieViewHolder(binding, onReserveClick)
             }
+
+            R.layout.ad_banner_item -> {
+                val binding = AdBannerItemBinding.inflate(inflater, parent, false)
+                AdViewHolder(binding)
+            }
+            else -> throw IllegalArgumentException(INVALID_VIEW_TYPE)
         }
     }
 
     override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
+        holder: ViewHolder,
         position: Int,
     ) {
+        val item = items[position]
+
         when (holder) {
-            is MovieViewHolder -> {
-                val realPosition = position - (position / (AD_FREQUENCY + 1))
-                val movie = movieList[realPosition]
-
-                holder.bind(movie)
-            }
-
-            is AdViewHolder -> {
-                holder.imgBanner.setImageResource(R.drawable.img_advertisement)
-            }
+            is MovieViewHolder -> holder.bind((item as MovieListItem.MovieItem).movie)
+            is AdViewHolder -> holder.binding(item as MovieListItem.AdvertisementItem)
         }
     }
 
     companion object {
-        private const val TYPE_MOVIE = 0
-        private const val TYPE_AD = 1
-        private const val AD_FREQUENCY = 3
+        private const val INVALID_VIEW_TYPE: String = "지원하지 않는 아이템 타입입니다"
     }
 }

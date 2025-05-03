@@ -5,7 +5,7 @@ import woowacourse.movie.ui.model.TheaterUiModel
 
 interface MovieContract {
     interface View {
-        fun setupMovieList(movies: List<MovieUiModel>)
+        fun setupMovieList(movies: List<MovieListItem>)
 
         fun showToast(message: String)
 

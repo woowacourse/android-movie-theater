@@ -38,7 +38,7 @@ class MovieFragment : Fragment(), MovieContract.View {
         presenter.initializeData()
     }
 
-    override fun setupMovieList(movies: List<MovieUiModel>) {
+    override fun setupMovieList(movies: List<MovieListItem>) {
         val adapter =
             MovieAdapter(movies) { movie ->
                 presenter.setTheaters(movie)
