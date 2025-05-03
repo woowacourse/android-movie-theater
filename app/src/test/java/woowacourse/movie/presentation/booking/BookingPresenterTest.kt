@@ -58,7 +58,7 @@ class BookingPresenterTest {
         val date = LocalDate.of(2025, 4, 29)
 
         // When
-        presenter.onDateSelected(date)
+        presenter.selectScreeningDate(date)
 
         // Then
         verify { view.showBookableTimes(any(), any()) }
@@ -90,13 +90,13 @@ class BookingPresenterTest {
         // Given
         val date = LocalDate.of(2025, 5, 6)
         val time = LocalTime.of(12, 0)
-        presenter.onDateSelected(date)
-        presenter.onTimeSelected(time)
+        presenter.selectScreeningDate(date)
+        presenter.selectScreeningTime(time)
 
         // When
         presenter.confirmBooking()
 
         // Then
-        verify { view.navigateToSeats(any()) }
+        verify { view.navigateToSeatSelect(any()) }
     }
 }

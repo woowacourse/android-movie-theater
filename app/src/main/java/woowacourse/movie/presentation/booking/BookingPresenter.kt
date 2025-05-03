@@ -19,19 +19,18 @@ class BookingPresenter(
     override fun loadBooking() {
         view.showMovie(_ticket.movie)
         updateHeadCount()
-        view.showBookableDates(movieScheduler.getBookableDates(), ticket.showtime.toLocalDate())
+        view.showBookableDates(movieScheduler.getBookableDates(), _ticket.showtime.toLocalDate())
     }
 
-    override fun onDateSelected(date: LocalDate) {
+    override fun selectScreeningDate(date: LocalDate) {
         _ticket = _ticket.copy(showtime = LocalDateTime.of(date, _ticket.showtime.toLocalTime()))
-
         view.showBookableTimes(
             movieScheduler.getBookableTimes(date),
             _ticket.showtime.toLocalTime(),
         )
     }
 
-    override fun onTimeSelected(time: LocalTime) {
+    override fun selectScreeningTime(time: LocalTime) {
         _ticket = _ticket.copy(showtime = LocalDateTime.of(_ticket.showtime.toLocalDate(), time))
     }
 
@@ -46,7 +45,7 @@ class BookingPresenter(
     }
 
     override fun confirmBooking() {
-        view.navigateToSeats(ticket)
+        view.navigateToSeatSelect(_ticket)
     }
 
     override fun restoreTicket(ticket: Ticket) {

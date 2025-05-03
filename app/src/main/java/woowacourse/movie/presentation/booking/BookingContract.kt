@@ -25,15 +25,15 @@ interface BookingContract {
             selectedTime: LocalTime,
         )
 
-        fun navigateToSeats(ticket: Ticket)
+        fun navigateToSeatSelect(ticket: Ticket)
     }
 
     interface Presenter {
         fun loadBooking()
 
-        fun onDateSelected(date: LocalDate)
+        fun selectScreeningDate(date: LocalDate)
 
-        fun onTimeSelected(time: LocalTime)
+        fun selectScreeningTime(time: LocalTime)
 
         fun increaseHeadCount()
 

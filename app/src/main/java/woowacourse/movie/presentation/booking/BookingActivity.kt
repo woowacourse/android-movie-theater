@@ -79,7 +79,7 @@ class BookingActivity :
                     position: Int,
                     id: Long,
                 ) {
-                    presenter.onDateSelected(dates[position])
+                    presenter.selectScreeningDate(dates[position])
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -101,14 +101,14 @@ class BookingActivity :
                     position: Int,
                     id: Long,
                 ) {
-                    presenter.onTimeSelected(times[position])
+                    presenter.selectScreeningTime(times[position])
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit
             }
     }
 
-    override fun navigateToSeats(ticket: Ticket) {
+    override fun navigateToSeatSelect(ticket: Ticket) {
         val intent = SeatsActivity.newIntent(this, ticket)
         startActivity(intent)
     }
