@@ -61,3 +61,13 @@
 ## 리팩토링할 부분
 - [X] 좌석 선택 화면에서 인원 수 상관 없이 모두 선택되던 현상 수정
 
+## 1,2단계 1차 피드백 반영
+- [ ] 테스트 코드의 반복적인 내용을 테스트용 확장함수로 리팩토링
+- matchText, isDisplay, click 등
+- `fun ViewInteraction.performClick() = this.perform(click())`
+- [ ] onCreate의 구현 코드 분리
+
+
+## 1,2단계 변경 사항
+- [x] 매니페스트 오류 수정
+- MovieActivity를 fragment로 변경하여 새로운 MainActivity를 만듦으로서 해당 사항 컴파일 에러 수정
