@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -17,7 +16,7 @@ import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.booking.Booking
 import woowacourse.movie.view.ext.getSerializableOrNull
 import woowacourse.movie.view.ext.showToastFromResource
-import woowacourse.movie.view.ext.toDrawableResourceId
+import woowacourse.movie.view.handler.BookingActionHandler
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.home.seat.SeatActivity
 import woowacourse.movie.view.uiModel.MovieUiModel
@@ -62,6 +61,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         screeningTimes: List<LocalDateTime>,
     ) {
         binding.model = movie
+        binding.eventHandler = BookingActionHandler(presenter)
         with(movie) {
             presenter.loadScreeningTime(
                 binding.spDate.selectedItem as LocalDate,
@@ -110,16 +110,8 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         startActivity(intent)
     }
 
-    private fun initPosterView(imgName: String) {
-        val moviePosterView = findViewById<ImageView>(R.id.img_movie_poster)
-        moviePosterView.setImageResource(imgName.toDrawableResourceId(this@BookingActivity))
-    }
-
     private fun initButtonListener() {
         with(binding) {
-            btnIncrease.setOnClickListener { presenter.increasePeopleCount(MAX_SEAT) }
-            btnDecrease.setOnClickListener { presenter.decreasePeopleCount() }
-
             btnBookingComplete.setOnClickListener {
                 presenter.loadBooking(
                     title = tvTitle.text.toString(),
@@ -162,7 +154,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     companion object {
         const val KEY_SCREENING = "MOVIE_SCREENING"
 
-        private const val MAX_SEAT = 20
+        const val MAX_SEAT = 20
 
         private const val KEY_SELECTED_TIME_POSITION = "SELECTED_TIME_POSITION"
         private const val KEY_PEOPLE_COUNT = "SAVED_PEOPLE_COUNT"

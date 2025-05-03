@@ -7,6 +7,10 @@
         <variable
             name="model"
             type="woowacourse.movie.view.uiModel.MovieUiModel" />
+
+        <variable
+            name="eventHandler"
+            type="woowacourse.movie.view.handler.BookingActionHandler" />
     </data>
     
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -125,6 +129,7 @@
 
         <Button
             android:id="@+id/btn_decrease"
+            android:onClick="@{() -> eventHandler.decrease()}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -151,6 +156,7 @@
 
         <Button
             android:id="@+id/btn_increase"
+            android:onClick="@{() -> eventHandler.increase()}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
