@@ -9,7 +9,6 @@ const val STAR_IS_BORN = "스타 이즈 본"
 fun createMovie(name: String): Movie =
     Movie(
         title = name,
-        imageSource = "harry_potter.png",
         screeningStartDate = LocalDate.of(2025, 5, 10),
         screeningEndDate = LocalDate.of(2025, 5, 15),
         runningTime = 152,

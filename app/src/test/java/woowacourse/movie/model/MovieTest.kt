@@ -10,7 +10,6 @@ class MovieTest {
     fun `영화 제목은 비어있을 수 없다`() {
         assertThrows<IllegalArgumentException> {
             Movie(
-                "harry_potter.png",
                 "",
                 LocalDate.of(2025, 4, 17),
                 LocalDate.of(2025, 4, 18),
@@ -20,7 +19,6 @@ class MovieTest {
 
         assertDoesNotThrow {
             Movie(
-                "harry_potter.png",
                 "해리포터",
                 LocalDate.of(2025, 4, 17),
                 LocalDate.of(2025, 4, 18),
@@ -33,7 +31,6 @@ class MovieTest {
     fun `영화 상영시간은 0보다 커야한다`() {
         assertThrows<IllegalArgumentException> {
             Movie(
-                "harry_potter.png",
                 "해리포터",
                 LocalDate.of(2025, 4, 17),
                 LocalDate.of(2025, 4, 18),
@@ -43,7 +40,6 @@ class MovieTest {
 
         assertDoesNotThrow {
             Movie(
-                "harry_potter.png",
                 "해리포터",
                 LocalDate.of(2025, 4, 17),
                 LocalDate.of(2025, 4, 18),
@@ -56,7 +52,6 @@ class MovieTest {
     fun `영화 시작 날짜는 종료보다 앞서야 한다`() {
         assertThrows<IllegalArgumentException> {
             Movie(
-                "harry_potter.png",
                 "해리포터",
                 LocalDate.of(2025, 4, 20),
                 LocalDate.of(2025, 4, 18),
@@ -66,7 +61,6 @@ class MovieTest {
 
         assertDoesNotThrow {
             Movie(
-                "harry_potter.png",
                 "해리포터",
                 LocalDate.of(2025, 4, 17),
                 LocalDate.of(2025, 4, 18),
