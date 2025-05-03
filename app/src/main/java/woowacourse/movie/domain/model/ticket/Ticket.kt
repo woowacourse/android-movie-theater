@@ -23,7 +23,7 @@ data class Ticket(
             price: Int,
         ): Ticket {
             return Ticket(
-                title = booking.title,
+                title = booking.movieTitle,
                 bookingDate = booking.bookingDate,
                 bookingTime = booking.bookingTime,
                 theaterName = booking.theaterName,

@@ -4,9 +4,8 @@ import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalTime
 
-class Booking(
-    val title: String,
     val theaterName: String,
+    val movieTitle: String,
     val bookingDate: LocalDate,
     val bookingTime: LocalTime,
     val count: PeopleCount,

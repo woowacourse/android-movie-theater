@@ -19,7 +19,7 @@ class SeatPresenter(
     private val limit = booking.count.value
 
     override fun loadBookingInfo() {
-        view.showBookingInformation(booking.title)
+        view.showBookingInformation(booking.movieTitle)
         view.showPrice(0)
     }
 
