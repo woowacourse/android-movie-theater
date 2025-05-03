@@ -8,14 +8,14 @@ import woowacourse.movie.domain.model.movie.Movie
 class TheaterPresenter(
     private val view: TheaterContract.View,
     private val movie: Movie,
+    private val screeningData: ScreeningData,
 ) : TheaterContract.Presenter {
-    private val screeningInfos = ScreeningInfos(ScreeningData.values)
-
-    override fun onViewCreated() {
+    override fun loadTheaterList() {
+        val screeningInfos = ScreeningInfos(screeningData.values)
         view.showTheaters(screeningInfos.findByMovie(movie))
     }
 
-    override fun onTheaterClicked(screening: Screening) {
+    override fun startBooking(screening: Screening) {
         view.navigateToBooking(screening)
     }
 }

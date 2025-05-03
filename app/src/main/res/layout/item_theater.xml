@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="screeningInfo"
+            name="screening"
             type="woowacourse.movie.domain.model.Screening" />
 
         <variable
@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> handler.onClick(screeningInfo)}"
+        android:onClick="@{() -> handler.onClick(screening)}"
         android:paddingHorizontal="16dp"
         android:paddingVertical="10dp">
 
@@ -25,7 +25,7 @@
             android:id="@+id/textview_theater_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{screeningInfo.theater}"
+            android:text="@{screening.theater}"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.format(@string/theater_text, screeningInfo.times.size)}"
+            android:text="@{String.format(@string/theater_text, screening.times.size)}"
             android:textColor="@color/gray"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"

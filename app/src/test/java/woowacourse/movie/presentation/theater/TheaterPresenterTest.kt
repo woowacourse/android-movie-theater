@@ -22,7 +22,7 @@ class TheaterPresenterTest {
     @Test
     fun `극장 목록을 가져와서 화면에 출력한다`() {
         // When
-        presenter.onViewCreated()
+        presenter.loadTheaterList()
 
         // Then
         verify { view.showTheaters(any()) }
@@ -39,7 +39,7 @@ class TheaterPresenterTest {
             )
 
         // When
-        presenter.onTheaterClicked(screening)
+        presenter.startBooking(screening)
 
         // Then
         verify { view.navigateToBooking(screening) }

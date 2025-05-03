@@ -10,8 +10,8 @@ interface TheaterContract {
     }
 
     interface Presenter {
-        fun onViewCreated()
+        fun loadTheaterList()
 
-        fun onTheaterClicked(screening: Screening)
+        fun startBooking(screening: Screening)
     }
 }

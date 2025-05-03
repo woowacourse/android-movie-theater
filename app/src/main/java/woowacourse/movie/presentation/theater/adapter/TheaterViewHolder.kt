@@ -9,9 +9,15 @@ class TheaterViewHolder(
     private val binding: ItemTheaterBinding,
     private val onClickTheater: (Screening) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
+    private lateinit var currentItem: Screening
+
+    init {
+        binding.handler = ItemClickListener<Screening> { onClickTheater(currentItem) }
+    }
+
     fun bind(item: Screening) {
-        binding.screeningInfo = item
-        binding.handler = ItemClickListener<Screening> { onClickTheater(it) }
+        currentItem = item
+        binding.screening = item
         binding.executePendingBindings()
     }
 }

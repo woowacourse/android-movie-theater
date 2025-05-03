@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.booking
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -127,7 +128,7 @@ class BookingActivity :
     }
 
     private fun fetchMovieFromIntent(): Boolean {
-        val data = intent.intentSerializable(IntentKeys.SCREENING_INFO, Screening::class.java)
+        val data = intent.intentSerializable(EXTRA_SCREENING, Screening::class.java)
         if (data == null) {
             Toast.makeText(this, MOVIE_INTENT_ERROR, Toast.LENGTH_SHORT).show()
             finish()
@@ -153,6 +154,15 @@ class BookingActivity :
     }
 
     companion object {
+        fun newIntent(
+            context: Context?,
+            screening: Screening,
+        ): Intent =
+            Intent(context, BookingActivity::class.java).apply {
+                putExtra(EXTRA_SCREENING, screening)
+            }
+
+        private const val EXTRA_SCREENING = "screening"
         private const val DEFAULT_POSITION = 0
         private const val HEADCOUNT_KEY = "HeadCount"
         private const val DATE_POSITION_KEY = "Date"

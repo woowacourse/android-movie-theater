@@ -13,7 +13,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.common.constant.IntentKeys
 import woowacourse.movie.data.MovieData
 
 @RunWith(AndroidJUnit4::class)
@@ -23,7 +22,7 @@ class TheaterFragmentTest {
 
     private val args =
         Bundle().apply {
-            putSerializable(IntentKeys.MOVIE, movie)
+            putSerializable("movie", movie)
         }
 
     @Test

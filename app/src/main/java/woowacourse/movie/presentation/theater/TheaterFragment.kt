@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.theater
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +7,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
-import woowacourse.movie.common.constant.IntentKeys
 import woowacourse.movie.common.util.bundleSerializable
+import woowacourse.movie.data.ScreeningData
 import woowacourse.movie.databinding.FragmentTheaterBinding
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.movie.Movie
@@ -19,16 +18,15 @@ import woowacourse.movie.presentation.theater.adapter.TheaterAdapter
 class TheaterFragment :
     BottomSheetDialogFragment(),
     TheaterContract.View {
-    private var movie: Movie? = null
     private lateinit var binding: FragmentTheaterBinding
     private lateinit var presenter: TheaterContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            movie = it.bundleSerializable(IntentKeys.MOVIE, Movie::class.java)
-        }
-        movie?.let { presenter = TheaterPresenter(this, it) }
+        val movie =
+            arguments?.bundleSerializable(EXTRA_MOVIE, Movie::class.java)
+                ?: dismiss().run { return }
+        presenter = TheaterPresenter(this, movie, ScreeningData)
     }
 
     override fun onCreateView(
@@ -46,21 +44,15 @@ class TheaterFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.onViewCreated()
+        presenter.loadTheaterList()
     }
 
     override fun showTheaters(theaters: List<Screening>) {
-        binding.recyclerviewTheaters.adapter =
-            TheaterAdapter(theaters) {
-                presenter.onTheaterClicked(it)
-            }
+        binding.adapter = TheaterAdapter(theaters) { presenter.startBooking(it) }
     }
 
     override fun navigateToBooking(screening: Screening) {
-        val intent =
-            Intent(context, BookingActivity::class.java).apply {
-                putExtra(IntentKeys.SCREENING_INFO, screening)
-            }
+        val intent = BookingActivity.newIntent(context, screening)
         startActivity(intent)
     }
 
@@ -70,8 +62,10 @@ class TheaterFragment :
             TheaterFragment().apply {
                 arguments =
                     Bundle().apply {
-                        putSerializable(IntentKeys.MOVIE, movie)
+                        putSerializable(EXTRA_MOVIE, movie)
                     }
             }
+
+        private const val EXTRA_MOVIE = "movie"
     }
 }
