@@ -29,11 +29,6 @@ interface BookingContract {
 
         fun loadPeopleCount()
 
-        fun loadScreeningDate(
-            screeningDateTime: List<LocalDateTime>,
-            now: LocalDateTime,
-        )
-
         fun loadScreeningTime(
             selectedDate: LocalDate,
             now: LocalDateTime,

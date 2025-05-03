@@ -16,31 +16,19 @@ class BookingPresenter private constructor(
     private val movies: MovieStore,
     private var count: PeopleCount,
     private val screeningInfo: ScreeningInfo,
+    private val initialTime: LocalDateTime = LocalDateTime.now(),
 ) : BookingContract.Presenter {
     init {
         loadPeopleCount()
     }
 
     override fun loadMovieDetail() {
-        loadScreeningDate(screeningInfo.screening, LocalDateTime.now())
         view.showMovieDetail(movies[screeningInfo.movieId].toUiModel(), screeningInfo.screening)
+        loadScreening()
     }
 
     override fun loadPeopleCount() {
         view.showPeopleCount(count.value)
-    }
-
-    override fun loadScreeningDate(
-        screeningDateTime: List<LocalDateTime>,
-        now: LocalDateTime,
-    ) {
-        val screeningDate = screeningDateTime.map { it.toLocalDate() }
-
-        val screeningBookingDates: List<LocalDate> =
-            ScreeningDate(screeningDate)
-                .bookingDates(now.toLocalDate())
-
-        view.showScreeningDate(screeningBookingDates)
     }
 
     override fun loadScreeningTime(
@@ -89,6 +77,17 @@ class BookingPresenter private constructor(
             )
 
         view.moveToBookingComplete(booking)
+    }
+
+    private fun loadScreening() {
+        val screeningDate = screeningInfo.screening.map { it.toLocalDate() }
+
+        val screeningBookingDates: List<LocalDate> =
+            ScreeningDate(screeningDate)
+                .bookingDates(initialTime.toLocalDate())
+
+        view.showScreeningDate(screeningBookingDates)
+        loadScreeningTime(screeningBookingDates.first(), initialTime)
     }
 
     companion object {

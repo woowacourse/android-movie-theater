@@ -62,12 +62,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     ) {
         binding.model = movie
         binding.eventHandler = BookingActionHandler(presenter)
-        with(movie) {
-            presenter.loadScreeningTime(
-                binding.spDate.selectedItem as LocalDate,
-                LocalDateTime.now(),
-            )
-        }
     }
 
     override fun showPeopleCount(count: Int) {

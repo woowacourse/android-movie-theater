@@ -7,7 +7,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.MovieStore
 import woowacourse.movie.domain.fixture.harryPotter1MoviesFixture
 import woowacourse.movie.domain.model.booking.PeopleCount
 import woowacourse.movie.view.bindingadapter.ImageSource
@@ -21,17 +20,13 @@ import java.time.LocalTime
 
 class BookingPresenterTest {
     private val view: BookingContract.View = mockk<BookingContract.View>(relaxed = true)
-    private lateinit var model: MovieStore
     private lateinit var presenter: BookingPresenter
 
     @BeforeEach
     fun setUp() {
-        model = MovieStore()
         presenter =
-            BookingPresenter(
+            BookingPresenter.initialize(
                 view,
-                MovieStore(),
-                PeopleCount(1),
                 ScreeningInfo(
                     movieId = 0,
                     theaterName = "CGV",
@@ -97,10 +92,8 @@ class BookingPresenterTest {
     fun `인원이 1명 감소한다`() {
         // given
         val presenter =
-            BookingPresenter(
+            BookingPresenter.initialize(
                 view,
-                model,
-                PeopleCount(5),
                 ScreeningInfo(
                     movieId = 0,
                     theaterName = "CGV",
