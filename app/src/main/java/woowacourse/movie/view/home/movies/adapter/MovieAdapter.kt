@@ -1,23 +1,47 @@
 package woowacourse.movie.view.home.movies.adapter
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.view.home.movies.HomeEventHandler
 import woowacourse.movie.view.home.movies.model.UiModel
+import woowacourse.movie.view.home.movies.model.UiModel.AdvertiseUiModel
+import woowacourse.movie.view.home.movies.model.UiModel.MovieUiModel
 import woowacourse.movie.view.home.movies.viewholder.AdvertiseViewHolder
 import woowacourse.movie.view.home.movies.viewholder.MovieViewHolder
 
 class MovieAdapter(
     private val itemsList: List<UiModel>,
     private val handler: HomeEventHandler,
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : ListAdapter<UiModel, RecyclerView.ViewHolder>(
+        object : DiffUtil.ItemCallback<UiModel>() {
+            override fun areItemsTheSame(
+                oldItem: UiModel,
+                newItem: UiModel,
+            ): Boolean {
+                return when {
+                    oldItem is MovieUiModel && newItem is MovieUiModel && oldItem.id == newItem.id -> true
+                    oldItem is AdvertiseUiModel && newItem is AdvertiseUiModel && oldItem.imgResource == newItem.imgResource -> true
+                    else -> false
+                }
+            }
+
+            override fun areContentsTheSame(
+                oldItem: UiModel,
+                newItem: UiModel,
+            ): Boolean {
+                return oldItem == newItem
+            }
+        },
+    ) {
     override fun getItemCount(): Int = itemsList.size
 
     override fun getItemViewType(position: Int): Int =
         when (itemsList[position]) {
-            is UiModel.MovieUiModel -> VIEW_TYPE_MOVIE
-            is UiModel.AdvertiseUiModel -> VIEW_TYPE_ADVERTISEMENT
+            is MovieUiModel -> VIEW_TYPE_MOVIE
+            is AdvertiseUiModel -> VIEW_TYPE_ADVERTISEMENT
         }
 
     override fun onCreateViewHolder(
