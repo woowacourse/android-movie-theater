@@ -27,7 +27,7 @@ class CinemaSelectionFragment : BottomSheetDialogFragment() {
                 inflater,
                 R.layout.fragment_cinema_seclection,
                 container,
-                true,
+                false,
             )
         return binding.root
     }

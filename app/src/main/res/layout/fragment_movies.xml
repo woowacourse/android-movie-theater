@@ -5,11 +5,11 @@
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/main"
+        android:id="@+id/movies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        tools:context=".view.movies.MoviesActivity">
+        tools:context=".view.movies.MoviesFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lv_movie"
@@ -25,6 +25,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

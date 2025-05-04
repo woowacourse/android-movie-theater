@@ -1,20 +1,24 @@
 package woowacourse.movie.view.movies
 
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
-import woowacourse.movie.databinding.ActivityMoviesBinding
+import woowacourse.movie.databinding.FragmentMoviesBinding
 import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.view.base.BaseActivity
+import woowacourse.movie.view.base.BaseFragment
 import woowacourse.movie.view.movies.cinema.CinemaSelectionFragment
 
-class MoviesActivity :
-    BaseActivity<ActivityMoviesBinding>(R.layout.activity_movies),
+class MoviesFragment :
+    BaseFragment<FragmentMoviesBinding>(R.layout.fragment_movies),
     MoviesContract.View {
     private val presenter = MoviesPresenter(this)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.loadData()
     }
 
@@ -28,10 +32,13 @@ class MoviesActivity :
                             CinemaSelectionFragment.newInstance(
                                 movie.screening,
                             )
-                        instance.show(supportFragmentManager, "CinemaSelectionFragment")
+                        instance.show(parentFragmentManager, "CinemaSelectionFragment")
                     }
                 },
             )
-        binding.lvMovie.layoutManager = LinearLayoutManager(this)
+        binding.lvMovie.layoutManager = LinearLayoutManager(context)
+    }
+
+    companion object {
     }
 }

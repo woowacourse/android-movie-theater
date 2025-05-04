@@ -15,7 +15,7 @@ import woowacourse.movie.R
 
 class MoviesActivityTest {
     @get:Rule
-    val activityRule = ActivityScenarioRule(MoviesActivity::class.java)
+    val activityRule = ActivityScenarioRule(MoviesFragment::class.java)
 
     private lateinit var movieItem: DataInteraction
 

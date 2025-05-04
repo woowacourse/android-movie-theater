@@ -10,7 +10,7 @@ import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.view.base.BaseActivity
 import woowacourse.movie.view.extension.getParcelableCompat
-import woowacourse.movie.view.movies.MoviesActivity
+import woowacourse.movie.view.movies.MoviesFragment
 
 class ReservationResultActivity :
     BaseActivity<ActivityReservationResultBinding>(R.layout.activity_reservation_result),
@@ -30,7 +30,7 @@ class ReservationResultActivity :
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val intent = Intent(this@ReservationResultActivity, MoviesActivity::class.java)
+                    val intent = Intent(this@ReservationResultActivity, MoviesFragment::class.java)
                     startActivity(intent)
                     finish()
                 }
@@ -40,7 +40,7 @@ class ReservationResultActivity :
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> startActivity(Intent(this, MoviesActivity::class.java))
+            android.R.id.home -> startActivity(Intent(this, MoviesFragment::class.java))
         }
 
         return super.onOptionsItemSelected(item)

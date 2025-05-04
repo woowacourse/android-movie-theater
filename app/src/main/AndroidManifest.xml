@@ -16,7 +16,13 @@
             android:name=".view.reservation.seat.SeatSelectionActivity"
             android:exported="false" />
         <activity
-            android:name=".view.movies.MoviesActivity"
+            android:name=".view.reservation.result.ReservationResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.reservation.ReservationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,12 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.reservation.result.ReservationResultActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.reservation.ReservationActivity"
-            android:exported="false" />
     </application>
 
 </manifest>
