@@ -47,6 +47,27 @@
 - [x] 영화 극장이름을 보여준다
 - [x] 티켓의 총 가격을 보여준다
 
+## 피드백 반영
+- [ ] Theater | 더미 데이터 분리 
+- [ ] Showings | 구조 개선 고안
+- [ ] MainActivity | BotNav 중복 코드 제거 
+- [ ] HomeFragment | Fragment 생명 주기에 따른 binding 해제 관련
+- [ ] HomeFragment | 광고 반복 로직 비지니스 로직으로 변경
+- [ ] HomeFragment | 사용하지 않는 파라미터 제거
+- [ ] HomeFragment | 생성자로 데이터 주입받기
+- [ ] HomeFragment | 반복되는 뷰 함수 호출 로직 개선
+- [ ] TheaterAdapter | DiffUtil 함수 확인 후 개선 
+- [ ] TheaterViewHolder | 바인딩 전달하는 파라미터 수정
+- [ ] TheaterBottomSheetDialogFragment | getSerializable 메서드 수정
+- [ ] TheaterBottomSheetDialogFragment | 바텀 시트를 띄운 상태로 구성 변경 시, 앱 크래시가 나지 않도록 개선
+- [ ] TheaterBottomSheetDialogFragment | 뷰 바인딩 적용
+- [ ] ReservationActivity | SDK 관련 로직 확장 함수로 사용
+- [ ] ReservationSeatPresenter | Seat 자료 구조형 불변으로 변경
+- [ ] ReservationSeatPresenter | Presenter에서 안드로이드 의존성 제거
+- [ ] ReservationSeatPresenter | getSerializable 메서드 수정
+- [ ] movie_item | text에 값이 안들어있는 오류 수정
+
+
 
 
 
