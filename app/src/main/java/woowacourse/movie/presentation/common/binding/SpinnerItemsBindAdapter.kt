@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.home.reservation.detail.adapter
+package woowacourse.movie.presentation.common.binding
 
 import android.widget.ArrayAdapter
 import android.widget.Spinner

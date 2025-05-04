@@ -54,7 +54,8 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/movie_poster"
                 android:scaleType="centerCrop"
-                android:src="@drawable/harrypotter" />
+                app:poster="@{movie.poster}"
+                tools:src="@drawable/harrypotter" />
 
             <LinearLayout
                 android:layout_width="match_parent"

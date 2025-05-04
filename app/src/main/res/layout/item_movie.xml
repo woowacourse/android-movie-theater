@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:background="@color/teal_200"
             android:contentDescription="@string/movie_poster"
-            app:imgRes="@{itemMovie.poster}"
+            app:poster="@{itemMovie.poster}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
