@@ -26,7 +26,7 @@ interface ReservationDetailContract {
     }
 
     interface Presenter {
-        fun fetchData(theater: TheaterUIModel)
+        fun fetchData(theater: TheaterUIModel?)
 
         fun initDateAdapter()
 

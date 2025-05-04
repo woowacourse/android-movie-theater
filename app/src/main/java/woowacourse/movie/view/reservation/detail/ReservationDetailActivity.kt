@@ -45,7 +45,7 @@ class ReservationDetailActivity :
         val theater =
             intent?.getParcelableExtraCompat<TheaterUIModel>(Extras.TheaterData.THEATER_UI_MODEL_KEY)
 
-        presenter.fetchData()
+        presenter.fetchData(theater)
 
         setupButtonClickListener()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

@@ -21,24 +21,23 @@ class ReservationDetailPresenter(
     private val movieDao by lazy { MovieDao() }
     var isTimeSelected = false
 
-    override fun fetchData(getMovie: () -> TheaterUIModel?) {
-        val theaterUIModel = getMovie()
-        if (theaterUIModel == null) {
+    override fun fetchData(theater: TheaterUIModel?) {
+        if (theater == null) {
             view.showErrorDialog()
             return
         }
 
         reservationUIModel =
             ReservationUIModel(
-                movie = theaterUIModel.movie,
+                movie = theater.movie,
                 movieDate =
                     MovieDate(
-                        theaterUIModel.movie.startDate.toLocalDate(),
-                        theaterUIModel.movie.endDate.toLocalDate(),
+                        theater.movie.startDate.toLocalDate(),
+                        theater.movie.endDate.toLocalDate(),
                     ),
                 movieTime = MovieTime(),
                 ticketCount = TicketCount().value,
-                theaterName = theaterUIModel.name,
+                theaterName = theater.name,
             )
 
         updateMovieInfo()
