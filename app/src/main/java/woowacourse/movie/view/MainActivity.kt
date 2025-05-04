@@ -40,7 +40,14 @@ class MainActivity : AppCompatActivity() {
             replaceFragment(movieListFragment)
             binding.navigation.selectedItemId = R.id.action_home
         }
+        setNavigationListener(historyFragment, movieListFragment, settingFragment)
+    }
 
+    private fun setNavigationListener(
+        historyFragment: BookingHistoryFragment,
+        movieListFragment: MovieListFragment,
+        settingFragment: SettingFragment
+    ){
         binding.navigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_history -> {
