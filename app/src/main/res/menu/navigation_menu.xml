@@ -3,15 +3,15 @@
     <item
         android:id="@+id/menu_history"
         android:icon="@drawable/ic_history"
-        android:title="예매 내역" />
+        android:title="@string/bottom_navi_menu_history" />
     <item
         android:id="@+id/menu_home"
         android:icon="@drawable/ic_home"
-        android:title="홈" />
+        android:title="@string/bottom_navi_menu_home" />
     <item
         android:id="@+id/menu_setting"
         android:icon="@drawable/ic_settings"
-        android:title="설정" />
+        android:title="@string/bottom_navi_menu_setting" />
 
 
 </menu>

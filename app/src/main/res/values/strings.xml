@@ -4,6 +4,11 @@
     <!-- 기본 메시지 -->
     <string name="default_error_message">문제가 발생 했습니다</string>
 
+    <!-- Bottom Navigation Menu -->
+    <string name="bottom_navi_menu_history">예매 내역</string>
+    <string name="bottom_navi_menu_home">홈</string>
+    <string name="bottom_navi_menu_setting">설정</string>
+
     <!-- 영화 목록 화면 -->
     <string name="movie_poster">movie poster</string>
 
