@@ -9,6 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.domain.model.ReservationInfo
+import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.view.base.BaseActivity
 import woowacourse.movie.view.extension.getParcelableCompat
 import woowacourse.movie.view.movies.MoviesActivity
@@ -68,7 +69,7 @@ class ReservationResultActivity :
         tvReservationSeats.text =
             getString(
                 R.string.seat_split_line,
-                reservationInfo.seats.joinToString(",") { it.row.toString() + it.column.toString() },
+                reservationInfo.seats.joinToString(",") { it.toFormattedRow() + it.column.toString() },
             )
     }
 
@@ -129,4 +130,8 @@ class ReservationResultActivity :
                 )
             }
     }
+}
+
+private fun Seat.toFormattedRow():String {
+    return (this.row + 65).toChar().toString()
 }
