@@ -40,7 +40,7 @@ class ReservationDetailPresenter(
         }
 
         reservationCount += updateCount
-        view.updateReservationCount(reservationCount.value, reservationCount.isValid())
+        view.updateReservationCount(reservationCount.value, !reservationCount.isMin())
     }
 
     override fun onSelectDate(
@@ -64,7 +64,7 @@ class ReservationDetailPresenter(
 
     private fun setupInitialView(dateTime: LocalDateTime?) {
         view.showScreen(movie.toUiModel())
-        view.updateReservationCount(reservationCount.value, reservationCount.isValid())
+        view.updateReservationCount(reservationCount.value, !reservationCount.isMin())
         updateAvailableDatesAndTimes(dateTime)
     }
 
@@ -100,19 +100,17 @@ class ReservationDetailPresenter(
 
     private fun getAvailableDates(): List<LocalDate> {
         val now = LocalDateTime.now()
-        return getAvailableShowTimes(now)
+        return theater
+            .availableShowTimes(movie.id, now)
             .map { it.toLocalDate() }
             .distinct()
     }
 
     private fun getAvailableTimesFor(date: LocalDate): List<LocalTime> {
         val now = LocalDateTime.now()
-        return getAvailableShowTimes(now)
+        return theater
+            .availableShowTimes(movie.id, now)
             .filter { it.toLocalDate().isEqual(date) }
             .map { it.toLocalTime() }
     }
-
-    private fun getAvailableShowTimes(currentTime: LocalDateTime) = theater.availableShowTimes(movie.id, currentTime)
-
-    private fun ReservationCount.isValid(): Boolean = value > ReservationCount.RESERVATION_MIN_COUNT
 }

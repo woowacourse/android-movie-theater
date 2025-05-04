@@ -12,6 +12,8 @@ value class ReservationCount(
 
     operator fun minus(other: Int): ReservationCount = ReservationCount(value - other)
 
+    fun isMin(): Boolean = value == RESERVATION_MIN_COUNT
+
     companion object {
         const val RESERVATION_MIN_COUNT = 1
         private const val INVALID_RESERVATION_COUNT_MESSAGE = "최소 예매 인원은 ${RESERVATION_MIN_COUNT}명 입니다"

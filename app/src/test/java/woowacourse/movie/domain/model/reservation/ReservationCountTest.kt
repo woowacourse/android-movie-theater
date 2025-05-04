@@ -48,4 +48,10 @@ class ReservationCountTest {
             ReservationCount(2) - 2
         }
     }
+
+    @Test
+    fun `현재 예매 인원이 최소 인원인 지 확인할 수 있다`() {
+        val count = ReservationCount(1)
+        assertThat(count.isMin()).isTrue()
+    }
 }
