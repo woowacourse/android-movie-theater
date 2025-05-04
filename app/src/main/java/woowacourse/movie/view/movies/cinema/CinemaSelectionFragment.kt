@@ -4,30 +4,40 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentCinemaSeclectionBinding
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.view.extension.getParcelableCompat
 import woowacourse.movie.view.reservation.ReservationActivity
 
-class CinemaSeclectionFragment : BottomSheetDialogFragment() {
+class CinemaSelectionFragment : BottomSheetDialogFragment() {
     private lateinit var screenings: List<Screening>
+    private lateinit var binding: FragmentCinemaSeclectionBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? = inflater.inflate(R.layout.fragment_cinema_seclection, container, false)
+    ): View? {
+        binding =
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_cinema_seclection,
+                container,
+                true,
+            )
+        return binding.root
+    }
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val list = view.findViewById<RecyclerView>(R.id.lv_cinema)
-        list.adapter =
+        binding.lvCinema.adapter =
             CinemaSelectionAdapter(
                 screenings,
                 object : OnCinemaSelectionListener {
@@ -44,7 +54,7 @@ class CinemaSeclectionFragment : BottomSheetDialogFragment() {
                     }
                 },
             )
-        list.layoutManager = LinearLayoutManager(context)
+        binding.lvCinema.layoutManager = LinearLayoutManager(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,8 +66,8 @@ class CinemaSeclectionFragment : BottomSheetDialogFragment() {
     companion object {
         private const val SCREENING_KEY = "SCREENING_KEY"
 
-        fun newInstance(screenings: List<Screening>): CinemaSeclectionFragment {
-            val fragment = CinemaSeclectionFragment()
+        fun newInstance(screenings: List<Screening>): CinemaSelectionFragment {
+            val fragment = CinemaSelectionFragment()
             val args = Bundle()
             args.putParcelableArray(SCREENING_KEY, screenings.toTypedArray())
             fragment.arguments = args
