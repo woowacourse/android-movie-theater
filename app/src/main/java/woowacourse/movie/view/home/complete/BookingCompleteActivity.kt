@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,6 +14,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.ticket.Ticket
+import woowacourse.movie.view.MainActivity
 import woowacourse.movie.view.StringFormatter
 import woowacourse.movie.view.ext.getSerializableCompat
 import woowacourse.movie.view.ext.showToast
@@ -26,6 +28,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
 
         val ticket: Ticket =
@@ -37,6 +40,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         presenter = BookingCompletePresenter(this, ticket)
 
         initView()
+        setBackAction()
     }
 
     private fun initView() {
@@ -46,6 +50,17 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             insets
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun setBackAction() {
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    moveToHome()
+                }
+            },
+        )
     }
 
     override fun showTicket(ticket: Ticket) {
@@ -104,12 +119,19 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                finish()
+                moveToHome()
                 true
             }
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun moveToHome() {
+        val intent = Intent(this@BookingCompleteActivity, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 
     companion object {
