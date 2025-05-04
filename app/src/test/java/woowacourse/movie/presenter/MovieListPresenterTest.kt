@@ -5,7 +5,6 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieStore
-import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.domain.model.movies.Movie
 import woowacourse.movie.view.home.model.UiModel
 import woowacourse.movie.view.home.movies.MovieListContract
@@ -22,7 +21,7 @@ class MovieListPresenterTest {
 
     @Test
     fun `영화 리스트를 로딩하면 영화와 광고가 포함된 리스트를 View에 전달한다`() {
-        val presenter = MovieListPresenter(view, MovieStore(), TheaterStore())
+        val presenter = MovieListPresenter(view, MovieStore())
 
         presenter.loadMovies()
 
