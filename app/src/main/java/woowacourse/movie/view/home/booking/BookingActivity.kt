@@ -157,7 +157,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
     private fun initRunningTimeView(runningTime: Int) {
         val movieRunningTimeView = findViewById<TextView>(R.id.tv_running_time)
         movieRunningTimeView.text =
-            getString(R.string.text_running_time_ㅡminute_unit).format(runningTime)
+            getString(R.string.text_running_time_minute_unit).format(runningTime)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
