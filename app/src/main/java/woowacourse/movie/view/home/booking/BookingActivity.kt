@@ -21,7 +21,8 @@ import woowacourse.movie.domain.model.booking.Booking
 import woowacourse.movie.domain.model.booking.PeopleCount
 import woowacourse.movie.domain.model.movies.Movie
 import woowacourse.movie.view.StringFormatter
-import woowacourse.movie.view.ext.getSerializable
+import woowacourse.movie.view.ext.getSerializableCompat
+import woowacourse.movie.view.ext.showToast
 import woowacourse.movie.view.ext.toDrawableResourceId
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.home.seat.SeatActivity
@@ -38,7 +39,12 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking)
 
-        val screeningInfo = intent.getSerializable(KEY_SCREENING, ScreeningInfo::class.java)
+        val screeningInfo: ScreeningInfo =
+            intent.getSerializableCompat(KEY_SCREENING) ?: run {
+                showToast(getString(R.string.text_error))
+                finish()
+                return
+            }
 
         presenter = BookingPresenter(this, MovieStore(), PeopleCount(), screeningInfo)
         initView()

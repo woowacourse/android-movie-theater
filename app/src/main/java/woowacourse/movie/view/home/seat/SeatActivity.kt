@@ -18,7 +18,8 @@ import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.Seats
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.StringFormatter
-import woowacourse.movie.view.ext.getSerializable
+import woowacourse.movie.view.ext.getSerializableCompat
+import woowacourse.movie.view.ext.showToast
 import woowacourse.movie.view.home.complete.BookingCompleteActivity
 
 class SeatActivity : AppCompatActivity(), SeatContract.View {
@@ -29,7 +30,12 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat)
-        val booking = intent.getSerializable(KEY_BOOKING, Booking::class.java)
+        val booking: Booking =
+            intent.getSerializableCompat(KEY_BOOKING) ?: run {
+                showToast(getString(R.string.text_error))
+                finish()
+                return
+            }
 
         presenter = SeatPresenter(this, Seats(), booking)
         initView()
