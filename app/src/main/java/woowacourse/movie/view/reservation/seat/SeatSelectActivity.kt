@@ -120,9 +120,7 @@ class SeatSelectActivity :
             message,
             { dialog -> dialog.dismiss() },
             { _ ->
-                presenter.createReservationInfo { reservationInfo ->
-                    navigateToComplete(reservationInfo)
-                }
+                presenter.reservationConfirmed()
             },
         )
     }

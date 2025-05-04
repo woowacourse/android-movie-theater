@@ -35,11 +35,11 @@ interface SeatSelectContract {
 
         fun seatSelect(seatId: String)
 
-        fun createReservationInfo(onCreated: (ReservationInfo) -> Unit)
-
         fun confirmRequested(
             title: String,
             message: String,
         )
+
+        fun reservationConfirmed()
     }
 }

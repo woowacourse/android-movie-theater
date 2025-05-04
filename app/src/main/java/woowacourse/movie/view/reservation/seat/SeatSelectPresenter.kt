@@ -41,24 +41,16 @@ class SeatSelectPresenter(
         view.updateConfirmButtonEnabled(selectedSeats.size == movieTicket.count)
     }
 
-    override fun createReservationInfo(onCreated: (ReservationInfo) -> Unit) {
-        val reservationInfo =
-            ReservationInfo(
-                title = movieTicket.title,
-                date = movieTicket.date,
-                time = movieTicket.time,
-                seats = selectedSeats,
-                price = selectedSeats.totalPrice,
-                theaterName = movieTicket.theaterName,
-            )
-        onCreated(reservationInfo)
-    }
-
     override fun confirmRequested(
         title: String,
         message: String,
     ) {
         view.showReservationDialog(title, message)
+    }
+
+    override fun reservationConfirmed() {
+        val reservationInfo = createReservationInfo()
+        view.navigateToComplete(reservationInfo)
     }
 
     fun getSelectedSeatIds(): List<String> = selectedSeats.labels()
@@ -76,6 +68,16 @@ class SeatSelectPresenter(
         val isEnabled = selectedSeats.size == movieTicket.count
         view.updateConfirmButtonEnabled(isEnabled)
     }
+
+    private fun createReservationInfo(): ReservationInfo =
+        ReservationInfo(
+            title = movieTicket.title,
+            date = movieTicket.date,
+            time = movieTicket.time,
+            seats = selectedSeats,
+            price = selectedSeats.totalPrice,
+            theaterName = movieTicket.theaterName,
+        )
 
     companion object {
         private const val DEFAULT_PRICE = 0
