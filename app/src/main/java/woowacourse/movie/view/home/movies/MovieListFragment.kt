@@ -11,14 +11,14 @@ import woowacourse.movie.data.MovieStore
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.view.home.model.UiModel
 import woowacourse.movie.view.home.movies.adapter.MovieAdapter
-import woowacourse.movie.view.home.theaters.TheaterBottomSheet
+import woowacourse.movie.view.home.theaters.TheaterListFragment
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContract.View, MovieListEventHandler {
-    private var _binding: FragmentMovieListBinding? = null
-    private val binding get() = _binding!!
     private val presenter: MovieListContract.Presenter by lazy {
         MovieListPresenter(this, MovieStore())
     }
+    private var _binding: FragmentMovieListBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +42,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
     }
 
     override fun moveToTheaterSelection(movieId: Int) {
-        TheaterBottomSheet.newInstance(movieId).show(childFragmentManager, THEATER_BOTTOM_SHEET)
+        TheaterListFragment.newInstance(movieId).show(childFragmentManager, THEATER_BOTTOM_SHEET)
     }
 
     override fun onMovieSelected(movieId: Int) {

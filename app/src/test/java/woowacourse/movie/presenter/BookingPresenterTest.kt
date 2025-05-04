@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.domain.fixture.harryPotter1MoviesFixture
-import woowacourse.movie.domain.model.booking.PeopleCount
+import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.view.home.booking.BookingContract
 import woowacourse.movie.view.home.booking.BookingPresenter
 import woowacourse.movie.view.home.model.ScreeningInfo
@@ -29,11 +29,11 @@ class BookingPresenterTest {
             BookingPresenter(
                 view,
                 MovieStore(),
-                PeopleCount(1),
+                AdmissionCount(1),
                 ScreeningInfo(
                     movieId = 0,
                     theaterName = "CGV",
-                    screening = listOf(LocalDateTime.of(2025, 4, 10, 12, 10)),
+                    screenings = listOf(LocalDateTime.of(2025, 4, 10, 12, 10)),
                 ),
             )
     }
@@ -52,7 +52,7 @@ class BookingPresenterTest {
                     it.id == expected.id &&
                         it.title == expected.title &&
                         it.posterResource == expected.posterResource &&
-                        it.releaseDate == expected.releaseDate &&
+                        it.screeningDates == expected.screeningDates &&
                         it.runningTime == expected.runningTime
                 },
                 any(),
@@ -64,26 +64,26 @@ class BookingPresenterTest {
     fun `인원은 0명이 될 수 없다`() {
         // given
         var count = 1
-        every { view.showPeopleCount(count) } just Runs
+        every { view.showAdmissionCount(count) } just Runs
 
         // when
-        presenter.decreasePeopleCount()
+        presenter.decreaseAdmissionCount()
 
         // then
-        verify { view.showPeopleCount(1) }
+        verify { view.showAdmissionCount(1) }
     }
 
     @Test
     fun `인원이 1명 증가한다`() {
         // given
         var count = 1
-        every { view.showPeopleCount(count) }
+        every { view.showAdmissionCount(count) }
 
         // when
-        presenter.increasePeopleCount(2)
+        presenter.increaseAdmissionCount(2)
 
         // then
-        verify { view.showPeopleCount(2) }
+        verify { view.showAdmissionCount(2) }
     }
 
     @Test
@@ -93,40 +93,40 @@ class BookingPresenterTest {
             BookingPresenter(
                 view,
                 model,
-                PeopleCount(5),
+                AdmissionCount(5),
                 ScreeningInfo(
                     movieId = 0,
                     theaterName = "CGV",
-                    screening = listOf(LocalDateTime.of(2025, 4, 10, 12, 10)),
+                    screenings = listOf(LocalDateTime.of(2025, 4, 10, 12, 10)),
                 ),
             )
-        every { view.showPeopleCount(4) } just Runs
+        every { view.showAdmissionCount(4) } just Runs
 
         // when
-        presenter.decreasePeopleCount()
+        presenter.decreaseAdmissionCount()
 
         // then
-        verify { view.showPeopleCount(4) }
+        verify { view.showAdmissionCount(4) }
     }
 
     @Test
     fun `예약 버튼을 누르면 예약 완료 화면으로 이동하며 예약 정보 Booking 객체를 전달한다`() {
         // when
         presenter.loadBooking(
-            title = "테스트 영화 1",
-            bookingDate = "2025-04-24",
-            bookingTime = "12:00",
-            count = "3",
+            movieTitle = "테스트 영화 1",
+            screeningDate = "2025-04-24",
+            screeningTime = "12:00",
+            admissionCount = "3",
         )
 
         // then
         verify {
             view.moveToBookingComplete(
                 match {
-                    it.title == "테스트 영화 1" &&
-                        it.bookingDate == LocalDate.of(2025, 4, 24) &&
-                        it.bookingTime == LocalTime.of(12, 0) &&
-                        it.count == PeopleCount(3)
+                    it.movieTitle == "테스트 영화 1" &&
+                        it.screeningDate == LocalDate.of(2025, 4, 24) &&
+                        it.screeningTime == LocalTime.of(12, 0) &&
+                        it.count == AdmissionCount(3)
                 },
             )
         }

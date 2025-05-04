@@ -10,7 +10,7 @@ class Seats : Serializable {
 
     fun removeSeat(newSeat: Seat) = _item.remove(newSeat)
 
-    fun bookingPrice() = _item.sumOf { it.seatPrice() }
+    fun totalPrice() = _item.sumOf { it.price() }
 
     fun isNotSelectDone(limit: Int) = _item.size != limit
 

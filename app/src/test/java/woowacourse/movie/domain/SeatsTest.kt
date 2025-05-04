@@ -43,7 +43,7 @@ class SeatsTest {
         seats.addSeat(oneByTowSeat)
 
         // given
-        val totalPrice = seats.bookingPrice()
+        val totalPrice = seats.totalPrice()
 
         // then
         assertEquals(20000, totalPrice)
@@ -82,7 +82,7 @@ class SeatsTest {
         val seats = Seats()
 
         // given
-        val totalPrice = seats.bookingPrice()
+        val totalPrice = seats.totalPrice()
 
         // then
         assertEquals(0, totalPrice)
@@ -95,7 +95,7 @@ class SeatsTest {
         seats.addSeat(oneByOneSeat)
 
         // given
-        val totalPrice = seats.bookingPrice()
+        val totalPrice = seats.totalPrice()
 
         // then
         assertEquals(10000, totalPrice)

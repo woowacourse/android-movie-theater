@@ -74,13 +74,13 @@ class TheaterStore {
         movie: Movie,
         timeSlots: List<LocalTime>,
     ): List<Screening> {
-        val dateRange = generateDateRange(movie.releaseDate.startDate, movie.releaseDate.endDate)
+        val dateRange = generateDateRange(movie.screeningDates.startDate, movie.screeningDates.endDate)
 
         return dateRange.flatMap { date ->
             timeSlots.map { time ->
                 Screening(
                     movieId = movie.id,
-                    screenTime = LocalDateTime.of(date, time),
+                    time = LocalDateTime.of(date, time),
                 )
             }
         }

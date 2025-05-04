@@ -24,7 +24,7 @@ class SeatView(
     }
 
     fun updateSeats(selectedSeats: Set<Seat>) {
-        val selectedCoords = selectedSeats.map { Seat(Column(it.x.value), Row(it.y.value)) }.toSet()
-        rows.forEach { it.updateSeats(selectedCoords) }
+        val selectedPositions = selectedSeats.map { Seat(Column(it.x.value), Row(it.y.value)) }.toSet()
+        rows.forEach { it.updateSeats(selectedPositions) }
     }
 }

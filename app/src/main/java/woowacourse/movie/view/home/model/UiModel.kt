@@ -10,8 +10,8 @@ sealed interface UiModel {
         val id: Int,
         val title: String,
         val imgName: String,
-        val releaseStartDate: String,
-        val releaseEndDate: String,
+        val startDate: String,
+        val endDate: String,
         val runningTime: Int,
     ) : UiModel
 
@@ -25,8 +25,8 @@ fun Movie.toUiModel(): MovieUiModel {
         id = id,
         title = title,
         imgName = posterResource,
-        releaseStartDate = StringFormatter.dotDateFormat(releaseDate.startDate),
-        releaseEndDate = StringFormatter.dotDateFormat(releaseDate.endDate),
+        startDate = StringFormatter.dotDateFormat(screeningDates.startDate),
+        endDate = StringFormatter.dotDateFormat(screeningDates.endDate),
         runningTime = runningTime,
     )
 }

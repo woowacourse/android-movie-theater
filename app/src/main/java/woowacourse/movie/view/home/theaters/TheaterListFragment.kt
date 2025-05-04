@@ -13,7 +13,7 @@ import woowacourse.movie.view.home.model.ScreeningInfo
 import woowacourse.movie.view.home.theaters.adapter.TheaterAdapter
 import woowacourse.movie.view.util.showToast
 
-class TheaterBottomSheet :
+class TheaterListFragment :
     BottomSheetDialogFragment(R.layout.fragment_theater_bottom_sheet),
     TheaterListContract.View,
     TheaterListEventHandler {
@@ -63,9 +63,9 @@ class TheaterBottomSheet :
         private const val MOVIE_ID_NOT_INITIALIZED = -1
         private const val KEY_MOVIE_ID = "MOVIE_ID"
 
-        fun newInstance(movieId: Int): TheaterBottomSheet {
+        fun newInstance(movieId: Int): TheaterListFragment {
             val arguments = Bundle().apply { putInt(KEY_MOVIE_ID, movieId) }
-            return TheaterBottomSheet().apply { this.arguments = arguments }
+            return TheaterListFragment().apply { this.arguments = arguments }
         }
     }
 }

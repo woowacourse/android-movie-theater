@@ -5,8 +5,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.booking.Booking
-import woowacourse.movie.domain.model.booking.PeopleCount
 import woowacourse.movie.domain.model.seat.Column
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
@@ -22,10 +22,10 @@ class SeatPresenterTest {
     private lateinit var presenter: SeatPresenter
     private val booking =
         Booking(
-            title = "Test Booking",
-            bookingDate = LocalDate.now(),
-            bookingTime = LocalTime.now(),
-            count = PeopleCount(2),
+            movieTitle = "Test Booking",
+            screeningDate = LocalDate.now(),
+            screeningTime = LocalTime.now(),
+            count = AdmissionCount(2),
             theaterName = "CGV",
         )
 
@@ -44,7 +44,7 @@ class SeatPresenterTest {
         presenter.changeSeat(position)
 
         // then
-        verify { mockView.showToast(booking.count.value) }
+        verify { mockView.notifySelectedSeatsCount(booking.count.value) }
     }
 
     @Test
@@ -56,7 +56,7 @@ class SeatPresenterTest {
         presenter.attemptConfirmBooking()
 
         // then
-        verify { mockView.showToast(booking.count.value) }
+        verify { mockView.notifySelectedSeatsCount(booking.count.value) }
         verify(exactly = 0) { mockView.moveToBookingComplete(any()) }
     }
 
@@ -65,7 +65,7 @@ class SeatPresenterTest {
         // given
         every { mockSeats.isNotSelectDone(booking.count.value) } returns false
         every { mockSeats.item } returns setOf(Seat(Column(1), Row(1)))
-        every { mockSeats.bookingPrice() } returns 10000
+        every { mockSeats.totalPrice() } returns 10000
 
         // when
         presenter.attemptConfirmBooking()

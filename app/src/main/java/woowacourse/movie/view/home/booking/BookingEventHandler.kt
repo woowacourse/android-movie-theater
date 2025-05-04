@@ -1,9 +1,9 @@
 package woowacourse.movie.view.home.booking
 
 interface BookingEventHandler {
-    fun onIncreasePeopleCount()
+    fun onIncreaseAdmissionCount()
 
-    fun onDecreasePeopleCount()
+    fun onDecreaseAdmissionCount()
 
     fun onBookingComplete()
 }

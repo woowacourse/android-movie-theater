@@ -22,7 +22,7 @@ class TheaterTest {
         val theater = Theater("잠실 극장", screening)
 
         // then
-        val excepted = theater.screeningTimeCount(1)
+        val excepted = theater.screeningsCount(1)
         assertEquals(excepted, 3)
     }
 
@@ -41,14 +41,14 @@ class TheaterTest {
         val theater = Theater("잠실 극장", screening)
 
         // then
-        val excepted = theater.getMovieScreening(1)
+        val excepted = theater.screeningTimes(1)
 
         assertEquals(
             excepted,
             listOf(
-                screeningFixtureWithMovieId1.screenTime,
-                screeningFixtureWithMovieId1.screenTime,
-                screeningFixtureWithMovieId1.screenTime,
+                screeningFixtureWithMovieId1.time,
+                screeningFixtureWithMovieId1.time,
+                screeningFixtureWithMovieId1.time,
             ),
         )
     }

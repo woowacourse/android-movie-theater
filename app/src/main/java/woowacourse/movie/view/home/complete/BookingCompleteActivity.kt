@@ -22,13 +22,12 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
-    private lateinit var binding: ActivityBookingCompleteBinding
     private lateinit var presenter: BookingCompleteContract.Presenter
+    private lateinit var binding: ActivityBookingCompleteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
 
         val ticket: Ticket =
@@ -65,8 +64,8 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
     override fun showTicket(ticket: Ticket) {
         with(ticket) {
-            initBookingMovieTitleView(title)
-            initBookingScheduleView(bookingDate, bookingTime)
+            initBookingMovieTitleView(movieTitle)
+            initBookingScheduleView(screeningDate, screeningTime)
             initBookingSeatView(seats)
             initTheaterNameView(theaterName)
             initBookingPeopleCountView(count.value)
@@ -98,7 +97,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     }
 
     private fun initBookingPeopleCountView(peopleCount: Int) {
-        binding.tvPeopleCount.text =
+        binding.tvAdmissionCount.text =
             getString(R.string.text_general_people_count).format(peopleCount)
     }
 

@@ -61,8 +61,8 @@ class MovieAdapter(
         val item = itemsList[position]
 
         when (holder) {
-            is AdvertiseViewHolder -> holder.bind(item as UiModel.AdvertiseUiModel)
-            is MovieViewHolder -> holder.bind(item as UiModel.MovieUiModel)
+            is AdvertiseViewHolder -> holder.bind(item as AdvertiseUiModel)
+            is MovieViewHolder -> holder.bind(item as MovieUiModel)
         }
     }
 

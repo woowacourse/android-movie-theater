@@ -18,7 +18,7 @@ class TheaterListPresenter(
         selectedTheater: Theater,
     ) {
         val theaterName = selectedTheater.name
-        val screeningTimes = selectedTheater.getMovieScreening(movieId)
+        val screeningTimes = selectedTheater.screeningTimes(movieId)
         val screeningInfo = ScreeningInfo(movieId, theaterName, screeningTimes)
 
         view.moveToBooking(screeningInfo)

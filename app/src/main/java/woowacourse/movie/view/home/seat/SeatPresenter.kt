@@ -19,7 +19,7 @@ class SeatPresenter(
     private val limit = booking.count.value
 
     override fun loadBookingInfo() {
-        view.showBookingInformation(booking.title)
+        view.showBookingInformation(booking.movieTitle)
         view.showPrice(0)
     }
 
@@ -27,27 +27,26 @@ class SeatPresenter(
         val newSeat = Seat(x = Column(position.x.value), y = Row(position.y.value))
 
         if (!seats.isSelected(newSeat) && !seats.canSelect(limit)) {
-            return view.showToast(limit)
+            return view.notifySelectedSeatsCount(limit)
         }
-
         seats.toggleSeat(newSeat)
 
-        view.showSeat(seats.item)
-        view.showPrice(seats.bookingPrice())
-        updateConfirmButtonState(limit)
+        view.showSeats(seats.item)
+        view.showPrice(seats.totalPrice())
+        updateConfirmControlState(limit)
     }
 
     override fun attemptConfirmBooking() {
         if (seats.isNotSelectDone(limit)) {
-            return view.showToast(limit)
+            return view.notifySelectedSeatsCount(limit)
         }
 
-        val ticket = Ticket.initialize(booking, seats.item, seats.bookingPrice())
+        val ticket = Ticket.initialize(booking, seats.item, seats.totalPrice())
         view.moveToBookingComplete(ticket)
     }
 
-    private fun updateConfirmButtonState(peopleCount: Int) {
+    private fun updateConfirmControlState(peopleCount: Int) {
         val isEnabled = seats.item.size == peopleCount
-        view.setConfirmButtonEnabled(isEnabled)
+        view.setConfirmControlEnabled(isEnabled)
     }
 }

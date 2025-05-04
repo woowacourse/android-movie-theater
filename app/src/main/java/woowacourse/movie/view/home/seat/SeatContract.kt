@@ -7,13 +7,13 @@ interface SeatContract {
     interface View {
         fun showBookingInformation(title: String)
 
-        fun showSeat(seats: Set<Seat>)
+        fun showSeats(seats: Set<Seat>)
 
-        fun showToast(peopleCount: Int)
+        fun notifySelectedSeatsCount(peopleCount: Int)
 
         fun showPrice(price: Int)
 
-        fun setConfirmButtonEnabled(clickable: Boolean)
+        fun setConfirmControlEnabled(clickable: Boolean)
 
         fun moveToBookingComplete(ticket: Ticket)
     }

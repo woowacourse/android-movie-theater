@@ -65,7 +65,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="4dp"
                     android:gravity="center"
-                    android:text="@{String.format(@string/text_date_period, movie.releaseStartDate, movie.releaseEndDate)}"
+                    android:text="@{String.format(@string/text_date_period, movie.startDate, movie.endDate)}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     tools:text="2025.4.1 ~ 2025.4.25" />

@@ -6,5 +6,5 @@ data class Seat(
     val x: Column,
     val y: Row,
 ) : Serializable {
-    fun seatPrice() = SeatPolicy.get(x.value).price
+    fun price() = SeatPolicy.get(x.value).price
 }

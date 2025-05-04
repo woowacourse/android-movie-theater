@@ -4,5 +4,5 @@ import java.time.LocalDateTime
 
 data class Screening(
     val movieId: Int,
-    val screenTime: LocalDateTime,
+    val time: LocalDateTime,
 )

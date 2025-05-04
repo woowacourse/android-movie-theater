@@ -1,6 +1,6 @@
 package woowacourse.movie.data
 
-import woowacourse.movie.domain.model.booking.ScreeningDate
+import woowacourse.movie.domain.model.booking.ScreeningDates
 import woowacourse.movie.domain.model.movies.Movie
 import java.time.LocalDate
 
@@ -15,9 +15,9 @@ class MovieStore {
         fun createScreeningDate(
             start: LocalDate,
             days: Long,
-        ): ScreeningDate {
+        ): ScreeningDates {
             val dates = (0 until days).map { start.plusDays(it) }
-            return ScreeningDate(dates)
+            return ScreeningDates(dates)
         }
 
         val baseDate = LocalDate.of(2025, 5, 1)

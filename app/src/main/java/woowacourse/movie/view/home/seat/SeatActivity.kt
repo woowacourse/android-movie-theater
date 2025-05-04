@@ -71,11 +71,11 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         findViewById<TextView>(R.id.tv_title).text = title
     }
 
-    override fun showSeat(seats: Set<Seat>) {
+    override fun showSeats(seats: Set<Seat>) {
         seatView.updateSeats(seats)
     }
 
-    override fun showToast(peopleCount: Int) {
+    override fun notifySelectedSeatsCount(peopleCount: Int) {
         val msg = getString(R.string.text_over_limit_people_count).format(peopleCount)
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
@@ -85,7 +85,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         binding.tvPrice.text = getString(R.string.text_korea_unit).format(formattedPrice)
     }
 
-    override fun setConfirmButtonEnabled(clickable: Boolean) {
+    override fun setConfirmControlEnabled(clickable: Boolean) {
         binding.btnBooking.isEnabled = clickable
     }
 

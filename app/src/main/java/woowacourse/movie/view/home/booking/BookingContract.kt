@@ -13,48 +13,48 @@ interface BookingContract {
             screeningTimes: List<LocalDateTime>,
         )
 
-        fun showPeopleCount(count: Int)
+        fun showAdmissionCount(count: Int)
 
         fun showScreeningPeriod(
             startDate: LocalDate,
             endDate: LocalDate,
         )
 
-        fun showScreeningDate(screeningBookingDates: List<LocalDate>)
+        fun showScreeningDates(bookableDates: List<LocalDate>)
 
-        fun showScreeningTime(screeningBookingTimes: List<LocalTime>)
+        fun showScreeningTimes(bookableTimes: List<LocalTime>)
 
-        fun showToast()
+        fun notifyNoAvailableTime()
 
         fun moveToBookingComplete(booking: Booking)
     }
 
     interface Presenter {
+        fun loadAdmissionCount()
+
         fun loadMovieDetail()
 
-        fun loadPeopleCount()
-
-        fun loadScreeningDate(
-            screeningDateTime: List<LocalDateTime>,
+        fun loadScreeningDates(
+            screeningDateTimes: List<LocalDateTime>,
             now: LocalDateTime,
         )
 
-        fun loadScreeningTime(
+        fun loadScreeningTimes(
             selectedDate: LocalDate,
             now: LocalDateTime,
         )
 
         fun loadBooking(
-            title: String,
-            bookingDate: String,
-            bookingTime: String,
-            peopleCount: String,
+            movieTitle: String,
+            screeningDate: String,
+            screeningTime: String,
+            admissionCount: String,
         )
 
-        fun decreasePeopleCount()
+        fun decreaseAdmissionCount()
 
-        fun increasePeopleCount(limit: Int)
+        fun increaseAdmissionCount(limit: Int)
 
-        fun restorePeopleCount(savedCount: Int)
+        fun restoreAdmissionCount(savedCount: Int)
     }
 }

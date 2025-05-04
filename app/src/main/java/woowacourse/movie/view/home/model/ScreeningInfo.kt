@@ -8,11 +8,13 @@ import java.time.LocalTime
 data class ScreeningInfo(
     val movieId: Int,
     val theaterName: String,
-    val screening: List<LocalDateTime>,
+    val screenings: List<LocalDateTime>,
 ) : Serializable {
-    fun screeningTime(selectedDate: LocalDate): List<LocalTime> {
-        return screening
-            .filter { it.toLocalDate() == selectedDate }
-            .map { it.toLocalTime() }
+    fun screeningTimes(selectedDate: LocalDate): List<LocalTime> {
+        return screenings.filter { screening ->
+            screening.toLocalDate() == selectedDate
+        }.map { screening ->
+            screening.toLocalTime()
+        }
     }
 }

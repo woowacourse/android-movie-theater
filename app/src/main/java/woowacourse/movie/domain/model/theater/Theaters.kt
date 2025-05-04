@@ -7,7 +7,7 @@ class Theaters(
 ) : Serializable {
     operator fun get(index: Int) = value[index]
 
-    fun availableTheaters(movieId: Int) = Theaters(value.filter { it.screeningTimeCount(movieId) > 0 })
+    fun availableTheaters(movieId: Int) = Theaters(value.filter { it.screeningsCount(movieId) > 0 })
 
     fun size() = value.size
 }

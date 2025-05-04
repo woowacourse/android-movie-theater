@@ -4,15 +4,15 @@ import java.time.LocalDateTime
 
 data class Theater(
     val name: String,
-    val movieSchedules: List<Screening>,
+    val screenings: List<Screening>,
 ) {
-    fun screeningTimeCount(movieId: Int) = movieSchedules.count { it.movieId == movieId }
+    fun screeningsCount(movieId: Int) =
+        screenings.count { screening ->
+            screening.movieId == movieId
+        }
 
-    fun getMovieScreening(movieId: Int): List<LocalDateTime> =
-        movieSchedules
-            .filter {
-                it.movieId == movieId
-            }.map {
-                it.screenTime
-            }
+    fun screeningTimes(movieId: Int): List<LocalDateTime> =
+        screenings.filter { screening ->
+            screening.movieId == movieId
+        }.map { screening -> screening.time }
 }

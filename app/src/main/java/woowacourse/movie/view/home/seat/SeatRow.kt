@@ -19,17 +19,17 @@ class SeatRow(
         row.children
             .filterIsInstance<TextView>()
             .forEachIndexed { colIndex, view ->
-                val coord = Seat(Column(rowIndex + 1), Row(colIndex + 1))
-                view.tag = coord
-                seatViews[coord] = view
-                view.setOnClickListener { onSeatClick(coord) }
+                val position = Seat(Column(rowIndex + 1), Row(colIndex + 1))
+                view.tag = position
+                seatViews[position] = view
+                view.setOnClickListener { onSeatClick(position) }
             }
     }
 
-    fun updateSeats(selectedCoords: Set<Seat>) {
-        seatViews.forEach { (coord, view) ->
+    fun updateSeats(selectedPositions: Set<Seat>) {
+        seatViews.forEach { (position, view) ->
             view.setBackgroundColor(
-                if (coord in selectedCoords) Color.YELLOW else Color.TRANSPARENT,
+                if (position in selectedPositions) Color.YELLOW else Color.TRANSPARENT,
             )
         }
     }

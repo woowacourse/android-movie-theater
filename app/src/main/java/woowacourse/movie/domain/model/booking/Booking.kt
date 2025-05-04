@@ -5,9 +5,9 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class Booking(
-    val title: String,
+    val movieTitle: String,
     val theaterName: String,
-    val bookingDate: LocalDate,
-    val bookingTime: LocalTime,
-    val count: PeopleCount,
+    val screeningDate: LocalDate,
+    val screeningTime: LocalTime,
+    val count: AdmissionCount,
 ) : Serializable

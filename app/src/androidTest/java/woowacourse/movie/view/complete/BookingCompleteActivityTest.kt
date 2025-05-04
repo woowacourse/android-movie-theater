@@ -7,7 +7,7 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.domain.model.booking.PeopleCount
+import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.seat.Column
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
@@ -27,10 +27,10 @@ class BookingCompleteActivityTest {
                 fakeContext,
                 Ticket(
                     "해리 포터와 마법사의 돌",
+                    "CGV",
                     LocalDate.parse("2025-04-01"),
                     LocalTime.parse("12:00"),
-                    "CGV",
-                    PeopleCount(2),
+                    AdmissionCount(2),
                     setOf(Seat(Column(1), Row(1)), Seat(Column(1), Row(2))),
                     26000,
                 ),

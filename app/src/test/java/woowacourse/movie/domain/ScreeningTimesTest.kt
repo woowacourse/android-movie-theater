@@ -2,17 +2,17 @@ package woowacourse.movie.domain
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.booking.ScreeningTime
+import woowacourse.movie.domain.model.booking.ScreeningTimes
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class ScreeningTimeTest {
+class ScreeningTimesTest {
     @Test
     fun `선택된 예매 날짜가 당일이면 당일 시간 이전은 제외한 예매 시간을 반환한다`() {
         // when
-        val screeningTime =
-            ScreeningTime(
+        val screeningTimes =
+            ScreeningTimes(
                 LocalDateTime.of(2025, 4, 24, 15, 20),
                 listOf(
                     LocalTime.of(9, 0),
@@ -24,7 +24,7 @@ class ScreeningTimeTest {
             )
 
         // given
-        val result = screeningTime.getAvailableScreeningTimes(LocalDate.of(2025, 4, 24))
+        val result = screeningTimes.bookableTimes(LocalDate.of(2025, 4, 24))
 
         // then
         assertEquals(
@@ -39,8 +39,8 @@ class ScreeningTimeTest {
     @Test
     fun `선택된 예매 날짜가 당일이 아니면 모든 예매 시간을 반환한다`() {
         // when
-        val screeningTime =
-            ScreeningTime(
+        val screeningTimes =
+            ScreeningTimes(
                 LocalDateTime.of(2025, 4, 24, 15, 20),
                 listOf(
                     LocalTime.of(9, 0),
@@ -53,7 +53,7 @@ class ScreeningTimeTest {
 
         // given
         val result =
-            screeningTime.getAvailableScreeningTimes(
+            screeningTimes.bookableTimes(
                 LocalDate.of(2025, 4, 25),
             )
 

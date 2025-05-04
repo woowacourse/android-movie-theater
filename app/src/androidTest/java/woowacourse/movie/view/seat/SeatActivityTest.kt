@@ -11,8 +11,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
+import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.booking.Booking
-import woowacourse.movie.domain.model.booking.PeopleCount
 import woowacourse.movie.fixture.fakeContext
 import woowacourse.movie.view.home.seat.SeatActivity
 import woowacourse.movie.view.home.seat.SeatActivity.Companion.newIntent
@@ -28,10 +28,10 @@ class SeatActivityTest {
             newIntent(
                 fakeContext,
                 Booking(
-                    title = "해리 포터와 마법사의 돌",
-                    bookingDate = LocalDate.parse("2025-04-01"),
-                    bookingTime = LocalTime.parse("12:00"),
-                    count = PeopleCount(2),
+                    movieTitle = "해리 포터와 마법사의 돌",
+                    screeningDate = LocalDate.parse("2025-04-01"),
+                    screeningTime = LocalTime.parse("12:00"),
+                    count = AdmissionCount(2),
                     theaterName = "선릉 극장",
                 ),
             )

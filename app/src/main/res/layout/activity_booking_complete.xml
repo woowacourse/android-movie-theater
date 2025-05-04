@@ -65,7 +65,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_schedule">
 
             <TextView
-                android:id="@+id/tv_people_count"
+                android:id="@+id/tv_admission_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
