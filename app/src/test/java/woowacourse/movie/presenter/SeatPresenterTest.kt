@@ -22,7 +22,7 @@ class SeatPresenterTest {
     private lateinit var presenter: SeatPresenter
     private val booking =
         Booking(
-            title = "Test Booking",
+            movieTitle = "Test Booking",
             bookingDate = LocalDate.now(),
             bookingTime = LocalTime.now(),
             count = PeopleCount(2),
