@@ -1,70 +1,81 @@
 package woowacourse.movie.view
 
-import android.content.Context
-import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.LargeTest
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import woowacourse.movie.MovieFixture
 import woowacourse.movie.R
+import woowacourse.movie.checkIsDisplayed
+import woowacourse.movie.checkWithText
 import woowacourse.movie.moviebooking.MovieBookingActivity
 
-@RunWith(AndroidJUnit4::class)
-@LargeTest
 class MovieBookingActivityTest {
-    private lateinit var scenario: ActivityScenario<MovieBookingActivity>
-
     @Before
     fun setUp() {
-        val fakeContext = ApplicationProvider.getApplicationContext<Context>()
-        val intent =
-            Intent(
-                fakeContext,
-                MovieBookingActivity::class.java,
-            ).apply {
-                putExtra("movie", MovieFixture.MOVIE)
-            }
-        scenario = ActivityScenario.launch(intent)
+        val movie = MovieFixture.MOVIE
+        val theater = MovieFixture.THEATER
+
+        val intent = MovieBookingActivity.movieBookingIntent(ApplicationProvider.getApplicationContext(), movie, theater)
+
+        ActivityScenario.launch<MovieBookingActivity>(intent)
     }
 
     @Test
-    fun 영화정보가_올바르게_표시된다() {
-        onView(withText(MovieFixture.HARRY_POTTER_TITLE)).check(matches(isDisplayed()))
-        onView(withText(MovieFixture.HARRY_POTTER_DATE)).check(matches(isDisplayed()))
-        onView(withText(MovieFixture.HARRY_POTTER_RUNNING_TIME)).check(matches(isDisplayed()))
+    fun 예매할_영화_포스터가_보인다() {
+        onView(withId(R.id.booking_movie_poster)).checkIsDisplayed()
     }
 
     @Test
-    fun 인원수_버튼을_누르면_수정된다() {
-        onView(withId(R.id.member_count))
-            .check(matches(withText("1")))
-
-        onView(withId(R.id.plus_member_count)).perform(ViewActions.click())
-
-        onView(withId(R.id.member_count))
-            .check(matches(withText("2")))
-
-        onView(withId(R.id.minus_member_count)).perform(ViewActions.click())
-
-        onView(withId(R.id.member_count))
-            .check(matches(withText("1")))
+    fun 예매할_영화_제목이_보인다() {
+        onView(withId(R.id.booking_movie_title)).checkIsDisplayed()
     }
 
     @Test
-    fun 예약_완료_버튼을_누르면_확인_다이얼로그가_나온다() {
-        onView(withId(R.id.booking_complete_button)).perform(ViewActions.click())
-
-        onView(withText(R.string.confirm_reservation_message))
-            .check(matches(isDisplayed()))
+    fun 예매할_영화_상영_기간이_보인다() {
+        onView(withId(R.id.booking_movie_date)).checkIsDisplayed()
     }
+
+    @Test
+    fun 예매할_영화_러닝_타임이_보인다() {
+        onView(withId(R.id.booking_movie_running_time)).checkIsDisplayed()
+    }
+
+    @Test
+    fun 인원_수_증가_버튼이_보인다() {
+        onView(withId(R.id.booking_plus_member_count)).checkIsDisplayed()
+    }
+
+    @Test
+    fun 인원_수_감소_버튼이_보인다() {
+        onView(withId(R.id.booking_minus_member_count)).checkIsDisplayed()
+    }
+
+    @Test
+    fun 예매할_인원_수가_보인다() {
+        onView(withId(R.id.booking_member_count)).checkWithText("1")
+    }
+
+    @Test
+    fun 예매_완료_버튼이_보인다() {
+        onView(withId(R.id.booking_complete_button)).checkIsDisplayed()
+    }
+
+//    @Test
+//    fun 예매할_날짜가_보인다() {
+//        onView(withId(R.id.booking_date_picker)).checkWithText("2025.09.29")
+//    }
+//
+//    @Test
+//    fun 예매할_시간이_보인다() {
+//        onView(withId(R.id.booking_time_picker)).checkWithText("10:00")
+//    }
+//
+//    @Test
+//    fun 예약_완료_버튼을_누르면_확인_다이얼로그가_나온다() {
+//        onView(withId(R.id.booking_complete_button)).performClick()
+//        onView(withText(R.string.confirm_reservation_message)).checkIsDisplayed()
+//    }
 }

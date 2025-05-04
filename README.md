@@ -84,3 +84,7 @@
 - 앱 수준 gradle에 테스트 옵션 애니메이션 false 추가
 - xml 아이템 ID에 booked 접미사 추가
 - isDisplayed 확장함수 추가
+
+- [x] refactor: MovieBookingActivity UI 테스트 코드 추가
+- 영화 예매 화면의 포스터, 영화 제목, 상영 기간, 러닝 타임, 증가 버튼, 감소 버튼, 예매할 인원 수가 보이는지 테스트 (날짜와 시간 스피너, 다이얼로그 테스트 제외)
+- xml 아이템 ID에 booking 접미사 추가

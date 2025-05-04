@@ -61,15 +61,15 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
     }
 
     override fun updateMemberCount(count: Int) {
-        binding.memberCount.text = count.toString()
+        binding.bookingMemberCount.text = count.toString()
     }
 
     override fun showBookingDate(dates: List<LocalDate>) {
-        binding.datePicker.adapter = BookedDateSpinnerAdapter(dates)
+        binding.bookingDatePicker.adapter = BookedDateSpinnerAdapter(dates)
     }
 
     override fun showBookingTimes(times: List<LocalTime>) {
-        binding.timePicker.adapter = BookedTimeSpinnerAdapter(times)
+        binding.bookingTimePicker.adapter = BookedTimeSpinnerAdapter(times)
     }
 
     override fun navigateToMovieBookingSeat(bookingStatus: BookingStatus) {
@@ -91,7 +91,7 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
     }
 
     private fun setupDatePicker() {
-        binding.datePicker.onItemSelectedListener =
+        binding.bookingDatePicker.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -108,7 +108,7 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
     }
 
     private fun setupTimePicker() {
-        binding.timePicker.onItemSelectedListener =
+        binding.bookingTimePicker.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -125,8 +125,8 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
     }
 
     private fun setupMemberCount() {
-        binding.plusMemberCount.setOnClickListener { presenter.increaseCount() }
-        binding.minusMemberCount.setOnClickListener { presenter.decreaseCount() }
+        binding.bookingPlusMemberCount.setOnClickListener { presenter.increaseCount() }
+        binding.bookingMinusMemberCount.setOnClickListener { presenter.decreaseCount() }
     }
 
     private fun setupBookingCompleteButton() {
