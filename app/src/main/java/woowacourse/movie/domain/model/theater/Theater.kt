@@ -6,7 +6,12 @@ class Theater(
     val name: String,
     val movieSchedules: List<Screening>,
 ) {
-    fun screeningTimeCount(movieId: Int) = movieSchedules.count { it.movieId == movieId }
+    fun screeningTimeCount(movieId: Int) =
+        movieSchedules
+            .asSequence()
+            .filter { it.movieId == movieId }
+            .mapTo(mutableSetOf()) { it.screenTime.toLocalTime() }
+            .size
 
     fun getMovieScreening(movieId: Int): List<LocalDateTime> =
         movieSchedules
