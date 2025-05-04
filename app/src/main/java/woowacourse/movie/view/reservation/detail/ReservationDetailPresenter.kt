@@ -2,12 +2,10 @@ package woowacourse.movie.view.reservation.detail
 
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.MovieDao
-import woowacourse.movie.domain.model.MovieDate
 import woowacourse.movie.domain.model.MovieTicket
-import woowacourse.movie.domain.model.MovieTime
-import woowacourse.movie.domain.model.ReservationUIModel
+import woowacourse.movie.domain.model.ReservationUiModel
 import woowacourse.movie.domain.model.TheaterUIModel
-import woowacourse.movie.domain.model.TicketCount
+import woowacourse.movie.domain.model.toReservationUiModel
 import woowacourse.movie.view.ReservationUiFormatter
 import woowacourse.movie.view.model.toLocalDate
 import java.time.LocalDate
@@ -16,7 +14,7 @@ import java.time.LocalDateTime
 class ReservationDetailPresenter(
     val view: ReservationDetailContract.View,
 ) : ReservationDetailContract.Presenter {
-    private lateinit var reservationUIModel: ReservationUIModel
+    private lateinit var reservationUIModel: ReservationUiModel
     private var currentTimeTable: List<Int> = emptyList()
     private val movieDao by lazy { MovieDao() }
     private var isTimeSelected = false
@@ -27,20 +25,9 @@ class ReservationDetailPresenter(
             return
         }
 
-        reservationUIModel =
-            ReservationUIModel(
-                movie = theater.movie,
-                movieDate =
-                    MovieDate(
-                        theater.movie.startDate.toLocalDate(),
-                        theater.movie.endDate.toLocalDate(),
-                    ),
-                movieTime = MovieTime(),
-                ticketCount = TicketCount().value,
-                theaterName = theater.name,
-            )
+        reservationUIModel = theater.toReservationUiModel()
 
-        updateMovieInfo()
+        view.showMovieInfo(reservationUIModel.movie)
     }
 
     override fun initDateAdapter() {
@@ -106,10 +93,6 @@ class ReservationDetailPresenter(
     }
 
     fun currentTicketCount(): Int = reservationUIModel.ticketCount
-
-    private fun updateMovieInfo() {
-        view.showMovieInfo(reservationUIModel.movie)
-    }
 
     private fun createTicket(): MovieTicket =
         MovieTicket(
