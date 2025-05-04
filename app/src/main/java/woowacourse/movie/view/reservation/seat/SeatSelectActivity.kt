@@ -85,13 +85,7 @@ class SeatSelectActivity :
     }
 
     override fun showSeatCountError(count: Int) {
-        Toast
-            .makeText(
-                this,
-                getString(R.string.seat_select_error_count, count),
-                Toast.LENGTH_SHORT,
-            ).show()
-        return
+        showToast(getString(R.string.seat_select_error_count, count))
     }
 
     override fun showSelectedSeat(seatId: String) {
@@ -119,9 +113,7 @@ class SeatSelectActivity :
             title,
             message,
             { dialog -> dialog.dismiss() },
-            { _ ->
-                presenter.reservationConfirmed()
-            },
+            { _ -> presenter.reservationConfirmed() },
         )
     }
 
@@ -163,6 +155,10 @@ class SeatSelectActivity :
                 )
             }
         }
+    }
+
+    override fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setupSavedData(savedInstanceState: Bundle?) {

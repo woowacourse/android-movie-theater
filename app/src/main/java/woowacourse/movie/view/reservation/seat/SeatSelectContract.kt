@@ -28,6 +28,8 @@ interface SeatSelectContract {
         )
 
         fun navigateToComplete(reservationInfo: ReservationInfo)
+
+        fun showToast(message: String)
     }
 
     interface Presenter {
