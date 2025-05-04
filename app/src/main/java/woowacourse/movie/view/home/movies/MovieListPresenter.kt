@@ -7,7 +7,7 @@ import woowacourse.movie.view.home.movies.model.MovieRvItem
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.mapper.toItem
 
-class MovieListPresenter private constructor(
+class MovieListPresenter(
     private val view: MovieListContract.View,
     private val movieStore: MovieStore,
     theaterStore: TheaterStore,

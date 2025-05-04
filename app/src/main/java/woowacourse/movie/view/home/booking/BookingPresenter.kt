@@ -98,9 +98,11 @@ class BookingPresenter(
             view: BookingContract.View,
             screeningInfo: ScreeningInfo,
         ): BookingPresenter {
+            val movieStore = MovieStore()
+
             return BookingPresenter(
                 view,
-                MovieStore(),
+                movieStore,
                 screeningInfo,
             )
         }
