@@ -8,10 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.domain.model.ReservationCount
@@ -31,9 +27,6 @@ class ReservationActivity :
     private val presenter = ReservationPresenter(this)
     private var shouldIgnoreNextSelection = false
 
-    private val tvReservationCount by lazy { findViewById<TextView>(R.id.tv_reservation_count) }
-    private val spinnerDate by lazy { findViewById<Spinner>(R.id.spinner_reservation_date) }
-    private val spinnerTime by lazy { findViewById<Spinner>(R.id.spinner_reservation_time) }
     private val dateSpinnerAdapter: ArrayAdapter<LocalDate> by lazy {
         ArrayAdapter(this, android.R.layout.simple_spinner_item, mutableListOf<LocalDate>()).apply {
             setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -68,8 +61,8 @@ class ReservationActivity :
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        val selectedDate = spinnerDate.selectedItem as? LocalDate
-        val selectedTime = spinnerTime.selectedItem as? LocalTime
+        val selectedDate = binding.spinnerReservationDate.selectedItem as? LocalDate
+        val selectedTime = binding.spinnerReservationTime.selectedItem as? LocalTime
 
         val reservationDateTime =
             if (selectedDate != null && selectedTime != null) {
@@ -85,7 +78,7 @@ class ReservationActivity :
             putString(RESTORE_BUNDLE_KEY_RESERVATION_DATETIME, reservationDateTime.toString())
             putInt(
                 RESTORE_BUNDLE_KEY_RESERVATION_NUMBER,
-                tvReservationCount.text.toString().toIntOrNull() ?: 1,
+                binding.tvReservationCount.text.toString().toIntOrNull() ?: 1,
             )
         }
     }
@@ -101,7 +94,7 @@ class ReservationActivity :
     }
 
     override fun updateReservationCount(count: Int) {
-        tvReservationCount.text = count.toString()
+        binding.tvReservationCount.text = count.toString()
     }
 
     override fun updateDateSet(
@@ -114,7 +107,7 @@ class ReservationActivity :
 
         selectedDate?.let {
             val position = dateSpinnerAdapter.getPosition(it)
-            spinnerDate.setSelection(position)
+            binding.spinnerReservationDate.setSelection(position)
         }
     }
 
@@ -129,7 +122,7 @@ class ReservationActivity :
         selectedTime?.let {
             val timePosition = timeSpinnerAdapter.getPosition(it)
             if (timePosition >= 0) {
-                spinnerTime.setSelection(timePosition)
+                binding.spinnerReservationTime.setSelection(timePosition)
             }
         }
     }
@@ -152,13 +145,11 @@ class ReservationActivity :
     }
 
     private fun setupListener() {
-        val btnReservationFinish = findViewById<Button>(R.id.btn_reservation_finish)
-        btnReservationFinish.setOnClickListener {
+        binding.btnReservationFinish.setOnClickListener {
             submitReservation()
         }
 
-        val btnMinus = findViewById<Button>(R.id.btn_reservation_count_minus)
-        btnMinus.setOnClickListener {
+        binding.btnReservationCountMinus.setOnClickListener {
             runCatching {
                 presenter.decreaseCount(1)
             }.onFailure {
@@ -171,32 +162,31 @@ class ReservationActivity :
             }
         }
 
-        val btnPlus = findViewById<Button>(R.id.btn_reservation_count_plus)
-        btnPlus.setOnClickListener {
+        binding.btnReservationCountPlus.setOnClickListener {
             presenter.increaseCount(1)
         }
     }
 
     private fun submitReservation() {
         presenter.onReserve(
-            reservationDate = spinnerDate.selectedItem as? LocalDate,
-            reservationTime = spinnerTime.selectedItem as? LocalTime,
+            reservationDate = binding.spinnerReservationDate.selectedItem as? LocalDate,
+            reservationTime = binding.spinnerReservationTime.selectedItem as? LocalTime,
         )
     }
 
     private fun setMovieInfo(screening: Screening) {
         val formatter =
             DateTimeFormatter.ofPattern(getString(R.string.movie_screening_period_format))
-        findViewById<ImageView>(R.id.iv_reservation_poster).setImageResource(screening.movie.poster.toInt())
-        findViewById<TextView>(R.id.tv_reservation_title).text = screening.movie.title
-        findViewById<TextView>(R.id.tv_screening_period).text =
+        binding.ivReservationPoster.setImageResource(screening.movie.poster.toInt())
+        binding.tvReservationTitle.text = screening.movie.title
+        binding.tvScreeningPeriod.text =
             getString(
                 R.string.movie_date,
                 screening.movie.startDate.format(formatter),
                 screening.movie.endDate
                     .format(formatter),
             )
-        findViewById<TextView>(R.id.tv_reservation_running_time).text =
+        binding.tvReservationRunningTime.text =
             getString(
                 R.string.running_time,
                 screening.movie.runningTime.minute
@@ -205,10 +195,10 @@ class ReservationActivity :
     }
 
     private fun setupDateSpinner() {
-        spinnerDate.adapter = dateSpinnerAdapter
-        spinnerTime.adapter = timeSpinnerAdapter
+        binding.spinnerReservationDate.adapter = dateSpinnerAdapter
+        binding.spinnerReservationTime.adapter = timeSpinnerAdapter
 
-        spinnerDate.onItemSelectedListener =
+        binding.spinnerReservationDate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,

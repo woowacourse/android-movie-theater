@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
@@ -57,13 +55,13 @@ class SeatSelectionActivity :
     private fun setupViews(title: String) {
         showMovieTitle(title)
 
-        findViewById<Button>(R.id.btn_seat_select_confirm).setOnClickListener {
+        binding.btnSeatSelectConfirm.setOnClickListener {
             presenter.showConfirmButton()
         }
     }
 
     override fun showSeats(seats: List<Seat>) {
-        findViewById<TableLayout>(R.id.tl_seat)
+        binding.tlSeat
             .children
             .filterIsInstance<TableRow>()
             .forEachIndexed { rowIndex, row ->
@@ -82,7 +80,7 @@ class SeatSelectionActivity :
         seat: Seat,
         isSelected: Boolean,
     ) {
-        findViewById<TableLayout>(R.id.tl_seat)
+        binding.tlSeat
             .children
             .filterIsInstance<TableRow>()
             .elementAtOrNull(seat.row)
@@ -100,16 +98,16 @@ class SeatSelectionActivity :
     }
 
     override fun showTotalPrice(price: Int) {
-        val tvPrice = findViewById<TextView>(R.id.tv_seat_select_total_price)
+        val tvPrice = binding.tvSeatSelectTotalPrice
         tvPrice.text = getString(R.string.reservation_total_money, price)
     }
 
     override fun showMovieTitle(title: String) {
-        findViewById<TextView>(R.id.tv_seat_select_movie_title).text = title
+        binding.tvSeatSelectMovieTitle.text = title
     }
 
     override fun enableConfirmButton(enabled: Boolean) {
-        findViewById<Button>(R.id.btn_seat_select_confirm).isEnabled = enabled
+        binding.btnSeatSelectConfirm.isEnabled = enabled
     }
 
     override fun showError(message: String) {
