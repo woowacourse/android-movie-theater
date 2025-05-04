@@ -30,7 +30,7 @@ interface ReservationDetailContract {
     interface Presenter {
         fun fetchData(theater: TheaterUIModel?)
 
-        fun initDateAdapter()
+        fun initDateAdapter(movie: MovieUiModel)
 
         fun selectDate(date: LocalDate)
 

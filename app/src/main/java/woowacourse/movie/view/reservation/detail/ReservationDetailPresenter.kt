@@ -2,11 +2,14 @@ package woowacourse.movie.view.reservation.detail
 
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.MovieDao
+import woowacourse.movie.domain.model.MovieDate
 import woowacourse.movie.domain.model.MovieTicket
 import woowacourse.movie.domain.model.ReservationUiModel
 import woowacourse.movie.domain.model.TheaterUIModel
 import woowacourse.movie.domain.model.toReservationUiModel
 import woowacourse.movie.view.ReservationUiFormatter
+import woowacourse.movie.view.model.MovieUiModel
+import woowacourse.movie.view.model.toLocalDate
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -29,9 +32,11 @@ class ReservationDetailPresenter(
         view.showMovieInfo(theater.movie)
     }
 
-    override fun initDateAdapter() {
-        var duration = reservationUIModel.movieDate.getDateTable(LocalDate.now())
-        if (duration.isEmpty()) duration = listOf(reservationUIModel.movieDate.value)
+    override fun initDateAdapter(movie: MovieUiModel) {
+        val now = LocalDate.now()
+        var duration =
+            MovieDate(movie.startDate.toLocalDate(), movie.endDate.toLocalDate()).getDateTable(now)
+        if (duration.isEmpty()) duration = listOf(now)
 
         view.updateDateAdapter(duration, 0)
         selectDate(duration[0])
@@ -46,7 +51,8 @@ class ReservationDetailPresenter(
             isTimeSelected = false
         }
 
-        reservationUIModel = reservationUIModel.copy(movieDate = reservationUIModel.movieDate)
+        reservationUIModel =
+            reservationUIModel.copy(movieDate = ReservationUiFormatter.localDateToUI(date))
 
         view.updateTimeAdapter(
             currentTimeTable.map {
@@ -98,7 +104,7 @@ class ReservationDetailPresenter(
     private fun createTicket(): MovieTicket =
         MovieTicket(
             title = reservationUIModel.title,
-            date = reservationUIModel.movieDate.value,
+            date = reservationUIModel.movieDate.toLocalDate(),
             time = reservationUIModel.movieTime,
             count = reservationUIModel.ticketCount,
             theaterName = reservationUIModel.theaterName,

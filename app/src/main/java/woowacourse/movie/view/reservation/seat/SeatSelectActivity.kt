@@ -23,8 +23,8 @@ import woowacourse.movie.view.getParcelableExtraCompat
 import woowacourse.movie.view.reservation.complete.ReservationCompleteActivity
 import woowacourse.movie.view.reservation.detail.ReservationDetailDialog
 
-@BindingAdapter("formattedPrice")
-fun setFormattedPrice(
+@BindingAdapter("totalPrice")
+fun setTotalPrice(
     view: TextView,
     totalPrice: Int,
 ) {

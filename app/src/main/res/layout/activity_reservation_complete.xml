@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="reservationInfo"
+            type="woowacourse.movie.domain.model.ReservationInfo" />
     </data>
 
     <ScrollView
@@ -37,6 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
+                android:text="@{reservationInfo.title}"
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -53,9 +57,11 @@
                 android:text="@string/reservation_complete_date_time"
                 android:textColor="@color/black"
                 android:textSize="20sp"
+                app:date="@{reservationInfo.date}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_reservation_complete_title"
+                app:time="@{reservationInfo.time}"
                 tools:text="2025.4.15 11:00" />
 
             <TextView
@@ -73,6 +79,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_reservation_complete_timestamp"
+                app:seats="@{reservationInfo.seats}"
+                app:theaterName="@{reservationInfo.theaterName}"
                 tools:text="일반 2명 | B3, D2 | 극장 이름이 30글자가 되면 어떻게 될까" />
 
             <TextView
@@ -80,12 +88,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:text="@string/reservation_complete_ticket_price"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@id/tv_reservation_complete_count_seats"
                 app:layout_constraintStart_toStartOf="@id/tv_reservation_complete_count_seats"
-                app:layout_constraintTop_toBottomOf="@id/tv_reservation_complete_count_seats" />
+                app:layout_constraintTop_toBottomOf="@id/tv_reservation_complete_count_seats"
+                app:reservationCompleteTotalPrice="@{reservationInfo.price}"
+                tools:text="@string/reservation_complete_ticket_price" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

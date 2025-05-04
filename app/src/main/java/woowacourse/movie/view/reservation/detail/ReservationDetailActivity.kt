@@ -54,7 +54,7 @@ class ReservationDetailActivity :
 
     override fun showMovieInfo(movie: MovieUiModel) {
         setupMovieReservationInfo(movie)
-        presenter.initDateAdapter()
+        presenter.initDateAdapter(movie)
     }
 
     override fun showErrorDialog() {

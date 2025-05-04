@@ -3,9 +3,8 @@ package woowacourse.movie.domain.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-@JvmInline
 @Parcelize
-value class Seats private constructor(
+class Seats private constructor(
     private val _seats: MutableSet<Seat>,
 ) : Parcelable {
     val value: List<Seat>
