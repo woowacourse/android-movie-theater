@@ -4,27 +4,26 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.presentation.common.model.TheaterUiModel
 
 class TheatersAdapter(
     private val onClickTheater: (TheaterUiModel) -> Unit,
-) : ListAdapter<TheaterUiModel, RecyclerView.ViewHolder>(TheatersDiffUtil) {
+) : ListAdapter<TheaterUiModel, TheaterViewHolder>(TheatersDiffUtil) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): RecyclerView.ViewHolder {
+    ): TheaterViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<ItemTheaterBinding>(inflater, R.layout.item_theater, parent, false)
         return TheaterViewHolder(binding, onClickTheater)
     }
 
     override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
+        holder: TheaterViewHolder,
         position: Int,
     ) {
-        (holder as? TheaterViewHolder)?.bind(currentList[position])
+        holder.bind(currentList[position])
     }
 }
