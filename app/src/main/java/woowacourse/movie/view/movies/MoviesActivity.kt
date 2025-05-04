@@ -20,8 +20,7 @@ class MoviesActivity :
     }
 
     override fun showMovies(movies: List<MovieListItem>) {
-        val lvMovie = findViewById<RecyclerView>(R.id.lv_movie)
-        lvMovie.adapter =
+        binding.lvMovie.adapter =
             MovieListAdapter(
                 movies,
                 object : OnMovieEventListener {
@@ -34,6 +33,6 @@ class MoviesActivity :
                     }
                 },
             )
-        lvMovie.layoutManager = LinearLayoutManager(this)
+        binding.lvMovie.layoutManager = LinearLayoutManager(this)
     }
 }

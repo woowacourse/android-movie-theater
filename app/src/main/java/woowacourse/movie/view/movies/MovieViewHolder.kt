@@ -11,7 +11,6 @@ import woowacourse.movie.domain.model.Movie
 import java.time.format.DateTimeFormatter
 
 class MovieViewHolder(
-    val view: View,
     val binding: ItemMovieBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(

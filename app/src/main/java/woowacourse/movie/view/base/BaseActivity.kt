@@ -14,7 +14,7 @@ import woowacourse.movie.R
 abstract class BaseActivity<T: ViewDataBinding>(
     @LayoutRes private val layoutResId: Int,
 ) : AppCompatActivity(layoutResId) {
-    private lateinit var binding: T
+    protected lateinit var binding: T
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, layoutResId)
