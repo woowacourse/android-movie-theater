@@ -118,17 +118,4 @@ class ReservationDetailPresenter(
             count = reservationUIModel.ticketCount,
             theaterName = reservationUIModel.theaterName,
         )
-
-    private fun updateReservationState(
-        movieDate: MovieDate = reservationUIModel.movieDate,
-        movieTime: MovieTime = reservationUIModel.movieTime,
-        ticketCount: TicketCount = TicketCount(reservationUIModel.ticketCount),
-    ) {
-        reservationUIModel =
-            reservationUIModel.copy(
-                movieDate = movieDate,
-                movieTime = movieTime,
-                ticketCount = ticketCount.value,
-            )
-    }
 }
