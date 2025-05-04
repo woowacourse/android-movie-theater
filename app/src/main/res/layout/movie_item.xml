@@ -89,7 +89,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="4dp"
                     android:gravity="center"
-                    android:text="@{String.format(@string/text_running_time_ㅡminute_unit, model.runningTime)}"
+                    android:text="@{String.format(@string/text_running_time_minute_unit, model.runningTime)}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     tools:text="152분" />

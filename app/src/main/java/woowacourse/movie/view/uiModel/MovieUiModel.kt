@@ -7,5 +7,5 @@ data class MovieUiModel(
     val posterResource: ImageSource,
     val screeningStartDate: String,
     val screeningEndDate: String,
-    val runningTime: String,
+    val runningTime: Int,
 )
