@@ -1,5 +1,6 @@
 package woowacourse.movie.booking.complete
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -81,5 +82,14 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         private const val ERROR_EMPTY_BOOKING_RESULT_DATA = "인텐트에 영화 예매 정보(KEY_BOOKING_RESULT)가 없습니다."
         private const val ERROR_FINISH_ACTIVITY = "%s 데이터가 없어서 Activity를 종료했습니다"
         const val KEY_BOOKING_RESULT = "bookingResult"
+
+        fun createIntent(
+            context: Context,
+            ticket: TicketUiModel,
+        ): Intent {
+            return Intent(context, BookingCompleteActivity::class.java).apply {
+                putExtra(KEY_BOOKING_RESULT, ticket)
+            }
+        }
     }
 }

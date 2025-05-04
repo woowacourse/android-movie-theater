@@ -1,5 +1,6 @@
 package woowacourse.movie.booking.detail
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -182,5 +183,16 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
         private const val KEY_HEAD_COUNT = "HEAD_COUNT"
         private const val KEY_SCREENING_DATE = "SCREENING_DATE"
         private const val KEY_SCREENING_TIME = "SCREENING_TIME"
+
+        fun createIntent(
+            context: Context,
+            theater: TheaterUiModel,
+            movie: MovieUiModel,
+        ): Intent {
+            return Intent(context, BookingDetailActivity::class.java).apply {
+                putExtra(KEY_THEATER_DATA, theater)
+                putExtra(KEY_MOVIE_DATA, movie)
+            }
+        }
     }
 }

@@ -1,6 +1,5 @@
 package woowacourse.movie.seat
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.TableRow
@@ -15,7 +14,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.booking.complete.BookingCompleteActivity
-import woowacourse.movie.booking.complete.BookingCompleteActivity.Companion.KEY_BOOKING_RESULT
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.model.seat.Col
@@ -149,10 +147,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun startBookingCompleteActivity(ticket: TicketUiModel) {
-        val intent =
-            Intent(this, BookingCompleteActivity::class.java).apply {
-                putExtra(KEY_BOOKING_RESULT, ticket)
-            }
+        val intent = BookingCompleteActivity.createIntent(this, ticket)
         startActivity(intent)
     }
 
