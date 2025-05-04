@@ -18,8 +18,8 @@ import woowacourse.movie.presentation.home.reservation.ReservationActivity
 class TheaterBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
     TheaterBottomSheetDialogContract.View {
-    private var mBinding: FragmentTheaterBottomSheetDialogBinding? = null
-    private val binding get() = mBinding!!
+    private var _binding: FragmentTheaterBottomSheetDialogBinding? = null
+    private val binding get() = _binding!!
     private val presenter: TheaterBottomSheetDialogPresenter by lazy {
         TheaterBottomSheetDialogPresenter(
             this,
@@ -37,7 +37,7 @@ class TheaterBottomSheetDialogFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        mBinding =
+        _binding =
             DataBindingUtil.inflate(
                 inflater,
                 R.layout.fragment_theater_bottom_sheet_dialog,
@@ -60,16 +60,14 @@ class TheaterBottomSheetDialogFragment :
 
     override fun showTheaters(theaters: TheatersUiModel) {
         binding.rvTheater.adapter = theaterAdapter
-        theaterAdapter.submitList(theaters.theaters.map { TheaterUiModel(it.key, it.value) })
+        binding.theaters = theaters
     }
 
     override fun showDetail(
         movie: MovieUiModel,
         theater: TheaterUiModel,
     ) {
-        val intent =
-            woowacourse.movie.presentation.home.reservation.ReservationActivity
-                .newIntent(requireContext(), movie, theater)
+        val intent = ReservationActivity.newIntent(requireContext(), movie, theater)
         startActivity(intent)
         dismiss()
     }

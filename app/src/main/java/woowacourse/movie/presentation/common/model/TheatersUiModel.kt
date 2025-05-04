@@ -8,3 +8,5 @@ import java.time.LocalDateTime
 class TheatersUiModel(
     val theaters: Map<String, List<LocalDateTime>>,
 ) : Parcelable
+
+fun TheatersUiModel.toTheaterUiModels() = this.theaters.map { TheaterUiModel(it.key, it.value) }
