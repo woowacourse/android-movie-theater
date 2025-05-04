@@ -64,9 +64,9 @@ class SeatSelectActivity :
         }
 
         setupSeatView(binding.tlSeat)
-        presenter.fetchData {
-            intent?.getParcelableExtraCompat<MovieTicket>(Extras.TicketData.TICKET_KEY)
-        }
+
+        val ticket = intent?.getParcelableExtraCompat<MovieTicket>(Extras.TicketData.TICKET_KEY)
+        presenter.fetchData(ticket)
 
         setupConfirmButton()
 

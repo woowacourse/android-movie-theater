@@ -10,14 +10,13 @@ class SeatSelectPresenter(
     private lateinit var movieTicket: MovieTicket
     private var selectedSeats = Seats.create()
 
-    override fun fetchData(getMovieTicket: () -> MovieTicket?) {
-        val result = getMovieTicket()
-        if (result == null) {
+    override fun fetchData(ticket: MovieTicket?) {
+        if (ticket == null) {
             view.showErrorDialog()
             return
         }
 
-        movieTicket = result
+        movieTicket = ticket
         view.showReservationInfo(
             movieTicket.title,
             DEFAULT_PRICE,

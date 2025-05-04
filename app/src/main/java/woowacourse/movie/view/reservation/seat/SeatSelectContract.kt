@@ -31,7 +31,7 @@ interface SeatSelectContract {
     }
 
     interface Presenter {
-        fun fetchData(getMovieTicket: () -> MovieTicket?)
+        fun fetchData(ticket: MovieTicket?)
 
         fun seatSelect(seatId: String)
 
