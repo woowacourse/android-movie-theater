@@ -9,7 +9,7 @@ fun Seat.toUiModel(): SeatUiModel =
     )
 
 fun SeatUiModel.toDomain(): Seat =
-    Seat(
+    Seat.from(
         row = this.row,
         col = this.col,
     )

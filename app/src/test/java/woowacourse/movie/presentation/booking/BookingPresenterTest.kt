@@ -4,8 +4,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
-import woowacourse.movie.domain.model.movie.Movie
 import java.time.LocalDate
 import java.time.LocalTime
 

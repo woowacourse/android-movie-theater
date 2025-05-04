@@ -2,7 +2,7 @@ package woowacourse.movie.presentation.movies.adapter
 
 import androidx.annotation.DrawableRes
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.movie.Movie
+import woowacourse.movie.domain.model.Movie
 
 sealed class MovieListItem(
     val type: ViewType,

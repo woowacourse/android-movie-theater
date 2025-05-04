@@ -4,33 +4,27 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.movie.MovieTicket
-import java.time.LocalDateTime
+import woowacourse.movie.domain.model.Ticket
+import woowacourse.movie.fixture.TICKET
 
 class BookingResultPresenterTest {
     private lateinit var view: BookingResultContract.View
     private lateinit var presenter: BookingResultContract.Presenter
-
-    private val testTicket =
-        MovieTicket(
-            movieTitle = "test",
-            theaterName = "선릉 극장",
-            showtime = LocalDateTime.of(2025, 12, 31, 12, 0),
-            headCount = 2,
-        )
+    private lateinit var ticket: Ticket
 
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = BookingResultPresenter(view, testTicket)
+        ticket = TICKET
+        presenter = BookingResultPresenter(view, ticket)
     }
 
     @Test
     fun `티켓의 정보가 출력된다`() {
-        // When
+        // when
         presenter.loadBookingResult()
 
-        // Then
-        verify { view.showTicketInfo(testTicket) }
+        // then
+        verify { view.showTicketInfo(ticket) }
     }
 }

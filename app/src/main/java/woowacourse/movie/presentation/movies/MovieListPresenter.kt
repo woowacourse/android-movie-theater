@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.movies
 
 import woowacourse.movie.data.MovieData
-import woowacourse.movie.domain.model.movie.Movie
+import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.presentation.movies.adapter.MovieListItem
 
 class MovieListPresenter(

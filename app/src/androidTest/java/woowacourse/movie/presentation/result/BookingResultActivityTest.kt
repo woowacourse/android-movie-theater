@@ -12,7 +12,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.movie.MovieTicket
+import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.presentation.booking.BookingActivity
 import java.time.LocalDateTime
 
@@ -22,7 +22,7 @@ class BookingResultActivityTest {
     @Before
     fun setUp() {
         val ticket =
-            MovieTicket(
+            Ticket(
                 "Test",
                 "선릉 극장",
                 LocalDateTime.of(2025, 12, 31, 12, 0),

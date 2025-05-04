@@ -3,7 +3,6 @@ package woowacourse.movie.domain.model
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.movie.Movie
 import java.time.LocalDate
 import java.time.LocalTime
 

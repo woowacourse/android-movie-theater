@@ -14,8 +14,8 @@ import woowacourse.movie.common.util.TicketUiFormatter
 import woowacourse.movie.common.util.bundleSerializable
 import woowacourse.movie.common.util.intentSerializable
 import woowacourse.movie.databinding.ActivitySeatsBinding
+import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.presentation.result.BookingResultActivity
 import woowacourse.movie.presentation.seats.mode.SeatUiModel

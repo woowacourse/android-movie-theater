@@ -1,7 +1,5 @@
 package woowacourse.movie.domain.model
 
-import woowacourse.movie.domain.model.movie.Movie
-
 class ScreeningInfos(
     private val value: List<Screening>,
 ) {

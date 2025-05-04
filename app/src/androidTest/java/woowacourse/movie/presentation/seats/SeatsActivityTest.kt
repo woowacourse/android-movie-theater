@@ -7,9 +7,9 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isClickable
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.isNotClickable
+import androidx.test.espresso.matcher.ViewMatchers.isEnabled
+import androidx.test.espresso.matcher.ViewMatchers.isNotEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -17,7 +17,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.movie.MovieTicket
+import woowacourse.movie.domain.model.Ticket
 import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
@@ -28,7 +28,7 @@ class SeatsActivityTest {
     @Before
     fun setUp() {
         val ticket =
-            MovieTicket(
+            Ticket(
                 "Test",
                 "선릉 극장",
                 LocalDateTime.of(2025, 12, 31, 12, 0),
@@ -69,8 +69,8 @@ class SeatsActivityTest {
 
     @Test
     fun 선택한_좌석이_인원수보다_적으면_확인_버튼이_비활성화된다() {
-        onView(withId(R.id.textview_confirm))
-            .check(matches(isNotClickable()))
+        onView(withId(R.id.button_confirm))
+            .check(matches(isNotEnabled()))
     }
 
     @Test
@@ -78,8 +78,8 @@ class SeatsActivityTest {
         onView(withText("A1"))
             .perform(click())
 
-        onView(withId(R.id.textview_confirm))
-            .check(matches(isClickable()))
+        onView(withId(R.id.button_confirm))
+            .check(matches(isEnabled()))
     }
 
     @Test
@@ -87,7 +87,7 @@ class SeatsActivityTest {
         onView(withText("A1"))
             .perform(click())
 
-        onView(withId(R.id.textview_confirm))
+        onView(withId(R.id.button_confirm))
             .perform(click())
 
         onView(withText("정말 예매하시겠습니까?"))
@@ -99,7 +99,7 @@ class SeatsActivityTest {
         onView(withText("A1"))
             .perform(click())
 
-        onView(withId(R.id.textview_confirm))
+        onView(withId(R.id.button_confirm))
             .perform(click())
 
         onView(withText("정말 예매하시겠습니까?"))

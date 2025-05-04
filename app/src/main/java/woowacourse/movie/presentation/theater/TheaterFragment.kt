@@ -10,8 +10,8 @@ import woowacourse.movie.R
 import woowacourse.movie.common.util.bundleSerializable
 import woowacourse.movie.data.ScreeningData
 import woowacourse.movie.databinding.FragmentTheaterBinding
+import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
-import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.presentation.booking.BookingActivity
 import woowacourse.movie.presentation.theater.adapter.TheaterAdapter
 
