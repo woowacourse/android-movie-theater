@@ -33,7 +33,7 @@ class TheaterTest {
 
     @Test
     fun `특정 영화 ID의 현재 이후 시간만 정렬하여 반환한다`() {
-        val result = theater.getAvailableShowTimesFor(1, now)
+        val result = theater.availableShowTimes(1, now)
         val expected =
             listOf(
                 now.plusHours(1),
@@ -48,7 +48,7 @@ class TheaterTest {
 
     @Test
     fun `일치하는 영화가 없으면 빈 리스트를 반환한다`() {
-        val result = theater.getAvailableShowTimesFor(99, now)
+        val result = theater.availableShowTimes(99, now)
 
         assertThat(result).isEmpty()
     }

@@ -68,8 +68,7 @@ class ReservationDetailPresenterTest {
     fun `날짜를 선택하면 해당 날짜의 시간 목록을 보여준다`() {
         // Given: 특정 날짜에 해당하는 상영 시간을 준비하고 View의 동작을 설정한다.
         val now = LocalDateTime.now().plusDays(2)
-//        val times = dummyMovie.screeningPeriod.getAvailableTimesFor(now, now.toLocalDate())
-        val times = fakeTheater.toDomain(fakeMovie.id).getAvailableShowTimesFor(fakeMovie.id, now).map { it.toLocalTime() }
+        val times = fakeTheater.toDomain(fakeMovie.id).availableShowTimes(fakeMovie.id, now).map { it.toLocalTime() }
 
         every { view.updateTimes(any()) } just Runs
         every { view.showScreen(fakeMovie) } just Runs
