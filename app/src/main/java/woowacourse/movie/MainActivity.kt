@@ -16,9 +16,9 @@ import woowacourse.movie.view.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val homeFragment by lazy { HomeFragment() }
-    private val settingFragment by lazy { SettingFragment() }
-    private val reservationDetailsFragment by lazy { ReservationDetailsFragment() }
+    private val homeFragment = HomeFragment()
+    private val settingFragment = SettingFragment()
+    private val reservationDetailsFragment = ReservationDetailsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
