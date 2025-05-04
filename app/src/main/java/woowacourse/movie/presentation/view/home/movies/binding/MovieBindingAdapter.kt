@@ -1,8 +1,10 @@
-package woowacourse.movie.presentation.view.home.movies.adapter
+package woowacourse.movie.presentation.view.home.movies.binding
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.presentation.model.MovieUiModel
+import woowacourse.movie.presentation.view.home.movies.adapter.MovieAdManager
+import woowacourse.movie.presentation.view.home.movies.adapter.MoviesAdapter
 
 @BindingAdapter("setItems")
 fun setItems(
@@ -13,6 +15,8 @@ fun setItems(
 
     val adapter = rv.adapter
     if (adapter is MoviesAdapter) {
-        adapter.submitList(movies.toList())
+        val adManager = MovieAdManager()
+        val items = adManager.insertAds(movies)
+        adapter.submitList(items)
     }
 }

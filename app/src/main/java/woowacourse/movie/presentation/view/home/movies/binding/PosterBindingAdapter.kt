@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.home.movies.adapter
+package woowacourse.movie.presentation.view.home.movies.binding
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
