@@ -1,18 +1,16 @@
 package woowacourse.movie.view.home.movies.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.databinding.AdvertisementItemBinding
-import woowacourse.movie.databinding.MovieItemBinding
+import woowacourse.movie.view.home.movies.HomeEventHandler
 import woowacourse.movie.view.home.movies.model.UiModel
 import woowacourse.movie.view.home.movies.viewholder.AdvertiseViewHolder
 import woowacourse.movie.view.home.movies.viewholder.MovieViewHolder
 
 class MovieAdapter(
-    private val onClickBooking: (Int) -> Unit,
     private val itemsList: List<UiModel>,
+    private val handler: HomeEventHandler,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = itemsList.size
 
@@ -25,18 +23,12 @@ class MovieAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): RecyclerView.ViewHolder {
-        val inflater =
-            LayoutInflater.from(parent.context)
-
-        val movieItemBinding = MovieItemBinding.inflate(inflater, parent, false)
-        val advertisementItemBinding = AdvertisementItemBinding.inflate(inflater, parent, false)
-        return when (viewType) {
-            VIEW_TYPE_ADVERTISEMENT -> AdvertiseViewHolder(advertisementItemBinding)
-            VIEW_TYPE_MOVIE -> MovieViewHolder(movieItemBinding, onClickBooking)
-            else -> throw IllegalArgumentException()
+    ): RecyclerView.ViewHolder =
+        when (viewType) {
+            VIEW_TYPE_ADVERTISEMENT -> AdvertiseViewHolder(parent)
+            VIEW_TYPE_MOVIE -> MovieViewHolder(parent, handler)
+            else -> throw IllegalStateException()
         }
-    }
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,

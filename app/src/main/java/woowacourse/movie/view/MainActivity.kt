@@ -11,7 +11,7 @@ import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.view.history.BookingHistoryFragment
-import woowacourse.movie.view.home.HomeFragment
+import woowacourse.movie.view.home.movies.HomeFragment
 import woowacourse.movie.view.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {

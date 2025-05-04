@@ -5,8 +5,11 @@
 
     <data>
         <variable
-            name="model"
+            name="movie"
             type="woowacourse.movie.view.home.movies.model.UiModel.MovieUiModel" />
+        <variable
+            name="handler"
+            type="woowacourse.movie.view.home.movies.HomeEventHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +19,7 @@
 
         <ImageView
             android:id="@+id/img_poster"
-            imageFromName="@{model.imgName}"
+            imageFromName="@{movie.imgName}"
             android:layout_width="76dp"
             android:layout_height="108dp"
             android:scaleType="centerCrop"
@@ -37,7 +40,7 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{model.title}"
+                android:text="@{movie.title}"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -62,7 +65,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="4dp"
                     android:gravity="center"
-                    android:text="@{String.format(@string/text_date_period, model.releaseStartDate, model.releaseEndDate)}"
+                    android:text="@{String.format(@string/text_date_period, movie.releaseStartDate, movie.releaseEndDate)}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     tools:text="2025.4.1 ~ 2025.4.25" />
@@ -85,7 +88,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="4dp"
                     android:gravity="center"
-                    android:text="@{String.format(@string/text_running_time_minute_unit, model.runningTime)}"
+                    android:text="@{String.format(@string/text_running_time_minute_unit, movie.runningTime)}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     tools:text="152분" />
@@ -96,6 +99,7 @@
             android:id="@+id/btn_booking"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:onClick="@{() -> handler.onMovieSelected(movie.id)}"
             android:text="@string/text_booking"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -105,5 +109,3 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
-
-

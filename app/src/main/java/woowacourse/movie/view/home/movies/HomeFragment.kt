@@ -1,4 +1,4 @@
-package woowacourse.movie.view.home
+package woowacourse.movie.view.home.movies
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,14 +12,12 @@ import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.model.theater.Theaters
 import woowacourse.movie.view.home.booking.BookingActivity
-import woowacourse.movie.view.home.movies.MovieListContract
-import woowacourse.movie.view.home.movies.MovieListPresenter
 import woowacourse.movie.view.home.movies.adapter.MovieAdapter
 import woowacourse.movie.view.home.movies.bottomsheet.TheaterBottomSheet
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.home.movies.model.UiModel
 
-class HomeFragment : Fragment(R.layout.fragment_home), MovieListContract.View {
+class HomeFragment : Fragment(R.layout.fragment_home), MovieListContract.View, HomeEventHandler {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val presenter: MovieListContract.Presenter by lazy {
@@ -44,15 +42,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), MovieListContract.View {
     }
 
     override fun showMovieList(movieList: List<UiModel>) {
-        val rv = binding.rv
-        val adapter =
-            MovieAdapter(
-                itemsList = movieList,
-                onClickBooking = {
-                    presenter.loadTheaters(it)
-                },
-            )
-        rv.adapter = adapter
+        binding.rv.adapter = MovieAdapter(movieList, this)
     }
 
     override fun showTheaterBottomSheet(
@@ -68,8 +58,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), MovieListContract.View {
         ).show(childFragmentManager, THEATER_BOTTOM_SHEET)
     }
 
+    override fun onMovieSelected(movieId: Int) {
+        presenter.loadTheaters(movieId)
+    }
+
     override fun moveToBooking(screening: ScreeningInfo) {
-        val intent = BookingActivity.Companion.newIntent(requireContext(), screening)
+        val intent = BookingActivity.newIntent(requireContext(), screening)
         startActivity(intent)
     }
 
