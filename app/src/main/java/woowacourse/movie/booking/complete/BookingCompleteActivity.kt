@@ -28,7 +28,8 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
         setUpUi()
 
-        presenter.initializeData(requireTicketOrFinish())
+        val ticket = requireTicketOrFinish() ?: return
+        presenter.initializeData(ticket)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -41,17 +42,19 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         }
     }
 
-    private fun requireTicketOrFinish(): TicketUiModel {
-        return IntentCompat.getParcelableExtra(
-            intent,
-            KEY_BOOKING_RESULT,
-            TicketUiModel::class.java,
-        )
-            ?: run {
-                Log.e(TAG, ERROR_EMPTY_BOOKING_RESULT_DATA)
-                showToastErrorAndFinish(getString(R.string.booking_toast_message))
-                throw IllegalStateException(ERROR_FINISH_ACTIVITY.format(KEY_BOOKING_RESULT))
-            }
+    private fun requireTicketOrFinish(): TicketUiModel? {
+        val ticket =
+            IntentCompat.getParcelableExtra(
+                intent,
+                KEY_BOOKING_RESULT,
+                TicketUiModel::class.java,
+            )
+
+        if (ticket == null) {
+            showToastErrorAndFinish(getString(R.string.booking_toast_message))
+            null
+        }
+        return ticket
     }
 
     override fun showBookingCompleteResult(ticket: TicketUiModel) {
@@ -79,9 +82,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
     companion object {
         private const val TAG = "BookingCompleteActivity"
-        private const val ERROR_EMPTY_BOOKING_RESULT_DATA = "인텐트에 영화 예매 정보(KEY_BOOKING_RESULT)가 없습니다."
-        private const val ERROR_FINISH_ACTIVITY = "%s 데이터가 없어서 Activity를 종료했습니다"
-        const val KEY_BOOKING_RESULT = "bookingResult"
+        private const val KEY_BOOKING_RESULT = "bookingResult"
 
         fun createIntent(
             context: Context,

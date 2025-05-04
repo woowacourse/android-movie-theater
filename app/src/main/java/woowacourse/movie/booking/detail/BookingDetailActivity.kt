@@ -18,7 +18,6 @@ import woowacourse.movie.booking.detail.listener.ScreeningTimeSelectedListener
 import woowacourse.movie.databinding.ActivityBookingDetailBinding
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.seat.SeatSelectionActivity
-import woowacourse.movie.seat.SeatSelectionActivity.Companion.KEY_TICKET
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
 import woowacourse.movie.ui.model.TicketUiModel
@@ -36,7 +35,10 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
         binding.detail = this
         setUpUi()
 
-        presenter.initializeData(requireMovieOrFinish(), requireTheaterOrFinish())
+        val movie = requireMovieOrFinish() ?: return
+        val theater = requireTheaterOrFinish() ?: return
+
+        presenter.initializeData(movie, theater)
 
         if (savedInstanceState != null) {
             val headCount = savedInstanceState.getInt(KEY_HEAD_COUNT)
@@ -61,22 +63,25 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
         }
     }
 
-    private fun requireMovieOrFinish(): MovieUiModel {
-        return IntentCompat.getParcelableExtra(intent, KEY_MOVIE_DATA, MovieUiModel::class.java)
-            ?: run {
-                Log.e(TAG, ERROR_EMPTY_MOVIE_DATA)
-                showToastErrorAndFinish(getString(R.string.booking_toast_message))
-                throw IllegalStateException(ERROR_FINISH_ACTIVITY.format(KEY_MOVIE_DATA))
-            }
+    private fun requireMovieOrFinish(): MovieUiModel? {
+        val movie =
+            IntentCompat.getParcelableExtra(intent, KEY_MOVIE_DATA, MovieUiModel::class.java)
+        if (movie == null) {
+            showToastErrorAndFinish(getString(R.string.booking_toast_message))
+            null
+        }
+        return movie
     }
 
-    private fun requireTheaterOrFinish(): TheaterUiModel {
-        return IntentCompat.getParcelableExtra(intent, KEY_THEATER_DATA, TheaterUiModel::class.java)
-            ?: run {
-                Log.e(TAG, ERROR_EMPTY_THEATER_DATA)
-                showToastErrorAndFinish(getString(R.string.booking_toast_message))
-                throw IllegalStateException(ERROR_FINISH_ACTIVITY.format(KEY_THEATER_DATA))
-            }
+    private fun requireTheaterOrFinish(): TheaterUiModel? {
+        val theater =
+            IntentCompat.getParcelableExtra(intent, KEY_THEATER_DATA, TheaterUiModel::class.java)
+
+        if (theater == null) {
+            showToastErrorAndFinish(getString(R.string.booking_toast_message))
+            null
+        }
+        return theater
     }
 
     private fun initReserveConfirm() {
@@ -145,10 +150,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     }
 
     override fun startSeatSelectionActivity(ticket: TicketUiModel) {
-        val intent =
-            Intent(this, SeatSelectionActivity::class.java).apply {
-                putExtra(KEY_TICKET, ticket)
-            }
+        val intent = SeatSelectionActivity.createIntent(this, ticket)
         startActivity(intent)
     }
 
@@ -175,11 +177,8 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
 
     companion object {
         private const val TAG = "BookingDetailActivity"
-        private const val ERROR_EMPTY_MOVIE_DATA = "인텐트에 영화 예매 정보(KEY_MOVIE_DATA)가 없습니다"
-        private const val ERROR_EMPTY_THEATER_DATA = "인텐트에 극장 정보(KEY_THEATER_DATA)가 없습니다"
-        private const val ERROR_FINISH_ACTIVITY = "%s 데이터가 없어서 Activity를 종료했습니다"
-        const val KEY_MOVIE_DATA = "movieData"
-        const val KEY_THEATER_DATA = "theaterData"
+        private const val KEY_MOVIE_DATA = "movieData"
+        private const val KEY_THEATER_DATA = "theaterData"
         private const val KEY_HEAD_COUNT = "HEAD_COUNT"
         private const val KEY_SCREENING_DATE = "SCREENING_DATE"
         private const val KEY_SCREENING_TIME = "SCREENING_TIME"

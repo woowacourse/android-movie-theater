@@ -1,7 +1,8 @@
 package woowacourse.movie.seat
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
@@ -31,7 +32,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
         setUi()
 
-        presenter.initializeData(requireTicketOrFinish())
+        val ticket = requireTicketOrFinish() ?: return
+        presenter.initializeData(ticket)
 
         setupSeatClickListeners()
         setupConfirmButton()
@@ -47,17 +49,18 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
     }
 
-    private fun requireTicketOrFinish(): TicketUiModel {
-        return IntentCompat.getParcelableExtra(
-            intent,
-            KEY_TICKET,
-            TicketUiModel::class.java,
-        )
-            ?: run {
-                Log.e(TAG, ERROR_EMPTY_TICKET_DATA)
-                showToastErrorAndFinish(getString(R.string.booking_toast_message))
-                throw IllegalStateException(ERROR_FINISH_ACTIVITY.format(KEY_TICKET))
-            }
+    private fun requireTicketOrFinish(): TicketUiModel? {
+        val ticket =
+            IntentCompat.getParcelableExtra(
+                intent,
+                KEY_TICKET,
+                TicketUiModel::class.java,
+            )
+        if (ticket == null) {
+            showToastErrorAndFinish(getString(R.string.booking_toast_message))
+            null
+        }
+        return ticket
     }
 
     private fun setupSeatClickListeners() {
@@ -157,9 +160,15 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     companion object {
-        private const val TAG = "SeatSelectionActivity"
-        private const val ERROR_EMPTY_TICKET_DATA = "인텐트에 영화 예매 정보(KEY_TICKET)가 없습니다."
-        private const val ERROR_FINISH_ACTIVITY = "%s 데이터가 없어서 Activity를 종료했습니다"
-        const val KEY_TICKET = "ticketUiData"
+        private const val KEY_TICKET = "ticketUiData"
+
+        fun createIntent(
+            context: Context,
+            ticket: TicketUiModel,
+        ): Intent {
+            return Intent(context, BookingCompleteActivity::class.java).apply {
+                putExtra(KEY_TICKET, ticket)
+            }
+        }
     }
 }
