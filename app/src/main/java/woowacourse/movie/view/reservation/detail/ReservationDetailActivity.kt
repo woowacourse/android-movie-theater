@@ -42,7 +42,6 @@ class ReservationDetailActivity :
 
         val theater =
             intent?.getParcelableExtraCompat<TheaterUIModel>(Extras.TheaterData.THEATER_UI_MODEL_KEY)
-
         presenter.fetchData(theater)
 
         setupButtonClickListener()
@@ -100,8 +99,7 @@ class ReservationDetailActivity :
                         presenter.selectDate(duration[position])
                     }
 
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) = Unit
                 }
         }
     }
@@ -127,8 +125,7 @@ class ReservationDetailActivity :
                         presenter.selectTime(position)
                     }
 
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) = Unit
                 }
         }
     }
