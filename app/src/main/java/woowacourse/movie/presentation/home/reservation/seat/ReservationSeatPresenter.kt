@@ -39,7 +39,10 @@ class ReservationSeatPresenter(
 
     override fun updateSeat(seat: SeatUiModel) {
         runCatching {
-            reservationInfo.updateSeats(seat.toDomain())
+            val domainSeat = seat.toDomain()
+            with(reservationInfo) {
+                if (hasSeat(domainSeat)) removeSeat(domainSeat) else addSeat(domainSeat)
+            }
         }.onFailure {
             view.notifySeatUpdateFailed(it.message.orEmpty())
         }.onSuccess {
@@ -63,7 +66,7 @@ class ReservationSeatPresenter(
 
     private fun restoreSelectedSeats(restoredSeats: ScreenUiModel?) {
         restoredSeats?.seats?.forEach {
-            reservationInfo.updateSeats(it.toDomain())
+            reservationInfo.addSeat(it.toDomain())
         }
     }
 }

@@ -9,7 +9,6 @@ data class SeatUiModel(
     val row: Int,
     val col: Int,
     val type: SeatTypeUiModel,
-    val selected: Boolean = false,
 ) : Parcelable {
     fun toLabel(): String = "${'A' + row}${col + 1}"
 }

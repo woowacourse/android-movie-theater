@@ -32,7 +32,7 @@ fun ReservationInfoUiModel.toDomain(): ReservationInfo {
             ReservationCount(reservationCount),
         )
 
-    this.seats.forEach { info.updateSeats(it.toDomain()) }
+    this.seats.forEach { info.addSeat(it.toDomain()) }
 
     return info
 }

@@ -39,7 +39,7 @@ class TicketMachineTest {
                 Seat(3, 1),
                 Seat(5, 1),
             )
-        seats.forEach { fakeReservationInfo.updateSeats(it) }
+        seats.forEach { fakeReservationInfo.addSeat(it) }
     }
 
     @Test
