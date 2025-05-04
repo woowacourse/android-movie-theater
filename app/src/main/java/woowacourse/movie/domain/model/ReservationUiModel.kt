@@ -1,11 +1,9 @@
 package woowacourse.movie.domain.model
 
-import woowacourse.movie.view.model.MovieUiModel
-
 data class ReservationUiModel(
-    val movie: MovieUiModel,
+    val title: String,
     val movieDate: MovieDate,
-    val movieTime: MovieTime,
+    val movieTime: String,
     val ticketCount: Int,
     val theaterName: String,
 )

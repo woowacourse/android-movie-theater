@@ -29,9 +29,10 @@ class ReservationCompleteActivity :
             insets
         }
 
-        presenter.fetchData {
+        val reservationInfo =
             intent?.getParcelableExtraCompat<ReservationInfo>(Extras.ReservationInfoData.RESERVATION_KEY)
-        }
+        presenter.fetchData(reservationInfo)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

@@ -5,16 +5,12 @@ import woowacourse.movie.domain.model.ReservationInfo
 class ReservationCompletePresenter(
     val view: ReservationCompleteContract.View,
 ) : ReservationCompleteContract.Presenter {
-    private lateinit var reservationInfo: ReservationInfo
-
-    override fun fetchData(getReservationInfo: () -> ReservationInfo?) {
-        val result = getReservationInfo()
-        if (result == null) {
+    override fun fetchData(reservationInfo: ReservationInfo?) {
+        if (reservationInfo == null) {
             view.showErrorDialog()
             return
         }
 
-        reservationInfo = result
         view.showReservationInfo(reservationInfo)
     }
 }

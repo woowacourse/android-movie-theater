@@ -10,6 +10,6 @@ interface ReservationCompleteContract {
     }
 
     interface Presenter {
-        fun fetchData(getReservationInfo: () -> ReservationInfo?)
+        fun fetchData(reservationInfo: ReservationInfo?)
     }
 }

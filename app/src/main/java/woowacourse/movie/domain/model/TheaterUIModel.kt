@@ -14,13 +14,13 @@ data class TheaterUIModel(
 
 fun TheaterUIModel.toReservationUiModel() =
     ReservationUiModel(
-        movie = this.movie,
+        title = this.movie.name,
         movieDate =
             MovieDate(
                 this.movie.startDate.toLocalDate(),
                 this.movie.endDate.toLocalDate(),
             ),
-        movieTime = MovieTime(),
+        movieTime = "",
         ticketCount = TicketCount().value,
         theaterName = this.name,
     )
