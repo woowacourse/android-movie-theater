@@ -14,12 +14,9 @@ class MovieListPresenter(
 ) : MovieListContract.Presenter {
     private val theaters = theaterStore.theaters()
 
-    override fun loadTheaters(
-        movieId: Int,
-        formatter: String,
-    ) {
+    override fun loadTheaters(movieId: Int) {
         val bookingAbleTheater =
-            theaters.bookingAbleTheater(movieId).map { it.toItem(movieId, formatter) }
+            theaters.bookingAbleTheater(movieId).map { it.toItem(movieId) }
 
         view.showTheaterBottomSheet(movieId, bookingAbleTheater)
     }

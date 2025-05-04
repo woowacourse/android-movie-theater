@@ -7,7 +7,7 @@ sealed class TheaterRvItem(val viewType: ViewType) {
     data class TheaterItem(
         val name: String,
         val movieId: Int,
-        val bookingAbleTimeCount: String,
+        val bookingAbleTimeCount: Int,
     ) : TheaterRvItem(ViewType.VIEW_TYPE_THEATER)
 
     enum class ViewType(
