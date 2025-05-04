@@ -10,6 +10,8 @@ data class ScreeningInfo(
     val theaterName: String,
     val screening: List<LocalDateTime>,
 ) : Serializable {
+    fun screeningDate() = screening.map { it.toLocalDate() }
+
     fun screeningTime(selectedDate: LocalDate): List<LocalTime> {
         return screening
             .filter { it.toLocalDate() == selectedDate }
