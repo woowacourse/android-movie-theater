@@ -7,7 +7,7 @@ import woowacourse.movie.domain.model.reservation.ReservationCount
 import woowacourse.movie.domain.model.reservation.ReservationInfo
 import woowacourse.movie.presentation.common.model.MovieUiModel
 import woowacourse.movie.presentation.common.model.TheaterUiModel
-import woowacourse.movie.presentation.common.model.toModel
+import woowacourse.movie.presentation.common.model.toDomain
 import woowacourse.movie.presentation.common.model.toUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -27,8 +27,8 @@ class ReservationDetailPresenter(
         initCount: Int?,
         dateTime: LocalDateTime?,
     ) {
-        this.movie = movie.toModel()
-        this.theater = theater.toModel(movie.id)
+        this.movie = movie.toDomain()
+        this.theater = theater.toDomain(movie.id)
         initCount?.let { initializeReservationCount(it) }
         setupInitialView(dateTime)
     }

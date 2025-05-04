@@ -12,4 +12,4 @@ data class TheaterUiModel(
     val times: List<LocalDateTime>,
 ) : Parcelable
 
-fun TheaterUiModel.toModel(movieId: Int): Theater = Theater(name, listOf(MovieSchedule(movieId, times)))
+fun TheaterUiModel.toDomain(movieId: Int): Theater = Theater(name, listOf(MovieSchedule(movieId, times)))

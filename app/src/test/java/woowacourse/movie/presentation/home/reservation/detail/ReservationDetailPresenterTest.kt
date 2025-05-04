@@ -12,7 +12,7 @@ import woowacourse.movie.domain.model.movie.ScreeningPeriod
 import woowacourse.movie.presentation.common.fixture.dummyMovie
 import woowacourse.movie.presentation.common.model.ScreeningPeriodUiModel
 import woowacourse.movie.presentation.common.model.TheaterUiModel
-import woowacourse.movie.presentation.common.model.toModel
+import woowacourse.movie.presentation.common.model.toDomain
 import woowacourse.movie.presentation.common.model.toUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -69,7 +69,7 @@ class ReservationDetailPresenterTest {
         // Given: 특정 날짜에 해당하는 상영 시간을 준비하고 View의 동작을 설정한다.
         val now = LocalDateTime.now().plusDays(2)
 //        val times = dummyMovie.screeningPeriod.getAvailableTimesFor(now, now.toLocalDate())
-        val times = fakeTheater.toModel(fakeMovie.id).getAvailableShowTimesFor(fakeMovie.id, now).map { it.toLocalTime() }
+        val times = fakeTheater.toDomain(fakeMovie.id).getAvailableShowTimesFor(fakeMovie.id, now).map { it.toLocalTime() }
 
         every { view.updateTimes(any()) } just Runs
         every { view.showScreen(fakeMovie) } just Runs

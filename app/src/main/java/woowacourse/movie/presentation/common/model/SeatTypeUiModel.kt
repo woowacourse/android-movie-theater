@@ -13,4 +13,4 @@ enum class SeatTypeUiModel : Parcelable {
 
 fun SeatType.toUiModel(): SeatTypeUiModel = SeatTypeUiModel.valueOf(this.toString())
 
-fun SeatTypeUiModel.toModel(): SeatType = SeatType.valueOf(this.toString())
+fun SeatTypeUiModel.toDomain(): SeatType = SeatType.valueOf(this.toString())

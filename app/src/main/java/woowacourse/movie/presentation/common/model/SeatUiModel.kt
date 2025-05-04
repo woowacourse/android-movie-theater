@@ -16,4 +16,4 @@ data class SeatUiModel(
 
 fun Seat.toUiModel(): SeatUiModel = SeatUiModel(row, col, type.toUiModel())
 
-fun SeatUiModel.toModel(): Seat = Seat(row, col)
+fun SeatUiModel.toDomain(): Seat = Seat(row, col)

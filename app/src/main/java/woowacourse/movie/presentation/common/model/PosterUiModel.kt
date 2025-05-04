@@ -21,7 +21,7 @@ fun Poster.toUiModel(): PosterUiModel =
         is Poster.Url -> PosterUiModel.Url(this.url)
     }
 
-fun PosterUiModel.toModel(): Poster =
+fun PosterUiModel.toDomain(): Poster =
     when (this) {
         is PosterUiModel.Resource -> Poster.Resource(this.resId)
         is PosterUiModel.Url -> Poster.Url(this.url)

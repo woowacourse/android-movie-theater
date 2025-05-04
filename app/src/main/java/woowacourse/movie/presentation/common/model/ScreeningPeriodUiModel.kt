@@ -18,4 +18,4 @@ data class ScreeningPeriodUiModel(
 
 fun ScreeningPeriod.toUiModel() = ScreeningPeriodUiModel(startDate, endDate)
 
-fun ScreeningPeriodUiModel.toModel() = ScreeningPeriod(startDate, endDate)
+fun ScreeningPeriodUiModel.toDomain() = ScreeningPeriod(startDate, endDate)

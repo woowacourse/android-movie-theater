@@ -16,4 +16,4 @@ data class MovieUiModel(
 
 fun Movie.toUiModel(): MovieUiModel = MovieUiModel(id, title, poster.toUiModel(), screeningPeriod.toUiModel(), runningTime.minute)
 
-fun MovieUiModel.toModel(): Movie = Movie(id, title, poster.toModel(), screeningPeriod.toModel(), RunningTime(runningTime))
+fun MovieUiModel.toDomain(): Movie = Movie(id, title, poster.toDomain(), screeningPeriod.toDomain(), RunningTime(runningTime))

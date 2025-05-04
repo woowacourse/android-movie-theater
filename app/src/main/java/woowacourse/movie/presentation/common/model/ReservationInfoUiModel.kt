@@ -24,7 +24,7 @@ fun ReservationInfo.toUiModel(theaterName: String): ReservationInfoUiModel =
         theaterName,
     )
 
-fun ReservationInfoUiModel.toModel(): ReservationInfo {
+fun ReservationInfoUiModel.toDomain(): ReservationInfo {
     val info =
         ReservationInfo(
             title,
@@ -32,7 +32,7 @@ fun ReservationInfoUiModel.toModel(): ReservationInfo {
             ReservationCount(reservationCount),
         )
 
-    this.seats.forEach { info.updateSeats(it.toModel()) }
+    this.seats.forEach { info.updateSeats(it.toDomain()) }
 
     return info
 }

@@ -8,7 +8,7 @@ import woowacourse.movie.domain.model.ticketing.TicketMachine
 import woowacourse.movie.presentation.common.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.common.model.ScreenUiModel
 import woowacourse.movie.presentation.common.model.SeatUiModel
-import woowacourse.movie.presentation.common.model.toModel
+import woowacourse.movie.presentation.common.model.toDomain
 import woowacourse.movie.presentation.common.model.toUiModel
 
 class ReservationSeatPresenter(
@@ -24,7 +24,7 @@ class ReservationSeatPresenter(
         screen: ScreenUiModel?,
         restoredSeats: ScreenUiModel?,
     ) {
-        this.reservationInfo = reservationInfo.toModel()
+        this.reservationInfo = reservationInfo.toDomain()
         this.theaterName = reservationInfo.theaterName
         restoreSelectedSeats(restoredSeats)
 
@@ -39,7 +39,7 @@ class ReservationSeatPresenter(
 
     override fun updateSeat(seat: SeatUiModel) {
         runCatching {
-            reservationInfo.updateSeats(seat.toModel())
+            reservationInfo.updateSeats(seat.toDomain())
         }.onFailure {
             view.notifySeatUpdateFailed(it.message.orEmpty())
         }.onSuccess {
@@ -63,7 +63,7 @@ class ReservationSeatPresenter(
 
     private fun restoreSelectedSeats(restoredSeats: ScreenUiModel?) {
         restoredSeats?.seats?.forEach {
-            reservationInfo.updateSeats(it.toModel())
+            reservationInfo.updateSeats(it.toDomain())
         }
     }
 }
