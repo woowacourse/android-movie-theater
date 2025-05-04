@@ -3,8 +3,6 @@ package woowacourse.movie.view.home.seat
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -20,6 +18,7 @@ import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.Seats
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.StringFormatter
+import woowacourse.movie.view.ext.getSerializableArrayList
 import woowacourse.movie.view.ext.getSerializableOrNull
 import woowacourse.movie.view.ext.showToastFromResource
 import woowacourse.movie.view.home.complete.BookingCompleteActivity
@@ -95,10 +94,6 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         startActivity(intent)
     }
 
-    override fun saveSeat(seat: Seats) {
-        TODO("Not yet implemented")
-    }
-
     private fun showDialog() {
         AlertDialog.Builder(this)
             .setTitle(R.string.text_booking_dialog_title)
@@ -126,7 +121,14 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        //outState.putSerializable(KEY_BOOKING, )
+        val seats = ArrayList(seatView.selectedSeat())
+
+        outState.putSerializable(KEY_SEAT, seats)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        presenter.restoreSeat(savedInstanceState.getSerializableArrayList<Seat>(KEY_SEAT))
     }
 
     companion object {

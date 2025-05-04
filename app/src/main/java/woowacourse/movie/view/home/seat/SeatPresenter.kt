@@ -46,6 +46,12 @@ class SeatPresenter(
         view.moveToBookingComplete(ticket)
     }
 
+    override fun restoreSeat(seat: ArrayList<Seat>) {
+        this.seats.restore(seat)
+        view.showSeat(seat.toSet())
+        updateConfirmButtonState(limit)
+    }
+
     private fun updateConfirmButtonState(peopleCount: Int) {
         val isEnabled = seats.item.size == peopleCount
         view.setConfirmButtonEnabled(isEnabled)

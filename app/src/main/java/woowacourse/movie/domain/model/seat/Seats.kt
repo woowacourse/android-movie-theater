@@ -23,4 +23,8 @@ class Seats {
     fun isSelected(newSeat: Seat) = _item.contains(newSeat)
 
     fun canSelect(limit: Int) = _item.size < limit
+
+    fun restore(seats: List<Seat>) {
+        _item.addAll(seats)
+    }
 }
