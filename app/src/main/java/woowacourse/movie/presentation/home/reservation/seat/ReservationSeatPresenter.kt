@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.home.reservation.seat
 
+import woowacourse.movie.domain.model.cinema.Seat
 import woowacourse.movie.domain.model.cinema.Seats
 import woowacourse.movie.domain.model.reservation.ReservationInfo
 import woowacourse.movie.domain.model.ticketing.DiceCinemaPricePolicy
@@ -40,9 +41,7 @@ class ReservationSeatPresenter(
     override fun updateSeat(seat: SeatUiModel) {
         runCatching {
             val domainSeat = seat.toDomain()
-            with(reservationInfo) {
-                if (hasSeat(domainSeat)) removeSeat(domainSeat) else addSeat(domainSeat)
-            }
+            validUpdateSeat(domainSeat)
         }.onFailure {
             view.notifySeatUpdateFailed(it.message.orEmpty())
         }.onSuccess {
@@ -56,6 +55,12 @@ class ReservationSeatPresenter(
             machine.publishTickets(reservationInfo, theaterName)
         }.onSuccess {
             view.notifyPublishedTickets(it.toUiModel())
+        }
+    }
+
+    private fun validUpdateSeat(seat: Seat) {
+        with(reservationInfo) {
+            if (hasSeat(seat)) removeSeat(seat) else addSeat(seat)
         }
     }
 
