@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import woowacourse.movie.domain.model.cinema.screen.Seat
-import woowacourse.movie.domain.model.cinema.screen.SeatType
 import java.time.LocalDateTime
 
 class ReservationInfoTest {
@@ -23,14 +22,14 @@ class ReservationInfoTest {
 
     @Test
     fun `예약 좌석을 추가할 수 있다`() {
-        val seat = Seat(0, 1, SeatType.B_CLASS)
+        val seat = Seat(0, 1)
         fakeReservationInfo.updateSeats(seat)
         assertThat(fakeReservationInfo.seats).contains(seat)
     }
 
     @Test
     fun `예약 좌석을 제거할 수 있다`() {
-        val seat = Seat(0, 1, SeatType.B_CLASS)
+        val seat = Seat(0, 1)
         fakeReservationInfo.updateSeats(seat)
         fakeReservationInfo.updateSeats(seat)
         assertThat(fakeReservationInfo.seats).doesNotContain(seat)
@@ -38,7 +37,7 @@ class ReservationInfoTest {
 
     @Test
     fun `예매 인원 보다 더 많은 좌석을 선택하면 예외가 발생한다`() {
-        val seat = Seat(0, 1, SeatType.B_CLASS)
+        val seat = Seat(0, 1)
         fakeReservationInfo.updateSeats(seat)
         fakeReservationInfo.updateSeats(seat.copy(1))
 
@@ -49,8 +48,8 @@ class ReservationInfoTest {
 
     @Test
     fun `모든 인원에 대해 좌석을 선택해야 발권할 수 있다`() {
-        fakeReservationInfo.updateSeats(Seat(0, 1, SeatType.B_CLASS))
-        fakeReservationInfo.updateSeats(Seat(0, 2, SeatType.B_CLASS))
+        fakeReservationInfo.updateSeats(Seat(0, 1))
+        fakeReservationInfo.updateSeats(Seat(0, 2))
         assertThat(fakeReservationInfo.canPublish()).isTrue()
     }
 

@@ -11,9 +11,9 @@ data class SeatUiModel(
     val type: SeatTypeUiModel,
     val selected: Boolean = false,
 ) : Parcelable {
-    fun toLabel(): String = "${'A' + row}$col"
+    fun toLabel(): String = "${'A' + row}${col + 1}"
 }
 
 fun Seat.toUiModel(): SeatUiModel = SeatUiModel(row, col, type.toUiModel())
 
-fun SeatUiModel.toModel(): Seat = Seat(row, col, type.toModel())
+fun SeatUiModel.toModel(): Seat = Seat(row, col)

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import woowacourse.movie.domain.model.cinema.DiceCinemaPricePolicy
 import woowacourse.movie.domain.model.cinema.screen.Seat
-import woowacourse.movie.domain.model.cinema.screen.SeatType
 import woowacourse.movie.domain.model.reservation.ReservationCount
 import woowacourse.movie.domain.model.reservation.ReservationInfo
 import java.time.LocalDateTime
@@ -16,8 +15,8 @@ class TicketMachineTest {
     private val ticketMachine = TicketMachine(policy)
     private val seats =
         listOf(
-            Seat(1, 1, SeatType.S_CLASS),
-            Seat(1, 2, SeatType.S_CLASS),
+            Seat(1, 1),
+            Seat(1, 2),
         )
     private lateinit var fakeReservationInfo: ReservationInfo
 
