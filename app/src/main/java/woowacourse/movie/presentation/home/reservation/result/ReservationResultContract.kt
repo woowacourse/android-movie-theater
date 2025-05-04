@@ -4,7 +4,7 @@ import woowacourse.movie.presentation.common.model.TicketUiModel
 
 interface ReservationResultContract {
     interface Presenter {
-        fun fetchDate(ticket: TicketUiModel)
+        fun fetchData(ticket: TicketUiModel)
     }
 
     interface View {

@@ -24,7 +24,7 @@ class ReservationResultFragment :
 
         val ticket =
             arguments.getParcelableCompat<TicketUiModel>(BUNDLE_KEY_TICKET)
-        presenter.fetchDate(ticket)
+        presenter.fetchData(ticket)
     }
 
     override fun showScreen(

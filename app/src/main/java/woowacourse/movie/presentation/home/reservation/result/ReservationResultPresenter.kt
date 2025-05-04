@@ -6,7 +6,7 @@ import woowacourse.movie.presentation.common.model.TicketUiModel
 class ReservationResultPresenter(
     private val view: ReservationResultContract.View,
 ) : ReservationResultContract.Presenter {
-    override fun fetchDate(ticket: TicketUiModel) {
+    override fun fetchData(ticket: TicketUiModel) {
         view.showScreen(ticket, TicketMachine.CANCELLATION_TIME)
     }
 }

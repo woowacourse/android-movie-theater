@@ -37,7 +37,7 @@ class ReservationResultPresenterTest {
         every { view.showScreen(any(), any()) } just Runs
 
         // When: presenter가 데이터를 불러온다
-        presenter.fetchDate(ticket)
+        presenter.fetchData(ticket)
 
         // Then: View의 setScreen이 티켓 번들의 정보와 함께 호출된다.
         verify { view.showScreen(any(), any()) }
