@@ -7,15 +7,15 @@ import org.junit.jupiter.api.Test
 class SeatGradeTest {
     @Test
     fun `1행, 2행의 좌석은 B등급이다`() {
-        // Given
+        // given
         val seat1 = 0
         val seat2 = 1
 
-        // When
+        // when
         val grade1 = SeatGrade.of(seat1)
         val grade2 = SeatGrade.of(seat2)
 
-        // Then
+        // then
         assertSoftly {
             grade1 shouldBe SeatGrade.B
             grade2 shouldBe SeatGrade.B
@@ -24,15 +24,15 @@ class SeatGradeTest {
 
     @Test
     fun `3행, 4행의 좌석은 S등급이다`() {
-        // Given
+        // given
         val seat1 = 2
         val seat2 = 3
 
-        // When
+        // when
         val grade1 = SeatGrade.of(seat1)
         val grade2 = SeatGrade.of(seat2)
 
-        // Then
+        // then
         assertSoftly {
             grade1 shouldBe SeatGrade.S
             grade2 shouldBe SeatGrade.S
@@ -41,40 +41,40 @@ class SeatGradeTest {
 
     @Test
     fun `5행의 좌석은 A등급이다`() {
-        // Given
+        // given
         val seat = 4
 
-        // When
+        // when
         val grade = SeatGrade.of(seat)
 
-        // Then
+        // then
         grade shouldBe SeatGrade.A
     }
 
     @Test
     fun `B등급 좌석의 가격은 10000원이다`() {
-        // When
+        // when
         val seatB = SeatGrade.B
 
-        // Then
+        // then
         seatB.price shouldBe 10000
     }
 
     @Test
     fun `A등급 좌석의 가격은 12000원이다`() {
-        // When
+        // when
         val seatA = SeatGrade.A
 
-        // Then
+        // then
         seatA.price shouldBe 12000
     }
 
     @Test
     fun `S등급 좌석의 가격은 15000원이다`() {
-        // When
+        // when
         val seatS = SeatGrade.S
 
-        // Then
+        // then
         seatS.price shouldBe 15000
     }
 }

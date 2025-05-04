@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class MovieScheduler(
+class Scheduler(
     private val screening: Screening,
 ) {
     fun getBookableDates(today: LocalDate = LocalDate.now()): List<LocalDate> {
