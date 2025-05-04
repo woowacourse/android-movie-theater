@@ -17,6 +17,7 @@ class TheaterStore(
                     name = "선릉 극장",
                     movieSchedules =
                         generateScreenings(
+                            theaterName = "선릉 극장",
                             theaterStartDate = LocalDate.of(2025, 5, 4),
                             screeningDays = 40,
                             openTime = LocalTime.of(8, 0),
@@ -27,6 +28,7 @@ class TheaterStore(
                     name = "잠실 극장",
                     movieSchedules =
                         generateScreenings(
+                            theaterName = "잠실 극장",
                             theaterStartDate = LocalDate.of(2025, 5, 1),
                             screeningDays = 30,
                             openTime = LocalTime.of(8, 0),
@@ -34,9 +36,10 @@ class TheaterStore(
                         ),
                 ),
                 Theater(
-                    name = "잠실 극장",
+                    name = "강남 극장",
                     movieSchedules =
                         generateScreenings(
+                            theaterName = "강남 극장",
                             theaterStartDate = LocalDate.of(2025, 5, 1),
                             screeningDays = 30,
                             openTime = LocalTime.of(7, 0),
@@ -47,6 +50,7 @@ class TheaterStore(
         )
 
     private fun generateScreenings(
+        theaterName: String,
         theaterStartDate: LocalDate,
         screeningDays: Long,
         openTime: LocalTime,
@@ -55,6 +59,14 @@ class TheaterStore(
         val theaterEndDate = theaterStartDate.plusDays(screeningDays)
 
         return movies.getAll().flatMap { movie ->
+            if (
+                (theaterName == "강남 극장" && movie.title == "해리 포터와 마법사의 돌") ||
+                (theaterName == "선릉 극장" && movie.title == "해리 포터와 비밀의 방") ||
+                (theaterName == "잠실 극장" && movie.title == "해리 포터와 아즈카반의 죄수")
+            ) {
+                return@flatMap emptyList()
+            }
+
             val actualStart = maxOf(theaterStartDate, movie.screeningStartDate)
             val actualEnd = minOf(theaterEndDate, movie.screeningEndDate)
 
