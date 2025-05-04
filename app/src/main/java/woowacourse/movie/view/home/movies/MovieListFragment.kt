@@ -8,20 +8,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieStore
-import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.databinding.FragmentMovieListBinding
-import woowacourse.movie.domain.model.theater.Theaters
-import woowacourse.movie.view.home.booking.BookingActivity
 import woowacourse.movie.view.home.movies.adapter.MovieAdapter
 import woowacourse.movie.view.home.movies.bottomsheet.TheaterBottomSheet
-import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.home.movies.model.UiModel
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContract.View, MovieListEventHandler {
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
     private val presenter: MovieListContract.Presenter by lazy {
-        MovieListPresenter(this, MovieStore(), TheaterStore())
+        MovieListPresenter(this, MovieStore())
     }
 
     override fun onCreateView(
@@ -38,33 +34,19 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.loadUiData()
+        presenter.loadMovies()
     }
 
     override fun showMovieList(movieList: List<UiModel>) {
         binding.rv.adapter = MovieAdapter(movieList, this)
     }
 
-    override fun showTheaterBottomSheet(
-        movieId: Int,
-        theaters: Theaters,
-    ) {
-        TheaterBottomSheet(
-            theaters,
-            movieId,
-            onclick = {
-                presenter.loadMovieScreening(movieId, it)
-            },
-        ).show(childFragmentManager, THEATER_BOTTOM_SHEET)
+    override fun moveToTheaterSelection(movieId: Int) {
+        TheaterBottomSheet.newInstance(movieId).show(childFragmentManager, THEATER_BOTTOM_SHEET)
     }
 
     override fun onMovieSelected(movieId: Int) {
-        presenter.loadTheaters(movieId)
-    }
-
-    override fun moveToBooking(screening: ScreeningInfo) {
-        val intent = BookingActivity.newIntent(requireContext(), screening)
-        startActivity(intent)
+        presenter.selectMovie(movieId)
     }
 
     override fun onDestroyView() {
