@@ -2,25 +2,18 @@ package woowacourse.movie.domain.model
 
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.TheaterUIModel
-import woowacourse.movie.view.model.toDomainModel
-import java.time.LocalDate
 
 class Theater(
     val name: String,
-    private val movies: List<Movie>,
-) {
-    fun getTotalTimeSlotCount(movie: Movie): Int {
-        if (movie !in movies) {
-            return 0
-        }
-        val endDate = movies.find { it == movie }?.endDate ?: LocalDate.now()
-        return MovieDao().getTotalTimeSlotCount(this, movie, endDate)
-    }
-}
+    val movies: List<Movie>,
+)
 
-fun Theater.toUiModel(movie: MovieUiModel): TheaterUIModel =
+fun Theater.toUiModel(
+    movie: MovieUiModel,
+    timeSlot: Int,
+): TheaterUIModel =
     TheaterUIModel(
         name = this.name,
         movie = movie,
-        timeSlotCount = this.getTotalTimeSlotCount(movie.toDomainModel()),
+        timeSlotCount = timeSlot,
     )

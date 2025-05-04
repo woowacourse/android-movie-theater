@@ -2,16 +2,17 @@ package woowacourse.movie.domain.model
 
 import woowacourse.movie.R
 import woowacourse.movie.view.model.MovieTicket
+import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.ReservationInfo
 import woowacourse.movie.view.model.TheaterUIModel
 import java.time.LocalDate
 
 val dummyMovie =
-    Movie(
+    MovieUiModel(
         "라라랜드",
         R.drawable.lalaland,
-        LocalDate.of(2025, 4, 1),
-        LocalDate.of(2025, 4, 30),
+        "2025.04.01",
+        "2025.04.30",
         120,
     )
 

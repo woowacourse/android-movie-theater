@@ -4,7 +4,7 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.model.Movie
 import java.time.LocalDate
 
-object MovieDatabase {
+object MovieFixture {
     val screenings =
         mapOf(
             "선릉" to
