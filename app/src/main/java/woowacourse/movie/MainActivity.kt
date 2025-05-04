@@ -34,24 +34,23 @@ class MainActivity : AppCompatActivity() {
         binding.mainBottomNavigationBar.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.bottom_navigation_reservation_details ->
-                    return@setOnItemSelectedListener replaceFragment(reservationDetailsFragment)
+                    replaceFragment(reservationDetailsFragment)
 
                 R.id.bottom_navigation_home ->
-                    return@setOnItemSelectedListener replaceFragment(homeFragment)
+                    replaceFragment(homeFragment)
 
                 R.id.bottom_navigation_setting ->
-                    return@setOnItemSelectedListener replaceFragment(settingFragment)
+                    replaceFragment(settingFragment)
             }
-            false
+            return@setOnItemSelectedListener true
         }
     }
 
-    private fun replaceFragment(selectedFragment: Fragment): Boolean {
+    private fun replaceFragment(selectedFragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(binding.mainFragmentContainer.id, selectedFragment)
         }
-        return true
     }
 
     companion object {
