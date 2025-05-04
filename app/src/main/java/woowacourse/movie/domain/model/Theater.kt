@@ -1,6 +1,7 @@
 package woowacourse.movie.domain.model
 
 import woowacourse.movie.view.model.MovieUiModel
+import woowacourse.movie.view.model.TheaterUIModel
 import woowacourse.movie.view.model.toDomainModel
 import java.time.LocalDate
 

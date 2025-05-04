@@ -1,15 +1,14 @@
-package woowacourse.movie.domain.model
+package woowacourse.movie.view.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
 
 @Parcelize
-data class ReservationInfo(
+data class MovieTicket(
     val title: String,
     val date: LocalDate,
     val time: String,
-    val seats: Seats,
-    val price: Int,
+    val count: Int,
     val theaterName: String,
 ) : Parcelable

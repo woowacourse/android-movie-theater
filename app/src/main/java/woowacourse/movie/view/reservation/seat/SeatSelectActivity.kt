@@ -15,11 +15,11 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectBinding
-import woowacourse.movie.domain.model.MovieTicket
-import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.ReservationUiFormatter
 import woowacourse.movie.view.getParcelableExtraCompat
+import woowacourse.movie.view.model.MovieTicket
+import woowacourse.movie.view.model.ReservationInfo
 import woowacourse.movie.view.reservation.complete.ReservationCompleteActivity
 import woowacourse.movie.view.reservation.detail.ReservationDetailDialog
 

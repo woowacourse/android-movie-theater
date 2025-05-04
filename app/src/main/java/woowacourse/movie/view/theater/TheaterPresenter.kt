@@ -2,9 +2,9 @@ package woowacourse.movie.view.theater
 
 import woowacourse.movie.domain.model.MovieDao
 import woowacourse.movie.domain.model.Theater
-import woowacourse.movie.domain.model.TheaterUIModel
 import woowacourse.movie.domain.model.toUiModel
 import woowacourse.movie.view.model.MovieUiModel
+import woowacourse.movie.view.model.TheaterUIModel
 
 class TheaterPresenter(
     val view: TheaterContract.View,

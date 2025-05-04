@@ -1,8 +1,8 @@
-package woowacourse.movie.domain.model
+package woowacourse.movie.view.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.movie.view.model.MovieUiModel
+import woowacourse.movie.domain.model.TicketCount
 
 @Parcelize
 data class TheaterUIModel(

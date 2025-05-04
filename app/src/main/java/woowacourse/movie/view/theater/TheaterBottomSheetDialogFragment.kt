@@ -9,10 +9,10 @@ import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
-import woowacourse.movie.domain.model.TheaterUIModel
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.compatParcelable
 import woowacourse.movie.view.model.MovieUiModel
+import woowacourse.movie.view.model.TheaterUIModel
 import woowacourse.movie.view.reservation.detail.ReservationDetailActivity
 
 class TheaterBottomSheetDialogFragment :

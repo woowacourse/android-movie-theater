@@ -7,7 +7,7 @@
 
         <variable
             name="reservationInfo"
-            type="woowacourse.movie.domain.model.ReservationInfo" />
+            type="woowacourse.movie.view.model.ReservationInfo" />
     </data>
 
     <ScrollView
