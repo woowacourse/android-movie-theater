@@ -4,9 +4,9 @@ import java.time.LocalDateTime
 
 data class Theater(
     val name: String,
-    private val schedules: List<MovieSchedule> = listOf(),
+    private val schedules: List<MovieSchedule> = emptyList(),
 ) {
-    fun getAvailableShowTimesFor(
+    fun availableShowTimes(
         movieId: Int,
         now: LocalDateTime,
     ): List<LocalDateTime> =

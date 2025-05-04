@@ -1,11 +1,11 @@
-package woowacourse.movie.domain.model.cinema.screen
+package woowacourse.movie.domain.model.cinema
 
-class Screen(
-    size: ScreenSize,
+class Seats(
+    size: SeatingSize,
 ) {
     val seats: List<Seat> = buildSeats(size)
 
-    private fun buildSeats(size: ScreenSize): List<Seat> =
+    private fun buildSeats(size: SeatingSize): List<Seat> =
         (STARTING_INDEX until size.rowSize).flatMap { row ->
             (STARTING_INDEX until size.colSize).map { col ->
                 Seat(row, col)
@@ -13,7 +13,7 @@ class Screen(
         }
 
     companion object {
-        val DEFAULT_SCREEN = Screen(ScreenSize(5, 4))
+        val DEFAULT_SEATS = Seats(SeatingSize(5, 4))
         private const val STARTING_INDEX = 0
     }
 }

@@ -1,10 +1,10 @@
 package woowacourse.movie.presentation.home.reservation.seat
 
-import woowacourse.movie.domain.model.cinema.DiceCinemaPricePolicy
-import woowacourse.movie.domain.model.cinema.PricePolicy
-import woowacourse.movie.domain.model.cinema.screen.Screen
-import woowacourse.movie.domain.model.cinema.ticket.TicketMachine
+import woowacourse.movie.domain.model.cinema.Seats
 import woowacourse.movie.domain.model.reservation.ReservationInfo
+import woowacourse.movie.domain.model.ticketing.DiceCinemaPricePolicy
+import woowacourse.movie.domain.model.ticketing.PricePolicy
+import woowacourse.movie.domain.model.ticketing.TicketMachine
 import woowacourse.movie.presentation.common.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.common.model.ScreenUiModel
 import woowacourse.movie.presentation.common.model.SeatUiModel
@@ -30,7 +30,7 @@ class ReservationSeatPresenter(
 
         view.showScreen(
             reservationInfo,
-            screen ?: Screen.DEFAULT_SCREEN.toUiModel(),
+            screen ?: Seats.DEFAULT_SEATS.toUiModel(),
             this.reservationInfo.seats.map { it.toUiModel() },
         )
 

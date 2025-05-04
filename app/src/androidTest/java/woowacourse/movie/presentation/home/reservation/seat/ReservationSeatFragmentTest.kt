@@ -23,7 +23,7 @@ import org.hamcrest.Matcher
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.cinema.screen.Screen
+import woowacourse.movie.domain.model.cinema.Seats
 import woowacourse.movie.presentation.common.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.common.model.toUiModel
 import java.time.LocalDateTime
@@ -41,7 +41,7 @@ class ReservationSeatFragmentTest {
 
     @Before
     fun setUp() {
-        val bundle = bundleOf("reservation_info" to fakeReservationInfo, "screen" to Screen.DEFAULT_SCREEN.toUiModel())
+        val bundle = bundleOf("reservation_info" to fakeReservationInfo, "screen" to Seats.DEFAULT_SEATS.toUiModel())
         scenario =
             launchFragmentInContainer(bundle) {
                 ReservationSeatFragment()

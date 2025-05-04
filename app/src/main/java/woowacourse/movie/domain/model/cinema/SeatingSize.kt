@@ -1,12 +1,12 @@
-package woowacourse.movie.domain.model.cinema.screen
+package woowacourse.movie.domain.model.cinema
 
-data class ScreenSize(
+data class SeatingSize(
     val rowSize: Int,
     val colSize: Int,
 ) {
     init {
         require(rowSize > MINIMUM_SIZE && colSize > MINIMUM_SIZE) {
-            INVALID_SCREEN_SIZE.format(
+            INVALID_SEATING_SIZE.format(
                 rowSize,
                 colSize,
             )
@@ -15,6 +15,6 @@ data class ScreenSize(
 
     companion object {
         private const val MINIMUM_SIZE = 0
-        private const val INVALID_SCREEN_SIZE = "스크린 크기는 ${MINIMUM_SIZE}보다 커야 합니다. rowSize: %d, colSize: %d"
+        private const val INVALID_SEATING_SIZE = "좌석의 규모는 ${MINIMUM_SIZE}보다 커야 합니다. rowSize: %d, colSize: %d"
     }
 }

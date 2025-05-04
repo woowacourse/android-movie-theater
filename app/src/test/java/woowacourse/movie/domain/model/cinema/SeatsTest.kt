@@ -1,26 +1,26 @@
-package woowacourse.movie.domain.model.cinema.screen
+package woowacourse.movie.domain.model.cinema
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-class ScreenTest {
+class SeatsTest {
     @Nested
     inner class `Screen 생성 시` {
         @Test
         fun `row와 col 크기에 맞게 좌석이 생성된다`() {
-            val screenSize = ScreenSize(5, 4)
-            val screen = Screen(screenSize)
+            val seatingSize = SeatingSize(5, 4)
+            val seats = Seats(seatingSize)
 
-            assertThat(screen.seats.size).isEqualTo(20)
+            assertThat(seats.seats.size).isEqualTo(20)
         }
 
         @Test
         fun `row에 따라 좌석 타입이 올바르게 설정된다`() {
-            val screenSize = ScreenSize(5, 4)
-            val screen = Screen(screenSize)
+            val seatingSize = SeatingSize(5, 4)
+            val seats = Seats(seatingSize)
 
-            screen.seats.forEach { seat ->
+            seats.seats.forEach { seat ->
                 val expectedSeatType =
                     when (seat.row) {
                         0, 1 -> SeatType.B_CLASS

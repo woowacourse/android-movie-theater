@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.home.reservation.detail
 
+import woowacourse.movie.domain.model.cinema.Seats
 import woowacourse.movie.domain.model.cinema.Theater
-import woowacourse.movie.domain.model.cinema.screen.Screen
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.reservation.ReservationCount
 import woowacourse.movie.domain.model.reservation.ReservationInfo
@@ -16,7 +16,7 @@ import java.time.LocalTime
 class ReservationDetailPresenter(
     private val view: ReservationDetailContract.View,
 ) : ReservationDetailContract.Presenter {
-    private val screen: Screen = Screen.DEFAULT_SCREEN
+    private val seats: Seats = Seats.DEFAULT_SEATS
     private lateinit var movie: Movie
     private lateinit var theater: Theater
     private var reservationCount = ReservationCount()
@@ -34,7 +34,7 @@ class ReservationDetailPresenter(
     }
 
     override fun updateReservationCount(updateCount: Int) {
-        if (updateCount >= 0 && reservationCount.value >= screen.seats.size) {
+        if (updateCount >= 0 && reservationCount.value >= seats.seats.size) {
             view.notifyReservationLimitReached()
             return
         }
@@ -59,7 +59,7 @@ class ReservationDetailPresenter(
                 reservationCount,
             ).toUiModel(theater.name)
 
-        view.notifyReservationConfirm(reservationInfo, screen.toUiModel(), theater.name)
+        view.notifyReservationConfirm(reservationInfo, seats.toUiModel(), theater.name)
     }
 
     private fun setupInitialView(dateTime: LocalDateTime?) {
@@ -112,8 +112,7 @@ class ReservationDetailPresenter(
             .map { it.toLocalTime() }
     }
 
-    private fun getAvailableShowTimes(currentTime: LocalDateTime): List<LocalDateTime> =
-        theater.getAvailableShowTimesFor(movie.id, currentTime)
+    private fun getAvailableShowTimes(currentTime: LocalDateTime) = theater.availableShowTimes(movie.id, currentTime)
 
     private fun ReservationCount.isValid(): Boolean = value > ReservationCount.RESERVATION_MIN_COUNT
 }

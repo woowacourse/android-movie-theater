@@ -2,7 +2,7 @@ package woowacourse.movie.presentation.common.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.movie.domain.model.cinema.screen.Seat
+import woowacourse.movie.domain.model.cinema.Seat
 
 @Parcelize
 data class SeatUiModel(

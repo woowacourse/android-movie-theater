@@ -11,7 +11,7 @@ class Theaters(
     ): Map<String, List<LocalDateTime>> =
         theaters
             .associate { theater ->
-                val available = theater.getAvailableShowTimesFor(movieId, now)
+                val available = theater.availableShowTimes(movieId, now)
                 if (available.isNotEmpty()) theater.name to available else theater.name to emptyList()
             }
 }

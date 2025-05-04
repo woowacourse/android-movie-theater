@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import woowacourse.movie.domain.model.cinema.screen.Seat
+import woowacourse.movie.domain.model.cinema.Seat
 import java.time.LocalDateTime
 
 class ReservationInfoTest {

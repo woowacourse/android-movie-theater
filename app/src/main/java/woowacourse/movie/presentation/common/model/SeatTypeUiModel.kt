@@ -2,7 +2,7 @@ package woowacourse.movie.presentation.common.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.movie.domain.model.cinema.screen.SeatType
+import woowacourse.movie.domain.model.cinema.SeatType
 
 @Parcelize
 enum class SeatTypeUiModel : Parcelable {

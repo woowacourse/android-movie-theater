@@ -1,7 +1,6 @@
-package woowacourse.movie.domain.model.cinema.ticket
+package woowacourse.movie.domain.model.ticketing
 
-import woowacourse.movie.domain.model.cinema.PricePolicy
-import woowacourse.movie.domain.model.cinema.screen.Seat
+import woowacourse.movie.domain.model.cinema.Seat
 import woowacourse.movie.domain.model.reservation.ReservationInfo
 
 class TicketMachine(

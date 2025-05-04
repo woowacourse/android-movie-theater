@@ -1,13 +1,14 @@
-package woowacourse.movie.domain.model.cinema.ticket
+package woowacourse.movie.domain.model.ticketing
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import woowacourse.movie.domain.model.cinema.DiceCinemaPricePolicy
-import woowacourse.movie.domain.model.cinema.screen.Seat
+import woowacourse.movie.domain.model.cinema.Seat
 import woowacourse.movie.domain.model.reservation.ReservationCount
 import woowacourse.movie.domain.model.reservation.ReservationInfo
+import woowacourse.movie.domain.model.ticketing.DiceCinemaPricePolicy
+import woowacourse.movie.domain.model.ticketing.TicketMachine
 import java.time.LocalDateTime
 
 class TicketMachineTest {

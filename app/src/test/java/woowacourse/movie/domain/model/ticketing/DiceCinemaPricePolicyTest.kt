@@ -1,10 +1,11 @@
-package woowacourse.movie.domain.model.cinema
+package woowacourse.movie.domain.model.ticketing
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.cinema.screen.SeatType
+import woowacourse.movie.domain.model.cinema.SeatType
+import woowacourse.movie.domain.model.ticketing.DiceCinemaPricePolicy
 
 class DiceCinemaPricePolicyTest {
     private val pricePolicy = DiceCinemaPricePolicy()
