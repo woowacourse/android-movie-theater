@@ -1,9 +1,12 @@
 package woowacourse.movie.view.home.movies.model
 
+import android.os.Parcelable
 import androidx.annotation.LayoutRes
+import kotlinx.parcelize.Parcelize
 import woowacourse.movie.R
 
-sealed class TheaterRvItem(val viewType: ViewType) {
+@Parcelize
+sealed class TheaterRvItem(val viewType: ViewType) : Parcelable {
     data class TheaterItem(
         val name: String,
         val movieId: Int,

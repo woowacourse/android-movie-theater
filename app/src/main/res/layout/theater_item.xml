@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> eventListener.onSelectTheater(model.name, model.movieId)}"
+        android:onClick="@{() -> eventListener.onSelectTheater(model.name)}"
         android:padding="20dp">
 
         <TextView

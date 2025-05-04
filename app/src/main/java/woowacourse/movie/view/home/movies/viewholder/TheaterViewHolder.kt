@@ -19,9 +19,6 @@ class TheaterViewHolder(
     }
 
     interface Handler {
-        fun onSelectTheater(
-            theaterName: String,
-            movieId: Int,
-        )
+        fun onSelectTheater(theaterName: String)
     }
 }
