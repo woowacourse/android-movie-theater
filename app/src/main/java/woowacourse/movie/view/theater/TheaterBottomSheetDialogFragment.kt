@@ -63,12 +63,7 @@ class TheaterBottomSheetDialogFragment :
     }
 
     override fun showEmptySlotMessage() {
-        Toast
-            .makeText(
-                requireContext(),
-                getString(R.string.bottom_sheet_dialog_error_empty_showing_movie),
-                Toast.LENGTH_SHORT,
-            ).show()
+        showToast(getString(R.string.bottom_sheet_dialog_error_empty_showing_movie))
     }
 
     override fun navigateToReservation(theaterUIModel: TheaterUIModel) {
@@ -86,6 +81,10 @@ class TheaterBottomSheetDialogFragment :
 
     private fun onTheaterClicked(theaterUIModel: TheaterUIModel) {
         presenter.theaterSelected(theaterUIModel)
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {
