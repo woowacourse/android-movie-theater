@@ -65,7 +65,7 @@
 - [ ] ReservationSeatPresenter | Seat 자료 구조형 불변으로 변경
 - [ ] ReservationSeatPresenter | Presenter에서 안드로이드 의존성 제거
 - [ ] ReservationSeatPresenter | getSerializable 메서드 수정
-- [ ] movie_item | text에 값이 안들어있는 오류 수정
+- [x] movie_item | text에 값이 안들어있는 오류 수정
 
 
 
