@@ -2,7 +2,7 @@ package woowacourse.movie.domain.model.theater
 
 import java.time.LocalDateTime
 
-class Theater(
+data class Theater(
     val name: String,
     val movieSchedules: List<Screening>,
 ) {
