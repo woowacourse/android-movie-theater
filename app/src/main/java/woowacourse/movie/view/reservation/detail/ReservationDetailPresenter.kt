@@ -91,16 +91,14 @@ class ReservationDetailPresenter(
         view.showTicketCount(reservationUIModel.ticketCount)
     }
 
-    override fun createTicket(onCreated: (MovieTicket) -> Unit) {
-        val ticket =
-            MovieTicket(
-                title = reservationUIModel.movie.name,
-                date = reservationUIModel.movieDate.value,
-                time = ReservationUiFormatter.movieTimeToUI(reservationUIModel.movieTime.value),
-                count = reservationUIModel.ticketCount,
-                theaterName = reservationUIModel.theaterName,
-            )
-        onCreated(ticket)
+    override fun completeSelected() {
+        if (!isTimeSelected) {
+            view.showTimeNotSelectedError()
+            return
+        }
+
+        val ticket = createTicket()
+        view.navigateToSeatSelect(ticket)
     }
 
     fun restoreTicketCount(count: Int) {
@@ -115,6 +113,15 @@ class ReservationDetailPresenter(
     private fun updateMovieInfo() {
         view.showMovieInfo(reservationUIModel.movie)
     }
+
+    private fun createTicket(): MovieTicket =
+        MovieTicket(
+            title = reservationUIModel.movie.name,
+            date = reservationUIModel.movieDate.value,
+            time = ReservationUiFormatter.movieTimeToUI(reservationUIModel.movieTime.value),
+            count = reservationUIModel.ticketCount,
+            theaterName = reservationUIModel.theaterName,
+        )
 
     private fun updateReservationState(
         movieDate: MovieDate = reservationUIModel.movieDate,

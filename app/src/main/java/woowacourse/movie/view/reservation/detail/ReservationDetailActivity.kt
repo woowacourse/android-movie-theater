@@ -136,6 +136,22 @@ class ReservationDetailActivity :
         }
     }
 
+    override fun navigateToSeatSelect(ticket: MovieTicket) {
+        val intent =
+            Intent(this, SeatSelectActivity::class.java).apply {
+                putExtra(Extras.TicketData.TICKET_KEY, ticket)
+            }
+        startActivity(intent)
+    }
+
+    override fun showToast(stringResId: Int) {
+        Toast.makeText(this, getString(stringResId), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showTimeNotSelectedError() {
+        showToast(R.string.reservation_error_empty_selected_movie_time)
+    }
+
     private fun setupMovieReservationInfo(movie: MovieUiModel) {
         binding.ivReservationPoster.setImageResource(movie.poster)
         binding.tvReservationTitle.text = movie.name
@@ -147,31 +163,8 @@ class ReservationDetailActivity :
 
     private fun setupCompleteButtonClick() {
         binding.btnReservationSelectComplete.setOnClickListener {
-            presenter.createTicket { ticket ->
-                if (presenter.isTimeSelected) {
-                    navigateToSeatSelect(ticket)
-                } else {
-                    Toast
-                        .makeText(
-                            this,
-                            getString(R.string.reservation_error_empty_selected_movie_time),
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                }
-            }
+            presenter.completeSelected()
         }
-    }
-
-    override fun navigateToSeatSelect(ticket: MovieTicket) {
-        val intent =
-            Intent(this, SeatSelectActivity::class.java).apply {
-                putExtra(Extras.TicketData.TICKET_KEY, ticket)
-            }
-        startActivity(intent)
-    }
-
-    override fun showToast(stringResId: Int) {
-        Toast.makeText(this, getString(stringResId), Toast.LENGTH_SHORT).show()
     }
 
     private fun setupSavedData(savedInstanceState: Bundle?) {

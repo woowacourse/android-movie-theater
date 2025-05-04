@@ -23,6 +23,8 @@ interface ReservationDetailContract {
         fun navigateToSeatSelect(ticket: MovieTicket)
 
         fun showToast(stringResId: Int)
+
+        fun showTimeNotSelectedError()
     }
 
     interface Presenter {
@@ -38,6 +40,6 @@ interface ReservationDetailContract {
 
         fun minusTicketCount()
 
-        fun createTicket(onCreated: (MovieTicket) -> Unit)
+        fun completeSelected()
     }
 }
