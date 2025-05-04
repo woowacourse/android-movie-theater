@@ -16,8 +16,6 @@ interface SeatSelectionContract {
 
         fun showTotalPrice(price: Int)
 
-        fun showMovieTitle(title: String)
-
         fun enableConfirmButton(enabled: Boolean)
 
         fun showError(message: String)

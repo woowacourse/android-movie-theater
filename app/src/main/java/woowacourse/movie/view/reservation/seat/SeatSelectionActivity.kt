@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
@@ -39,8 +40,7 @@ class SeatSelectionActivity :
         val reservation = intent.getParcelableCompat<ReservationInfo>(BUNDLE_KEY_RESERVATION_INFO)
 
         presenter.loadSeats(reservation)
-        setupViews(reservation.title)
-
+        binding.reservationInfo = reservation
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -50,14 +50,6 @@ class SeatSelectionActivity :
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun setupViews(title: String) {
-        showMovieTitle(title)
-
-        binding.btnSeatSelectConfirm.setOnClickListener {
-            presenter.showConfirmButton()
-        }
     }
 
     override fun showSeats(seats: List<Seat>) {
@@ -98,12 +90,8 @@ class SeatSelectionActivity :
     }
 
     override fun showTotalPrice(price: Int) {
-        val tvPrice = binding.tvSeatSelectTotalPrice
-        tvPrice.text = getString(R.string.reservation_total_money, price)
-    }
-
-    override fun showMovieTitle(title: String) {
-        binding.tvSeatSelectMovieTitle.text = title
+        binding.price = price
+        binding.invalidateAll()
     }
 
     override fun enableConfirmButton(enabled: Boolean) {
@@ -133,6 +121,10 @@ class SeatSelectionActivity :
         view.setOnClickListener {
             presenter.selectSeat(seat)
         }
+    }
+
+    fun showConfirmButton(view: View) {
+        presenter.showConfirmButton()
     }
 
     companion object {

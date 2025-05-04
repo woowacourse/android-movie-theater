@@ -6,8 +6,11 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
+import woowacourse.movie.domain.model.ReservationCount
 import woowacourse.movie.domain.model.RunningTime
+import woowacourse.movie.domain.model.Seat
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @BindingAdapter("android:startDate", "android:endDate", requireAll = true)
@@ -77,4 +80,64 @@ fun setOnClickEventListener(
     view.setOnClickListener {
         listener()
     }
+}
+
+@BindingAdapter("android:price")
+fun setPrice(
+    view: TextView,
+    price: Int,
+) {
+    val text = view.context.getString(R.string.reservation_total_money, price)
+    view.text = text
+}
+
+@BindingAdapter("android:seats")
+fun setSeats(
+    view: TextView,
+    seats: List<Seat>,
+) {
+    val text =
+        view.context.getString(
+            R.string.seat_split_line,
+            seats.joinToString(",") { it.toFormattedRow() + it.column.toString() },
+        )
+    view.text = text
+}
+
+@BindingAdapter("android:reservationDateTime")
+fun setReservationDateTime(
+    view: TextView,
+    reservationDateTime: LocalDateTime,
+) {
+    val text =
+        reservationDateTime.format(
+            DateTimeFormatter.ofPattern(
+                view.context.getString(R.string.reservation_datetime_format),
+            ),
+        )
+    view.text = text
+}
+
+@BindingAdapter("android:reservationCount")
+fun setReservationCount(
+    view: TextView,
+    reservationCount: ReservationCount,
+) {
+    view.text =
+        view.context.getString(
+            R.string.reservation_count_info,
+        ).format(reservationCount.value)
+}
+
+@BindingAdapter("android:totalPrice")
+fun setTotalPrice(
+    view: TextView,
+    totalPrice: Int,
+) {
+    val text = view.context.getString(R.string.reservation_total_price, totalPrice)
+    view.text = text
+}
+
+private fun Seat.toFormattedRow(): String {
+    return (this.row + 65).toChar().toString()
 }
