@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.common.BaseActivity
-import woowacourse.movie.common.util.bundleSerializable
-import woowacourse.movie.common.util.intentSerializable
+import woowacourse.movie.common.util.getSerializableCompat
+import woowacourse.movie.common.util.getSerializableExtraCompat
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
@@ -43,7 +43,7 @@ class BookingActivity :
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val restoredTicket = savedInstanceState.bundleSerializable(EXTRA_TICKET, Ticket::class.java)
+        val restoredTicket = savedInstanceState.getSerializableCompat(EXTRA_TICKET, Ticket::class.java)
         restoredTicket?.let { presenter.restoreTicket(it) }
     }
 
@@ -114,7 +114,7 @@ class BookingActivity :
     }
 
     private fun fetchScreening(): Boolean {
-        val data = intent.intentSerializable(EXTRA_SCREENING, Screening::class.java)
+        val data = intent.getSerializableExtraCompat(EXTRA_SCREENING, Screening::class.java)
         if (data == null) {
             Toast.makeText(this, ERROR_INTENT_KEY, Toast.LENGTH_SHORT).show()
             finish()

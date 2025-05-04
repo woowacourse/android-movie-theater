@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
-import woowacourse.movie.common.util.bundleSerializable
+import woowacourse.movie.common.util.getSerializableCompat
 import woowacourse.movie.data.ScreeningData
 import woowacourse.movie.databinding.FragmentTheaterBinding
 import woowacourse.movie.domain.model.Movie
@@ -24,7 +24,7 @@ class TheaterFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val movie =
-            arguments?.bundleSerializable(EXTRA_MOVIE, Movie::class.java)
+            arguments?.getSerializableCompat(EXTRA_MOVIE, Movie::class.java)
                 ?: dismiss().run { return }
         presenter = TheaterPresenter(this, movie, ScreeningData)
     }

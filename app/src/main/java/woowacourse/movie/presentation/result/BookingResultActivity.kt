@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.common.BaseActivity
-import woowacourse.movie.common.util.intentSerializable
+import woowacourse.movie.common.util.getSerializableExtraCompat
 import woowacourse.movie.databinding.ActivityBookingResultBinding
 import woowacourse.movie.domain.model.Ticket
 
@@ -30,7 +30,7 @@ class BookingResultActivity :
     }
 
     private fun fetchTicketFromIntent(): Boolean {
-        val data = intent.intentSerializable(EXTRA_TICKET, Ticket::class.java)
+        val data = intent.getSerializableExtraCompat(EXTRA_TICKET, Ticket::class.java)
         if (data == null) {
             Toast.makeText(this, ERROR_INTENT_KEY, Toast.LENGTH_SHORT).show()
             finish()
