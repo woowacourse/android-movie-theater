@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.view.home.movies.HomeEventHandler
+import woowacourse.movie.view.home.movies.MovieListEventHandler
 import woowacourse.movie.view.home.movies.model.UiModel
 import woowacourse.movie.view.home.movies.model.UiModel.AdvertiseUiModel
 import woowacourse.movie.view.home.movies.model.UiModel.MovieUiModel
@@ -14,7 +14,7 @@ import woowacourse.movie.view.home.movies.viewholder.MovieViewHolder
 
 class MovieAdapter(
     private val itemsList: List<UiModel>,
-    private val handler: HomeEventHandler,
+    private val handler: MovieListEventHandler,
 ) : ListAdapter<UiModel, RecyclerView.ViewHolder>(
         object : DiffUtil.ItemCallback<UiModel>() {
             override fun areItemsTheSame(

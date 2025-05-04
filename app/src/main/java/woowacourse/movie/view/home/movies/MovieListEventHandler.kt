@@ -1,5 +1,5 @@
 package woowacourse.movie.view.home.movies
 
-interface HomeEventHandler {
+interface MovieListEventHandler {
     fun onMovieSelected(movieId: Int)
 }

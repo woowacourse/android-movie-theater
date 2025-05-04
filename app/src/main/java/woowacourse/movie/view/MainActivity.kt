@@ -11,7 +11,7 @@ import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.view.history.BookingHistoryFragment
-import woowacourse.movie.view.home.movies.HomeFragment
+import woowacourse.movie.view.home.movies.MovieListFragment
 import woowacourse.movie.view.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
@@ -33,11 +33,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         val historyFragment = BookingHistoryFragment()
-        val homeFragment = HomeFragment()
+        val movieListFragment = MovieListFragment()
         val settingFragment = SettingFragment()
 
         if (savedInstanceState == null) {
-            replaceFragment(homeFragment)
+            replaceFragment(movieListFragment)
             binding.navigation.selectedItemId = R.id.action_home
         }
 
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.action_home -> {
-                    replaceFragment(homeFragment)
+                    replaceFragment(movieListFragment)
                     true
                 }
 

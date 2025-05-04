@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.data.TheaterStore
-import woowacourse.movie.databinding.FragmentHomeBinding
+import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.domain.model.theater.Theaters
 import woowacourse.movie.view.home.booking.BookingActivity
 import woowacourse.movie.view.home.movies.adapter.MovieAdapter
@@ -17,8 +17,8 @@ import woowacourse.movie.view.home.movies.bottomsheet.TheaterBottomSheet
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.home.movies.model.UiModel
 
-class HomeFragment : Fragment(R.layout.fragment_home), MovieListContract.View, HomeEventHandler {
-    private var _binding: FragmentHomeBinding? = null
+class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContract.View, MovieListEventHandler {
+    private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
     private val presenter: MovieListContract.Presenter by lazy {
         MovieListPresenter(this, MovieStore(), TheaterStore())
@@ -29,7 +29,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), MovieListContract.View, H
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list, container, false)
         return binding.root
     }
 

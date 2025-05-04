@@ -9,7 +9,7 @@
             type="woowacourse.movie.view.home.movies.model.UiModel.MovieUiModel" />
         <variable
             name="handler"
-            type="woowacourse.movie.view.home.movies.HomeEventHandler" />
+            type="woowacourse.movie.view.home.movies.MovieListEventHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
