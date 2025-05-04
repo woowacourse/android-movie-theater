@@ -2,6 +2,8 @@ package woowacourse.movie.domain.model.booking
 
 @JvmInline
 value class PeopleCount(val value: Int = MIN_PEOPLE_COUNT) {
+    fun modify(newCount: Int) = PeopleCount(newCount)
+
     fun increase(limit: Int): PeopleCount {
         val increasedCount = this.value + PEOPLE_COUNT_CHANGE_STANDARD
         return PeopleCount(increasedCount.coerceAtMost(limit))
