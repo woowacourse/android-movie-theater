@@ -19,13 +19,13 @@ import woowacourse.movie.view.reservation.seat.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 class ReservationActivity :
     BaseActivity<ActivityReservationBinding>(R.layout.activity_reservation),
     ReservationContract.View {
     private val presenter = ReservationPresenter(this)
     private var shouldIgnoreNextSelection = false
+    var count = 0
 
     private val dateSpinnerAdapter: ArrayAdapter<LocalDate> by lazy {
         ArrayAdapter(this, android.R.layout.simple_spinner_item, mutableListOf<LocalDate>()).apply {
@@ -86,7 +86,6 @@ class ReservationActivity :
     override fun showMovieDetail(screening: Screening) {
         setMovieInfo(screening)
         setupDateSpinner()
-        setupListener()
     }
 
     override fun notifyInvalidReservationInfo() {
@@ -94,7 +93,8 @@ class ReservationActivity :
     }
 
     override fun updateReservationCount(count: Int) {
-        binding.tvReservationCount.text = count.toString()
+        this.count = count
+        binding.invalidateAll()
     }
 
     override fun updateDateSet(
@@ -144,54 +144,33 @@ class ReservationActivity :
         startActivity(intent)
     }
 
-    private fun setupListener() {
-        binding.btnReservationFinish.setOnClickListener {
-            submitReservation()
-        }
-
-        binding.btnReservationCountMinus.setOnClickListener {
-            runCatching {
-                presenter.decreaseCount(1)
-            }.onFailure {
-                showToast(
-                    getString(
-                        R.string.invalid_reservation_count_message,
-                        ReservationCount.MINIMUM_RESERVATION_COUNT,
-                    ),
-                )
-            }
-        }
-
-        binding.btnReservationCountPlus.setOnClickListener {
-            presenter.increaseCount(1)
-        }
-    }
-
-    private fun submitReservation() {
+    fun submitReservation(view: View) {
         presenter.onReserve(
             reservationDate = binding.spinnerReservationDate.selectedItem as? LocalDate,
             reservationTime = binding.spinnerReservationTime.selectedItem as? LocalTime,
         )
     }
 
+    fun increase(view: View) {
+        presenter.increaseCount(1)
+    }
+
+    fun decrease(view: View) {
+        runCatching {
+            presenter.decreaseCount(1)
+        }.onFailure {
+            showToast(
+                getString(
+                    R.string.invalid_reservation_count_message,
+                    ReservationCount.MINIMUM_RESERVATION_COUNT,
+                ),
+            )
+        }
+    }
+
     private fun setMovieInfo(screening: Screening) {
-        val formatter =
-            DateTimeFormatter.ofPattern(getString(R.string.movie_screening_period_format))
-        binding.ivReservationPoster.setImageResource(screening.movie.poster.toInt())
-        binding.tvReservationTitle.text = screening.movie.title
-        binding.tvScreeningPeriod.text =
-            getString(
-                R.string.movie_date,
-                screening.movie.startDate.format(formatter),
-                screening.movie.endDate
-                    .format(formatter),
-            )
-        binding.tvReservationRunningTime.text =
-            getString(
-                R.string.running_time,
-                screening.movie.runningTime.minute
-                    .toString(),
-            )
+        binding.screening = screening
+        binding.activity = this
     }
 
     private fun setupDateSpinner() {
