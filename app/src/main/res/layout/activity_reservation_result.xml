@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable
+            name="reservationInfo"
+            type="woowacourse.movie.domain.model.ReservationInfo" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -30,6 +35,7 @@
         android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
+        android:text="@{reservationInfo.title}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_cancel_description"
@@ -45,7 +51,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
+        android:reservationDateTime="@{reservationInfo.reservationDateTime}"
         tools:text="2025.4.1" />
+
         <TextView
             android:id="@+id/tv_reservation_count_info"
             android:layout_width="wrap_content"
@@ -58,6 +66,7 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:reservationCount="@{reservationInfo.reservationCount}"
             tools:text="일반 2명" />
 
         <TextView
@@ -67,7 +76,7 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
-
+            android:seats="@{reservationInfo.seats}"
             app:layout_constraintBottom_toBottomOf="@+id/tv_reservation_count_info"
             app:layout_constraintTop_toTopOf="@+id/tv_reservation_count_info"
             app:layout_constraintStart_toEndOf="@+id/tv_reservation_count_info"
@@ -82,6 +91,7 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:cinemaName="@{reservationInfo.cinema.name}"
             app:layout_constraintBottom_toBottomOf="@+id/tv_reservation_count_info"
             app:layout_constraintTop_toTopOf="@+id/tv_reservation_count_info"
             app:layout_constraintStart_toEndOf="@+id/tv_reservation_seats"
@@ -91,6 +101,7 @@
             tools:text="아주아주아주아주아주ㅏ우자ㅜ아주아주긴 극장" />
 
     <TextView
+        android:totalPrice="@{reservationInfo.totalPrice()}"
         android:id="@+id/tv_reservation_total_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -4,8 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@JvmInline
-value class ReservationCount(
+data class ReservationCount(
     val value: Int = MINIMUM_RESERVATION_COUNT,
 ) : Parcelable {
     init {

@@ -4,17 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.domain.model.ReservationInfo
-import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.view.base.BaseActivity
 import woowacourse.movie.view.extension.getParcelableCompat
 import woowacourse.movie.view.movies.MoviesActivity
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class ReservationResultActivity :
     BaseActivity<ActivityReservationResultBinding>(R.layout.activity_reservation_result),
@@ -51,68 +47,13 @@ class ReservationResultActivity :
     }
 
     override fun showReservationResult(reservationInfo: ReservationInfo) {
-        displayReservationResult(reservationInfo)
-    }
-
-    private fun displayReservationResult(reservationInfo: ReservationInfo) {
+        binding.reservationInfo = reservationInfo
         setupCancelDescription()
-        setupMovieTitle(reservationInfo.title)
-        setupMovieDate(reservationInfo.reservationDateTime)
-        setupReservationCount(reservationInfo.reservationCount.value)
-        setupTotalPrice(reservationInfo.totalPrice())
-        setupSeats()
-        setupCinema()
-    }
-
-    private fun setupSeats() {
-        val tvReservationSeats = findViewById<TextView>(R.id.tv_reservation_seats)
-        tvReservationSeats.text =
-            getString(
-                R.string.seat_split_line,
-                reservationInfo.seats.joinToString(",") { it.toFormattedRow() + it.column.toString() },
-            )
-    }
-
-    private fun setupCinema() {
-        val tvReservationCinema = findViewById<TextView>(R.id.tv_reservation_cinema)
-        tvReservationCinema.text =
-            getString(
-                R.string.cinema,
-                reservationInfo.cinema.name,
-            )
     }
 
     private fun setupCancelDescription() {
-        val tvCancelDescription = findViewById<TextView>(R.id.tv_cancel_description)
-        tvCancelDescription?.text =
+        binding.tvCancelDescription.text =
             getString(R.string.reservation_result_cancel_time_description, CANCELLATION_TIME)
-    }
-
-    private fun setupMovieTitle(title: String?) {
-        val tvMovieTitle = findViewById<TextView>(R.id.tv_movie_title)
-        tvMovieTitle?.text = title
-    }
-
-    private fun setupMovieDate(reservationDateTime: LocalDateTime?) {
-        val tvMovieDate = findViewById<TextView>(R.id.tv_movie_date)
-        tvMovieDate.text =
-            reservationDateTime?.format(
-                DateTimeFormatter.ofPattern(
-                    getString(R.string.reservation_datetime_format),
-                ),
-            )
-    }
-
-    private fun setupReservationCount(reservationCount: Int?) {
-        val tvReservationCountInfo = findViewById<TextView>(R.id.tv_reservation_count_info)
-        tvReservationCountInfo?.text =
-            getString(R.string.reservation_count_info).format(reservationCount)
-    }
-
-    private fun setupTotalPrice(totalPrice: Int?) {
-        val tvTotalPrice = findViewById<TextView>(R.id.tv_reservation_total_price)
-        tvTotalPrice?.text =
-            getString(R.string.reservation_total_price).format(totalPrice)
     }
 
     companion object {
@@ -130,8 +71,4 @@ class ReservationResultActivity :
                 )
             }
     }
-}
-
-private fun Seat.toFormattedRow():String {
-    return (this.row + 65).toChar().toString()
 }
