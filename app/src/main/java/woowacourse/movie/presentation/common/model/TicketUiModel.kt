@@ -3,21 +3,21 @@ package woowacourse.movie.presentation.common.model
 import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import woowacourse.movie.domain.model.cinema.ticket.TicketBundle
+import woowacourse.movie.domain.model.cinema.ticket.Ticket
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Parcelize
-class TicketBundleUiModel(
+class TicketUiModel(
     val title: String,
-    val size: Int,
-    val dateTime: LocalDateTime,
-    val totalPrice: Int,
-    val labels: List<SeatUiModel>,
     val theaterName: String,
+    val dateTime: LocalDateTime,
+    val seats: List<SeatUiModel>,
+    val count: Int,
+    val price: Int,
 ) : Parcelable {
     @IgnoredOnParcel
-    val joinedLabel: String = labels.joinToString { it.toLabel() }
+    val joinedLabel: String = seats.joinToString { it.toLabel() }
 
     fun formatedDateTime(formatPattern: String): String {
         val formatter = DateTimeFormatter.ofPattern(formatPattern)
@@ -25,12 +25,12 @@ class TicketBundleUiModel(
     }
 }
 
-fun TicketBundle.toUiModel(theaterName: String): TicketBundleUiModel =
-    TicketBundleUiModel(
+fun Ticket.toUiModel() =
+    TicketUiModel(
         title,
-        size,
-        dateTime,
-        totalPrice,
-        labels.map { it.toUiModel() },
         theaterName,
+        reservationDateTime,
+        seats.map { it.toUiModel() },
+        count,
+        price,
     )

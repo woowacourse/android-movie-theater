@@ -5,7 +5,7 @@
     <data>
         <variable
             name="ticket"
-            type="woowacourse.movie.presentation.common.model.TicketBundleUiModel" />
+            type="woowacourse.movie.presentation.common.model.TicketUiModel" />
 
         <variable
             name="cancellationTime"
@@ -67,7 +67,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textAlignment="center"
-            android:text="@{String.format(@string/reservation_count_info, ticket.size, ticket.joinedLabel, ticket.theaterName)}" />
+            android:text="@{String.format(@string/reservation_count_info, ticket.count, ticket.joinedLabel, ticket.theaterName)}" />
 
         <TextView
             android:id="@+id/tv_reservation_total_price"
@@ -78,7 +78,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textAlignment="center"
-            android:text="@{String.format(@string/reservation_total_price, ticket.totalPrice)}" />
+            android:text="@{String.format(@string/reservation_total_price, ticket.price)}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -3,7 +3,7 @@ package woowacourse.movie.presentation.home.reservation.seat
 import woowacourse.movie.presentation.common.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.common.model.ScreenUiModel
 import woowacourse.movie.presentation.common.model.SeatUiModel
-import woowacourse.movie.presentation.common.model.TicketBundleUiModel
+import woowacourse.movie.presentation.common.model.TicketUiModel
 
 interface ReservationSeatContract {
     interface Presenter {
@@ -31,7 +31,7 @@ interface ReservationSeatContract {
 
         fun notifyCanPublish(canPublish: Boolean)
 
-        fun notifyPublishedTickets(ticketBundle: TicketBundleUiModel)
+        fun notifyPublishedTickets(ticket: TicketUiModel)
 
         fun notifySeatUpdateFailed(message: String)
     }

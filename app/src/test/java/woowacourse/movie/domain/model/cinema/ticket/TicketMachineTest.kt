@@ -34,17 +34,17 @@ class TicketMachineTest {
 
     @Test
     fun `티켓 출판시 티켓 모음이 올바르게 생성된다`() {
-        val ticketBundle = ticketMachine.publishTickets(fakeReservationInfo)
+        val ticketBundle = ticketMachine.publishTickets(fakeReservationInfo, "선릉 극장")
 
         assertAll(
             { assertThat(ticketBundle.title).isEqualTo(fakeReservationInfo.title) },
-            { assertThat(ticketBundle.size).isEqualTo(seats.size) },
-            { assertThat(ticketBundle.dateTime).isEqualTo(fakeReservationInfo.reservationDateTime) },
+            { assertThat(ticketBundle.count).isEqualTo(seats.size) },
+            { assertThat(ticketBundle.reservationDateTime).isEqualTo(fakeReservationInfo.reservationDateTime) },
             {
                 val expectedTotalPrice = seats.sumOf { policy.calculatePrice(it.type) }
-                assertThat(ticketBundle.totalPrice).isEqualTo(expectedTotalPrice)
+                assertThat(ticketBundle.price).isEqualTo(expectedTotalPrice)
             },
-            { assertThat(ticketBundle.labels).containsExactlyElementsOf(seats) },
+            { assertThat(ticketBundle.seats).containsExactlyElementsOf(seats) },
         )
     }
 }

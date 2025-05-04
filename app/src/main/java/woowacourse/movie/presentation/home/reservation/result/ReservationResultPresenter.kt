@@ -1,12 +1,12 @@
 package woowacourse.movie.presentation.home.reservation.result
 
 import woowacourse.movie.domain.model.cinema.ticket.TicketMachine
-import woowacourse.movie.presentation.common.model.TicketBundleUiModel
+import woowacourse.movie.presentation.common.model.TicketUiModel
 
 class ReservationResultPresenter(
     private val view: ReservationResultContract.View,
 ) : ReservationResultContract.Presenter {
-    override fun fetchDate(ticketBundle: TicketBundleUiModel) {
-        view.showScreen(ticketBundle, TicketMachine.CANCELLATION_TIME)
+    override fun fetchDate(ticket: TicketUiModel) {
+        view.showScreen(ticket, TicketMachine.CANCELLATION_TIME)
     }
 }

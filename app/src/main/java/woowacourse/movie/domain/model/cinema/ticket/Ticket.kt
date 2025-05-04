@@ -5,7 +5,10 @@ import java.time.LocalDateTime
 
 class Ticket(
     val title: String,
+    val theaterName: String,
     val reservationDateTime: LocalDateTime,
-    val seat: Seat,
+    val seats: List<Seat>,
     val price: Int,
-)
+) {
+    val count = seats.count()
+}

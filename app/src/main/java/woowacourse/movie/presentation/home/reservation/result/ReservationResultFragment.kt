@@ -8,7 +8,7 @@ import woowacourse.movie.databinding.FragmentReservationResultBinding
 import woowacourse.movie.presentation.common.base.BaseFragment
 import woowacourse.movie.presentation.common.base.HomeButtonHandler
 import woowacourse.movie.presentation.common.extension.getParcelableCompat
-import woowacourse.movie.presentation.common.model.TicketBundleUiModel
+import woowacourse.movie.presentation.common.model.TicketUiModel
 
 class ReservationResultFragment :
     BaseFragment<FragmentReservationResultBinding>(R.layout.fragment_reservation_result),
@@ -22,25 +22,25 @@ class ReservationResultFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val ticketBundle =
-            arguments.getParcelableCompat<TicketBundleUiModel>(BUNDLE_KEY_TICKET_BUNDLE)
-        presenter.fetchDate(ticketBundle)
+        val ticket =
+            arguments.getParcelableCompat<TicketUiModel>(BUNDLE_KEY_TICKET)
+        presenter.fetchDate(ticket)
     }
 
     override fun showScreen(
-        ticketBundle: TicketBundleUiModel,
+        ticket: TicketUiModel,
         cancellationTime: Int,
     ) {
-        binding.ticket = ticketBundle
+        binding.ticket = ticket
         binding.cancellationTime = cancellationTime
     }
 
     companion object {
-        private const val BUNDLE_KEY_TICKET_BUNDLE = "ticket_bundle"
+        private const val BUNDLE_KEY_TICKET = "ticket"
 
-        fun newInstance(ticketBundle: TicketBundleUiModel): ReservationResultFragment =
+        fun newInstance(ticket: TicketUiModel): ReservationResultFragment =
             ReservationResultFragment().apply {
-                arguments = bundleOf(BUNDLE_KEY_TICKET_BUNDLE to ticketBundle)
+                arguments = bundleOf(BUNDLE_KEY_TICKET to ticket)
             }
     }
 }

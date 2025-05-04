@@ -9,36 +9,28 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.cinema.screen.Seat
-import woowacourse.movie.domain.model.cinema.screen.SeatType
-import woowacourse.movie.domain.model.cinema.ticket.Ticket
-import woowacourse.movie.domain.model.cinema.ticket.TicketBundle
-import woowacourse.movie.presentation.common.model.toUiModel
+import woowacourse.movie.presentation.common.model.SeatTypeUiModel
+import woowacourse.movie.presentation.common.model.SeatUiModel
+import woowacourse.movie.presentation.common.model.TicketUiModel
 import java.time.LocalDateTime
 
 class ReservationResultFragmentTest {
-    private val ticketBundle =
-        TicketBundle
-            .bundleOf(
-                listOf(
-                    Ticket(
-                        "해리 포터와 마법사의 돌",
-                        LocalDateTime.of(2025, 4, 15, 11, 0),
-                        Seat(0, 1, SeatType.B_CLASS),
-                        10_000,
-                    ),
-                    Ticket(
-                        "해리 포터와 마법사의 돌",
-                        LocalDateTime.of(2025, 4, 15, 11, 0),
-                        Seat(0, 2, SeatType.B_CLASS),
-                        10_000,
-                    ),
-                ),
-            ).toUiModel("선릉 극장")
+    private val ticket =
+        TicketUiModel(
+            "해리 포터와 마법사의 돌",
+            "선릉 극장",
+            LocalDateTime.of(2025, 4, 15, 11, 0),
+            listOf(
+                SeatUiModel(0, 1, SeatTypeUiModel.B_CLASS),
+                SeatUiModel(0, 2, SeatTypeUiModel.B_CLASS),
+            ),
+            2,
+            20_000,
+        )
 
     @Before
     fun setUp() {
-        launchFragmentInContainer(bundleOf("ticket_bundle" to ticketBundle)) {
+        launchFragmentInContainer(bundleOf("ticket" to ticket)) {
             ReservationResultFragment()
         }
     }

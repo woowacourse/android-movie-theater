@@ -1,15 +1,15 @@
 package woowacourse.movie.presentation.home.reservation.result
 
-import woowacourse.movie.presentation.common.model.TicketBundleUiModel
+import woowacourse.movie.presentation.common.model.TicketUiModel
 
 interface ReservationResultContract {
     interface Presenter {
-        fun fetchDate(ticketBundle: TicketBundleUiModel)
+        fun fetchDate(ticket: TicketUiModel)
     }
 
     interface View {
         fun showScreen(
-            ticketBundle: TicketBundleUiModel,
+            ticket: TicketUiModel,
             cancellationTime: Int,
         )
     }

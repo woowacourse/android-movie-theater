@@ -13,7 +13,7 @@ import woowacourse.movie.presentation.common.extension.getParcelableCompat
 import woowacourse.movie.presentation.common.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.common.model.ScreenUiModel
 import woowacourse.movie.presentation.common.model.SeatUiModel
-import woowacourse.movie.presentation.common.model.TicketBundleUiModel
+import woowacourse.movie.presentation.common.model.TicketUiModel
 import woowacourse.movie.presentation.home.reservation.result.ReservationResultFragment
 
 class ReservationSeatFragment :
@@ -91,10 +91,10 @@ class ReservationSeatFragment :
         binding.canPublish = canPublish
     }
 
-    override fun notifyPublishedTickets(ticketBundle: TicketBundleUiModel) {
+    override fun notifyPublishedTickets(ticket: TicketUiModel) {
         parentFragmentManager.commit {
             setReorderingAllowed(true)
-            add(R.id.fragment_container_view, ReservationResultFragment.newInstance(ticketBundle))
+            add(R.id.fragment_container_view, ReservationResultFragment.newInstance(ticket))
             addToBackStack(null)
         }
     }

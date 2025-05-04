@@ -1,8 +1,8 @@
 package woowacourse.movie.presentation.home.reservation.seat
 
 import woowacourse.movie.domain.model.cinema.DiceCinemaPricePolicy
+import woowacourse.movie.domain.model.cinema.PricePolicy
 import woowacourse.movie.domain.model.cinema.screen.Screen
-import woowacourse.movie.domain.model.cinema.ticket.TicketBundle
 import woowacourse.movie.domain.model.cinema.ticket.TicketMachine
 import woowacourse.movie.domain.model.reservation.ReservationInfo
 import woowacourse.movie.presentation.common.model.ReservationInfoUiModel
@@ -13,8 +13,9 @@ import woowacourse.movie.presentation.common.model.toUiModel
 
 class ReservationSeatPresenter(
     private val view: ReservationSeatContract.View,
+    policy: PricePolicy = DiceCinemaPricePolicy(),
 ) : ReservationSeatContract.Presenter {
-    private val machine = TicketMachine(DiceCinemaPricePolicy())
+    private val machine = TicketMachine(policy)
     private lateinit var reservationInfo: ReservationInfo
     private lateinit var theaterName: String
 
@@ -48,18 +49,15 @@ class ReservationSeatPresenter(
     }
 
     override fun publishTickets() {
-        val ticketBundle =
-            runCatching {
-                machine.publishTickets(reservationInfo)
-            }.getOrNull()
-
-        ticketBundle?.let {
-            view.notifyPublishedTickets(it.toUiModel(theaterName))
+        runCatching {
+            machine.publishTickets(reservationInfo, theaterName)
+        }.onSuccess {
+            view.notifyPublishedTickets(it.toUiModel())
         }
     }
 
     private fun updateSeatEvent() {
-        view.notifyTotalPrice(reservationInfo.totalPriceOrDefault())
+        view.notifyTotalPrice(machine.calculateTotalPrice(reservationInfo.seats))
         view.notifyCanPublish(reservationInfo.canPublish())
     }
 
@@ -68,8 +66,4 @@ class ReservationSeatPresenter(
             reservationInfo.updateSeats(it.toModel())
         }
     }
-
-    private fun ReservationInfo.totalPriceOrDefault(): Int =
-        runCatching { machine.publishTickets(this).totalPrice }
-            .getOrDefault(TicketBundle.DEFAULT_TOTAL_PRICE)
 }
