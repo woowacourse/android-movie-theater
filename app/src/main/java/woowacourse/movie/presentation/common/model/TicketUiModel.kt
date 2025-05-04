@@ -5,7 +5,6 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import woowacourse.movie.domain.model.cinema.ticket.Ticket
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @Parcelize
 class TicketUiModel(
@@ -18,11 +17,6 @@ class TicketUiModel(
 ) : Parcelable {
     @IgnoredOnParcel
     val joinedLabel: String = seats.joinToString { it.toLabel() }
-
-    fun formatedDateTime(formatPattern: String): String {
-        val formatter = DateTimeFormatter.ofPattern(formatPattern)
-        return dateTime.format(formatter)
-    }
 }
 
 fun Ticket.toUiModel() =
