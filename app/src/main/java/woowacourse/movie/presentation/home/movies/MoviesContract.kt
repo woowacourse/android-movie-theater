@@ -1,0 +1,21 @@
+package woowacourse.movie.presentation.home.movies
+
+import woowacourse.movie.presentation.common.model.MovieUiModel
+import woowacourse.movie.presentation.common.model.TheatersUiModel
+
+interface MoviesContract {
+    interface Presenter {
+        fun fetchData()
+
+        fun availableTheatersAndCount(movieId: Int)
+    }
+
+    interface View {
+        fun showScreen(movies: List<MovieUiModel>)
+
+        fun showAvailableTheatersAndCount(
+            movie: MovieUiModel,
+            times: TheatersUiModel,
+        )
+    }
+}

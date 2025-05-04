@@ -7,7 +7,7 @@
 
         <variable
             name="reservationInfo"
-            type="woowacourse.movie.presentation.model.ReservationInfoUiModel" />
+            type="woowacourse.movie.presentation.common.model.ReservationInfoUiModel" />
 
         <variable
             name="money"

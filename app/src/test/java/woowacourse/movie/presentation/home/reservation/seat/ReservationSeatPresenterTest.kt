@@ -8,13 +8,11 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.cinema.screen.Screen
-import woowacourse.movie.presentation.model.ReservationInfoUiModel
-import woowacourse.movie.presentation.model.ScreenUiModel
-import woowacourse.movie.presentation.model.SeatTypeUiModel
-import woowacourse.movie.presentation.model.SeatUiModel
-import woowacourse.movie.presentation.model.toUiModel
-import woowacourse.movie.presentation.view.home.reservation.seat.ReservationSeatContract
-import woowacourse.movie.presentation.view.home.reservation.seat.ReservationSeatPresenter
+import woowacourse.movie.presentation.common.model.ReservationInfoUiModel
+import woowacourse.movie.presentation.common.model.ScreenUiModel
+import woowacourse.movie.presentation.common.model.SeatTypeUiModel
+import woowacourse.movie.presentation.common.model.SeatUiModel
+import woowacourse.movie.presentation.common.model.toUiModel
 import java.time.LocalDateTime
 
 class ReservationSeatPresenterTest {

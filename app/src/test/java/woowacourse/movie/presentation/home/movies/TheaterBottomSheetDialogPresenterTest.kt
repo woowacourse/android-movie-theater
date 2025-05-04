@@ -7,13 +7,13 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.presentation.model.MovieUiModel
-import woowacourse.movie.presentation.model.PosterUiModel
-import woowacourse.movie.presentation.model.ScreeningPeriodUiModel
-import woowacourse.movie.presentation.model.TheaterUiModel
-import woowacourse.movie.presentation.model.TheatersUiModel
-import woowacourse.movie.presentation.view.home.movies.dialog.TheaterBottomSheetDialogContract
-import woowacourse.movie.presentation.view.home.movies.dialog.TheaterBottomSheetDialogPresenter
+import woowacourse.movie.presentation.common.model.MovieUiModel
+import woowacourse.movie.presentation.common.model.PosterUiModel
+import woowacourse.movie.presentation.common.model.ScreeningPeriodUiModel
+import woowacourse.movie.presentation.common.model.TheaterUiModel
+import woowacourse.movie.presentation.common.model.TheatersUiModel
+import woowacourse.movie.presentation.home.movies.dialog.TheaterBottomSheetDialogContract
+import woowacourse.movie.presentation.home.movies.dialog.TheaterBottomSheetDialogPresenter
 import java.time.LocalDate
 import java.time.LocalDateTime
 

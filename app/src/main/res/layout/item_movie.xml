@@ -7,11 +7,11 @@
 
         <variable
             name="itemMovie"
-            type="woowacourse.movie.presentation.model.MovieUiModel" />
+            type="woowacourse.movie.presentation.common.model.MovieUiModel" />
 
         <variable
             name="onClickListener"
-            type="woowacourse.movie.presentation.view.home.movies.adapter.MovieViewHolder.OnMovieEventListener" />
+            type="woowacourse.movie.presentation.home.movies.adapter.MovieViewHolder.OnMovieEventListener" />
     </data>
 
 

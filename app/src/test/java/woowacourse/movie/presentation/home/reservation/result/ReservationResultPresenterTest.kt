@@ -11,9 +11,7 @@ import woowacourse.movie.domain.model.cinema.screen.Seat
 import woowacourse.movie.domain.model.cinema.screen.SeatType
 import woowacourse.movie.domain.model.cinema.ticket.Ticket
 import woowacourse.movie.domain.model.cinema.ticket.TicketBundle
-import woowacourse.movie.presentation.model.toUiModel
-import woowacourse.movie.presentation.view.home.reservation.result.ReservationResultContract
-import woowacourse.movie.presentation.view.home.reservation.result.ReservationResultPresenter
+import woowacourse.movie.presentation.common.model.toUiModel
 import java.time.LocalDateTime
 
 class ReservationResultPresenterTest {

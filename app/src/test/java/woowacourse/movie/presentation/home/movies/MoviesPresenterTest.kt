@@ -7,8 +7,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.presentation.view.home.movies.MoviesContract
-import woowacourse.movie.presentation.view.home.movies.MoviesPresenter
 
 class MoviesPresenterTest {
     private lateinit var presenter: MoviesContract.Presenter

@@ -9,13 +9,11 @@ import io.mockk.verifySequence
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.movie.ScreeningPeriod
-import woowacourse.movie.presentation.fixture.dummyMovie
-import woowacourse.movie.presentation.model.ScreeningPeriodUiModel
-import woowacourse.movie.presentation.model.TheaterUiModel
-import woowacourse.movie.presentation.model.toModel
-import woowacourse.movie.presentation.model.toUiModel
-import woowacourse.movie.presentation.view.home.reservation.detail.ReservationDetailContract
-import woowacourse.movie.presentation.view.home.reservation.detail.ReservationDetailPresenter
+import woowacourse.movie.presentation.common.fixture.dummyMovie
+import woowacourse.movie.presentation.common.model.ScreeningPeriodUiModel
+import woowacourse.movie.presentation.common.model.TheaterUiModel
+import woowacourse.movie.presentation.common.model.toModel
+import woowacourse.movie.presentation.common.model.toUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 
