@@ -16,7 +16,7 @@ import java.time.LocalDateTime
 class ReservationDetailPresenter(
     val view: ReservationDetailContract.View,
 ) : ReservationDetailContract.Presenter {
-    lateinit var reservationUIModel: ReservationUIModel
+    private lateinit var reservationUIModel: ReservationUIModel
     private var currentTimeTable: List<Int> = emptyList()
     private val movieDao by lazy { MovieDao() }
     var isTimeSelected = false
@@ -59,8 +59,9 @@ class ReservationDetailPresenter(
         if (currentTimeTable.isEmpty()) {
             isTimeSelected = false
         }
-        reservationUIModel.movieDate.updateDate(date)
-        updateReservationState(movieDate = reservationUIModel.movieDate)
+
+        reservationUIModel = reservationUIModel.copy(movieDate = reservationUIModel.movieDate)
+
         view.updateTimeAdapter(
             currentTimeTable.map {
                 ReservationUiFormatter.movieTimeToUI(it)
@@ -69,14 +70,12 @@ class ReservationDetailPresenter(
     }
 
     override fun selectTime(position: Int) {
-        reservationUIModel.movieTime.updateTime(currentTimeTable[position])
-        updateReservationState(movieTime = reservationUIModel.movieTime)
+        reservationUIModel = reservationUIModel.copy(movieTime = reservationUIModel.movieTime)
     }
 
     override fun plusTicketCount() {
-        updateReservationState(
-            ticketCount = TicketCount(reservationUIModel.ticketCount + 1),
-        )
+        reservationUIModel =
+            reservationUIModel.copy(ticketCount = reservationUIModel.ticketCount + 1)
         view.showTicketCount(reservationUIModel.ticketCount)
     }
 
@@ -85,9 +84,8 @@ class ReservationDetailPresenter(
             view.showToast(R.string.reservation_info_minimum_ticket_count)
             return
         }
-        updateReservationState(
-            ticketCount = TicketCount(reservationUIModel.ticketCount - 1),
-        )
+        reservationUIModel =
+            reservationUIModel.copy(ticketCount = reservationUIModel.ticketCount - 1)
         view.showTicketCount(reservationUIModel.ticketCount)
     }
 
@@ -102,9 +100,7 @@ class ReservationDetailPresenter(
     }
 
     fun restoreTicketCount(count: Int) {
-        updateReservationState(
-            ticketCount = TicketCount(count),
-        )
+        reservationUIModel = reservationUIModel.copy(ticketCount = count)
         view.showTicketCount(reservationUIModel.ticketCount)
     }
 

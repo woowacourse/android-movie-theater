@@ -132,7 +132,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="@{String.valueOf(presenter.reservationUIModel.ticketCount)}"
+                    android:text="@{String.valueOf(presenter.currentTicketCount())}"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="@id/btn_reservation_minus_ticket_count"

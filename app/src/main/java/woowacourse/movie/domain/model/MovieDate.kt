@@ -2,7 +2,7 @@ package woowacourse.movie.domain.model
 
 import java.time.LocalDate
 
-class MovieDate(
+data class MovieDate(
     private val startDate: LocalDate,
     private val endDate: LocalDate,
 ) {
@@ -10,10 +10,6 @@ class MovieDate(
         private set
 
     fun getDateTable(currentDate: LocalDate): List<LocalDate> = dateRangeToTable(currentDate)
-
-    fun updateDate(newDate: LocalDate) {
-        value = newDate
-    }
 
     private fun dateRangeToTable(currentDate: LocalDate): List<LocalDate> {
         var minDate: LocalDate = maxOf(startDate, currentDate)
