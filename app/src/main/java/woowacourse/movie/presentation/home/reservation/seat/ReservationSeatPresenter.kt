@@ -60,7 +60,7 @@ class ReservationSeatPresenter(
     }
 
     private fun updateSeatEvent() {
-        view.notifyTotalPrice(machine.calculateTotalPrice(reservationInfo.seats))
+        view.updateTotalPrice(machine.calculateTotalPrice(reservationInfo.seats))
         view.notifyCanPublish(reservationInfo.canPublish())
     }
 

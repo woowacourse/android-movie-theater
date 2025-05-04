@@ -39,7 +39,7 @@ class ReservationDetailPresenter(
             return
         }
 
-        reservationCount += updateCount
+        validUpdateReservationCount(updateCount)
         view.updateReservationCount(reservationCount.value, !reservationCount.isMin())
     }
 
@@ -71,6 +71,10 @@ class ReservationDetailPresenter(
     private fun initializeReservationCount(count: Int) {
         runCatching { ReservationCount(count) }
             .onSuccess { reservationCount = it }
+    }
+
+    private fun validUpdateReservationCount(updateCount: Int) {
+        runCatching { reservationCount += updateCount }
     }
 
     private fun updateAvailableDatesAndTimes(selectedDateTime: LocalDateTime?) {

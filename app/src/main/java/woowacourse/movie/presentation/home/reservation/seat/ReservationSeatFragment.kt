@@ -83,7 +83,7 @@ class ReservationSeatFragment :
         views.updateSeatState(selectedSeat)
     }
 
-    override fun notifyTotalPrice(totalPrice: Int) {
+    override fun updateTotalPrice(totalPrice: Int) {
         binding.money = totalPrice
     }
 

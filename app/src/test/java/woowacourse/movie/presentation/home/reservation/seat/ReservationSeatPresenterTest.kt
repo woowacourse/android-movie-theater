@@ -37,7 +37,7 @@ class ReservationSeatPresenterTest {
     fun `예매 정보를 불러온다`() {
         // Given: view의 setScreen 동작을 설정한다
         every { view.showScreen(any(), any(), any()) } just Runs
-        every { view.notifyTotalPrice(any()) } just Runs
+        every { view.updateTotalPrice(any()) } just Runs
         every { view.notifyCanPublish(any()) } just Runs
 
         // When: presenter가 데이터를 불러온다
@@ -53,7 +53,7 @@ class ReservationSeatPresenterTest {
 
         // Given: 초기 데이터 로딩과 updateSeatStatus 동작을 설정한다
         every { view.showScreen(any(), any(), any()) } just Runs
-        every { view.notifyTotalPrice(any()) } just Runs
+        every { view.updateTotalPrice(any()) } just Runs
         every { view.notifyCanPublish(any()) } just Runs
         every { view.updateSeatState(any()) } just Runs
         presenter.fetchData(fakeReservationInfo, Seats.DEFAULT_SEATS.toUiModel(), ScreenUiModel(emptyList()))
@@ -71,7 +71,7 @@ class ReservationSeatPresenterTest {
 
         // Given: view의 동작을 설정한다
         every { view.showScreen(any(), any(), any()) } just Runs
-        every { view.notifyTotalPrice(any()) } just Runs
+        every { view.updateTotalPrice(any()) } just Runs
         every { view.notifyCanPublish(any()) } just Runs
         every { view.updateSeatState(any()) } just Runs
         every { view.notifySeatUpdateFailed(any()) } just Runs
@@ -92,7 +92,7 @@ class ReservationSeatPresenterTest {
 
         // Given: 초기 데이터 로딩, 좌석 업데이트, 티켓 발행 알림 동작을 설정한다
         every { view.showScreen(any(), any(), any()) } just Runs
-        every { view.notifyTotalPrice(any()) } just Runs
+        every { view.updateTotalPrice(any()) } just Runs
         every { view.notifyCanPublish(any()) } just Runs
         every { view.updateSeatState(any()) } just Runs
         every { view.notifyPublishedTickets(any()) } just Runs
