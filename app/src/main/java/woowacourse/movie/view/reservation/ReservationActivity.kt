@@ -25,7 +25,6 @@ class ReservationActivity :
     ReservationContract.View {
     private val presenter = ReservationPresenter(this)
     private var shouldIgnoreNextSelection = false
-    var count = 0
 
     private val dateSpinnerAdapter: ArrayAdapter<LocalDate> by lazy {
         ArrayAdapter(this, android.R.layout.simple_spinner_item, mutableListOf<LocalDate>()).apply {
@@ -93,7 +92,7 @@ class ReservationActivity :
     }
 
     override fun updateReservationCount(count: Int) {
-        this.count = count
+        binding.count = count
         binding.invalidateAll()
     }
 
@@ -170,7 +169,6 @@ class ReservationActivity :
 
     private fun setMovieInfo(screening: Screening) {
         binding.screening = screening
-        binding.activity = this
     }
 
     private fun setupDateSpinner() {
