@@ -1,12 +1,14 @@
 package woowacourse.movie.presentation.result
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.common.BaseActivity
-import woowacourse.movie.common.IntentKeys
 import woowacourse.movie.common.util.intentSerializable
 import woowacourse.movie.databinding.ActivityBookingResultBinding
+import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.movie.MovieTicket
 
 class BookingResultActivity :
@@ -29,7 +31,7 @@ class BookingResultActivity :
     }
 
     private fun fetchTicketFromIntent(): Boolean {
-        val data = intent.intentSerializable(IntentKeys.TICKET, MovieTicket::class.java)
+        val data = intent.intentSerializable(EXTRA_TICKET, MovieTicket::class.java)
         if (data == null) {
             Toast.makeText(this, TICKET_INTENT_ERROR, Toast.LENGTH_SHORT).show()
             finish()
@@ -40,6 +42,15 @@ class BookingResultActivity :
     }
 
     companion object {
+        fun newIntent(
+            context: Context,
+            ticket: Ticket,
+        ): Intent =
+            Intent(context, BookingResultActivity::class.java).apply {
+                putExtra(EXTRA_TICKET, ticket)
+            }
+
+        private const val EXTRA_TICKET = "ticket"
         private const val CANCELABLE_TIME = 15
         private const val TICKET_INTENT_ERROR = "[ERROR] 예매 정보에 대한 키 값이 올바르지 않습니다."
     }

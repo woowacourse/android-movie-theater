@@ -1,57 +1,42 @@
 package woowacourse.movie.presentation.seats
 
-import woowacourse.movie.domain.model.movie.MovieTicket
+import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
-import woowacourse.movie.domain.model.seat.SelectedSeats
 
 class SeatsPresenter(
     private val view: SeatsContract.View,
-    private val movieTicket: MovieTicket,
+    ticket: Ticket,
 ) : SeatsContract.Presenter {
-    private var selectedSeats = SelectedSeats(movieTicket.headCount)
+    private var _ticket: Ticket = ticket.copy()
+    val ticket: Ticket get() = _ticket
 
-    override fun onViewCreated() {
-        view.initSeats()
-        view.showMovieTitle(movieTicket.movieTitle)
-        view.updateAmount(movieTicket.amount)
-    }
-
-    override fun getSeat(
-        row: Int,
-        col: Int,
-    ): Seat = Seat(row, col)
-
-    override fun getSelectedSeats(): List<Seat> = selectedSeats.value
-
-    override fun isSelectedSeat(seat: Seat): Boolean = selectedSeats.isSelected(seat)
-
-    override fun onSeatClicked(seat: Seat) {
-        runCatching {
-            selectedSeats.updateSelection(seat)
-            view.updateAmount(selectedSeats.totalPrice())
-            view.updateConfirmButtonEnabled(selectedSeats.isFull())
-        }.onFailure {
-            view.showToast(it.message ?: it.stackTraceToString())
+    override fun loadSeatSelect() {
+        view.showMovieInfo(_ticket.movie)
+        view.showTotalPrice(_ticket.totalPrice())
+        view.updateConfirmButtonState(_ticket.isFull())
+        ticket.seats.seats.forEach {
+            view.updateSeatSelectionState(it, true)
         }
     }
 
-    override fun onConfirmClicked() {
-        val movieTicket =
-            MovieTicket(
-                movieTitle = this.movieTicket.movieTitle,
-                theaterName = this.movieTicket.theaterName,
-                showtime = this.movieTicket.showtime,
-                headCount = this.movieTicket.headCount,
-                amount = selectedSeats.totalPrice(),
-                seats = selectedSeats.value,
-            )
-        view.navigateToSummary(movieTicket)
+    override fun selectSeat(seat: Seat) {
+        _ticket =
+            if (_ticket.seats.contains(seat)) {
+                _ticket.copy(seats = _ticket.seats - seat)
+            } else {
+                _ticket.copy(seats = _ticket.seats + seat)
+            }
+        view.updateSeatSelectionState(seat, _ticket.seats.contains(seat))
+        view.updateConfirmButtonState(_ticket.isFull())
+        view.showTotalPrice(_ticket.totalPrice())
     }
 
-    override fun onConfigurationChanged(seats: List<Seat>) {
-        selectedSeats = SelectedSeats(movieTicket.headCount, seats.toMutableSet())
-        view.updateSelectedSeats(selectedSeats.value)
-        view.updateAmount(selectedSeats.totalPrice())
-        view.updateConfirmButtonEnabled(selectedSeats.isFull())
+    override fun finishBooking() {
+        view.navigateToSummary(_ticket)
+    }
+
+    override fun restoreTicket(ticket: Ticket) {
+        _ticket = ticket
+        loadSeatSelect()
     }
 }

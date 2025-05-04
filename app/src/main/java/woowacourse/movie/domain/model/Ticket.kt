@@ -1,7 +1,6 @@
 package woowacourse.movie.domain.model
 
 import woowacourse.movie.domain.model.movie.Movie
-import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.Seats
 import java.io.Serializable
 import java.time.LocalDateTime
@@ -16,5 +15,5 @@ data class Ticket(
 ) : Serializable {
     fun totalPrice(): Int = seats.totalPrice()
 
-    fun contains(seat: Seat): Boolean = seats.contains(seat)
+    fun isFull(): Boolean = seats.size() == headCount.value
 }

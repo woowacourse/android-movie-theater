@@ -1,43 +1,32 @@
 package woowacourse.movie.presentation.seats
 
-import woowacourse.movie.domain.model.movie.MovieTicket
+import woowacourse.movie.domain.model.Ticket
+import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.seat.Seat
 
 interface SeatsContract {
     interface View {
-        fun initSeats()
+        fun showMovieInfo(movie: Movie)
 
-        fun showMovieTitle(title: String)
+        fun showTotalPrice(price: Int)
 
-        fun showConfirmDialog()
+        fun updateSeatSelectionState(
+            seat: Seat,
+            isSelected: Boolean,
+        )
 
-        fun showToast(message: String)
+        fun updateConfirmButtonState(isEnabled: Boolean)
 
-        fun updateAmount(amount: Int)
-
-        fun updateSelectedSeats(seats: List<Seat>)
-
-        fun updateConfirmButtonEnabled(canConfirm: Boolean)
-
-        fun navigateToSummary(ticket: MovieTicket)
+        fun navigateToSummary(ticket: Ticket)
     }
 
     interface Presenter {
-        fun onViewCreated()
+        fun loadSeatSelect()
 
-        fun getSeat(
-            row: Int,
-            col: Int,
-        ): Seat
+        fun selectSeat(seat: Seat)
 
-        fun getSelectedSeats(): List<Seat>
+        fun finishBooking()
 
-        fun isSelectedSeat(seat: Seat): Boolean
-
-        fun onSeatClicked(seat: Seat)
-
-        fun onConfirmClicked()
-
-        fun onConfigurationChanged(seats: List<Seat>)
+        fun restoreTicket(ticket: Ticket)
     }
 }

@@ -10,146 +10,114 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.common.BaseActivity
-import woowacourse.movie.common.IntentKeys
 import woowacourse.movie.common.util.TicketUiFormatter
+import woowacourse.movie.common.util.bundleSerializable
 import woowacourse.movie.common.util.intentSerializable
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.domain.model.movie.MovieTicket
+import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.presentation.result.BookingResultActivity
-import java.io.Serializable
+import woowacourse.movie.presentation.seats.mode.SeatUiModel
+import woowacourse.movie.presentation.seats.mode.toDomain
+import woowacourse.movie.presentation.seats.mode.toUiModel
 
 class SeatsActivity :
     BaseActivity<ActivitySeatsBinding>(R.layout.activity_seats),
     SeatsContract.View {
-    private lateinit var movieTicket: MovieTicket
-    private lateinit var presenter: SeatsContract.Presenter
-    private var confirmDialog: AlertDialog? = null
+    private lateinit var presenter: SeatsPresenter
+    private lateinit var ticket: Ticket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (!fetchTicketFromIntent()) return
-        presenter = SeatsPresenter(this, movieTicket)
-        presenter.onViewCreated()
+        if (!fetchTicket()) return
+        presenter = SeatsPresenter(this, ticket)
+        initView()
+        presenter.loadSeatSelect()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable(EXTRA_TICKET, presenter.ticket)
         super.onSaveInstanceState(outState)
-        val selectedSeats = presenter.getSelectedSeats()
-        outState.putSerializable(SEATS_KEY, selectedSeats as Serializable)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val selectedSeats = savedInstanceState.getSerializable(SEATS_KEY) as List<Seat>
-        presenter.onConfigurationChanged(selectedSeats)
+        val restoredTicket = savedInstanceState.bundleSerializable(EXTRA_TICKET, Ticket::class.java)
+        restoredTicket?.let { presenter.restoreTicket(it) }
     }
 
-    override fun initSeats() {
+    override fun showMovieInfo(movie: Movie) {
+        binding.textviewTitle.text = movie.title
+    }
+
+    override fun showTotalPrice(price: Int) {
+        binding.textviewAmount.text =
+            TicketUiFormatter.formatAmount(getString(R.string.amount_message), price)
+    }
+
+    override fun updateSeatSelectionState(
+        seat: Seat,
+        isSelected: Boolean,
+    ) {
+        val seatTextView: TextView = binding.tablelayoutSeats.findViewWithTag(seat.toUiModel())
+        seatTextView.setBackgroundResource(if (isSelected) R.color.yellow else R.color.white)
+    }
+
+    override fun updateConfirmButtonState(isEnabled: Boolean) {
+        binding.buttonConfirm.isEnabled = isEnabled
+    }
+
+    override fun navigateToSummary(ticket: Ticket) {
+        val intent = BookingResultActivity.newIntent(this, ticket)
+        startActivity(intent)
+    }
+
+    private fun fetchTicket(): Boolean {
+        val data = intent.intentSerializable(EXTRA_TICKET, Ticket::class.java)
+        if (data == null) {
+            Toast.makeText(this, ERROR_INTENT_KEY, Toast.LENGTH_SHORT).show()
+            finish()
+            return false
+        }
+        ticket = data
+        return true
+    }
+
+    private fun initView() {
+        initSeats()
+        initConfirmButton()
+    }
+
+    private fun initSeats() {
         binding.tablelayoutSeats.children
             .filterIsInstance<TableRow>()
-            .forEachIndexed { rowIndex, row ->
-                row.children.filterIsInstance<TextView>().forEachIndexed { colIndex, view ->
-                    val seat = presenter.getSeat(rowIndex, colIndex)
-                    view.tag = seat
-                    setSeatClickListener(view, seat)
+            .forEachIndexed { rowIdx, row ->
+                row.children.filterIsInstance<TextView>().forEachIndexed { colIdx, view ->
+                    view.apply {
+                        val seat = SeatUiModel(rowIdx, colIdx)
+                        tag = seat
+                        text = seat.toString()
+                        setTextColor(getColor(seat.colorResId))
+                        setOnClickListener { presenter.selectSeat(seat.toDomain()) }
+                    }
                 }
             }
     }
 
-    override fun showMovieTitle(title: String) {
-        binding.textviewTitle.text = title
+    private fun initConfirmButton() {
+        binding.buttonConfirm.setOnClickListener { showConfirmAlertDialog() }
     }
 
-    override fun showConfirmDialog() {
-        if (confirmDialog == null) initConfirmDialog()
-        confirmDialog?.show()
-    }
-
-    override fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun updateAmount(amount: Int) {
-        binding.textviewAmount.text =
-            TicketUiFormatter.formatAmount(getString(R.string.amount_message), amount)
-    }
-
-    override fun updateSelectedSeats(seats: List<Seat>) {
-        binding.tablelayoutSeats.children.filterIsInstance<TableRow>().forEach { row ->
-            row.children.filterIsInstance<TextView>().forEach seat@{ seatView ->
-                val seat = seatView.tag as? Seat ?: return@seat
-                seatView.setBackgroundColor(
-                    if (presenter.isSelectedSeat(seat)) {
-                        getColor(R.color.selected_seat)
-                    } else {
-                        getColor(
-                            R.color.white,
-                        )
-                    },
-                )
-            }
-        }
-    }
-
-    override fun updateConfirmButtonEnabled(canConfirm: Boolean) {
-        val confirmTextView = binding.textviewConfirm
-        if (canConfirm) {
-            confirmTextView.setBackgroundColor(getColor(R.color.confirm_activate))
-            confirmTextView.isClickable = true
-            confirmTextView.setOnClickListener {
-                showConfirmDialog()
-            }
-            return
-        }
-        confirmTextView.setBackgroundColor(getColor(R.color.confirm_deactivate))
-        confirmTextView.isClickable = false
-    }
-
-    override fun navigateToSummary(ticket: MovieTicket) {
-        val intent =
-            Intent(this, BookingResultActivity::class.java).apply {
-                putExtra(IntentKeys.TICKET, ticket)
-            }
-        startActivity(intent)
-    }
-
-    private fun setSeatClickListener(
-        view: TextView,
-        seat: Seat,
-    ) {
-        view.setOnClickListener {
-            presenter.onSeatClicked(seat)
-            if (presenter.isSelectedSeat(seat)) {
-                view.setBackgroundColor(getColor(R.color.selected_seat))
-            } else {
-                view.setBackgroundColor(getColor(R.color.white))
-            }
-        }
-    }
-
-    private fun fetchTicketFromIntent(): Boolean {
-        val data = intent.intentSerializable(EXTRA_TICKET, MovieTicket::class.java)
-        if (data == null) {
-            Toast.makeText(this, TICKET_INTENT_ERROR, Toast.LENGTH_SHORT).show()
-            finish()
-            return false
-        }
-        movieTicket = data
-        return true
-    }
-
-    private fun initConfirmDialog() {
-        confirmDialog =
-            AlertDialog
-                .Builder(this)
-                .setTitle(getString(R.string.dialog_title))
-                .setMessage(getString(R.string.dialog_message))
-                .setPositiveButton(getString(R.string.complete)) { _, _ -> presenter.onConfirmClicked() }
-                .setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.dismiss() }
-                .setCancelable(false)
-                .create()
+    private fun showConfirmAlertDialog() {
+        AlertDialog
+            .Builder(this)
+            .setTitle(getString(R.string.dialog_title))
+            .setMessage(getString(R.string.dialog_message))
+            .setPositiveButton(getString(R.string.complete)) { _, _ -> presenter.finishBooking() }
+            .setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.dismiss() }
+            .setCancelable(false)
+            .show()
     }
 
     companion object {
@@ -162,7 +130,6 @@ class SeatsActivity :
             }
 
         private const val EXTRA_TICKET = "ticket"
-        private const val TICKET_INTENT_ERROR = "[ERROR] 예매 정보에 대한 키 값이 올바르지 않습니다."
-        private const val SEATS_KEY = "Seats"
+        private const val ERROR_INTENT_KEY = "[ERROR] 키 값이 올바르지 않습니다."
     }
 }

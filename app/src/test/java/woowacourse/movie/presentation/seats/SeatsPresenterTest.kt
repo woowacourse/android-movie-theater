@@ -29,12 +29,12 @@ class SeatsPresenterTest {
     @Test
     fun `좌석, 영화 제목, 금액이 출력된다`() {
         // When
-        presenter.onViewCreated()
+        presenter.loadSeatSelect()
 
         // Then
         verify { view.initSeats() }
-        verify { view.showMovieTitle(movieTicket.movieTitle) }
-        verify { view.updateAmount(movieTicket.amount) }
+        verify { view.showMovieInfo(movieTicket.movieTitle) }
+        verify { view.showTotalPrice(movieTicket.amount) }
     }
 
     @Test
@@ -43,25 +43,25 @@ class SeatsPresenterTest {
         val seat = Seat(1, 1)
 
         // When
-        presenter.onSeatClicked(seat)
+        presenter.selectSeat(seat)
 
         // Then
         presenter.isSelectedSeat(seat) shouldBe true
-        verify { view.updateAmount(10000) }
+        verify { view.showTotalPrice(10000) }
     }
 
     @Test
     fun `선택한 좌석을 재선택하면 좌석을 제거하고 금액을 갱신한다`() {
         // Given
         val seat = Seat(1, 1)
-        presenter.onSeatClicked(seat)
+        presenter.selectSeat(seat)
 
         // When
-        presenter.onSeatClicked(seat)
+        presenter.selectSeat(seat)
 
         // Then
         presenter.isSelectedSeat(seat) shouldBe false
-        verify { view.updateAmount(0) }
+        verify { view.showTotalPrice(0) }
     }
 
     @Test
@@ -71,8 +71,8 @@ class SeatsPresenterTest {
         val seat2 = Seat(2, 2)
 
         // When
-        presenter.onSeatClicked(seat1)
-        presenter.onSeatClicked(seat2)
+        presenter.selectSeat(seat1)
+        presenter.selectSeat(seat2)
 
         // Then
         presenter.isSelectedSeat(seat2) shouldBe false
@@ -83,10 +83,10 @@ class SeatsPresenterTest {
     fun `예매 버튼을 누르면 티켓을 생성하고 화면을 이동한다`() {
         // Given
         val seat = Seat(1, 1)
-        presenter.onSeatClicked(seat)
+        presenter.selectSeat(seat)
 
         // When
-        presenter.onConfirmClicked()
+        presenter.finishBooking()
 
         // Then
         verify {
