@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.common.BaseActivity
-import woowacourse.movie.common.util.TicketUiFormatter
 import woowacourse.movie.common.util.getSerializableCompat
 import woowacourse.movie.common.util.getSerializableExtraCompat
 import woowacourse.movie.databinding.ActivitySeatsBinding
@@ -43,7 +42,8 @@ class SeatsActivity :
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val restoredTicket = savedInstanceState.getSerializableCompat(EXTRA_TICKET, Ticket::class.java)
+        val restoredTicket =
+            savedInstanceState.getSerializableCompat(EXTRA_TICKET, Ticket::class.java)
         restoredTicket?.let { presenter.restoreTicket(it) }
     }
 
@@ -52,8 +52,7 @@ class SeatsActivity :
     }
 
     override fun showTotalPrice(price: Int) {
-        binding.textviewAmount.text =
-            TicketUiFormatter.formatAmount(getString(R.string.amount_message), price)
+        binding.textviewAmount.text = getString(R.string.amount_message, price)
     }
 
     override fun updateSeatSelectionState(

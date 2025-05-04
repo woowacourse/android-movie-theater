@@ -5,10 +5,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
+import woowacourse.movie.common.StringFormatter
 import woowacourse.movie.common.util.PosterMapper
-import woowacourse.movie.common.util.TicketUiFormatter.formatAmount
-import woowacourse.movie.common.util.TicketUiFormatter.formatDateTime
-import woowacourse.movie.common.util.TicketUiFormatter.formatHeadCount
 import woowacourse.movie.domain.model.HeadCount
 import woowacourse.movie.domain.model.seat.Seats
 import woowacourse.movie.presentation.seats.mode.toUiModel
@@ -27,17 +25,17 @@ fun ImageView.setImageViewResource(resId: Bitmap) {
 
 @BindingAdapter("formattedDateTime")
 fun TextView.setFormattedDateTime(dateTime: LocalDateTime) {
-    text = formatDateTime(dateTime)
+    text = StringFormatter.dateTime(dateTime)
 }
 
 @BindingAdapter("formattedHeadCount")
 fun TextView.setFormattedHeadCount(headCount: HeadCount) {
-    text = formatHeadCount(context.getString(R.string.headCount_message), headCount.value)
+    text = context.getString(R.string.headCount_message, headCount.value)
 }
 
 @BindingAdapter("formattedAmount")
 fun TextView.setFormattedAmount(amount: Int) {
-    text = formatAmount(context.getString(R.string.summary_amount_message), amount)
+    text = context.getString(R.string.summary_amount_message, amount)
 }
 
 @BindingAdapter("seats")

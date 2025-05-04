@@ -18,8 +18,8 @@
     <string name="cancel">취소</string>
     <string name="complete">예매 완료</string>
     <string name="headCount_message">일반 %d명</string>
-    <string name="amount_message">%s원</string>
-    <string name="summary_amount_message">%s원 (현장 결제)</string>
+    <string name="amount_message">%,d원</string>
+    <string name="summary_amount_message">%,d원 (현장 결제)</string>
     <string name="screen_text">SCREEN</string>
     <string name="confirm_text">확인</string>
     <string name="delimiter"> | </string>
