@@ -41,20 +41,4 @@ class MovieScheduleTest {
             { assertThat(result.all { it.isAfter(baseTime) }).isTrue() },
         )
     }
-
-    @Test
-    fun `영화로부터 영화 시간표 생성한다`() {
-        val schedule = MovieSchedule.createDummy(dummyMovie)
-
-        assertAll(
-            { assertThat(dummyMovie.id).isEqualTo(schedule.movieId) },
-            {
-                assertThat(
-                    schedule.times.all {
-                        it.toLocalDate() in dummyMovie.screeningPeriod.getAvailableDates(LocalDate.now())
-                    },
-                ).isTrue()
-            },
-        )
-    }
 }

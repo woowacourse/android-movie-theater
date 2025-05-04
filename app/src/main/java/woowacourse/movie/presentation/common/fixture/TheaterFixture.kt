@@ -4,10 +4,7 @@ import woowacourse.movie.domain.model.cinema.MovieSchedule
 import woowacourse.movie.domain.model.cinema.Theater
 import woowacourse.movie.domain.model.cinema.Theaters
 
-private fun createDummyMovieSchedule(movieId: Int): MovieSchedule =
-    MovieSchedule.createDummy(
-        dummyMovie.copy(id = movieId),
-    )
+private fun createDummyMovieSchedule(movieId: Int): MovieSchedule = createDummySchedule(dummyMovie.copy(id = movieId))
 
 val dummySeolleungTheater =
     Theater(
