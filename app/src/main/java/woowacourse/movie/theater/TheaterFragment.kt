@@ -62,7 +62,20 @@ class TheaterFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        const val KEY_THEATERS = "theatersData"
-        const val KEY_MOVIE = "theatersMovieData"
+        private const val KEY_THEATERS = "theatersData"
+        private const val KEY_MOVIE = "theatersMovieData"
+
+        fun create(
+            movie: MovieUiModel,
+            theaters: ArrayList<TheaterUiModel>,
+        ): TheaterFragment {
+            return TheaterFragment().apply {
+                arguments =
+                    Bundle().apply {
+                        putParcelable(KEY_MOVIE, movie)
+                        putParcelableArrayList(KEY_THEATERS, theaters)
+                    }
+            }
+        }
     }
 }
