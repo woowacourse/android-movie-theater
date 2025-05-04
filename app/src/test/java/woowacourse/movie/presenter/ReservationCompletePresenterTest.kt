@@ -32,13 +32,13 @@ class ReservationCompletePresenterTest {
         every { view.showReservationInfo(capture(reservationInfoSlot)) } just Runs
 
         // when
-        presenter.fetchData { dummyReservationInfo }
+        presenter.fetchData(dummyReservationInfo)
 
         // then
         verify { view.showReservationInfo(any()) }
 
         assertThat(reservationInfoSlot.captured.title).isEqualTo("라라랜드")
         assertThat(reservationInfoSlot.captured.time).isEqualTo("14:00")
-        assertThat(reservationInfoSlot.captured.price).isEqualTo(20000)
+        assertThat(reservationInfoSlot.captured.price).isEqualTo(20_000)
     }
 }

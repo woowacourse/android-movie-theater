@@ -31,7 +31,7 @@ class SeatSelectPresenterTest {
         every { view.showReservationInfo(capture(slot1), capture(slot2)) } just Runs
 
         // when
-        presenter.fetchData { dummyTicket }
+        presenter.fetchData(dummyTicket)
 
         // then
         assertThat(slot1.captured).isEqualTo("라라랜드")
@@ -42,7 +42,7 @@ class SeatSelectPresenterTest {
     fun `티켓 정보를 불러오지 못하면 에러 다이얼로그를 호출한다`() {
         every { view.showErrorDialog() } just Runs
 
-        presenter.fetchData { null }
+        presenter.fetchData(null)
 
         verify { view.showErrorDialog() }
     }
@@ -55,7 +55,7 @@ class SeatSelectPresenterTest {
         every { view.showTotalPrice(any()) } just Runs
         every { view.updateConfirmButtonEnabled(any()) } just Runs
 
-        presenter.fetchData { dummyTicket }
+        presenter.fetchData(dummyTicket)
         presenter.seatSelect("A1")
 
         verify { view.showSelectedSeat("A1") }
@@ -70,7 +70,7 @@ class SeatSelectPresenterTest {
         every { view.showTotalPrice(any()) } just Runs
         every { view.updateConfirmButtonEnabled(any()) } just Runs
 
-        presenter.fetchData { dummyTicket }
+        presenter.fetchData(dummyTicket)
         presenter.seatSelect("A1")
         presenter.seatSelect("A1")
 
@@ -88,7 +88,7 @@ class SeatSelectPresenterTest {
         every { view.updateConfirmButtonEnabled(capture(buttonSlot)) } just Runs
 
         val ticket = dummyTicket.copy(count = 2)
-        presenter.fetchData { ticket }
+        presenter.fetchData(ticket)
         presenter.seatSelect("A1")
         presenter.seatSelect("A2")
 
@@ -106,7 +106,7 @@ class SeatSelectPresenterTest {
         every { view.updateConfirmButtonEnabled(any()) } just Runs
         val ticket = dummyTicket.copy(count = 1)
 
-        presenter.fetchData { ticket }
+        presenter.fetchData(ticket)
         presenter.seatSelect("A1")
         presenter.seatSelect("A2")
 
@@ -117,7 +117,7 @@ class SeatSelectPresenterTest {
     fun `확인 버튼을 누르면 예매 다이얼로그를 보여준다`() {
         every { view.showReservationDialog(any(), any()) } just Runs
 
-        presenter.confirmClicked("예매 확인", "정말 예매하시겠습니까?")
+        presenter.confirmRequested("예매 확인", "정말 예매하시겠습니까?")
 
         verify { view.showReservationDialog(any(), any()) }
     }

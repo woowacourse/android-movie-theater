@@ -13,21 +13,20 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.view.Extras
+import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.TheaterUIModel
-import java.time.LocalDate
 
 class ReservationDetailActivityTest {
     private lateinit var scenario: ActivityScenario<ReservationDetailActivity>
     private val fakeUIModel: TheaterUIModel =
         TheaterUIModel(
             "선릉",
-            Movie(
+            MovieUiModel(
                 "라라랜드",
                 R.drawable.lalaland,
-                LocalDate.of(2025, 4, 1),
-                LocalDate.of(2025, 4, 30),
+                "2025.04.01",
+                "2025.04.30",
                 123,
             ),
             2,

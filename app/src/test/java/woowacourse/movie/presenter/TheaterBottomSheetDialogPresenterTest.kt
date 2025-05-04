@@ -18,7 +18,7 @@ class TheaterBottomSheetDialogPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk()
-        presenter = TheaterPresenter(view)
+        presenter = TheaterPresenter(view, dummyMovie)
     }
 
     @Test
@@ -27,7 +27,7 @@ class TheaterBottomSheetDialogPresenterTest {
         every { view.showTheaters(any()) } just Runs
 
         // When
-        presenter.fetchTheaters(dummyMovie)
+        presenter.fetchTheaters()
 
         // Then
         verify { view.showTheaters(any()) }
