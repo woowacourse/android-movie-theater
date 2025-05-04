@@ -1,4 +1,4 @@
-package woowacourse.movie.view.home.movies.viewholder
+package woowacourse.movie.view.home.theaters.viewholder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.TheaterItemBinding
 import woowacourse.movie.domain.model.theater.Theater
-import woowacourse.movie.view.home.movies.bottomsheet.TheaterListEventHandler
+import woowacourse.movie.view.home.theaters.TheaterListEventHandler
 
 class TheaterViewHolder private constructor(
     private val binding: TheaterItemBinding,

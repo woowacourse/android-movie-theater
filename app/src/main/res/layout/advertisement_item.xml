@@ -5,30 +5,27 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-            name="model"
-            type="woowacourse.movie.view.home.movies.model.UiModel.AdvertiseUiModel" />
+            name="advertisement"
+            type="woowacourse.movie.view.home.model.UiModel.AdvertiseUiModel" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="96dp">
-
-    <ImageView
-        android:id="@+id/img_ad"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        imageFromName="@{model.imgResource}"
-        tools:src="@drawable/ad"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        android:layout_height="96dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/img_ad"
+            imageFromName="@{advertisement.imgResource}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ad" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
-
-

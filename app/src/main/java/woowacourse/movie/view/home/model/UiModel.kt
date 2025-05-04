@@ -1,9 +1,9 @@
-package woowacourse.movie.view.home.movies.model
+package woowacourse.movie.view.home.model
 
 import woowacourse.movie.domain.model.ad.Advertisement
 import woowacourse.movie.domain.model.movies.Movie
-import woowacourse.movie.view.StringFormatter
-import woowacourse.movie.view.home.movies.model.UiModel.MovieUiModel
+import woowacourse.movie.view.home.model.UiModel.MovieUiModel
+import woowacourse.movie.view.util.StringFormatter
 
 sealed interface UiModel {
     data class MovieUiModel(

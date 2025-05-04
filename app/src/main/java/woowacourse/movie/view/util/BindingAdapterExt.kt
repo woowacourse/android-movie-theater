@@ -1,8 +1,7 @@
-package woowacourse.movie.view.ext.bindingadapter
+package woowacourse.movie.view.util
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import woowacourse.movie.view.ext.toDrawableResourceId
 
 @BindingAdapter("imageFromName")
 fun ImageView.setImageFromName(name: String) {

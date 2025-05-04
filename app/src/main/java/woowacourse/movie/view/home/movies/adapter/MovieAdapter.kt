@@ -5,10 +5,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.view.home.model.UiModel
+import woowacourse.movie.view.home.model.UiModel.AdvertiseUiModel
+import woowacourse.movie.view.home.model.UiModel.MovieUiModel
 import woowacourse.movie.view.home.movies.MovieListEventHandler
-import woowacourse.movie.view.home.movies.model.UiModel
-import woowacourse.movie.view.home.movies.model.UiModel.AdvertiseUiModel
-import woowacourse.movie.view.home.movies.model.UiModel.MovieUiModel
 import woowacourse.movie.view.home.movies.viewholder.AdvertiseViewHolder
 import woowacourse.movie.view.home.movies.viewholder.MovieViewHolder
 

@@ -12,7 +12,7 @@ import woowacourse.movie.domain.fixture.harryPotter1MoviesFixture
 import woowacourse.movie.domain.model.booking.PeopleCount
 import woowacourse.movie.view.home.booking.BookingContract
 import woowacourse.movie.view.home.booking.BookingPresenter
-import woowacourse.movie.view.home.movies.model.ScreeningInfo
+import woowacourse.movie.view.home.model.ScreeningInfo
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

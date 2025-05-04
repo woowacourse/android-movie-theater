@@ -1,8 +1,8 @@
-package woowacourse.movie.view.home.movies.bottomsheet
+package woowacourse.movie.view.home.theaters
 
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.domain.model.theater.Theaters
-import woowacourse.movie.view.home.movies.model.ScreeningInfo
+import woowacourse.movie.view.home.model.ScreeningInfo
 
 interface TheaterListContract {
     interface View {

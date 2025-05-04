@@ -1,4 +1,4 @@
-package woowacourse.movie.view.home.movies.bottomsheet
+package woowacourse.movie.view.home.theaters
 
 import woowacourse.movie.domain.model.theater.Theater
 

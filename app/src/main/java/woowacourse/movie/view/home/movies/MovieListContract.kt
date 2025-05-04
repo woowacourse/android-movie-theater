@@ -1,6 +1,6 @@
 package woowacourse.movie.view.home.movies
 
-import woowacourse.movie.view.home.movies.model.UiModel
+import woowacourse.movie.view.home.model.UiModel
 
 interface MovieListContract {
     interface View {

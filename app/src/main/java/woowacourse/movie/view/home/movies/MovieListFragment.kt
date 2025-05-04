@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.databinding.FragmentMovieListBinding
+import woowacourse.movie.view.home.model.UiModel
 import woowacourse.movie.view.home.movies.adapter.MovieAdapter
-import woowacourse.movie.view.home.movies.bottomsheet.TheaterBottomSheet
-import woowacourse.movie.view.home.movies.model.UiModel
+import woowacourse.movie.view.home.theaters.TheaterBottomSheet
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContract.View, MovieListEventHandler {
     private var _binding: FragmentMovieListBinding? = null

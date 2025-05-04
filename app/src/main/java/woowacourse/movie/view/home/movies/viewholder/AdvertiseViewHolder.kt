@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.AdvertisementItemBinding
-import woowacourse.movie.view.home.movies.model.UiModel.AdvertiseUiModel
+import woowacourse.movie.view.home.model.UiModel.AdvertiseUiModel
 
 class AdvertiseViewHolder private constructor(
     private val binding: AdvertisementItemBinding,
@@ -14,6 +14,6 @@ class AdvertiseViewHolder private constructor(
     )
 
     fun bind(item: AdvertiseUiModel) {
-        binding.model = item
+        binding.advertisement = item
     }
 }

@@ -1,4 +1,4 @@
-package woowacourse.movie.view.home.movies.bottomsheet
+package woowacourse.movie.view.home.theaters
 
 import android.os.Bundle
 import android.view.View
@@ -8,10 +8,10 @@ import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetBinding
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.domain.model.theater.Theaters
-import woowacourse.movie.view.ext.showToast
 import woowacourse.movie.view.home.booking.BookingActivity
-import woowacourse.movie.view.home.movies.adapter.TheaterAdapter
-import woowacourse.movie.view.home.movies.model.ScreeningInfo
+import woowacourse.movie.view.home.model.ScreeningInfo
+import woowacourse.movie.view.home.theaters.adapter.TheaterAdapter
+import woowacourse.movie.view.util.showToast
 
 class TheaterBottomSheet :
     BottomSheetDialogFragment(R.layout.fragment_theater_bottom_sheet),

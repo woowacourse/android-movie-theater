@@ -15,9 +15,9 @@ import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.MainActivity
-import woowacourse.movie.view.StringFormatter
-import woowacourse.movie.view.ext.getSerializableCompat
-import woowacourse.movie.view.ext.showToast
+import woowacourse.movie.view.util.StringFormatter
+import woowacourse.movie.view.util.getSerializableCompat
+import woowacourse.movie.view.util.showToast
 import java.time.LocalDate
 import java.time.LocalTime
 

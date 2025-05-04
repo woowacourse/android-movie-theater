@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.MovieItemBinding
+import woowacourse.movie.view.home.model.UiModel.MovieUiModel
 import woowacourse.movie.view.home.movies.MovieListEventHandler
-import woowacourse.movie.view.home.movies.model.UiModel.MovieUiModel
 
 class MovieViewHolder private constructor(
     private val binding: MovieItemBinding,

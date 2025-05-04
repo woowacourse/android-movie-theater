@@ -19,12 +19,12 @@ import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.booking.Booking
 import woowacourse.movie.domain.model.booking.PeopleCount
 import woowacourse.movie.domain.model.movies.Movie
-import woowacourse.movie.view.StringFormatter
-import woowacourse.movie.view.ext.getSerializableCompat
-import woowacourse.movie.view.ext.showToast
-import woowacourse.movie.view.ext.toDrawableResourceId
-import woowacourse.movie.view.home.movies.model.ScreeningInfo
+import woowacourse.movie.view.home.model.ScreeningInfo
 import woowacourse.movie.view.home.seat.SeatActivity
+import woowacourse.movie.view.util.StringFormatter
+import woowacourse.movie.view.util.getSerializableCompat
+import woowacourse.movie.view.util.showToast
+import woowacourse.movie.view.util.toDrawableResourceId
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

@@ -11,7 +11,7 @@
 
         <variable
             name="handler"
-            type="woowacourse.movie.view.home.movies.bottomsheet.TheaterListEventHandler" />
+            type="woowacourse.movie.view.home.theaters.TheaterListEventHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

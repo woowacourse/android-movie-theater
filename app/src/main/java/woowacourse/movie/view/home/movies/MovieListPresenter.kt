@@ -2,8 +2,8 @@ package woowacourse.movie.view.home.movies
 
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.domain.model.ad.Advertisement
-import woowacourse.movie.view.home.movies.model.UiModel
-import woowacourse.movie.view.home.movies.model.toUiModel
+import woowacourse.movie.view.home.model.UiModel
+import woowacourse.movie.view.home.model.toUiModel
 
 class MovieListPresenter(
     private val view: MovieListContract.View,

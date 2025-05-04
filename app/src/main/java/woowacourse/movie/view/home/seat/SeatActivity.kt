@@ -17,10 +17,10 @@ import woowacourse.movie.domain.model.booking.Booking
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.Seats
 import woowacourse.movie.domain.model.ticket.Ticket
-import woowacourse.movie.view.StringFormatter
-import woowacourse.movie.view.ext.getSerializableCompat
-import woowacourse.movie.view.ext.showToast
 import woowacourse.movie.view.home.complete.BookingCompleteActivity
+import woowacourse.movie.view.util.StringFormatter
+import woowacourse.movie.view.util.getSerializableCompat
+import woowacourse.movie.view.util.showToast
 
 class SeatActivity : AppCompatActivity(), SeatContract.View {
     private lateinit var binding: ActivitySeatBinding

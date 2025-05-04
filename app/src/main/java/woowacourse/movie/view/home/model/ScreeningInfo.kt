@@ -1,4 +1,4 @@
-package woowacourse.movie.view.home.movies.model
+package woowacourse.movie.view.home.model
 
 import java.io.Serializable
 import java.time.LocalDate

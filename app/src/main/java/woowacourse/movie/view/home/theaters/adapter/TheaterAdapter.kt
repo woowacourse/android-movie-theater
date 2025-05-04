@@ -1,4 +1,4 @@
-package woowacourse.movie.view.home.movies.adapter
+package woowacourse.movie.view.home.theaters.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.domain.model.theater.Theaters
-import woowacourse.movie.view.home.movies.bottomsheet.TheaterListEventHandler
-import woowacourse.movie.view.home.movies.viewholder.TheaterViewHolder
+import woowacourse.movie.view.home.theaters.TheaterListEventHandler
+import woowacourse.movie.view.home.theaters.viewholder.TheaterViewHolder
 
 class TheaterAdapter(
     private val movieId: Int,
