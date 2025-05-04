@@ -108,6 +108,24 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
             .show()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable(KEY_SEATS, presenter.seats)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val seats: Seats =
+            savedInstanceState.getSerializableCompat(KEY_SEATS) ?: run {
+                showToast(getString(R.string.text_error))
+                finish()
+                return
+            }
+        seats.item.forEach { seat ->
+            presenter.changeSeat(seat)
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -121,6 +139,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
 
     companion object {
         const val KEY_BOOKING = "BOOKING"
+        private const val KEY_SEATS = "SEATS"
 
         fun newIntent(
             context: Context,

@@ -9,7 +9,7 @@ import woowacourse.movie.domain.model.ticket.Ticket
 
 class SeatPresenter(
     private val view: SeatContract.View,
-    private val seats: Seats,
+    val seats: Seats,
     private val booking: Booking,
 ) : SeatContract.Presenter {
     init {
