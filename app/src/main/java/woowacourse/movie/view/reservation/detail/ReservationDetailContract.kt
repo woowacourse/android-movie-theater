@@ -2,17 +2,12 @@ package woowacourse.movie.view.reservation.detail
 
 import woowacourse.movie.domain.model.MovieTicket
 import woowacourse.movie.domain.model.TheaterUIModel
+import woowacourse.movie.view.model.MovieUiModel
 import java.time.LocalDate
 
 interface ReservationDetailContract {
     interface View {
-        fun showMovieInfo(
-            posterResId: Int,
-            title: String,
-            startDate: String,
-            endDate: String,
-            runningTime: Int,
-        )
+        fun showMovieInfo(movie: MovieUiModel)
 
         fun showErrorDialog()
 
@@ -31,7 +26,7 @@ interface ReservationDetailContract {
     }
 
     interface Presenter {
-        fun fetchData(getMovie: () -> TheaterUIModel?)
+        fun fetchData(theater: TheaterUIModel)
 
         fun initDateAdapter()
 

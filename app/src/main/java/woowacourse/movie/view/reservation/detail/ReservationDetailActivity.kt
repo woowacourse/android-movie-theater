@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
@@ -19,6 +18,7 @@ import woowacourse.movie.domain.model.MovieTicket
 import woowacourse.movie.domain.model.TheaterUIModel
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.getParcelableExtraCompat
+import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.movie.MoviesActivity
 import woowacourse.movie.view.reservation.seat.SeatSelectActivity
 import java.time.LocalDate
@@ -26,6 +26,7 @@ import java.time.LocalDate
 class ReservationDetailActivity :
     AppCompatActivity(),
     ReservationDetailContract.View {
+    private val spinnerLayout = layout.support_simple_spinner_dropdown_item
     private lateinit var binding: ActivityReservationBinding
     private val reservationDialog by lazy { ReservationDetailDialog() }
     private val presenter: ReservationDetailPresenter by lazy { ReservationDetailPresenter(this) }
@@ -41,9 +42,11 @@ class ReservationDetailActivity :
             insets
         }
 
-        presenter.fetchData {
+        val theater =
             intent?.getParcelableExtraCompat<TheaterUIModel>(Extras.TheaterData.THEATER_UI_MODEL_KEY)
-        }
+
+        presenter.fetchData()
+
         setupButtonClickListener()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -52,14 +55,8 @@ class ReservationDetailActivity :
         setupCompleteButtonClick()
     }
 
-    override fun showMovieInfo(
-        posterResId: Int,
-        title: String,
-        startDate: String,
-        endDate: String,
-        runningTime: Int,
-    ) {
-        setupMovieReservationInfo(posterResId, title, startDate, endDate, runningTime)
+    override fun showMovieInfo(movie: MovieUiModel) {
+        setupMovieReservationInfo(movie)
         presenter.initDateAdapter()
     }
 
@@ -87,7 +84,7 @@ class ReservationDetailActivity :
         val dateAdapter =
             ArrayAdapter(
                 this,
-                layout.support_simple_spinner_dropdown_item,
+                spinnerLayout,
                 duration,
             )
 
@@ -115,7 +112,7 @@ class ReservationDetailActivity :
         val timeAdapter =
             ArrayAdapter(
                 this,
-                layout.support_simple_spinner_dropdown_item,
+                spinnerLayout,
                 times,
             )
 
@@ -139,27 +136,13 @@ class ReservationDetailActivity :
         }
     }
 
-    private fun setupMovieReservationInfo(
-        posterResId: Int,
-        title: String,
-        startDate: String,
-        endDate: String,
-        runningTime: Int,
-    ) {
-        val poster =
-            AppCompatResources.getDrawable(
-                this,
-                posterResId,
-            )
-        binding.ivReservationPoster.setImageDrawable(poster)
-
-        binding.tvReservationTitle.text = title
-
+    private fun setupMovieReservationInfo(movie: MovieUiModel) {
+        binding.ivReservationPoster.setImageResource(movie.poster)
+        binding.tvReservationTitle.text = movie.name
         binding.tvReservationScreeningDate.text =
-            resources.getString(R.string.movie_screening_date, startDate, endDate)
-
+            resources.getString(R.string.movie_screening_date, movie.startDate, movie.endDate)
         binding.tvReservationRunningTime.text =
-            getString(R.string.movie_running_time).format(runningTime)
+            getString(R.string.movie_running_time).format(movie.runningTime)
     }
 
     private fun setupCompleteButtonClick() {
