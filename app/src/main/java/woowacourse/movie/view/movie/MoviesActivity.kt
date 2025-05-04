@@ -15,9 +15,6 @@ import woowacourse.movie.view.SettingFragment
 
 class MoviesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMoviesBinding
-    private val movieListFragment: ReservationListFragment by lazy { ReservationListFragment() }
-    private val moviesFragment: MoviesFragment by lazy { MoviesFragment() }
-    private val settingFragment: SettingFragment by lazy { SettingFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +43,9 @@ class MoviesActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             val fragment =
                 when (it.itemId) {
-                    R.id.fragment_movies -> moviesFragment
-                    R.id.fragment_list -> movieListFragment
-                    R.id.fragment_setting -> settingFragment
+                    R.id.fragment_movies -> getFragmentByTag(MoviesFragment::class.java.name)
+                    R.id.fragment_list -> getFragmentByTag(ReservationListFragment::class.java.name)
+                    R.id.fragment_setting -> getFragmentByTag(SettingFragment::class.java.name)
                     else -> throw IllegalArgumentException(ERROR_INVALID_FRAGMENT)
                 }
             replaceFragment(fragment)
@@ -56,10 +53,30 @@ class MoviesActivity : AppCompatActivity() {
         }
     }
 
+    private fun getFragmentByTag(tag: String): Fragment =
+        supportFragmentManager.findFragmentByTag(tag)
+            ?: when (tag) {
+                MoviesFragment::class.java.name -> MoviesFragment()
+                ReservationListFragment::class.java.name -> ReservationListFragment()
+                SettingFragment::class.java.name -> SettingFragment()
+                else -> throw IllegalArgumentException(ERROR_INVALID_FRAGMENT)
+            }
+
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.fcv_main, fragment)
+
+            supportFragmentManager.fragments.forEach {
+                if (it != fragment) {
+                    hide(it)
+                }
+            }
+
+            if (!fragment.isAdded) {
+                add(R.id.fcv_main, fragment, fragment::class.java.name)
+            } else {
+                show(fragment)
+            }
         }
     }
 
