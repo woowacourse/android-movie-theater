@@ -1,6 +1,5 @@
 package woowacourse.movie.view.home.booking
 
-import AdapterItemSelectedListener
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -30,7 +29,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class BookingActivity : AppCompatActivity(), BookingContract.View {
+class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventHandler {
     private lateinit var presenter: BookingContract.Presenter
     private lateinit var binding: ActivityBookingBinding
 
@@ -38,6 +37,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking)
+        binding.handler = this
 
         val screeningInfo: ScreeningInfo =
             intent.extras?.getSerializableCompat(KEY_SCREENING) ?: run {
@@ -59,8 +59,23 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         presenter.loadMovieDetail()
+    }
 
-        initButtonListener()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putInt(KEY_PEOPLE_COUNT, binding.tvPeopleCount.text.toString().toInt())
+        outState.putInt(KEY_SELECTED_TIME_POSITION, binding.spTime.selectedItemPosition)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        with(savedInstanceState) {
+            presenter.restorePeopleCount(getInt(KEY_PEOPLE_COUNT))
+            val savedTimePosition = getInt(KEY_SELECTED_TIME_POSITION)
+            binding.spTime.setSelection(savedTimePosition)
+        }
     }
 
     override fun showMovieDetail(
@@ -145,22 +160,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
             getString(R.string.text_running_time_ㅡminute_unit).format(runningTime)
     }
 
-    private fun initButtonListener() {
-        with(binding) {
-            btnIncrease.setOnClickListener { presenter.increasePeopleCount(MAX_SEAT) }
-            btnDecrease.setOnClickListener { presenter.decreasePeopleCount() }
-
-            btnBookingComplete.setOnClickListener {
-                presenter.loadBooking(
-                    title = tvTitle.text.toString(),
-                    bookingDate = spDate.selectedItem.toString(),
-                    bookingTime = spTime.selectedItem.toString(),
-                    peopleCount = tvPeopleCount.text.toString(),
-                )
-            }
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -172,20 +171,22 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        outState.putInt(KEY_PEOPLE_COUNT, binding.tvPeopleCount.text.toString().toInt())
-        outState.putInt(KEY_SELECTED_TIME_POSITION, binding.spTime.selectedItemPosition)
+    override fun onIncreasePeopleCount() {
+        presenter.increasePeopleCount(MAX_SEAT)
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
+    override fun onDecreasePeopleCount() {
+        presenter.decreasePeopleCount()
+    }
 
-        with(savedInstanceState) {
-            presenter.restorePeopleCount(getInt(KEY_PEOPLE_COUNT))
-            val savedTimePosition = getInt(KEY_SELECTED_TIME_POSITION)
-            binding.spTime.setSelection(savedTimePosition)
+    override fun onBookingComplete() {
+        with(binding) {
+            presenter.loadBooking(
+                title = tvTitle.text.toString(),
+                bookingDate = spDate.selectedItem.toString(),
+                bookingTime = spTime.selectedItem.toString(),
+                peopleCount = tvPeopleCount.text.toString(),
+            )
         }
     }
 

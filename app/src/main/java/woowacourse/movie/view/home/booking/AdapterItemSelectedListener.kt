@@ -1,3 +1,5 @@
+package woowacourse.movie.view.home.booking
+
 import android.view.View
 import android.widget.AdapterView
 
