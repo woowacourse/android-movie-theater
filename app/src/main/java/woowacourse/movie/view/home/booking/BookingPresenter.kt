@@ -2,7 +2,6 @@ package woowacourse.movie.view.home.booking
 
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.domain.model.booking.Booking
-import woowacourse.movie.domain.model.booking.PeopleCount
 import woowacourse.movie.domain.model.booking.ScreeningDate
 import woowacourse.movie.domain.model.booking.ScreeningTime
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
@@ -11,24 +10,30 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class BookingPresenter private constructor(
+class BookingPresenter(
     private val view: BookingContract.View,
     private val movies: MovieStore,
-    private var count: PeopleCount,
     private val screeningInfo: ScreeningInfo,
     private val initialTime: LocalDateTime = LocalDateTime.now(),
 ) : BookingContract.Presenter {
-    init {
+    private var booking = Booking.initialize(screeningInfo.theaterName)
+    private val screeningDate =
+        ScreeningDate(
+            screeningInfo.screeningDate(),
+        ).bookingDates(initialTime.toLocalDate())
+
+    private var availableScreeningTimes: List<LocalTime> = emptyList()
+
+    override fun loadMovieDetail() {
+        val movie = movies[screeningInfo.movieId]
+        booking = booking.modifyMovieTitle(movie.title)
+        view.showMovieDetail(movie.toUiModel(), screeningInfo.screening)
+        loadScreening()
         loadPeopleCount()
     }
 
-    override fun loadMovieDetail() {
-        view.showMovieDetail(movies[screeningInfo.movieId].toUiModel(), screeningInfo.screening)
-        loadScreening()
-    }
-
     override fun loadPeopleCount() {
-        view.showPeopleCount(count.value)
+        view.showPeopleCount(booking.count.value)
     }
 
     override fun loadScreeningTime(
@@ -36,58 +41,56 @@ class BookingPresenter private constructor(
         now: LocalDateTime,
     ) {
         val timeOnSelectedDate = screeningInfo.screeningTime(selectedDate)
-        val availableTimes =
+        availableScreeningTimes =
             ScreeningTime(now, timeOnSelectedDate)
                 .getAvailableScreeningTimes(selectedDate)
 
-        if (availableTimes.isEmpty()) {
+        if (availableScreeningTimes.isEmpty()) {
             return view.guideNoBookingTime()
         }
-        view.showScreeningTime(availableTimes)
+        booking = booking.modifyBookingTime(availableScreeningTimes.first())
+        view.showScreeningTime(availableScreeningTimes)
     }
 
     override fun decreasePeopleCount() {
-        count = count.decrease()
-        view.showPeopleCount(count.value)
+        booking = booking.decreasePeopleCount()
+        loadPeopleCount()
     }
 
     override fun increasePeopleCount(limit: Int) {
-        count = count.increase(limit)
-        view.showPeopleCount(count.value)
+        booking = booking.increasePeopleCount(limit)
+        loadPeopleCount()
     }
 
-    override fun restorePeopleCount(savedCount: Int) {
-        count = PeopleCount(savedCount)
-        view.showPeopleCount(count.value)
-    }
-
-    override fun loadBooking(
-        title: String,
-        bookingDate: String,
-        bookingTime: String,
-        count: String,
+    override fun restoreSavedData(
+        savedDate: Int,
+        savedTime: Int,
+        savedCount: Int,
     ) {
-        val booking =
-            Booking(
-                title = title,
-                theaterName = screeningInfo.theaterName,
-                bookingDate = LocalDate.parse(bookingDate),
-                bookingTime = LocalTime.parse(bookingTime),
-                count = PeopleCount(count.toInt()),
+        val selectedDate = screeningDate[savedDate]
+        val selectedTime = availableScreeningTimes[savedTime]
+
+        booking =
+            booking.restore(
+                selectedDate,
+                selectedTime,
+                savedCount,
             )
 
+        loadPeopleCount()
+    }
+
+    override fun loadBooking() {
         view.moveToBookingComplete(booking)
     }
 
     private fun loadScreening() {
-        val screeningDate = screeningInfo.screening.map { it.toLocalDate() }
+        val startDate = screeningDate.first()
 
-        val screeningBookingDates: List<LocalDate> =
-            ScreeningDate(screeningDate)
-                .bookingDates(initialTime.toLocalDate())
+        view.showScreeningDate(screeningDate)
+        booking = booking.modifyBookingDate(startDate)
 
-        view.showScreeningDate(screeningBookingDates)
-        loadScreeningTime(screeningBookingDates.first(), initialTime)
+        loadScreeningTime(startDate, initialTime)
     }
 
     companion object {
@@ -98,7 +101,6 @@ class BookingPresenter private constructor(
             return BookingPresenter(
                 view,
                 MovieStore(),
-                PeopleCount(),
                 screeningInfo,
             )
         }

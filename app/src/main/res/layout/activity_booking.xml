@@ -168,6 +168,7 @@
 
         <Button
             android:id="@+id/btn_booking_complete"
+            android:onClick="@{() -> eventHandler.booking()}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"

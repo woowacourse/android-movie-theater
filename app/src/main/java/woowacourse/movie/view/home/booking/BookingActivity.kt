@@ -52,8 +52,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         presenter.loadMovieDetail()
-
-        initButtonListener()
     }
 
     override fun showMovieDetail(
@@ -104,19 +102,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         startActivity(intent)
     }
 
-    private fun initButtonListener() {
-        with(binding) {
-            btnBookingComplete.setOnClickListener {
-                presenter.loadBooking(
-                    title = tvTitle.text.toString(),
-                    bookingDate = spDate.selectedItem.toString(),
-                    bookingTime = spTime.selectedItem.toString(),
-                    peopleCount = tvPeopleCount.text.toString(),
-                )
-            }
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -133,15 +118,23 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
         outState.putInt(KEY_PEOPLE_COUNT, binding.tvPeopleCount.text.toString().toInt())
         outState.putInt(KEY_SELECTED_TIME_POSITION, binding.spTime.selectedItemPosition)
+        outState.putInt(KEY_SELECTED_DATE_POSITION, binding.spDate.selectedItemPosition)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
         with(savedInstanceState) {
-            presenter.restorePeopleCount(getInt(KEY_PEOPLE_COUNT))
+            val savedDatePosition = getInt(KEY_SELECTED_DATE_POSITION)
             val savedTimePosition = getInt(KEY_SELECTED_TIME_POSITION)
-            binding.spTime.setSelection(savedTimePosition)
+            val savedPeopleCount = getInt(KEY_PEOPLE_COUNT)
+
+            presenter.restoreSavedData(
+                savedDatePosition,
+                savedTimePosition,
+                savedPeopleCount,
+            )
+            binding.spTime.setSelection(getInt(KEY_SELECTED_TIME_POSITION))
         }
     }
 
@@ -150,6 +143,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
 
         const val MAX_SEAT = 20
 
+        private const val KEY_SELECTED_DATE_POSITION = "SELECTED_DATE_POSITION"
         private const val KEY_SELECTED_TIME_POSITION = "SELECTED_TIME_POSITION"
         private const val KEY_PEOPLE_COUNT = "SAVED_PEOPLE_COUNT"
 

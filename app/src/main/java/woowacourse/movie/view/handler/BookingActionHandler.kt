@@ -13,4 +13,8 @@ class BookingActionHandler(
     fun decrease() {
         presenter.decreasePeopleCount()
     }
+
+    fun booking() {
+        presenter.loadBooking()
+    }
 }

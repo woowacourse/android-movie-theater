@@ -34,17 +34,16 @@ interface BookingContract {
             now: LocalDateTime,
         )
 
-        fun loadBooking(
-            title: String,
-            bookingDate: String,
-            bookingTime: String,
-            peopleCount: String,
-        )
+        fun loadBooking()
 
         fun decreasePeopleCount()
 
         fun increasePeopleCount(limit: Int)
 
-        fun restorePeopleCount(savedCount: Int)
+        fun restoreSavedData(
+            savedDate: Int,
+            savedTime: Int,
+            savedCount: Int,
+        )
     }
 }
