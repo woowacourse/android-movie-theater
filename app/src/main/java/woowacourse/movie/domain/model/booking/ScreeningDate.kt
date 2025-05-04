@@ -4,17 +4,17 @@ import java.io.Serializable
 import java.time.LocalDate
 
 data class ScreeningDate(
-    val screenings: List<LocalDate>,
+    val screenings: Set<LocalDate>,
 ) : Serializable {
-    val startDate: LocalDate get() = screenings.first()
-    val endDate: LocalDate get() = screenings.last()
+    constructor(screenings: List<LocalDate>) : this(screenings.toSet())
 
     fun bookingDates(today: LocalDate): List<LocalDate> {
         val start = getStartDate(today)
-        return screenings.filter { !it.isBefore(start) }.distinct()
+        return screenings.filterNot { it.isBefore(start) }
     }
 
     private fun getStartDate(other: LocalDate): LocalDate {
+        val startDate = screenings.first()
         if (startDate.isAfter(other)) {
             return startDate
         }
