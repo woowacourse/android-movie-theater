@@ -23,6 +23,10 @@ class TheaterPresenter(
     }
 
     override fun theaterSelected(theaterUIModel: TheaterUIModel) {
-        view.navigateToReservation(theaterUIModel)
+        if (theaterUIModel.timeSlotCount == 0) {
+            view.showEmptySlotMessage()
+        } else {
+            view.navigateToReservation(theaterUIModel)
+        }
     }
 }

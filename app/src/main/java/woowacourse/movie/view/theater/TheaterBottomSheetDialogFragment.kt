@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
@@ -42,9 +41,8 @@ class TheaterBottomSheetDialogFragment :
         savedInstanceState: Bundle?,
     ): View {
         binding =
-            DataBindingUtil.inflate(
+            FragmentTheaterBottomSheetDialogBinding.inflate(
                 inflater,
-                R.layout.fragment_theater_bottom_sheet_dialog,
                 container,
                 false,
             )
@@ -64,6 +62,15 @@ class TheaterBottomSheetDialogFragment :
         theaterAdapter.submitList(theaters)
     }
 
+    override fun showEmptySlotMessage() {
+        Toast
+            .makeText(
+                requireContext(),
+                getString(R.string.bottom_sheet_dialog_error_empty_showing_movie),
+                Toast.LENGTH_SHORT,
+            ).show()
+    }
+
     override fun navigateToReservation(theaterUIModel: TheaterUIModel) {
         val intent =
             Intent(requireContext(), ReservationDetailActivity::class.java).apply {
@@ -78,16 +85,7 @@ class TheaterBottomSheetDialogFragment :
     }
 
     private fun onTheaterClicked(theaterUIModel: TheaterUIModel) {
-        if (theaterUIModel.timeSlotCount == 0) {
-            Toast
-                .makeText(
-                    requireContext(),
-                    getString(R.string.bottom_sheet_dialog_error_empty_showing_movie),
-                    Toast.LENGTH_SHORT,
-                ).show()
-        } else {
-            presenter.theaterSelected(theaterUIModel)
-        }
+        presenter.theaterSelected(theaterUIModel)
     }
 
     companion object {

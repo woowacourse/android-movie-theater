@@ -6,6 +6,8 @@ interface TheaterContract {
     interface View {
         fun showTheaters(theaters: List<TheaterUIModel>)
 
+        fun showEmptySlotMessage()
+
         fun navigateToReservation(theaterUIModel: TheaterUIModel)
     }
 
