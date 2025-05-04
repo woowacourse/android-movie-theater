@@ -395,6 +395,7 @@
                 tools:text="0원" />
 
             <TextView
+                android:enabled="false"
                 android:id="@+id/btn_booking_confirm"
                 android:layout_width="88dp"
                 android:layout_height="match_parent"

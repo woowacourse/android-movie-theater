@@ -8,28 +8,22 @@ data class Seats(val values: List<Seat>) {
     val amount: Int
         get() = values.sumOf { it.grade.price }
 
-    fun toggle(
+    fun updateSeats(
         seat: Seat,
         headCount: Int,
     ): Seats {
-        val row = seat.row
-        val col = seat.col
-        val existingSeat = values.find { it.col == col && it.row == row }
-
-        return if (existingSeat != null) {
-            Seats(
-                values.map {
-                    if (it.col == col && it.row == row) it.copy(isSelected = false) else it
-                }.filter { it.isSelected },
-            )
+        return if (contains(seat)) {
+            Seats(values.filterNot { it.row == seat.row && it.col == seat.col })
+        } else if (values.size >= headCount) {
+            this
         } else {
-            if (values.count { it.isSelected } >= headCount) {
-                this
-            } else {
-                Seats(values + seat.copy(isSelected = true))
-            }
+            Seats(values + seat.copy(isSelected = true))
         }
     }
+
+    fun contains(seat: Seat): Boolean = values.any { it.row == seat.row && it.col == seat.col }
+
+    fun countSelected(): Int = values.count { it.isSelected }
 
     companion object {
         private const val ERROR_UNSELECTED_SEATS = "선택되지 않은 Seat은 포함될 수 없습니다"

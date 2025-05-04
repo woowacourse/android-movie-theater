@@ -17,16 +17,13 @@ class SeatSelectionPresenter(
     }
 
     override fun onSeatClicked(seat: Seat) {
-        val row = seat.row
-        val col = seat.col
-        val domainSeat = Seat(row, col)
+        domainTicket = domainTicket.toggleSeat(seat)
 
-        domainTicket = domainTicket.toggleSeat(domainSeat)
-
-        val isSelected = domainTicket.seats.values.any { it.row == row && it.col == col }
+        val isSelected = domainTicket.seats.contains(seat)
         view.showSeatState(seat, isSelected)
 
-        val shouldEnableButton = domainTicket.seats.values.size == domainTicket.headCount.value
+        val selectedCount = domainTicket.seats.countSelected()
+        val shouldEnableButton = selectedCount == domainTicket.headCount.value
         view.setButtonEnabled(shouldEnableButton)
 
         view.showTicket(domainTicket.toUiModel())

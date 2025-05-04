@@ -25,7 +25,7 @@ fun Ticket.toUiModel(): TicketUiModel {
         selectedDateText = selectedDateText,
         selectedTimeText = selectedTimeText,
         totalPrice = amountText,
-        seats = seats.values.joinToString(",") { it.toSeatLabel() },
+        seats = seats.values.joinToString(", ") { it.toSeatLabel() },
     )
 }
 

@@ -30,7 +30,7 @@ data class Ticket(
 
     fun isHeadCountValid(): Boolean = headCount.isValid()
 
-    fun toggleSeat(seat: Seat): Ticket = copy(seats = seats.toggle(seat, headCount.value))
+    fun toggleSeat(seat: Seat): Ticket = copy(seats = seats.updateSeats(seat, headCount.value))
 
     companion object {
         private const val ERROR_TITLE_BLANK_MESSAGE = "예매한 영화 제목은 비어 있을 수 없다"
