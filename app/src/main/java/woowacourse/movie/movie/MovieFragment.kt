@@ -39,12 +39,10 @@ class MovieFragment : Fragment(), MovieContract.View {
     }
 
     override fun setupMovieList(movies: List<MovieUiModel>) {
-        val adapter =
+        binding.recyclerViewLayout.adapter =
             MovieAdapter(movies) { movie ->
                 presenter.setTheaters(movie)
             }
-        val recyclerView = binding.recyclerViewLayout
-        recyclerView.adapter = adapter
     }
 
     override fun showToast(message: String) {

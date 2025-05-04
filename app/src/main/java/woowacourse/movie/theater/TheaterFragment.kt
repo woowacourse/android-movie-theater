@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.booking.detail.BookingDetailActivity
@@ -40,8 +39,7 @@ class TheaterFragment : BottomSheetDialogFragment() {
 
         val theaters = initTheaters()
 
-        val recyclerView: RecyclerView = binding.rvTheater
-        recyclerView.adapter =
+        binding.rvTheater.adapter =
             TheaterAdapter(theaters) { theater ->
                 parentFragmentManager.commit {
                     setReorderingAllowed(true)
