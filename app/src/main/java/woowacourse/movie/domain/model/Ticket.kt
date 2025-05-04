@@ -7,7 +7,7 @@ import java.time.LocalTime
 
 data class Ticket(
     val movie: Movie,
-    val theater: String,
+    val theater: Theater,
     val showtime: LocalDateTime = LocalDateTime.of(movie.startDate, LocalTime.MIDNIGHT),
     val headCount: HeadCount = HeadCount(),
     val seats: Seats = Seats(),

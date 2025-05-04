@@ -25,8 +25,6 @@ class BookingResultActivity :
 
     override fun showTicketInfo(ticket: Ticket) {
         binding.ticket = ticket
-        binding.textviewNotice.text =
-            String.format(getString(R.string.cancel_notice), CANCELABLE_TIME)
     }
 
     private fun fetchTicketFromIntent(): Boolean {
@@ -50,7 +48,6 @@ class BookingResultActivity :
             }
 
         private const val EXTRA_TICKET = "ticket"
-        private const val CANCELABLE_TIME = 15
         private const val ERROR_INTENT_KEY = "[ERROR] 키 값이 올바르지 않습니다."
     }
 }

@@ -30,6 +30,7 @@
                 android:paddingBottom="20dp"
                 android:textColor="@color/white"
                 android:textSize="16sp"
+                android:text="@{String.format(@string/cancel_notice, ticket.theater.cancelableTime)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -124,7 +125,7 @@
                         android:ellipsize="end"
                         android:gravity="center"
                         android:maxLines="1"
-                        android:text="@{ticket.theater}"
+                        android:text="@{ticket.theater.name}"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         tools:text="선릉 극장 선릉 극장 선릉 극장 선릉 극장 선릉 극장" />

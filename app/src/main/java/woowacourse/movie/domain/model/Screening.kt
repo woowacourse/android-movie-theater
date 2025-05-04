@@ -4,7 +4,7 @@ import java.io.Serializable
 import java.time.LocalTime
 
 data class Screening(
-    val theater: String,
+    val theater: Theater,
     val movie: Movie,
     val times: List<LocalTime>,
 ) : Serializable
