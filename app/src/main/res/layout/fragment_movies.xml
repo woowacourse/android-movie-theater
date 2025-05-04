@@ -9,20 +9,20 @@
             type="java.util.List&lt;woowacourse.movie.presentation.model.MovieUiModel>" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-android:id="@+id/main"
-android:layout_height="match_parent"
-android:layout_width="match_parent"
-tools:context=".presentation.view.MovieTheaterActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.view.MovieTheaterActivity">
 
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/rv_movie"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    tools:listitem="@layout/item_movie"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-    app:setItems="@{movieList}" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_movie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:setItems="@{movieList}"
+            tools:listitem="@layout/item_movie" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </layout>
+</layout>

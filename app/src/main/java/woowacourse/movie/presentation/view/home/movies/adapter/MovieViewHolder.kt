@@ -1,18 +1,26 @@
 package woowacourse.movie.presentation.view.home.movies.adapter
 
-import androidx.recyclerview.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemMovieBinding
+import woowacourse.movie.presentation.base.BaseViewHolder
 import woowacourse.movie.presentation.model.MovieUiModel
+import woowacourse.movie.presentation.view.home.movies.adapter.item.MovieItem
 
 class MovieViewHolder(
-    private val binding: ItemMovieBinding,
+    view: ViewGroup,
     private val eventListener: OnMovieEventListener,
-) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(movie: MovieUiModel) {
-        binding.itemMovie = movie
-        binding.btnReservation.setOnClickListener {
-            eventListener.onClick(movie)
-        }
-        binding.executePendingBindings()
+) : BaseViewHolder<MovieItem, ItemMovieBinding>(
+        DataBindingUtil.inflate(LayoutInflater.from(view.context), R.layout.item_movie, view, false),
+    ) {
+    override fun bind(item: MovieItem) {
+        binding.itemMovie = item.movie
+        binding.onClickListener = eventListener
+    }
+
+    interface OnMovieEventListener {
+        fun onClick(movie: MovieUiModel)
     }
 }

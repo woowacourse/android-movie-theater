@@ -1,19 +1,19 @@
 package woowacourse.movie.presentation.view.home.movies.adapter
 
-import android.view.View
-import android.widget.ImageView
-import androidx.annotation.DrawableRes
-import androidx.recyclerview.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdBinding
+import woowacourse.movie.presentation.base.BaseViewHolder
+import woowacourse.movie.presentation.view.home.movies.adapter.item.AdItem
 
 class AdViewHolder(
-    parentView: View,
-) : RecyclerView.ViewHolder(parentView) {
-    private val ivAd = parentView.findViewById<ImageView>(R.id.iv_ad)
-
-    fun bind(
-        @DrawableRes resId: Int,
+    view: ViewGroup,
+) : BaseViewHolder<AdItem, ItemAdBinding>(
+        DataBindingUtil.inflate(LayoutInflater.from(view.context), R.layout.item_ad, view, false),
     ) {
-        ivAd.setImageResource(resId)
+    override fun bind(item: AdItem) {
+        binding.ivAd.setImageResource(item.resId)
     }
 }
