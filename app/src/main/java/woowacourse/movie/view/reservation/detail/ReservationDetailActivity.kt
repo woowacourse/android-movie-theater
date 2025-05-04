@@ -125,7 +125,6 @@ class ReservationDetailActivity :
                         id: Long,
                     ) {
                         presenter.selectTime(position)
-                        presenter.isTimeSelected = true
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {

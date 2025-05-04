@@ -19,7 +19,7 @@ class ReservationDetailPresenter(
     private lateinit var reservationUIModel: ReservationUIModel
     private var currentTimeTable: List<Int> = emptyList()
     private val movieDao by lazy { MovieDao() }
-    var isTimeSelected = false
+    private var isTimeSelected = false
 
     override fun fetchData(theater: TheaterUIModel?) {
         if (theater == null) {
@@ -71,6 +71,7 @@ class ReservationDetailPresenter(
 
     override fun selectTime(position: Int) {
         reservationUIModel = reservationUIModel.copy(movieTime = reservationUIModel.movieTime)
+        isTimeSelected = true
     }
 
     override fun plusTicketCount() {
