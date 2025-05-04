@@ -3,6 +3,8 @@ package woowacourse.movie.view.home.seat
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -31,7 +33,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat)
 
-        intent.getSerializableOrNull(KEY_BOOKING, Booking::class.java)?.let {
+        intent.getSerializableOrNull<Booking>(KEY_BOOKING)?.let {
             presenter = SeatPresenter(this, Seats(), it)
             initView()
         } ?: run {
@@ -93,6 +95,10 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         startActivity(intent)
     }
 
+    override fun saveSeat(seat: Seats) {
+        TODO("Not yet implemented")
+    }
+
     private fun showDialog() {
         AlertDialog.Builder(this)
             .setTitle(R.string.text_booking_dialog_title)
@@ -118,7 +124,13 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        //outState.putSerializable(KEY_BOOKING, )
+    }
+
     companion object {
+        private const val KEY_SEAT = "SEAT"
         const val KEY_BOOKING = "BOOKING"
 
         fun newIntent(

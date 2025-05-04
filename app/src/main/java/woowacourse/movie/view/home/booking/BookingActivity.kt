@@ -33,7 +33,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking)
 
-        intent.getSerializableOrNull(KEY_SCREENING, ScreeningInfo::class.java)
+        intent.getSerializableOrNull<ScreeningInfo>(KEY_SCREENING)
             ?.let {
                 presenter = BookingPresenter.initialize(this, it)
                 initView()

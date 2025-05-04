@@ -28,7 +28,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
 
-        intent.getSerializableOrNull(KEY_TICKET, Ticket::class.java)?.let {
+        intent.getSerializableOrNull<Ticket>(KEY_TICKET)?.let {
             presenter = BookingCompletePresenter(this, it)
         } ?: run {
             showToastFromResource(R.string.error_missing_booking_info)
