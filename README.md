@@ -48,7 +48,7 @@
 - [x] 티켓의 총 가격을 보여준다
 
 ## 피드백 반영
-- [ ] Theater | 더미 데이터 분리 
+- [x] Theater | 더미 데이터 분리 
 - [ ] Showings | 구조 개선 고안
 - [ ] MainActivity | BotNav 중복 코드 제거 
 - [ ] HomeFragment | Fragment 생명 주기에 따른 binding 해제 관련
