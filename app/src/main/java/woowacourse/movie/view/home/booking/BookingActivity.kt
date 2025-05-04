@@ -40,7 +40,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking)
 
         val screeningInfo: ScreeningInfo =
-            intent.getSerializableCompat(KEY_SCREENING) ?: run {
+            intent.extras?.getSerializableCompat(KEY_SCREENING) ?: run {
                 showToast(getString(R.string.text_error))
                 finish()
                 return

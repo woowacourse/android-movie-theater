@@ -24,14 +24,14 @@ import woowacourse.movie.view.home.complete.BookingCompleteActivity
 
 class SeatActivity : AppCompatActivity(), SeatContract.View {
     private lateinit var binding: ActivitySeatBinding
-    private lateinit var presenter: SeatContract.Presenter
+    private lateinit var presenter: SeatPresenter
     private lateinit var seatView: SeatView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat)
         val booking: Booking =
-            intent.getSerializableCompat(KEY_BOOKING) ?: run {
+            intent.extras?.getSerializableCompat(KEY_BOOKING) ?: run {
                 showToast(getString(R.string.text_error))
                 finish()
                 return

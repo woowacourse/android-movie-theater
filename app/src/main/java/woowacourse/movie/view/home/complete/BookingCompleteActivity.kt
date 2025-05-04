@@ -29,7 +29,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
 
         val ticket: Ticket =
-            intent.getSerializableCompat(KEY_TICKET) ?: run {
+            intent.extras?.getSerializableCompat(KEY_TICKET) ?: run {
                 showToast(getString(R.string.text_error))
                 finish()
                 return
