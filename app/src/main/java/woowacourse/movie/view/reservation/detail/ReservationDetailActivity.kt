@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.R.layout
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.domain.model.MovieTicket
@@ -26,7 +25,6 @@ import java.time.LocalDate
 class ReservationDetailActivity :
     AppCompatActivity(),
     ReservationDetailContract.View {
-    private val spinnerLayout = layout.support_simple_spinner_dropdown_item
     private lateinit var binding: ActivityReservationBinding
     private val reservationDialog by lazy { ReservationDetailDialog() }
     private val presenter: ReservationDetailPresenter by lazy { ReservationDetailPresenter(this) }
@@ -84,7 +82,7 @@ class ReservationDetailActivity :
         val dateAdapter =
             ArrayAdapter(
                 this,
-                spinnerLayout,
+                android.R.layout.simple_spinner_dropdown_item,
                 duration,
             )
 
@@ -112,7 +110,7 @@ class ReservationDetailActivity :
         val timeAdapter =
             ArrayAdapter(
                 this,
-                spinnerLayout,
+                android.R.layout.simple_spinner_dropdown_item,
                 times,
             )
 
