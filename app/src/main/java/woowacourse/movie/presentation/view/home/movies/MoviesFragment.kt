@@ -8,35 +8,25 @@ import woowacourse.movie.presentation.base.BaseFragment
 import woowacourse.movie.presentation.model.MovieUiModel
 import woowacourse.movie.presentation.model.TheatersUiModel
 import woowacourse.movie.presentation.view.home.movies.adapter.MoviesAdapter
-import woowacourse.movie.presentation.view.home.movies.adapter.OnMovieEventListener
 import woowacourse.movie.presentation.view.home.movies.dialog.TheaterBottomSheetDialogFragment
 
 class MoviesFragment :
     BaseFragment<FragmentMoviesBinding>(R.layout.fragment_movies),
     MoviesContract.View {
     private val presenter: MoviesPresenter by lazy { MoviesPresenter(this) }
+    private val moviesAdapter: MoviesAdapter by lazy { MoviesAdapter(MovieEventListener(presenter)) }
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-
-        val moviesAdapter =
-            MoviesAdapter(
-                object : OnMovieEventListener {
-                    override fun onClick(movie: MovieUiModel) {
-                        presenter.availableTheatersAndCount(movie.id)
-                    }
-                },
-            )
-        binding.rvMovie.adapter = moviesAdapter
-
+        setMoviesAdapter()
         presenter.fetchData()
     }
 
     override fun showScreen(movies: List<MovieUiModel>) {
-        binding.movieList = movies
+        updateMovies(movies)
     }
 
     override fun showAvailableTheatersAndCount(
@@ -46,6 +36,14 @@ class MoviesFragment :
         TheaterBottomSheetDialogFragment
             .newInstance(times, movie)
             .show(parentFragmentManager, THEATER_BOTTOM_SHEET_DIALOG_TAG)
+    }
+
+    private fun setMoviesAdapter() {
+        binding.rvMovie.adapter = moviesAdapter
+    }
+
+    private fun updateMovies(movies: List<MovieUiModel>) {
+        binding.movieList = movies
     }
 
     companion object {
