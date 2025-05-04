@@ -7,7 +7,6 @@ import woowacourse.movie.domain.model.ReservationUiModel
 import woowacourse.movie.domain.model.TheaterUIModel
 import woowacourse.movie.domain.model.toReservationUiModel
 import woowacourse.movie.view.ReservationUiFormatter
-import woowacourse.movie.view.model.toLocalDate
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -27,12 +26,12 @@ class ReservationDetailPresenter(
 
         reservationUIModel = theater.toReservationUiModel()
 
-        view.showMovieInfo(reservationUIModel.movie)
+        view.showMovieInfo(theater.movie)
     }
 
     override fun initDateAdapter() {
         var duration = reservationUIModel.movieDate.getDateTable(LocalDate.now())
-        if (duration.isEmpty()) duration = listOf(reservationUIModel.movie.startDate.toLocalDate())
+        if (duration.isEmpty()) duration = listOf(reservationUIModel.movieDate.value)
 
         view.updateDateAdapter(duration, 0)
         selectDate(duration[0])
@@ -41,7 +40,7 @@ class ReservationDetailPresenter(
     override fun selectDate(date: LocalDate) {
         val now = LocalDateTime.now()
         val screenTimes =
-            movieDao.getScreenTimes(reservationUIModel.theaterName, reservationUIModel.movie.name)
+            movieDao.getScreenTimes(reservationUIModel.theaterName, reservationUIModel.title)
         currentTimeTable = movieDao.getTimeTable(now, date, screenTimes)
         if (currentTimeTable.isEmpty()) {
             isTimeSelected = false
@@ -57,7 +56,9 @@ class ReservationDetailPresenter(
     }
 
     override fun selectTime(position: Int) {
-        reservationUIModel = reservationUIModel.copy(movieTime = reservationUIModel.movieTime)
+        val selectedTime = currentTimeTable.getOrNull(position) ?: return
+        reservationUIModel =
+            reservationUIModel.copy(movieTime = ReservationUiFormatter.movieTimeToUI(selectedTime))
         isTimeSelected = true
     }
 
@@ -96,9 +97,9 @@ class ReservationDetailPresenter(
 
     private fun createTicket(): MovieTicket =
         MovieTicket(
-            title = reservationUIModel.movie.name,
+            title = reservationUIModel.title,
             date = reservationUIModel.movieDate.value,
-            time = ReservationUiFormatter.movieTimeToUI(reservationUIModel.movieTime.value),
+            time = reservationUIModel.movieTime,
             count = reservationUIModel.ticketCount,
             theaterName = reservationUIModel.theaterName,
         )
