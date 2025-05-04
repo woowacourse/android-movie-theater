@@ -128,7 +128,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        presenter.restoreSeat(savedInstanceState.getSerializableArrayList<Seat>(KEY_SEAT))
+        presenter.restore(savedInstanceState.getSerializableArrayList<Seat>(KEY_SEAT))
     }
 
     companion object {

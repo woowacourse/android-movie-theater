@@ -25,6 +25,6 @@ interface SeatContract {
 
         fun attemptConfirmBooking()
 
-        fun restoreSeat(seat: ArrayList<Seat>)
+        fun restore(seat: ArrayList<Seat>)
     }
 }

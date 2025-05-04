@@ -46,9 +46,10 @@ class SeatPresenter(
         view.moveToBookingComplete(ticket)
     }
 
-    override fun restoreSeat(seat: ArrayList<Seat>) {
+    override fun restore(seat: ArrayList<Seat>) {
         this.seats.restore(seat)
         view.showSeat(seat.toSet())
+        view.showPrice(seats.bookingPrice())
         updateConfirmButtonState(limit)
     }
 
