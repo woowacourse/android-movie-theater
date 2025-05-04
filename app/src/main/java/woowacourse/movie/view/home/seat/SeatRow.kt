@@ -1,6 +1,7 @@
 package woowacourse.movie.view.home.seat
 
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.core.view.children
@@ -32,5 +33,12 @@ class SeatRow(
                 if (coord in selectedCoords) Color.YELLOW else Color.TRANSPARENT,
             )
         }
+    }
+
+    fun selectedSeat(): Set<Seat> {
+        return seatViews
+            .filterValues { view ->
+                (view.background as? ColorDrawable)?.color == Color.YELLOW
+            }.keys
     }
 }

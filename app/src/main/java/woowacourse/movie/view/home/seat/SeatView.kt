@@ -24,4 +24,8 @@ class SeatView(
     fun updateSeats(selectedSeats: Set<Seat>) {
         rows.forEach { it.updateSeats(selectedSeats) }
     }
+
+    fun selectedSeat(): List<Seat> {
+        return rows.flatMap { it.selectedSeat() }
+    }
 }
