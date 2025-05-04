@@ -9,8 +9,9 @@ import woowacourse.movie.common.util.PosterMapper
 import woowacourse.movie.common.util.TicketUiFormatter.formatAmount
 import woowacourse.movie.common.util.TicketUiFormatter.formatDateTime
 import woowacourse.movie.common.util.TicketUiFormatter.formatHeadCount
-import woowacourse.movie.common.util.toUi
-import woowacourse.movie.domain.model.seat.Seat
+import woowacourse.movie.domain.model.HeadCount
+import woowacourse.movie.domain.model.seat.Seats
+import woowacourse.movie.presentation.seats.mode.toUiModel
 import java.time.LocalDateTime
 
 @BindingAdapter("posterImage")
@@ -30,8 +31,8 @@ fun TextView.setFormattedDateTime(dateTime: LocalDateTime) {
 }
 
 @BindingAdapter("formattedHeadCount")
-fun TextView.setFormattedDateTime(headCount: Int) {
-    text = formatHeadCount(context.getString(R.string.headCount_message), headCount)
+fun TextView.setFormattedHeadCount(headCount: HeadCount) {
+    text = formatHeadCount(context.getString(R.string.headCount_message), headCount.value)
 }
 
 @BindingAdapter("formattedAmount")
@@ -40,6 +41,6 @@ fun TextView.setFormattedAmount(amount: Int) {
 }
 
 @BindingAdapter("seats")
-fun TextView.setSeats(seats: List<Seat>) {
-    text = seats.toUi()
+fun TextView.setSeats(seats: Seats) {
+    text = seats.seats.map { it.toUiModel() }.joinToString()
 }

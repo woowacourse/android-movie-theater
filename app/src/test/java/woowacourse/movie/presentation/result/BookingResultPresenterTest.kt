@@ -28,9 +28,9 @@ class BookingResultPresenterTest {
     @Test
     fun `티켓의 정보가 출력된다`() {
         // When
-        presenter.onViewCreated()
+        presenter.loadBookingResult()
 
         // Then
-        verify { view.showTicket(testTicket) }
+        verify { view.showTicketInfo(testTicket) }
     }
 }

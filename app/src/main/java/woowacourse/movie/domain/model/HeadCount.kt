@@ -1,9 +1,10 @@
 package woowacourse.movie.domain.model
 
-@JvmInline
-value class HeadCount(
+import java.io.Serializable
+
+data class HeadCount(
     val value: Int = MINIMUM_HEAD_COUNT,
-) {
+) : Serializable {
     init {
         require(value in MINIMUM_HEAD_COUNT..MAXIMUM_HEAD_COUNT) { ERROR_INVALID_HEAD_COUNT }
     }

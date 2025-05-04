@@ -1,13 +1,13 @@
 package woowacourse.movie.presentation.result
 
-import woowacourse.movie.domain.model.movie.MovieTicket
+import woowacourse.movie.domain.model.Ticket
 
 interface BookingResultContract {
     interface View {
-        fun showTicket(ticket: MovieTicket)
+        fun showTicketInfo(ticket: Ticket)
     }
 
     interface Presenter {
-        fun onViewCreated()
+        fun loadBookingResult()
     }
 }
