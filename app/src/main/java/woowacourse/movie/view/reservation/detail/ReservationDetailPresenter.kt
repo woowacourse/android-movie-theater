@@ -9,6 +9,7 @@ import woowacourse.movie.domain.model.ReservationUIModel
 import woowacourse.movie.domain.model.TheaterUIModel
 import woowacourse.movie.domain.model.TicketCount
 import woowacourse.movie.view.ReservationUiFormatter
+import woowacourse.movie.view.model.toLocalDate
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -27,14 +28,18 @@ class ReservationDetailPresenter(
             return
         }
 
-//        reservationUIModel =
-//            ReservationUIModel(
-//                movie = theaterUIModel.movie,
-//                movieDate = MovieDate(theaterUIModel.movie.startDate, theaterUIModel.movie.endDate),
-//                movieTime = MovieTime(),
-//                ticketCount = TicketCount().value,
-//                theaterName = theaterUIModel.name,
-//            )
+        reservationUIModel =
+            ReservationUIModel(
+                movie = theaterUIModel.movie,
+                movieDate =
+                    MovieDate(
+                        theaterUIModel.movie.startDate.toLocalDate(),
+                        theaterUIModel.movie.endDate.toLocalDate(),
+                    ),
+                movieTime = MovieTime(),
+                ticketCount = TicketCount().value,
+                theaterName = theaterUIModel.name,
+            )
 
         updateMovieInfo()
     }
@@ -109,14 +114,14 @@ class ReservationDetailPresenter(
     fun currentTicketCount(): Int = reservationUIModel.ticketCount
 
     private fun updateMovieInfo() {
-//        val movie = reservationUIModel.movie
-//        view.showMovieInfo(
-//            posterResId = movie.poster,
-//            title = movie.name,
-//            startDate = ReservationUiFormatter.localDateToUI(movie.startDate),
-//            endDate = ReservationUiFormatter.localDateToUI(movie.endDate),
-//            runningTime = movie.runningTime,
-//        )
+        val movie = reservationUIModel.movie
+        view.showMovieInfo(
+            posterResId = movie.poster,
+            title = movie.name,
+            startDate = movie.startDate,
+            endDate = movie.endDate,
+            runningTime = movie.runningTime,
+        )
     }
 
     private fun updateReservationState(

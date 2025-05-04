@@ -5,6 +5,17 @@
 
     <data>
 
+        <variable
+            name="movieTitle"
+            type="String" />
+
+        <variable
+            name="totalPrice"
+            type="int" />
+
+        <variable
+            name="isConfirmButtonEnabled"
+            type="boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -205,6 +216,7 @@
             android:layout_marginTop="16dp"
             android:ellipsize="end"
             android:maxLines="1"
+            android:text="@{movieTitle}"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -220,6 +232,7 @@
             android:layout_marginBottom="16dp"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:formattedPrice="@{totalPrice}"
             app:layout_constraintBottom_toBottomOf="@id/cl_movie_info"
             app:layout_constraintStart_toStartOf="@id/tv_seat_select_movie_title"
             app:layout_constraintTop_toBottomOf="@id/tv_seat_select_movie_title"
@@ -233,6 +246,7 @@
             android:text="@string/seat_select_confirm"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:enabledAlpha="@{isConfirmButtonEnabled}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"
