@@ -9,8 +9,8 @@ object Formatter {
     private val PRICE_UI_FORMATTER = DecimalFormat("#,###")
 
     @JvmStatic
-    fun localDateToUI(date: LocalDate): String = date.format(DATE_UI_FORMATTER)
+    fun localDateToUi(date: LocalDate): String = date.format(DATE_UI_FORMATTER)
 
     @JvmStatic
-    fun priceToUI(price: Int): String = PRICE_UI_FORMATTER.format(price)
+    fun priceToUi(price: Int): String = PRICE_UI_FORMATTER.format(price)
 }

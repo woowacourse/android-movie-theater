@@ -7,9 +7,9 @@ import woowacourse.movie.R
 import woowacourse.movie.model.movie.MovieTime
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.theater.Theater
-import woowacourse.movie.view.mapper.Formatter.localDateToUI
-import woowacourse.movie.view.mapper.Formatter.priceToUI
-import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.seatsToUI
+import woowacourse.movie.view.mapper.Formatter.localDateToUi
+import woowacourse.movie.view.mapper.Formatter.priceToUi
+import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.seatsToUi
 import java.time.LocalDate
 
 @BindingAdapter("android:startDate", "android:endDate", requireAll = true)
@@ -18,8 +18,8 @@ fun setFormatLocalDate(
     startDate: LocalDate,
     endDate: LocalDate,
 ) {
-    val startDate: String = localDateToUI(startDate)
-    val endDate: String = localDateToUI(endDate)
+    val startDate: String = localDateToUi(startDate)
+    val endDate: String = localDateToUi(endDate)
 
     textView.text = textView.context.getString(R.string.movie_screening_date, startDate, endDate)
 }
@@ -38,7 +38,7 @@ fun setFormatLocalDateTime(
     movieDate: LocalDate,
     movieTime: MovieTime,
 ) {
-    val formatMovieDate: String = localDateToUI(movieDate)
+    val formatMovieDate: String = localDateToUi(movieDate)
     val formatMovieTime: String = movieTime.value.toString()
 
     textView.text =
@@ -55,7 +55,7 @@ fun setTheaterInfo(
     seats: List<Seat>,
     theater: Theater,
 ) {
-    val formateSeats: String = seatsToUI(seats, ", ")
+    val formateSeats: String = seatsToUi(seats, ", ")
 
     textView.text =
         textView.context.getString(
@@ -72,7 +72,7 @@ fun setFormatTicketPrice(
     ticketPrice: Int,
     isPayed: Boolean,
 ) {
-    val formatPrice: String = priceToUI(ticketPrice)
+    val formatPrice: String = priceToUi(ticketPrice)
 
     if (isPayed) {
         textView.text =
