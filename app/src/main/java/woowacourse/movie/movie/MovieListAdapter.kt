@@ -6,12 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.AdItemBinding
 import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.helper.CustomClickListenerHelper.setOnSingleClickListener
 
 class MovieListAdapter(
     private val value: List<Movie>,
-    private val navigateToBook: (Movie) -> Unit,
-    private val navigateToAd: () -> Unit,
+    private val movieClickListener: MovieClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -49,9 +47,9 @@ class MovieListAdapter(
     ) {
         if (getItemViewType(position) == VIEW_TYPE_MOVIE) {
             val realPosition = position - (position / 4)
-            (holder as MovieViewHolder).bindMovie(value[realPosition])
+            (holder as MovieViewHolder).bindMovie(value[realPosition], movieClickListener)
         } else {
-            (holder as AdViewHolder).bindAd()
+            (holder as AdViewHolder).bindAd(movieClickListener)
         }
     }
 
@@ -59,26 +57,6 @@ class MovieListAdapter(
         val movieCount = value.size
         val adCount = movieCount / 3
         return movieCount + adCount
-    }
-
-    inner class MovieViewHolder(
-        private val binding: MovieItemBinding,
-    ) : RecyclerView.ViewHolder(binding.root) {
-        fun bindMovie(movie: Movie) {
-            binding.root.setOnSingleClickListener { navigateToBook(movie) }
-            binding.movie = movie
-            binding.movieBookBtn.setOnSingleClickListener { navigateToBook(movie) }
-        }
-    }
-
-    inner class AdViewHolder(
-        private val binding: AdItemBinding,
-    ) : RecyclerView.ViewHolder(binding.root) {
-        fun bindAd() {
-            binding.root.setOnSingleClickListener {
-                navigateToAd()
-            }
-        }
     }
 
     companion object {

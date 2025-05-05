@@ -108,3 +108,7 @@
 - [x] refactor: 다이얼로그 프래그먼트 생성 리팩토링
 - TheaterBottomSheetDialogFragment에서 키를 관리하고 생성하도록 변경
 - TAG 상수화
+
+- [x] refactor: 클릭 함수를 인터페이스로 확장
+- databinding xml 적용
+- inner class MovieViewHolder, AdViewHolder 파일 분리 : 외부 참조가 강하게 연결되어 있는 것을 분리하기 위함

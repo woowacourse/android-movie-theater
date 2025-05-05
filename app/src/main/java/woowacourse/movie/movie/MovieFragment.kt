@@ -29,11 +29,27 @@ class MovieFragment : Fragment(), Movies.View {
     }
 
     override fun showMovies(movies: List<Movie>) {
+        object : MovieClickListener {
+            override fun navigateToBook(movie: Movie) {
+                presenter.selectedMovie(movie)
+            }
+
+            override fun navigateToAd() {
+                presenter.selectedAd()
+            }
+        }
         binding.movies.adapter =
             MovieListAdapter(
                 movies,
-                { movie -> presenter.selectedMovie(movie) },
-                { presenter.selectedAd() },
+                object : MovieClickListener {
+                    override fun navigateToBook(movie: Movie) {
+                        presenter.selectedMovie(movie)
+                    }
+
+                    override fun navigateToAd() {
+                        presenter.selectedAd()
+                    }
+                }
             )
         binding.movies.layoutManager = LinearLayoutManager(this.context)
     }
