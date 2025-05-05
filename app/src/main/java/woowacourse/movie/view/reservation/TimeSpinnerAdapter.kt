@@ -12,9 +12,7 @@ class TimeSpinnerAdapter(
         com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
         times,
     ) {
-    override fun getItem(position: Int): LocalTime? = super.getItem(position)
-
-    fun updateDateItems(newItems: List<LocalTime>) {
+    fun updateTimeItems(newItems: List<LocalTime>) {
         clear()
         addAll(newItems)
         notifyDataSetChanged()

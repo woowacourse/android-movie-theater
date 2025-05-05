@@ -169,7 +169,7 @@ class ReservationActivity :
     }
 
     override fun updateTimes(times: List<LocalTime>) {
-        timeSpinnerAdapter.updateDateItems(times)
+        timeSpinnerAdapter.updateTimeItems(times)
     }
 
     override fun showSelectedDate(position: Int) {
