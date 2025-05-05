@@ -1,9 +1,7 @@
 package woowacourse.movie.view.home.theater
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.BottomSheetFragmentTheaterBinding
@@ -15,19 +13,13 @@ import woowacourse.movie.view.extension.showShortToast
 import woowacourse.movie.view.reservation.ReservationActivity
 
 class TheaterBottomSheetDialogFragment :
-    BottomSheetDialogFragment(),
+    BottomSheetDialogFragment(R.layout.fragment_reservation_details),
     TheaterContracts.View {
     private var _binding: BottomSheetFragmentTheaterBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var theaterAdapter: TheaterAdapter
     private lateinit var presenter: TheaterContracts.Presenter
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View = inflater.inflate(R.layout.fragment_reservation_details, container, false)
 
     override fun onViewCreated(
         view: View,
