@@ -3,7 +3,6 @@ package woowacourse.movie.booking.complete
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -62,7 +61,6 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     }
 
     override fun showToastErrorAndFinish(message: String) {
-        Log.d(TAG, message)
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         finish()
     }
@@ -81,7 +79,6 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     }
 
     companion object {
-        private const val TAG = "BookingCompleteActivity"
         private const val KEY_BOOKING_RESULT = "bookingResult"
 
         fun createIntent(

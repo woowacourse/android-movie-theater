@@ -3,7 +3,6 @@ package woowacourse.movie.booking.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -153,7 +152,6 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     }
 
     override fun showToastErrorAndFinish(message: String) {
-        Log.d(TAG, message)
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         finish()
     }
@@ -174,7 +172,6 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     }
 
     companion object {
-        private const val TAG = "BookingDetailActivity"
         private const val KEY_MOVIE_DATA = "movieData"
         private const val KEY_THEATER_DATA = "theaterData"
         private const val KEY_HEAD_COUNT = "HEAD_COUNT"
