@@ -1,6 +1,7 @@
 package woowacourse.movie.view.seatSelection
 
 import woowacourse.movie.model.seat.Seat
+import woowacourse.movie.model.seat.SeatGridElement
 
 object SeatSelectionFormatter {
     @JvmStatic
@@ -14,11 +15,11 @@ object SeatSelectionFormatter {
             .joinToString(separator) { seat -> seatToUi(seat) }
 
     @JvmStatic
-    fun seatToUi(seat: Seat): String = "${rowToUi(seat.row.value)}${columnToUi(seat.column.value)}"
+    fun seatToUi(seat: Seat): String = "${rowToUi(seat.row)}${columnToUi(seat.column)}"
 
     @JvmStatic
-    fun rowToUi(row: Int): String = (Char('A'.code) + row).toString()
+    fun rowToUi(row: SeatGridElement): String = (Char('A'.code) + row.value).toString()
 
     @JvmStatic
-    fun columnToUi(column: Int): String = (column + 1).toString()
+    fun columnToUi(column: SeatGridElement): String = (column.value + 1).toString()
 }

@@ -23,8 +23,8 @@ import woowacourse.movie.presenter.seatSelection.SeatSelectionPresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.extension.showShortToast
 import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity
-import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.columnToUI
-import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.rowToUI
+import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.columnToUi
+import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.rowToUi
 
 class SeatSelectionActivity :
     AppCompatActivity(),
@@ -109,7 +109,7 @@ class SeatSelectionActivity :
         seat: Seat,
         view: TextView,
     ) {
-        val seatText = "${rowToUI(seat.row.value)}${columnToUI(seat.column.value)}"
+        val seatText = "${rowToUi(seat.row)}${columnToUi(seat.column)}"
         view.text = seatText
     }
 
