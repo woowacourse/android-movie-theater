@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.view.home.theater.OnTheaterEventListener
-import java.time.LocalDateTime
+import java.time.LocalTime
 
 class TheaterViewHolder(
     view: View,
@@ -27,6 +27,6 @@ class TheaterViewHolder(
     fun bind(showings: Showings) {
         this.showings = showings
         theaterNameTextView.text = showings.theaterName
-        theaterTimeTextView.text = showings.showings.afterCurrentSchedule(currentDateTime = LocalDateTime.now()).size.toString()
+        theaterTimeTextView.text = showings.showings.afterCurrentTimeSchedule(LocalTime.now()).size.toString()
     }
 }

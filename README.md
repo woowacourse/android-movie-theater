@@ -52,7 +52,7 @@
 - [x] HomeFragmentTest | 테스트 명 변경
 - [x] Movie | UiModel 만들기
 - [x] MovieItem | Movie 네이밍 변경
-- [ ] ScheduleTime | 메서드 분리
+- [x] ScheduleTime | 메서드 분리
 - [ ] Showings | 스스로 일을 할 수 있게 변경
 - [ ] Ticket | 15 값 enum class로 변경
 - [ ] MovieSchedule | filter를 toList 전에 호출되도록 변경

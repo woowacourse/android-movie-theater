@@ -9,12 +9,16 @@ import java.time.LocalTime
 data class ScheduleTime(
     val times: List<LocalTime>,
 ) : Serializable {
-    fun afterCurrentSchedule(
-        date: LocalDateTime = LocalDateTime.now(),
+    fun afterCurrentTimeSchedule(currentTime: LocalTime): List<LocalTime> {
+        return times.filter { it > currentTime }
+    }
+
+    fun afterCurrentDateSchedule(
+        date: LocalDateTime,
         currentDateTime: LocalDateTime,
     ): List<LocalTime> {
         if (LocalDate.of(date.year, date.month, date.dayOfMonth) == currentDateTime.toLocalDate()) {
-            return times.filter { it > currentDateTime.toLocalTime() }
+            return afterCurrentTimeSchedule(currentDateTime.toLocalTime())
         }
         return times
     }
