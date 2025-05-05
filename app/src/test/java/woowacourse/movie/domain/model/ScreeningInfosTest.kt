@@ -3,6 +3,7 @@ package woowacourse.movie.domain.model
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import woowacourse.movie.fixture.SEOLLEUNG
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -20,7 +21,7 @@ class ScreeningInfosTest {
         val data =
             listOf(
                 Screening(
-                    "선릉 극장",
+                    SEOLLEUNG,
                     testMovie,
                     listOf(LocalTime.of(12, 0)),
                 ),
@@ -32,7 +33,7 @@ class ScreeningInfosTest {
 
         // Then
         assertSoftly(expected.first()) {
-            theater shouldBe "선릉 극장"
+            theater shouldBe SEOLLEUNG
             movie shouldBe testMovie
             times shouldBe listOf(LocalTime.of(12, 0))
         }

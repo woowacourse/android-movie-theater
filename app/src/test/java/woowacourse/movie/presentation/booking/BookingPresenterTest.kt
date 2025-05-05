@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
+import woowacourse.movie.fixture.JAMSIL
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -23,7 +24,7 @@ class BookingPresenterTest {
 
     private val testScreening =
         Screening(
-            "잠실 극장",
+            JAMSIL,
             testMovie,
             listOf(10, 12, 14, 17, 20, 22).map { LocalTime.of(it, 0) },
         )

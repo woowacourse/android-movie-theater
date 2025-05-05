@@ -7,6 +7,7 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.fixture.HARRY_POTTER
+import woowacourse.movie.fixture.SEOLLEUNG
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -19,7 +20,7 @@ class SchedulerTest {
         scheduler =
             Scheduler(
                 Screening(
-                    "선릉 극장",
+                    SEOLLEUNG,
                     HARRY_POTTER,
                     listOf(1, 2, 20, 22).map { LocalTime.of(it, 0) },
                 ),

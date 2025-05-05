@@ -8,6 +8,7 @@ import woowacourse.movie.fixture.B3
 import woowacourse.movie.fixture.D2
 import woowacourse.movie.fixture.E4
 import woowacourse.movie.fixture.HARRY_POTTER
+import woowacourse.movie.fixture.SEOLLEUNG
 
 class TicketTest {
     @Test
@@ -17,7 +18,7 @@ class TicketTest {
         val ticket =
             Ticket(
                 movie = HARRY_POTTER,
-                theater = "선릉 극장",
+                theater = SEOLLEUNG,
                 seats = seats,
             )
 
@@ -35,7 +36,7 @@ class TicketTest {
         val ticket =
             Ticket(
                 movie = HARRY_POTTER,
-                theater = "선릉 극장",
+                theater = SEOLLEUNG,
                 seats = seats,
             )
 
@@ -53,7 +54,7 @@ class TicketTest {
         val ticket =
             Ticket(
                 movie = HARRY_POTTER,
-                theater = "선릉 극장",
+                theater = SEOLLEUNG,
                 seats = seats,
             )
 

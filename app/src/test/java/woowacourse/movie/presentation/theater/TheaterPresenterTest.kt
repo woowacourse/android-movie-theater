@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieData
 import woowacourse.movie.data.ScreeningData
 import woowacourse.movie.domain.model.Screening
+import woowacourse.movie.fixture.SEOLLEUNG
 import java.time.LocalTime
 
 class TheaterPresenterTest {
@@ -34,7 +35,7 @@ class TheaterPresenterTest {
         // Given
         val screening =
             Screening(
-                "선릉 극장",
+                SEOLLEUNG,
                 movie,
                 listOf(LocalTime.of(12, 0)),
             )
