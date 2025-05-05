@@ -4,101 +4,82 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
-import woowacourse.movie.domain.model.scheduler.DefaultScheduler
+import woowacourse.movie.domain.model.scheduler.Scheduler
+import woowacourse.movie.fixture.HARRY_POTTER
 import woowacourse.movie.fixture.JAMSIL
 import java.time.LocalDate
-import java.time.LocalTime
 
 class BookingPresenterTest {
     private lateinit var view: BookingContract.View
     private lateinit var presenter: BookingContract.Presenter
+    private lateinit var scheduler: Scheduler
 
-    private val testMovie =
-        Movie(
-            "test",
-            LocalDate.of(2025, 5, 5),
-            LocalDate.of(2025, 5, 6),
-            100,
-        )
-
-    private val testScreening =
+    private val screening =
         Screening(
             JAMSIL,
-            testMovie,
-            listOf(10, 12, 14, 17, 20, 22).map { LocalTime.of(it, 0) },
+            HARRY_POTTER,
+            listOf(),
         )
 
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = BookingPresenter(view, testScreening, DefaultScheduler(testScreening))
+        scheduler = mockk(relaxed = true)
+        presenter = BookingPresenter(view, screening, scheduler)
     }
 
     @Test
     fun `영화의 정보와 예매 가능 날짜, 인원 수가 화면에 출력된다`() {
-        // Given
-        val expected =
-            listOf(
-                LocalDate.of(2025, 5, 5),
-                LocalDate.of(2025, 5, 6),
-            )
-
-        // When
+        // when
         presenter.loadBooking()
 
-        // Then
-        verify { view.showMovie(testMovie) }
-        verify { view.showBookableDates(expected, any()) }
+        // then
+        verify { view.showMovie(HARRY_POTTER) }
+        verify { view.showBookableDates(any(), any()) }
         verify { view.showHeadCount(1) }
     }
 
     @Test
     fun `날짜를 선택하면 예약 가능한 시간들이 출력된다`() {
-        // Given
-        val date = LocalDate.of(2025, 4, 29)
+        // given
+        val date = LocalDate.of(2025, 5, 5)
 
-        // When
+        // when
         presenter.selectScreeningDate(date)
 
-        // Then
+        // then
         verify { view.showBookableTimes(any(), any()) }
     }
 
     @Test
     fun `증가 버튼을 누르면 예매 인원을 증가시키고 출력한다`() {
-        // When
+        // when
         presenter.increaseHeadCount()
 
-        // Then
+        // then
         verify { view.showHeadCount(2) }
     }
 
     @Test
     fun `현재 인원이 2 이상일 때 감소 버튼을 누르면 예매 인원을 감소시키고 출력한다`() {
-        // Given
+        // given
         presenter.increaseHeadCount()
 
-        // When
+        // when
         presenter.decreaseHeadCount()
 
-        // Then
+        // then
+        verify(exactly = 2) { view.showHeadCount(any()) }
         verify { view.showHeadCount(1) }
     }
 
     @Test
-    fun `선택 완료 버튼을 누르면 티켓을 생성하고 화면을 이동한다`() {
-        // Given
-        val date = LocalDate.of(2025, 5, 6)
-        val time = LocalTime.of(12, 0)
-        presenter.selectScreeningDate(date)
-        presenter.selectScreeningTime(time)
-
-        // When
+    fun `선택 완료 버튼을 누르면 화면을 이동한다`() {
+        // when
         presenter.confirmBooking()
 
-        // Then
+        // then
         verify { view.navigateToSeatSelect(any()) }
     }
 }

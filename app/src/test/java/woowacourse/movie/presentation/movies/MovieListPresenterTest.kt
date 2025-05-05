@@ -9,8 +9,8 @@ import woowacourse.movie.fixture.HARRY_POTTER
 
 class MovieListPresenterTest {
     private lateinit var view: MovieListContract.View
-    private lateinit var movieData: MovieRepository
     private lateinit var presenter: MovieListContract.Presenter
+    private lateinit var movieData: MovieRepository
 
     @BeforeEach
     fun setUp() {
