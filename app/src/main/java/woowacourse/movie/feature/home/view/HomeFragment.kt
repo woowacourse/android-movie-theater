@@ -11,7 +11,7 @@ import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity
 import woowacourse.movie.feature.home.contract.HomeContract
 import woowacourse.movie.feature.home.presenter.HomePresenter
-import woowacourse.movie.feature.home.view.adapter.Item
+import woowacourse.movie.feature.home.view.adapter.MovieItem
 import woowacourse.movie.feature.home.view.adapter.MoviesAdapter
 import woowacourse.movie.feature.model.MovieUiModel
 import woowacourse.movie.feature.model.ScreeningUiModel
@@ -42,7 +42,7 @@ class HomeFragment :
     }
 
     override fun showMovies(movies: List<MovieUiModel>) {
-        moviesAdapter.submitList(Item.from(movies))
+        moviesAdapter.submitList(MovieItem.from(movies))
         binding.moviesAdapter = moviesAdapter
     }
 

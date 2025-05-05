@@ -9,24 +9,22 @@ import woowacourse.movie.feature.model.MovieUiModel
 
 class MoviesAdapter(
     private val onBookingClick: (MovieUiModel) -> Unit,
-) : ListAdapter<Item, RecyclerView.ViewHolder>(DiffCallback) {
+) : ListAdapter<MovieItem, RecyclerView.ViewHolder>(DiffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return when (viewType) {
-            ItemViewType.MOVIE.type ->
+        return when (MovieItemViewType.entries[viewType]) {
+            MovieItemViewType.MOVIE ->
                 MovieViewHolder(
                     inflater.inflate(R.layout.item_movie, parent, false),
                 )
 
-            ItemViewType.ADVERTISEMENT.type ->
+            MovieItemViewType.ADVERTISEMENT ->
                 AdvertisementViewHolder(
                     inflater.inflate(R.layout.item_advertisement, parent, false),
                 )
-
-            else -> throw IllegalArgumentException("[ERROR] 알 수 없는 뷰 타입 오류입니다.")
         }
     }
 
@@ -34,21 +32,17 @@ class MoviesAdapter(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
-        val item: Item = getItem(position)
+        val movieItem: MovieItem = getItem(position)
 
         when (holder) {
-            is MovieViewHolder -> holder.bind(item as Item.Movie, onBookingClick)
+            is MovieViewHolder -> holder.bind(movieItem as MovieItem.Movie, onBookingClick)
             is AdvertisementViewHolder -> Unit
         }
     }
 
-    override fun getItemViewType(position: Int): Int =
-        when (getItem(position)) {
-            is Item.Movie -> ItemViewType.MOVIE.type
-            is Item.Advertisement -> ItemViewType.ADVERTISEMENT.type
-        }
+    override fun getItemViewType(position: Int): Int = getItem(position).viewType.ordinal
 
-    override fun submitList(list: List<Item?>?) {
+    override fun submitList(list: List<MovieItem?>?) {
         if (itemCount + (list?.size ?: 0) > 10000) return else super.submitList(list)
     }
 }
