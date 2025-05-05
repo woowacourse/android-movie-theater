@@ -43,6 +43,10 @@ class MoviesAdapter(
     override fun getItemViewType(position: Int): Int = getItem(position).viewType.ordinal
 
     override fun submitList(list: List<MovieItem?>?) {
-        if (itemCount + (list?.size ?: 0) > 10000) return else super.submitList(list)
+        if (itemCount + (list?.size ?: 0) > MAX_ITEM_COUNT) return else super.submitList(list)
+    }
+
+    companion object {
+        private const val MAX_ITEM_COUNT = 10000
     }
 }
