@@ -7,7 +7,6 @@ import woowacourse.movie.R
 import woowacourse.movie.model.movie.MovieDate
 import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.view.mapper.Formatter.localDateToUI
-import woowacourse.movie.view.mapper.Formatter.priceToUI
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.seatsToUI
 
 @BindingAdapter("movieDate")
@@ -64,27 +63,4 @@ fun setTheaterInfo(
             formateSeats,
             movieTicket.theater.name,
         )
-}
-
-@BindingAdapter("ticketPrice", "isPayed", requireAll = true)
-fun setFormatTicketPrice(
-    textView: TextView,
-    ticketPrice: Int,
-    isPayed: Boolean,
-) {
-    val formatPrice: String = priceToUI(ticketPrice)
-
-    if (isPayed) {
-        textView.text =
-            textView.context.getString(
-                R.string.reservation_complete_ticket_price,
-                formatPrice,
-            )
-    } else {
-        textView.text =
-            textView.context.getString(
-                R.string.seat_selection_ticket_price,
-                formatPrice,
-            )
-    }
 }
