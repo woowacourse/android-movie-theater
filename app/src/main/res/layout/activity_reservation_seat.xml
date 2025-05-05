@@ -30,7 +30,7 @@
                 android:textSize="30sp" />
 
             <TableLayout
-                android:id="@+id/tv_seat"
+                android:id="@+id/seats_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"

@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityReservationSeatBinding
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.domain.movieseat.Seats
@@ -29,23 +30,27 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
     private val presenter: ReservationSeatContract.Present by lazy {
         ReservationSeatPresenter(this)
     }
+    private lateinit var binding: ActivityReservationSeatBinding
     private lateinit var seatLayout: TableLayout
-    private val moviePriceTextView by lazy { findViewById<TextView>(R.id.reservation_movie_money) }
-    private val movieSelectableButton by lazy { findViewById<TextView>(R.id.btn_confirm) }
+
+    private val movieSelectableButton = binding.btnConfirm
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_reservation_seat)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+
+        binding = ActivityReservationSeatBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val ticket = intent.getSerializableExtraCompat(KEY_TICKET, Ticket::class.java)
-        seatLayout = findViewById<TableLayout>(R.id.tv_seat)
+        binding = ActivityReservationSeatBinding.inflate(layoutInflater)
+        seatLayout = binding.seatsLayout
 
-        checkTicket(ticket)
+        checkTicket()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -69,7 +74,9 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
         return super.onOptionsItemSelected(item)
     }
 
-    private fun checkTicket(ticket: Ticket?) {
+    private fun checkTicket() {
+        val ticket = intent.getSerializableExtraCompat(KEY_TICKET, Ticket::class.java)
+
         if (ticket == null) {
             handleInvalidTicket()
         } else {
@@ -110,13 +117,12 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
     }
 
     override fun showMovieName(movieName: String) {
-        val movieTitleTextView = findViewById<TextView>(R.id.reservation_movie_title)
-        movieTitleTextView.text = movieName
+        binding.reservationMovieTitle.text = movieName
     }
 
     override fun showTicketMoney(moviePrice: Int) {
         val priceFormatter = DecimalFormat(PRICE_PATTERN)
-        moviePriceTextView.text = getString(R.string.movie_money, priceFormatter.format(moviePrice))
+        binding.reservationMovieMoney.text = getString(R.string.movie_money, priceFormatter.format(moviePrice))
     }
 
     override fun setReservationButton(onClickConfirm: () -> Unit) {
