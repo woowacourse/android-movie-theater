@@ -24,11 +24,13 @@ class SeatSelectionPresenter(
     ) {
         val seat = Seat(row, col)
 
-        if (ticket.hasSeat(seat)) {
-            ticket = ticket.unselectSeat(seat)
-        } else {
-            ticket = ticket.selectSeat(seat)
-        }
+        ticket =
+            if (ticket.hasSeat(seat)) {
+                ticket.unselectSeat(seat)
+            } else {
+                if (ticket.canReserve()) return
+                ticket.selectSeat(seat)
+            }
 
         view.showSeatState(seat.toUiModel())
 

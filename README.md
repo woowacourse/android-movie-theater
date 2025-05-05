@@ -41,7 +41,7 @@
 - [x] Presenter | 반환값이 없도록 수정
 - [x] layout | ConstraintLayout 중첩 구조 개선
 
-- [ ] SeatSelectionActivity | 좌석을 더 선택할 수 있는 점 개선하기
+- [x] SeatSelectionActivity | 좌석을 더 선택할 수 있는 점 개선하기
 - [x] MainActivity | fragment 재사용에 대한 고민
 - [x] TheaterAdapter | inflate 위치 이동
 - [x] MovieFragment | Binding 객체 null 처리하기
