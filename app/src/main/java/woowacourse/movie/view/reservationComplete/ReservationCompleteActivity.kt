@@ -50,17 +50,20 @@ class ReservationCompleteActivity :
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    startActivity(MainActivity.getIntent(this@ReservationCompleteActivity))
-                    finish()
+                    navigateToMainActivity()
                 }
             },
         )
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        navigateToMainActivity()
+        return super.onSupportNavigateUp()
+    }
+
+    private fun navigateToMainActivity() {
         startActivity(MainActivity.getIntent(this))
         finish()
-        return super.onSupportNavigateUp()
     }
 
     override fun showMovieTicket(movieTicket: MovieTicket) {
