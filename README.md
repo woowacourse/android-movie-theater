@@ -92,3 +92,5 @@
 - [x] refactor: MovieBookingSeatActivity UI 테스트 코드 추가
 - 영화관 스크린, 예매할 좌석, 영화 제목, 총 가격, 확인 버튼, 인원 수 만큼 좌석 선택 후 확인 다이얼로그가 보이는지 테스트
 - xml 아이템 ID에 seat 접미사 추가
+
+- [x] refactor: 테스트 함수용 확장 함수 파일 분리

@@ -1,10 +1,5 @@
 package woowacourse.movie
 
-import androidx.test.espresso.ViewInteraction
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.Movies
@@ -15,10 +10,6 @@ import woowacourse.movie.domain.seat.BookingSeats
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-
-fun ViewInteraction.performClick(): ViewInteraction = this.perform(click())
-fun ViewInteraction.checkIsDisplayed(): ViewInteraction = this.check(matches(isDisplayed()))
-fun ViewInteraction.checkWithText(text: String): ViewInteraction = this.check(matches(withText(text)))
 
 object MovieFixture {
     const val HARRY_POTTER_TITLE = "해리포터와 마법사의 돌"
