@@ -43,7 +43,7 @@ class MovieAdapter(
 
         when (holder) {
             is MovieViewHolder -> holder.bind((item as MovieFeedUiModel.MovieItem).movie)
-            is AdViewHolder -> holder.binding(item as MovieFeedUiModel.AdvertisementItem)
+            is AdViewHolder -> holder.bind(item as MovieFeedUiModel.AdvertisementItem)
         }
     }
 

@@ -15,7 +15,7 @@ class AdViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 
     private val imgBanner: ImageView = binding.imgBanner
 
-    fun binding(item: MovieFeedUiModel.AdvertisementItem) {
+    fun bind(item: MovieFeedUiModel.AdvertisementItem) {
         imgBanner.setImageResource(item.imageId)
     }
 }
