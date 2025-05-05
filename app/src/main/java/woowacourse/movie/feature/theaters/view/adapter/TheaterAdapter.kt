@@ -9,22 +9,22 @@ import woowacourse.movie.feature.model.ScreeningUiModel
 class TheaterAdapter(
     private val items: List<ScreeningUiModel>,
     private val onBookingClick: (ScreeningUiModel) -> Unit,
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<TheaterViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): RecyclerView.ViewHolder {
+    ): TheaterViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemTheaterBinding.inflate(inflater, parent, false)
         return TheaterViewHolder(binding)
     }
 
     override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
+        holder: TheaterViewHolder,
         position: Int,
     ) {
         val item: ScreeningUiModel = items[position]
-        (holder as TheaterViewHolder).bind(item) { onBookingClick(item) }
+        holder.bind(item) { onBookingClick(item) }
     }
 
     override fun getItemCount(): Int = items.size
