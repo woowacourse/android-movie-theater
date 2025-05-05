@@ -53,12 +53,11 @@ class MovieFragment : Fragment(), MovieContract.View {
         movie: MovieUiModel,
     ) {
         val fragment = TheaterFragment()
-        val bundle = Bundle()
-
-        bundle.putParcelableArrayList(KEY_THEATERS, theaters)
-        bundle.putParcelable(KEY_MOVIE, movie)
-        fragment.arguments = bundle
-
+        fragment.arguments =
+            Bundle().apply {
+                putParcelableArrayList(KEY_THEATERS, theaters)
+                putParcelable(KEY_MOVIE, movie)
+            }
         fragment.show(parentFragmentManager, fragment.tag)
     }
 
