@@ -8,9 +8,11 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.DummyScreening
+import woowacourse.movie.domain.model.Cinema
+import woowacourse.movie.domain.model.ReservationCount
+import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.view.reservation.ReservationContract
 import woowacourse.movie.view.reservation.ReservationPresenter
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 class ReservationPresenterTest {
@@ -76,31 +78,25 @@ class ReservationPresenterTest {
 
     @Test
     fun `예약 시 조건이 맞으면 예약 정보를 넘긴다`() {
-        val now = LocalDateTime.of(2025, 4, 1, 12, 0)
+        val now = LocalDateTime.of(2025, 5, 29, 11, 0, 0)
         // given
         every { view.showMovieDetail(any()) } just Runs
         every { view.updateReservationCount(any()) } just Runs
+        every { view.navigateToSeatSelectionScreen(any()) } just Runs
 
         // when
         presenter.loadData(DummyScreening.dummyScreenings[0], 3)
         presenter.onReserve(now.toLocalDate(), now.toLocalTime())
         // then
-    }
-
-    @Test
-    fun `예매 가능한 날짜가 없는 경우 알려준다`() {
-        val dummyItem = DummyScreening.dummyScreenings[0]
-        // given
-        every { view.showMovieDetail(any()) } just Runs
-        every { view.updateReservationCount(any()) } just Runs
-        every { view.updateDateSet(any()) } just Runs
-        every { view.updateTimeSet(any()) } just Runs
-
-        every { view.notifyUnavailableDate() } just Runs
-        // when
-        presenter.loadData(dummyItem)
-        presenter.selectDate(LocalDate.now())
-        // then
-        verify { view.notifyUnavailableDate() }
+        verify {
+            view.navigateToSeatSelectionScreen(
+                ReservationInfo(
+                    title = "해리 포터와 마법사의 돌",
+                    reservationDateTime = LocalDateTime.of(now.toLocalDate(), now.toLocalTime()),
+                    reservationCount = ReservationCount(3),
+                    cinema = Cinema(1, "선릉"),
+                ),
+            )
+        }
     }
 }
