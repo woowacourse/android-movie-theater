@@ -38,7 +38,7 @@ class HomePresenterTest {
         every { view.showAdvertisement(any()) } just Runs
 
         // when:
-        presenter.onAdvertisementRequested("https://navar.com")
+        presenter.requestAdvertisement("https://navar.com")
 
         // then:
         verify { view.showAdvertisement(any()) }

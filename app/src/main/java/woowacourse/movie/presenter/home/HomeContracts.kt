@@ -17,6 +17,6 @@ interface HomeContracts {
 
         fun onTheaterRequested(movieId: Long)
 
-        fun onAdvertisementRequested(url: String)
+        fun requestAdvertisement(url: String)
     }
 }

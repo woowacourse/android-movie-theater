@@ -23,7 +23,7 @@ class HomePresenter(
         view.showTheaters(theaterMovieSchedules)
     }
 
-    override fun onAdvertisementRequested(url: String) {
+    override fun requestAdvertisement(url: String) {
         view.showAdvertisement(url)
     }
 }

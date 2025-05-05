@@ -52,7 +52,7 @@ class HomeFragment :
                             }
                         },
                     advertisementClickListener = {
-                        presenter.onAdvertisementRequested(
+                        presenter.requestAdvertisement(
                             ADVERTISEMENT_URL,
                         )
                     },
