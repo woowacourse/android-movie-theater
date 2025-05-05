@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.commit {
+            setReorderingAllowed(true)
             replace(R.id.fragment_container_view, fragment)
         }
     }

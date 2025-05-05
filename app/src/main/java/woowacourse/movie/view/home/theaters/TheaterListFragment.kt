@@ -2,6 +2,7 @@ package woowacourse.movie.view.home.theaters
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.data.TheaterStore
@@ -36,7 +37,10 @@ class TheaterListFragment :
     private fun initMovieId(): Int {
         return arguments?.getInt(KEY_MOVIE_ID) ?: run {
             activity?.showToast(getString(R.string.text_error))
-            parentFragmentManager.beginTransaction().remove(this).commit()
+            parentFragmentManager.commit {
+                setReorderingAllowed(true)
+                remove(this@TheaterListFragment)
+            }
             MOVIE_ID_NOT_INITIALIZED
         }
     }
