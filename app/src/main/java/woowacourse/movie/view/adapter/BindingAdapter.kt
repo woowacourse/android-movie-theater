@@ -18,10 +18,15 @@ fun setFormatLocalDate(
     startDate: LocalDate,
     endDate: LocalDate,
 ) {
-    val startDate: String = localDateToUI(startDate)
-    val endDate: String = localDateToUI(endDate)
+    val formattedStartDate: String = localDateToUI(startDate)
+    val formattedEndDate: String = localDateToUI(endDate)
 
-    textView.text = textView.context.getString(R.string.movie_screening_date, startDate, endDate)
+    textView.text =
+        textView.context.getString(
+            R.string.movie_screening_date,
+            formattedStartDate,
+            formattedEndDate,
+        )
 }
 
 @BindingAdapter("imageRes")
