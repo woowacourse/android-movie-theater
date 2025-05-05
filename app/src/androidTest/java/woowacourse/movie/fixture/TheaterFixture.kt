@@ -2,16 +2,16 @@ package woowacourse.movie.fixture
 
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieSchedule
-import woowacourse.movie.domain.model.ScreeningDateTime
 import woowacourse.movie.domain.model.ScreeningPeriod
-import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.TheaterSchedules
 import woowacourse.movie.domain.model.Theaters
 import java.time.LocalDate
-import java.time.LocalTime
+import java.time.LocalDateTime
 
 val MOVIE_HARRY_POTTER_AND_THE_PHILOSOPHERS_STONE =
     Movie(
+        1L,
         "해리 포터와 마법사의 돌",
         0,
         ScreeningPeriod(
@@ -23,6 +23,7 @@ val MOVIE_HARRY_POTTER_AND_THE_PHILOSOPHERS_STONE =
 
 val MOVIE_HARRY_POTTER_AND_THE_CHAMBER_OF_SECRETS =
     Movie(
+        2L,
         "해리 포터와 비밀의 방",
         0,
         ScreeningPeriod(
@@ -34,6 +35,7 @@ val MOVIE_HARRY_POTTER_AND_THE_CHAMBER_OF_SECRETS =
 
 val MOVIE_HARRY_POTTER_AND_THE_PRISONER_OF_AZKABAN =
     Movie(
+        3L,
         "해리 포터와 아즈카반의 죄수",
         0,
         ScreeningPeriod(
@@ -45,6 +47,7 @@ val MOVIE_HARRY_POTTER_AND_THE_PRISONER_OF_AZKABAN =
 
 val MOVIE_HARRY_POTTER_AND_THE_GOBLET_OF_FIRE =
     Movie(
+        4L,
         "해리 포터와 불의 잔",
         0,
         ScreeningPeriod(
@@ -54,173 +57,89 @@ val MOVIE_HARRY_POTTER_AND_THE_GOBLET_OF_FIRE =
         157,
     )
 
-val TEST_DUMMY_MOVIES =
-    listOf(
-        MOVIE_HARRY_POTTER_AND_THE_PHILOSOPHERS_STONE,
-        MOVIE_HARRY_POTTER_AND_THE_CHAMBER_OF_SECRETS,
-        MOVIE_HARRY_POTTER_AND_THE_PRISONER_OF_AZKABAN,
-        MOVIE_HARRY_POTTER_AND_THE_GOBLET_OF_FIRE,
-    )
-
-val SCHEDULE_HARRY_PHILOSOPHERS_STONE_2025_04_10_1300 =
-    MovieSchedule(
-        movie = MOVIE_HARRY_POTTER_AND_THE_PHILOSOPHERS_STONE,
-        screeningDateTime =
-            ScreeningDateTime(
-                screeningDate = LocalDate.of(2025, 4, 10),
-                screeningTime = LocalTime.of(13, 0),
-            ),
-        seat = Seats(),
-    )
-val SCHEDULE_HARRY_PHILOSOPHERS_STONE_2025_04_15_1630 =
-    MovieSchedule(
-        movie = MOVIE_HARRY_POTTER_AND_THE_PHILOSOPHERS_STONE,
-        screeningDateTime =
-            ScreeningDateTime(
-                screeningDate = LocalDate.of(2025, 4, 15),
-                screeningTime = LocalTime.of(16, 30),
-            ),
-        seat = Seats(),
-    )
-
-val SCHEDULE_HARRY_THE_CHAMBER_OF_SECRETS_2025_04_15_1630 =
-    MovieSchedule(
-        movie = MOVIE_HARRY_POTTER_AND_THE_CHAMBER_OF_SECRETS,
-        screeningDateTime =
-            ScreeningDateTime(
-                screeningDate = LocalDate.of(2025, 4, 15),
-                screeningTime = LocalTime.of(16, 30),
-            ),
-        seat = Seats(),
-    )
-
-val SCHEDULE_HARRY_THE_PRISONER_OF_AZKABAN_2025_05_03_2200 =
-    MovieSchedule(
-        movie = MOVIE_HARRY_POTTER_AND_THE_PRISONER_OF_AZKABAN,
-        screeningDateTime =
-            ScreeningDateTime(
-                screeningDate = LocalDate.of(2025, 5, 3),
-                screeningTime = LocalTime.of(22, 0),
-            ),
-        seat = Seats(),
-    )
-
-val SCHEDULE_HARRY_THE_CHAMBER_OF_SECRETS_2025_04_20_1200 =
-    MovieSchedule(
-        movie = MOVIE_HARRY_POTTER_AND_THE_CHAMBER_OF_SECRETS,
-        ScreeningDateTime(
-            screeningDate = LocalDate.of(2025, 4, 20),
-            screeningTime = LocalTime.of(12, 0),
-        ),
-        seat = Seats(),
-    )
-
-val SCHEDULE_HARRY_THE_CHAMBER_OF_SECRETS_2025_05_01_1200 =
-    MovieSchedule(
-        movie = MOVIE_HARRY_POTTER_AND_THE_CHAMBER_OF_SECRETS,
-        ScreeningDateTime(
-            screeningDate = LocalDate.of(2025, 5, 1),
-            screeningTime = LocalTime.of(12, 0),
-        ),
-        seat = Seats(),
-    )
-
-val SCHEDULE_HARRY_THE_CHAMBER_OF_SECRETS_2025_05_01_2300 =
-    MovieSchedule(
-        movie = MOVIE_HARRY_POTTER_AND_THE_CHAMBER_OF_SECRETS,
-        ScreeningDateTime(
-            screeningDate = LocalDate.of(2025, 5, 1),
-            screeningTime = LocalTime.of(23, 0),
-        ),
-        seat = Seats(),
-    )
-
-val SCHEDULE_HARRY_THE_PRISONER_OF_AZKABAN_2025_05_01_2300 =
-    MovieSchedule(
-        movie = MOVIE_HARRY_POTTER_AND_THE_PRISONER_OF_AZKABAN,
-        ScreeningDateTime(
-            screeningDate = LocalDate.of(2025, 5, 1),
-            screeningTime = LocalTime.of(23, 0),
-        ),
-        seat = Seats(),
-    )
-
-val SCHEDULE_HARRY_THE_PRISONER_OF_AZKABAN_2025_05_05_1130 =
-    MovieSchedule(
-        movie = MOVIE_HARRY_POTTER_AND_THE_PRISONER_OF_AZKABAN,
-        ScreeningDateTime(
-            screeningDate = LocalDate.of(2025, 5, 1),
-            screeningTime = LocalTime.of(23, 0),
-        ),
-        seat = Seats(),
-    )
-
-val SCHEDULE_HARRY_THE_GOBLET_OF_FIRE_2025_06_01_1900 =
-    MovieSchedule(
-        movie = MOVIE_HARRY_POTTER_AND_THE_GOBLET_OF_FIRE,
-        ScreeningDateTime(
-            screeningDate = LocalDate.of(2025, 6, 1),
-            screeningTime = LocalTime.of(19, 0),
-        ),
-        seat = Seats(),
-    )
-
-val SCHEDULE_HARRY_THE_GOBLET_OF_FIRE_2025_06_01_2200 =
-    MovieSchedule(
-        movie = MOVIE_HARRY_POTTER_AND_THE_GOBLET_OF_FIRE,
-        ScreeningDateTime(
-            screeningDate = LocalDate.of(2025, 6, 1),
-            screeningTime = LocalTime.of(22, 0),
-        ),
-        seat = Seats(),
-    )
-
-val TEST_MOVIE_SCHEDULES =
-    listOf(
-        SCHEDULE_HARRY_PHILOSOPHERS_STONE_2025_04_10_1300,
-        SCHEDULE_HARRY_PHILOSOPHERS_STONE_2025_04_15_1630,
-    )
-
 val THEATER_CGV_GANGNAM =
     Theater(
         name = "CGV 강남",
-        movieSchedules =
-            listOf(
-                SCHEDULE_HARRY_PHILOSOPHERS_STONE_2025_04_10_1300,
-                SCHEDULE_HARRY_THE_CHAMBER_OF_SECRETS_2025_04_15_1630,
-                SCHEDULE_HARRY_THE_PRISONER_OF_AZKABAN_2025_05_03_2200,
+        theaterSchedules =
+            TheaterSchedules(
+                mutableMapOf(
+                    1L to
+                        setOf(
+                            MovieSchedule(LocalDateTime.of(2025, 4, 10, 13, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 4, 10, 15, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 4, 10, 17, 0)),
+                        ),
+                    2L to
+                        setOf(
+                            MovieSchedule(LocalDateTime.of(2025, 4, 10, 13, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 10, 15, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 20, 17, 0)),
+                        ),
+                    4L to
+                        setOf(
+                            MovieSchedule(LocalDateTime.of(2025, 5, 1, 13, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 2, 15, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 3, 17, 0)),
+                        ),
+                ),
             ),
     )
 
 val THEATER_LOTTE_SINEMA =
     Theater(
         name = "롯데시네마 건대입구",
-        movieSchedules =
-            listOf(
-                SCHEDULE_HARRY_THE_CHAMBER_OF_SECRETS_2025_04_20_1200,
-                SCHEDULE_HARRY_THE_CHAMBER_OF_SECRETS_2025_05_01_1200,
-                SCHEDULE_HARRY_THE_CHAMBER_OF_SECRETS_2025_05_01_2300,
-                SCHEDULE_HARRY_THE_PRISONER_OF_AZKABAN_2025_05_01_2300,
+        theaterSchedules =
+            TheaterSchedules(
+                mutableMapOf(
+                    1L to
+                        setOf(
+                            MovieSchedule(LocalDateTime.of(2025, 4, 20, 13, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 10, 15, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 10, 17, 0)),
+                        ),
+                    2L to
+                        setOf(
+                            MovieSchedule(LocalDateTime.of(2025, 4, 10, 13, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 10, 15, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 20, 17, 0)),
+                        ),
+                    3L to
+                        setOf(
+                            MovieSchedule(LocalDateTime.of(2025, 5, 11, 13, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 12, 15, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 13, 17, 0)),
+                        ),
+                ),
             ),
     )
 
 val THEATER_MEGA_BOX =
     Theater(
         name = "메가박스 코엑스",
-        movieSchedules =
-            listOf(
-                SCHEDULE_HARRY_THE_PRISONER_OF_AZKABAN_2025_05_05_1130,
-                SCHEDULE_HARRY_THE_GOBLET_OF_FIRE_2025_06_01_1900,
-                SCHEDULE_HARRY_THE_GOBLET_OF_FIRE_2025_06_01_2200,
+        theaterSchedules =
+            TheaterSchedules(
+                mutableMapOf(
+                    1L to
+                        setOf(
+                            MovieSchedule(LocalDateTime.of(2025, 5, 8, 13, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 9, 15, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 9, 17, 0)),
+                        ),
+                    3L to
+                        setOf(
+                            MovieSchedule(LocalDateTime.of(2025, 5, 10, 13, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 12, 15, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 23, 17, 0)),
+                        ),
+                    4L to
+                        setOf(
+                            MovieSchedule(LocalDateTime.of(2025, 5, 1, 13, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 2, 15, 0)),
+                            MovieSchedule(LocalDateTime.of(2025, 5, 3, 17, 0)),
+                        ),
+                ),
             ),
     )
 
 val TEST_DUMMY_THEATERS =
-    Theaters(
-        theaters =
-            listOf(
-                THEATER_CGV_GANGNAM,
-                THEATER_LOTTE_SINEMA,
-                THEATER_MEGA_BOX,
-            ),
-    )
+    Theaters(theaters = listOf(THEATER_CGV_GANGNAM, THEATER_LOTTE_SINEMA, THEATER_MEGA_BOX))
