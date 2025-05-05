@@ -8,14 +8,14 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.DialogFragmentTheatersBinding
+import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity
 import woowacourse.movie.feature.model.ScreeningUiModel
 import woowacourse.movie.feature.theaters.view.adapter.TheaterAdapter
+import woowacourse.movie.util.getExtras
 
-class TheatersDialogFragment(
-    screenings: List<ScreeningUiModel>,
-    navigateToBookingDetail: (ScreeningUiModel) -> Unit,
-) : BottomSheetDialogFragment() {
-    private val theaterAdapter: TheaterAdapter by lazy { TheaterAdapter(screenings, navigateToBookingDetail) }
+class TheatersDialogFragment : BottomSheetDialogFragment() {
+    private val theaterAdapter: TheaterAdapter by lazy { TheaterAdapter(screenings, ::navigateToBookingDetail) }
+    private val screenings: List<ScreeningUiModel> by lazy { arguments?.getExtras(SCREENINGS_KEY) ?: emptyList() }
     private lateinit var binding: DialogFragmentTheatersBinding
 
     override fun onCreateView(
@@ -35,7 +35,22 @@ class TheatersDialogFragment(
         binding.theaterAdapter = theaterAdapter
     }
 
+    private fun navigateToBookingDetail(screening: ScreeningUiModel) {
+        val intent = BookingDetailActivity.newIntent(requireContext(), screening)
+        startActivity(intent)
+        dismiss()
+    }
+
     companion object {
         const val TAG = "SCREENS_DIALOG_FRAGMENT"
+        private const val SCREENINGS_KEY = "screenings"
+
+        fun newInstance(screenings: List<ScreeningUiModel>): TheatersDialogFragment =
+            TheatersDialogFragment().apply {
+                arguments =
+                    Bundle().apply {
+                        putParcelableArrayList(SCREENINGS_KEY, ArrayList(screenings))
+                    }
+            }
     }
 }
