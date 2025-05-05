@@ -7,7 +7,7 @@
 
         <variable
             name="image"
-            type="android.graphics.Bitmap" />
+            type="java.lang.Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

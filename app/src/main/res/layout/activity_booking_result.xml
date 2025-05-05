@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="woowacourse.movie.common.StringFormatter" />
+
         <variable
             name="ticket"
             type="woowacourse.movie.domain.model.Ticket" />
@@ -28,9 +30,9 @@
                 android:background="@color/purple_200"
                 android:gravity="bottom|center_horizontal"
                 android:paddingBottom="20dp"
+                android:text="@{String.format(@string/cancel_notice, ticket.theater.cancelableTime)}"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:text="@{String.format(@string/cancel_notice, ticket.theater.cancelableTime)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -61,10 +63,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:text="@{StringFormatter.dateTime(ticket.showtime)}"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:formattedDateTime="@{ticket.showtime}"
                     tools:text="2025.4.15 11:00" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -83,9 +85,9 @@
                         android:ellipsize="end"
                         android:gravity="center"
                         android:maxLines="1"
+                        android:text="@{String.format(@string/headCount_message, ticket.headCount.value)}"
                         android:textColor="@color/black"
                         android:textSize="20sp"
-                        app:formattedHeadCount="@{ticket.headCount}"
                         tools:text="일반 2명" />
 
                     <TextView
@@ -137,9 +139,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
+                    android:text="@{String.format(@string/summary_amount_message, ticket.totalPrice())}"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    app:formattedAmount="@{ticket.totalPrice()}"
                     tools:text="25,000원 (현장 결제)" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
