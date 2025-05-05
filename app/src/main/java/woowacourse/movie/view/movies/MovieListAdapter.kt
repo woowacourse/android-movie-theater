@@ -29,7 +29,7 @@ class MovieListAdapter(
                         parent,
                         false,
                     )
-                MovieViewHolder(binding)
+                MovieViewHolder(binding, eventListener)
             }
 
             ViewType.ITEM_AD -> {
@@ -55,7 +55,6 @@ class MovieListAdapter(
             is MovieListItem.MovieItem ->
                 (holder as MovieViewHolder).bind(
                     item.movie,
-                    eventListener,
                 )
         }
     }
