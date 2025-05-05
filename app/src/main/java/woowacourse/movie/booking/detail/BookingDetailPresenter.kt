@@ -27,9 +27,10 @@ class BookingDetailPresenter(
     ) {
         this.movie = movie
         this.theater = theater
+        this.ticket = createDefaultTicket()
     }
 
-    override fun setUpTicket() {
+    override fun presentTicketDetails() {
         view.showMovieInfo(movie)
         view.showHeadCount()
         view.showScreeningDates(
@@ -60,7 +61,13 @@ class BookingDetailPresenter(
         if (ticket.selectedTime == time) return
 
         ticket = ticket.updateTime(time)
-        view.showScreeningTimes(Scheduler.screeningTimes(ticket.selectedDate, theater.schedule.screeningTimes), ticket.selectedTime)
+        view.showScreeningTimes(
+            Scheduler.screeningTimes(
+                ticket.selectedDate,
+                theater.schedule.screeningTimes,
+            ),
+            ticket.selectedTime,
+        )
     }
 
     override fun increaseHeadCount() {
@@ -86,26 +93,30 @@ class BookingDetailPresenter(
         screeningDate: String?,
         screeningTime: String?,
     ) {
+        val restoredDate =
+            screeningDate?.let { formatStringDateDotSeparated(it) } ?: LocalDate.now()
+        val restoredTime =
+            screeningTime?.let { formatStringTimeWithMidnight24(it) } ?: LocalTime.now()
+
         ticket =
-            Ticket(
-                theater = theater.place,
-                title = movie.title,
+            ticket.copy(
                 headCount = HeadCount(headCount),
-                selectedDate = screeningDate?.let { formatStringDateDotSeparated(it) } ?: LocalDate.now(),
-                selectedTime = screeningTime?.let { formatStringTimeWithMidnight24(it) } ?: LocalTime.now(),
+                selectedDate = restoredDate,
+                selectedTime = restoredTime,
                 seats = Seats(emptyList()),
             )
+
+        presentTicketDetails()
     }
 
-    override fun createDefaultTicket() {
-        ticket =
-            Ticket(
-                theater = theater.place,
-                title = movie.title,
-                headCount = HeadCount(0),
-                selectedDate = LocalDate.now(),
-                selectedTime = LocalTime.now(),
-                seats = Seats(emptyList()),
-            )
+    override fun createDefaultTicket(): Ticket {
+        return Ticket(
+            theater = theater.place,
+            title = movie.title,
+            headCount = HeadCount(0),
+            selectedDate = LocalDate.now(),
+            selectedTime = LocalTime.now(),
+            seats = Seats(emptyList()),
+        )
     }
 }

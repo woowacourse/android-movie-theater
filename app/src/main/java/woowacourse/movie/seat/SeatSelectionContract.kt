@@ -25,5 +25,9 @@ interface SeatSelectionContract {
         fun onSeatClicked(seat: Seat)
 
         fun onButtonClicked()
+
+        fun getCurrentTicketUiModel(): TicketUiModel
+
+        fun restoreTicketData(seats: String)
     }
 }

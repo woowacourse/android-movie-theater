@@ -45,10 +45,9 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
             val screeningDate = savedInstanceState.getString(KEY_SCREENING_DATE)
             val screeningTime = savedInstanceState.getString(KEY_SCREENING_TIME)
             presenter.restoreTicketData(headCount, screeningDate, screeningTime)
-        } else {
-            presenter.createDefaultTicket()
         }
-        presenter.setUpTicket()
+
+        presenter.presentTicketDetails()
 
         initReserveConfirm()
 
@@ -68,7 +67,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
             IntentCompat.getParcelableExtra(intent, KEY_MOVIE_DATA, MovieUiModel::class.java)
         if (movie == null) {
             showToastErrorAndFinish(getString(R.string.booking_toast_message))
-            null
+            return null
         }
         return movie
     }
@@ -79,14 +78,13 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
 
         if (theater == null) {
             showToastErrorAndFinish(getString(R.string.booking_toast_message))
-            null
+            return null
         }
         return theater
     }
 
     private fun initReserveConfirm() {
-        val btnReserveConfirm = binding.btnSelectionConfirm
-        btnReserveConfirm.setOnClickListener {
+        binding.btnSelectionConfirm.setOnClickListener {
             presenter.confirmReservation()
         }
     }

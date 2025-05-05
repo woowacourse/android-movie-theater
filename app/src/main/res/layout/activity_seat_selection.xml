@@ -17,6 +17,7 @@
         android:fitsSystemWindows="true">
 
         <ScrollView
+            android:paddingBottom="78dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/seat_selection_background">
@@ -25,7 +26,6 @@
                 android:id="@+id/main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +49,8 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TableLayout
+                    android:layout_marginBottom="50dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:id="@+id/seat_table"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
@@ -395,11 +397,10 @@
                 tools:text="0원" />
 
             <TextView
-                android:enabled="false"
+                android:background="@color/btn_deactivate_background"
                 android:id="@+id/btn_booking_confirm"
                 android:layout_width="88dp"
                 android:layout_height="match_parent"
-                android:background="@color/btn_deactivate_background"
                 android:gravity="center"
                 android:text="@string/seat_selection_confirm_button"
                 android:textColor="@color/white"

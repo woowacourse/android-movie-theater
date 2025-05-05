@@ -52,7 +52,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
         if (ticket == null) {
             showToastErrorAndFinish(getString(R.string.booking_toast_message))
-            null
+            return null
         }
         return ticket
     }

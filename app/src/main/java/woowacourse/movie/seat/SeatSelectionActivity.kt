@@ -35,6 +35,14 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         val ticket = requireTicketOrFinish() ?: return
         presenter.initializeData(ticket)
 
+        savedInstanceState?.let { bundle ->
+            val seats = bundle.getString(KEY_SEATS)
+
+            if (!seats.isNullOrBlank()) {
+                presenter.restoreTicketData(seats)
+            }
+        }
+
         setupSeatClickListeners()
         setupConfirmButton()
 
@@ -58,7 +66,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             )
         if (ticket == null) {
             showToastErrorAndFinish(getString(R.string.booking_toast_message))
-            null
+            return null
         }
         return ticket
     }
@@ -85,10 +93,9 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun setupConfirmButton() {
-        binding.btnBookingConfirm.apply {
-            setBackgroundColor(ContextCompat.getColor(context, R.color.btn_deactivate_background))
-            setOnClickListener {
-                if (it.isEnabled) presenter.onButtonClicked()
+        binding.btnBookingConfirm.setOnClickListener {
+            if (it.isEnabled) {
+                presenter.onButtonClicked()
             }
         }
     }
@@ -131,8 +138,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             } else {
                 R.color.btn_deactivate_background
             }
-
-        confirmButton.setBackgroundColor(ContextCompat.getColor(this, colorRes))
+        confirmButton.setBackgroundResource(colorRes)
     }
 
     override fun showBookingAlertDialog(ticket: TicketUiModel) {
@@ -159,14 +165,23 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         return super.onSupportNavigateUp()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val ticketUiModel = presenter.getCurrentTicketUiModel()
+        if (ticketUiModel.seats.isNotBlank()) {
+            outState.putString(KEY_SEATS, ticketUiModel.seats)
+        }
+    }
+
     companion object {
         private const val KEY_TICKET = "ticketUiData"
+        private const val KEY_SEATS = "SEATS"
 
         fun createIntent(
             context: Context,
             ticket: TicketUiModel,
         ): Intent {
-            return Intent(context, BookingCompleteActivity::class.java).apply {
+            return Intent(context, SeatSelectionActivity::class.java).apply {
                 putExtra(KEY_TICKET, ticket)
             }
         }

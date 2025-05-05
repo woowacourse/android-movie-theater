@@ -1,5 +1,6 @@
 package woowacourse.movie.booking.detail
 
+import woowacourse.movie.model.Ticket
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
 import woowacourse.movie.ui.model.TicketUiModel
@@ -33,9 +34,9 @@ interface BookingDetailContract {
             theater: TheaterUiModel,
         )
 
-        fun setUpTicket()
+        fun presentTicketDetails()
 
-        fun createDefaultTicket()
+        fun createDefaultTicket(): Ticket
 
         fun restoreTicketData(
             headCount: Int,
