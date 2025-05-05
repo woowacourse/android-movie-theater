@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemAdvertisementBinding
 import woowacourse.movie.databinding.ItemMovieBinding
 
@@ -14,16 +13,16 @@ class MovieListAdapter(
 ) : RecyclerView.Adapter<ViewHolder>() {
     override fun getItemViewType(position: Int): Int =
         when (items[position]) {
-            is MovieListItem.AdItem -> R.layout.item_advertisement
-            is MovieListItem.MovieItem -> R.layout.item_movie
+            is MovieListItem.AdItem -> ViewType.ITEM_AD.ordinal
+            is MovieListItem.MovieItem -> ViewType.ITEM_MOVIE.ordinal
         }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): ViewHolder {
-        return when (viewType) {
-            R.layout.item_movie -> {
+        return when (ViewType.find(viewType)) {
+            ViewType.ITEM_MOVIE -> {
                 val binding =
                     ItemMovieBinding.inflate(
                         LayoutInflater.from(parent.context),
@@ -33,7 +32,7 @@ class MovieListAdapter(
                 MovieViewHolder(binding)
             }
 
-            R.layout.item_advertisement -> {
+            ViewType.ITEM_AD -> {
                 val binding =
                     ItemAdvertisementBinding.inflate(
                         LayoutInflater.from(parent.context),
@@ -42,11 +41,10 @@ class MovieListAdapter(
                     )
                 AdViewHolder(binding)
             }
-            else -> throw IllegalArgumentException()
         }
     }
 
-    override fun getItemCount(): Int = if (items.size >= 10_000) 10_000 else items.size
+    override fun getItemCount(): Int = if (items.size >= MAX_SIZE) MAX_SIZE else items.size
 
     override fun onBindViewHolder(
         holder: ViewHolder,
@@ -60,5 +58,9 @@ class MovieListAdapter(
                     eventListener,
                 )
         }
+    }
+
+    companion object {
+        private const val MAX_SIZE = 10_000
     }
 }
