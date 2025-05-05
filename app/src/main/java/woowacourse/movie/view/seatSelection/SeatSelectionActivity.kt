@@ -78,7 +78,7 @@ class SeatSelectionActivity :
             .setNegativeButton(getString(R.string.reservation_dialog_cancel)) { dialog, _ ->
                 dialog.dismiss()
             }.setPositiveButton(getString(R.string.reservation_dialog_complete)) { dialog, _ ->
-                presenter.onReservationCompleteRequested()
+                presenter.updateMovieTicket()
                 dialog.dismiss()
             }.show()
     }

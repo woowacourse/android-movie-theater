@@ -19,12 +19,12 @@ class HomePresenter(
         )
     }
 
-    override fun onTheaterRequested(movieId: Long) {
+    override fun updateTheater(movieId: Long) {
         val filteredSchedules = TheaterMovieSchedules().findTheaterMovieSchedulesById(movieId)
         view.showTheaters(filteredSchedules)
     }
 
-    override fun onAdvertisementRequested(url: String) {
+    override fun updateAdvertisement(url: String) {
         view.showAdvertisement(url)
     }
 }

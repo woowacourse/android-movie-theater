@@ -13,6 +13,6 @@ interface TheaterContracts {
     interface Presenter {
         fun updateTheaterMovieSchedules(theaterMovieSchedules: TheaterMovieSchedules)
 
-        fun onReservationRequested(theaterMovieSchedule: TheaterMovieSchedule)
+        fun updateTheaterMovieSchedule(theaterMovieSchedule: TheaterMovieSchedule)
     }
 }

@@ -37,7 +37,7 @@ class TheaterBottomSheetDialogFragment :
     private fun setupAdapter() {
         if (::theaterAdapter.isInitialized.not()) {
             theaterAdapter =
-                TheaterAdapter { presenter.onReservationRequested(it) }
+                TheaterAdapter { presenter.updateTheaterMovieSchedule(it) }
         }
 
         binding.theaters.adapter = theaterAdapter

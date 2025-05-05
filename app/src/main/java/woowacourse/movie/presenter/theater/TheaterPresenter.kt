@@ -10,7 +10,7 @@ class TheaterPresenter(
         view.showTheaterMovieSchedule(theaterMovieSchedules)
     }
 
-    override fun onReservationRequested(theaterMovieSchedule: TheaterMovieSchedule) {
+    override fun updateTheaterMovieSchedule(theaterMovieSchedule: TheaterMovieSchedule) {
         view.showReservationView(theaterMovieSchedule)
     }
 }

@@ -37,11 +37,11 @@ class HomeFragment :
                     movieClickListener =
                         object : MovieClickListener {
                             override fun onReservationClick(movieId: Long) {
-                                presenter.onTheaterRequested(movieId)
+                                presenter.updateTheater(movieId)
                             }
 
                             override fun onAdvertisementClick(url: String) {
-                                presenter.onAdvertisementRequested(url)
+                                presenter.updateAdvertisement(url)
                             }
                         },
                 )

@@ -42,7 +42,7 @@ class TheaterPresenterTest {
         every { view.showReservationView(any()) } just Runs
 
         // when
-        presenter.onReservationRequested(THEATER_MOVIE_SCHEDULE_LOTTE)
+        presenter.updateTheaterMovieSchedule(THEATER_MOVIE_SCHEDULE_LOTTE)
 
         // then
         verify {

@@ -38,7 +38,7 @@ class HomePresenterTest {
         every { view.showAdvertisement(any()) } just Runs
 
         // when:
-        presenter.onAdvertisementRequested("https://navar.com")
+        presenter.updateAdvertisement("https://navar.com")
 
         // then:
         verify { view.showAdvertisement(any()) }
@@ -50,7 +50,7 @@ class HomePresenterTest {
         every { view.showTheaters(any()) } just Runs
 
         // when
-        presenter.onTheaterRequested(1L)
+        presenter.updateTheater(1L)
 
         // then
         verify { view.showTheaters(any()) }

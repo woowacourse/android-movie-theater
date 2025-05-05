@@ -98,7 +98,7 @@ class ReservationPresenterTest {
         presenter.updateMovieData(THEATER_MOVIE_SCHEDULE_CGV)
 
         // when:
-        presenter.onMovieToReserveRequest()
+        presenter.updateMovieToReserve()
 
         // then:
         verify { view.showSeatSelectionView(any()) }

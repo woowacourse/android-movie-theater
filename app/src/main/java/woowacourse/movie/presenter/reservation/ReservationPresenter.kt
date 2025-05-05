@@ -53,7 +53,7 @@ class ReservationPresenter(
         }
     }
 
-    override fun onMovieToReserveRequest() {
+    override fun updateMovieToReserve() {
         val movieToReserve =
             MovieToReserve(
                 id = theaterMovieSchedule.movie.id,

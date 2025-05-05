@@ -15,8 +15,8 @@ interface HomeContracts {
     interface Presenter {
         fun updateView()
 
-        fun onTheaterRequested(movieId: Long)
+        fun updateTheater(movieId: Long)
 
-        fun onAdvertisementRequested(url: String)
+        fun updateAdvertisement(url: String)
     }
 }

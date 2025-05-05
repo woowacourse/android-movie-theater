@@ -68,7 +68,7 @@ class ReservationActivity :
         }
 
         binding.btnReservationSelectComplete.setOnClickListener {
-            presenter.onMovieToReserveRequest()
+            presenter.updateMovieToReserve()
         }
     }
 
