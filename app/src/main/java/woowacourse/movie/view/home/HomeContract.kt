@@ -1,6 +1,7 @@
 package woowacourse.movie.view.home
 
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.MovieItem
 import woowacourse.movie.domain.Showings
 
 interface HomeContract {
@@ -16,7 +17,7 @@ interface HomeContract {
     }
 
     interface View {
-        fun showMovies(movies: List<Movie>)
+        fun showMovies(movieItems: List<MovieItem>)
 
         fun showTheaterSelectDialog(movie: Movie)
 

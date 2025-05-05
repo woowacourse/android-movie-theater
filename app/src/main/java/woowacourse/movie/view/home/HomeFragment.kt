@@ -45,15 +45,7 @@ class HomeFragment : Fragment(), HomeContract.View {
         _binding = null
     }
 
-    override fun showMovies(movies: List<Movie>) {
-        val movieItems = mutableListOf<MovieItem>()
-        movies.forEachIndexed { index, movie ->
-            movieItems.add(MovieItem.ItemMovie(movie))
-            if ((index + 1) % 3 == 0) {
-                movieItems.add(MovieItem.ItemAd)
-            }
-        }
-
+    override fun showMovies(movieItems: List<MovieItem>) {
         movieAdapter =
             MovieAdapter(
                 object : OnMovieEventListener {

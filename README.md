@@ -52,7 +52,7 @@
 - [ ] Showings | 구조 개선 고안
 - [x] MainActivity | BotNav 중복 코드 제거 
 - [x] HomeFragment | Fragment 생명 주기에 따른 binding 해제 관련
-- [ ] HomeFragment | 광고 반복 로직 비지니스 로직으로 변경
+- [x] HomeFragment | 광고 반복 로직 비지니스 로직으로 변경
 - [x] HomeFragment | 사용하지 않는 파라미터 제거
 - [ ] HomeFragment | 생성자로 데이터 주입받기
 - [x] HomeFragment | 반복되는 뷰 함수 호출 로직 개선
