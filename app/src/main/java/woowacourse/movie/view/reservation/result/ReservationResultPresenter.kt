@@ -1,16 +1,14 @@
 package woowacourse.movie.view.reservation.result
 
-import woowacourse.movie.domain.model.ReservationInfo
+import woowacourse.movie.domain.model.Ticket
 
 class ReservationResultPresenter(
     private var view: ReservationResultContract.View,
 ) : ReservationResultContract.Presenter {
-    override fun loadReservationInfo(reservationInfo: ReservationInfo?) {
-        reservationInfo?.let {
-            view.showReservationResult(reservationInfo)
+    override fun loadReservationInfo(ticket: Ticket?) {
+        ticket?.let {
+            view.showReservationResult(ticket)
             return
         }
-        // 오류 처리
-        if (reservationInfo == null) throw IllegalArgumentException("받아올 값이 없습니다")
     }
 }

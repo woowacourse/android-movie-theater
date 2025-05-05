@@ -15,6 +15,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seat
+import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.base.BaseActivity
 import woowacourse.movie.view.extension.getParcelableCompat
 import woowacourse.movie.view.reservation.result.ReservationResultActivity
@@ -23,6 +24,7 @@ class SeatSelectionActivity :
     BaseActivity<ActivitySeatSelectionBinding>(R.layout.activity_seat_selection),
     SeatSelectionContract.View {
     private val presenter: SeatSelectionPresenter by lazy { SeatSelectionPresenter(this) }
+    private val seats: MutableList<Seat> = mutableListOf()
 
     private val showReservationDialog by lazy {
         AlertDialog
@@ -68,10 +70,7 @@ class SeatSelectionActivity :
             }
     }
 
-    override fun updateSeatSelection(
-        seat: Seat,
-        isSelected: Boolean,
-    ) {
+    override fun updateSeatSelection(seat: Seat) {
         binding.tlSeat
             .children
             .filterIsInstance<TableRow>()
@@ -81,7 +80,7 @@ class SeatSelectionActivity :
             ?.elementAtOrNull(seat.column)
             ?.apply {
                 background =
-                    if (isSelected) {
+                    if (seat.isSelected) {
                         ContextCompat.getDrawable(context, R.color.yellow)
                     } else {
                         ContextCompat.getDrawable(context, R.color.white)
@@ -106,8 +105,8 @@ class SeatSelectionActivity :
         showReservationDialog.show()
     }
 
-    override fun navigateToResult(reservationInfo: ReservationInfo) {
-        startActivity(ReservationResultActivity.newIntent(this, reservationInfo))
+    override fun navigateToResult(ticket: Ticket) {
+        startActivity(ReservationResultActivity.newIntent(this, ticket))
     }
 
     private fun submitReservation() {

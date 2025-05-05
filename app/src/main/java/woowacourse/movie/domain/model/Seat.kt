@@ -9,10 +9,10 @@ data class Seat(
     val column: Int,
     var isSelected: Boolean = false,
 ) : Parcelable {
-
     init {
         require(row in 0..MAX_ROW) { ERR_INVALID_ROW }
     }
+
     fun price() = SeatGrade.of(this).price
 
     companion object {

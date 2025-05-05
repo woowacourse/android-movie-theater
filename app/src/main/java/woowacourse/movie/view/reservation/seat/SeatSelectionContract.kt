@@ -3,16 +3,13 @@ package woowacourse.movie.view.reservation.seat
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.SeatFactory
-import woowacourse.movie.domain.model.TicketMachine
+import woowacourse.movie.domain.model.Ticket
 
 interface SeatSelectionContract {
     interface View {
         fun showSeats(seats: List<Seat>)
 
-        fun updateSeatSelection(
-            seat: Seat,
-            isSelected: Boolean,
-        )
+        fun updateSeatSelection(seat: Seat)
 
         fun showTotalPrice(price: Int)
 
@@ -22,7 +19,7 @@ interface SeatSelectionContract {
 
         fun showReservationDialog()
 
-        fun navigateToResult(reservationInfo: ReservationInfo)
+        fun navigateToResult(ticket: Ticket)
     }
 
     interface Presenter {
@@ -40,9 +37,9 @@ class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
 ) : SeatSelectionContract.Presenter {
     private var reservationInfo: ReservationInfo? = null
+    private var ticket: Ticket? = null
 
     private val seatFactory = SeatFactory.default()
-    private val ticketMachine = TicketMachine()
 
     override fun loadSeats(reservationInfo: ReservationInfo?) {
         val seats = seatFactory.createSeats()
@@ -54,8 +51,12 @@ class SeatSelectionPresenter(
 
     override fun selectSeat(seat: Seat) {
         try {
-            reservationInfo?.updateSeats(seat)
-            view.updateSeatSelection(seat, seat.isSelected)
+            ticket ?: let {
+                ticket = reservationInfo?.toTicket(listOf())
+            }
+            ticket = ticket?.updateSeats(seat)
+
+            view.updateSeatSelection(seat)
             updateScreen()
         } catch (e: IllegalArgumentException) {
             view.showError(e.message ?: "좌석 선택 오류")
@@ -63,11 +64,14 @@ class SeatSelectionPresenter(
     }
 
     private fun updateScreen() {
-        view.showTotalPrice(reservationInfo?.totalPrice() ?: throw IllegalArgumentException())
+        view.showTotalPrice(ticket?.totalPrice() ?: 0)
         view.enableConfirmButton(canCompleteReservation())
     }
 
-    private fun canCompleteReservation(): Boolean = reservationInfo?.let { ticketMachine.canPublish(it) } ?: false
+    private fun canCompleteReservation(): Boolean =
+        ticket?.let {
+            it.seats.size == it.reservationCount.value
+        } ?: false
 
     override fun showConfirmButton() {
         if (canCompleteReservation()) {
@@ -78,8 +82,7 @@ class SeatSelectionPresenter(
     }
 
     override fun completeReservation() {
-        reservationInfo?.let {
-            ticketMachine.publishTickets(it)
+        ticket?.let {
             view.navigateToResult(it)
         }
     }

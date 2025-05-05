@@ -21,11 +21,4 @@ class ReservationInfoTest {
             { assertThat(reservationInfo.reservationCount.value).isEqualTo(2) },
         )
     }
-
-    @Test
-    fun `영화_예매_인원_수에_따라_티켓_금액을_계산할_수_있다`() {
-        val ticketPrice = reservationInfo.totalPrice()
-        val expected = 26000
-        assertThat(ticketPrice).isEqualTo(expected)
-    }
 }
