@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@{movie.poster}"
+                app:drawableResource="@{movie.poster}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_percent="0.80"
                 app:layout_constraintStart_toStartOf="parent"
