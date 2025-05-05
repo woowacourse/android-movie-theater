@@ -17,7 +17,6 @@ import woowacourse.movie.feature.bookingdetail.view.adapter.TimeAdapter
 import woowacourse.movie.feature.bookingseat.view.BookingSeatActivity
 import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.model.MovieDateUiModel
-import woowacourse.movie.feature.model.MovieTimeUiModel
 import woowacourse.movie.feature.model.ScreeningUiModel
 import woowacourse.movie.util.getExtra
 
@@ -112,9 +111,8 @@ class BookingDetailActivity :
                     position: Int,
                     id: Long,
                 ) {
-                    val selectedDate =
-                        MovieDateUiModel.from(parent?.getItemAtPosition(position) as String)
-                    presenter.selectDate(selectedDate.toString())
+                    val selectedDate = parent?.getItemAtPosition(position) as String
+                    presenter.selectDate(selectedDate)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -130,9 +128,8 @@ class BookingDetailActivity :
                     position: Int,
                     id: Long,
                 ) {
-                    val selectedTime =
-                        MovieTimeUiModel.from(parent?.getItemAtPosition(position) as String)
-                    presenter.selectTime(selectedTime.toString())
+                    val selectedTime = parent?.getItemAtPosition(position) as String
+                    presenter.selectTime(selectedTime)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit
