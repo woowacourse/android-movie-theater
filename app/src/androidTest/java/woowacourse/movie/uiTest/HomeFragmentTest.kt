@@ -32,13 +32,13 @@ class HomeFragmentTest {
     }
 
     @Test
-    fun `영화목록_첫번째아이템_해리포터가_표시된다`() {
+    fun `영화목록_첫번째아이템_영화제목이_표시된다`() {
         onView(withText("해리포터"))
             .check(matches(isDisplayed()))
     }
 
     @Test
-    fun `영화목록_스크롤하여_어거스트러쉬가_표시된다`() {
+    fun `영화목록_스크롤하여_영화제목이_표시된다`() {
         onView(withId(R.id.recycler_view))
             .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(7))
 

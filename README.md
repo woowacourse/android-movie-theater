@@ -49,7 +49,7 @@
 
 ### 피드백 반영
 
-- [ ] HomeFragmentTest | 테스트 명 변경
+- [x] HomeFragmentTest | 테스트 명 변경
 - [ ] Movie | UiModel 만들기
 - [ ] MovieItem | Movie 네이밍 변경
 - [ ] ScheduleTime | 메서드 분리
