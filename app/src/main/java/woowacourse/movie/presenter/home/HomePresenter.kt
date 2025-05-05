@@ -7,8 +7,6 @@ import woowacourse.movie.view.home.MovieType
 class HomePresenter(
     private val view: HomeContracts.View,
 ) : HomeContracts.Presenter {
-    private lateinit var theaterMovieSchedules: TheaterMovieSchedules
-
     override fun updateView() {
         view.showMovies(
             Movie.values.mapIndexed { i, v ->
@@ -22,14 +20,8 @@ class HomePresenter(
     }
 
     override fun onTheaterRequested(movieId: Long) {
-        theaterMovieSchedules = TheaterMovieSchedules()
-        val theaterMovieSchedules =
-            TheaterMovieSchedules(
-                theaterMovieSchedules.findTheaterMovieSchedulesById(
-                    movieId,
-                ),
-            )
-        view.showTheaters(theaterMovieSchedules)
+        val filteredSchedules = TheaterMovieSchedules().findTheaterMovieSchedulesById(movieId)
+        view.showTheaters(filteredSchedules)
     }
 
     override fun onAdvertisementRequested(url: String) {

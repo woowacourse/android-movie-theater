@@ -8,11 +8,13 @@ import java.time.LocalTime
 data class TheaterMovieSchedules(
     val value: Set<TheaterMovieSchedule> = values,
 ) : Serializable {
-    fun findTheaterMovieSchedulesById(movieId: Long): Set<TheaterMovieSchedule> =
-        value
-            .filter {
-                it.movie.id == movieId
-            }.toSet()
+    fun findTheaterMovieSchedulesById(movieId: Long): TheaterMovieSchedules =
+        TheaterMovieSchedules(
+            value
+                .filter {
+                    it.movie.id == movieId
+                }.toSet(),
+        )
 
     companion object {
         private val theaters =

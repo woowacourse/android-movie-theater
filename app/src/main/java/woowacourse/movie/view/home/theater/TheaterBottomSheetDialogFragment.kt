@@ -8,12 +8,13 @@ import woowacourse.movie.databinding.BottomSheetFragmentTheaterBinding
 import woowacourse.movie.model.theater.TheaterMovieSchedule
 import woowacourse.movie.model.theater.TheaterMovieSchedules
 import woowacourse.movie.presenter.theater.TheaterContracts
+import woowacourse.movie.presenter.theater.TheaterPresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.extension.showShortToast
 import woowacourse.movie.view.reservation.ReservationActivity
 
 class TheaterBottomSheetDialogFragment :
-    BottomSheetDialogFragment(R.layout.fragment_reservation_details),
+    BottomSheetDialogFragment(R.layout.bottom_sheet_fragment_theater),
     TheaterContracts.View {
     private var _binding: BottomSheetFragmentTheaterBinding? = null
     private val binding get() = _binding!!
@@ -28,7 +29,7 @@ class TheaterBottomSheetDialogFragment :
         super.onViewCreated(view, savedInstanceState)
 
         _binding = BottomSheetFragmentTheaterBinding.bind(view)
-
+        presenter = TheaterPresenter(this)
         setupAdapter()
         presenter.updateTheaterMovieSchedules(
             arguments?.getSerializableExtraData<TheaterMovieSchedules>(
