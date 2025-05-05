@@ -12,27 +12,19 @@ import woowacourse.movie.fixture.SEAT_C1
 import woowacourse.movie.fixture.SEOLLEUNG
 import woowacourse.movie.fixture.createTicket
 import woowacourse.movie.mapper.toUiModel
-import woowacourse.movie.model.Ticket
 import woowacourse.movie.ui.model.TicketUiModel
 
-class SchedulerCompletePresenterTest {
+class BookingCompletePresenterTest {
     private lateinit var presenter: BookingCompletePresenter
     private lateinit var mockView: BookingCompleteContract.View
-    private lateinit var mockTicket: Ticket
     private lateinit var mockTicketUiData: TicketUiModel
 
     @BeforeEach
     fun setUp() {
         mockView = mockk(relaxed = true)
 
-        val seats =
-            listOf(
-                SEAT_A1,
-                SEAT_A2,
-                SEAT_C1,
-            )
-
-        mockTicket = createTicket(SEOLLEUNG, seats)
+        val seats = listOf(SEAT_A1, SEAT_A2, SEAT_C1)
+        val mockTicket = createTicket(SEOLLEUNG, seats)
 
         mockTicketUiData = mockTicket.toUiModel()
 
@@ -41,8 +33,10 @@ class SchedulerCompletePresenterTest {
 
     @Test
     fun `영화 예매 정보를 화면에 표시할 수 있다`() {
+        // given & when
         presenter.initializeData(mockTicketUiData)
 
+        // then
         verify { mockView.showBookingCompleteResult(mockTicketUiData) }
         verify {
             mockView.showBookingCompleteResult(

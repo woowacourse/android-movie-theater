@@ -42,7 +42,7 @@ class MovieFragment : Fragment(), MovieContract.View {
     override fun setupMovieList(movies: List<MovieFeedUiModel>) {
         val adapter =
             MovieAdapter(movies) { movie ->
-                presenter.setTheaters(movie)
+                presenter.selectMovie(movie)
             }
         val recyclerView = binding.recyclerViewLayout
         recyclerView.adapter = adapter

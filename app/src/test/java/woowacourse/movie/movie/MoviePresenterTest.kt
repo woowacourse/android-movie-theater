@@ -5,36 +5,28 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.fixture.HARRY_POTTER
-import woowacourse.movie.fixture.STAR_IS_BORN
 import woowacourse.movie.fixture.createMovie
 import woowacourse.movie.mapper.toUiModel
-import woowacourse.movie.model.Movie
 
 class MoviePresenterTest {
     private lateinit var presenter: MoviePresenter
     private lateinit var mockView: MovieContract.View
-    private lateinit var mockMovieList: List<Movie>
 
     @BeforeEach
     fun setUp() {
         mockView = mockk(relaxed = true)
-        mockMovieList =
-            listOf(
-                createMovie(HARRY_POTTER),
-                createMovie(STAR_IS_BORN),
-            )
-
         presenter = MoviePresenter(view = mockView)
     }
 
     @Test
-    fun `지금 예매 버튼을 누르면 다음 화면으로 넘어간다`() {
-        val movie =
-            createMovie(HARRY_POTTER)
+    fun `영화를 고르면 영화관 선택 다이얼로그를 띄운다`() {
+        // given
+        val movieUiData = createMovie(HARRY_POTTER).toUiModel()
 
-        val movieUiData = movie.toUiModel()
-        presenter.setTheaters(movieUiData)
+        // when
+        presenter.selectMovie(movieUiData)
 
+        // then
         verify { mockView.showTheaterDialog(any(), movieUiData) }
     }
 }

@@ -17,6 +17,6 @@ interface MovieContract {
     interface Presenter {
         fun initializeData()
 
-        fun setTheaters(movie: MovieUiModel)
+        fun selectMovie(movie: MovieUiModel)
     }
 }

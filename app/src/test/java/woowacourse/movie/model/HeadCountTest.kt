@@ -2,32 +2,47 @@ package woowacourse.movie.model
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class HeadCountTest {
     @Test
-    fun `인원수가 0명인 경우에 minus를 호출해도 인원수가 줄어들지 않는다`() {
+    fun `인원수가 1명인 경우에 minus를 호출해도 인원수가 줄어들지 않는다`() {
+        // given
         val headCount = HeadCount(0)
-        val newHeadCount = headCount.minus()
 
+        // when
+        val actual = headCount.minus()
         val expected = HeadCount(0)
-        assertEquals(newHeadCount, expected)
+
+        // given
+        assertEquals(actual, expected)
     }
 
-    @Test
-    fun `인원수가 3명인 경우에 minus를 호출하면 인원수가 줄어든다`() {
-        val headCount = HeadCount(3)
-        val newHeadCount = headCount.minus()
+    @ParameterizedTest
+    @ValueSource(ints = [2, 4, 10, 25])
+    fun `인원수가 2명 이상인 경우에 minus를 호출하면 인원수가 줄어든다`(count: Int) {
+        // given
+        val headCount = HeadCount(count)
 
-        val expected = HeadCount(2)
-        assertEquals(newHeadCount, expected)
+        // when
+        val actual = headCount.minus()
+        val expected = HeadCount(count - 1)
+
+        // then
+        assertEquals(actual, expected)
     }
 
     @Test
     fun `plus를 호출하면 인원수가 증가한다`() {
-        val headCount = HeadCount(0)
-        val newHeadCount = headCount.plus()
+        // given
+        val headCount = HeadCount(1)
 
-        val expected = HeadCount(1)
-        assertEquals(newHeadCount, expected)
+        // when
+        val actual = headCount.plus()
+        val expected = HeadCount(2)
+
+        // then
+        assertEquals(actual, expected)
     }
 }

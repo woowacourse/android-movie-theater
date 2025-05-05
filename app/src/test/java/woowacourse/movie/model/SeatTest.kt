@@ -8,9 +8,15 @@ import woowacourse.movie.fixture.SEAT_A1
 class SeatTest {
     @Test
     fun `좌석의 이름에 맞는 등급을 확인할 수 있다`() {
+        // given
         val seat = SEAT_A1
 
-        assertThat(seat.grade).isEqualTo(SeatGrade.B)
+        // when
+        val actual = seat.grade
+        val expected = SeatGrade.B
+
+        // then
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test

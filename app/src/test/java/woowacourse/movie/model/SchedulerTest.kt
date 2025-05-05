@@ -1,6 +1,6 @@
 package woowacourse.movie.model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.fixture.HARRY_POTTER
@@ -13,12 +13,13 @@ class SchedulerTest {
 
     @BeforeEach
     fun setUp() {
-        movie =
-            createMovie(HARRY_POTTER)
+        movie = createMovie(HARRY_POTTER)
     }
 
     @Test
     fun `상영일자에 맞는 상영일들을 가져온다`() {
+        // when
+        val actual = Scheduler.screeningPeriods(movie)
         val expected =
             localDates(
                 "2025-05-10",
@@ -29,19 +30,21 @@ class SchedulerTest {
                 "2025-05-15",
             )
 
-        val actual = Scheduler.screeningPeriods(movie)
-
-        Assertions.assertThat(actual).isEqualTo(expected)
+        // then
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
     fun `현재 시간을 기준으로 예매 가능한 시간들을 가져온다`() {
-        val expected =
-            localTimes("11:00", "12:00")
+        // given
+        val times: List<LocalTime> = localTimes("11:00", "12:00")
 
-        val actual = Scheduler.screeningTimes(LocalDate.of(2025, 4, 10), expected)
+        // when
+        val actual = Scheduler.screeningTimes(LocalDate.of(3025, 4, 10), times)
+        val expected = localTimes("11:00", "12:00")
 
-        Assertions.assertThat(actual).isEqualTo(expected)
+        // then
+        assertThat(actual).isEqualTo(expected)
     }
 
     private fun localDates(vararg dates: String): List<LocalDate> {

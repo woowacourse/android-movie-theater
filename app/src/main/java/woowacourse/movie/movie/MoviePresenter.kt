@@ -23,7 +23,7 @@ class MoviePresenter(
         return theater.map { it.screeningInfos }.flatten().map { it.movie }.distinct()
     }
 
-    override fun setTheaters(movie: MovieUiModel) {
+    override fun selectMovie(movie: MovieUiModel) {
         val domainMovie = movie.toDomain()
 
         val domainTheaters = theater.filter { it.screeningInfos.map { it.movie }.contains(domainMovie) }

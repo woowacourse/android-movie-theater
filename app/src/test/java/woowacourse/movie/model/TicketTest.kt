@@ -40,47 +40,42 @@ class TicketTest {
 
     @Test
     fun `예매 인원에 맞는 금액을 계산한다`() {
+        // given
         val ticket = createTicket(SEOLLEUNG, listOf())
+
+        // when
+        val actual = ticket.amount
         val expected = 0
 
-        val actual = ticket.amount
-
-        assertEquals(expected, actual)
-    }
-
-    @Test
-    fun `예매 인원과  좌석별 등급에 맞는 금액을 계산한다`() {
-        val seats = listOf(SEAT_A1, SEAT_A2)
-        val ticket = createTicket(SEOLLEUNG, seats)
-
-        val expected = 20000
-
-        val actual = ticket.amount
-
+        // then
         assertEquals(expected, actual)
     }
 
     @Test
     fun `예매 인원과 좌석별 등급에 맞는 금액을 계산한다`() {
+        // given
         val seats = listOf(SEAT_A1, SEAT_A2)
         val ticket = createTicket(SEOLLEUNG, seats)
 
+        // when
+        val actual = ticket.amount
         val expected = 20000
 
-        val actual = ticket.amount
-
+        // then
         assertEquals(expected, actual)
     }
 
     @Test
     fun `예매 인원과 좌석별 등급에 맞는 금액을 계산한다2`() {
+        // given
         val seats = listOf(SEAT_C1, SEAT_A2)
         val ticket = createTicket(SEOLLEUNG, seats)
 
+        // when
+        val actual = ticket.amount
         val expected = 25000
 
-        val actual = ticket.amount
-
+        // then
         assertEquals(expected, actual)
     }
 }
