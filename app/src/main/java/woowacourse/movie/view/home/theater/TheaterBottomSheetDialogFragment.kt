@@ -30,7 +30,11 @@ class TheaterBottomSheetDialogFragment :
 
         _binding = BottomSheetFragmentTheaterBinding.bind(view)
         presenter = TheaterPresenter(this)
+        updateTheaters()
         setupAdapter()
+    }
+
+    private fun updateTheaters() {
         presenter.updateTheaterMovieSchedules(
             arguments?.getSerializableExtraData<TheaterMovieSchedules>(
                 THEATER_KEY,
