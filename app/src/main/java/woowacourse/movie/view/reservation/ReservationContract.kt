@@ -24,13 +24,11 @@ interface ReservationContract {
         fun notifyUnavailableDate()
 
         fun navigateToSeatSelectionScreen(reservationInfo: ReservationInfo)
-
-        fun notifyInvalidReservationInfo()
     }
 
     interface Presenter {
         fun loadData(
-            screening: Screening?,
+            screening: Screening,
             count: Int? = null,
             dateTime: String? = null,
         )
@@ -42,8 +40,8 @@ interface ReservationContract {
         fun selectDate(date: LocalDate)
 
         fun onReserve(
-            reservationDate: LocalDate?,
-            reservationTime: LocalTime?,
+            reservationDate: LocalDate,
+            reservationTime: LocalTime,
         )
     }
 }

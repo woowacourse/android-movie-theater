@@ -50,7 +50,7 @@ class ReservationActivity :
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val screening = intent?.getParcelableCompat<Screening>(BUNDLE_KEY_MOVIE)
+        val screening = intent.getParcelableCompat<Screening>(BUNDLE_KEY_MOVIE)
         val count = savedInstanceState?.getInt(RESTORE_BUNDLE_KEY_RESERVATION_NUMBER)
         val reservationDateTime =
             savedInstanceState?.getString(RESTORE_BUNDLE_KEY_RESERVATION_DATETIME)
@@ -60,18 +60,13 @@ class ReservationActivity :
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        val selectedDate = binding.spinnerReservationDate.selectedItem as? LocalDate
-        val selectedTime = binding.spinnerReservationTime.selectedItem as? LocalTime
-
+        val selectedDate = binding.spinnerReservationDate.selectedItem as LocalDate
+        val selectedTime = binding.spinnerReservationTime.selectedItem as LocalTime
         val reservationDateTime =
-            if (selectedDate != null && selectedTime != null) {
-                LocalDateTime.of(
-                    selectedDate,
-                    selectedTime,
-                )
-            } else {
-                ""
-            }
+            LocalDateTime.of(
+                selectedDate,
+                selectedTime,
+            )
 
         outState.apply {
             putString(RESTORE_BUNDLE_KEY_RESERVATION_DATETIME, reservationDateTime.toString())
@@ -85,10 +80,6 @@ class ReservationActivity :
     override fun showMovieDetail(screening: Screening) {
         setMovieInfo(screening)
         setupDateSpinner()
-    }
-
-    override fun notifyInvalidReservationInfo() {
-        showToast(getString(R.string.invalid_reservation_message))
     }
 
     override fun updateReservationCount(count: Int) {
@@ -145,8 +136,8 @@ class ReservationActivity :
 
     fun submitReservation(view: View) {
         presenter.onReserve(
-            reservationDate = binding.spinnerReservationDate.selectedItem as? LocalDate,
-            reservationTime = binding.spinnerReservationTime.selectedItem as? LocalTime,
+            reservationDate = binding.spinnerReservationDate.selectedItem as LocalDate,
+            reservationTime = binding.spinnerReservationTime.selectedItem as LocalTime,
         )
     }
 
