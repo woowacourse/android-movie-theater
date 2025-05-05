@@ -46,5 +46,5 @@
 - [x] TheaterAdapter | inflate 위치 이동
 - [ ] MovieFragment | Binding 객체 null 처리하기
 - [ ] MovieFragment | Bundle 사용 시 스코프 함수 활용
-- [ ] Ticket | 불변 객체 보장
+- [x] Ticket | 불변 객체 보장
 - [ ] SeatSelectionActivityTest | 중복되는 코드 함수로 분리

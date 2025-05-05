@@ -1,7 +1,7 @@
 package woowacourse.movie.model
 
 class Seats(values: Set<Seat> = setOf()) {
-    private val _seats: MutableSet<Seat> = values.toMutableSet()
+    private val _seats: Set<Seat> = values.toSet()
     val seats: Set<Seat> get() = _seats.toSet()
 
     val amount: Int
@@ -11,11 +11,7 @@ class Seats(values: Set<Seat> = setOf()) {
         return _seats.contains(seat)
     }
 
-    operator fun minus(seat: Seat) {
-        _seats.remove(seat)
-    }
+    operator fun plus(seat: Seat): Seats = Seats(_seats + seat)
 
-    operator fun plus(seat: Seat) {
-        _seats.add(seat)
-    }
+    operator fun minus(seat: Seat): Seats = Seats(_seats - seat)
 }

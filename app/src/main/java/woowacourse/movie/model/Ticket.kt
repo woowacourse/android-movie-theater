@@ -26,16 +26,12 @@ data class Ticket(
 
     fun updateTime(time: LocalTime): Ticket = copy(selectedTime = time)
 
+    fun selectSeat(seat: Seat): Ticket = copy(seats = seats + seat)
+
+    fun unselectSeat(seat: Seat): Ticket = copy(seats = seats - seat)
+
     fun hasSeat(seat: Seat): Boolean {
         return seats.has(seat)
-    }
-
-    fun selectSeat(seat: Seat) {
-        seats + seat
-    }
-
-    fun unselectSeat(seat: Seat) {
-        seats - seat
     }
 
     fun canReserve(): Boolean {

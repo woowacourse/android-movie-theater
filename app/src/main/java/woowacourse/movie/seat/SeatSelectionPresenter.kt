@@ -25,9 +25,9 @@ class SeatSelectionPresenter(
         val seat = Seat(row, col)
 
         if (ticket.hasSeat(seat)) {
-            ticket.unselectSeat(seat)
+            ticket = ticket.unselectSeat(seat)
         } else {
-            ticket.selectSeat(seat)
+            ticket = ticket.selectSeat(seat)
         }
 
         view.showSeatState(seat.toUiModel())
