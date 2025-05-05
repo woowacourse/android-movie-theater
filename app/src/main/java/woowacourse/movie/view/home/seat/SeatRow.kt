@@ -12,7 +12,6 @@ import woowacourse.movie.domain.model.seat.Seat
 class SeatRow(
     private val row: TableRow,
     private val rowIndex: Int,
-    private val onSeatClick: (Seat) -> Unit,
 ) {
     private val seatViews = mutableMapOf<Seat, TextView>()
 
@@ -21,9 +20,7 @@ class SeatRow(
             .filterIsInstance<TextView>()
             .forEachIndexed { colIndex, view ->
                 val coord = Seat(Column(rowIndex + 1), Row(colIndex + 1))
-                view.tag = coord
                 seatViews[coord] = view
-                view.setOnClickListener { onSeatClick(coord) }
             }
     }
 
@@ -40,5 +37,9 @@ class SeatRow(
             .filterValues { view ->
                 (view.background as? ColorDrawable)?.color == Color.YELLOW
             }.keys
+    }
+
+    interface Handler {
+        fun onClickSeat(coord: Seat)
     }
 }

@@ -21,6 +21,7 @@ import woowacourse.movie.view.StringFormatter
 import woowacourse.movie.view.ext.getSerializableArrayList
 import woowacourse.movie.view.ext.getSerializableOrNull
 import woowacourse.movie.view.ext.showToastFromResource
+import woowacourse.movie.view.handler.SeatActionHandler
 import woowacourse.movie.view.home.complete.BookingCompleteActivity
 
 class SeatActivity : AppCompatActivity(), SeatContract.View {
@@ -34,6 +35,8 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
 
         intent.getSerializableOrNull<Booking>(KEY_BOOKING)?.let {
             presenter = SeatPresenter(this, Seats(), it)
+            val handler = SeatActionHandler(presenter)
+            binding.handler = handler
             initView()
         } ?: run {
             showToastFromResource(R.string.error_missing_movie_seat)
@@ -54,10 +57,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     }
 
     private fun initSeat() {
-        seatView =
-            SeatView(binding.seatTable) { seat ->
-                presenter.changeSeat(seat)
-            }
+        seatView = SeatView(binding.seatTable)
         seatView.initSeats()
     }
 
@@ -142,4 +142,6 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
             putExtra(KEY_BOOKING, booking)
         }
     }
+
+    interface Handler : SeatRow.Handler
 }

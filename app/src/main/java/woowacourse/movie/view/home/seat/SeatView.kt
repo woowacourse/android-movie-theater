@@ -7,7 +7,6 @@ import woowacourse.movie.domain.model.seat.Seat
 
 class SeatView(
     private val seatTable: TableLayout,
-    private val onSeatClick: (Seat) -> Unit,
 ) {
     private val rows = mutableListOf<SeatRow>()
 
@@ -15,9 +14,9 @@ class SeatView(
         seatTable.children
             .filterIsInstance<TableRow>()
             .forEachIndexed { rowIndex, row ->
-                val rowManager = SeatRow(row, rowIndex, onSeatClick)
-                rowManager.initSeats()
-                rows.add(rowManager)
+                val row = SeatRow(row, rowIndex)
+                row.initSeats()
+                rows.add(row)
             }
     }
 
