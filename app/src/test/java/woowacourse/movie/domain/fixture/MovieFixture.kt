@@ -1,7 +1,7 @@
 package woowacourse.movie.domain.fixture
 
 import woowacourse.movie.domain.model.booking.ScreeningDates
-import woowacourse.movie.domain.model.movies.Movie
+import woowacourse.movie.domain.model.feed.Feed.Movie
 import java.time.LocalDate
 
 val screeningDatesFixture =
@@ -13,6 +13,7 @@ val screeningDatesFixture =
             LocalDate.of(2025, 5, 4),
         ),
     )
+
 val harryPotter1MoviesFixture =
     Movie(
         0,

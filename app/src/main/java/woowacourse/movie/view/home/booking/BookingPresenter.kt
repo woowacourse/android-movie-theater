@@ -31,7 +31,7 @@ class BookingPresenter(
 
         loadScreeningDates(screenings, LocalDateTime.now())
         view.showScreeningPeriod(screeningBookingDates.startDate, screeningBookingDates.endDate)
-        view.showMovieDetail(movies[screeningInfo.movieId], screenings)
+        view.showMovieDetail(movies.movies[screeningInfo.movieId], screenings)
     }
 
     override fun loadScreeningDates(

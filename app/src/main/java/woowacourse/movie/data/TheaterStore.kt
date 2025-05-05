@@ -1,6 +1,6 @@
 package woowacourse.movie.data
 
-import woowacourse.movie.domain.model.movies.Movie
+import woowacourse.movie.domain.model.feed.Feed.Movie
 import woowacourse.movie.domain.model.theater.Screening
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.domain.model.theater.Theaters
@@ -18,7 +18,7 @@ class TheaterStore {
         )
 
     fun createTheaters(): Theaters {
-        val movies = MovieStore().getAll()
+        val movies = MovieStore().movies
 
         val theaters =
             listOf(

@@ -18,7 +18,7 @@ import woowacourse.movie.data.MovieStore
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.booking.Booking
-import woowacourse.movie.domain.model.movies.Movie
+import woowacourse.movie.domain.model.feed.Feed.Movie
 import woowacourse.movie.view.home.model.ScreeningInfo
 import woowacourse.movie.view.home.seat.SeatActivity
 import woowacourse.movie.view.util.StringFormatter

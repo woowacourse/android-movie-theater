@@ -1,10 +1,10 @@
 package woowacourse.movie.view.home.movies
 
-import woowacourse.movie.view.home.model.UiModel
+import woowacourse.movie.view.home.model.FeedUiModel
 
 interface MovieListContract {
     interface View {
-        fun showMovieList(movieList: List<UiModel>)
+        fun showMovieList(movieList: List<FeedUiModel>)
 
         fun moveToTheaterSelection(movieId: Int)
     }

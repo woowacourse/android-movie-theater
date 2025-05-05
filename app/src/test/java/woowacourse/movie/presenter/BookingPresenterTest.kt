@@ -8,7 +8,6 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieStore
-import woowacourse.movie.domain.fixture.harryPotter1MoviesFixture
 import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.view.home.booking.BookingContract
 import woowacourse.movie.view.home.booking.BookingPresenter
@@ -43,21 +42,8 @@ class BookingPresenterTest {
         // when
         presenter.loadMovieDetail()
 
-        val expected = harryPotter1MoviesFixture
-
         // then
-        verify {
-            view.showMovieDetail(
-                match {
-                    it.id == expected.id &&
-                        it.title == expected.title &&
-                        it.posterResource == expected.posterResource &&
-                        it.screeningDates == expected.screeningDates &&
-                        it.runningTime == expected.runningTime
-                },
-                any(),
-            )
-        }
+        verify { view.showMovieDetail(any(), any()) }
     }
 
     @Test

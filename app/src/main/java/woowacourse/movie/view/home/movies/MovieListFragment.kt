@@ -7,16 +7,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieStore
 import woowacourse.movie.databinding.FragmentMovieListBinding
-import woowacourse.movie.view.home.model.UiModel
+import woowacourse.movie.view.home.model.FeedUiModel
 import woowacourse.movie.view.home.movies.adapter.MovieAdapter
 import woowacourse.movie.view.home.theaters.TheaterListFragment
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContract.View, MovieListEventHandler {
-    private val presenter: MovieListContract.Presenter by lazy {
-        MovieListPresenter(this, MovieStore())
-    }
+    private val presenter: MovieListContract.Presenter by lazy { MovieListPresenter(this) }
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
 
@@ -37,7 +34,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
         presenter.loadMovies()
     }
 
-    override fun showMovieList(movieList: List<UiModel>) {
+    override fun showMovieList(movieList: List<FeedUiModel>) {
         binding.rv.adapter = MovieAdapter(movieList, this)
     }
 

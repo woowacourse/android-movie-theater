@@ -5,32 +5,32 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.view.home.model.UiModel
-import woowacourse.movie.view.home.model.UiModel.AdvertiseUiModel
-import woowacourse.movie.view.home.model.UiModel.MovieUiModel
+import woowacourse.movie.view.home.model.FeedUiModel
+import woowacourse.movie.view.home.model.FeedUiModel.AdvertisementUiModel
+import woowacourse.movie.view.home.model.FeedUiModel.MovieUiModel
 import woowacourse.movie.view.home.movies.MovieListEventHandler
 import woowacourse.movie.view.home.movies.viewholder.AdvertiseViewHolder
 import woowacourse.movie.view.home.movies.viewholder.MovieViewHolder
 
 class MovieAdapter(
-    private val itemsList: List<UiModel>,
+    private val itemsList: List<FeedUiModel>,
     private val handler: MovieListEventHandler,
-) : ListAdapter<UiModel, RecyclerView.ViewHolder>(
-        object : DiffUtil.ItemCallback<UiModel>() {
+) : ListAdapter<FeedUiModel, RecyclerView.ViewHolder>(
+        object : DiffUtil.ItemCallback<FeedUiModel>() {
             override fun areItemsTheSame(
-                oldItem: UiModel,
-                newItem: UiModel,
+                oldItem: FeedUiModel,
+                newItem: FeedUiModel,
             ): Boolean {
                 return when {
                     oldItem is MovieUiModel && newItem is MovieUiModel && oldItem.id == newItem.id -> true
-                    oldItem is AdvertiseUiModel && newItem is AdvertiseUiModel && oldItem.imgResource == newItem.imgResource -> true
+                    oldItem is AdvertisementUiModel && newItem is AdvertisementUiModel && oldItem.imgResource == newItem.imgResource -> true
                     else -> false
                 }
             }
 
             override fun areContentsTheSame(
-                oldItem: UiModel,
-                newItem: UiModel,
+                oldItem: FeedUiModel,
+                newItem: FeedUiModel,
             ): Boolean {
                 return oldItem == newItem
             }
@@ -41,7 +41,7 @@ class MovieAdapter(
     override fun getItemViewType(position: Int): Int =
         when (itemsList[position]) {
             is MovieUiModel -> VIEW_TYPE_MOVIE
-            is AdvertiseUiModel -> VIEW_TYPE_ADVERTISEMENT
+            is AdvertisementUiModel -> VIEW_TYPE_ADVERTISEMENT
         }
 
     override fun onCreateViewHolder(
@@ -61,7 +61,7 @@ class MovieAdapter(
         val item = itemsList[position]
 
         when (holder) {
-            is AdvertiseViewHolder -> holder.bind(item as AdvertiseUiModel)
+            is AdvertiseViewHolder -> holder.bind(item as AdvertisementUiModel)
             is MovieViewHolder -> holder.bind(item as MovieUiModel)
         }
     }

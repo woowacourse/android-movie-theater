@@ -6,7 +6,7 @@
     <data>
         <variable
             name="movie"
-            type="woowacourse.movie.view.home.model.UiModel.MovieUiModel" />
+            type="woowacourse.movie.view.home.model.FeedUiModel.MovieUiModel" />
         <variable
             name="handler"
             type="woowacourse.movie.view.home.movies.MovieListEventHandler" />
