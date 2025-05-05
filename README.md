@@ -56,7 +56,7 @@
 - [x] HomeFragment | 사용하지 않는 파라미터 제거
 - [x] HomeFragment | 생성자로 데이터 주입받기
 - [x] HomeFragment | 반복되는 뷰 함수 호출 로직 개선
-- [ ] TheaterAdapter | DiffUtil 함수 확인 후 개선 
+- [x] TheaterAdapter | DiffUtil 함수 확인 후 개선 
 - [ ] TheaterViewHolder | 바인딩 전달하는 파라미터 수정
 - [x] TheaterBottomSheetDialogFragment | getSerializable 메서드 수정
 - [x] TheaterBottomSheetDialogFragment | 바텀 시트를 띄운 상태로 구성 변경 시, 앱 크래시가 나지 않도록 개선
