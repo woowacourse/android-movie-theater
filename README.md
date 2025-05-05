@@ -43,7 +43,7 @@
 
 - [ ] SeatSelectionActivity | 좌석을 더 선택할 수 있는 점 개선하기
 - [x] MainActivity | fragment 재사용에 대한 고민
-- [ ] TheaterAdapter | inflate 위치 이동
+- [x] TheaterAdapter | inflate 위치 이동
 - [ ] MovieFragment | Binding 객체 null 처리하기
 - [ ] MovieFragment | Bundle 사용 시 스코프 함수 활용
 - [ ] Ticket | 불변 객체 보장

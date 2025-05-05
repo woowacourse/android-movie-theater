@@ -1,12 +1,9 @@
 package woowacourse.movie.movie.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.R
-import woowacourse.movie.databinding.AdBannerItemBinding
-import woowacourse.movie.databinding.MovieListItemBinding
 import woowacourse.movie.ui.model.MovieFeedUiModel
 
 class MovieAdapter(
@@ -26,16 +23,13 @@ class MovieAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             R.layout.movie_list_item -> {
-                val binding = MovieListItemBinding.inflate(inflater, parent, false)
-                MovieViewHolder(binding, onReserveClick)
+                MovieViewHolder(parent, onReserveClick)
             }
 
             R.layout.ad_banner_item -> {
-                val binding = AdBannerItemBinding.inflate(inflater, parent, false)
-                AdViewHolder(binding)
+                AdViewHolder(parent)
             }
             else -> throw IllegalArgumentException(INVALID_VIEW_TYPE)
         }
