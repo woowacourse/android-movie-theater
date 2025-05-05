@@ -60,6 +60,8 @@ class ReservationResultActivityTest {
 
     @Test
     fun `예매한_영화의_인원수에_맞는_총_티켓_가격을_보여준다`() {
+        // given
+        // A1열(10,000원), C1열(15,000원)
         onView(withId(R.id.tv_reservation_total_price))
             .check(matches(withText("25,000원 (현장 결제)")))
     }
