@@ -16,6 +16,7 @@ class MovieViewHolder(
 
     fun bind(item: Movie) {
         binding.movie = item
+        binding.executePendingBindings()
     }
 
     companion object {

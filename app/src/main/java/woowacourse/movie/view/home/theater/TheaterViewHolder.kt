@@ -16,6 +16,7 @@ class TheaterViewHolder(
 
     fun bind(theaterMovieSchedule: TheaterMovieSchedule) {
         binding.movieScreeningInfoByTheater = theaterMovieSchedule
+        binding.executePendingBindings()
     }
 
     companion object {
