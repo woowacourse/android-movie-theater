@@ -37,27 +37,25 @@ class HomeFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        movieAdapter =
+            MovieAdapter(
+                movieClickListener =
+                    object : MovieClickListener {
+                        override fun onReservationClick(movieId: Long) {
+                            presenter.onTheaterRequested(movieId)
+                        }
+                    },
+                advertisementClickListener = {
+                    presenter.requestAdvertisement(
+                        ADVERTISEMENT_URL,
+                    )
+                },
+            )
 
         presenter.initView()
     }
 
     override fun showMovies(movies: List<Movie>) {
-        if (::movieAdapter.isInitialized.not()) {
-            movieAdapter =
-                MovieAdapter(
-                    movieClickListener =
-                        object : MovieClickListener {
-                            override fun onReservationClick(movieId: Long) {
-                                presenter.onTheaterRequested(movieId)
-                            }
-                        },
-                    advertisementClickListener = {
-                        presenter.requestAdvertisement(
-                            ADVERTISEMENT_URL,
-                        )
-                    },
-                )
-        }
         binding.rvMainMovies.adapter = movieAdapter
         movieAdapter.submitList(movies)
     }
