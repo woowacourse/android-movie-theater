@@ -15,14 +15,16 @@ import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
 
 class TheaterFragment : BottomSheetDialogFragment() {
-    private lateinit var binding: FragmentTheaterBinding
+//    private lateinit var binding: FragmentTheaterBinding
+    private var _binding: FragmentTheaterBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_theater, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_theater, container, false)
         return binding.root
     }
 
@@ -59,6 +61,11 @@ class TheaterFragment : BottomSheetDialogFragment() {
             dismiss()
             throw IllegalArgumentException(ERROR_NOT_FOUND_DATA.format(KEY_MOVIE))
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

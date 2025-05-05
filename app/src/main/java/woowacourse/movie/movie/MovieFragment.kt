@@ -18,14 +18,15 @@ import woowacourse.movie.ui.model.TheaterUiModel
 
 class MovieFragment : Fragment(), MovieContract.View {
     private val presenter = MoviePresenter(this)
-    private lateinit var binding: FragmentMovieBinding
+    private var _binding: FragmentMovieBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie, container, false)
         return binding.root
     }
 
@@ -59,5 +60,10 @@ class MovieFragment : Fragment(), MovieContract.View {
         fragment.arguments = bundle
 
         fragment.show(parentFragmentManager, fragment.tag)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
