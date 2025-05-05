@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             binding.bottomNavigation.selectedItemId = R.id.menu_home
             supportFragmentManager.commit {
-                add(R.id.fragment_view, MovieFragment())
+                add(R.id.fragment_view, MovieFragment(), TAG_MOVIE_FRAGMENT)
             }
         }
 
@@ -39,31 +39,46 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initBottomNav() {
-        val homeFragment = MovieFragment()
-        val settingFragment = SettingFragment()
-        val reservationListFragment = ReservationListFragment()
-
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_home -> {
-                    replaceFragment(homeFragment)
+                    replaceFragment(TAG_MOVIE_FRAGMENT, MovieFragment())
                 }
 
                 R.id.menu_setting -> {
-                    replaceFragment(settingFragment)
+                    replaceFragment(TAG_SETTING_FRAGMENT, SettingFragment())
                 }
 
                 R.id.menu_reserve_list -> {
-                    replaceFragment(reservationListFragment)
+                    replaceFragment(TAG_RESERVATION_LIST_FRAGMENT, ReservationListFragment())
                 }
             }
             true
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(
+        tag: String,
+        fragment: Fragment,
+    ) {
+        val existingFragment = supportFragmentManager.findFragmentByTag(tag)
+
         supportFragmentManager.commit {
-            replace(R.id.fragment_view, fragment)
+            supportFragmentManager.fragments.forEach {
+                hide(it)
+            }
+
+            if (existingFragment != null) {
+                show(existingFragment)
+            } else {
+                add(R.id.fragment_view, fragment, tag)
+            }
         }
+    }
+
+    companion object {
+        private const val TAG_MOVIE_FRAGMENT = "tag_movie"
+        private const val TAG_SETTING_FRAGMENT = "tag_setting"
+        private const val TAG_RESERVATION_LIST_FRAGMENT = "tag_reservation"
     }
 }
