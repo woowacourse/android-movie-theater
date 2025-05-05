@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.booking.detail.BookingDetailActivity
@@ -15,7 +14,8 @@ import woowacourse.movie.databinding.FragmentTheaterBinding
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
 
-class TheaterFragment : BottomSheetDialogFragment() {
+class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.View {
+    private val presenter = TheaterPresenter(this)
     private lateinit var binding: FragmentTheaterBinding
 
     override fun onCreateView(
@@ -34,17 +34,9 @@ class TheaterFragment : BottomSheetDialogFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+        val movie = initMovie()
         val theaters = initTheaters()
-
-        binding.rvTheater.adapter =
-            TheaterAdapter(theaters) { theater ->
-                parentFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    val intent = BookingDetailActivity.createIntent(requireContext(), theater, initMovie())
-                    startActivity(intent)
-                    dismiss()
-                }
-            }
+        presenter.initialize(movie, theaters)
     }
 
     private fun initTheaters(): ArrayList<TheaterUiModel> {
@@ -61,6 +53,22 @@ class TheaterFragment : BottomSheetDialogFragment() {
         return movie!!
     }
 
+    override fun showTheaters(theaters: List<TheaterUiModel>) {
+        binding.rvTheater.adapter =
+            TheaterAdapter(theaters) { selected ->
+                presenter.clickTheater(selected)
+            }
+    }
+
+    override fun navigateToBookingDetail(
+        theater: TheaterUiModel,
+        movie: MovieUiModel,
+    ) {
+        val intent = BookingDetailActivity.createIntent(requireContext(), theater, movie)
+        startActivity(intent)
+        dismiss()
+    }
+
     companion object {
         private const val KEY_THEATERS = "theatersData"
         private const val KEY_MOVIE = "theatersMovieData"
@@ -68,8 +76,8 @@ class TheaterFragment : BottomSheetDialogFragment() {
         fun create(
             movie: MovieUiModel,
             theaters: ArrayList<TheaterUiModel>,
-        ): TheaterFragment {
-            return TheaterFragment().apply {
+        ): TheaterBottomSheetFragment {
+            return TheaterBottomSheetFragment().apply {
                 arguments =
                     Bundle().apply {
                         putParcelable(KEY_MOVIE, movie)

@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieBinding
 import woowacourse.movie.movie.adapter.MovieAdapter
-import woowacourse.movie.theater.TheaterFragment
+import woowacourse.movie.theater.TheaterBottomSheetFragment
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
 
@@ -51,7 +51,7 @@ class MovieFragment : Fragment(), MovieContract.View {
         theaters: ArrayList<TheaterUiModel>,
         movie: MovieUiModel,
     ) {
-        val fragment = TheaterFragment.create(movie, theaters)
+        val fragment = TheaterBottomSheetFragment.create(movie, theaters)
         fragment.show(parentFragmentManager, fragment.tag)
     }
 }
