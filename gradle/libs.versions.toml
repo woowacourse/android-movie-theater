@@ -9,6 +9,7 @@ androidx-espresso-core = "3.6.1"
 androidx-test-ext-junit = "1.2.1"
 androidx-test-runner = "1.6.2"
 assertj-core = "3.27.3"
+espresso-contrib = "3.3.0"
 google-material = "1.12.0"
 hamcrest-library = "3.0"
 junit-jupiter = "5.12.0"
@@ -27,7 +28,9 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
 androidx-espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "androidx-espresso-core" }
+androidx-espresso-contrib-v330 = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espresso-contrib" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }
+androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment-testing" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidx-test-runner" }
 assertj-core = { group = "org.assertj", name = "assertj-core", version.ref = "assertj-core" }
