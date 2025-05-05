@@ -32,8 +32,8 @@ data class Movie(
                     id = id.toLong(),
                     title = "해리포터 $id",
                     poster = poster,
-                    startDate = LocalDate.of(2025, 4, (id % 28) + 1),
-                    endDate = LocalDate.of(2025, 5, (id % 28) + 1),
+                    startDate = LocalDate.of(2025, 10, (id % 28) + 1),
+                    endDate = LocalDate.of(2025, 11, (id % 28) + 1),
                     runningTime = 100 + (id % 60),
                 )
             }
