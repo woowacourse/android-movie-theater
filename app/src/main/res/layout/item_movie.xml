@@ -24,7 +24,7 @@
             android:layout_width="76dp"
             android:layout_height="108dp"
             android:contentDescription="@null"
-            android:imageRes="@{movie.poster}"
+            app:imageRes="@{movie.poster}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/lalaland" />
@@ -47,12 +47,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:endDate="@{movie.endDate}"
-            android:startDate="@{movie.startDate}"
             android:textColor="@color/black"
             android:textSize="12sp"
+            app:endDate="@{movie.endDate}"
             app:layout_constraintStart_toStartOf="@id/tv_movie_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_movie_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
+            app:startDate="@{movie.startDate}" />
 
         <TextView
             android:id="@+id/tv_movie_running_time"

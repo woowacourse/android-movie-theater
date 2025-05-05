@@ -49,8 +49,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:movieDate="@{movieTicket.movieDate}"
-            android:movieTime="@{movieTicket.movieTime}"
+            app:movieDate="@{movieTicket.movieDate}"
+            app:movieTime="@{movieTicket.movieTime}"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -67,13 +67,13 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:seats="@{movieTicket.seats}"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:theater="@{movieTicket.theater}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_reservation_complete_timestamp"
+            app:seats="@{movieTicket.seats}"
+            app:theater="@{movieTicket.theater}"
             tools:text="일반 3명 | C3, C2, C1 | 엄청나게 긴 극장이름입니다" />
 
         <TextView
@@ -81,13 +81,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:isPayed="@{true}"
-            android:ticketPrice="@{movieTicket.price}"
             android:textColor="@color/black"
             android:textSize="20sp"
+            app:isPayed="@{true}"
             app:layout_constraintEnd_toEndOf="@id/tv_reservation_complete_ticket_count"
             app:layout_constraintStart_toStartOf="@id/tv_reservation_complete_ticket_count"
             app:layout_constraintTop_toBottomOf="@id/tv_reservation_complete_ticket_count"
+            app:ticketPrice="@{movieTicket.price}"
             tools:text="39,000원 (현장 결제)" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

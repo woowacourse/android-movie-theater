@@ -12,7 +12,7 @@ import woowacourse.movie.view.mapper.Formatter.priceToUi
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.seatsToUi
 import java.time.LocalDate
 
-@BindingAdapter("android:startDate", "android:endDate", requireAll = true)
+@BindingAdapter("app:startDate", "app:endDate", requireAll = true)
 fun setFormatLocalDate(
     textView: TextView,
     startDate: LocalDate,
@@ -24,7 +24,7 @@ fun setFormatLocalDate(
     textView.text = textView.context.getString(R.string.movie_screening_date, startDate, endDate)
 }
 
-@BindingAdapter("android:imageRes")
+@BindingAdapter("app:imageRes")
 fun setImage(
     imageView: ImageView,
     resId: Int,
@@ -32,7 +32,7 @@ fun setImage(
     imageView.setImageResource(resId)
 }
 
-@BindingAdapter("android:movieDate", "android:movieTime", requireAll = true)
+@BindingAdapter("app:movieDate", "app:movieTime", requireAll = true)
 fun setFormatLocalDateTime(
     textView: TextView,
     movieDate: LocalDate,
@@ -49,7 +49,7 @@ fun setFormatLocalDateTime(
         )
 }
 
-@BindingAdapter("android:seats", "android:theater", requireAll = true)
+@BindingAdapter("app:seats", "app:theater", requireAll = true)
 fun setTheaterInfo(
     textView: TextView,
     seats: List<Seat>,
@@ -66,7 +66,7 @@ fun setTheaterInfo(
         )
 }
 
-@BindingAdapter("android:ticketPrice", "android:isPayed", requireAll = true)
+@BindingAdapter("app:ticketPrice", "app:isPayed", requireAll = true)
 fun setFormatTicketPrice(
     textView: TextView,
     ticketPrice: Int,
