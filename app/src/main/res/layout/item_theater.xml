@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="onTheaterClick"
+            type="kotlin.jvm.functions.Function1" />
+
+        <variable
             name="movieScreeningInfoByTheater"
             type="woowacourse.movie.model.theater.TheaterMovieSchedule" />
 
@@ -14,6 +18,7 @@
         android:id="@+id/theater_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{() -> onTheaterClick.invoke(movieScreeningInfoByTheater)}"
         android:paddingVertical="8dp">
 
         <TextView

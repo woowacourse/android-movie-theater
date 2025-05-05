@@ -4,6 +4,10 @@
     <data>
 
         <variable
+            name="onMovieClick"
+            type="kotlin.jvm.functions.Function1" />
+
+        <variable
             name="movie"
             type="woowacourse.movie.model.movie.Movie" />
     </data>
@@ -65,6 +69,7 @@
             android:id="@+id/btn_movie_reservation"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:onClick="@{() -> onMovieClick.invoke(movie.id)}"
             android:paddingVertical="10dp"
             android:text="@string/movie_reservation"
             android:textSize="14sp"

@@ -10,12 +10,12 @@ class TheaterViewHolder(
     private val binding: ItemTheaterBinding,
     private val onTheaterClick: (TheaterMovieSchedule) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
+    init {
+        binding.onTheaterClick = onTheaterClick
+    }
+
     fun bind(theaterMovieSchedule: TheaterMovieSchedule) {
         binding.movieScreeningInfoByTheater = theaterMovieSchedule
-
-        binding.theaterButton.setOnClickListener {
-            onTheaterClick.invoke(theaterMovieSchedule)
-        }
     }
 
     companion object {

@@ -10,11 +10,12 @@ class MovieViewHolder(
     private val binding: ItemMovieBinding,
     private val onMovieClick: (movieId: Long) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
+    init {
+        binding.onMovieClick = onMovieClick
+    }
+
     fun bind(item: Movie) {
         binding.movie = item
-        binding.btnMovieReservation.setOnClickListener {
-            onMovieClick.invoke(item.id)
-        }
     }
 
     companion object {
