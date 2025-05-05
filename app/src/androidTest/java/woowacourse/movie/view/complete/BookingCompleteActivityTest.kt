@@ -39,7 +39,7 @@ class BookingCompleteActivityTest {
     }
 
     @Test
-    fun `전달_받은_영화_이름_상영_시간_예매_인원_예매_가격을_출력한다`() {
+    fun 전달_받은_영화_이름_상영_시간_예매_인원_예매_가격을_출력한다() {
         Espresso.onView(ViewMatchers.withText("해리 포터와 마법사의 돌"))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
 

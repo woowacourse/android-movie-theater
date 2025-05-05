@@ -40,24 +40,24 @@ class BookingActivityTest {
     }
 
     @Test
-    fun `전달_받은_영화_이름_상영일_상영_시간을_출력한다`() {
+    fun 전달_받은_영화_이름_상영일_상영_시간을_출력한다() {
         onView(withText("해리 포터와 마법사의 돌")).check(matches(isDisplayed()))
         onView(withText("2025.5.1 ~ 2025.5.5")).check(matches(isDisplayed()))
         onView(withText("152분")).check(matches(isDisplayed()))
     }
 
     @Test
-    fun `상영_날짜_스피너에_날짜_목록이_표시된다`() {
+    fun 상영_날짜_스피너에_날짜_목록이_표시된다() {
         onView(withId(R.id.sp_date)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun `예매_가능_시간_스피너에_시간_목록이_표시된다`() {
+    fun 예매_가능_시간_스피너에_시간_목록이_표시된다() {
         onView(withId(R.id.sp_time)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun `인원_증가_버튼을_누르면_인원이_1_증가한다`() {
+    fun 인원_증가_버튼을_누르면_인원이_1_증가한다() {
         // given
         onView(withId(R.id.tv_admission_count)).check(matches(withText("1")))
 
@@ -69,7 +69,7 @@ class BookingActivityTest {
     }
 
     @Test
-    fun `인원_감소_버튼을_누르면_인원이_1_감소한다`() {
+    fun 인원_감소_버튼을_누르면_인원이_1_감소한다() {
         // given
         onView(withId(R.id.tv_admission_count)).check(matches(withText("1")))
 
@@ -81,7 +81,7 @@ class BookingActivityTest {
     }
 
     @Test
-    fun `인원은_1명_이하로_감소하지_않는다`() {
+    fun 인원은_1명_이하로_감소하지_않는다() {
         // when
         onView(withId(R.id.tv_admission_count))
             .check(matches(withText("1")))
@@ -94,7 +94,7 @@ class BookingActivityTest {
     }
 
     @Test
-    fun `화면이_회전_되어도_인원수가_유지된다`() {
+    fun 화면이_회전_되어도_인원수가_유지된다() {
         // given
         onView(withId(R.id.btn_increase)).perform(click())
 

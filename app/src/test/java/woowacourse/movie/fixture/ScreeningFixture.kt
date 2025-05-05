@@ -1,15 +1,15 @@
-package woowacourse.movie.domain.fixture
+package woowacourse.movie.fixture
 
 import woowacourse.movie.domain.model.theater.Screening
 import java.time.LocalDateTime
 
-val screeningFixtureWithMovieId1 =
+val MOVIE_1_SCREENING =
     Screening(
         movieId = 1,
         time = LocalDateTime.of(2025, 4, 29, 9, 30),
     )
 
-val screeningFixtureWithMovieId2 =
+val MOVIE_2_SCREENING =
     Screening(
         movieId = 2,
         time = LocalDateTime.of(2025, 4, 29, 9, 30),

@@ -2,9 +2,9 @@ package woowacourse.movie.domain
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.fixture.screeningFixtureWithMovieId1
-import woowacourse.movie.domain.fixture.screeningFixtureWithMovieId2
 import woowacourse.movie.domain.model.theater.Theater
+import woowacourse.movie.fixture.MOVIE_1_SCREENING
+import woowacourse.movie.fixture.MOVIE_2_SCREENING
 
 class TheaterTest {
     @Test
@@ -12,10 +12,10 @@ class TheaterTest {
         // when
         val screening =
             listOf(
-                screeningFixtureWithMovieId1,
-                screeningFixtureWithMovieId1,
-                screeningFixtureWithMovieId1,
-                screeningFixtureWithMovieId2,
+                MOVIE_1_SCREENING,
+                MOVIE_1_SCREENING,
+                MOVIE_1_SCREENING,
+                MOVIE_2_SCREENING,
             )
 
         // given
@@ -31,10 +31,10 @@ class TheaterTest {
         // when
         val screening =
             listOf(
-                screeningFixtureWithMovieId1,
-                screeningFixtureWithMovieId1,
-                screeningFixtureWithMovieId1,
-                screeningFixtureWithMovieId2,
+                MOVIE_1_SCREENING,
+                MOVIE_1_SCREENING,
+                MOVIE_1_SCREENING,
+                MOVIE_2_SCREENING,
             )
 
         // given
@@ -46,9 +46,9 @@ class TheaterTest {
         assertEquals(
             excepted,
             listOf(
-                screeningFixtureWithMovieId1.time,
-                screeningFixtureWithMovieId1.time,
-                screeningFixtureWithMovieId1.time,
+                MOVIE_1_SCREENING.time,
+                MOVIE_1_SCREENING.time,
+                MOVIE_1_SCREENING.time,
             ),
         )
     }

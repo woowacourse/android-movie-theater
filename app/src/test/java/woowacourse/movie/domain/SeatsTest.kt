@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.fixture.oneByOneSeat
-import woowacourse.movie.domain.fixture.oneByTowSeat
 import woowacourse.movie.domain.model.seat.Seats
+import woowacourse.movie.fixture.SEAT_A1
+import woowacourse.movie.fixture.SEAT_C1
 
 class SeatsTest {
     @Test
@@ -15,10 +15,10 @@ class SeatsTest {
         val seats = Seats()
 
         // given
-        seats.addSeat(oneByOneSeat)
+        seats.addSeat(SEAT_A1)
 
         // then
-        assertTrue(seats.item.contains(oneByOneSeat))
+        assertTrue(seats.item.contains(SEAT_A1))
     }
 
     @Test
@@ -27,33 +27,33 @@ class SeatsTest {
         val seats = Seats()
 
         // given
-        seats.addSeat(oneByOneSeat)
-        seats.removeSeat(oneByOneSeat)
+        seats.addSeat(SEAT_A1)
+        seats.removeSeat(SEAT_A1)
 
         // then
-        assertTrue(seats.item.isEmpty()) // assertTrue로 변경
+        assertTrue(seats.item.isEmpty())
     }
 
     @Test
-    fun `B등급 좌석 두 개를 예매하면 총 가격 2만원을 반환한다`() {
+    fun `B등급 좌석과 S등급 좌석을 하나씩 예매하면 총 가격 35000원을 반환한다`() {
         // when
         val seats = Seats()
 
-        seats.addSeat(oneByOneSeat)
-        seats.addSeat(oneByTowSeat)
+        seats.addSeat(SEAT_A1)
+        seats.addSeat(SEAT_C1)
 
         // given
         val totalPrice = seats.totalPrice()
 
         // then
-        assertEquals(20000, totalPrice)
+        assertEquals(25000, totalPrice)
     }
 
     @Test
     fun `선택한 예매 인원수만큼 예매하지 않았으면 참을 반환한다`() {
         // when
         val seats = Seats()
-        seats.addSeat(oneByOneSeat)
+        seats.addSeat(SEAT_A1)
 
         // given
         val result = seats.isNotSelectDone(2)
@@ -66,8 +66,8 @@ class SeatsTest {
     fun `선택한 예매 인원수 만큼 예매 했으면 거짓을 반환한다`() {
         // when
         val seats = Seats()
-        seats.addSeat(oneByOneSeat)
-        seats.addSeat(oneByTowSeat)
+        seats.addSeat(SEAT_A1)
+        seats.addSeat(SEAT_C1)
 
         // given
         val result = seats.isNotSelectDone(2)
@@ -92,7 +92,7 @@ class SeatsTest {
     fun `하나의 좌석만 예매하면 가격이 해당 좌석 가격으로 계산된다`() {
         // when
         val seats = Seats()
-        seats.addSeat(oneByOneSeat)
+        seats.addSeat(SEAT_A1)
 
         // given
         val totalPrice = seats.totalPrice()
@@ -107,9 +107,9 @@ class SeatsTest {
         val seats = Seats()
 
         // given
-        seats.toggleSeat(oneByOneSeat)
+        seats.toggleSeat(SEAT_A1)
 
         // then
-        assertTrue(seats.item.contains(oneByOneSeat))
+        assertTrue(seats.item.contains(SEAT_A1))
     }
 }

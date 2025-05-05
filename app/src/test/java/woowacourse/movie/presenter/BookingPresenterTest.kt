@@ -49,8 +49,7 @@ class BookingPresenterTest {
     @Test
     fun `인원은 0명이 될 수 없다`() {
         // given
-        var count = 1
-        every { view.showAdmissionCount(count) } just Runs
+        every { view.showAdmissionCount(1) } just Runs
 
         // when
         presenter.decreaseAdmissionCount()
@@ -62,8 +61,7 @@ class BookingPresenterTest {
     @Test
     fun `인원이 1명 증가한다`() {
         // given
-        var count = 1
-        every { view.showAdmissionCount(count) }
+        every { view.showAdmissionCount(1) }
 
         // when
         presenter.increaseAdmissionCount(2)

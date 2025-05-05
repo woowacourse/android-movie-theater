@@ -13,6 +13,9 @@ import woowacourse.movie.domain.model.seat.Column
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.Seats
+import woowacourse.movie.fixture.SEAT_A1
+import woowacourse.movie.fixture.SEAT_C1
+import woowacourse.movie.fixture.SEAT_E1
 import woowacourse.movie.view.home.seat.SeatContract
 import woowacourse.movie.view.home.seat.SeatPresenter
 import java.time.LocalDate
@@ -81,15 +84,12 @@ class SeatPresenterTest {
     @Test
     fun `B, S, A등급 순서로 좌석을 선택하면 가격이 10000, 25000, 37000원 순서로 표시된다`() {
         // given
-        val seat1 = Seat(Column(1), Row(1))
-        val seat2 = Seat(Column(3), Row(1))
-        val seat3 = Seat(Column(5), Row(1))
         val presenter = SeatPresenter(view, Seats(), booking)
 
         // when
-        presenter.changeSeat(seat1)
-        presenter.changeSeat(seat2)
-        presenter.changeSeat(seat3)
+        presenter.changeSeat(SEAT_A1)
+        presenter.changeSeat(SEAT_C1)
+        presenter.changeSeat(SEAT_E1)
 
         // then
         verifyOrder {
@@ -102,21 +102,18 @@ class SeatPresenterTest {
     @Test
     fun `선택한 순서대로 좌석이 저장된다`() {
         // given
-        val seat1 = Seat(Column(1), Row(1))
-        val seat2 = Seat(Column(3), Row(1))
-        val seat3 = Seat(Column(5), Row(1))
         val presenter = SeatPresenter(view, Seats(), booking)
         val capturedSeats = mutableListOf<Set<Seat>>()
 
         // when
-        presenter.changeSeat(seat1)
-        presenter.changeSeat(seat2)
-        presenter.changeSeat(seat3)
+        presenter.changeSeat(SEAT_A1)
+        presenter.changeSeat(SEAT_C1)
+        presenter.changeSeat(SEAT_E1)
 
         // then
         verify { view.showSeats(capture(capturedSeats)) }
-        assertThat(capturedSeats[0]).isEqualTo(setOf(seat1))
-        assertThat(capturedSeats[1]).isEqualTo(setOf(seat1, seat2))
-        assertThat(capturedSeats[2]).isEqualTo(setOf(seat1, seat2, seat3))
+        assertThat(capturedSeats[0]).isEqualTo(setOf(SEAT_A1))
+        assertThat(capturedSeats[1]).isEqualTo(setOf(SEAT_A1, SEAT_C1))
+        assertThat(capturedSeats[2]).isEqualTo(setOf(SEAT_A1, SEAT_C1, SEAT_E1))
     }
 }
