@@ -116,3 +116,6 @@
 - [x] refactor: 레이아웃 매니저 xml에서 적용하도록 변경
 
 - [x] fix: 이미지 안 뜨는 현상 수정
+
+- [x] refactor: xml 레이아웃 아이디를 뷰 타입으로 갖도록 변경
+- Sealed class로 FeedItem 정의

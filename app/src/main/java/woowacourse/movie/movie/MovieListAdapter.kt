@@ -3,6 +3,7 @@ package woowacourse.movie.movie
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.R
 import woowacourse.movie.databinding.AdItemBinding
 import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.domain.Movie
@@ -11,56 +12,59 @@ class MovieListAdapter(
     private val value: List<Movie>,
     private val movieClickListener: MovieClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val items = createFeedItems()
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerView.ViewHolder {
         return when (viewType) {
-            VIEW_TYPE_MOVIE -> {
+            R.layout.movie_item -> {
                 val binding =
                     MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 MovieViewHolder(binding)
             }
 
-            else -> {
+            R.layout.ad_item -> {
                 val binding =
                     AdItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 AdViewHolder(binding)
             }
+
+            else -> throw IllegalArgumentException("지원 하지 않는 타입입니다.")
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when {
-            isAdPosition(position) -> VIEW_TYPE_AD
-            else -> VIEW_TYPE_MOVIE
+        return when (items[position]) {
+            is FeedItem.MovieItem -> R.layout.movie_item
+            is FeedItem.AdvertiseItem -> R.layout.ad_item
         }
-    }
-
-    private fun isAdPosition(position: Int): Boolean {
-        return (position + 1) % 4 == 0
     }
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
-        if (getItemViewType(position) == VIEW_TYPE_MOVIE) {
-            val realPosition = position - (position / 4)
-            (holder as MovieViewHolder).bindMovie(value[realPosition], movieClickListener)
-        } else {
-            (holder as AdViewHolder).bindAd(movieClickListener)
+        when (items[position]) {
+            is FeedItem.MovieItem -> {
+                (holder as MovieViewHolder).bindMovie(items[position] as FeedItem.MovieItem, movieClickListener)
+            }
+            is FeedItem.AdvertiseItem -> {
+                (holder as AdViewHolder).bindAd(movieClickListener)
+            }
         }
     }
 
-    override fun getItemCount(): Int {
-        val movieCount = value.size
-        val adCount = movieCount / 3
-        return movieCount + adCount
-    }
+    override fun getItemCount(): Int = items.size
 
-    companion object {
-        private const val VIEW_TYPE_MOVIE = 0
-        private const val VIEW_TYPE_AD = 1
+    private fun createFeedItems(): List<FeedItem> {
+        val result = mutableListOf<FeedItem>()
+        value.forEachIndexed { index, movie ->
+            result.add(FeedItem.MovieItem(movie))
+            if ((index + 1) % 3 == 0) {
+                result.add(FeedItem.AdvertiseItem)
+            }
+        }
+        return result.toList()
     }
 }
