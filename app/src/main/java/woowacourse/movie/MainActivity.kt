@@ -10,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.view.home.HomeFragment
 import woowacourse.movie.view.reservationDetails.ReservationDetailsFragment
@@ -17,9 +18,6 @@ import woowacourse.movie.view.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val homeFragment by lazy { HomeFragment() }
-    private val settingFragment by lazy { SettingFragment() }
-    private val reservationDetailsFragment by lazy { ReservationDetailsFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,17 +32,17 @@ class MainActivity : AppCompatActivity() {
         binding.mainBottomNavigationBar.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.bottom_navigation_reservation_details -> {
-                    replaceFragment(reservationDetailsFragment)
+                    replaceFragment<ReservationDetailsFragment>()
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.bottom_navigation_home -> {
-                    replaceFragment(homeFragment)
+                    replaceFragment<HomeFragment>()
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.bottom_navigation_setting -> {
-                    replaceFragment(settingFragment)
+                    replaceFragment<SettingFragment>()
                     return@setOnItemSelectedListener true
                 }
             }
@@ -52,10 +50,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(selectedFragment: Fragment) {
+    private inline fun <reified T : Fragment> replaceFragment() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(binding.mainFragmentContainer.id, selectedFragment)
+            replace<T>(binding.mainFragmentContainer.id)
         }
     }
 
