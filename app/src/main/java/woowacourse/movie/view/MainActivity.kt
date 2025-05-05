@@ -36,11 +36,6 @@ class MainActivity :
             insets
         }
 
-        binding.bottomNavigationViewMain.selectedItemId = R.id.item_menu_main_home
-
-        if (savedInstanceState == null) {
-            presenter.presentScreen(SCREEN_ID_HOME)
-        }
         binding.main = this
         binding.bottomNavigationViewMain.setOnItemSelectedListener { menuItem ->
             val screenId: Int =
@@ -52,6 +47,11 @@ class MainActivity :
                 }
             presenter.presentScreen(screenId)
             true
+        }
+
+        if (savedInstanceState == null) {
+            presenter.presentScreen(SCREEN_ID_HOME)
+            binding.bottomNavigationViewMain.selectedItemId = R.id.item_menu_main_home
         }
     }
 
