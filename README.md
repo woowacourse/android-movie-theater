@@ -104,3 +104,7 @@
 
 - [x] refactor: BindingAdapter 기능별 파일 분리
 - TextViewBindingAdapter, ImageViewBindingAdapter
+
+- [x] refactor: 다이얼로그 프래그먼트 생성 리팩토링
+- TheaterBottomSheetDialogFragment에서 키를 관리하고 생성하도록 변경
+- TAG 상수화

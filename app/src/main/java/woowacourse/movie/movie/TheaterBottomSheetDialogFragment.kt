@@ -14,8 +14,6 @@ import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.Theaters
 import woowacourse.movie.moviebooking.MovieBookingActivity
 
-private const val ARG_PARAM1 = "movie"
-
 class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
 
@@ -25,7 +23,6 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(LayoutInflater.from(this.context), R.layout.fragment_theater_bottom_sheet_dialog, container, false)
-
         return binding.root
     }
 
@@ -36,9 +33,9 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val movie: Movie =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                arguments?.getParcelable(ARG_PARAM1, Movie::class.java) ?: throw IllegalArgumentException()
+                arguments?.getParcelable(KEY_MOVIE, Movie::class.java) ?: throw IllegalArgumentException()
             } else {
-                arguments?.getParcelable(ARG_PARAM1) ?: throw IllegalArgumentException()
+                arguments?.getParcelable(KEY_MOVIE) ?: throw IllegalArgumentException()
             }
 
         val adapter = TheaterListAdapter(Theaters.theaters, movie) { theater -> navigateToTheater(theater, movie) }
@@ -53,5 +50,19 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     ) {
         val intent = MovieBookingActivity.movieBookingIntent(requireContext(), movie, theater)
         startActivity(intent)
+    }
+
+    companion object {
+        private const val KEY_MOVIE = "movie"
+
+        fun newInstance(movie: Movie): TheaterBottomSheetDialogFragment {
+            val dialogFragment = TheaterBottomSheetDialogFragment()
+            val bundle =
+                Bundle().apply {
+                    putParcelable(KEY_MOVIE, movie)
+                }
+            dialogFragment.arguments = bundle
+            return dialogFragment
+        }
     }
 }

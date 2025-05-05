@@ -39,13 +39,8 @@ class MovieFragment : Fragment(), Movies.View {
     }
 
     override fun navigateToBook(movie: Movie) {
-        val dialog = TheaterBottomSheetDialogFragment()
-        val bundle =
-            Bundle().apply {
-                putParcelable("movie", movie)
-            }
-        dialog.arguments = bundle
-        dialog.show(parentFragmentManager, "TheaterBottomSheet")
+        val dialogFragment = TheaterBottomSheetDialogFragment.newInstance(movie)
+        dialogFragment.show(parentFragmentManager, TAG_THEATER_DIALOG)
     }
 
     override fun navigateToAdPage() {
@@ -67,5 +62,9 @@ class MovieFragment : Fragment(), Movies.View {
     private fun setUpPresenter() {
         presenter = MoviesPresenter(this@MovieFragment)
         presenter.loadMovies()
+    }
+
+    companion object {
+        private const val TAG_THEATER_DIALOG = "TheaterBottomSheet"
     }
 }
