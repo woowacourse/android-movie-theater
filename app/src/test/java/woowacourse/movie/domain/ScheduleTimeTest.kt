@@ -15,7 +15,7 @@ class ScheduleTimeTest {
             )
         // when
         val actual =
-            scheduleTime.afterCurrentSchedule(
+            scheduleTime.afterCurrentDateSchedule(
                 date = LocalDateTime.of(2025, 1, 1, 0, 0),
                 currentDateTime = LocalDateTime.of(2025, 1, 1, 3, 0),
             )
