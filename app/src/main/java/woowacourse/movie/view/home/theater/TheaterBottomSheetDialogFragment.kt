@@ -19,8 +19,8 @@ class TheaterBottomSheetDialogFragment :
     private var _binding: BottomSheetFragmentTheaterBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var theaterAdapter: TheaterAdapter
-    private lateinit var presenter: TheaterContracts.Presenter
+    private val presenter: TheaterContracts.Presenter = TheaterPresenter(this)
+    private val theaterAdapter = TheaterAdapter(presenter::updateTheaterMovieSchedule)
 
     override fun onViewCreated(
         view: View,
@@ -29,17 +29,11 @@ class TheaterBottomSheetDialogFragment :
         super.onViewCreated(view, savedInstanceState)
 
         _binding = BottomSheetFragmentTheaterBinding.bind(view)
-        presenter = TheaterPresenter(this)
         setupAdapter()
         updateTheaters()
     }
 
     private fun setupAdapter() {
-        if (::theaterAdapter.isInitialized.not()) {
-            theaterAdapter =
-                TheaterAdapter { presenter.updateTheaterMovieSchedule(it) }
-        }
-
         binding.theaters.adapter = theaterAdapter
     }
 

@@ -19,7 +19,19 @@ class HomeFragment :
     private val binding get() = _binding!!
 
     private val presenter: HomeContracts.Presenter = HomePresenter(this)
-    private lateinit var movieAdapter: MovieAdapter
+    private val movieAdapter =
+        MovieAdapter(
+            movieClickListener =
+                object : MovieClickListener {
+                    override fun onReservationClick(movieId: Long) {
+                        presenter.updateTheater(movieId)
+                    }
+
+                    override fun onAdvertisementClick(url: String) {
+                        presenter.updateAdvertisement(url)
+                    }
+                },
+        )
 
     override fun onViewCreated(
         view: View,
@@ -31,21 +43,6 @@ class HomeFragment :
     }
 
     override fun showMovies(movies: List<MovieType>) {
-        if (::movieAdapter.isInitialized.not()) {
-            movieAdapter =
-                MovieAdapter(
-                    movieClickListener =
-                        object : MovieClickListener {
-                            override fun onReservationClick(movieId: Long) {
-                                presenter.updateTheater(movieId)
-                            }
-
-                            override fun onAdvertisementClick(url: String) {
-                                presenter.updateAdvertisement(url)
-                            }
-                        },
-                )
-        }
         binding.rvMainMovies.adapter = movieAdapter
         movieAdapter.submitList(movies)
     }
