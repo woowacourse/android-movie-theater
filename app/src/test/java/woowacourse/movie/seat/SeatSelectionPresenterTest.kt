@@ -4,6 +4,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.fixture.SEAT_A1
 import woowacourse.movie.fixture.SEOLLEUNG
 import woowacourse.movie.fixture.createTicket
 import woowacourse.movie.mapper.toUiModel
@@ -32,19 +33,16 @@ class SeatSelectionPresenterTest {
 
         verify { mockView.showTicket(mockTicketUiData) }
     }
-//
-//    @Test
-//    fun `좌석을_클릭하면_좌석_상태와_버튼_활성화_상태를_갱신한다`() {
-//        val seatTextView = mockk<TextView>(relaxed = true)
-//        every { seatTextView.text.toString() } returns "A1"
-//
-//        presenter.initializeData(mockTicketUiData)
-//        presenter.onSeatClicked(seatTextView)
-//
-//        verify { mockView.showSeatState(seatTextView, isSelected = true) }
-//        verify { mockView.setButtonEnabled(any()) }
-//        verify { mockView.showTicket(match { it.seats == "A1" && it.totalPrice == "10,000" }) }
-//    }
+
+    @Test
+    fun `좌석을_클릭하면_좌석_상태와_버튼_활성화_상태를_갱신한다`() {
+        presenter.initializeData(mockTicketUiData)
+        presenter.updateSeats(0, 0)
+
+        verify { mockView.showSeatState(SEAT_A1.toUiModel()) }
+        verify { mockView.updateCanBook(any()) }
+        verify { mockView.showTicket(match { it.seats == setOf(SEAT_A1.toUiModel()) && it.totalPrice == "10,000" }) }
+    }
 
     @Test
     fun `예약버튼_클릭시_예약_다이얼로그를_표시한다`() {
