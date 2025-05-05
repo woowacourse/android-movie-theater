@@ -18,6 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="132dp"
+        android:id="@+id/item_movie"
         android:padding="12dp">
 
         <ImageView

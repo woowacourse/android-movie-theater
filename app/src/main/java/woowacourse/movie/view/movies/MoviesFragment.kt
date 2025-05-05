@@ -38,7 +38,4 @@ class MoviesFragment :
             )
         binding.lvMovie.layoutManager = LinearLayoutManager(context)
     }
-
-    companion object {
-    }
 }

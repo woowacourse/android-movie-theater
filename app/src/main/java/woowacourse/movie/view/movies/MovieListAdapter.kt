@@ -46,7 +46,7 @@ class MovieListAdapter(
         }
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = if (items.size >= 10_000) 10_000 else items.size
 
     override fun onBindViewHolder(
         holder: ViewHolder,
