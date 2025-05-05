@@ -32,6 +32,8 @@ data class Ticket(
         }
     }
 
+    fun isCompleted(): Boolean = seats.size == reservationCount.value
+
     companion object {
         private const val INVALID_SEATS_SIZE_ERROR_MESSAGE =
             "예매 인원 수보다 많은 좌석을 선택할 수 없습니다. (총 인원: %d / 선택 좌석: %d)"
