@@ -39,7 +39,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
     }
 
     override fun moveToTheaterSelection(movieId: Int) {
-        TheaterListFragment.newInstance(movieId).show(childFragmentManager, THEATER_BOTTOM_SHEET)
+        TheaterListFragment.newInstance(movieId).show(parentFragmentManager, THEATER_BOTTOM_SHEET)
     }
 
     override fun onMovieSelected(movieId: Int) {
