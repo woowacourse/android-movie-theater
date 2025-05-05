@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.booking.detail.adapter.ScreeningDateSpinnerAdapter
 import woowacourse.movie.booking.detail.adapter.ScreeningTimeSpinnerAdapter
+import woowacourse.movie.booking.detail.listener.HeadCountListener
 import woowacourse.movie.booking.detail.listener.ScreeningDateSelectedListener
 import woowacourse.movie.booking.detail.listener.ScreeningTimeSelectedListener
 import woowacourse.movie.databinding.ActivityBookingDetailBinding
@@ -23,7 +24,7 @@ import woowacourse.movie.ui.model.TicketUiModel
 import java.time.LocalDate
 import java.time.LocalTime
 
-class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
+class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View, HeadCountListener {
     private val presenter = BookingDetailPresenter(this)
     private lateinit var binding: ActivityBookingDetailBinding
 
@@ -31,7 +32,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_detail)
-        binding.detail = this
+        binding.headCountListener = this
         setUpUi()
 
         val movie = requireMovieOrFinish() ?: return
@@ -92,13 +93,13 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
         binding.movie = movie
     }
 
-    fun decreaseHeadCount() {
-        presenter.decreaseHeadCount()
+    override fun onIncreaseHeadCount() {
+        presenter.increaseHeadCount()
         showHeadCount()
     }
 
-    fun increaseHeadCount() {
-        presenter.increaseHeadCount()
+    override fun onDecreaseHeadCount() {
+        presenter.decreaseHeadCount()
         showHeadCount()
     }
 

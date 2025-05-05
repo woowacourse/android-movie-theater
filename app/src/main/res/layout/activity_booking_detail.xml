@@ -10,8 +10,9 @@
             type="woowacourse.movie.ui.model.MovieUiModel" />
 
         <variable
-            name="detail"
-            type="woowacourse.movie.booking.detail.BookingDetailActivity" />
+            name="headCountListener"
+            type="woowacourse.movie.booking.detail.listener.HeadCountListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -124,6 +125,7 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_booking_running_info">
 
                         <Spinner
+
                             android:id="@+id/spinner_screening_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -143,11 +145,11 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <Button
-                        android:onClick="@{() -> detail.decreaseHeadCount()}"
                         android:id="@+id/btn_minus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="19dp"
+                        android:onClick="@{() -> headCountListener.onDecreaseHeadCount()}"
                         android:text="@string/btn_minus_text"
                         android:textSize="25sp"
                         android:textStyle="bold"
@@ -158,21 +160,21 @@
                         android:id="@+id/tv_people_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/default_head_count"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@id/btn_plus"
                         app:layout_constraintEnd_toStartOf="@id/btn_plus"
                         app:layout_constraintStart_toEndOf="@id/btn_minus"
-                        app:layout_constraintTop_toTopOf="@id/btn_minus" />
+                        app:layout_constraintTop_toTopOf="@id/btn_minus"
+                        tools:text="0" />
 
                     <Button
-                        android:onClick="@{()->detail.increaseHeadCount()}"
                         android:id="@+id/btn_plus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="19dp"
+                        android:onClick="@{() -> headCountListener.onIncreaseHeadCount()}"
                         android:text="@string/btn_plus_text"
                         android:textSize="25sp"
                         android:textStyle="bold"
@@ -194,7 +196,5 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
