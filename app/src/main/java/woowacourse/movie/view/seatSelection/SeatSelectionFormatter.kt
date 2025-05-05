@@ -10,8 +10,7 @@ object SeatSelectionFormatter {
         separator: String,
     ): String =
         seats
-            .sortedBy { it.column.value }
-            .sortedBy { it.row.value }
+            .sortedWith(compareBy({ it.row.value }, { it.column.value }))
             .joinToString(separator) { seat -> seatToUi(seat) }
 
     @JvmStatic
