@@ -17,5 +17,5 @@ class ScreeningTimeSelectedListener(
         onTimeSelected(selectedTime)
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
+    override fun onNothingSelected(parent: AdapterView<*>?) = Unit
 }
