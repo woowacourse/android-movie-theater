@@ -30,8 +30,17 @@ class TheaterBottomSheetDialogFragment :
 
         _binding = BottomSheetFragmentTheaterBinding.bind(view)
         presenter = TheaterPresenter(this)
-        updateTheaters()
         setupAdapter()
+        updateTheaters()
+    }
+
+    private fun setupAdapter() {
+        if (::theaterAdapter.isInitialized.not()) {
+            theaterAdapter =
+                TheaterAdapter { presenter.onReservationRequested(it) }
+        }
+
+        binding.theaters.adapter = theaterAdapter
     }
 
     private fun updateTheaters() {
@@ -44,15 +53,6 @@ class TheaterBottomSheetDialogFragment :
                 return
             },
         )
-    }
-
-    private fun setupAdapter() {
-        if (::theaterAdapter.isInitialized.not()) {
-            theaterAdapter =
-                TheaterAdapter { presenter.onReservationRequested(it) }
-        }
-
-        binding.theaters.adapter = theaterAdapter
     }
 
     override fun showTheaterMovieSchedule(theaterMovieSchedules: TheaterMovieSchedules) {
