@@ -22,7 +22,7 @@ class MovieTicketTest {
             )
 
         // when
-        val price = ticket.price()
+        val price = ticket.price
 
         // then
         Assertions.assertThat(price).isEqualTo(47000)

@@ -13,5 +13,5 @@ data class MovieTicket(
     val seats: List<Seat>,
     val theater: Theater,
 ) : Serializable {
-    fun price(): Int = seats.sumOf { seat -> seat.price }
+    val price: Int = seats.sumOf { seat -> seat.price }
 }
