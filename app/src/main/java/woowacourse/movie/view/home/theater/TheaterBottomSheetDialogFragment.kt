@@ -13,11 +13,11 @@ import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.home.movies.OnBottomSheetDialogEventListener
 import woowacourse.movie.view.home.movies.adapter.TheaterAdapter
 
-class TheaterBottomSheetDialogFragment(
-    val eventListener: OnBottomSheetDialogEventListener,
-) : BottomSheetDialogFragment(), TheaterContract.View {
+class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), TheaterContract.View {
     private var _binding: FragmentTheaterBottomSheetDialogBinding? = null
     private val binding get() = _binding!!
+
+    private var eventListener: OnBottomSheetDialogEventListener? = null
 
     private val presenter: TheaterContract.Presenter by lazy {
         TheaterPresenter(this)
@@ -67,7 +67,7 @@ class TheaterBottomSheetDialogFragment(
             TheaterAdapter(
                 object : OnTheaterEventListener {
                     override fun onClickReservation(showings: Showings) {
-                        eventListener.onClick(showings)
+                        eventListener?.onClick(showings)
                         dismiss()
                     }
                 },
@@ -82,7 +82,9 @@ class TheaterBottomSheetDialogFragment(
             movie: Movie,
             eventListener: OnBottomSheetDialogEventListener,
         ): TheaterBottomSheetDialogFragment {
-            return TheaterBottomSheetDialogFragment(eventListener).apply {
+            val fragment = TheaterBottomSheetDialogFragment()
+            fragment.eventListener = eventListener
+            return fragment.apply {
                 arguments =
                     Bundle().apply {
                         putSerializable("movie", movie)
