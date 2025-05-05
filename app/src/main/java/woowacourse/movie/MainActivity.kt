@@ -33,25 +33,30 @@ class MainActivity : AppCompatActivity() {
 
         binding.mainBottomNavigationBar.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.bottom_navigation_reservation_details ->
-                    return@setOnItemSelectedListener replaceFragment(reservationDetailsFragment)
+                R.id.bottom_navigation_reservation_details -> {
+                    replaceFragment(reservationDetailsFragment)
+                    return@setOnItemSelectedListener true
+                }
 
-                R.id.bottom_navigation_home ->
-                    return@setOnItemSelectedListener replaceFragment(homeFragment)
+                R.id.bottom_navigation_home -> {
+                    replaceFragment(homeFragment)
+                    return@setOnItemSelectedListener true
+                }
 
-                R.id.bottom_navigation_setting ->
-                    return@setOnItemSelectedListener replaceFragment(settingFragment)
+                R.id.bottom_navigation_setting -> {
+                    replaceFragment(settingFragment)
+                    return@setOnItemSelectedListener true
+                }
             }
             false
         }
     }
 
-    private fun replaceFragment(selectedFragment: Fragment): Boolean {
+    private fun replaceFragment(selectedFragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(binding.mainFragmentContainer.id, selectedFragment)
         }
-        return true
     }
 
     companion object {
