@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.MovieItem
@@ -19,6 +17,7 @@ import woowacourse.movie.view.reservation.detail.ReservationActivity
 
 class HomeFragment : Fragment(), HomeContract.View {
     private val presenter = HomePresenter(this)
+    private lateinit var movieAdapter: MovieAdapter
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -38,7 +37,7 @@ class HomeFragment : Fragment(), HomeContract.View {
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        presenter.fetchData()
+        presenter.loadMovies()
     }
 
     override fun onDestroyView() {
@@ -46,41 +45,34 @@ class HomeFragment : Fragment(), HomeContract.View {
         _binding = null
     }
 
-    override fun showMoviesScreen(
-        movies: List<Movie>,
-        navigate: (Movie) -> Unit,
-    ) {
-        val recyclerView: RecyclerView = binding.root.findViewById(R.id.recycler_view)
-        val movieAdapter: MovieAdapter =
+    override fun showMovies(movies: List<Movie>) {
+        val movieItems = mutableListOf<MovieItem>()
+        movies.forEachIndexed { index, movie ->
+            movieItems.add(MovieItem.ItemMovie(movie))
+            if ((index + 1) % 3 == 0) {
+                movieItems.add(MovieItem.ItemAd)
+            }
+        }
+
+        movieAdapter =
             MovieAdapter(
                 object : OnMovieEventListener {
                     override fun onClickShowTheater(movie: Movie) {
-                        navigate(movie)
+                        presenter.onMovieSelected(movie)
                     }
                 },
             )
-
-        val movieItems = mutableListOf<MovieItem>()
-        movies.forEachIndexed { index, movie ->
-            movieItems.add(MovieItem.Movie(movie))
-            if ((index + 1) % 3 == 0) {
-                movieItems.add(MovieItem.Advertisement)
-            }
-        }
-        recyclerView.adapter = movieAdapter
+        binding.recyclerView.adapter = movieAdapter
         movieAdapter.submitList(movieItems)
     }
 
-    override fun showTheaterSelectDialog(
-        movie: Movie,
-        navigate: (Showings) -> Unit,
-    ) {
+    override fun showTheaterSelectDialog(movie: Movie) {
         val dialog =
             TheaterBottomSheetDialogFragment.newInstance(
                 movie,
                 object : OnBottomSheetDialogEventListener {
                     override fun onClick(showings: Showings) {
-                        navigateToReservation(movie, showings)
+                        presenter.onTheaterSelected(movie, showings)
                     }
                 },
             )

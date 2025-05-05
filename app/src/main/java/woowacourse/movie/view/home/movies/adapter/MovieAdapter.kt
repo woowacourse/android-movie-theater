@@ -38,20 +38,20 @@ class MovieAdapter(
         position: Int,
     ) {
         when (val item = getItem(position)) {
-            is MovieItem.Movie -> {
+            is MovieItem.ItemMovie -> {
                 if (holder is MovieViewHolder) {
                     holder.bind(item.movie)
                 }
             }
 
-            is MovieItem.Advertisement -> {}
+            is MovieItem.ItemAd -> {}
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is MovieItem.Movie -> TYPE_MOVIE
-            is MovieItem.Advertisement -> TYPE_AD
+            is MovieItem.ItemMovie -> TYPE_MOVIE
+            is MovieItem.ItemAd -> TYPE_AD
         }
     }
 

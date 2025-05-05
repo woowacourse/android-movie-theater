@@ -6,7 +6,7 @@ import woowacourse.movie.domain.movietime.Date
 import woowacourse.movie.domain.movietime.MovieSchedule
 import java.time.LocalDate
 
-class MovieScheduleTest {
+class ItemMovieScheduleTest {
     @Test
     fun `영화 스케줄은 현재 상영가능한 날짜 리스트를 반환한다`() {
         // given

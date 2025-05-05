@@ -53,9 +53,9 @@
 - [x] MainActivity | BotNav 중복 코드 제거 
 - [x] HomeFragment | Fragment 생명 주기에 따른 binding 해제 관련
 - [ ] HomeFragment | 광고 반복 로직 비지니스 로직으로 변경
-- [ ] HomeFragment | 사용하지 않는 파라미터 제거
+- [x] HomeFragment | 사용하지 않는 파라미터 제거
 - [ ] HomeFragment | 생성자로 데이터 주입받기
-- [ ] HomeFragment | 반복되는 뷰 함수 호출 로직 개선
+- [x] HomeFragment | 반복되는 뷰 함수 호출 로직 개선
 - [ ] TheaterAdapter | DiffUtil 함수 확인 후 개선 
 - [ ] TheaterViewHolder | 바인딩 전달하는 파라미터 수정
 - [ ] TheaterBottomSheetDialogFragment | getSerializable 메서드 수정
