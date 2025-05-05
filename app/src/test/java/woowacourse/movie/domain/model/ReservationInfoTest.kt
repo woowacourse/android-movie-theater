@@ -3,15 +3,11 @@ package woowacourse.movie.domain.model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
+import woowacourse.movie.fixture.TestData
 import java.time.LocalDateTime
 
 class ReservationInfoTest {
-    private val reservationInfo =
-        ReservationInfo(
-            title = "해리 포터와 마법사의 돌",
-            reservationDateTime = LocalDateTime.of(2025, 4, 15, 11, 0),
-            reservationCount = ReservationCount(2),
-        )
+    private val reservationInfo = TestData.reservationInfo
 
     @Test
     fun `예약_정보를_생성_할_수_있다`() {

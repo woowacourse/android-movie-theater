@@ -12,7 +12,9 @@ data class Screening(
     val cinema: Cinema,
     val movie: Movie,
 ) : Parcelable {
-    fun getAvailableTimesFor(
+    val availableTimesSize: Int get() = screeningTimes.size
+
+    fun availableTimes(
         now: LocalDateTime,
         date: LocalDate,
     ): List<LocalTime> {

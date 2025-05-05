@@ -19,7 +19,7 @@ data class Movie(
             return findByMovie(this)
         }
 
-    fun getAvailableDates(now: LocalDateTime): List<LocalDate> {
+    fun availableDates(now: LocalDateTime): List<LocalDate> {
         val dates = mutableListOf<LocalDate>()
         var date = now.toLocalDate()
         while (!date.isAfter(endDate)) {
@@ -29,17 +29,7 @@ data class Movie(
         return dates.filterNot { it.isBefore(startDate) }
     }
 
-    fun findByMovie(movie: Movie): List<Screening> {
+    private fun findByMovie(movie: Movie): List<Screening> {
         return DummyScreening.dummyScreenings.filter { it.movie == movie }
-    }
-
-    fun screeningCinemas(): List<Cinema> {
-        return screening.map { screening ->
-            screening.cinema
-        }
-    }
-
-    fun totalScreeningTimes(cinema: Cinema): Int {
-        return screening.find { it.cinema == cinema }?.screeningTimes?.size ?: throw IllegalArgumentException()
     }
 }

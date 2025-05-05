@@ -56,7 +56,7 @@ class ReservationPresenter(
         val times = screening?.screeningTimes ?: throw IllegalArgumentException()
         times.ifEmpty {
             val nextDate = date.plusDays(1)
-            val dates = screening?.movie?.getAvailableDates(LocalDateTime.of(nextDate, LocalTime.of(0, 0))) ?: emptyList()
+            val dates = screening?.movie?.availableDates(LocalDateTime.of(nextDate, LocalTime.of(0, 0))) ?: emptyList()
             if (dates.isEmpty()) {
                 view.notifyUnavailableDate()
                 return
@@ -64,7 +64,7 @@ class ReservationPresenter(
             view.updateDateSet(dates, nextDate)
         }
 
-        val temp = screening?.movie?.getAvailableDates(LocalDateTime.now()) ?: emptyList()
+        val temp = screening?.movie?.availableDates(LocalDateTime.now()) ?: emptyList()
         view.updateDateSet(temp)
         view.updateTimeSet(times)
     }

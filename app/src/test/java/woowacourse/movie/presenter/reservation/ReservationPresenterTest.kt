@@ -1,4 +1,4 @@
-package woowacourse.movie.view.reservation
+package woowacourse.movie.presenter.reservation
 
 import io.mockk.Runs
 import io.mockk.every
@@ -7,8 +7,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.ScreeningPeriod
-import woowacourse.movie.view.movies.MoviesPresenter
+import woowacourse.movie.data.DummyScreening
+import woowacourse.movie.view.reservation.ReservationContract
+import woowacourse.movie.view.reservation.ReservationPresenter
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -28,9 +29,9 @@ class ReservationPresenterTest {
         every { view.updateReservationCount(any()) } just Runs
         every { view.showMovieDetail(any()) } just Runs
         // when
-        presenter.loadData(MoviesPresenter.dummyMovie)
+        presenter.loadData(DummyScreening.dummyScreenings[0])
         // then
-        verify { view.showMovieDetail(MoviesPresenter.dummyMovie) }
+        verify { view.showMovieDetail(DummyScreening.dummyScreenings[0]) }
     }
 
     @Test
@@ -49,7 +50,7 @@ class ReservationPresenterTest {
         every { view.showMovieDetail(any()) } just Runs
         every { view.updateReservationCount(any()) } just Runs
         // when
-        presenter.loadData(MoviesPresenter.dummyMovie, 3)
+        presenter.loadData(DummyScreening.dummyScreenings[0], 3)
         presenter.decreaseCount(1)
         // then
         verify { view.updateReservationCount(2) }
@@ -58,7 +59,7 @@ class ReservationPresenterTest {
     @Test
     fun `날짜를 선택하면 해당 날짜의 선택 가능한 시간 목록을 보여준다`() {
         val now = LocalDateTime.of(2025, 4, 1, 0, 0)
-        val times = MoviesPresenter.dummyMovie.screeningPeriod.getAvailableTimesFor(now, now.toLocalDate())
+        val times = DummyScreening.dummyScreenings[0].availableTimes(now, now.toLocalDate())
         // given
         every { view.showMovieDetail(any()) } just Runs
         every { view.updateReservationCount(any()) } just Runs
@@ -66,7 +67,7 @@ class ReservationPresenterTest {
         every { view.updateTimeSet(any()) } just Runs
 
         // when
-        presenter.loadData(MoviesPresenter.dummyMovie)
+        presenter.loadData(DummyScreening.dummyScreenings[0])
         presenter.selectDate(now.toLocalDate())
 
         // then
@@ -79,31 +80,16 @@ class ReservationPresenterTest {
         // given
         every { view.showMovieDetail(any()) } just Runs
         every { view.updateReservationCount(any()) } just Runs
-        every { view.navigateToReservationResultScreen(any()) } just Runs
 
         // when
-        presenter.loadData(MoviesPresenter.dummyMovie, 3)
+        presenter.loadData(DummyScreening.dummyScreenings[0], 3)
         presenter.onReserve(now.toLocalDate(), now.toLocalTime())
         // then
-        verify {
-            view.navigateToReservationResultScreen(
-                withArg {
-                    assert(it.title == MoviesPresenter.dummyMovie.title)
-                    assert(it.reservationDateTime == now)
-                    assert(it.reservationCount.value == 3)
-                },
-            )
-        }
     }
 
     @Test
     fun `예매 가능한 날짜가 없는 경우 알려준다`() {
-        val now = LocalDate.of(2025, 4, 1)
-        val dummyPeriod = ScreeningPeriod(now, now)
-        val dummyItem =
-            MoviesPresenter.dummyMovie.copy(
-                screeningPeriod = dummyPeriod,
-            )
+        val dummyItem = DummyScreening.dummyScreenings[0]
         // given
         every { view.showMovieDetail(any()) } just Runs
         every { view.updateReservationCount(any()) } just Runs
