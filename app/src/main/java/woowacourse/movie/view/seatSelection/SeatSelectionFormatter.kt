@@ -4,14 +4,11 @@ import woowacourse.movie.model.seat.Seat
 
 object SeatSelectionFormatter {
     @JvmStatic
-    fun seatsToUI(
-        seats: List<Seat>,
-        separator: String,
-    ): String =
+    fun seatsToUI(seats: List<Seat>): String =
         seats
             .sortedBy { it.column.value }
             .sortedBy { it.row.value }
-            .joinToString(separator) { seat -> seatToUI(seat) }
+            .joinToString { seat -> seatToUI(seat) }
 
     @JvmStatic
     fun seatToUI(seat: Seat): String = "${rowToUI(seat.row.value)}${columnToUI(seat.column.value)}"

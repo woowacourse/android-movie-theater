@@ -4,22 +4,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
-import woowacourse.movie.model.movie.MovieTime
-import woowacourse.movie.model.seat.Seat
-import woowacourse.movie.model.theater.Theater
+import woowacourse.movie.model.movie.MovieDate
+import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.view.mapper.Formatter.localDateToUI
 import woowacourse.movie.view.mapper.Formatter.priceToUI
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.seatsToUI
-import java.time.LocalDate
 
-@BindingAdapter("startDate", "endDate", requireAll = true)
+@BindingAdapter("movieDate")
 fun setFormatLocalDate(
     textView: TextView,
-    startDate: LocalDate,
-    endDate: LocalDate,
+    movieDate: MovieDate,
 ) {
-    val formattedStartDate: String = localDateToUI(startDate)
-    val formattedEndDate: String = localDateToUI(endDate)
+    val formattedStartDate: String = localDateToUI(movieDate.startDate)
+    val formattedEndDate: String = localDateToUI(movieDate.endDate)
 
     textView.text =
         textView.context.getString(
@@ -37,14 +34,13 @@ fun setImage(
     imageView.setImageResource(resId)
 }
 
-@BindingAdapter("movieDate", "movieTime", requireAll = true)
-fun setFormatLocalDateTime(
+@BindingAdapter("reserveDate")
+fun setFormatReserveDate(
     textView: TextView,
-    movieDate: LocalDate,
-    movieTime: MovieTime,
+    movieTicket: MovieTicket,
 ) {
-    val formatMovieDate: String = localDateToUI(movieDate)
-    val formatMovieTime: String = movieTime.value.toString()
+    val formatMovieDate: String = localDateToUI(movieTicket.movieDate)
+    val formatMovieTime: String = movieTicket.movieTime.value.toString()
 
     textView.text =
         textView.context.getString(
@@ -54,20 +50,19 @@ fun setFormatLocalDateTime(
         )
 }
 
-@BindingAdapter("seats", "theater", requireAll = true)
+@BindingAdapter("theaterInfo")
 fun setTheaterInfo(
     textView: TextView,
-    seats: List<Seat>,
-    theater: Theater,
+    movieTicket: MovieTicket,
 ) {
-    val formateSeats: String = seatsToUI(seats, ", ")
+    val formateSeats: String = seatsToUI(movieTicket.seats)
 
     textView.text =
         textView.context.getString(
             R.string.reservation_complete_seat_theater_name_info,
-            seats.size,
+            movieTicket.seats.size,
             formateSeats,
-            theater.name,
+            movieTicket.theater.name,
         )
 }
 
