@@ -48,11 +48,11 @@ class SeatsActivity :
     }
 
     override fun showMovieInfo(movie: Movie) {
-        binding.textviewTitle.text = movie.title
+        binding.movie = movie
     }
 
     override fun showTotalPrice(price: Int) {
-        binding.textviewAmount.text = getString(R.string.amount_message, price)
+        binding.price = price
     }
 
     override fun updateSeatSelectionState(
@@ -105,7 +105,12 @@ class SeatsActivity :
     }
 
     private fun initConfirmButton() {
-        binding.buttonConfirm.setOnClickListener { showConfirmAlertDialog() }
+        binding.eventHandler =
+            object : SeatSelectEventHandler {
+                override fun onConfirmButtonClicked() {
+                    showConfirmAlertDialog()
+                }
+            }
     }
 
     private fun showConfirmAlertDialog() {
