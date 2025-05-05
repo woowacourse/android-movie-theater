@@ -18,10 +18,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.MovieId
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movietime.MovieSchedule
 import woowacourse.movie.view.dialog.DialogFactory
+import woowacourse.movie.view.home.movies.MovieUi
+import woowacourse.movie.view.home.movies.getMovieById
 import woowacourse.movie.view.reservation.seat.ReservationSeatActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -55,11 +58,11 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         plusButton = findViewById(R.id.btn_plus_button)
         minusButton = findViewById(R.id.btn_minus_button)
 
-        val movie: Movie? =
+        val movieId: MovieId? =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getSerializableExtra(KEY_MOVIE, Movie::class.java)
+                intent.getSerializableExtra(KEY_MOVIE_ID, MovieId::class.java)
             } else {
-                intent.getSerializableExtra(KEY_MOVIE) as? Movie
+                intent.getSerializableExtra(KEY_MOVIE_ID) as? MovieId
             }
         val showings: Showings? =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -67,17 +70,17 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
             } else {
                 intent.getSerializableExtra(KEY_SHOWINGS) as? Showings
             }
-        checkTheater(movie, showings)
+        checkTheater(movieId, showings)
     }
 
     private fun checkTheater(
-        movie: Movie?,
+        movieId: MovieId?,
         showings: Showings?,
     ) {
-        if (movie == null || showings == null) {
+        if (movieId == null || showings == null) {
             showErrorInvalidMovie()
         } else {
-            present.fetchData(movie, showings)
+            present.fetchData(getMovieById(movieId), showings)
         }
     }
 
@@ -107,20 +110,20 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         spinnerDate.setSelection(selectedDatePosition)
     }
 
-    override fun showMovieReservationScreen(movie: Movie) {
+    override fun showMovieReservationScreen(movieUi: MovieUi) {
         val movieTitleTextView = findViewById<TextView>(R.id.tv_movie_title)
         val movieDateTextView = findViewById<TextView>(R.id.tv_movie_date)
         val movieTimeTextView = findViewById<TextView>(R.id.tv_movie_time)
         val moviePosterImageView = findViewById<ImageView>(R.id.iv_movie_image)
 
         val formatter = DateTimeFormatter.ofPattern(DATE_PATTERN)
-        val start = movie.date.startDate.format(formatter)
-        val end = movie.date.endDate.format(formatter)
+        val start = movieUi.date.startDate.format(formatter)
+        val end = movieUi.date.endDate.format(formatter)
 
-        movieTitleTextView.text = movie.title
+        movieTitleTextView.text = movieUi.title
         movieDateTextView.text = getString(R.string.movieDate, start, end)
-        movieTimeTextView.text = getString(R.string.movieTime, movie.time.toString())
-        moviePosterImageView.setImageResource(movie.image)
+        movieTimeTextView.text = getString(R.string.movieTime, movieUi.time.toString())
+        moviePosterImageView.setImageResource(movieUi.image)
     }
 
     override fun showCount(count: Int) {
@@ -234,19 +237,19 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     companion object {
-        private const val KEY_MOVIE = "MOVIE"
+        private const val KEY_MOVIE_ID = "MOVIE_ID"
         private const val KEY_SHOWINGS = "SHOWINGS"
         private const val DATE_PATTERN = "yyyy.M.d"
 
         fun newIntent(
             context: Context,
-            movie: Movie?,
+            movieId: MovieId?,
             showings: Showings?,
         ): Intent =
             Intent(context, ReservationActivity::class.java)
                 .putExtra(
-                    KEY_MOVIE,
-                    movie,
+                    KEY_MOVIE_ID,
+                    movieId,
                 )
                 .putExtra(
                     KEY_SHOWINGS,

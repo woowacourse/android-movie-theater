@@ -4,6 +4,7 @@ import android.os.Bundle
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.Ticket
+import woowacourse.movie.view.home.movies.MovieUi
 import java.time.LocalDateTime
 
 interface ReservationContract {
@@ -36,7 +37,7 @@ interface ReservationContract {
     interface View {
         fun showErrorInvalidMovie()
 
-        fun showMovieReservationScreen(movie: Movie)
+        fun showMovieReservationScreen(movieUi: MovieUi)
 
         fun showCount(count: Int)
 

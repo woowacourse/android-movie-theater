@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
-import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.MovieItem
 import woowacourse.movie.domain.Showings
+import woowacourse.movie.view.home.movies.MovieItem
+import woowacourse.movie.view.home.movies.MovieUi
 import woowacourse.movie.view.home.movies.OnBottomSheetDialogEventListener
 import woowacourse.movie.view.home.movies.OnMovieEventListener
 import woowacourse.movie.view.home.movies.adapter.MovieAdapter
@@ -40,22 +40,22 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun showMoviesScreen(
-        movies: List<Movie>,
-        navigate: (Movie) -> Unit,
+        movieUis: List<MovieUi>,
+        navigate: (MovieUi) -> Unit,
     ) {
         val recyclerView: RecyclerView = binding.root.findViewById(R.id.recycler_view)
         val movieAdapter: MovieAdapter =
             MovieAdapter(
                 object : OnMovieEventListener {
-                    override fun onClickShowTheater(movie: Movie) {
-                        navigate(movie)
+                    override fun onClickShowTheater(movieUi: MovieUi) {
+                        navigate(movieUi)
                     }
                 },
             )
 
         val movieItems = mutableListOf<MovieItem>()
-        movies.forEachIndexed { index, movie ->
-            movieItems.add(MovieItem.Movie(movie))
+        movieUis.forEachIndexed { index, movieUi ->
+            movieItems.add(MovieItem.ScreeningMovieUi(movieUi))
             if ((index + 1) % 3 == 0) {
                 movieItems.add(MovieItem.Advertisement)
             }
@@ -65,15 +65,15 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun showTheaterSelectDialog(
-        movie: Movie,
+        movieUi: MovieUi,
         navigate: (Showings) -> Unit,
     ) {
         val dialog =
             TheaterBottomSheetDialogFragment.newInstance(
-                movie,
+                movieUi.movieId,
                 object : OnBottomSheetDialogEventListener {
                     override fun onClick(showings: Showings) {
-                        navigateToReservation(movie, showings)
+                        navigateToReservation(movieUi, showings)
                     }
                 },
             )
@@ -81,10 +81,10 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun navigateToReservation(
-        movie: Movie,
+        movieUi: MovieUi,
         showings: Showings,
     ) {
-        val intent = ReservationActivity.newIntent(requireContext(), movie, showings)
+        val intent = ReservationActivity.newIntent(requireContext(), movieUi.movieId, showings)
         startActivity(intent)
     }
 }

@@ -5,8 +5,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieItemBinding
-import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.movietime.Date
+import woowacourse.movie.view.home.movies.MovieUi
 import woowacourse.movie.view.home.movies.OnMovieEventListener
 import java.time.format.DateTimeFormatter
 
@@ -14,7 +14,7 @@ class MovieViewHolder(
     eventListener: OnMovieEventListener,
     binding: MovieItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private var movie: Movie? = null
+    private var movieUi: MovieUi? = null
     private val movieImage: ImageView = binding.ivMovieImage
     private val movieTitle: TextView = binding.tvMovieTitle
     private val movieDate: TextView = binding.tvMovieDate
@@ -22,16 +22,16 @@ class MovieViewHolder(
 
     init {
         binding.btnReserve.setOnClickListener {
-            movie?.let { eventListener.onClickShowTheater(it) }
+            movieUi?.let { eventListener.onClickShowTheater(it) }
         }
     }
 
-    fun bind(movie: Movie) {
-        this.movie = movie
-        movieImage.setImageResource(movie.image)
-        movieTitle.text = movie.title
-        setDateTextView(movie.date)
-        setTimeTextView(movie.time)
+    fun bind(movieUi: MovieUi) {
+        this.movieUi = movieUi
+        movieImage.setImageResource(movieUi.image)
+        movieTitle.text = movieUi.title
+        setDateTextView(movieUi.date)
+        setTimeTextView(movieUi.time)
     }
 
     private fun setDateTextView(date: Date) {

@@ -50,8 +50,8 @@
 ### 피드백 반영
 
 - [x] HomeFragmentTest | 테스트 명 변경
-- [ ] Movie | UiModel 만들기
-- [ ] MovieItem | Movie 네이밍 변경
+- [x] Movie | UiModel 만들기
+- [x] MovieItem | Movie 네이밍 변경
 - [ ] ScheduleTime | 메서드 분리
 - [ ] Showings | 스스로 일을 할 수 있게 변경
 - [ ] Ticket | 15 값 enum class로 변경

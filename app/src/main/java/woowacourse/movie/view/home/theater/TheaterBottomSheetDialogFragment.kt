@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
-import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.MovieId
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.home.movies.OnBottomSheetDialogEventListener
 import woowacourse.movie.view.home.movies.adapter.TheaterAdapter
+import woowacourse.movie.view.home.movies.getMovieById
 
 class TheaterBottomSheetDialogFragment(
     val eventListener: OnBottomSheetDialogEventListener,
@@ -34,12 +35,12 @@ class TheaterBottomSheetDialogFragment(
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movie = arguments?.getSerializable("movie") as? Movie?
+        val movieId = arguments?.getSerializable(KEY_MOVIE_ID) as? MovieId?
 
-        if (movie == null) {
+        if (movieId == null) {
             handleInvalidTicket()
         } else {
-            presenter.fetchData(movie)
+            presenter.fetchData(getMovieById(movieId))
         }
     }
 
@@ -67,14 +68,16 @@ class TheaterBottomSheetDialogFragment(
     }
 
     companion object {
+        private const val KEY_MOVIE_ID = "MOVIE_ID"
+
         fun newInstance(
-            movie: Movie,
+            movieId: MovieId,
             eventListener: OnBottomSheetDialogEventListener,
         ): TheaterBottomSheetDialogFragment {
             return TheaterBottomSheetDialogFragment(eventListener).apply {
                 arguments =
                     Bundle().apply {
-                        putSerializable("movie", movie)
+                        putSerializable(KEY_MOVIE_ID, movieId)
                     }
             }
         }

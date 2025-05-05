@@ -1,13 +1,11 @@
 package woowacourse.movie.domain
 
-import androidx.annotation.DrawableRes
-import woowacourse.movie.R
 import woowacourse.movie.domain.movietime.Date
 import java.io.Serializable
 import java.time.LocalDate
 
 data class Movie(
-    @DrawableRes val image: Int,
+    val movieId: MovieId,
     val title: String,
     val date: Date,
     val time: Int,
@@ -16,37 +14,37 @@ data class Movie(
         val dummy: List<Movie> =
             listOf(
                 Movie(
-                    R.drawable.harry,
+                    MovieId.Harry1,
                     "해리포터",
                     Date(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 30)),
                     152,
                 ),
                 Movie(
-                    R.drawable.poster_suzume,
+                    MovieId.Suzume,
                     "스즈메의 문단속",
                     Date(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 30)),
                     152,
                 ),
                 Movie(
-                    R.drawable.poster_criminalcity,
+                    MovieId.CriminalCity3,
                     "범죄도시",
                     Date(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 30)),
                     152,
                 ),
                 Movie(
-                    R.drawable.poster_castaway,
+                    MovieId.CastAway,
                     "김씨표류기",
                     Date(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 30)),
                     152,
                 ),
                 Movie(
-                    R.drawable.poster_singstreet,
+                    MovieId.StringStreet,
                     "싱스트리트",
                     Date(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 30)),
                     152,
                 ),
                 Movie(
-                    R.drawable.poster_agugustrush,
+                    MovieId.Agustrush,
                     "어거스트 러쉬",
                     Date(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 30)),
                     152,

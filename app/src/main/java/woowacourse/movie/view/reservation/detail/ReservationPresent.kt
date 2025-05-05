@@ -4,6 +4,7 @@ import android.os.Bundle
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.Ticket
+import woowacourse.movie.view.home.movies.toMovieUi
 import java.time.LocalDateTime
 
 class ReservationPresent(
@@ -20,7 +21,7 @@ class ReservationPresent(
     ) {
         this.movie = movie
         view.showCount(count)
-        view.showMovieReservationScreen(this.movie)
+        view.showMovieReservationScreen(this.movie.toMovieUi())
         view.setCountButtons()
         view.setReservationButton(showings)
         view.showSpinnerData(this.movie, selectedDatePosition, showings)

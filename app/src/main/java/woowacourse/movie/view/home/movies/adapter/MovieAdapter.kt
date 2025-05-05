@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieItemBinding
-import woowacourse.movie.domain.MovieItem
+import woowacourse.movie.view.home.movies.MovieItem
 import woowacourse.movie.view.home.movies.OnMovieEventListener
 
 class MovieAdapter(
@@ -38,9 +38,9 @@ class MovieAdapter(
         position: Int,
     ) {
         when (val item = getItem(position)) {
-            is MovieItem.Movie -> {
+            is MovieItem.ScreeningMovieUi -> {
                 if (holder is MovieViewHolder) {
-                    holder.bind(item.movie)
+                    holder.bind(item.movieUi)
                 }
             }
 
@@ -50,7 +50,7 @@ class MovieAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is MovieItem.Movie -> TYPE_MOVIE
+            is MovieItem.ScreeningMovieUi -> TYPE_MOVIE
             is MovieItem.Advertisement -> TYPE_AD
         }
     }
