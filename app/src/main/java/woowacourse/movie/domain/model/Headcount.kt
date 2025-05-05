@@ -4,14 +4,9 @@ import java.io.Serializable
 
 class Headcount(
     count: Int = 1,
-    val ticketType: TicketType = TicketType.B_GRADE,
 ) : Serializable {
     var count: Int = count
         private set
-
-    fun deepCopy(): Headcount = Headcount(count, ticketType)
-
-    fun price(): Int = ticketType.price * count
 
     fun increase() {
         if (count < MAX_HEADCOUNT) {
