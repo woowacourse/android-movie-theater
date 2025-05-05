@@ -2,7 +2,6 @@ package woowacourse.movie.movie.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.AdBannerItemBinding
@@ -13,9 +12,7 @@ class AdViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 ) {
     private val binding = AdBannerItemBinding.bind(itemView)
 
-    private val imgBanner: ImageView = binding.imgBanner
-
     fun bind(item: MovieFeedUiModel.AdvertisementItem) {
-        imgBanner.setImageResource(item.imageId)
+        binding.imgBanner.setImageResource(item.imageId)
     }
 }
