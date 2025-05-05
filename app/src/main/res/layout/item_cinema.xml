@@ -7,7 +7,7 @@
 
         <variable
             name="cinema"
-            type="woowacourse.movie.view.cinema.adapter.CinemaViewHolder" />
+            type="woowacourse.movie.ui.view.cinema.adapter.CinemaViewHolder" />
 
     </data>
 

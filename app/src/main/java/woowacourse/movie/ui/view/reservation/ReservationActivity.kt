@@ -1,0 +1,351 @@
+package woowacourse.movie.ui.view.reservation
+
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Spinner
+import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import woowacourse.movie.R
+import woowacourse.movie.domain.reservation.Screening
+import woowacourse.movie.domain.reservation.ShowtimePolicy
+import woowacourse.movie.ui.contract.reservation.ReservationContract
+import woowacourse.movie.ui.presenter.reservation.ReservationPresenter
+import woowacourse.movie.ui.view.reservation.Poster.posterId
+import woowacourse.movie.ui.view.util.ErrorMessage
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+
+class ReservationActivity :
+    AppCompatActivity(),
+    ReservationContract.View {
+    private var presenter: ReservationContract.Presenter? = null
+
+    private lateinit var posterImageView: ImageView
+    private lateinit var titleView: TextView
+    private lateinit var periodView: TextView
+    private lateinit var runningTimeView: TextView
+    private lateinit var dateSpinner: Spinner
+    private lateinit var timeSpinner: Spinner
+    private lateinit var ticketCountView: TextView
+    private lateinit var ticketCountMinusButton: Button
+    private lateinit var ticketCountPlusButton: Button
+    private lateinit var completeButton: Button
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        presenter?.getTicketCount()?.let {
+            outState.putInt(
+                woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.TICKET_COUNT,
+                it,
+            )
+        }
+        presenter?.getItemPosition()?.let {
+            outState.putInt(
+                woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.TIME_ITEM_POSITION,
+                it,
+            )
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_reservation)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.layout_reservation)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+        initPresenter(
+            savedInstanceState?.getInt(woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.TICKET_COUNT),
+            savedInstanceState?.getInt(woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.TIME_ITEM_POSITION),
+        )
+        findViews()
+        initViews()
+        initEventListeners()
+    }
+
+    private fun initPresenter(
+        ticketCount: Int?,
+        timeItemPosition: Int?,
+    ) {
+        presenter =
+            ReservationPresenter(
+                this,
+                intent.getScreeningExtra(EXTRA_SCREENING)
+                    ?: error(
+                        ErrorMessage(CAUSE_SCREENING)
+                            .notProvided(),
+                    ),
+                intent.getShowtimePolicyExtra()
+                    ?: error(
+                        ErrorMessage(CAUSE_SCREENING)
+                            .notProvided(),
+                    ),
+                intent.getStringExtra(EXTRA_CINEMA_NAME)
+                    ?: error(
+                        ErrorMessage(CAUSE_CINEMA_NAME)
+                            .notProvided(),
+                    ),
+                ticketCount,
+                timeItemPosition,
+            )
+    }
+
+    private fun findViews() {
+        posterImageView = findViewById<ImageView>(R.id.iv_reservation_poster)
+        titleView = findViewById<TextView>(R.id.tv_reservation_movie_title)
+        periodView = findViewById<TextView>(R.id.tv_reservation_movie_period)
+        runningTimeView = findViewById<TextView>(R.id.tv_reservation_movie_running_time)
+        dateSpinner = findViewById<Spinner>(R.id.spinner_reservation_screening_date)
+        timeSpinner = findViewById<Spinner>(R.id.spinner_reservation_screening_time)
+        ticketCountView = findViewById<TextView>(R.id.tv_reservation_audience_count)
+        ticketCountMinusButton = findViewById<Button>(R.id.btn_reservation_minus)
+        ticketCountPlusButton = findViewById<Button>(R.id.btn_reservation_plus)
+        completeButton = findViewById<Button>(R.id.btn_reservation_select_complete)
+    }
+
+    @Suppress("DEPRECATION")
+    private fun Intent.getScreeningExtra(key: String): Screening? =
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ->
+                getSerializableExtra(key, Screening::class.java)
+
+            else -> getSerializableExtra(key) as? Screening
+        }
+
+    @Suppress("DEPRECATION")
+    private fun Intent.getShowtimePolicyExtra(): ShowtimePolicy? =
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ->
+                getSerializableExtra(
+                    woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.EXTRA_SHOWTIME_POLICY,
+                    ShowtimePolicy::class.java,
+                )
+
+            else ->
+                getSerializableExtra(
+                    woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.EXTRA_SHOWTIME_POLICY,
+                ) as? ShowtimePolicy
+        }
+
+    private fun initViews() {
+        (
+            presenter ?: error(
+                woowacourse.movie.ui.view.util.ErrorMessage("screening").notProvided(),
+            )
+        ).run {
+            presentPoster()
+            presentTitle()
+            presentPeriod()
+            presentRunningTime()
+            presentDates()
+            presentTicketCount()
+        }
+    }
+
+    private fun initEventListeners() {
+        initDateSpinnerItemSelectedEvent()
+        initTimeSpinnerItemSelectedEvent()
+        initTicketCountPlusButtonClickEvent()
+        initTicketCountMinusButtonClickEvent()
+        initCompleteButtonClickEvent()
+    }
+
+    private fun initDateSpinnerItemSelectedEvent() {
+        dateSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    presenter?.presentTimes(LocalDateTime.now())
+                        ?: error(
+                            ErrorMessage(CAUSE_SCREENING).notProvided(),
+                        )
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+    }
+
+    private fun initTimeSpinnerItemSelectedEvent() {
+        timeSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    presenter?.setTimeItemPosition(position)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+    }
+
+    private fun initTicketCountPlusButtonClickEvent() {
+        ticketCountPlusButton.setOnClickListener {
+            presenter?.plusTicketCount()
+                ?: error(
+                    ErrorMessage(CAUSE_SCREENING)
+                        .notProvided(),
+                )
+        }
+    }
+
+    private fun initTicketCountMinusButtonClickEvent() {
+        ticketCountMinusButton.setOnClickListener {
+            presenter?.minusTicketCount()
+                ?: error(
+                    ErrorMessage(CAUSE_SCREENING)
+                        .notProvided(),
+                )
+        }
+    }
+
+    private fun initCompleteButtonClickEvent() {
+        completeButton.setOnClickListener {
+            presenter?.presentAvailableSeats()
+                ?: error(
+                    ErrorMessage(CAUSE_SCREENING)
+                        .notProvided(),
+                )
+        }
+    }
+
+    override fun setPoster(movieId: Int) {
+        val posterResourceId = posterId(movieId)
+        if (posterResourceId != null) posterImageView.setImageResource(posterResourceId)
+    }
+
+    override fun setTitle(title: String) {
+        titleView.text = title
+    }
+
+    override fun setPeriod(
+        startYear: Int,
+        startMonth: Int,
+        startDay: Int,
+        endYear: Int,
+        endMonth: Int,
+        endDay: Int,
+    ) {
+        periodView.text =
+            getString(
+                R.string.screening_period,
+                startYear,
+                startMonth,
+                startDay,
+                endYear,
+                endMonth,
+                endDay,
+            )
+    }
+
+    override fun setRunningTime(runningTime: Int) {
+        runningTimeView.text =
+            getString(
+                R.string.running_time,
+                runningTime,
+            )
+    }
+
+    override fun setDates(dates: List<LocalDate>) {
+        dateSpinner.adapter =
+            ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item,
+                dates,
+            )
+    }
+
+    override fun setTimes(
+        times: List<LocalTime>,
+        timeItemPosition: Int,
+    ) {
+        timeSpinner.adapter =
+            ArrayAdapter(
+                this@ReservationActivity,
+                android.R.layout.simple_spinner_item,
+                times,
+            )
+
+        if (timeItemPosition >= times.size) {
+            timeSpinner.setSelection(times.lastIndex)
+        } else {
+            timeSpinner.setSelection(timeItemPosition)
+        }
+    }
+
+    override fun setTicketCount(count: Int) {
+        ticketCountView.text = count.toString()
+    }
+
+    override fun navigateToSeatSelectionScreen(
+        title: String,
+        ticketCount: Int,
+        cinemaName: String,
+    ) {
+        val intent =
+            woowacourse.movie.ui.view.reservation.SeatSelectionActivity.Companion.newIntent(
+                this,
+                title,
+                ticketCount,
+                LocalDateTime.of(
+                    dateSpinner.selectedItem as LocalDate,
+                    timeSpinner.selectedItem as LocalTime,
+                ),
+                cinemaName,
+            )
+        startActivity(intent)
+    }
+
+    companion object {
+        private const val TICKET_COUNT = "TICKET_COUNT"
+        private const val TIME_ITEM_POSITION = "TIME_ITEM_POSITION"
+
+        private const val CAUSE_SCREENING = "screening"
+        private const val CAUSE_CINEMA_NAME = "cinemaName"
+
+        private const val EXTRA_SCREENING = "woowacourse.movie.EXTRA_SCREENING"
+        private const val EXTRA_CINEMA_NAME = "woowacourse.movie.EXTRA_CINEMA_NAME"
+        private const val EXTRA_SHOWTIME_POLICY = "woowacourse.movie.EXTRA_SHOWTIME_POLICY"
+
+        fun newIntent(
+            context: Context,
+            screening: Screening,
+            cinemaName: String,
+            showtimePolicy: ShowtimePolicy,
+        ): Intent =
+            Intent(context, woowacourse.movie.ui.view.reservation.ReservationActivity::class.java)
+                .putExtra(
+                    woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.EXTRA_SCREENING,
+                    screening,
+                ).putExtra(
+                    woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.EXTRA_CINEMA_NAME,
+                    cinemaName,
+                )
+                .putExtra(
+                    woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.EXTRA_SHOWTIME_POLICY,
+                    showtimePolicy,
+                )
+    }
+}

@@ -8,9 +8,9 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.contract.MainContract
-import woowacourse.movie.view.MainActivity.Companion.SCREEN_ID_HOME
-import woowacourse.movie.view.MainActivity.Companion.SCREEN_ID_RESERVATION_HISTORY
-import woowacourse.movie.view.MainActivity.Companion.SCREEN_ID_SETTING
+import woowacourse.movie.view.MainActivity.Companion.HOME
+import woowacourse.movie.view.MainActivity.Companion.RESERVATION_HISTORY
+import woowacourse.movie.view.MainActivity.Companion.SETTING
 
 class MainPresenterTest {
     private lateinit var view: MainContract.View
@@ -25,36 +25,36 @@ class MainPresenterTest {
     @Test
     fun `하단의 네비게이션 뷰 통해 영화 예매 내역 화면으로 이동할 수 있다`() {
         // given
-        every { view.updateScreen(SCREEN_ID_RESERVATION_HISTORY) } just Runs
+        every { view.updateScreen(RESERVATION_HISTORY) } just Runs
 
         // when
-        presenter.presentScreen(SCREEN_ID_RESERVATION_HISTORY)
+        presenter.presentScreen(RESERVATION_HISTORY)
 
         // then
-        verify { view.updateScreen(SCREEN_ID_RESERVATION_HISTORY) }
+        verify { view.updateScreen(RESERVATION_HISTORY) }
     }
 
     @Test
     fun `하단의 네비게이션 뷰 통해 홈 화면으로 이동할 수 있다`() {
         // given
-        every { view.updateScreen(SCREEN_ID_HOME) } just Runs
+        every { view.updateScreen(HOME) } just Runs
 
         // when
-        presenter.presentScreen(SCREEN_ID_HOME)
+        presenter.presentScreen(HOME)
 
         // then
-        verify { view.updateScreen(SCREEN_ID_HOME) }
+        verify { view.updateScreen(HOME) }
     }
 
     @Test
     fun `하단의 네비게이션 뷰 통해 설정 화면으로 이동할 수 있다`() {
         // given
-        every { view.updateScreen(SCREEN_ID_SETTING) } just Runs
+        every { view.updateScreen(SETTING) } just Runs
 
         // when
-        presenter.presentScreen(SCREEN_ID_SETTING)
+        presenter.presentScreen(SETTING)
 
         // then
-        verify { view.updateScreen(SCREEN_ID_SETTING) }
+        verify { view.updateScreen(SETTING) }
     }
 }

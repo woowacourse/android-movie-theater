@@ -18,7 +18,7 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.reservation.Movie
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
-import woowacourse.movie.view.reservation.ReservationActivity
+import woowacourse.movie.ui.view.reservation.ReservationActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -26,8 +26,8 @@ import java.time.LocalTime
 class ReservationActivityTest {
     @get:Rule
     val activityRule =
-        ActivityScenarioRule<ReservationActivity>(
-            ReservationActivity.newIntent(
+        ActivityScenarioRule<woowacourse.movie.ui.view.reservation.ReservationActivity>(
+            woowacourse.movie.ui.view.reservation.ReservationActivity.newIntent(
                 ApplicationProvider.getApplicationContext(),
                 Screening(
                     movie =

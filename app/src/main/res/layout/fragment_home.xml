@@ -6,7 +6,7 @@
 
         <variable
             name="home"
-            type="woowacourse.movie.view.cinema.HomeFragment" />
+            type="woowacourse.movie.ui.view.cinema.HomeFragment" />
 
     </data>
 
