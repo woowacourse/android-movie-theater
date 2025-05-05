@@ -16,9 +16,9 @@ import woowacourse.movie.view.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val homeFragment = HomeFragment()
-    private val settingFragment = SettingFragment()
-    private val reservationDetailsFragment = ReservationDetailsFragment()
+    private val homeFragment by lazy { HomeFragment().newInstance() }
+    private val settingFragment by lazy { SettingFragment().newInstance() }
+    private val reservationDetailsFragment by lazy { ReservationDetailsFragment().newInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +57,11 @@ class MainActivity : AppCompatActivity() {
         fun getIntent(context: Context): Intent =
             Intent(context, MainActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            }
+
+        fun Fragment.newInstance(): Fragment =
+            this.apply {
+                arguments = Bundle()
             }
     }
 }
