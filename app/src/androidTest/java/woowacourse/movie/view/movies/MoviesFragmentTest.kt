@@ -15,10 +15,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.fixture.TestData
+import woowacourse.movie.matchers.RecyclerViewMatcher.Companion.withRecyclerView
+import woowacourse.movie.matchers.scrollToPosition
 import woowacourse.movie.view.MainActivity
-import woowacourse.movie.view.fixture.TestData
-import woowacourse.movie.view.matchers.RecyclerViewMatcher.Companion.withRecyclerView
-import woowacourse.movie.view.matchers.scrollToPosition
 
 @RunWith(AndroidJUnit4::class)
 @Suppress("FunctionName")

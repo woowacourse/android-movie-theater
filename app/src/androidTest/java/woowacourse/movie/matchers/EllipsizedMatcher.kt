@@ -1,4 +1,4 @@
-package woowacourse.movie.view.matchers
+package woowacourse.movie.matchers
 
 import android.widget.TextView
 import androidx.test.espresso.ViewAssertion

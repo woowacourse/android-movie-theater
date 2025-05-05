@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.view.fixture.TestData
+import woowacourse.movie.fixture.TestData
 
 @RunWith(AndroidJUnit4::class)
 @Suppress("FunctionName")

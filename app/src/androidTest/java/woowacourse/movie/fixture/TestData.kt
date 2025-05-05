@@ -1,4 +1,4 @@
-package woowacourse.movie.view.fixture
+package woowacourse.movie.fixture
 
 import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovie

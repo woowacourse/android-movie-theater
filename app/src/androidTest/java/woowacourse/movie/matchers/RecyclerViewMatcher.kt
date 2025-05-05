@@ -1,4 +1,4 @@
-package woowacourse.movie.view.matchers
+package woowacourse.movie.matchers
 
 import android.content.res.Resources
 import android.view.View

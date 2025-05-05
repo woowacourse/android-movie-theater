@@ -1,4 +1,4 @@
-package woowacourse.movie.view.reservation.result
+package woowacourse.movie.view.result
 
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -12,14 +12,15 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Cinema
-import woowacourse.movie.view.fixture.TestData
-import woowacourse.movie.view.matchers.isEllipsized
+import woowacourse.movie.fixture.TestData
+import woowacourse.movie.matchers.isEllipsized
+import woowacourse.movie.view.reservation.result.ReservationResultActivity
 
 @RunWith(AndroidJUnit4::class)
 @Suppress("FunctionName")
 class ReservationResultActivityTest {
     val intent =
-        ReservationResultActivity.newIntent(
+        ReservationResultActivity.Companion.newIntent(
             ApplicationProvider.getApplicationContext(),
             TestData.reservationInfo,
         )
