@@ -5,6 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
@@ -41,33 +42,23 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavMenu.selectedItemId = R.id.menu_fragment_home
 
         binding.bottomNavMenu.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.menu_fragment_home -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container, HomeFragment())
-                    }
-                    return@setOnItemSelectedListener true
+            val fragment =
+                when (item.itemId) {
+                    R.id.menu_fragment_home -> HomeFragment()
+                    R.id.menu_fragment_history -> HistoryFragment()
+                    R.id.menu_fragment_settings -> SettingFragment()
+                    else -> return@setOnItemSelectedListener false
                 }
 
-                R.id.menu_fragment_history -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container, HistoryFragment())
-                    }
-                    return@setOnItemSelectedListener true
-                }
+            replaceFragment(fragment)
+            return@setOnItemSelectedListener true
+        }
+    }
 
-                R.id.menu_fragment_settings -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container, SettingFragment())
-                    }
-                    return@setOnItemSelectedListener true
-                }
-
-                else -> return@setOnItemSelectedListener false
-            }
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.main_fragment_container, fragment)
         }
     }
 }
