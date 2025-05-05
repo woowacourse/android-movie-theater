@@ -12,6 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Cinema
+import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.fixture.TestData
 import woowacourse.movie.matchers.isEllipsized
 import woowacourse.movie.view.reservation.result.ReservationResultActivity
@@ -22,7 +23,12 @@ class ReservationResultActivityTest {
     val intent =
         ReservationResultActivity.Companion.newIntent(
             ApplicationProvider.getApplicationContext(),
-            TestData.reservationInfo,
+            TestData.reservationInfo.toTicket(
+                listOf(
+                    Seat(0, 1),
+                    Seat(2, 1),
+                ),
+            ),
         )
 
     @get:Rule
@@ -70,7 +76,7 @@ class ReservationResultActivityTest {
             it.showReservationResult(
                 TestData.reservationInfo.copy(
                     cinema = Cinema(1, "잠실잠실잠실잠실잠실잠실잠실잠실잠실잠실잠실잠실잠실잠실잠실잠실잠실잠실잠실잠실잠실잠실잠실"),
-                ),
+                ).toTicket(listOf()),
             )
         }
         onView(withId(R.id.tv_reservation_cinema))

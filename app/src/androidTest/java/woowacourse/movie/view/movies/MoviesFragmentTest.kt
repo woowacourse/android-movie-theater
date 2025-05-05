@@ -2,7 +2,6 @@ package woowacourse.movie.view.movies
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -17,6 +16,8 @@ import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.fixture.TestData
 import woowacourse.movie.matchers.RecyclerViewMatcher.Companion.withRecyclerView
+import woowacourse.movie.matchers.isDisplayed
+import woowacourse.movie.matchers.performClick
 import woowacourse.movie.matchers.scrollToPosition
 import woowacourse.movie.view.MainActivity
 
@@ -29,13 +30,13 @@ class MoviesFragmentTest {
     @Before
     fun setUp() {
         onView(withId(R.id.home))
-            .perform(click())
+            .performClick()
     }
 
     @Test
     fun `영화_정보가_표시된다`() {
         onView(withId(R.id.movies))
-            .check(matches(isDisplayed()))
+            .isDisplayed()
 
         onView(withRecyclerView(R.id.lv_movie).atPositionOnView(0, R.id.tv_title))
             .check(matches(withText("해리 포터와 마법사의 돌")))
@@ -51,11 +52,11 @@ class MoviesFragmentTest {
     fun 극장_선택_창에는_극장의_이름과_상영_가능_시간이_나타난다() {
         // given, when
         onView(withRecyclerView(R.id.lv_movie).atPositionOnView(0, R.id.btn_reservation))
-            .perform(click())
+            .performClick()
 
         // then
         onView(withId(R.id.lv_cinema))
-            .check(matches(isDisplayed()))
+            .isDisplayed()
         onView(withRecyclerView(R.id.lv_cinema).atPositionOnView(0, R.id.tv_cinema))
             .check(matches(withText("선릉 극장")))
         onView(withRecyclerView(R.id.lv_cinema).atPositionOnView(0, R.id.tv_screening_time))
@@ -66,15 +67,15 @@ class MoviesFragmentTest {
     fun 극장_선택_창의_요소를_누르면_예매_화면으로_넘어간다() {
         // given
         onView(withRecyclerView(R.id.lv_movie).atPositionOnView(0, R.id.btn_reservation))
-            .perform(click())
+            .performClick()
 
         // when
         onView(withRecyclerView(R.id.lv_cinema).atPositionOnView(0, -1))
-            .perform(click())
+            .performClick()
 
         // then
         onView(withId(R.id.reservation))
-            .check(matches(isDisplayed()))
+            .isDisplayed()
     }
 
     @Test
@@ -84,12 +85,12 @@ class MoviesFragmentTest {
                 onView(withId(R.id.lv_movie))
                     .perform(scrollToPosition(it))
                 onView(withRecyclerView(R.id.lv_movie).atPositionOnView(it, R.id.item_advertisement))
-                    .check(matches(isDisplayed()))
+                    .isDisplayed()
             } else {
                 onView(withId(R.id.lv_movie))
                     .perform(scrollToPosition(it))
                 onView(withRecyclerView(R.id.lv_movie).atPositionOnView(it, R.id.item_movie))
-                    .check(matches(isDisplayed()))
+                    .isDisplayed()
             }
         }
     }
