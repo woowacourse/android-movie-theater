@@ -4,9 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.util.getSerializableCompat
@@ -17,6 +16,9 @@ import woowacourse.movie.view.home.movies.adapter.TheaterAdapter
 class TheaterBottomSheetDialogFragment(
     val eventListener: OnBottomSheetDialogEventListener,
 ) : BottomSheetDialogFragment(), TheaterContract.View {
+    private var _binding: FragmentTheaterBottomSheetDialogBinding? = null
+    private val binding get() = _binding!!
+
     private val presenter: TheaterContract.Presenter by lazy {
         TheaterPresenter(this)
     }
@@ -25,8 +27,11 @@ class TheaterBottomSheetDialogFragment(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_theater_bottom_sheet_dialog, container, false)
+    ): View {
+        _binding = FragmentTheaterBottomSheetDialogBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        return view
     }
 
     override fun onViewCreated(
@@ -44,6 +49,11 @@ class TheaterBottomSheetDialogFragment(
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun handleInvalidTicket() {
         DialogFactory().showError(requireContext()) {
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -51,7 +61,7 @@ class TheaterBottomSheetDialogFragment(
     }
 
     override fun showTheaterList(showings: List<Showings>) {
-        val recyclerView: RecyclerView? = view?.findViewById(R.id.rv_theater_category)
+        val recyclerView = binding.rvTheaterCategory
 
         val theaterAdapter =
             TheaterAdapter(
@@ -63,7 +73,7 @@ class TheaterBottomSheetDialogFragment(
                 },
             )
 
-        recyclerView?.adapter = theaterAdapter
+        recyclerView.adapter = theaterAdapter
         theaterAdapter.submitList(showings)
     }
 
