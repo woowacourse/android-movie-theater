@@ -4,21 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.BottomSheetFragmentTheaterBinding
 import woowacourse.movie.model.theater.TheaterMovieSchedule
 import woowacourse.movie.model.theater.TheaterMovieSchedules
 import woowacourse.movie.presenter.theater.TheaterContracts
-import woowacourse.movie.presenter.theater.TheaterPresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.reservation.ReservationActivity
 
 class TheaterBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
     TheaterContracts.View {
-    private lateinit var binding: BottomSheetFragmentTheaterBinding
+    private var _binding: BottomSheetFragmentTheaterBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var theaterAdapter: TheaterAdapter
     private lateinit var presenter: TheaterContracts.Presenter
 
@@ -26,25 +26,15 @@ class TheaterBottomSheetDialogFragment :
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View {
-        presenter = TheaterPresenter(this)
-
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.bottom_sheet_fragment_theater,
-                container,
-                false,
-            )
-
-        return binding.root
-    }
+    ): View = inflater.inflate(R.layout.fragment_reservation_details, container, false)
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+
+        _binding = BottomSheetFragmentTheaterBinding.bind(view)
 
         setupAdapter()
         presenter.updateTheaterMovieSchedules(
@@ -71,6 +61,11 @@ class TheaterBottomSheetDialogFragment :
         val intent = ReservationActivity.getIntent(requireContext(), theaterMovieSchedule)
         startActivity(intent)
         dismiss()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
