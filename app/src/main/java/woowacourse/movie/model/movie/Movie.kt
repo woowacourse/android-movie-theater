@@ -8,8 +8,7 @@ data class Movie(
     val id: Long,
     val title: String,
     val poster: Int,
-    val startDate: LocalDate,
-    val endDate: LocalDate,
+    val movieDate: MovieDate,
     val runningTime: Int,
 ) : Serializable {
     companion object {
@@ -32,8 +31,11 @@ data class Movie(
                     id = id.toLong(),
                     title = "해리포터 $id",
                     poster = poster,
-                    startDate = LocalDate.of(2025, 4, (id % 28) + 1),
-                    endDate = LocalDate.of(2025, 5, (id % 28) + 1),
+                    movieDate =
+                        MovieDate(
+                            LocalDate.of(2025, 4, (id % 28) + 1),
+                            LocalDate.of(2025, 5, (id % 28) + 1),
+                        ),
                     runningTime = 100 + (id % 60),
                 )
             }

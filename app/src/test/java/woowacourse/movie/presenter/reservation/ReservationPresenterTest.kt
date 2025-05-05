@@ -25,7 +25,7 @@ class ReservationPresenterTest {
     fun setup() {
         view = mockk()
         presenter = ReservationPresenter(view)
-        movieDate = MovieDate(MOVIE.startDate, MOVIE.endDate)
+        movieDate = MovieDate(MOVIE.movieDate.startDate, MOVIE.movieDate.endDate)
         movieTime = MovieTime(LocalTime.of(15, 0))
     }
 

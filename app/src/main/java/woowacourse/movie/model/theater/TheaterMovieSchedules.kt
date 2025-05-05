@@ -2,6 +2,7 @@ package woowacourse.movie.model.theater
 
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.Movie.Companion.posterImages
+import woowacourse.movie.model.movie.MovieDate
 import woowacourse.movie.model.movie.MovieTime
 import java.io.Serializable
 import java.time.LocalDate
@@ -65,8 +66,15 @@ data class TheaterMovieSchedules(
                                 id = movieId,
                                 title = "해리포터 $movieId",
                                 poster = poster,
-                                startDate = LocalDate.of(2025, 4, (movieId % 28 + 1).toInt()),
-                                endDate = LocalDate.of(2025, 5, (movieId % 28 + 1).toInt()),
+                                movieDate =
+                                    MovieDate(
+                                        LocalDate.of(
+                                            2025,
+                                            4,
+                                            (movieId % 28 + 1).toInt(),
+                                        ),
+                                        LocalDate.of(2025, 5, (movieId % 28 + 1).toInt()),
+                                    ),
                                 runningTime = 100 + (movieId % 60).toInt(),
                             ),
                         screeningInfo =

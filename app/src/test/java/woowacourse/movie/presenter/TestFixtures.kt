@@ -20,8 +20,7 @@ val MOVIE: Movie =
         1,
         "라라랜드",
         R.drawable.lalaland,
-        LocalDate.of(2025, 4, 1),
-        LocalDate.of(2025, 5, 30),
+        MovieDate(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 30)),
         120,
     )
 
@@ -58,8 +57,7 @@ val THEATER_MOVIE_SCHEDULE_CGV =
                 id = 1L,
                 title = "라라랜드",
                 poster = R.drawable.lalaland,
-                startDate = LocalDate.of(2025, 4, 1),
-                endDate = LocalDate.of(2025, 5, 30),
+                movieDate = MovieDate(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 30)),
                 runningTime = 125,
             ),
         screeningInfo =
@@ -81,8 +79,7 @@ val THEATER_MOVIE_SCHEDULE_LOTTE =
                 id = 1L,
                 title = "라라랜드",
                 poster = R.drawable.lalaland,
-                startDate = LocalDate.of(2025, 4, 1),
-                endDate = LocalDate.of(2025, 5, 30),
+                movieDate = MovieDate(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 30)),
                 runningTime = 125,
             ),
         screeningInfo =

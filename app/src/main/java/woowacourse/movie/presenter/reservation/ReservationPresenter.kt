@@ -1,7 +1,6 @@
 package woowacourse.movie.presenter.reservation
 
 import woowacourse.movie.model.movie.Movie
-import woowacourse.movie.model.movie.MovieDate
 import woowacourse.movie.model.movie.MovieTime
 import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.theater.ScreeningInfo
@@ -15,12 +14,6 @@ class ReservationPresenter(
 ) : ReservationContract.Presenter {
     private lateinit var theaterMovieSchedule: TheaterMovieSchedule
     private var ticketCount = TicketCount()
-    private val movieDate by lazy {
-        MovieDate(
-            theaterMovieSchedule.movie.startDate,
-            theaterMovieSchedule.movie.endDate,
-        )
-    }
     private lateinit var movieTimes: ScreeningInfo
     private lateinit var selectedMovieTime: LocalTime
 
@@ -34,7 +27,7 @@ class ReservationPresenter(
     private fun updateView(movie: Movie) {
         view.showMovieInfo(movie)
         view.showTicketCount(ticketCount.value)
-        view.setupDateAdapter(movieDate.getDateTable(LocalDate.now()))
+        view.setupDateAdapter(movie.movieDate.getDateTable(LocalDate.now()))
         view.updateTimes(movieTimes.screeningTimes.map { it.value })
     }
 
@@ -58,7 +51,7 @@ class ReservationPresenter(
             MovieToReserve(
                 id = theaterMovieSchedule.movie.id,
                 title = theaterMovieSchedule.movie.title,
-                movieDate = movieDate,
+                movieDate = theaterMovieSchedule.movie.movieDate,
                 movieTime = MovieTime(selectedMovieTime),
                 ticketCount = ticketCount,
                 theater = theaterMovieSchedule.theater,
@@ -67,7 +60,7 @@ class ReservationPresenter(
     }
 
     override fun updateMovieDate(date: LocalDate) {
-        movieDate.updateDate(date)
+        theaterMovieSchedule.movie.movieDate.updateDate(date)
     }
 
     override fun updateMovieTime(time: LocalTime) {

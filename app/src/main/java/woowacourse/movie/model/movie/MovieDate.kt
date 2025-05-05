@@ -4,8 +4,8 @@ import java.io.Serializable
 import java.time.LocalDate
 
 data class MovieDate(
-    private val startDate: LocalDate,
-    private val endDate: LocalDate,
+    val startDate: LocalDate,
+    val endDate: LocalDate,
 ) : Serializable {
     var value: LocalDate = LocalDate.now()
         private set
