@@ -17,17 +17,19 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.domain.movieseat.Seats
+import woowacourse.movie.util.getSerializableCompat
 import woowacourse.movie.util.getSerializableExtraCompat
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.dialog.DialogInfo
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
+import woowacourse.movie.view.reservation.seat.ReservationSeatPresenter.Companion.KEY_SEATS
 import java.text.DecimalFormat
 
 class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.View {
     private val presenter: ReservationSeatContract.Present by lazy {
         ReservationSeatPresenter(this)
     }
-    private lateinit var seat: TableLayout
+    private lateinit var seatLayout: TableLayout
     private val moviePriceTextView by lazy { findViewById<TextView>(R.id.reservation_movie_money) }
     private val movieSelectableButton by lazy { findViewById<TextView>(R.id.btn_confirm) }
 
@@ -41,7 +43,7 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
             insets
         }
         val ticket = intent.getSerializableExtraCompat(KEY_TICKET, Ticket::class.java)
-        seat = findViewById<TableLayout>(R.id.tv_seat)
+        seatLayout = findViewById<TableLayout>(R.id.tv_seat)
 
         checkTicket(ticket)
 
@@ -50,12 +52,14 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        presenter.onSaveState(outState)
+        outState.putSerializable(KEY_SEATS, presenter.getCurrentSeat())
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        presenter.onRestoreState(savedInstanceState)
+        savedInstanceState.getSerializableCompat(KEY_SEATS, Seats::class.java)?.let {
+            presenter.restoreSeat(it)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -74,7 +78,7 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
     }
 
     private fun getAllSeatTextViews(): Sequence<TextView> {
-        return seat
+        return seatLayout
             .children
             .filterIsInstance<TableRow>()
             .flatMap { it.children }
