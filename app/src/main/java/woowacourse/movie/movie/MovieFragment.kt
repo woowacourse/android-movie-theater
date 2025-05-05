@@ -48,7 +48,7 @@ class MovieFragment : Fragment(), Movies.View {
                     override fun navigateToAd() {
                         presenter.selectedAd()
                     }
-                }
+                },
             )
     }
 

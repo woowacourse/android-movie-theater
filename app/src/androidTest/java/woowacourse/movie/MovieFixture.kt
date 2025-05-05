@@ -37,15 +37,15 @@ object MovieFixture {
         Movies(
             mapOf(
                 Title("해리포터와 마법사의 돌") to
-                        Movie(
-                            Title("해리포터와 마법사의 돌"),
-                            R.drawable.movie_poster,
-                            ScreeningPeriod(
-                                LocalDate.of(2025, 4, 1),
-                                LocalDate.of(2025, 4, 25),
-                            ),
-                            152,
+                    Movie(
+                        Title("해리포터와 마법사의 돌"),
+                        R.drawable.movie_poster,
+                        ScreeningPeriod(
+                            LocalDate.of(2025, 4, 1),
+                            LocalDate.of(2025, 4, 25),
                         ),
+                        152,
+                    ),
             ),
         )
 
