@@ -8,6 +8,7 @@ import woowacourse.movie.fixture.SEAT_A1_NOT_SELECTED
 import woowacourse.movie.fixture.SEAT_A2
 import woowacourse.movie.fixture.SEAT_C1
 import woowacourse.movie.fixture.SEAT_E1
+import woowacourse.movie.model.seat.Seats
 
 class SeatsTest {
     @Test
@@ -41,7 +42,7 @@ class SeatsTest {
                 emptyList(),
             )
         val seat = SEAT_A1_NOT_SELECTED
-        val newSeats = seats.toggle(seat, 3)
+        val newSeats = seats.updateSeats(seat, 3)
 
         val expectedSeat = SEAT_A1
         val expected = Seats(listOf(expectedSeat))
@@ -59,7 +60,7 @@ class SeatsTest {
                 ),
             )
         val seat = SEAT_A1_NOT_SELECTED
-        val newSeats = seats.toggle(seat, headCount)
+        val newSeats = seats.updateSeats(seat, headCount)
 
         val expected = seats
         assertEquals(expected, newSeats)
@@ -76,7 +77,7 @@ class SeatsTest {
                 ),
             )
         val seat = SEAT_A1_NOT_SELECTED
-        val newSeats = seats.toggle(seat, headCount)
+        val newSeats = seats.updateSeats(seat, headCount)
 
         val expected =
             Seats(

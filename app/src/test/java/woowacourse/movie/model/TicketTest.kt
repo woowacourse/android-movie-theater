@@ -12,6 +12,7 @@ import woowacourse.movie.fixture.SEAT_A2
 import woowacourse.movie.fixture.SEAT_C1
 import woowacourse.movie.fixture.SEOLLEUNG
 import woowacourse.movie.fixture.createTicket
+import woowacourse.movie.model.seat.Seats
 import java.time.LocalDate
 import java.time.LocalTime
 

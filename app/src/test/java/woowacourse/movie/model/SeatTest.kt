@@ -4,6 +4,10 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import woowacourse.movie.fixture.SEAT_A1
+import woowacourse.movie.model.seat.Col
+import woowacourse.movie.model.seat.Row
+import woowacourse.movie.model.seat.Seat
+import woowacourse.movie.model.seat.SeatGrade
 
 class SeatTest {
     @Test
@@ -14,13 +18,8 @@ class SeatTest {
     }
 
     @Test
-    fun `좌석의 이름은 비어있을 수 없다`() {
-        assertThrows<NoSuchElementException> { Seat("") }
-    }
-
-    @Test
     fun `좌석의 이름이 아닌 행을 넣을 수 없다`() {
-        assertThrows<IllegalArgumentException> { Seat("K1").grade }
-        assertThrows<IllegalArgumentException> { Seat("O1").grade }
+        assertThrows<IllegalArgumentException> { Seat(Row(5), Col(1)).grade }
+        assertThrows<IllegalArgumentException> { Seat(Row(0), Col(6)).grade }
     }
 }
