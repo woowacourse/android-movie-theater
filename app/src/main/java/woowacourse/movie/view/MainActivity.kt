@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         val settingFragment = SettingFragment()
 
         if (savedInstanceState == null) {
-            replaceFragment(movieListFragment)
             binding.navigation.selectedItemId = R.id.action_home
         }
         setNavigationListener(historyFragment, movieListFragment, settingFragment)
