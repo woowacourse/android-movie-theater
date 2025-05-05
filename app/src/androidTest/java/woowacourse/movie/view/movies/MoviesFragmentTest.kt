@@ -98,7 +98,8 @@ class MoviesFragmentTest {
     @Test
     fun 영화_목록의_요소는_10_000개까지_추가될_수_있다() {
         scenarioRule.scenario.onActivity {
-            (it.selectedFragment as MoviesFragment).showMovies(
+            val fragment = it.supportFragmentManager.findFragmentById(R.id.fragment_container_main)
+            (fragment as MoviesFragment).showMovies(
                 TestData.movies,
             )
             val recyclerView = it.findViewById<RecyclerView>(R.id.lv_movie)

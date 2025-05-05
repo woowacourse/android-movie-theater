@@ -11,10 +11,10 @@ import woowacourse.movie.view.reservelist.ReservationListFragment
 import woowacourse.movie.view.setting.SettingFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
-    lateinit var selectedFragment: Fragment
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lateinit var selectedFragment: Fragment
+
         binding.bottomNavView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.reservation_list -> selectedFragment = ReservationListFragment()
