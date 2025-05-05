@@ -27,22 +27,24 @@ interface ReservationSeatContract {
 
         fun setSeatInit()
 
+        fun setReservationButton(onClickConfirm: () -> Unit)
+
+        fun setSeatClickListener()
+
         fun showMovieName(movieName: String)
 
         fun showTicketMoney(moviePrice: Int)
-
-        fun setSeatClickListener()
 
         fun selectSeatView(position: Position)
 
         fun deselectSeatView(position: Position)
 
-        fun navigateToReservationComplete(
+        fun showReservationDialog(
             ticket: Ticket,
             seats: Seats,
         )
 
-        fun showReservationDialog(
+        fun navigateToReservationComplete(
             ticket: Ticket,
             seats: Seats,
         )
@@ -50,7 +52,5 @@ interface ReservationSeatContract {
         fun selectableButton()
 
         fun deSelectableButton()
-
-        fun setReservationButton(onClickConfirm: () -> Unit)
     }
 }

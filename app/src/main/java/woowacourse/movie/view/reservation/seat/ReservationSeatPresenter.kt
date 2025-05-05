@@ -22,21 +22,24 @@ class ReservationSeatPresenter(
         view.setReservationButton {
             view.showReservationDialog(ticket, seats)
         }
-        updateMoney()
+        refreshUI()
     }
 
     override fun selectSeat(position: Position) {
         if (seats.selectedLimit(ticket.personnel).not()) {
             seats = seats.addSeat(Seat(position))
             view.selectSeatView(position)
-            updateMoney()
-            updateReservationBtnState()
+            refreshUI()
         }
     }
 
     override fun deselectSeat(position: Position) {
         seats = seats.removeSeat(Seat(position))
         view.deselectSeatView(position)
+        refreshUI()
+    }
+
+    private fun refreshUI() {
         updateMoney()
         updateReservationBtnState()
     }
@@ -48,11 +51,10 @@ class ReservationSeatPresenter(
     override fun onRestoreState(outState: Bundle) {
         outState.getSerializableCompat(KEY_SEATS, Seats::class.java)?.let {
             seats = it
-            updateMoney()
             seats.selectedSeats.forEach { seat ->
                 view.selectSeatView(seat.position)
             }
-            updateReservationBtnState()
+            refreshUI()
         }
     }
 
