@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="model"
+            type="woowacourse.movie.view.uiModel.TicketUiModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
@@ -36,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center"
+            android:text="@{model.title}"
             android:textColor="@color/black"
             android:textSize="28sp"
             android:textStyle="bold"
@@ -46,6 +53,7 @@
             android:id="@+id/tv_schedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@{model.bookingSchedule}"
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:textColor="@color/black"
@@ -66,6 +74,7 @@
 
             <TextView
                 android:id="@+id/tv_people_count"
+                android:text="@{model.peopleCount}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -86,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="28sp"
+                android:text="@{model.seats}"
                 tools:text="B3, D2" />
 
             <TextView
@@ -98,6 +108,7 @@
 
             <TextView
                 android:id="@+id/tv_theater_name"
+                android:text="@{model.theaterName}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -110,6 +121,7 @@
 
         <TextView
             android:id="@+id/tv_price"
+            android:text="@{model.price}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"

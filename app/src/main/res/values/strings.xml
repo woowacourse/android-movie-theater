@@ -11,6 +11,7 @@
     <string name="text_booking_dialog_title">예매 확인</string>
     <string name="text_booking_dialog_positive_button">예매 완료</string>
     <string name="text_booking_dialog_negative_button">취소</string>
+    <string name="text_seat_formatter">%c%d</string>
     <string name="text_date_period">%s ~ %s</string>
     <string name="text_booking_dialog_description">정말 예매하시겠습니까?</string>
     <string name="text_booking_schedule">%s %s</string>
