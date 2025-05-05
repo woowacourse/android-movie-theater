@@ -6,19 +6,20 @@ import io.kotest.matchers.collections.shouldNotBeEmpty
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.model.scheduler.DefaultScheduler
 import woowacourse.movie.fixture.HARRY_POTTER
 import woowacourse.movie.fixture.SEOLLEUNG
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class SchedulerTest {
-    private lateinit var scheduler: Scheduler
+class DefaultSchedulerTest {
+    private lateinit var scheduler: DefaultScheduler
 
     @BeforeEach
     fun setUp() {
         scheduler =
-            Scheduler(
+            DefaultScheduler(
                 Screening(
                     SEOLLEUNG,
                     HARRY_POTTER,

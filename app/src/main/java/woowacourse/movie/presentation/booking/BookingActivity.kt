@@ -15,6 +15,7 @@ import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.Ticket
+import woowacourse.movie.domain.model.scheduler.DefaultScheduler
 import woowacourse.movie.presentation.seats.SeatsActivity
 import java.time.LocalDate
 import java.time.LocalTime
@@ -31,7 +32,7 @@ class BookingActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!fetchScreening()) return
-        presenter = BookingPresenter(this, screening)
+        presenter = BookingPresenter(this, screening, DefaultScheduler(screening))
         initView()
         presenter.loadBooking()
     }

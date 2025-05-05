@@ -1,8 +1,8 @@
 package woowacourse.movie.presentation.booking
 
-import woowacourse.movie.domain.model.Scheduler
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.Ticket
+import woowacourse.movie.domain.model.scheduler.Scheduler
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -10,11 +10,10 @@ import java.time.LocalTime
 class BookingPresenter(
     private val view: BookingContract.View,
     screening: Screening,
+    private val scheduler: Scheduler,
 ) : BookingContract.Presenter {
     private var _ticket = Ticket(screening.movie, screening.theater)
     val ticket: Ticket get() = _ticket
-
-    private val scheduler = Scheduler(screening)
 
     override fun loadBooking() {
         view.showMovie(_ticket.movie)

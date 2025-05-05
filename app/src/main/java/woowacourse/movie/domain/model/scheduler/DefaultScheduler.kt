@@ -1,13 +1,14 @@
-package woowacourse.movie.domain.model
+package woowacourse.movie.domain.model.scheduler
 
+import woowacourse.movie.domain.model.Screening
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class Scheduler(
+class DefaultScheduler(
     private val screening: Screening,
-) {
-    fun getBookableDates(today: LocalDate = LocalDate.now()): List<LocalDate> {
+) : Scheduler {
+    override fun getBookableDates(today: LocalDate): List<LocalDate> {
         val movie = screening.movie
         val firstDate = if (movie.startDate.isBefore(today)) today else movie.startDate
         return buildList {
@@ -19,9 +20,9 @@ class Scheduler(
         }
     }
 
-    fun getBookableTimes(
+    override fun getBookableTimes(
         selectedDate: LocalDate,
-        now: LocalDateTime = LocalDateTime.now(),
+        now: LocalDateTime,
     ): List<LocalTime> {
         val isToday = selectedDate.isEqual(now.toLocalDate())
         return if (isToday) {

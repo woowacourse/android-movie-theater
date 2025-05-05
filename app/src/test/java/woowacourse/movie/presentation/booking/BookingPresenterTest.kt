@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
+import woowacourse.movie.domain.model.scheduler.DefaultScheduler
 import woowacourse.movie.fixture.JAMSIL
 import java.time.LocalDate
 import java.time.LocalTime
@@ -32,7 +33,7 @@ class BookingPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = BookingPresenter(view, testScreening)
+        presenter = BookingPresenter(view, testScreening, DefaultScheduler(testScreening))
     }
 
     @Test
