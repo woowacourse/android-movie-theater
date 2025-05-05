@@ -11,6 +11,14 @@
         <variable
             name="movie"
             type="woowacourse.movie.domain.model.Movie" />
+
+        <variable
+            name="headCount"
+            type="java.lang.Integer" />
+
+        <variable
+            name="eventHandler"
+            type="woowacourse.movie.presentation.booking.BookingEventHandler" />
     </data>
 
     <ScrollView
@@ -124,6 +132,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="@{() -> eventHandler.onDecreaseButtonClicked()}"
                     android:text="@string/decrease_sign"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -136,6 +145,7 @@
                     android:freezesText="true"
                     android:gravity="center"
                     android:textColor="@color/black"
+                    android:text="@{String.valueOf(headCount)}"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     tools:text="1" />
@@ -145,6 +155,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="@{() -> eventHandler.onIncreaseButtonClicked()}"
                     android:text="@string/increase_sign"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -162,6 +173,7 @@
                 android:text="@string/select_text"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:onClick="@{() -> eventHandler.onConfirmButtonClicked()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

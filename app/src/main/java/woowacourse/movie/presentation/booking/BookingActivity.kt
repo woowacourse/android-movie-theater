@@ -52,7 +52,7 @@ class BookingActivity :
     }
 
     override fun showHeadCount(count: Int) {
-        binding.textviewHeadcount.text = count.toString()
+        binding.headCount = count
     }
 
     override fun updateDecreaseButtonState(isEnabled: Boolean) {
@@ -93,6 +93,7 @@ class BookingActivity :
         timeAdapter.clear()
         timeAdapter.addAll(times)
         binding.spinnerTime.setSelection(timeAdapter.getPosition(selectedTime))
+
         binding.spinnerTime.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -130,15 +131,20 @@ class BookingActivity :
     }
 
     private fun initButtons() {
-        binding.buttonIncrease.setOnClickListener {
-            presenter.increaseHeadCount()
-        }
-        binding.buttonDecrease.setOnClickListener {
-            presenter.decreaseHeadCount()
-        }
-        binding.buttonSelect.setOnClickListener {
-            presenter.confirmBooking()
-        }
+        binding.eventHandler =
+            object : BookingEventHandler {
+                override fun onIncreaseButtonClicked() {
+                    presenter.increaseHeadCount()
+                }
+
+                override fun onDecreaseButtonClicked() {
+                    presenter.decreaseHeadCount()
+                }
+
+                override fun onConfirmButtonClicked() {
+                    presenter.confirmBooking()
+                }
+            }
     }
 
     private fun initSpinners() {
