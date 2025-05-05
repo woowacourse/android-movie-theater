@@ -18,7 +18,8 @@ import woowacourse.movie.presentation.theater.adapter.TheaterAdapter
 class TheaterFragment :
     BottomSheetDialogFragment(),
     TheaterContract.View {
-    private lateinit var binding: FragmentTheaterBinding
+    private var _binding: FragmentTheaterBinding? = null
+    private val binding: FragmentTheaterBinding get() = _binding!!
     private lateinit var presenter: TheaterContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +35,7 @@ class TheaterFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
+        _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_theater, container, false)
         return binding.root
     }
@@ -45,6 +46,11 @@ class TheaterFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         presenter.loadTheaterList()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun showTheaters(theaters: List<Screening>) {

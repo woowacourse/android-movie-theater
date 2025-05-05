@@ -18,7 +18,8 @@ import woowacourse.movie.presentation.theater.TheaterFragment
 class MovieListFragment :
     Fragment(),
     MovieListContract.View {
-    private lateinit var binding: FragmentMovieListBinding
+    private var _binding: FragmentMovieListBinding? = null
+    private val binding: FragmentMovieListBinding get() = _binding!!
     private lateinit var presenter: MovieListContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +32,7 @@ class MovieListFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list, container, false)
         return binding.root
     }
 
@@ -41,6 +42,11 @@ class MovieListFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         presenter.loadMovieList()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun showMovieList(items: List<MovieListItem>) {
