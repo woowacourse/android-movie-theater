@@ -72,10 +72,4 @@ class MovieBookingActivityTest {
 //    fun 예매할_시간이_보인다() {
 //        onView(withId(R.id.booking_time_picker)).checkWithText("10:00")
 //    }
-//
-//    @Test
-//    fun 예약_완료_버튼을_누르면_확인_다이얼로그가_나온다() {
-//        onView(withId(R.id.booking_complete_button)).performClick()
-//        onView(withText(R.string.confirm_reservation_message)).checkIsDisplayed()
-//    }
 }

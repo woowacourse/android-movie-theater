@@ -1,5 +1,6 @@
 package woowacourse.movie.moviebookingseat
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TableRow
@@ -50,8 +51,8 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     }
 
     override fun updateButton() {
-        binding.confirmButton.setBackgroundResource(R.color.purple_500)
-        binding.confirmButton.setOnSingleClickListener { showConfirmDialog(bookingStatus) }
+        binding.seatConfirmButton.setBackgroundResource(R.color.purple_500)
+        binding.seatConfirmButton.setOnSingleClickListener { showConfirmDialog(bookingStatus) }
     }
 
     override fun updateSeat(
@@ -64,8 +65,8 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     }
 
     override fun showTotalPrice(price: Int) {
-        binding.moviePrice.text =
-            binding.moviePrice.context.getString(
+        binding.seatMoviePrice.text =
+            binding.seatMoviePrice.context.getString(
                 R.string.booking_seat_price,
                 price,
             )
@@ -126,7 +127,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
         private const val KEY_THEATER = "theater"
 
         fun movieBookingSeatIntent(
-            otherActivity: AppCompatActivity,
+            otherActivity: Context,
             bookingStatus: BookingStatus,
             theater: Theater,
         ): Intent {
