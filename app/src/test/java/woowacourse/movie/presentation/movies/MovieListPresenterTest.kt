@@ -31,7 +31,7 @@ class MovieListPresenterTest {
     @Test
     fun `버튼을 누르면 예매 화면으로 이동한다`() {
         // when
-        presenter.selectTheater(HARRY_POTTER)
+        presenter.selectMovie(HARRY_POTTER)
 
         // then
         verify { view.showTheaterList(HARRY_POTTER) }

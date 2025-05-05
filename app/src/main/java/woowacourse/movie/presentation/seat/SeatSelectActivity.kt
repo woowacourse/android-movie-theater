@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.seats
+package woowacourse.movie.presentation.seat
 
 import android.content.Context
 import android.content.Intent
@@ -9,21 +9,21 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.common.BaseActivity
 import woowacourse.movie.common.util.getSerializableCompat
 import woowacourse.movie.common.util.getSerializableExtraCompat
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
+import woowacourse.movie.presentation.BaseActivity
 import woowacourse.movie.presentation.result.BookingResultActivity
-import woowacourse.movie.presentation.seats.mode.SeatUiModel
-import woowacourse.movie.presentation.seats.mode.toDomain
-import woowacourse.movie.presentation.seats.mode.toUiModel
+import woowacourse.movie.presentation.seat.model.SeatUiModel
+import woowacourse.movie.presentation.seat.model.toDomain
+import woowacourse.movie.presentation.seat.model.toUiModel
 
-class SeatsActivity :
+class SeatSelectActivity :
     BaseActivity<ActivitySeatsBinding>(R.layout.activity_seats),
-    SeatsContract.View {
+    SeatSelectContract.View {
     private lateinit var presenter: SeatsPresenter
     private lateinit var ticket: Ticket
 
@@ -129,7 +129,7 @@ class SeatsActivity :
             context: Context,
             ticket: Ticket,
         ): Intent =
-            Intent(context, SeatsActivity::class.java).apply {
+            Intent(context, SeatSelectActivity::class.java).apply {
                 putExtra(EXTRA_TICKET, ticket)
             }
 

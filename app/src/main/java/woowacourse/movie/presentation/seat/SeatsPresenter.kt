@@ -1,12 +1,12 @@
-package woowacourse.movie.presentation.seats
+package woowacourse.movie.presentation.seat
 
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
 
 class SeatsPresenter(
-    private val view: SeatsContract.View,
+    private val view: SeatSelectContract.View,
     ticket: Ticket,
-) : SeatsContract.Presenter {
+) : SeatSelectContract.Presenter {
     private var _ticket: Ticket = ticket.copy()
     val ticket: Ticket get() = _ticket
 

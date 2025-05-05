@@ -13,6 +13,6 @@ interface MovieListContract {
     interface Presenter {
         fun loadMovieList()
 
-        fun selectTheater(movie: Movie)
+        fun selectMovie(movie: Movie)
     }
 }

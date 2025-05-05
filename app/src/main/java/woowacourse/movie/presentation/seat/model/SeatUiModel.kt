@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.seats.mode
+package woowacourse.movie.presentation.seat.model
 
 import androidx.annotation.ColorRes
 import woowacourse.movie.R

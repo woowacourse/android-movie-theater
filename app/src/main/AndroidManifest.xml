@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Movie"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.seats.SeatsActivity"
+            android:name=".presentation.seat.SeatSelectActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.booking.BookingActivity"
@@ -23,7 +23,7 @@
             android:name=".presentation.result.BookingResultActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

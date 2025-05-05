@@ -15,7 +15,7 @@ class TheaterPresenter(
         view.showTheaters(screeningInfos.findByMovie(movie))
     }
 
-    override fun startBooking(screening: Screening) {
+    override fun selectTheater(screening: Screening) {
         view.navigateToBooking(screening)
     }
 }

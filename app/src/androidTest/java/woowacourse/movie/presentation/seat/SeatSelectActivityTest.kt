@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.seats
+package woowacourse.movie.presentation.seat
 
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
@@ -18,15 +18,15 @@ import woowacourse.movie.R
 import woowacourse.movie.fixture.INITIAL_TICKET
 
 @Suppress("ktlint:standard:function-naming")
-class SeatsActivityTest {
-    private lateinit var activityScenario: ActivityScenario<SeatsActivity>
+class SeatSelectActivityTest {
+    private lateinit var activityScenario: ActivityScenario<SeatSelectActivity>
 
     @Before
     fun setUp() {
         val ticket = INITIAL_TICKET
 
         val intent =
-            Intent(ApplicationProvider.getApplicationContext(), SeatsActivity::class.java).apply {
+            Intent(ApplicationProvider.getApplicationContext(), SeatSelectActivity::class.java).apply {
                 putExtra("ticket", ticket)
             }
 

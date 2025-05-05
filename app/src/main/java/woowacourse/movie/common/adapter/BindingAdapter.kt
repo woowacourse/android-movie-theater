@@ -7,7 +7,7 @@ import androidx.databinding.BindingAdapter
 import woowacourse.movie.data.MovieData
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.seat.Seats
-import woowacourse.movie.presentation.seats.mode.toUiModel
+import woowacourse.movie.presentation.seat.model.toUiModel
 
 @BindingAdapter("posterImage")
 fun ImageView.setPosterImage(movie: Movie?) {

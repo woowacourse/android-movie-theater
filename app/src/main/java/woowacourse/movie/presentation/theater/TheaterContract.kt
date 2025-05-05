@@ -12,6 +12,6 @@ interface TheaterContract {
     interface Presenter {
         fun loadTheaterList()
 
-        fun startBooking(screening: Screening)
+        fun selectTheater(screening: Screening)
     }
 }

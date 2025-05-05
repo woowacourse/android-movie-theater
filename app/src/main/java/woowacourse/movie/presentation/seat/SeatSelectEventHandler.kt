@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.seats
+package woowacourse.movie.presentation.seat
 
 interface SeatSelectEventHandler {
     fun onConfirmButtonClicked()

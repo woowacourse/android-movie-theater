@@ -55,7 +55,7 @@ class MovieListFragment :
                 items = items,
                 clickListener =
                     object : MovieListClickListener {
-                        override fun onClickMovie(item: Movie) = presenter.selectTheater(item)
+                        override fun onClickMovie(item: Movie) = presenter.selectMovie(item)
                     },
             )
         binding.adapter = adapter

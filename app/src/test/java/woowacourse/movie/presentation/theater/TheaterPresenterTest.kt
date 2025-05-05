@@ -42,7 +42,7 @@ class TheaterPresenterTest {
             )
 
         // when
-        presenter.startBooking(screening)
+        presenter.selectTheater(screening)
 
         // then
         verify { view.navigateToBooking(screening) }

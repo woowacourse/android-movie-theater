@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import woowacourse.movie.R
-import woowacourse.movie.common.BaseActivity
 import woowacourse.movie.common.util.getSerializableExtraCompat
 import woowacourse.movie.databinding.ActivityBookingResultBinding
 import woowacourse.movie.domain.model.Ticket
+import woowacourse.movie.presentation.BaseActivity
 
 class BookingResultActivity :
     BaseActivity<ActivityBookingResultBinding>(R.layout.activity_booking_result),

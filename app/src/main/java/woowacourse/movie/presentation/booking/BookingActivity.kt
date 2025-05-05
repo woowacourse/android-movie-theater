@@ -8,7 +8,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import woowacourse.movie.R
-import woowacourse.movie.common.BaseActivity
 import woowacourse.movie.common.util.getSerializableCompat
 import woowacourse.movie.common.util.getSerializableExtraCompat
 import woowacourse.movie.databinding.ActivityBookingBinding
@@ -16,7 +15,8 @@ import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.scheduler.DefaultScheduler
-import woowacourse.movie.presentation.seats.SeatsActivity
+import woowacourse.movie.presentation.BaseActivity
+import woowacourse.movie.presentation.seat.SeatSelectActivity
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -44,7 +44,8 @@ class BookingActivity :
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val restoredTicket = savedInstanceState.getSerializableCompat(EXTRA_TICKET, Ticket::class.java)
+        val restoredTicket =
+            savedInstanceState.getSerializableCompat(EXTRA_TICKET, Ticket::class.java)
         restoredTicket?.let { presenter.restoreTicket(it) }
     }
 
@@ -111,7 +112,7 @@ class BookingActivity :
     }
 
     override fun navigateToSeatSelect(ticket: Ticket) {
-        val intent = SeatsActivity.newIntent(this, ticket)
+        val intent = SeatSelectActivity.newIntent(this, ticket)
         startActivity(intent)
     }
 

@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.seats
+package woowacourse.movie.presentation.seat
 
 import io.mockk.mockk
 import io.mockk.verify
@@ -9,8 +9,8 @@ import woowacourse.movie.fixture.A1
 import woowacourse.movie.fixture.TICKET
 
 class SeatsPresenterTest {
-    private lateinit var view: SeatsContract.View
-    private lateinit var presenter: SeatsContract.Presenter
+    private lateinit var view: SeatSelectContract.View
+    private lateinit var presenter: SeatSelectContract.Presenter
     private lateinit var ticket: Ticket
 
     @BeforeEach

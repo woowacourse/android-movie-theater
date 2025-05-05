@@ -1,4 +1,4 @@
-package woowacourse.movie.common
+package woowacourse.movie.presentation
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

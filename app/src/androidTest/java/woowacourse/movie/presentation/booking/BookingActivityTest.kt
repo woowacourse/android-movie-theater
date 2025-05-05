@@ -21,7 +21,7 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.fixture.HARRY_POTTER
 import woowacourse.movie.fixture.SEOLLEUNG
-import woowacourse.movie.presentation.seats.SeatsActivity
+import woowacourse.movie.presentation.seat.SeatSelectActivity
 import java.time.LocalTime
 
 @Suppress("ktlint:standard:function-naming")
@@ -147,7 +147,7 @@ class BookingActivityTest {
     fun 예매완료_버튼을_누르면_화면이_이동되고_예매_데이터가_전달된다() {
         onView(withId(R.id.button_select)).perform(click())
 
-        intended(hasComponent(SeatsActivity::class.java.name))
+        intended(hasComponent(SeatSelectActivity::class.java.name))
 
         intended(
             allOf(

@@ -1,10 +1,10 @@
-package woowacourse.movie.presentation.seats
+package woowacourse.movie.presentation.seat
 
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
 
-interface SeatsContract {
+interface SeatSelectContract {
     interface View {
         fun showMovieInfo(movie: Movie)
 

@@ -54,7 +54,7 @@ class TheaterFragment :
     }
 
     override fun showTheaters(theaters: List<Screening>) {
-        binding.adapter = TheaterAdapter(theaters) { presenter.startBooking(it) }
+        binding.adapter = TheaterAdapter(theaters) { presenter.selectTheater(it) }
     }
 
     override fun navigateToBooking(screening: Screening) {

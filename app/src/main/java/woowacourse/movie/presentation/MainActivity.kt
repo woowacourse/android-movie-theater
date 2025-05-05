@@ -1,9 +1,9 @@
-package woowacourse.movie
+package woowacourse.movie.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import woowacourse.movie.common.BaseActivity
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.bookinglist.BookingListFragment
 import woowacourse.movie.presentation.movies.MovieListFragment
