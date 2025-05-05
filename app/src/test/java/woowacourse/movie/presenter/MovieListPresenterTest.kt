@@ -31,7 +31,7 @@ class MovieListPresenterTest {
                     uiModels[0] is FeedUiModel.MovieUiModel &&
                         uiModels[1] is FeedUiModel.MovieUiModel &&
                         uiModels[2] is FeedUiModel.MovieUiModel &&
-                        uiModels[3] is FeedUiModel.AdvertisementUiModel
+                        uiModels[3] is FeedUiModel.AdUiModel
                 },
             )
         }

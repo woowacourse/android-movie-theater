@@ -11,7 +11,7 @@ sealed interface Feed {
         val runningTime: Int,
     ) : Feed
 
-    data class Advertisement(
+    data class Ad(
         val imgResource: String = "ad",
     ) : Feed
 }

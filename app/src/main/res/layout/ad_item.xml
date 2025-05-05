@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="advertisement"
-            type="woowacourse.movie.view.home.model.FeedUiModel.AdvertisementUiModel" />
+            name="ad"
+            type="woowacourse.movie.view.home.model.FeedUiModel.AdUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +17,7 @@
 
         <ImageView
             android:id="@+id/img_ad"
-            imageFromName="@{advertisement.imgResource}"
+            imageFromName="@{ad.imgResource}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"

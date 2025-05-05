@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.view.home.model.FeedUiModel
-import woowacourse.movie.view.home.model.FeedUiModel.AdvertisementUiModel
+import woowacourse.movie.view.home.model.FeedUiModel.AdUiModel
 import woowacourse.movie.view.home.model.FeedUiModel.MovieUiModel
 import woowacourse.movie.view.home.movies.MovieListEventHandler
-import woowacourse.movie.view.home.movies.viewholder.AdvertiseViewHolder
+import woowacourse.movie.view.home.movies.viewholder.AdViewHolder
 import woowacourse.movie.view.home.movies.viewholder.MovieViewHolder
 
 class MovieAdapter(
@@ -23,7 +23,7 @@ class MovieAdapter(
             ): Boolean {
                 return when {
                     oldItem is MovieUiModel && newItem is MovieUiModel && oldItem.id == newItem.id -> true
-                    oldItem is AdvertisementUiModel && newItem is AdvertisementUiModel && oldItem.imgResource == newItem.imgResource -> true
+                    oldItem is AdUiModel && newItem is AdUiModel && oldItem.imgResource == newItem.imgResource -> true
                     else -> false
                 }
             }
@@ -41,7 +41,7 @@ class MovieAdapter(
     override fun getItemViewType(position: Int): Int =
         when (itemsList[position]) {
             is MovieUiModel -> VIEW_TYPE_MOVIE
-            is AdvertisementUiModel -> VIEW_TYPE_ADVERTISEMENT
+            is AdUiModel -> VIEW_TYPE_AD
         }
 
     override fun onCreateViewHolder(
@@ -49,7 +49,7 @@ class MovieAdapter(
         viewType: Int,
     ): RecyclerView.ViewHolder =
         when (viewType) {
-            VIEW_TYPE_ADVERTISEMENT -> AdvertiseViewHolder(parent)
+            VIEW_TYPE_AD -> AdViewHolder(parent)
             VIEW_TYPE_MOVIE -> MovieViewHolder(parent, handler)
             else -> throw IllegalStateException()
         }
@@ -61,13 +61,13 @@ class MovieAdapter(
         val item = itemsList[position]
 
         when (holder) {
-            is AdvertiseViewHolder -> holder.bind(item as AdvertisementUiModel)
+            is AdViewHolder -> holder.bind(item as AdUiModel)
             is MovieViewHolder -> holder.bind(item as MovieUiModel)
         }
     }
 
     companion object {
         private val VIEW_TYPE_MOVIE = R.layout.movie_item
-        private val VIEW_TYPE_ADVERTISEMENT = R.layout.advertisement_item
+        private val VIEW_TYPE_AD = R.layout.ad_item
     }
 }

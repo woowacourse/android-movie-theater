@@ -10,7 +10,7 @@ sealed interface FeedUiModel {
         val runningTime: Int,
     ) : FeedUiModel
 
-    data class AdvertisementUiModel(
+    data class AdUiModel(
         val imgResource: String,
     ) : FeedUiModel
 }
