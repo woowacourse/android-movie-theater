@@ -1,14 +1,10 @@
 package woowacourse.movie.view.movies.cinema
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemCinemaBinding
-import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.domain.model.Screening
 
 class CinemaSelectionAdapter(
@@ -26,33 +22,27 @@ class CinemaSelectionAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): CinemaViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cinema, parent, false)
-        val binding = ItemCinemaBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        return CinemaViewHolder(view, binding)
+        val binding =
+            ItemCinemaBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false,
+            )
+        return CinemaViewHolder(binding)
     }
 
     override fun getItemCount(): Int = items.size
 }
 
 class CinemaViewHolder(
-    val view: View,
-    val binding: ItemCinemaBinding
+    val binding: ItemCinemaBinding,
 ) : ViewHolder(binding.root) {
-
-
     fun bind(
         screening: Screening,
         eventListener: OnCinemaSelectionListener,
     ) {
         binding.screening = screening
-        binding.root
-            .setOnClickListener {
-                eventListener.onReserveButtonClick(screening)
-            }
+        binding.eventListener = eventListener
         binding.executePendingBindings()
     }
 }

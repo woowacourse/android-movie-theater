@@ -4,13 +4,18 @@
         <variable
             name="screening"
             type="woowacourse.movie.domain.model.Screening" />
+        <variable
+            name="eventListener"
+            type="woowacourse.movie.view.movies.cinema.OnCinemaSelectionListener" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="8dp">
+        android:paddingVertical="8dp"
+        android:onClick="@{()->eventListener.onReserveButtonClick(screening)}"
+        >
 
         <TextView
             android:id="@+id/tv_cinema"
