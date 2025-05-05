@@ -1,11 +1,7 @@
 package woowacourse.movie.movie.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
-import woowacourse.movie.databinding.AdBannerItemBinding
-import woowacourse.movie.databinding.MovieListItemBinding
 import woowacourse.movie.ui.model.MovieUiModel
 
 class MovieAdapter(
@@ -29,17 +25,9 @@ class MovieAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            TYPE_AD -> {
-                val binding = AdBannerItemBinding.inflate(inflater, parent, false)
-                AdViewHolder(binding)
-            }
-
-            else -> {
-                val binding = MovieListItemBinding.inflate(inflater, parent, false)
-                MovieViewHolder(binding, onReserveClick)
-            }
+            TYPE_AD -> AdViewHolder(parent)
+            else -> MovieViewHolder.from(parent, onReserveClick)
         }
     }
 
@@ -50,13 +38,10 @@ class MovieAdapter(
         when (holder) {
             is MovieViewHolder -> {
                 val realPosition = position - (position / (AD_FREQUENCY + 1))
-                val movie = movieList[realPosition]
-
-                holder.bind(movie)
+                holder.bind(movieList[realPosition])
             }
-
             is AdViewHolder -> {
-                holder.imgBanner.setImageResource(R.drawable.img_advertisement)
+                holder.bind()
             }
         }
     }
