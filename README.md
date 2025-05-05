@@ -47,7 +47,26 @@
 - [x] 영화 극장이름을 보여준다
 - [x] 티켓의 총 가격을 보여준다
 
+### 피드백 반영
 
+- [ ] HomeFragmentTest | 테스트 명 변경
+- [ ] Movie | UiModel 만들기
+- [ ] MovieItem | Movie 네이밍 변경
+- [ ] ScheduleTime | 메서드 분리
+- [ ] Showings | 스스로 일을 할 수 있게 변경
+- [ ] Ticket | 15 값 enum class로 변경
+- [ ] MovieSchedule | filter를 toList 전에 호출되도록 변경
+- [ ] MainActivity | commit 하는 부분 공통부분 메서드 분리
+- [ ] MainActivity | Fragment 의 전역으로 미리 생성하도록 변경
+- [ ] MainActivity | Fragment가 상태가 유지되도록 변경 (show, hide 사용)
+- [ ] HomeContract | navigate가 되는 책임 view에서만 담당하도록 변경
+- [ ] HomeFragment | 함수형 인터페이스로 변경
+- [ ] HomeFragment | 데이터 이동의 책임을 view -> presenter로 이동
+- [ ] HomeFragment | findViewById 삭제
+- [ ] HomeFragment | superCall의 필요성?
+- [ ] MovieAdapter |  areItemsTheSame, areContentsTheSame 역할 찾기
+- [ ] TheaterBottomSheetDialogFragment | 생성자 삭제
+- [ ] 데이터 바인딩
 
 
 
