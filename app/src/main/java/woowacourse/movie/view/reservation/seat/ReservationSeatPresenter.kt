@@ -5,6 +5,7 @@ import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.domain.movieseat.Seat
 import woowacourse.movie.domain.movieseat.Seats
+import woowacourse.movie.util.getSerializableCompat
 
 class ReservationSeatPresenter(
     val view: ReservationSeatContract.View,
@@ -45,12 +46,14 @@ class ReservationSeatPresenter(
     }
 
     override fun onRestoreState(outState: Bundle) {
-        seats = outState.getSerializable(KEY_SEATS) as Seats
-        updateMoney()
-        seats.all.forEach { seat ->
-            view.selectSeatView(seat.position)
+        outState.getSerializableCompat(KEY_SEATS, Seats::class.java)?.let {
+            seats = it
+            updateMoney()
+            seats.all.forEach { seat ->
+                view.selectSeatView(seat.position)
+            }
+            canSelectedButton()
         }
-        canSelectedButton()
     }
 
     override fun updateMoney() {
