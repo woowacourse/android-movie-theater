@@ -19,7 +19,7 @@ class SeatRow(
         row.children
             .filterIsInstance<TextView>()
             .forEachIndexed { colIndex, view ->
-                val position = Seat(Column(rowIndex + 1), Row(colIndex + 1))
+                val position = Seat(Column(colIndex + 1), Row(rowIndex + 1))
                 view.tag = position
                 seatViews[position] = view
                 view.setOnClickListener { onSeatClick(position) }
