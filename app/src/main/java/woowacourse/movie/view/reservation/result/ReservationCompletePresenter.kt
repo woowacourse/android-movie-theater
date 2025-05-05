@@ -18,7 +18,7 @@ class ReservationCompletePresenter(
     }
 
     private fun Seats.toSeatString(): String {
-        val seats = this.all.map { getSeatName(it.position) }.toSortedSet()
+        val seats = this.selectedSeats.map { getSeatName(it.position) }.toSortedSet()
         return seats.joinToString(", ")
     }
 

@@ -25,7 +25,7 @@ class SeatsTest {
         seats.addSeat(Seat(Position(0, 0)))
         seats.addSeat(Seat(Position(1, 1)))
         // when
-        val actual = seats.all
+        val actual = seats.selectedSeats
         val expected = listOf(Seat(Position(0, 0)), Seat(Position(1, 1)))
 
         assertThat(actual).isEqualTo(expected)
@@ -37,7 +37,7 @@ class SeatsTest {
         val seats = Seats(mutableSetOf(Seat(Position(0, 0)), Seat(Position(1, 1))))
         seats.removeSeat(Seat(Position(0, 0)))
         // when
-        val actual = seats.all
+        val actual = seats.selectedSeats
         val expected = listOf(Seat(Position(1, 1)))
 
         assertThat(actual).isEqualTo(expected)

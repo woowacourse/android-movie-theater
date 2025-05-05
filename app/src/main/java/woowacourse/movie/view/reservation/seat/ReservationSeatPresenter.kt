@@ -10,8 +10,8 @@ import woowacourse.movie.util.getSerializableCompat
 class ReservationSeatPresenter(
     val view: ReservationSeatContract.View,
 ) : ReservationSeatContract.Present {
-    private var seats = Seats(mutableSetOf())
     private lateinit var ticket: Ticket
+    private var seats = Seats()
 
     override fun fetchData(ticket: Ticket) {
         this.ticket = ticket
@@ -27,18 +27,18 @@ class ReservationSeatPresenter(
 
     override fun selectSeat(position: Position) {
         if (seats.selectedLimit(ticket.personnel).not()) {
-            seats.addSeat(Seat(position))
+            seats = seats.addSeat(Seat(position))
             view.selectSeatView(position)
             updateMoney()
-            canSelectedButton()
+            updateReservationBtnState()
         }
     }
 
     override fun deselectSeat(position: Position) {
-        seats.removeSeat(Seat(position))
+        seats = seats.removeSeat(Seat(position))
         view.deselectSeatView(position)
         updateMoney()
-        canSelectedButton()
+        updateReservationBtnState()
     }
 
     override fun onSaveState(outState: Bundle) {
@@ -49,10 +49,10 @@ class ReservationSeatPresenter(
         outState.getSerializableCompat(KEY_SEATS, Seats::class.java)?.let {
             seats = it
             updateMoney()
-            seats.all.forEach { seat ->
+            seats.selectedSeats.forEach { seat ->
                 view.selectSeatView(seat.position)
             }
-            canSelectedButton()
+            updateReservationBtnState()
         }
     }
 
@@ -60,7 +60,7 @@ class ReservationSeatPresenter(
         view.showTicketMoney(seats.reservationPrice())
     }
 
-    private fun canSelectedButton() {
+    private fun updateReservationBtnState() {
         if (seats.canSelect(ticket.personnel)) {
             view.selectableButton()
         } else {

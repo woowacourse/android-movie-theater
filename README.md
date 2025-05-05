@@ -62,12 +62,12 @@
 - [ ] TheaterBottomSheetDialogFragment | 바텀 시트를 띄운 상태로 구성 변경 시, 앱 크래시가 나지 않도록 개선
 - [x] TheaterBottomSheetDialogFragment | 뷰 바인딩 적용
 - [x] ReservationActivity | SDK 관련 로직 확장 함수로 사용
-- [ ] ReservationSeatPresenter | Seat 자료 구조형 불변으로 변경
+- [x] ReservationSeatPresenter | Seat 자료 구조형 불변으로 변경
 - [ ] ReservationSeatPresenter | Presenter에서 안드로이드 의존성 제거
 - [x] ReservationSeatPresenter | getSerializable 메서드 수정
 - [x] movie_item | text에 값이 안들어있는 오류 수정
 
-
+- [ ] ReservationSeatPresenter | view 로직 분리
 
 
 
