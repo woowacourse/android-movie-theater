@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_booking_seat"
     tools:context=".feature.bookingseat.view.BookingSeatActivity">
-    
+
     <data>
+
         <variable
             name="bookingInfo"
             type="woowacourse.movie.feature.model.BookingInfoUiModel" />
@@ -13,6 +14,10 @@
         <variable
             name="onSeatSelectCompleteClick"
             type="kotlin.jvm.functions.Function0" />
+
+        <variable
+            name="presenter"
+            type="woowacourse.movie.feature.bookingseat.contract.BookingSeatContract.Presenter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_movie_seat_complete_background"
                 android:enabled="@{bookingInfo.isSeatAllSelected}"
-                android:onClick="@{() -> onSeatSelectCompleteClick.invoke()}"
+                android:onClick="@{() -> presenter.completeSeatSelection()}"
                 android:minWidth="88dp"
                 android:padding="28dp"
                 android:text="@string/booking_seat_select_complete"

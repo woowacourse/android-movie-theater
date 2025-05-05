@@ -27,15 +27,22 @@ import woowacourse.movie.util.getExtra
 class BookingSeatActivity :
     AppCompatActivity(),
     BookingSeatContract.View {
-    private val binding: ActivityBookingSeatBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_booking_seat) }
+    private val binding: ActivityBookingSeatBinding by lazy {
+        DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_booking_seat,
+        )
+    }
     private val presenter: BookingSeatContract.Presenter by lazy { BookingSeatPresenter(this) }
     private val seats: MutableMap<TextView, MovieSeatUiModel> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.onSeatSelectCompleteClick = presenter::completeSeatSelection
-        presenter.prepareBookingInfo(bookingInfo = intent.getExtra(BOOKING_INFO_KEY) ?: BookingInfoUiModel())
+        binding.presenter = presenter
+        presenter.prepareBookingInfo(
+            bookingInfo = intent.getExtra(BOOKING_INFO_KEY) ?: BookingInfoUiModel(),
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -56,7 +63,11 @@ class BookingSeatActivity :
                 }
 
             for (columnIndex in 0 until columnCount) {
-                val movieSeat = presenter.prepareSeats(rowIndex + SEAT_POSITION_OFFSET, columnIndex + SEAT_POSITION_OFFSET)
+                val movieSeat =
+                    presenter.prepareSeats(
+                        rowIndex + SEAT_POSITION_OFFSET,
+                        columnIndex + SEAT_POSITION_OFFSET,
+                    )
                 val seatView = createSeatTextView(movieSeat.toLabel())
 
                 tableRow.addView(seatView)
@@ -102,7 +113,8 @@ class BookingSeatActivity :
             gravity = Gravity.CENTER
             textSize = 22f
             setTypeface(typeface, Typeface.BOLD)
-            background = ContextCompat.getDrawable(context, R.drawable.selector_movie_seat_background)
+            background =
+                ContextCompat.getDrawable(context, R.drawable.selector_movie_seat_background)
         }
 
     private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
@@ -141,7 +153,12 @@ class BookingSeatActivity :
             }
 
             is SeatSelectionUiState.ExceedCountFailure -> {
-                Snackbar.make(button, getString(R.string.booking_seat_exceed_count_failure), Snackbar.LENGTH_SHORT).show()
+                Snackbar
+                    .make(
+                        button,
+                        getString(R.string.booking_seat_exceed_count_failure),
+                        Snackbar.LENGTH_SHORT,
+                    ).show()
             }
         }
     }
