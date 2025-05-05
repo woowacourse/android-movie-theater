@@ -6,7 +6,7 @@
 
     <data>
 
-        <import type="woowacourse.movie.common.StringFormatter" />
+        <import type="woowacourse.movie.common.util.StringFormatter" />
 
         <variable
             name="movie"

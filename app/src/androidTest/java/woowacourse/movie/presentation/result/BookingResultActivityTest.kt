@@ -11,7 +11,6 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.fixture.BOOKED_TICKET
-import woowacourse.movie.presentation.booking.BookingActivity
 
 @Suppress("ktlint:standard:function-naming")
 class BookingResultActivityTest {
@@ -27,7 +26,7 @@ class BookingResultActivityTest {
                 putExtra("ticket", ticket)
             }
 
-        ActivityScenario.launch<BookingActivity>(intent)
+        ActivityScenario.launch<BookingResultActivity>(intent)
     }
 
     @Test

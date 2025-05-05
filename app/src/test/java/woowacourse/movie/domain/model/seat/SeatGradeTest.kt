@@ -3,6 +3,7 @@ package woowacourse.movie.domain.model.seat
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class SeatGradeTest {
     @Test
@@ -49,6 +50,12 @@ class SeatGradeTest {
 
         // then
         grade shouldBe SeatGrade.A
+    }
+
+    @Test
+    fun `유효하지 않은 행 번호는 예외를 발생시킨다`() {
+        val invalidRow = 5
+        assertThrows<IllegalArgumentException> { SeatGrade.of(invalidRow) }
     }
 
     @Test
