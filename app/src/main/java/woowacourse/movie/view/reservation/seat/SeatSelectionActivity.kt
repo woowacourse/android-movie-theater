@@ -24,7 +24,6 @@ class SeatSelectionActivity :
     BaseActivity<ActivitySeatSelectionBinding>(R.layout.activity_seat_selection),
     SeatSelectionContract.View {
     private val presenter: SeatSelectionPresenter by lazy { SeatSelectionPresenter(this) }
-    private val seats: MutableList<Seat> = mutableListOf()
 
     private val showReservationDialog by lazy {
         AlertDialog
@@ -54,7 +53,10 @@ class SeatSelectionActivity :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun showSeats(seats: List<Seat>) {
+    override fun showSeats(
+        seats: List<Seat>,
+        selected: List<Seat>,
+    ) {
         binding.tlSeat
             .children
             .filterIsInstance<TableRow>()
@@ -62,30 +64,39 @@ class SeatSelectionActivity :
                 row.children
                     .filterIsInstance<TextView>()
                     .forEachIndexed { colIndex, view ->
-                        val seat =
-                            seats.find { it.row == rowIndex && it.column == colIndex }
-                                ?: return
-                        setupSeatClickListener(view, seat)
+                        val seat = findSeat(seats, rowIndex, colIndex)
+                        updateSeat(seat, selected, view)
                     }
             }
     }
 
-    override fun updateSeatSelection(seat: Seat) {
-        binding.tlSeat
-            .children
-            .filterIsInstance<TableRow>()
-            .elementAtOrNull(seat.row)
-            ?.children
-            ?.filterIsInstance<TextView>()
-            ?.elementAtOrNull(seat.column)
-            ?.apply {
-                background =
-                    if (seat.isSelected) {
-                        ContextCompat.getDrawable(context, R.color.yellow)
-                    } else {
-                        ContextCompat.getDrawable(context, R.color.white)
-                    }
+    private fun findSeat(
+        seats: List<Seat>,
+        rowIndex: Int,
+        colIndex: Int,
+    ): Seat {
+        return seats.find { it.row == rowIndex && it.column == colIndex }
+            ?: throw IllegalStateException("찾을 수 없는 죄석")
+    }
+
+    private fun updateSeat(
+        seat: Seat,
+        selected: List<Seat>,
+        view: TextView,
+    ) {
+        if (selected.contains(seat)) {
+            view.background =
+                ContextCompat.getDrawable(this, R.color.yellow)
+        } else {
+            view.background =
+                ContextCompat.getDrawable(this, R.color.white)
+        }
+
+        if (!view.hasOnClickListeners()) {
+            view.setOnClickListener {
+                presenter.selectSeat(seat)
             }
+        }
     }
 
     override fun showTotalPrice(price: Int) {
@@ -111,15 +122,6 @@ class SeatSelectionActivity :
 
     private fun submitReservation() {
         presenter.completeReservation()
-    }
-
-    private fun setupSeatClickListener(
-        view: TextView,
-        seat: Seat,
-    ) {
-        view.setOnClickListener {
-            presenter.selectSeat(seat)
-        }
     }
 
     fun showConfirmButton(view: View) {

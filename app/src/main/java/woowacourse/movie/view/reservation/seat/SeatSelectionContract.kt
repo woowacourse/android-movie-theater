@@ -6,9 +6,10 @@ import woowacourse.movie.domain.model.Ticket
 
 interface SeatSelectionContract {
     interface View {
-        fun showSeats(seats: List<Seat>)
-
-        fun updateSeatSelection(seat: Seat)
+        fun showSeats(
+            seats: List<Seat>,
+            selected: List<Seat>,
+        )
 
         fun showTotalPrice(price: Int)
 

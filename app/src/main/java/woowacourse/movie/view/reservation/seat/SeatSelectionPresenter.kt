@@ -12,19 +12,19 @@ class SeatSelectionPresenter(
     private lateinit var ticket: Ticket
 
     private val seatFactory = SeatFactory.default()
+    private val seats = seatFactory.seats
 
     override fun loadSeats(reservationInfo: ReservationInfo) {
-        val seats = seatFactory.createSeats()
         this.reservationInfo = reservationInfo
         ticket = reservationInfo.toTicket(listOf())
-        view.showSeats(seats)
+        view.showSeats(seats, listOf())
         updateScreen()
     }
 
     override fun selectSeat(seat: Seat) {
         runCatching {
             ticket = ticket.updateSeats(seat)
-            view.updateSeatSelection(seat)
+            view.showSeats(seats, ticket.seats)
             updateScreen()
         }.onFailure { e ->
             view.showError(e.message)
@@ -37,10 +37,7 @@ class SeatSelectionPresenter(
     }
 
     override fun showConfirmButton() {
-        when (ticket.isCompleted()) {
-            true -> view.showReservationDialog()
-            false -> view.showError("좌석을 선택해주세요")
-        }
+        view.showReservationDialog()
     }
 
     override fun completeReservation() {
