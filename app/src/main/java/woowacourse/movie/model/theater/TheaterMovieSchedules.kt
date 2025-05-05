@@ -1,10 +1,8 @@
 package woowacourse.movie.model.theater
 
 import woowacourse.movie.model.movie.Movie
-import woowacourse.movie.model.movie.Movie.Companion.posterImages
 import woowacourse.movie.model.movie.MovieTime
 import java.io.Serializable
-import java.time.LocalDate
 import java.time.LocalTime
 
 data class TheaterMovieSchedules(
@@ -50,30 +48,23 @@ data class TheaterMovieSchedules(
             )
 
         val values: Set<TheaterMovieSchedule> =
-            (1..1000)
-                .map { index ->
-                    val movieId = ((index - 1) % 50) + 1L
-                    val poster = posterImages[(index - 1) % posterImages.size]
-                    val theaterName = theaters[index % theaters.size]
-                    val screeningTimes =
-                        screeningTimesSamples[index % screeningTimesSamples.size].map { MovieTime(it) }
+            Movie.values
+                .flatMap { movie ->
+                    theaters.map { theaterName ->
+                        val screeningTimes =
+                            screeningTimesSamples[movie.id.toInt() % screeningTimesSamples.size].map {
+                                MovieTime(it)
+                            }
 
-                    TheaterMovieSchedule(
-                        theater = Theater(name = theaterName),
-                        movie =
-                            Movie(
-                                id = movieId,
-                                title = "해리포터 $movieId",
-                                poster = poster,
-                                startDate = LocalDate.of(2025, 4, (movieId % 28 + 1).toInt()),
-                                endDate = LocalDate.of(2025, 5, (movieId % 28 + 1).toInt()),
-                                runningTime = 100 + (movieId % 60).toInt(),
-                            ),
-                        screeningInfo =
-                            ScreeningInfo(
-                                screeningTimes = screeningTimes,
-                            ),
-                    )
+                        TheaterMovieSchedule(
+                            theater = Theater(name = theaterName),
+                            movie = movie,
+                            screeningInfo =
+                                ScreeningInfo(
+                                    screeningTimes = screeningTimes,
+                                ),
+                        )
+                    }
                 }.toSet()
     }
 }
