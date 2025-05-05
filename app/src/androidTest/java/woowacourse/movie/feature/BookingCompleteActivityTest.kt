@@ -9,16 +9,14 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.BookingInfo
-import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.MovieDate
-import woowacourse.movie.domain.model.MovieSeat
-import woowacourse.movie.domain.model.MovieSeats
-import woowacourse.movie.domain.model.MovieTime
-import woowacourse.movie.domain.model.TicketCount
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity.Companion.newIntent
-import woowacourse.movie.feature.mapper.toUi
+import woowacourse.movie.feature.model.BookingInfoUiModel
+import woowacourse.movie.feature.model.MovieDateUiModel
+import woowacourse.movie.feature.model.MovieSeatUiModel
+import woowacourse.movie.feature.model.MovieTimeUiModel
+import woowacourse.movie.feature.model.MovieUiModel
+import woowacourse.movie.feature.model.SeatTypeUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class BookingCompleteActivityTest {
@@ -30,20 +28,26 @@ class BookingCompleteActivityTest {
             newIntent(
                 context = getApplicationContext(),
                 bookingInfo =
-                    BookingInfo(
+                    BookingInfoUiModel(
                         movie =
-                            Movie(
+                            MovieUiModel(
                                 title = "해리 포터와 마법사의 돌",
-                                startDate = MovieDate(2025, 4, 1),
-                                endDate = MovieDate(2025, 4, 25),
+                                startDate = MovieDateUiModel(2025, 4, 1),
+                                endDate = MovieDateUiModel(2025, 4, 25),
                                 runningTime = 152,
                             ),
                         theaterName = "혜화",
-                        date = MovieDate(2025, 4, 1),
-                        time = MovieTime(9, 0),
-                        seats = MovieSeats(setOf(MovieSeat(1, 1), MovieSeat(2, 2))),
-                        ticketCount = TicketCount(2),
-                    ).toUi(),
+                        date = MovieDateUiModel(2025, 4, 1),
+                        movieTime = MovieTimeUiModel(9, 0),
+                        selectedSeats =
+                            setOf<MovieSeatUiModel>(
+                                MovieSeatUiModel(1, 1, SeatTypeUiModel.RANK_B),
+                                MovieSeatUiModel(2, 2, SeatTypeUiModel.RANK_B),
+                            ),
+                        ticketCount = 2,
+                        totalPrice = 20_000,
+                        isSeatAllSelected = true,
+                    ),
             )
 
         activityScenario = ActivityScenario.launch(intent)

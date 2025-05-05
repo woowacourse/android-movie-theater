@@ -1,7 +1,5 @@
 package woowacourse.movie.feature
 
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -10,10 +8,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import org.hamcrest.Description
-import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
-import org.hamcrest.TypeSafeMatcher
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
@@ -23,6 +18,7 @@ import woowacourse.movie.domain.model.MovieTime
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.feature.mapper.toUi
 import woowacourse.movie.feature.theaters.view.TheatersDialogFragment
+import woowacourse.movie.nthChildOf
 
 @Suppress("ktlint:standard:function-naming")
 class TheatersDialogFragmentTest {
@@ -51,22 +47,6 @@ class TheatersDialogFragmentTest {
                 isDescendantOfA(nthChildOf(withId(R.id.rv_theaters), 0)),
             ),
         ).check(matches(withText("1개의 상영 시간")))
-    }
-
-    private fun nthChildOf(
-        parentMatcher: Matcher<View>,
-        childPosition: Int,
-    ): Matcher<View> {
-        return object : TypeSafeMatcher<View>() {
-            override fun describeTo(description: Description?) = Unit
-
-            override fun matchesSafely(view: View): Boolean {
-                val parent = view.parent
-                return parent is ViewGroup &&
-                    parentMatcher.matches(parent) &&
-                    parent.getChildAt(childPosition) == view
-            }
-        }
     }
 
     private fun createTheatersDialogFragmentFactory(): FragmentFactory =

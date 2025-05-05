@@ -14,13 +14,12 @@ import org.hamcrest.CoreMatchers.anything
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.MovieDate
-import woowacourse.movie.domain.model.MovieTime
-import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity
 import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity.Companion.newIntent
-import woowacourse.movie.feature.mapper.toUi
+import woowacourse.movie.feature.model.MovieDateUiModel
+import woowacourse.movie.feature.model.MovieTimeUiModel
+import woowacourse.movie.feature.model.MovieUiModel
+import woowacourse.movie.feature.model.ScreeningUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class BookingDetailActivityTest {
@@ -32,11 +31,11 @@ class BookingDetailActivityTest {
             newIntent(
                 context = getApplicationContext(),
                 screening =
-                    Screening(
-                        Movie("해리 포터와 마법사의 돌", MovieDate(2025, 4, 1), MovieDate(2025, 4, 25), 152),
-                        "혜화",
-                        listOf(MovieTime(9, 0), MovieTime(12, 0), MovieTime(15, 0)),
-                    ).toUi(),
+                    ScreeningUiModel(
+                        movie = MovieUiModel("해리 포터와 마법사의 돌", MovieDateUiModel(2025, 4, 1), MovieDateUiModel(2025, 4, 25), 152),
+                        theaterName = "혜화",
+                        times = listOf<MovieTimeUiModel>(MovieTimeUiModel(9, 0), MovieTimeUiModel(12, 0), MovieTimeUiModel(15, 0)),
+                    ),
             )
 
         activityScenario = ActivityScenario.launch(intent)

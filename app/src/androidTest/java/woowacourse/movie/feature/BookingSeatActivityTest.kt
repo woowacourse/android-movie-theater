@@ -13,13 +13,13 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.BookingInfo
-import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.MovieDate
-import woowacourse.movie.domain.model.MovieTime
 import woowacourse.movie.feature.bookingseat.view.BookingSeatActivity
 import woowacourse.movie.feature.bookingseat.view.BookingSeatActivity.Companion.newIntent
-import woowacourse.movie.feature.mapper.toUi
+import woowacourse.movie.feature.model.BookingInfoUiModel
+import woowacourse.movie.feature.model.MovieDateUiModel
+import woowacourse.movie.feature.model.MovieSeatUiModel
+import woowacourse.movie.feature.model.MovieTimeUiModel
+import woowacourse.movie.feature.model.MovieUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class BookingSeatActivityTest {
@@ -31,18 +31,22 @@ class BookingSeatActivityTest {
             newIntent(
                 context = getApplicationContext(),
                 bookingInfo =
-                    BookingInfo(
+                    BookingInfoUiModel(
                         movie =
-                            Movie(
+                            MovieUiModel(
                                 title = "해리 포터와 마법사의 돌",
-                                startDate = MovieDate(2025, 4, 1),
-                                endDate = MovieDate(2025, 4, 25),
+                                startDate = MovieDateUiModel(2025, 4, 1),
+                                endDate = MovieDateUiModel(2025, 4, 25),
                                 runningTime = 152,
                             ),
                         theaterName = "혜화",
-                        date = MovieDate(2025, 4, 1),
-                        time = MovieTime(9, 0),
-                    ).toUi(),
+                        date = MovieDateUiModel(2025, 4, 1),
+                        movieTime = MovieTimeUiModel(9, 0),
+                        selectedSeats = setOf<MovieSeatUiModel>(),
+                        ticketCount = 1,
+                        totalPrice = 0,
+                        isSeatAllSelected = false,
+                    ),
             )
 
         activityScenario = ActivityScenario.launch(intent)
@@ -54,7 +58,7 @@ class BookingSeatActivityTest {
             .perform(click())
 
         onView(withId(R.id.tv_booking_seat_movie_price))
-            .check(matches(withText("10000원")))
+            .check(matches(withText("10,000원")))
     }
 
     @Test

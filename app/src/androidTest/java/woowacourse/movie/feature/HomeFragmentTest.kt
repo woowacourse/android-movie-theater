@@ -1,21 +1,17 @@
 package woowacourse.movie.feature
 
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import org.hamcrest.Description
-import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
-import org.hamcrest.TypeSafeMatcher
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.feature.home.view.HomeFragment
+import woowacourse.movie.nthChildOf
 
 @Suppress("ktlint:standard:function-naming")
 class HomeFragmentTest {
@@ -32,21 +28,5 @@ class HomeFragmentTest {
                 isDescendantOfA(nthChildOf(withId(R.id.rv_home_movies), 0)),
             ),
         ).check(matches(withText("해리 포터와 마법사의 돌")))
-    }
-
-    private fun nthChildOf(
-        parentMatcher: Matcher<View>,
-        childPosition: Int,
-    ): Matcher<View> {
-        return object : TypeSafeMatcher<View>() {
-            override fun describeTo(description: Description?) = Unit
-
-            override fun matchesSafely(view: View): Boolean {
-                val parent = view.parent
-                return parent is ViewGroup &&
-                    parentMatcher.matches(parent) &&
-                    parent.getChildAt(childPosition) == view
-            }
-        }
     }
 }
