@@ -51,7 +51,6 @@ class MovieFragment : Fragment(), Movies.View {
                     }
                 }
             )
-        binding.movies.layoutManager = LinearLayoutManager(this.context)
     }
 
     override fun navigateToBook(movie: Movie) {
