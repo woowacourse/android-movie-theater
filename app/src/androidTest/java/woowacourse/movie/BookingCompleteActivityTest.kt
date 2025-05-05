@@ -20,7 +20,7 @@ import woowacourse.movie.fixture.SEOLLEUNG
 import woowacourse.movie.fixture.createTicket
 import woowacourse.movie.mapper.toUiModel
 
-class SchedulerCompleteActivityTest {
+class BookingCompleteActivityTest {
     private lateinit var scenario: ActivityScenario<BookingCompleteActivity>
 
     @Before

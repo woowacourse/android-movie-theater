@@ -17,7 +17,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
-import woowacourse.movie.booking.detail.BookingDetailActivity
 import woowacourse.movie.fixture.HARRY_POTTER
 import woowacourse.movie.fixture.SEOLLEUNG
 import woowacourse.movie.fixture.createTicket
@@ -25,7 +24,7 @@ import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.seat.SeatSelectionActivity
 
 class SeatSelectionActivityTest {
-    private lateinit var scenario: ActivityScenario<BookingDetailActivity>
+    private lateinit var scenario: ActivityScenario<SeatSelectionActivity>
 
     @Before
     fun setUp() {
