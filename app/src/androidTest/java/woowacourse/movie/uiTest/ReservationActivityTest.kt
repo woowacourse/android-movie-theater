@@ -15,6 +15,7 @@ import org.junit.Test
 import org.junit.rules.TestName
 import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.MovieId
 import woowacourse.movie.domain.ScheduleTime
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.movietime.Date
@@ -36,7 +37,7 @@ class ReservationActivityTest {
     fun setUp() {
         movie =
             Movie(
-                R.drawable.harry,
+                MovieId.Harry1,
                 "해리 포터와 마법사의 돌",
                 Date(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 4, 25)),
                 152,
@@ -52,7 +53,7 @@ class ReservationActivityTest {
             )
         testName = nameRule.methodName
         if (testName == "`null값이_Intent된_경우_ErrorDialog를_띄운다`") return
-        val intent = ReservationActivity.newIntent(fakeContext, movie, showings)
+        val intent = ReservationActivity.newIntent(fakeContext, movie.movieId, showings)
         scenario = ActivityScenario.launch<ReservationActivity>(intent)
     }
 
