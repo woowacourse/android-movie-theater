@@ -49,10 +49,8 @@
             android:layout_marginTop="12dp"
             android:textColor="@color/black"
             android:textSize="12sp"
-            app:endDate="@{movie.endDate}"
             app:layout_constraintStart_toStartOf="@id/tv_movie_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
-            app:startDate="@{movie.startDate}" />
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_title" />
 
         <TextView
             android:id="@+id/tv_movie_running_time"

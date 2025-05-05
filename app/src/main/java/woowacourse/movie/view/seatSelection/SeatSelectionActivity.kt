@@ -22,6 +22,7 @@ import woowacourse.movie.presenter.seatSelection.SeatSelectionContracts
 import woowacourse.movie.presenter.seatSelection.SeatSelectionPresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.extension.showShortToast
+import woowacourse.movie.view.mapper.Formatter.priceToUi
 import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.columnToUi
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.rowToUi
@@ -159,7 +160,12 @@ class SeatSelectionActivity :
     }
 
     override fun showPrice(price: Int) {
-        binding.price = price
+        val formatPrice: String = priceToUi(price)
+        binding.tvSeatSelectionPrice.text =
+            getString(
+                R.string.seat_selection_ticket_price,
+                formatPrice,
+            )
     }
 
     override fun showButtonEnabled(enabled: Boolean) {

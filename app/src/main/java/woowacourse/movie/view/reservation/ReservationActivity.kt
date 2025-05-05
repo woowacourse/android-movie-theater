@@ -20,6 +20,7 @@ import woowacourse.movie.presenter.reservation.ReservationContract
 import woowacourse.movie.presenter.reservation.ReservationPresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.extension.showShortToast
+import woowacourse.movie.view.mapper.Formatter.localDateToUi
 import woowacourse.movie.view.seatSelection.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalTime
@@ -157,7 +158,11 @@ class ReservationActivity :
     }
 
     override fun showMovieInfo(movie: Movie) {
+        val startDate: String = localDateToUi(movie.startDate)
+        val endDate: String = localDateToUi(movie.endDate)
         binding.movie = movie
+        binding.tvReservationScreeningDate.text =
+            getString(R.string.movie_screening_date, startDate, endDate)
     }
 
     override fun showErrorToastMessage(message: String) {

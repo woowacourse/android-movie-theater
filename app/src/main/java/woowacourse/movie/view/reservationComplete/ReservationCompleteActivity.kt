@@ -16,6 +16,9 @@ import woowacourse.movie.presenter.reservationComplete.ReservationCompleteContra
 import woowacourse.movie.presenter.reservationComplete.ReservationCompletePresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.extension.showShortToast
+import woowacourse.movie.view.mapper.Formatter.localDateToUi
+import woowacourse.movie.view.mapper.Formatter.priceToUi
+import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.seatsToUi
 
 class ReservationCompleteActivity :
     androidx.appcompat.app.AppCompatActivity(),
@@ -68,6 +71,41 @@ class ReservationCompleteActivity :
 
     override fun showMovieTicket(movieTicket: MovieTicket) {
         binding.movieTicket = movieTicket
+        showMovieTimeStamp(movieTicket)
+        showTheaterSeats(movieTicket)
+        showPrice(movieTicket)
+    }
+
+    private fun showPrice(movieTicket: MovieTicket) {
+        val formatPrice: String = priceToUi(movieTicket.price)
+
+        binding.tvReservationCompleteTicketPrice.text =
+            getString(
+                R.string.reservation_complete_ticket_price,
+                formatPrice,
+            )
+    }
+
+    private fun showTheaterSeats(movieTicket: MovieTicket) {
+        val formatedSeats: String = seatsToUi(movieTicket.seats, ", ")
+        binding.tvReservationCompleteTicketCount.text =
+            getString(
+                R.string.reservation_complete_seat_theater_name_info,
+                movieTicket.seats.size,
+                formatedSeats,
+                movieTicket.theater.name,
+            )
+    }
+
+    private fun showMovieTimeStamp(movieTicket: MovieTicket) {
+        val formatMovieDate: String = localDateToUi(movieTicket.movieDate)
+        val formatMovieTime: String = movieTicket.movieTime.value.toString()
+        binding.tvReservationCompleteTimestamp.text =
+            getString(
+                R.string.reservation_complete_ticket_timestamp,
+                formatMovieDate,
+                formatMovieTime,
+            )
     }
 
     companion object {

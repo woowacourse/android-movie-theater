@@ -6,10 +6,6 @@
         <variable
             name="title"
             type="String" />
-
-        <variable
-            name="price"
-            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -164,12 +160,10 @@
                 android:enabled="false"
                 android:textColor="@color/gray_727272"
                 android:textSize="18sp"
-                app:isPayed="@{false}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_seat_selection_movie_title"
-                app:ticketPrice="@{price}"
                 tools:text="13,000원" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
