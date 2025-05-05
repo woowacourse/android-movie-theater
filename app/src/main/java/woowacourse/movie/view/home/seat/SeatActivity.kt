@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -81,7 +80,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
 
     override fun showPrice(price: Int) {
         val formattedPrice = StringFormatter.thousandFormat(price)
-        binding.tvPrice.text = getString(R.string.text_korea_unit).format(formattedPrice)
+        binding.tvPrice.text = getString(R.string.formatter_korea_unit).format(formattedPrice)
     }
 
     override fun setConfirmButtonEnabled(clickable: Boolean) {

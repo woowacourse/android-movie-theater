@@ -72,7 +72,7 @@
 
                     <TextView
                         android:id="@+id/tv_screening_period"
-                        android:text="@{String.format(@string/text_date_period, model.screeningStartDate, model.screeningEndDate)}"
+                        android:text="@{String.format(@string/formatter_date_period, model.screeningStartDate, model.screeningEndDate)}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -98,7 +98,7 @@
 
                     <TextView
                         android:id="@+id/tv_running_time"
-                        android:text="@{String.format(@string/text_running_time_minute_unit, model.runningTime)}"
+                        android:text="@{String.format(@string/formatter_running_time_minute_unit, model.runningTime)}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"

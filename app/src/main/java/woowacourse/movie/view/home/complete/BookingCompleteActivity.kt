@@ -58,10 +58,10 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     override fun showTicket(ticket: Ticket) {
         binding.model =
             ticket.toUiModel(
-                getString(R.string.text_booking_schedule),
-                getString(R.string.text_seat_formatter),
-                getString(R.string.text_general_people_count),
-                getString(R.string.text_on_site_payment),
+                getString(R.string.formatter_booking_schedule),
+                getString(R.string.formatter_text_seat_formatter),
+                getString(R.string.formatter_general_people_count),
+                getString(R.string.formatter_on_site_payment),
             )
     }
 

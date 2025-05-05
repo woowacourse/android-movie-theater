@@ -1,6 +1,5 @@
 package woowacourse.movie.view.mapper
 
-import android.util.Log
 import woowacourse.movie.domain.model.movies.Movie
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.StringFormatter
@@ -32,7 +31,6 @@ fun Ticket.toUiModel(
             val columnNumber = it.y.value
             seatFormatter.format(rowLetter, columnNumber)
         }
-    Log.d("dsdsa", formatedSeats)
     val formatedCount = countFormatter.format(count.value)
     val formatedPrice = paymentFormatter.format(StringFormatter.thousandFormat(price))
 
