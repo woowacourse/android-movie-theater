@@ -15,11 +15,15 @@ import woowacourse.movie.ui.presenter.MainPresenter
 import woowacourse.movie.ui.view.cinema.HomeFragment
 import woowacourse.movie.ui.view.reservation.ReservationHistoryFragment
 import woowacourse.movie.ui.view.setting.SettingFragment
+import woowacourse.movie.ui.view.util.ErrorMessage
 
 class MainActivity :
     AppCompatActivity(),
     MainContract.View {
     private val presenter: MainContract.Presenter = MainPresenter(this)
+    private val homeFragment by lazy { HomeFragment() }
+    private val reservationHistoryFragment by lazy { ReservationHistoryFragment() }
+    private val settingFragment by lazy { SettingFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +46,7 @@ class MainActivity :
                     R.id.item_menu_main_reservation_history -> MainScreen.RESERVATION_HISTORY
                     R.id.item_menu_main_home -> MainScreen.HOME
                     R.id.item_menu_main_setting -> MainScreen.SETTING
-                    else -> error(woowacourse.movie.ui.view.util.ErrorMessage("itemId").noSuch())
+                    else -> error(ErrorMessage("itemId").noSuch())
                 }
             presenter.presentScreen(mainScreen)
             true
@@ -57,9 +61,9 @@ class MainActivity :
     override fun updateScreen(mainScreen: MainScreen) {
         val fragment =
             when (mainScreen) {
-                MainScreen.RESERVATION_HISTORY -> ReservationHistoryFragment()
-                MainScreen.HOME -> HomeFragment()
-                MainScreen.SETTING -> SettingFragment()
+                MainScreen.RESERVATION_HISTORY -> reservationHistoryFragment
+                MainScreen.HOME -> homeFragment
+                MainScreen.SETTING -> settingFragment
             }
         replaceWith(fragment)
     }

@@ -18,3 +18,4 @@
 ### 1차 피드백 반영
 
 - [x] 탭을 savedInstanceState가 없을 시점에만 main으로 변경하도록 수정
+- [x] fragment를 재사용하도록 수정
