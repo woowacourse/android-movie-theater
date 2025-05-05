@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieData
+import woowacourse.movie.data.repository.DefaultMovieRepository
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.presentation.movies.adapter.MovieAdapter
@@ -20,11 +20,11 @@ class MovieListFragment :
     MovieListContract.View {
     private var _binding: FragmentMovieListBinding? = null
     private val binding: FragmentMovieListBinding get() = _binding!!
-    private lateinit var presenter: MovieListContract.Presenter
+    private lateinit var presenter: MovieListPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = MovieListPresenter(this, MovieData)
+        presenter = MovieListPresenter(this, DefaultMovieRepository())
     }
 
     override fun onCreateView(

@@ -5,7 +5,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieData
-import woowacourse.movie.data.ScreeningData
+import woowacourse.movie.data.repository.DefaultScreeningRepository
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.fixture.SEOLLEUNG
 import java.time.LocalTime
@@ -18,7 +18,7 @@ class TheaterPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = TheaterPresenter(view, movie, ScreeningData)
+        presenter = TheaterPresenter(view, movie, DefaultScreeningRepository())
     }
 
     @Test

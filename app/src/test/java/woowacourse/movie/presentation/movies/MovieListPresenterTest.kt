@@ -4,12 +4,12 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.MovieData
+import woowacourse.movie.data.repository.MovieRepository
 import woowacourse.movie.fixture.HARRY_POTTER
 
 class MovieListPresenterTest {
     private lateinit var view: MovieListContract.View
-    private lateinit var movieData: MovieData
+    private lateinit var movieData: MovieRepository
     private lateinit var presenter: MovieListContract.Presenter
 
     @BeforeEach

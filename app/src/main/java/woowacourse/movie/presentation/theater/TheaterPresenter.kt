@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.theater
 
-import woowacourse.movie.data.ScreeningData
+import woowacourse.movie.data.repository.ScreeningRepository
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.ScreeningInfos
@@ -8,10 +8,10 @@ import woowacourse.movie.domain.model.ScreeningInfos
 class TheaterPresenter(
     private val view: TheaterContract.View,
     private val movie: Movie,
-    private val screeningData: ScreeningData,
+    private val screeningRepository: ScreeningRepository,
 ) : TheaterContract.Presenter {
     override fun loadTheaterList() {
-        val screeningInfos = ScreeningInfos(screeningData.values)
+        val screeningInfos = ScreeningInfos(screeningRepository.fetch())
         view.showTheaters(screeningInfos.findByMovie(movie))
     }
 

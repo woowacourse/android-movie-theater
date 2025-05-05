@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.common.util.getSerializableCompat
-import woowacourse.movie.data.ScreeningData
+import woowacourse.movie.data.repository.DefaultScreeningRepository
 import woowacourse.movie.databinding.FragmentTheaterBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
@@ -27,7 +27,7 @@ class TheaterFragment :
         val movie =
             arguments?.getSerializableCompat(EXTRA_MOVIE, Movie::class.java)
                 ?: dismiss().run { return }
-        presenter = TheaterPresenter(this, movie, ScreeningData)
+        presenter = TheaterPresenter(this, movie, DefaultScreeningRepository())
     }
 
     override fun onCreateView(
