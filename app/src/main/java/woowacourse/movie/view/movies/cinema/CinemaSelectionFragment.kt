@@ -42,15 +42,13 @@ class CinemaSelectionFragment : BottomSheetDialogFragment() {
                 screenings,
                 object : OnCinemaSelectionListener {
                     override fun onReserveButtonClick(screening: Screening) {
-                        context?.let {
+                        val intent =
                             ReservationActivity
                                 .newIntent(
-                                    it,
+                                    requireContext(),
                                     screening,
-                                ).let(
-                                    requireActivity()::startActivity,
                                 )
-                        }
+                        requireActivity().startActivity(intent)
                     }
                 },
             )
