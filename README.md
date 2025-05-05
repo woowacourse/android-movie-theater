@@ -112,3 +112,6 @@
 - [x] refactor: 클릭 함수를 인터페이스로 확장
 - databinding xml 적용
 - inner class MovieViewHolder, AdViewHolder 파일 분리 : 외부 참조가 강하게 연결되어 있는 것을 분리하기 위함
+
+- [x] refactor: 이미지 바인딩 어댑터 제거
+- android:src에 포스터를 데이터 바인딩을 이용하도록 변경
