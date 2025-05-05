@@ -1,9 +1,9 @@
 package woowacourse.movie.model
 
 enum class SeatGrade(val price: Int) {
-    B(10000),
-    S(15000),
-    A(12000),
+    B(10_000),
+    S(15_000),
+    A(12_000),
     ;
 
     companion object {
