@@ -30,19 +30,10 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        binding = DataBindingUtil.setContentView(this, R.layout.movie_booking_seat)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booking_seat)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
-        bookingStatus =
-            BuildVersion().getParcelableClass(intent, KEY_BOOKING_SEAT, BookingStatus::class)
-        theater = BuildVersion().getParcelableClass(intent, KEY_THEATER, Theater::class)
-        presenter = MovieBookingSeatPresenter(this@MovieBookingSeatActivity)
-        presenter.loadBookingStatus(bookingStatus)
+        initBinding()
+        applyWindowInserts()
+        setUpIntentData()
+        setUpPresenter()
         initSeatTable()
     }
 
@@ -106,6 +97,29 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
             .setPositiveButton(R.string.error_dialog_okay, null)
             .show()
             .setCancelable(false)
+    }
+
+    private fun initBinding() {
+        binding = DataBindingUtil.setContentView(this, R.layout.movie_booking_seat)
+    }
+
+    private fun applyWindowInserts() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booking_seat)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+
+    private fun setUpIntentData() {
+        bookingStatus =
+            BuildVersion().getParcelableClass(intent, KEY_BOOKING_SEAT, BookingStatus::class)
+        theater = BuildVersion().getParcelableClass(intent, KEY_THEATER, Theater::class)
+    }
+
+    private fun setUpPresenter() {
+        presenter = MovieBookingSeatPresenter(this@MovieBookingSeatActivity)
+        presenter.loadBookingStatus(bookingStatus)
     }
 
     private fun initSeatTable() {

@@ -30,26 +30,10 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = DataBindingUtil.setContentView(this, R.layout.movie_booking)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booking)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        movie =
-            BuildVersion().getParcelableClass(
-                intent,
-                KEY_MOVIE, Movie::class,
-            )
-        theater =
-            BuildVersion().getParcelableClass(
-                intent,
-                KEY_THEATER, Theater::class,
-            )
-
-        presenter = MovieBookingPresenter(this@MovieBookingActivity)
-        presenter.loadMovie(movie)
-
+        initBinding()
+        applyWindowInserts()
+        initIntentData()
+        setUpPresenter()
         setupDatePicker()
         setupTimePicker()
         setupMemberCount()
@@ -88,6 +72,36 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
             .setPositiveButton(R.string.error_dialog_okay, null)
             .show()
             .setCancelable(false)
+    }
+
+    private fun initBinding() {
+        binding = DataBindingUtil.setContentView(this, R.layout.movie_booking)
+    }
+
+    private fun applyWindowInserts() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booking)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+
+    private fun initIntentData() {
+        movie =
+            BuildVersion().getParcelableClass(
+                intent,
+                KEY_MOVIE, Movie::class,
+            )
+        theater =
+            BuildVersion().getParcelableClass(
+                intent,
+                KEY_THEATER, Theater::class,
+            )
+    }
+
+    private fun setUpPresenter() {
+        presenter = MovieBookingPresenter(this@MovieBookingActivity)
+        presenter.loadMovie(movie)
     }
 
     private fun setupDatePicker() {

@@ -24,9 +24,7 @@ class MovieFragment : Fragment(), Movies.View {
         savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie, container, false)
-
-        presenter = MoviesPresenter(this@MovieFragment)
-        presenter.loadMovies()
+        setUpPresenter()
         return binding.root
     }
 
@@ -64,5 +62,10 @@ class MovieFragment : Fragment(), Movies.View {
             .setPositiveButton(R.string.error_dialog_okay, null)
             .show()
             .setCancelable(false)
+    }
+
+    private fun setUpPresenter() {
+        presenter = MoviesPresenter(this@MovieFragment)
+        presenter.loadMovies()
     }
 }

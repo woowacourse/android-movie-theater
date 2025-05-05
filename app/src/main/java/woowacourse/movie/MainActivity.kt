@@ -16,19 +16,31 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main2)
+        initBinding()
+        applyWindowInserts()
+        setUpBottomNavigation()
+    }
+
+    private fun setUpBottomNavigation() {
+        binding.navigationView.selectedItemId = R.id.navigation_home
+        setFrag(R.id.navigation_home)
+
+        binding.navigationView.setOnItemSelectedListener { item ->
+            setFrag(item.itemId)
+            true
+        }
+    }
+
+    private fun applyWindowInserts() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        binding.navView.selectedItemId = R.id.navigation_home
-        setFrag(R.id.navigation_home)
+    }
 
-        binding.navView.setOnItemSelectedListener { item ->
-            setFrag(item.itemId)
-            true
-        }
+    private fun initBinding() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main2)
     }
 
     private fun setFrag(itemId: Int) {

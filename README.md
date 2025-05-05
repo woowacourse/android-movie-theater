@@ -94,3 +94,10 @@
 - xml 아이템 ID에 seat 접미사 추가
 
 - [x] refactor: 테스트 함수용 확장 함수 파일 분리
+
+- [x] refactor: onCreate 내 함수 분리
+- MainActivity의 onCreate 함수 분리
+- activity_main2.xml의 BottomNavigationView ID 수정 (nav_view -> navigation_view)
+- MovieBookingSeatActivity onCreate 함수 분리
+- MovieBookedActivity onCreate 함수 분리
+- MovieFragment onCreateView 함수 분리

@@ -21,12 +21,8 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = DataBindingUtil.setContentView(this, R.layout.movie_booked)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booked)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        initBinding()
+        applyWindowInserts()
         presenter = MovieBookedPresenter(this)
         fetchBookingStatus()
     }
@@ -55,6 +51,18 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
                 "$rowChar$colNumber"
             }
         binding.bookedBookingSeat.text = seatsText
+    }
+
+    private fun initBinding() {
+        binding = DataBindingUtil.setContentView(this, R.layout.movie_booked)
+    }
+
+    private fun applyWindowInserts() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booked)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
     }
 
     companion object {
