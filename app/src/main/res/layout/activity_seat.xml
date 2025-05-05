@@ -8,6 +8,11 @@
         <variable
             name="handler"
             type="woowacourse.movie.view.handler.SeatActionHandler" />
+
+        <variable
+            name="movieTitle"
+            type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -181,6 +186,7 @@
 
                 <TextView
                     android:id="@+id/tv_title"
+                    android:text="@{movieTitle}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"

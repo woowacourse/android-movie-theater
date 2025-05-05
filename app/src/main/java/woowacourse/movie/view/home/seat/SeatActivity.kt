@@ -36,7 +36,10 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         intent.getSerializableOrNull<Booking>(KEY_BOOKING)?.let {
             presenter = SeatPresenter(this, Seats(), it)
             val handler = SeatActionHandler(presenter)
+
             binding.handler = handler
+            binding.movieTitle = it.movieTitle
+
             initView()
         } ?: run {
             showToastFromResource(R.string.error_missing_movie_seat)
@@ -65,10 +68,6 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         binding.btnBooking.setOnClickListener {
             showDialog()
         }
-    }
-
-    override fun showBookingInformation(title: String) {
-        findViewById<TextView>(R.id.tv_title).text = title
     }
 
     override fun showSeat(seats: Set<Seat>) {

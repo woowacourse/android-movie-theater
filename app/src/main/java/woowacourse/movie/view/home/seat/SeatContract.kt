@@ -5,8 +5,6 @@ import woowacourse.movie.domain.model.ticket.Ticket
 
 interface SeatContract {
     interface View {
-        fun showBookingInformation(title: String)
-
         fun showSeat(seats: Set<Seat>)
 
         fun showToast(peopleCount: Int)
