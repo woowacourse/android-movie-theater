@@ -1,6 +1,5 @@
 package woowacourse.movie.helper
 
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
@@ -26,21 +25,13 @@ fun setFormattedLocalDateTime(
     view.text = localDateTime.toDotFormat()
 }
 
-@BindingAdapter("drawableResource")
-fun setDrawableResource(
-    view: ImageView,
-    drawableRes: Int,
-) {
-    view.setImageResource(drawableRes)
-}
-
 @BindingAdapter("seat")
 fun setFormattedSeat(
     view: TextView,
     seats: List<Seat>,
 ) {
     view.text =
-        seats.joinToString(", ") { seat ->
+        seats.joinToString { seat ->
             val rowChar = 'A' + seat.row.value
             val colNumber = seat.column.value + 1
             "$rowChar$colNumber"

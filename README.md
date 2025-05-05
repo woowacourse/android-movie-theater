@@ -101,3 +101,6 @@
 - MovieBookingSeatActivity onCreate 함수 분리
 - MovieBookedActivity onCreate 함수 분리
 - MovieFragment onCreateView 함수 분리
+
+- [x] refactor: BindingAdapter 기능별 파일 분리
+- TextViewBindingAdapter, ImageViewBindingAdapter
