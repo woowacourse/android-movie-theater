@@ -20,7 +20,7 @@ class MovieListFragmentTest {
         onView(withId(R.id.recyclerview_movies))
             .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))
 
-        onView(withText("승부"))
+        onView(withText("해리 포터와 마법사의 돌"))
             .check(matches(isDisplayed()))
     }
 }

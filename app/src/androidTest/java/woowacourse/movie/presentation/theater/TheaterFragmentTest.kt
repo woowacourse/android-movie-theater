@@ -11,15 +11,13 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.jupiter.api.Test
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieData
+import woowacourse.movie.fixture.HARRY_POTTER
 
 @Suppress("ktlint:standard:function-naming")
 class TheaterFragmentTest {
-    private val movie = MovieData.movie1
-
     private val args =
         Bundle().apply {
-            putSerializable("movie", movie)
+            putSerializable("movie", HARRY_POTTER)
         }
 
     @Test

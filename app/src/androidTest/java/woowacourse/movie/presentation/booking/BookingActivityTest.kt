@@ -1,6 +1,7 @@
 package woowacourse.movie.presentation.booking
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -60,7 +61,7 @@ class BookingActivityTest {
     @Test
     fun 상영일자가_출력된다() {
         onView(withId(R.id.textview_screeningdate))
-            .check(matches(withText("상영일: 2025.05.01 ~ 2025.05.31")))
+            .check(matches(withText("상영일: 2025.04.01 ~ 2025.05.30")))
     }
 
     @Test
@@ -77,47 +78,67 @@ class BookingActivityTest {
 
     @Test
     fun 증가_버튼을_누르면_숫자가_1_증가한다() {
+        // given
+        onView(withId(R.id.textview_headcount))
+            .check(matches(withText("1")))
+
+        // when
         onView(withId(R.id.button_increase))
             .perform(click())
 
+        // then
         onView(withId(R.id.textview_headcount))
             .check(matches(withText("2")))
     }
 
     @Test
     fun 값이_2_이상일때_감소_버튼을_누르면_숫자가_1_감소한다() {
+        // given
         onView(withId(R.id.button_increase))
             .perform(click())
 
         onView(withId(R.id.textview_headcount))
             .check(matches(withText("2")))
 
+        // when
         onView(withId(R.id.button_decrease))
             .perform(click())
 
+        // then
         onView(withId(R.id.textview_headcount))
             .check(matches(withText("1")))
     }
 
     @Test
     fun 값이_1일때_감소_버튼을_누르면_숫자가_감소하지_않는다() {
+        // given
+        onView(withId(R.id.textview_headcount))
+            .check(matches(withText("1")))
+
+        // when
         onView(withId(R.id.button_decrease))
             .perform(click())
 
+        // then
         onView(withId(R.id.textview_headcount))
             .check(matches(withText("1")))
     }
 
     @Test
     fun 화면이_회전되어도_숫자의_값은_유지된다() {
+        // given
         onView(withId(R.id.button_increase))
             .perform(click())
 
         onView(withId(R.id.textview_headcount))
             .check(matches(withText("2")))
 
-        activityScenario.recreate()
+        // when
+        activityScenario.onActivity { activity ->
+            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        }
 
+        // then
         onView(withId(R.id.textview_headcount))
             .check(matches(withText("2")))
     }
