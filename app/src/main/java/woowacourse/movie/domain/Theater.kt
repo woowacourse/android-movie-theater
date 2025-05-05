@@ -8,8 +8,11 @@ data class Theater(
     val schedule: List<Schedule>,
 ) : Serializable {
     companion object {
-        fun findTheatersShowingMovie(targetMovieTitle: String): List<Showings> {
-            return theatersDummy.map { theater ->
+        fun findTheatersShowingMovie(
+            targetMovieTitle: String,
+            theaters: List<Theater>,
+        ): List<Showings> {
+            return theaters.map { theater ->
                 val totalShowings =
                     theater.schedule
                         .firstOrNull { it.movieTitle == targetMovieTitle }

@@ -7,11 +7,10 @@ import woowacourse.movie.domain.moviesDummy
 
 class HomePresenter(
     private val view: HomeContract.View,
+    private val movies: List<Movie> = moviesDummy,
 ) : HomeContract.Presenter {
     override fun loadMovies() {
-        val movies: List<Movie> = moviesDummy
         val movieItems = addAdItemToMovieItem(movies)
-
         view.showMovies(movieItems)
     }
 
