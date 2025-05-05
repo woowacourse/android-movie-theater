@@ -6,20 +6,27 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import woowacourse.movie.R
+import woowacourse.movie.domain.model.Cinema
 import woowacourse.movie.domain.model.ReservationCount
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.view.fixture.fakeContext
 import java.time.LocalDateTime
 
+@RunWith(AndroidJUnit4::class)
+@Suppress("FunctionName")
 class ReservationResultActivityTest {
     private val reservationInfo =
         ReservationInfo(
             title = "해리 포터와 마법사의 돌",
             reservationDateTime = LocalDateTime.of(2025, 4, 15, 11, 0),
             reservationCount = ReservationCount(2),
+            _seats = mutableListOf(),
+            cinema = Cinema(1, "잠실"),
         )
 
     @Before
