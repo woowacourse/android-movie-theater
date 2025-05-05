@@ -21,6 +21,7 @@ activity = "1.10.1"
 mockk = "1.14.0"
 fragment-testing = "1.8.6"
 junit-ktx = "1.2.1"
+navigation-ui-ktx = "2.8.9"
 
 [libraries]
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidx-activity-ktx" }
@@ -44,6 +45,7 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 androidx-fragment-testing = { group = "androidx.fragment", name = "fragment-testing", version.ref = "fragment-testing" }
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit-ktx" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-ui-ktx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
