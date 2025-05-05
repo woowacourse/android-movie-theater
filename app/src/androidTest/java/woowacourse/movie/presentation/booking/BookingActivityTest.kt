@@ -12,20 +12,17 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.CoreMatchers.allOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
+import woowacourse.movie.fixture.HARRY_POTTER
+import woowacourse.movie.fixture.SEOLLEUNG
 import woowacourse.movie.presentation.seats.SeatsActivity
-import java.time.LocalDate
 import java.time.LocalTime
 
-@RunWith(AndroidJUnit4::class)
 @Suppress("ktlint:standard:function-naming")
 class BookingActivityTest {
     private lateinit var activityScenario: ActivityScenario<BookingActivity>
@@ -34,26 +31,15 @@ class BookingActivityTest {
     fun setUp() {
         Intents.init()
 
-        val movie =
-            Movie(
-                "Test",
-                LocalDate.of(2025, 4, 17),
-                LocalDate.of(2025, 5, 30),
-                100,
-            )
-
         val screening =
             Screening(
-                "선릉 극장",
-                movie,
+                SEOLLEUNG,
+                HARRY_POTTER,
                 listOf(15, 17, 19).map { LocalTime.of(it, 0) },
             )
 
         val intent =
-            Intent(
-                ApplicationProvider.getApplicationContext(),
-                BookingActivity::class.java,
-            ).apply {
+            Intent(ApplicationProvider.getApplicationContext(), BookingActivity::class.java).apply {
                 putExtra("screening", screening)
             }
 
@@ -68,19 +54,19 @@ class BookingActivityTest {
     @Test
     fun 영화_제목이_출력된다() {
         onView(withId(R.id.textview_title))
-            .check(matches(withText("Test")))
+            .check(matches(withText("해리 포터와 마법사의 돌")))
     }
 
     @Test
     fun 상영일자가_출력된다() {
         onView(withId(R.id.textview_screeningdate))
-            .check(matches(withText("상영일: 2025-04-17 ~ 2025-04-30")))
+            .check(matches(withText("상영일: 2025.05.01 ~ 2025.05.31")))
     }
 
     @Test
     fun 러닝타임이_출력된다() {
         onView(withId(R.id.textview_runningtime))
-            .check(matches(withText("러닝타임: 100분")))
+            .check(matches(withText("러닝타임: 152분")))
     }
 
     @Test
@@ -138,14 +124,13 @@ class BookingActivityTest {
 
     @Test
     fun 예매완료_버튼을_누르면_화면이_이동되고_예매_데이터가_전달된다() {
-        onView(withId(R.id.button_select))
-            .perform(click())
+        onView(withId(R.id.button_select)).perform(click())
 
         intended(hasComponent(SeatsActivity::class.java.name))
 
         intended(
             allOf(
-                hasExtraWithKey("Ticket"),
+                hasExtraWithKey("ticket"),
             ),
         )
     }

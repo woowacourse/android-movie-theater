@@ -7,35 +7,24 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Ticket
+import woowacourse.movie.fixture.BOOKED_TICKET
 import woowacourse.movie.presentation.booking.BookingActivity
-import java.time.LocalDateTime
 
-@RunWith(AndroidJUnit4::class)
 @Suppress("ktlint:standard:function-naming")
 class BookingResultActivityTest {
     @Before
     fun setUp() {
-        val ticket =
-            Ticket(
-                "Test",
-                "선릉 극장",
-                LocalDateTime.of(2025, 12, 31, 12, 0),
-                2,
-                27000,
-            )
+        val ticket = BOOKED_TICKET
 
         val intent =
             Intent(
                 ApplicationProvider.getApplicationContext(),
                 BookingResultActivity::class.java,
             ).apply {
-                putExtra("Ticket", ticket)
+                putExtra("ticket", ticket)
             }
 
         ActivityScenario.launch<BookingActivity>(intent)
@@ -44,7 +33,7 @@ class BookingResultActivityTest {
     @Test
     fun 영화_제목이_출력된다() {
         onView(withId(R.id.textview_title))
-            .check(matches(withText("Test")))
+            .check(matches(withText("해리 포터와 마법사의 돌")))
     }
 
     @Test
@@ -62,6 +51,6 @@ class BookingResultActivityTest {
     @Test
     fun 총_결제금액이_출력된다() {
         onView(withId(R.id.textview_amount))
-            .check(matches(withText("27,000원 (현장 결제)")))
+            .check(matches(withText("25,000원 (현장 결제)")))
     }
 }

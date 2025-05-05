@@ -9,13 +9,10 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.jupiter.api.Test
-import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieData
 
-@RunWith(AndroidJUnit4::class)
 @Suppress("ktlint:standard:function-naming")
 class TheaterFragmentTest {
     private val movie = MovieData.movie1

@@ -12,35 +12,22 @@ import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.isNotEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Ticket
-import java.time.LocalDateTime
+import woowacourse.movie.fixture.INITIAL_TICKET
 
-@RunWith(AndroidJUnit4::class)
 @Suppress("ktlint:standard:function-naming")
 class SeatsActivityTest {
     private lateinit var activityScenario: ActivityScenario<SeatsActivity>
 
     @Before
     fun setUp() {
-        val ticket =
-            Ticket(
-                "Test",
-                "선릉 극장",
-                LocalDateTime.of(2025, 12, 31, 12, 0),
-                1,
-            )
+        val ticket = INITIAL_TICKET
 
         val intent =
-            Intent(
-                ApplicationProvider.getApplicationContext(),
-                SeatsActivity::class.java,
-            ).apply {
-                putExtra("Ticket", ticket)
+            Intent(ApplicationProvider.getApplicationContext(), SeatsActivity::class.java).apply {
+                putExtra("ticket", ticket)
             }
 
         activityScenario = ActivityScenario.launch(intent)
@@ -49,7 +36,7 @@ class SeatsActivityTest {
     @Test
     fun 영화_제목이_출력된다() {
         onView(withId(R.id.textview_title))
-            .check(matches(withText("Test")))
+            .check(matches(withText("해리 포터와 마법사의 돌")))
     }
 
     @Test
