@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 
 @Parcelize
-class ReservationInfo(
+data class ReservationInfo(
     val title: String,
     val reservationDateTime: LocalDateTime,
     val reservationCount: ReservationCount,
