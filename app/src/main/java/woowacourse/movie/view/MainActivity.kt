@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
-                setReorderingAllowed(true)
                 add(R.id.main_fragment_container, HomeFragment())
             }
         }
