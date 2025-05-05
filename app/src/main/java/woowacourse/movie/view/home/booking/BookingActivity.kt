@@ -14,12 +14,13 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.booking.Booking
+import woowacourse.movie.domain.model.movies.Movie
 import woowacourse.movie.view.ext.getSerializableOrNull
 import woowacourse.movie.view.ext.showToastFromResource
 import woowacourse.movie.view.handler.BookingActionHandler
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.home.seat.SeatActivity
-import woowacourse.movie.view.uiModel.MovieUiModel
+import woowacourse.movie.view.mapper.toUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -55,10 +56,14 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
     }
 
     override fun showMovieDetail(
-        movie: MovieUiModel,
+        movie: Movie,
         screeningTimes: List<LocalDateTime>,
     ) {
-        binding.model = movie
+        binding.model =
+            movie.toUiModel(
+                getString(R.string.formatter_date_period),
+                getString(R.string.formatter_running_time_minute_unit),
+            )
         binding.eventHandler = BookingActionHandler(presenter)
     }
 

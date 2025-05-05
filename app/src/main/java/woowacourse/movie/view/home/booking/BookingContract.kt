@@ -1,7 +1,7 @@
 package woowacourse.movie.view.home.booking
 
 import woowacourse.movie.domain.model.booking.Booking
-import woowacourse.movie.view.uiModel.MovieUiModel
+import woowacourse.movie.domain.model.movies.Movie
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -9,7 +9,7 @@ import java.time.LocalTime
 interface BookingContract {
     interface View {
         fun showMovieDetail(
-            movie: MovieUiModel,
+            movie: Movie,
             screeningTimes: List<LocalDateTime>,
         )
 

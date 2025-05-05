@@ -12,11 +12,9 @@ import woowacourse.movie.data.MovieStore
 import woowacourse.movie.domain.fixture.harryPotter1MoviesFixture
 import woowacourse.movie.domain.model.booking.PeopleCount
 import woowacourse.movie.domain.model.movies.Movie
-import woowacourse.movie.view.bindingadapter.ImageSource
 import woowacourse.movie.view.home.booking.BookingContract
 import woowacourse.movie.view.home.booking.BookingPresenter
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
-import woowacourse.movie.view.uiModel.MovieUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -53,12 +51,13 @@ class BookingPresenterTest {
         presenter.loadMovieDetail()
 
         val expected =
-            MovieUiModel(
+            Movie(
+                id = 0,
                 title = "해리 포터와 마법사의 돌",
-                posterResource = ImageSource.Resource(harryPotter1MoviesFixture.posterResource),
-                screeningStartDate = "2025.5.1",
-                screeningEndDate = "2025.5.4",
-                runningTime = "152",
+                posterResource = harryPotter1MoviesFixture.posterResource,
+                screeningStartDate = LocalDate.of(2025, 5, 1),
+                screeningEndDate = LocalDate.of(2025, 5, 4),
+                runningTime = 152,
             )
 
         // then
@@ -128,12 +127,13 @@ class BookingPresenterTest {
         presenter.loadBooking()
 
         val expected =
-            MovieUiModel(
+            Movie(
+                id = 0,
                 title = "해리 포터와 마법사의 돌",
-                posterResource = ImageSource.Resource(harryPotter1MoviesFixture.posterResource),
-                screeningStartDate = "2025.5.1",
-                screeningEndDate = "2025.5.4",
-                runningTime = "152",
+                posterResource = harryPotter1MoviesFixture.posterResource,
+                screeningStartDate = LocalDate.of(2025, 5, 1),
+                screeningEndDate = LocalDate.of(2025, 5, 4),
+                runningTime = 152,
             )
 
         // then

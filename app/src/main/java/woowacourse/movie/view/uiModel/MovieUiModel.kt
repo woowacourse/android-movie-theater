@@ -5,7 +5,6 @@ import woowacourse.movie.view.bindingadapter.ImageSource
 data class MovieUiModel(
     val title: String,
     val posterResource: ImageSource,
-    val screeningStartDate: String,
-    val screeningEndDate: String,
-    val runningTime: Int,
+    val screeningPeriod: String,
+    val runningTime: String,
 )

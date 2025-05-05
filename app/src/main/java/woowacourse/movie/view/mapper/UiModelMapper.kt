@@ -7,13 +7,18 @@ import woowacourse.movie.view.bindingadapter.ImageSource
 import woowacourse.movie.view.uiModel.MovieUiModel
 import woowacourse.movie.view.uiModel.TicketUiModel
 
-fun Movie.toUiModel(): MovieUiModel {
+fun Movie.toUiModel(
+    datePeriodFormatter: String,
+    runningTimeFormatter: String,
+): MovieUiModel {
+    val screeningPeriod = datePeriodFormatter.format(screeningStartDate, screeningEndDate)
+    val formattedRunningTimme = runningTimeFormatter.format(runningTime)
+
     return MovieUiModel(
         title = title,
         posterResource = ImageSource.Resource(posterResource),
-        screeningStartDate = StringFormatter.dotDateFormat(screeningStartDate),
-        screeningEndDate = StringFormatter.dotDateFormat(screeningEndDate),
-        runningTime = runningTime,
+        screeningPeriod = screeningPeriod,
+        runningTime = formattedRunningTimme,
     )
 }
 
