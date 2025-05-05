@@ -9,7 +9,7 @@ class MovieListPresenter(
     private val movieData: MovieData,
 ) : MovieListContract.Presenter {
     override fun loadMovieList() {
-        val movies = movieData.getData()
+        val movies = movieData.movies
         view.showMovieList(insertAdvertisement(movies))
     }
 

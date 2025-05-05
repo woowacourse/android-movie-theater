@@ -1,58 +1,89 @@
 package woowacourse.movie.data
 
+import androidx.annotation.DrawableRes
+import woowacourse.movie.R
 import woowacourse.movie.domain.model.Movie
 import java.time.LocalDate
 
 object MovieData {
-    fun getData(): List<Movie> = listOf(movie1, movie2, movie3, movie4, movie5, movie6, movie7)
+    val HARRY_POTTER_01 =
+        Movie(
+            title = "해리 포터와 마법사의 돌",
+            startDate = LocalDate.of(2025, 4, 1),
+            endDate = LocalDate.of(2025, 5, 30),
+            runningTime = 152,
+        )
 
-    val movie1 =
+    val HARRY_POTTER_02 =
         Movie(
-            "승부",
-            LocalDate.of(2025, 3, 26),
-            LocalDate.of(2025, 5, 26),
-            115,
+            title = "해리 포터와 비밀의 방",
+            startDate = LocalDate.of(2025, 4, 1),
+            endDate = LocalDate.of(2025, 5, 30),
+            runningTime = 161,
         )
-    val movie2 =
+
+    val HARRY_POTTER_03 =
         Movie(
-            "미키 17",
-            LocalDate.of(2025, 4, 1),
-            LocalDate.of(2025, 5, 13),
-            137,
+            title = "해리 포터와 아즈카반의 죄수",
+            startDate = LocalDate.of(2025, 4, 1),
+            endDate = LocalDate.of(2025, 5, 30),
+            runningTime = 141,
         )
-    val movie3 =
+
+    val HARRY_POTTER_04 =
         Movie(
-            "야당",
-            LocalDate.of(2025, 4, 1),
-            LocalDate.of(2025, 6, 1),
-            123,
+            title = "해리 포터와 불의 잔",
+            startDate = LocalDate.of(2025, 4, 1),
+            endDate = LocalDate.of(2025, 5, 30),
+            runningTime = 157,
         )
-    val movie4 =
+
+    val HARRY_POTTER_05 =
         Movie(
-            "위플래쉬",
-            LocalDate.of(2025, 3, 12),
-            LocalDate.of(2025, 5, 31),
-            106,
+            title = "해리 포터와 불사조 기사단",
+            startDate = LocalDate.of(2025, 4, 1),
+            endDate = LocalDate.of(2025, 5, 30),
+            runningTime = 138,
         )
-    val movie5 =
+
+    val HARRY_POTTER_06 =
         Movie(
-            "고독한 미식가 더 무비",
-            LocalDate.of(2025, 3, 19),
-            LocalDate.of(2025, 5, 8),
-            110,
+            title = "해리 포터와 혼혈 왕자",
+            startDate = LocalDate.of(2025, 4, 1),
+            endDate = LocalDate.of(2025, 5, 30),
+            runningTime = 153,
         )
-    val movie6 =
+
+    val HARRY_POTTER_07 =
         Movie(
-            "너의 췌장을 먹고 싶어",
-            LocalDate.of(2025, 4, 9),
-            LocalDate.of(2025, 6, 1),
-            115,
+            title = "해리 포터와 죽음의 성물 - 1부",
+            startDate = LocalDate.of(2025, 4, 1),
+            endDate = LocalDate.of(2025, 5, 30),
+            runningTime = 146,
         )
-    val movie7 =
+
+    val HARRY_POTTER_08 =
         Movie(
-            "로비",
-            LocalDate.of(2025, 4, 2),
-            LocalDate.of(2025, 5, 30),
-            106,
+            title = "해리 포터와 죽음의 성물 - 2부",
+            startDate = LocalDate.of(2025, 4, 1),
+            endDate = LocalDate.of(2025, 5, 30),
+            runningTime = 131,
         )
+
+    private val data: Map<Movie, Int> =
+        mapOf(
+            HARRY_POTTER_01 to R.drawable.harry_potter_01,
+            HARRY_POTTER_02 to R.drawable.harry_potter_02,
+            HARRY_POTTER_03 to R.drawable.harry_potter_03,
+            HARRY_POTTER_04 to R.drawable.harry_potter_04,
+            HARRY_POTTER_05 to R.drawable.harry_potter_05,
+            HARRY_POTTER_06 to R.drawable.harry_potter_06,
+            HARRY_POTTER_07 to R.drawable.harry_potter_07,
+            HARRY_POTTER_08 to R.drawable.harry_potter_08,
+        )
+
+    val movies: List<Movie> = data.keys.toList()
+
+    @DrawableRes
+    fun getDrawableResId(movie: Movie): Int = data[movie] ?: R.drawable.ic_launcher_foreground
 }

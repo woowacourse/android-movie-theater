@@ -30,7 +30,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:posterImage="@{movie.title}"
+            app:posterImage="@{movie}"
             tools:src="@drawable/harry_potter_01" />
 
         <TextView

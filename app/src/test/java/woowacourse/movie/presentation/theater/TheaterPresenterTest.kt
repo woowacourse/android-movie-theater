@@ -13,7 +13,7 @@ import java.time.LocalTime
 class TheaterPresenterTest {
     private lateinit var view: TheaterContract.View
     private lateinit var presenter: TheaterPresenter
-    private val movie = MovieData.movie1
+    private val movie = MovieData.HARRY_POTTER_01
 
     @BeforeEach
     fun setUp() {
