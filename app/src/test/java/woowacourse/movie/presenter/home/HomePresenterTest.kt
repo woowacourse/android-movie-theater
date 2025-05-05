@@ -26,7 +26,7 @@ class HomePresenterTest {
         every { view.showMovies(any()) } just Runs
 
         // when:
-        presenter.initView()
+        presenter.updateView()
 
         // then:
         verify { view.showMovies(any()) }

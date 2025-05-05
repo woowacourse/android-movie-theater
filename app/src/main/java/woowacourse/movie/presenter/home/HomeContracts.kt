@@ -1,11 +1,11 @@
 package woowacourse.movie.presenter.home
 
-import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.theater.TheaterMovieSchedules
+import woowacourse.movie.view.home.MovieType
 
 interface HomeContracts {
     interface View {
-        fun showMovies(movies: List<Movie>)
+        fun showMovies(movies: List<MovieType>)
 
         fun showTheaters(theaterMovieSchedules: TheaterMovieSchedules)
 
@@ -13,7 +13,7 @@ interface HomeContracts {
     }
 
     interface Presenter {
-        fun initView()
+        fun updateView()
 
         fun onTheaterRequested(movieId: Long)
 
