@@ -9,6 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.Showings
+import woowacourse.movie.util.getSerializableCompat
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.home.movies.OnBottomSheetDialogEventListener
 import woowacourse.movie.view.home.movies.adapter.TheaterAdapter
@@ -34,7 +35,7 @@ class TheaterBottomSheetDialogFragment(
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movie = arguments?.getSerializable("movie") as? Movie?
+        val movie = arguments?.getSerializableCompat("movie", Movie::class.java)
 
         if (movie == null) {
             handleInvalidTicket()
@@ -52,7 +53,7 @@ class TheaterBottomSheetDialogFragment(
     override fun showTheaterList(showings: List<Showings>) {
         val recyclerView: RecyclerView? = view?.findViewById(R.id.rv_theater_category)
 
-        val theaterAdapter: TheaterAdapter =
+        val theaterAdapter =
             TheaterAdapter(
                 object : OnTheaterEventListener {
                     override fun onClickReservation(showings: Showings) {
