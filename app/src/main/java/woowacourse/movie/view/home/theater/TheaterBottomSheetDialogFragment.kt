@@ -11,6 +11,7 @@ import woowacourse.movie.model.theater.TheaterMovieSchedule
 import woowacourse.movie.model.theater.TheaterMovieSchedules
 import woowacourse.movie.presenter.theater.TheaterContracts
 import woowacourse.movie.view.extension.getSerializableExtraData
+import woowacourse.movie.view.extension.showShortToast
 import woowacourse.movie.view.reservation.ReservationActivity
 
 class TheaterBottomSheetDialogFragment :
@@ -40,7 +41,11 @@ class TheaterBottomSheetDialogFragment :
         presenter.updateTheaterMovieSchedules(
             arguments?.getSerializableExtraData<TheaterMovieSchedules>(
                 THEATER_KEY,
-            ) ?: return,
+            ) ?: run {
+                requireContext().showShortToast("영화를 다시 선택해주세요.")
+                dismiss()
+                return
+            },
         )
     }
 

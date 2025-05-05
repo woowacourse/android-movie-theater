@@ -15,6 +15,7 @@ import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.presenter.reservationComplete.ReservationCompleteContracts
 import woowacourse.movie.presenter.reservationComplete.ReservationCompletePresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
+import woowacourse.movie.view.extension.showShortToast
 
 class ReservationCompleteActivity :
     androidx.appcompat.app.AppCompatActivity(),
@@ -33,7 +34,13 @@ class ReservationCompleteActivity :
             insets
         }
 
-        presenter.updateTicketData(intent.getSerializableExtraData<MovieTicket>(TICKET_DATA_KEY))
+        presenter.updateTicketData(
+            intent.getSerializableExtraData<MovieTicket>(TICKET_DATA_KEY) ?: run {
+                showShortToast("예상치 못한 오류로 영화 예매가 취소 되었습니다. 메인 화면으로 돌아갑니다.")
+                startActivity(MainActivity.getIntent(this@ReservationCompleteActivity))
+                return
+            },
+        )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupBackPressedDispatcher()
     }

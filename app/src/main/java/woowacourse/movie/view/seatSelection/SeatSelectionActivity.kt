@@ -21,6 +21,7 @@ import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.presenter.seatSelection.SeatSelectionContracts
 import woowacourse.movie.presenter.seatSelection.SeatSelectionPresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
+import woowacourse.movie.view.extension.showShortToast
 import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.columnToUI
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.rowToUI
@@ -50,7 +51,11 @@ class SeatSelectionActivity :
             getSeatsLayoutColumnCount(),
         )
         presenter.updateMovieToReserve(
-            intent.getSerializableExtraData<MovieToReserve>(MOVIE_TO_RESERVE_DATA_KEY),
+            intent.getSerializableExtraData<MovieToReserve>(MOVIE_TO_RESERVE_DATA_KEY) ?: run {
+                showShortToast("예상치 못한 오류로 이전 화면으로 돌아갑니다.")
+                finish()
+                return
+            },
         )
     }
 

@@ -50,6 +50,11 @@ class ReservationActivity :
     private fun updateMovieToPresenter() {
         val intentMovieData: TheaterMovieSchedule =
             intent.getSerializableExtraData<TheaterMovieSchedule>(SCREENING_INFO_KEY)
+                ?: run {
+                    showShortToast("예상치 못한 오류로 영화 선택 화면으로 돌아갑니다.")
+                    finish()
+                    return
+                }
         presenter.updateMovieData(intentMovieData)
     }
 
