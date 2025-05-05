@@ -7,7 +7,6 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
-import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.theater.TheaterMovieSchedules
 import woowacourse.movie.presenter.home.HomeContracts
 import woowacourse.movie.presenter.home.HomePresenter
@@ -28,10 +27,10 @@ class HomeFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
-        presenter.initView()
+        presenter.updateView()
     }
 
-    override fun showMovies(movies: List<Movie>) {
+    override fun showMovies(movies: List<MovieType>) {
         if (::movieAdapter.isInitialized.not()) {
             movieAdapter =
                 MovieAdapter(
@@ -40,12 +39,11 @@ class HomeFragment :
                             override fun onReservationClick(movieId: Long) {
                                 presenter.onTheaterRequested(movieId)
                             }
+
+                            override fun onAdvertisementClick(url: String) {
+                                presenter.onAdvertisementRequested(url)
+                            }
                         },
-                    advertisementClickListener = {
-                        presenter.onAdvertisementRequested(
-                            ADVERTISEMENT_URL,
-                        )
-                    },
                 )
         }
         binding.rvMainMovies.adapter = movieAdapter
@@ -66,9 +64,5 @@ class HomeFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        private const val ADVERTISEMENT_URL = "https://www.woowacourse.io/"
     }
 }
