@@ -13,7 +13,7 @@ data class Movie(
     val time: Int,
 ) : Serializable
 
-val dummy_movies: List<Movie> =
+val moviesDummy: List<Movie> =
     listOf(
         Movie(
             R.drawable.harry,
