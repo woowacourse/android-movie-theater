@@ -7,12 +7,14 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -86,8 +88,7 @@ class SeatSelectionActivityTest {
                 ),
             )
 
-        onView(withText("A1"))
-            .perform(click())
+        clickText("A1")
 
         onView(withId(R.id.tv_seat_amount))
             .check(
@@ -102,8 +103,7 @@ class SeatSelectionActivityTest {
 
     @Test
     fun `화면의_좌석을_선택하면_좌석의_배경색이_변경된다`() {
-        onView(withText("A1"))
-            .perform(click())
+        clickText("A1")
 
         onView(withText("A1")).check { view, _ ->
             val background = view.background
@@ -116,8 +116,7 @@ class SeatSelectionActivityTest {
 
     @Test
     fun `예매_인원보다_적은_인원의_좌석을_선택하면_버튼이_활성화되지_않는다`() {
-        onView(withText("A1"))
-            .perform(click())
+        clickText("A1")
 
         onView(withText("확인")).check { view, _ ->
             val background = view.background
@@ -130,11 +129,8 @@ class SeatSelectionActivityTest {
 
     @Test
     fun `예매_인원에_맞는_좌석들을_선택하면_버튼이_활성화된다`() {
-        onView(withText("A1"))
-            .perform(click())
-
-        onView(withText("C1"))
-            .perform(click())
+        clickText("A1")
+        clickText("C1")
 
         onView(withText("확인")).check { view, _ ->
             val background = view.background
@@ -147,11 +143,8 @@ class SeatSelectionActivityTest {
 
     @Test
     fun `활성화된_버튼을_클릭하면_예매관련_다이알로그가_뜬다`() {
-        onView(withText("A1"))
-            .perform(click())
-
-        onView(withText("C1"))
-            .perform(click())
+        clickText("A1")
+        clickText("C1")
 
         onView(withId(R.id.btn_booking_confirm))
             .perform(click())
@@ -168,11 +161,8 @@ class SeatSelectionActivityTest {
 
     @Test
     fun `다이알로그에서_취소를_누르면_화면이_닫힌다`() {
-        onView(withText("A1"))
-            .perform(click())
-
-        onView(withText("C1"))
-            .perform(click())
+        clickText("A1")
+        clickText("C1")
 
         onView(withId(R.id.btn_booking_confirm))
             .perform(click())
@@ -183,7 +173,17 @@ class SeatSelectionActivityTest {
         onView(withText("정말 예매하시겠습니까?"))
             .check(matches(isDisplayed()))
 
-        onView(withText("취소"))
+        clickText("취소")
+
+        onView(withText("예매 확인"))
+            .check(doesNotExist())
+
+        onView(withText("정말 예매하시겠습니까?"))
+            .check(doesNotExist())
+    }
+
+    private fun clickText(text: String) {
+        onView(withText(text))
             .perform(click())
     }
 }
