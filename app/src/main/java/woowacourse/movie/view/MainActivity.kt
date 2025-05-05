@@ -13,13 +13,14 @@ import woowacourse.movie.view.setting.SettingFragment
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         lateinit var selectedFragment: Fragment
 
         binding.bottomNavView.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.reservation_list -> selectedFragment = ReservationListFragment()
-                R.id.home -> selectedFragment = MoviesFragment()
-                R.id.settings -> selectedFragment = SettingFragment()
+                R.id.reservation_list -> selectedFragment = reservationListFragment
+                R.id.home -> selectedFragment = moviesFragment
+                R.id.settings -> selectedFragment = settingFragment
             }
 
             supportFragmentManager.commit {
@@ -28,5 +29,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             true
         }
         binding.bottomNavView.setSelectedItemId(R.id.home)
+    }
+
+    companion object {
+        private val reservationListFragment = ReservationListFragment()
+        private val moviesFragment = MoviesFragment()
+        private val settingFragment = SettingFragment()
     }
 }
