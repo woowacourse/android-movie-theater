@@ -12,9 +12,9 @@ import androidx.databinding.ViewDataBinding
 import woowacourse.movie.R
 
 abstract class BaseActivity<T : ViewDataBinding>(
-    @LayoutRes private val layoutResId: Int,
+    @LayoutRes val layoutResId: Int,
 ) : AppCompatActivity(layoutResId) {
-    private lateinit var binding: T
+    lateinit var binding: T
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
