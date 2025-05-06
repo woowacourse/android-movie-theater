@@ -1,19 +1,27 @@
 package woowacourse.movie.view.theater
 
-import woowacourse.movie.view.model.TheaterUIModel
+import woowacourse.movie.view.model.MovieUiModel
+import woowacourse.movie.view.model.TheaterUiModel
+import woowacourse.movie.view.model.TheatersUiModel
 
 interface TheaterContract {
     interface View {
-        fun showTheaters(theaters: List<TheaterUIModel>)
+        fun showTheaters(theaters: List<TheaterUiModel>)
 
         fun showEmptySlotMessage()
 
-        fun navigateToReservation(theaterUIModel: TheaterUIModel)
+        fun navigateToReservation(
+            movie: MovieUiModel,
+            theater: TheaterUiModel,
+        )
     }
 
     interface Presenter {
-        fun fetchTheaters()
+        fun fetchTheaters(
+            movie: MovieUiModel,
+            theaters: TheatersUiModel,
+        )
 
-        fun theaterSelected(theaterUIModel: TheaterUIModel)
+        fun theaterSelected(theater: TheaterUiModel)
     }
 }
