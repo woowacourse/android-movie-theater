@@ -1,21 +1,26 @@
 package woowacourse.movie.ui.complete
 
 import woowacourse.movie.domain.model.BookedTicket
+import woowacourse.movie.domain.model.Headcount
+import woowacourse.movie.domain.model.Seats
+import java.time.LocalDateTime
 
 interface BookingCompleteContract {
     interface Presenter {
-        fun loadBookedTicket(): BookedTicket
-
-        fun refreshBookedTicketDisplay()
-
-        fun refreshTicketPrice()
+        fun loadBookedTicket(bookedTicket: BookedTicket)
     }
 
     interface View {
-        fun getBookedTicket(): BookedTicket?
+        fun showMovieTitle(movieTitle: String)
 
-        fun setBookedTicket(bookedTicket: BookedTicket)
+        fun showScreeningDateTime(dateTime: LocalDateTime)
 
-        fun setBookedTicketPrice(price: Int)
+        fun showDetailInfos(
+            headcount: Headcount,
+            seats: Seats,
+            theaterName: String,
+        )
+
+        fun showTotalPrice(totalPrice: Int)
     }
 }
