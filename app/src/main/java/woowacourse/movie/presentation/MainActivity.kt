@@ -10,6 +10,10 @@ import woowacourse.movie.presentation.movies.MovieListFragment
 import woowacourse.movie.presentation.settings.SettingsFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+    private val bookingListFragment = BookingListFragment()
+    private val movieListFragment = MovieListFragment()
+    private val settingsFragment = SettingsFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setBottomNavigationView()
@@ -20,10 +24,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     private fun setBottomNavigationView() {
-        val bookingListFragment = BookingListFragment()
-        val movieListFragment = MovieListFragment()
-        val settingsFragment = SettingsFragment()
-
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_list -> {
