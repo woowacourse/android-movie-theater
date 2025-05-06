@@ -23,8 +23,7 @@ class BookingActivity :
     DataBindingBaseActivity(),
     BookingContract.View {
     private val binding by binding<ActivityBookingBinding>(R.layout.activity_booking)
-    private lateinit var presenter: BookingContract.Presenter
-    private lateinit var screeningInfo: ScreeningInfo
+    private val presenter: BookingPresenter by lazy { BookingPresenter(this) }
     private var dateItemPosition: Int = DEFAULT_POSITION
     private var timeItemPosition: Int = DEFAULT_POSITION
 
@@ -32,8 +31,6 @@ class BookingActivity :
         super.onCreate(savedInstanceState)
         if (!fetchMovieFromIntent()) return
         setupScreen(binding.root)
-        presenter = BookingPresenter(this, screeningInfo)
-        presenter.onViewCreated()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -48,7 +45,7 @@ class BookingActivity :
         val count = savedInstanceState.getString(HEADCOUNT_KEY)
         dateItemPosition = savedInstanceState.getInt(DATE_POSITION_KEY)
         timeItemPosition = savedInstanceState.getInt(TIME_POSITION_KEY)
-        presenter.onConfigurationChanged(
+        presenter.restoreBookingState(
             count?.toIntOrNull(),
             binding.spinnerDate.getItemAtPosition(dateItemPosition) as LocalDate?,
             binding.spinnerTime.getItemAtPosition(timeItemPosition) as LocalTime?,
@@ -82,7 +79,7 @@ class BookingActivity :
                     id: Long,
                 ) {
                     val selectedDate = dateSpinner.getItemAtPosition(position) as LocalDate
-                    presenter.onDateSelected(selectedDate)
+                    presenter.selectDate(selectedDate)
                     dateItemPosition = position
                 }
 
@@ -108,7 +105,7 @@ class BookingActivity :
                     id: Long,
                 ) {
                     val selectedTime = timeSpinner.getItemAtPosition(position) as LocalTime
-                    presenter.onTimeSelected(selectedTime)
+                    presenter.selectTime(selectedTime)
                     timeItemPosition = position
                 }
 
@@ -135,22 +132,22 @@ class BookingActivity :
             finish()
             return false
         }
-        screeningInfo = data
+        presenter.initializeBooking(data)
         return true
     }
 
     private fun bindHeadCountButtonListeners() {
         binding.buttonIncrease.setOnClickListener {
-            presenter.onIncreaseHeadCount()
+            presenter.increaseHeadCount()
         }
         binding.buttonDecrease.setOnClickListener {
-            presenter.onDecreaseHeadCount()
+            presenter.decreaseHeadCount()
         }
     }
 
     private fun bindSelectButtonListener() {
         binding.buttonSelect.setOnClickListener {
-            presenter.onConfirmClicked()
+            presenter.confirmBooking()
         }
     }
 

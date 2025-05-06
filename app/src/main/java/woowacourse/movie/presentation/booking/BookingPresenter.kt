@@ -10,26 +10,23 @@ import java.time.LocalTime
 
 class BookingPresenter(
     private val view: BookingContract.View,
-    private val screeningInfo: ScreeningInfo,
 ) : BookingContract.Presenter {
     private var selectedDate: LocalDate? = null
     private var selectedTime: LocalTime? = null
     private var headCount: HeadCount = HeadCount.of()
-    private val movieScheduler: MovieScheduler by lazy {
-        MovieScheduler(
-            screeningInfo.movie.startScreeningDate,
-            screeningInfo.movie.endScreeningDate,
-        )
-    }
+    private lateinit var screeningInfo: ScreeningInfo
+    private lateinit var movieScheduler: MovieScheduler
 
-    override fun onViewCreated() {
+    override fun initializeBooking(screeningInfo: ScreeningInfo) {
+        this.screeningInfo = screeningInfo
+        movieScheduler = MovieScheduler(screeningInfo.movie.startScreeningDate, screeningInfo.movie.endScreeningDate)
         view.initBooking()
         view.showMovie(screeningInfo.movie)
         view.showBookableDates(movieScheduler.getBookableDates())
         view.updateHeadCount(headCount.value)
     }
 
-    override fun onDateSelected(selectedDate: LocalDate) {
+    override fun selectDate(selectedDate: LocalDate) {
         this.selectedDate = selectedDate
         view.showBookableTimes(
             movieScheduler.getBookableTimes(
@@ -39,21 +36,21 @@ class BookingPresenter(
         )
     }
 
-    override fun onTimeSelected(selectedTime: LocalTime) {
+    override fun selectTime(selectedTime: LocalTime) {
         this.selectedTime = selectedTime
     }
 
-    override fun onIncreaseHeadCount() {
+    override fun increaseHeadCount() {
         headCount = headCount.increase()
         view.updateHeadCount(headCount.value)
     }
 
-    override fun onDecreaseHeadCount() {
+    override fun decreaseHeadCount() {
         headCount = headCount.decrease()
         view.updateHeadCount(headCount.value)
     }
 
-    override fun onConfirmClicked() {
+    override fun confirmBooking() {
         val ticket =
             MovieTicket(
                 movieTitle = screeningInfo.movie.title,
@@ -64,7 +61,7 @@ class BookingPresenter(
         view.navigateToSeats(ticket)
     }
 
-    override fun onConfigurationChanged(
+    override fun restoreBookingState(
         count: Int?,
         date: LocalDate?,
         time: LocalTime?,

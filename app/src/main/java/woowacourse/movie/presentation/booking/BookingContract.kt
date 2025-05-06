@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.booking
 
+import woowacourse.movie.domain.model.ScreeningInfo
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.movie.MovieTicket
 import java.time.LocalDate
@@ -21,19 +22,19 @@ interface BookingContract {
     }
 
     interface Presenter {
-        fun onViewCreated()
+        fun initializeBooking(screeningInfo: ScreeningInfo)
 
-        fun onDateSelected(selectedDate: LocalDate)
+        fun selectDate(selectedDate: LocalDate)
 
-        fun onTimeSelected(selectedTime: LocalTime)
+        fun selectTime(selectedTime: LocalTime)
 
-        fun onIncreaseHeadCount()
+        fun increaseHeadCount()
 
-        fun onDecreaseHeadCount()
+        fun decreaseHeadCount()
 
-        fun onConfirmClicked()
+        fun confirmBooking()
 
-        fun onConfigurationChanged(
+        fun restoreBookingState(
             count: Int?,
             date: LocalDate?,
             time: LocalTime?,
