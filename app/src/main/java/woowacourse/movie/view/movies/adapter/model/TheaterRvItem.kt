@@ -1,24 +1,18 @@
 package woowacourse.movie.view.movies.adapter.model
 
 import android.os.Parcelable
-import androidx.annotation.LayoutRes
 import kotlinx.parcelize.Parcelize
-import woowacourse.movie.R
 import woowacourse.movie.domain.model.theater.Theater
+import woowacourse.movie.view.movies.adapter.TheaterAdapter
 
 @Parcelize
-sealed class TheaterRvItem(val viewType: ViewType) : Parcelable {
+sealed class TheaterRvItem(val viewType: TheaterAdapter.ViewType) : Parcelable {
     data class TheaterItem(
         val name: String,
         val movieId: Int,
         val bookingAbleTimeCount: Int,
-    ) : TheaterRvItem(ViewType.VIEW_TYPE_THEATER)
+    ) : TheaterRvItem(TheaterAdapter.ViewType.VIEW_TYPE_THEATER)
 
-    enum class ViewType(
-        @LayoutRes val layoutRes: Int,
-    ) {
-        VIEW_TYPE_THEATER(R.layout.theater_item),
-    }
 }
 
 fun Theater.toItem(movieId: Int): TheaterRvItem.TheaterItem {

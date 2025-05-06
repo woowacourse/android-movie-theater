@@ -1,7 +1,9 @@
 package woowacourse.movie.view.movies.adapter
 
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.R
 import woowacourse.movie.view.core.base.BaseViewHolder
 import woowacourse.movie.view.movies.adapter.model.MovieRvItem
 
@@ -17,20 +19,20 @@ class MovieAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): BaseViewHolder {
-        return when (val type = MovieRvItem.ViewType.entries[viewType]) {
-            MovieRvItem.ViewType.VIEW_TYPE_ADVERTISEMENT ->
+        return when (ViewType.entries[viewType]) {
+            ViewType.VIEW_TYPE_ADVERTISEMENT ->
                 AdvertiseViewHolder(
                     parent,
-                    type.layoutRes,
+                    R.layout.advertisement_item,
                 )
 
-            MovieRvItem.ViewType.VIEW_TYPE_MOVIE ->
+            ViewType.VIEW_TYPE_MOVIE ->
                 MovieViewHolder(
                     parent,
-                    type.layoutRes,
+                    R.layout.movie_item,
                     handler,
                 )
-        } as BaseViewHolder
+        }
     }
 
     override fun onBindViewHolder(
@@ -41,6 +43,11 @@ class MovieAdapter(
             is AdvertiseViewHolder -> holder.bind(movieRvItems[position] as MovieRvItem.AdItem)
             is MovieViewHolder -> holder.bind(movieRvItems[position] as MovieRvItem.MovieItem)
         }
+    }
+
+    enum class ViewType {
+        VIEW_TYPE_ADVERTISEMENT,
+        VIEW_TYPE_MOVIE,
     }
 
     interface Handler : MovieViewHolder.Handler

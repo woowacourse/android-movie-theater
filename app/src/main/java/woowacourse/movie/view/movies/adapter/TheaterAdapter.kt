@@ -1,7 +1,9 @@
 package woowacourse.movie.view.movies.adapter
 
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.R
 import woowacourse.movie.view.core.base.BaseViewHolder
 import woowacourse.movie.view.movies.adapter.model.TheaterRvItem
 
@@ -15,14 +17,14 @@ class TheaterAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): BaseViewHolder {
-        return when (val type = TheaterRvItem.ViewType.entries[viewType]) {
-            TheaterRvItem.ViewType.VIEW_TYPE_THEATER ->
+        return when (ViewType.entries[viewType]) {
+            ViewType.VIEW_TYPE_THEATER ->
                 TheaterViewHolder(
                     parent,
-                    type.layoutRes,
+                    R.layout.theater_item,
                     handler,
                 )
-        } as BaseViewHolder
+        }
     }
 
     override fun onBindViewHolder(
@@ -32,6 +34,10 @@ class TheaterAdapter(
         when (holder) {
             is TheaterViewHolder -> holder.bind(items[position] as TheaterRvItem.TheaterItem)
         }
+    }
+
+    enum class ViewType {
+        VIEW_TYPE_THEATER,
     }
 
     interface Handler : TheaterViewHolder.Handler
