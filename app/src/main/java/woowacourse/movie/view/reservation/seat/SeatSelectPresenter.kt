@@ -1,6 +1,5 @@
 package woowacourse.movie.view.reservation.seat
 
-import android.util.Log
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.view.model.ReservationInfoUiModel
@@ -22,7 +21,6 @@ class SeatSelectPresenter(
 
         this.reservationInfo = reservationInfo.toDomain()
         this.theaterName = reservationInfo.theaterName
-        Log.d("aaa", "${reservationInfo.count}")
 
         view.showReservationInfo(
             reservationInfo.title,
