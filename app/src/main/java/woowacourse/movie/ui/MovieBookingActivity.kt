@@ -28,15 +28,23 @@ class MovieBookingActivity : AppCompatActivity() {
 
         applyWindowInsets()
 
-        // 앱 초기 실행 시 홈화면으로 설정
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 replace(R.id.main_fragment_container_view, MovieListFragment())
+                binding.navigation.selectedItemId = R.id.navigation_home
+            }
+        } else {
+            val currentFragment =
+                supportFragmentManager.findFragmentById(R.id.main_fragment_container_view)
+            when (currentFragment) {
+                is MovieListFragment -> binding.navigation.selectedItemId = R.id.navigation_home
+                is SettingsFragment -> binding.navigation.selectedItemId = R.id.navigation_settings
+                is BookingHistoryFragment ->
+                    binding.navigation.selectedItemId =
+                        R.id.navigation_history
             }
         }
-        binding.navigation.selectedItemId = R.id.navigation_home
-
         setBottomNavigationView()
     }
 
