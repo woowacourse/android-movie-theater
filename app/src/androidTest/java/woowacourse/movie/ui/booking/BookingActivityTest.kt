@@ -14,15 +14,16 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withSpinnerText
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import java.time.LocalDateTime
 import org.hamcrest.CoreMatchers.anything
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.ScreeningPeriod
+import woowacourse.movie.domain.model.MovieSchedule
+import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.TheaterSchedules
 import woowacourse.movie.fixture.fakeContext
 import woowacourse.movie.ui.booking.view.BookingActivity
-import java.time.LocalDate
 
 class BookingActivityTest {
     @Before
@@ -33,15 +34,21 @@ class BookingActivityTest {
                 BookingActivity::class.java,
             ).apply {
                 putExtra(
-                    "movie",
-                    Movie(
-                        "해리 포터와 마법사의 돌",
-                        R.drawable.harry_potter_one,
-                        ScreeningPeriod(LocalDate.of(2025, 5, 1), LocalDate.of(2025, 5, 25)),
-                        152,
-                    ),
+                    "EXTRA_THEATER", Theater(
+                        name = "선릉 극장",
+                        theaterSchedules = TheaterSchedules(
+                            mutableMapOf(
+                                1L to setOf(
+                                    MovieSchedule(LocalDateTime.of(2025, 5, 22, 10, 0)),
+                                    MovieSchedule(LocalDateTime.of(2025, 5, 25, 12, 0))
+                                )
+                            )
+                        )
+                    )
                 )
+                putExtra("EXTRA_MOVIE_ID", 1L)
             }
+
         onDevice().setScreenOrientation(ScreenOrientation.PORTRAIT)
         ActivityScenario.launch<BookingActivity>(intent)
     }
@@ -55,7 +62,7 @@ class BookingActivityTest {
     @Test
     fun `영화_상영일을_출력한다`() {
         onView(withId(R.id.tv_screening_period))
-            .check(matches(withText("2025.5.1 ~ 2025.5.25")))
+            .check(matches(withText("2025.4.1 ~ 2025.5.30")))
     }
 
     @Test
@@ -129,11 +136,11 @@ class BookingActivityTest {
     @Test
     fun `화면이_회전되어도_선택된_날짜가_유지된다`() {
         onView(withId(R.id.sp_date)).perform(click())
-        onData(anything()).atPosition(8).perform(click())
-        onView(withId(R.id.sp_time)).perform(click())
         onData(anything()).atPosition(1).perform(click())
+        onView(withId(R.id.sp_time)).perform(click())
+        onData(anything()).atPosition(0).perform(click())
         onView(withId(R.id.sp_date))
-            .check(matches(withSpinnerText("2025-04-25")))
+            .check(matches(withSpinnerText("2025-05-25")))
         onView(withId(R.id.sp_time))
             .check(matches(withSpinnerText("12:00")))
 
@@ -141,7 +148,7 @@ class BookingActivityTest {
         Companion.onDevice().setScreenOrientation(ScreenOrientation.PORTRAIT)
 
         onView(withId(R.id.sp_date))
-            .check(matches(withSpinnerText("2025-04-25")))
+            .check(matches(withSpinnerText("2025-05-25")))
         onView(withId(R.id.sp_time))
             .check(matches(withSpinnerText("12:00")))
     }
