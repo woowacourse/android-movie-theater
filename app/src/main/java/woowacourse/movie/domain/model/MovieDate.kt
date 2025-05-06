@@ -3,8 +3,8 @@ package woowacourse.movie.domain.model
 import java.time.LocalDate
 
 data class MovieDate(
-    private val startDate: LocalDate,
-    private val endDate: LocalDate,
+    val startDate: LocalDate,
+    val endDate: LocalDate,
 ) {
     var value: LocalDate = LocalDate.now()
         private set

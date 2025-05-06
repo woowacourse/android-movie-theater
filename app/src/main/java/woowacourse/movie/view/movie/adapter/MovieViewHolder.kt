@@ -8,8 +8,10 @@ import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemMovieBinding
+import woowacourse.movie.view.ReservationUiFormatter
 import woowacourse.movie.view.base.BaseViewHolder
 import woowacourse.movie.view.model.MovieUiModel
+import java.time.LocalDate
 
 @BindingAdapter("imgResPath")
 fun setImageViewResourcePath(
@@ -22,14 +24,14 @@ fun setImageViewResourcePath(
 @BindingAdapter(value = ["startDate", "endDate"])
 fun setScreeningDate(
     view: TextView,
-    startDate: String,
-    endDate: String,
+    startDate: LocalDate,
+    endDate: LocalDate,
 ) {
     val text =
         view.context.getString(
             R.string.movie_screening_date,
-            startDate,
-            endDate,
+            ReservationUiFormatter.localDateToUI(startDate),
+            ReservationUiFormatter.localDateToUI(endDate),
         )
     view.text = text
 }

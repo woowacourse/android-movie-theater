@@ -45,10 +45,10 @@
             android:layout_marginTop="12dp"
             android:textColor="@color/black"
             android:textSize="12sp"
-            app:endDate="@{movie.endDate}"
+            app:endDate="@{movie.date.endDate}"
             app:layout_constraintStart_toStartOf="@id/tv_movie_title"
             app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
-            app:startDate="@{movie.startDate}"
+            app:startDate="@{movie.date.startDate}"
             tools:text="@string/movie_screening_date" />
 
         <TextView
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@{String.format(@string/movie_running_time, movie.runningTime)}"
+            android:text="@{@string/movie_running_time(movie.runningTime)}"
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@id/tv_movie_title"
