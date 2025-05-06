@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.seats
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TableRow
@@ -14,11 +15,9 @@ import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.SelectedSeats
 import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
 import woowacourse.movie.ui.DataBindingBaseActivity
-import woowacourse.movie.ui.constant.IntentKeys
 import woowacourse.movie.ui.util.TicketUiFormatter
 import woowacourse.movie.ui.util.getSerializableCompat
 import woowacourse.movie.ui.util.getSerializableExtraCompat
-import java.io.Serializable
 
 class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
     private val binding by binding<ActivitySeatsBinding>(R.layout.activity_seats)
@@ -34,12 +33,12 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val selectedSeats = presenter.selectedSeats
-        outState.putSerializable(SEATS_KEY, selectedSeats)
+        outState.putSerializable(SELECTED_SEATS_KEY, selectedSeats)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val selectedSeats = savedInstanceState.getSerializableCompat(SEATS_KEY, SelectedSeats::class.java)
+        val selectedSeats = savedInstanceState.getSerializableCompat(SELECTED_SEATS_KEY, SelectedSeats::class.java)
         presenter.restoreSeats(selectedSeats)
     }
 
@@ -92,15 +91,12 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
     }
 
     override fun navigateToSummary(ticket: MovieTicket) {
-        val intent =
-            Intent(this, BookingSummaryActivity::class.java).apply {
-                putExtra(IntentKeys.TICKET, ticket)
-            }
+        val intent = BookingSummaryActivity.newIntent(this, ticket)
         startActivity(intent)
     }
 
     private fun fetchTicketFromIntent(): Boolean {
-        val data = intent.getSerializableExtraCompat(IntentKeys.TICKET, MovieTicket::class.java)
+        val data = intent.getSerializableExtraCompat(SEATS_KEY, MovieTicket::class.java)
         if (data == null) {
             Toast.makeText(this, getString(R.string.ticket_intent_error), Toast.LENGTH_SHORT).show()
             finish()
@@ -123,5 +119,12 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
 
     companion object {
         private const val SEATS_KEY = "Seats"
+        private const val SELECTED_SEATS_KEY = "SelectedSeats"
+
+        fun newIntent(context: Context, ticket: MovieTicket): Intent {
+            return Intent(context, SeatsActivity::class.java).apply {
+                putExtra(SEATS_KEY, ticket)
+            }
+        }
     }
 }

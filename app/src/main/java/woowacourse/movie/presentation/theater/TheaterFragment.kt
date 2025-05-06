@@ -14,7 +14,6 @@ import woowacourse.movie.domain.model.ScreeningInfo
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.presentation.booking.BookingActivity
 import woowacourse.movie.ui.adapter.TheaterAdapter
-import woowacourse.movie.ui.constant.IntentKeys
 import woowacourse.movie.ui.util.getSerializableCompat
 
 class TheaterFragment :
@@ -28,7 +27,7 @@ class TheaterFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            movie = it.getSerializableCompat(IntentKeys.MOVIE, Movie::class.java)
+            movie = it.getSerializableCompat(THEATER_KEY, Movie::class.java)
         }
     }
 
@@ -58,10 +57,7 @@ class TheaterFragment :
     }
 
     override fun navigateToBooking(screeningInfo: ScreeningInfo) {
-        val intent =
-            Intent(context, BookingActivity::class.java).apply {
-                putExtra(IntentKeys.SCREENING_INFO, screeningInfo)
-            }
+        val intent = BookingActivity.newIntent(binding.root.context, screeningInfo)
         startActivity(intent)
     }
 
@@ -71,12 +67,14 @@ class TheaterFragment :
     }
 
     companion object {
+        private const val THEATER_KEY = "Theater"
+
         @JvmStatic
         fun newInstance(movie: Movie) =
             TheaterFragment().apply {
                 arguments =
                     Bundle().apply {
-                        putSerializable(IntentKeys.MOVIE, movie)
+                        putSerializable(THEATER_KEY, movie)
                     }
             }
     }

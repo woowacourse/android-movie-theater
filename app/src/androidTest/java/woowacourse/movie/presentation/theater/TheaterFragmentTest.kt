@@ -21,7 +21,7 @@ class TheaterFragmentTest {
     private val movie = MovieData.movie1
 
     private val args = Bundle().apply {
-        putSerializable(IntentKeys.MOVIE, movie)
+        putSerializable("Theater", movie)
     }
 
     @Test

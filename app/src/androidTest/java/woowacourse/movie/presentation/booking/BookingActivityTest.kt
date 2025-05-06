@@ -47,14 +47,7 @@ class BookingActivityTest {
             listOf(15, 17, 19).map { LocalTime.of(it, 0) }
         )
 
-        val intent =
-            Intent(
-                ApplicationProvider.getApplicationContext(),
-                BookingActivity::class.java,
-            ).apply {
-                putExtra("ScreeningInfo", screeningInfo)
-            }
-
+        val intent = BookingActivity.newIntent(ApplicationProvider.getApplicationContext(), screeningInfo)
         activityScenario = ActivityScenario.launch(intent)
     }
 
@@ -72,7 +65,7 @@ class BookingActivityTest {
     @Test
     fun 상영일자가_출력된다() {
         onView(withId(R.id.textview_screeningdate))
-            .check(matches(withText("상영일: 2025-04-17 ~ 2025-04-30")))
+            .check(matches(withText("상영일: 2025-12-30 ~ 2025-12-31")))
     }
 
     @Test
@@ -143,7 +136,7 @@ class BookingActivityTest {
 
         intended(
             allOf(
-                hasExtraWithKey("Ticket"),
+                hasExtraWithKey("Seats"),
             ),
         )
     }

@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.booking
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -118,15 +119,12 @@ class BookingActivity :
     }
 
     override fun navigateToSeats(ticket: MovieTicket) {
-        val intent =
-            Intent(this, SeatsActivity::class.java).apply {
-                putExtra(IntentKeys.TICKET, ticket)
-            }
+        val intent = SeatsActivity.newIntent(this, ticket)
         startActivity(intent)
     }
 
     private fun fetchMovieFromIntent(): Boolean {
-        val data = intent.getSerializableExtraCompat(IntentKeys.SCREENING_INFO, ScreeningInfo::class.java)
+        val data = intent.getSerializableExtraCompat(BOOKING_KEY, ScreeningInfo::class.java)
         if (data == null) {
             Toast.makeText(this, getString(R.string.movie_intent_error), Toast.LENGTH_SHORT).show()
             finish()
@@ -157,5 +155,12 @@ class BookingActivity :
         private const val DATE_POSITION_KEY = "Date"
         private const val TIME_POSITION_KEY = "Time"
         private const val INTEGER_FORMAT = "%d"
+        private const val BOOKING_KEY = "Booking"
+
+        fun newIntent(context: Context, screeningInfo: ScreeningInfo): Intent {
+            return Intent(context, BookingActivity::class.java).apply {
+                putExtra(BOOKING_KEY, screeningInfo)
+            }
+        }
     }
 }

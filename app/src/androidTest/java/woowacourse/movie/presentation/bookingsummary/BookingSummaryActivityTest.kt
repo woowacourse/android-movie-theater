@@ -30,14 +30,7 @@ class BookingSummaryActivityTest {
                 27000,
             )
 
-        val intent =
-            Intent(
-                ApplicationProvider.getApplicationContext(),
-                BookingSummaryActivity::class.java,
-            ).apply {
-                putExtra("Ticket", ticket)
-            }
-
+        val intent = BookingSummaryActivity.newIntent(ApplicationProvider.getApplicationContext(), ticket)
         ActivityScenario.launch<BookingActivity>(intent)
     }
 

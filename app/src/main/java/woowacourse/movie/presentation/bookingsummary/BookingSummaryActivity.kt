@@ -1,5 +1,7 @@
 package woowacourse.movie.presentation.bookingsummary
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import woowacourse.movie.R
@@ -30,7 +32,7 @@ class BookingSummaryActivity :
     }
 
     private fun fetchTicketFromIntent(): Boolean {
-        val data = intent.getSerializableExtraCompat(IntentKeys.TICKET, MovieTicket::class.java)
+        val data = intent.getSerializableExtraCompat(BOOKING_SUMMARY_KEY, MovieTicket::class.java)
         if (data == null) {
             Toast.makeText(this, getString(R.string.ticket_intent_error), Toast.LENGTH_SHORT).show()
             finish()
@@ -38,5 +40,15 @@ class BookingSummaryActivity :
         }
         presenter.initializeBookingSummary(data)
         return true
+    }
+
+    companion object {
+        private const val BOOKING_SUMMARY_KEY = "BookingSummary"
+
+        fun newIntent(context: Context, ticket: MovieTicket): Intent {
+            return Intent(context, BookingSummaryActivity::class.java).apply {
+                putExtra(BOOKING_SUMMARY_KEY, ticket)
+            }
+        }
     }
 }

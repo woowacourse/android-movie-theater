@@ -35,14 +35,7 @@ class SeatsActivityTest {
                 1,
             )
 
-        val intent =
-            Intent(
-                ApplicationProvider.getApplicationContext(),
-                SeatsActivity::class.java,
-            ).apply {
-                putExtra("Ticket", ticket)
-            }
-
+        val intent = SeatsActivity.newIntent(ApplicationProvider.getApplicationContext(), ticket)
         activityScenario = ActivityScenario.launch(intent)
     }
 
