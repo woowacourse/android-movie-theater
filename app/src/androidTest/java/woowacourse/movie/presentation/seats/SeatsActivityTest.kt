@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.seats
 
-import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView

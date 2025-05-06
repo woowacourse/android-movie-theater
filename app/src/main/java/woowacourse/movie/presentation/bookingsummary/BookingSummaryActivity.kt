@@ -8,7 +8,6 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingsummaryBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.ui.DataBindingBaseActivity
-import woowacourse.movie.ui.constant.IntentKeys
 import woowacourse.movie.ui.util.getSerializableExtraCompat
 
 class BookingSummaryActivity :

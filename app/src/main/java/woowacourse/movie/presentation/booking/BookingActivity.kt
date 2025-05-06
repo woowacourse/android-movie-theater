@@ -14,7 +14,6 @@ import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.presentation.seats.SeatsActivity
 import woowacourse.movie.ui.DataBindingBaseActivity
-import woowacourse.movie.ui.constant.IntentKeys
 import woowacourse.movie.ui.util.getSerializableExtraCompat
 import java.time.LocalDate
 import java.time.LocalTime
