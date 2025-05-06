@@ -15,30 +15,32 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
+import androidx.databinding.DataBindingUtil
+import java.time.LocalDateTime
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityBookingSeatBinding
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
+import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.Theater
-import woowacourse.movie.sample.DUMMY_THEATERS
 import woowacourse.movie.ui.complete.BookingCompleteActivity
 import woowacourse.movie.utils.StringFormatter.thousandFormat
 import woowacourse.movie.utils.intentSerializable
-import java.time.LocalDateTime
 
 class BookingSeatActivity :
     AppCompatActivity(),
     BookingSeatContract.View {
     private val bookingSeatPresenter = BookingSeatPresenter(this)
-
+    private lateinit var binding : ActivityBookingSeatBinding
     private val seatTextViews: MutableMap<String, TextView> = mutableMapOf()
     private val confirmButton: Button by lazy { findViewById(R.id.btn_confirm) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_booking_seat)
+        binding = DataBindingUtil.setContentView(this@BookingSeatActivity,R.layout.activity_booking_seat)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         applyWindowInsets()
@@ -46,7 +48,7 @@ class BookingSeatActivity :
         bookingSeatPresenter.fetchData()
         bookingSeatPresenter.updateViews()
 
-        bookingSeatPresenter.loadTheater(restoreTheater())
+//        bookingSeatPresenter.loadTheater(restoreTheater())
         setConfirmButtonClickListener()
     }
 
@@ -58,13 +60,18 @@ class BookingSeatActivity :
         }
     }
 
-    private fun restoreTheater() =
-        intent.intentSerializable(EXTRA_THEATER, Theater::class.java)
-            ?: DUMMY_THEATERS.theaters.first()
+//    private fun restoreTheater() =
+//        intent.intentSerializable(EXTRA_THEATER, Theater::class.java)
+//            ?: DUMMY_THEATERS.theaters.first()
 
-    override fun getHeadcount(): Headcount? = intent.intentSerializable(EXTRA_HEADCOUNT, Headcount::class.java)
+    override fun getHeadcount(): Headcount? =
+        intent.intentSerializable(EXTRA_HEADCOUNT, Headcount::class.java)
 
-    override fun getMovieTitle(): String? = intent.getStringExtra(EXTRA_MOVIE_TITLE)
+    override fun getMovieTitle(): String? {
+        return null
+    }
+
+//    override fun getMovieTitle(): String? = intent.getStringExtra(EXTRA_MOVIE_TITLE)
 
     override fun setTotalPrice(totalPrice: Int) {
         val totalPriceView: TextView = findViewById(R.id.tv_price)
@@ -114,7 +121,8 @@ class BookingSeatActivity :
         theater: Theater,
     ) {
         val bookedDateTime =
-            intent.intentSerializable(EXTRA_DATETIME, LocalDateTime::class.java)
+            LocalDateTime.now()
+//            intent.intentSerializable(EXTRA_DATETIME, LocalDateTime::class.java)
                 ?: LocalDateTime.now()
         val bookedTicket =
             BookedTicket(
@@ -190,21 +198,21 @@ class BookingSeatActivity :
     companion object {
         fun newIntent(
             context: Context,
-            movieTitle: String,
-            dateTime: LocalDateTime,
+            movieId: Long,
+            movieSchedule: MovieSchedule,
             headcount: Headcount,
-            theater: Theater,
+            theaterName: String,
         ) = Intent(context, BookingSeatActivity::class.java).apply {
-            putExtra(EXTRA_MOVIE_TITLE, movieTitle)
-            putExtra(EXTRA_DATETIME, dateTime)
+            putExtra(EXTRA_MOVIE_ID, movieId)
+            putExtra(EXTRA_MOVIE_SCHEDULE, movieSchedule)
             putExtra(EXTRA_HEADCOUNT, headcount)
-            putExtra(EXTRA_THEATER, theater)
+            putExtra(EXTRA_THEATER_NAME, theaterName)
         }
 
-        private const val EXTRA_MOVIE_TITLE = "movieTitle"
-        private const val EXTRA_DATETIME = "dateTime"
-        private const val EXTRA_HEADCOUNT = "headcount"
-        private const val EXTRA_THEATER = "theater"
+        private const val EXTRA_MOVIE_ID = "EXTRA_MOVIE_ID"
+        private const val EXTRA_MOVIE_SCHEDULE = "EXTRA_MOVIE_SCHEDULE"
+        private const val EXTRA_HEADCOUNT = "EXTRA_HEADCOUNT"
+        private const val EXTRA_THEATER_NAME = "EXTRA_THEATER_NAME"
         private const val ASCII_A = 'A'
 
         private const val B_LINE = 2
