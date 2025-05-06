@@ -13,15 +13,18 @@ import woowacourse.movie.domain.reservation.ShowtimePolicy
 import woowacourse.movie.ui.contract.cinema.CinemaSelectionContract
 import woowacourse.movie.ui.presenter.cinema.CinemaSelectionPresenter
 import woowacourse.movie.ui.view.cinema.adapter.CinemaAdapter
+import woowacourse.movie.ui.view.reservation.ReservationActivity
+import woowacourse.movie.ui.view.util.ErrorMessage
 
 class CinemaSelectionBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
     CinemaSelectionContract.View {
     private var _binding: FragmentCinemaSelectionBottomSheetDialogBinding? = null
-    private val binding get() =
-        _binding ?: error(
-            woowacourse.movie.ui.view.util.ErrorMessage("_binding").notProvided(),
-        )
+    private val binding
+        get() =
+            _binding ?: error(
+                ErrorMessage("_binding").notProvided(),
+            )
 
     var cinemaAdapter: CinemaAdapter? = null
     private var presenter: CinemaSelectionPresenter? = null
@@ -30,7 +33,7 @@ class CinemaSelectionBottomSheetDialogFragment :
         super.onCreate(savedInstanceState)
         val screening =
             arguments.screening ?: error(
-                woowacourse.movie.ui.view.util.ErrorMessage("screening").notProvided(),
+                ErrorMessage("screening").notProvided(),
             )
         presenter = CinemaSelectionPresenter(this, screening)
         cinemaAdapter =
@@ -38,7 +41,9 @@ class CinemaSelectionBottomSheetDialogFragment :
                 screening = screening,
                 onClickItem = { cinemaName: String, showtimePolicy: ShowtimePolicy ->
                     presenter?.onSelectCinema(cinemaName, showtimePolicy)
-                        ?: error(woowacourse.movie.ui.view.util.ErrorMessage("presenter").notProvided())
+                        ?: error(
+                            ErrorMessage("presenter").notProvided(),
+                        )
                 },
             )
     }
@@ -60,7 +65,7 @@ class CinemaSelectionBottomSheetDialogFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         presenter?.presentCinemas() ?: error(
-            woowacourse.movie.ui.view.util.ErrorMessage("presenter").notProvided(),
+            ErrorMessage("presenter").notProvided(),
         )
     }
 
@@ -71,7 +76,7 @@ class CinemaSelectionBottomSheetDialogFragment :
 
     override fun setCinemas(cinemas: List<Cinema>) {
         cinemaAdapter?.submitList(cinemas) ?: error(
-            woowacourse.movie.ui.view.util.ErrorMessage("cinemaAdapter").notProvided(),
+            ErrorMessage("cinemaAdapter").notProvided(),
         )
     }
 
@@ -81,7 +86,12 @@ class CinemaSelectionBottomSheetDialogFragment :
         showtimePolicy: ShowtimePolicy,
     ) {
         val intent =
-            woowacourse.movie.ui.view.reservation.ReservationActivity.newIntent(requireContext(), screening, cinemaName, showtimePolicy)
+            ReservationActivity.newIntent(
+                requireContext(),
+                screening,
+                cinemaName,
+                showtimePolicy,
+            )
         startActivity(intent)
     }
 

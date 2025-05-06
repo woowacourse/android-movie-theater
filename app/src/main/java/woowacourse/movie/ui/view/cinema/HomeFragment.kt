@@ -12,17 +12,25 @@ import woowacourse.movie.domain.reservation.ScreeningContent
 import woowacourse.movie.ui.contract.cinema.ScreeningContract
 import woowacourse.movie.ui.presenter.cinema.ScreeningPresenter
 import woowacourse.movie.ui.view.cinema.adapter.ScreeningAdapter
+import woowacourse.movie.ui.view.util.ErrorMessage
 
 class HomeFragment :
     Fragment(),
     ScreeningContract.View {
     private var _binding: FragmentHomeBinding? = null
-    private val binding get() =
-        _binding ?: error(
-            woowacourse.movie.ui.view.util.ErrorMessage("_binding").notProvided(),
-        )
+    private val binding
+        get() =
+            _binding ?: error(
+                ErrorMessage("_binding").notProvided(),
+            )
 
     private val presenter: ScreeningContract.Presenter = ScreeningPresenter(this)
+    lateinit var screeningAdapter: ScreeningAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        screeningAdapter = ScreeningAdapter(presenter::selectScreening)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +38,7 @@ class HomeFragment :
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.home = this
         return binding.root
     }
 
@@ -47,14 +56,7 @@ class HomeFragment :
     }
 
     override fun setScreeningContents(screeningContents: List<ScreeningContent>) {
-        initListView(screeningContents)
-    }
-
-    private fun initListView(screeningContents: List<ScreeningContent>) {
-        val screenings: List<ScreeningContent> = arguments?.screenings ?: screeningContents
-        val moviesView = binding.recyclerViewHomeScreeningMovies
-        val movieAdapter = ScreeningAdapter(screenings, presenter::selectScreening)
-        moviesView.adapter = movieAdapter
+        screeningAdapter.submitList(screeningContents)
     }
 
     @Suppress("DEPRECATION")

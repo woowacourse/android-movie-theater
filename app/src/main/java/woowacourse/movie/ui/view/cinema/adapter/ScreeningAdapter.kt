@@ -11,9 +11,8 @@ import woowacourse.movie.domain.reservation.ScreeningContent
 import woowacourse.movie.ui.view.util.ErrorMessage
 
 class ScreeningAdapter(
-    private val items: List<ScreeningContent>,
     private val onClickReserveButton: (Screening) -> Unit,
-) : ListAdapter<ScreeningContent, ScreeningContentViewHolder>(
+) : ListAdapter<ScreeningContent, BaseViewHolder<ScreeningContent>>(
         object : DiffUtil.ItemCallback<ScreeningContent>() {
             override fun areItemsTheSame(
                 oldItem: ScreeningContent,
@@ -27,7 +26,7 @@ class ScreeningAdapter(
         },
     ) {
     override fun getItemViewType(position: Int): Int {
-        val screeningContent = items[position]
+        val screeningContent = getItem(position)
         return when (screeningContent) {
             is Screening -> VIEW_TYPE_SCREENING
             is Advertisement -> VIEW_TYPE_ADVERTISEMENT
@@ -37,7 +36,7 @@ class ScreeningAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): ScreeningContentViewHolder {
+    ): BaseViewHolder<ScreeningContent> {
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             VIEW_TYPE_SCREENING -> {
@@ -50,18 +49,16 @@ class ScreeningAdapter(
                 AdvertisementViewHolder(view)
             }
 
-            else -> error(woowacourse.movie.ui.view.util.ErrorMessage("viewType").noSuch())
+            else -> error(ErrorMessage("viewType").noSuch())
         }
     }
 
     override fun onBindViewHolder(
-        holder: ScreeningContentViewHolder,
+        holder: BaseViewHolder<ScreeningContent>,
         position: Int,
     ) {
-        holder.bind(items[position])
+        holder.bind(getItem(position))
     }
-
-    override fun getItemCount(): Int = items.size
 
     companion object {
         const val VIEW_TYPE_SCREENING = 0

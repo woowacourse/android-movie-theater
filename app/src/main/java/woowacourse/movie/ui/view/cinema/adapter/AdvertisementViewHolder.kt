@@ -9,7 +9,7 @@ import woowacourse.movie.ui.view.reservation.AdvertisementImage.advertisementRes
 
 class AdvertisementViewHolder(
     view: View,
-) : ScreeningContentViewHolder(view) {
+) : BaseViewHolder<ScreeningContent>(view) {
     private val advertisementView: ImageView =
         view.findViewById(R.id.iv_item_advertisement)
             ?: error(ERROR_MESSAGE_NO_VIEW_ID.format("iv_item_advertisement"))

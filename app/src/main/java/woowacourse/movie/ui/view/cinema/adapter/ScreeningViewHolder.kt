@@ -12,7 +12,7 @@ import woowacourse.movie.ui.view.reservation.Poster.posterId
 class ScreeningViewHolder(
     private val view: View,
     private val onClickReserveButton: (Screening) -> Unit,
-) : ScreeningContentViewHolder(view) {
+) : BaseViewHolder<ScreeningContent>(view) {
     private val titleView =
         view.findViewById<TextView>(R.id.tv_item_screening_title)
             ?: error(ERROR_MESSAGE_NO_VIEW_ID.format("tv_item_screening_title"))
