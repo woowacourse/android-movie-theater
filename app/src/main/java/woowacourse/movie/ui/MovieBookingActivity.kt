@@ -15,6 +15,9 @@ import woowacourse.movie.ui.settings.view.SettingsFragment
 
 class MovieBookingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieBookingBinding
+    private val homeFragment by lazy { MovieListFragment() }
+    private val settingFragment by lazy { SettingsFragment() }
+    private val historyFragment by lazy { BookingHistoryFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,11 +30,11 @@ class MovieBookingActivity : AppCompatActivity() {
             )
 
         applyWindowInsets()
-
+        
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                replace(R.id.main_fragment_container_view, MovieListFragment())
+                replace(R.id.main_fragment_container_view, homeFragment)
                 binding.navigation.selectedItemId = R.id.navigation_home
             }
         } else {
@@ -54,7 +57,7 @@ class MovieBookingActivity : AppCompatActivity() {
                 R.id.navigation_home -> {
                     supportFragmentManager.commit {
                         setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container_view, MovieListFragment())
+                        replace(R.id.main_fragment_container_view, homeFragment)
                     }
                     true
                 }
@@ -62,7 +65,7 @@ class MovieBookingActivity : AppCompatActivity() {
                 R.id.navigation_history -> {
                     supportFragmentManager.commit {
                         setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container_view, BookingHistoryFragment())
+                        replace(R.id.main_fragment_container_view, historyFragment)
                     }
                     true
                 }
@@ -70,7 +73,7 @@ class MovieBookingActivity : AppCompatActivity() {
                 R.id.navigation_settings -> {
                     supportFragmentManager.commit {
                         setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container_view, SettingsFragment())
+                        replace(R.id.main_fragment_container_view, settingFragment)
                     }
                     true
                 }
