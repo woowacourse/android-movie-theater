@@ -1,12 +1,8 @@
 package woowacourse.movie.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
 class Seats private constructor(
     private val _seats: MutableSet<Seat>,
-) : Parcelable {
+) {
     val value: List<Seat>
         get() = _seats.toList()
 
@@ -14,7 +10,7 @@ class Seats private constructor(
         get() = _seats.size
 
     val totalPrice: Int
-        get() = _seats.sumOf { it.price }
+        get() = value.sumOf { it.price }
 
     fun labels(): List<String> = _seats.map { it.label }
 
