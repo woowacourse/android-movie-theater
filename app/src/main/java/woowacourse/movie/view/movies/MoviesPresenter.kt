@@ -8,7 +8,7 @@ class MoviesPresenter(
     private val view: MoviesContract.View,
 ) : MoviesContract.Presenter {
     override fun loadData() {
-        view.showMovies(buildListWithAds(DummyMovie.dummyMovie))
+        view.showMovies(buildListWithAds(DummyMovie.baseDummyMovies))
     }
 
     private fun buildListWithAds(movies: List<Movie>): List<MovieListItem> {

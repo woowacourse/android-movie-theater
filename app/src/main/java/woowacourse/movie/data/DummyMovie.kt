@@ -6,7 +6,7 @@ import woowacourse.movie.domain.model.RunningTime
 import java.time.LocalDate
 
 object DummyMovie {
-    val dummyMovie =
+    val baseDummyMovies =
         listOf(
             Movie(
                 R.drawable.harrypotter_1.toString(),

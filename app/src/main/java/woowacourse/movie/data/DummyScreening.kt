@@ -10,47 +10,47 @@ object DummyScreening {
             Screening(
                 listOf(LocalTime.of(9, 0, 0), LocalTime.of(11, 0, 0)),
                 Cinema(1, "선릉"),
-                DummyMovie.dummyMovie[0],
+                DummyMovie.baseDummyMovies[0],
             ),
             Screening(
                 listOf(LocalTime.of(10, 0, 0), LocalTime.of(12, 0, 0)),
                 Cinema(2, "잠실"),
-                DummyMovie.dummyMovie[0],
+                DummyMovie.baseDummyMovies[0],
             ),
             Screening(
                 listOf(LocalTime.of(13, 0, 0), LocalTime.of(15, 0, 0)),
                 Cinema(3, "강남"),
-                DummyMovie.dummyMovie[0],
+                DummyMovie.baseDummyMovies[0],
             ),
             Screening(
                 listOf(LocalTime.of(9, 0, 0), LocalTime.of(11, 0, 0)),
                 Cinema(1, "선릉"),
-                DummyMovie.dummyMovie[1],
+                DummyMovie.baseDummyMovies[1],
             ),
             Screening(
                 listOf(LocalTime.of(10, 0, 0), LocalTime.of(12, 0, 0)),
                 Cinema(2, "잠실"),
-                DummyMovie.dummyMovie[1],
+                DummyMovie.baseDummyMovies[1],
             ),
             Screening(
                 listOf(LocalTime.of(13, 0, 0), LocalTime.of(15, 0, 0)),
                 Cinema(3, "강남"),
-                DummyMovie.dummyMovie[1],
+                DummyMovie.baseDummyMovies[1],
             ),
             Screening(
                 listOf(LocalTime.of(9, 0, 0), LocalTime.of(11, 0, 0)),
                 Cinema(1, "선릉"),
-                DummyMovie.dummyMovie[2],
+                DummyMovie.baseDummyMovies[2],
             ),
             Screening(
                 listOf(LocalTime.of(10, 0, 0), LocalTime.of(12, 0, 0)),
                 Cinema(2, "잠실"),
-                DummyMovie.dummyMovie[2],
+                DummyMovie.baseDummyMovies[2],
             ),
             Screening(
                 listOf(LocalTime.of(13, 0, 0), LocalTime.of(15, 0, 0)),
                 Cinema(3, "강남"),
-                DummyMovie.dummyMovie[2],
+                DummyMovie.baseDummyMovies[2],
             ),
         )
 }
