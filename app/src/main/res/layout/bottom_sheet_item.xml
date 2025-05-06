@@ -27,7 +27,7 @@
             tools:text="선릉 극장" />
 
         <TextView
-            android:id="@+id/therter_running_time_size"
+            android:id="@+id/theater_running_time_size"
             style="@style/MoviesTheaterRunningTimesTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
