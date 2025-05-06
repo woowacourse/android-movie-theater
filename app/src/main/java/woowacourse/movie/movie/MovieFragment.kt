@@ -37,7 +37,6 @@ class MovieFragment : Fragment(), Movies.View {
                 { movie -> presenter.selectedMovie(movie) },
                 { presenter.selectedAd() },
             )
-        binding.movies.layoutManager = LinearLayoutManager(this.context)
     }
 
     override fun navigateToBook(movie: Movie) {

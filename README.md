@@ -67,5 +67,5 @@
 - [ ] 예약된 곳에 예약을 다시 누르는 것은 정말로 예측 불가능한 "오류"인지 고민
 - [ ] Movie 도메인 고민
 - [ ] BindingAdapter 필요한 이유
-- [ ] LayoutManager xml에서 세팅
+- [X] LayoutManager xml에서 설정
 - [ ] MoviePresenter 테스트 가능하게 변경
