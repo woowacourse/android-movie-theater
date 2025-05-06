@@ -33,9 +33,11 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val movie: Movie =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                arguments?.getParcelable(KEY_MOVIE, Movie::class.java) ?: throw IllegalArgumentException()
+                arguments?.getParcelable(KEY_MOVIE, Movie::class.java)
+                    ?: throw IllegalArgumentException("$KEY_MOVIE 객체가 전달되지 않았습니다.")
             } else {
-                arguments?.getParcelable(KEY_MOVIE) ?: throw IllegalArgumentException()
+                arguments?.getParcelable(KEY_MOVIE)
+                    ?: throw IllegalArgumentException("$KEY_MOVIE 객체가 전달되지 않았습니다.")
             }
 
         val adapter = TheaterListAdapter(Theaters.theaters, movie) { theater -> navigateToTheater(theater, movie) }

@@ -126,3 +126,5 @@
 - [x] fix: Column의 검증 조건을 0 이상에서 1 이상으로 수정
 
 - [x] refactor: therter에서 theater로 오타 수정
+
+- [x] refactor: 객체 전달 오류 메시지 추가
