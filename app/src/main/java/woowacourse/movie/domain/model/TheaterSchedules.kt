@@ -27,6 +27,7 @@ class TheaterSchedules(
         return movieSchedules.filter { movieSchedule -> movieSchedule.isScreeningDate(dateTime) }
             .map { movieSchedule -> movieSchedule.screeningDate }
             .distinct()
+            .sorted()
     }
 
     fun screeningTimes(
@@ -38,12 +39,12 @@ class TheaterSchedules(
         if (isToday(dateTime)) {
             return movieSchedules.filter { movieSchedule ->
                 movieSchedule.isTodayAvailableScreening(now)
-            }.map { movieSchedule -> movieSchedule.screeningTime }
+            }.map { movieSchedule -> movieSchedule.screeningTime }.sorted()
         }
 
         return movieSchedules.filter { movieSchedule ->
             movieSchedule.isFutureAvailableScreeningByDate(dateTime)
-        }.map { movieSchedule -> movieSchedule.screeningTime }
+        }.map { movieSchedule -> movieSchedule.screeningTime }.sorted()
     }
 
     fun movieScheduleByMovieIdAndDateTime(
