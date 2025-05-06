@@ -8,7 +8,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityMain2Binding
-import woowacourse.movie.movie.MovieFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
@@ -23,24 +22,18 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         binding.bottomNavigation.selectedItemId = R.id.navigation_home
-        setFrag(R.id.navigation_home)
+        setFrag(ItemId.HOME)
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
-            setFrag(item.itemId)
+            ItemId.from(item.itemId)?.let { setFrag(it) } ?: setFrag(ItemId.HOME)
             true
         }
     }
 
-    private fun setFrag(itemId: Int) {
-        val fragment =
-            when (itemId) {
-                R.id.navigation_booking -> BookingFragment()
-                R.id.navigation_home -> MovieFragment()
-                R.id.navigation_settings -> SettingFragment()
-                else -> throw IllegalStateException()
-            }
+    private fun setFrag(itemId: ItemId) {
+        val fragment = ItemId.from(itemId)
         supportFragmentManager.commit {
-            replace(R.id.main_frame, fragment)
+            replace(R.id.main_frame, fragment.fragment)
         }
     }
 }
