@@ -14,7 +14,7 @@ interface ReservationContract {
 
         fun presentRunningTime()
 
-        fun presentDates()
+        fun presentDates(currentDate: LocalDateTime)
 
         fun presentTimes(currentDate: LocalDateTime)
 

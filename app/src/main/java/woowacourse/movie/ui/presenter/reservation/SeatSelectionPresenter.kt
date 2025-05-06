@@ -10,7 +10,7 @@ class SeatSelectionPresenter(
     private val cinemaName: String,
     selectedSeats: Set<Seat>?,
 ) : SeatSelectionContract.Presenter {
-    private val seats: Set<Seat> = Seat.Companion.seats()
+    private val seats: Set<Seat> = Seat.seats()
     private var selectedSeats = selectedSeats?.toSet() ?: emptySet()
     private val completable get() = ticket.count == selectedSeats.size
     private val price: Int get() = selectedSeats.sumOf(Seat::price)

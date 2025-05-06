@@ -42,8 +42,8 @@ class ReservationPresenter(
         view.setRunningTime(screening.runningTime)
     }
 
-    override fun presentDates() {
-        view.setDates(screening.availableDates())
+    override fun presentDates(currentDate: LocalDateTime) {
+        view.setDates(screening.availableDates(currentDate))
     }
 
     override fun presentTimes(currentDate: LocalDateTime) {

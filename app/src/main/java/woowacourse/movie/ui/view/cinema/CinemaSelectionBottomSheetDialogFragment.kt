@@ -38,7 +38,6 @@ class CinemaSelectionBottomSheetDialogFragment :
         presenter = CinemaSelectionPresenter(this, screening)
         cinemaAdapter =
             CinemaAdapter(
-                screening = screening,
                 onClickItem = { cinemaName: String, showtimePolicy: ShowtimePolicy ->
                     presenter?.onSelectCinema(cinemaName, showtimePolicy)
                         ?: error(

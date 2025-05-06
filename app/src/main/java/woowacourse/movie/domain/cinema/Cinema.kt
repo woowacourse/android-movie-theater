@@ -2,7 +2,7 @@ package woowacourse.movie.domain.cinema
 
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
-import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 class Cinema(
@@ -12,14 +12,10 @@ class Cinema(
 ) {
     val screening get() = _screenings.map { it.copy() }
 
-    fun showtimeCount(screening: Screening) = showtimes(screening).size
+    fun showtimeCount(current: LocalDateTime) = showtimes(current).size
 
-    fun showtimes(
-        screening: Screening,
-        date: LocalDate? = null,
-    ): List<LocalTime> {
-        if (date == null) return screening.showtimes(showtimePolicy)
-        return screening.showtimes(date, showtimePolicy)
+    fun showtimes(current: LocalDateTime): List<LocalTime> {
+        return showtimePolicy.showtimes(current)
     }
 
     override fun equals(other: Any?): Boolean {

@@ -3,13 +3,11 @@ package woowacourse.movie.domain.reservation
 import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 data class Screening(
     private val movie: Movie,
     private val start: LocalDate,
     private val end: LocalDate,
-    private val current: LocalDateTime = LocalDateTime.now(),
 ) : ScreeningContent,
     Serializable {
     val id: Int = movie.id
@@ -24,14 +22,7 @@ data class Screening(
     val endMonth: Int = end.monthValue
     val endDay: Int = end.dayOfMonth
 
-    fun availableDates(): List<LocalDate> = dates.filterNot { date -> date.isBefore(current.toLocalDate()) }
-
-    fun showtimes(showTimePolicy: ShowtimePolicy): List<LocalTime> = showTimePolicy.showtimes(current)
-
-    fun showtimes(
-        date: LocalDate,
-        showTimePolicy: ShowtimePolicy = DefaultShowtimePolicy(date),
-    ): List<LocalTime> = showTimePolicy.showtimes(current)
+    fun availableDates(current: LocalDateTime): List<LocalDate> = dates.filterNot { date -> date.isBefore(current.toLocalDate()) }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

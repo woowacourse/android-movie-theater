@@ -7,12 +7,12 @@ import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.ui.contract.ticket.TicketContract
 
 class TicketPresenter(
-    private val view: woowacourse.movie.ui.contract.ticket.TicketContract.View,
+    private val view: TicketContract.View,
     private val ticket: Ticket,
     private val seats: Set<Seat>,
     private val cinemaName: String,
     private val cancelTimePolicy: CancelTimePolicy = DefaultCancelTimePolicy,
-) : woowacourse.movie.ui.contract.ticket.TicketContract.Presenter {
+) : TicketContract.Presenter {
     override fun presentTitle() {
         view.setMovieTitle(ticket.title)
     }

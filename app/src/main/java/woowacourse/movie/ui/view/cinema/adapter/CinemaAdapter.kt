@@ -6,11 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.databinding.ItemCinemaBinding
 import woowacourse.movie.domain.cinema.Cinema
-import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
 
 class CinemaAdapter(
-    private val screening: Screening,
     private val onClickItem: (cinemaName: String, showtimePolicy: ShowtimePolicy) -> Unit,
 ) :
     ListAdapter<Cinema, CinemaViewHolder>(
@@ -47,6 +45,6 @@ class CinemaAdapter(
         holder: CinemaViewHolder,
         position: Int,
     ) {
-        holder.bind(getItem(position), screening)
+        holder.bind(getItem(position))
     }
 }

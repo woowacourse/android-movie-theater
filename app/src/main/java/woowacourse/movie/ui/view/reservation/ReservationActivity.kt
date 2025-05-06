@@ -48,13 +48,13 @@ class ReservationActivity :
 
         presenter?.getTicketCount()?.let {
             outState.putInt(
-                woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.TICKET_COUNT,
+                TICKET_COUNT,
                 it,
             )
         }
         presenter?.getItemPosition()?.let {
             outState.putInt(
-                woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.TIME_ITEM_POSITION,
+                TIME_ITEM_POSITION,
                 it,
             )
         }
@@ -71,8 +71,8 @@ class ReservationActivity :
             insets
         }
         initPresenter(
-            savedInstanceState?.getInt(woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.TICKET_COUNT),
-            savedInstanceState?.getInt(woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.TIME_ITEM_POSITION),
+            savedInstanceState?.getInt(TICKET_COUNT),
+            savedInstanceState?.getInt(TIME_ITEM_POSITION),
         )
         findViews()
         initViews()
@@ -133,27 +133,27 @@ class ReservationActivity :
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ->
                 getSerializableExtra(
-                    woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.EXTRA_SHOWTIME_POLICY,
+                    EXTRA_SHOWTIME_POLICY,
                     ShowtimePolicy::class.java,
                 )
 
             else ->
                 getSerializableExtra(
-                    woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.EXTRA_SHOWTIME_POLICY,
+                    EXTRA_SHOWTIME_POLICY,
                 ) as? ShowtimePolicy
         }
 
     private fun initViews() {
         (
             presenter ?: error(
-                woowacourse.movie.ui.view.util.ErrorMessage("screening").notProvided(),
+                ErrorMessage("screening").notProvided(),
             )
         ).run {
             presentPoster()
             presentTitle()
             presentPeriod()
             presentRunningTime()
-            presentDates()
+            presentDates(LocalDateTime.now())
             presentTicketCount()
         }
     }
@@ -305,7 +305,7 @@ class ReservationActivity :
         cinemaName: String,
     ) {
         val intent =
-            woowacourse.movie.ui.view.reservation.SeatSelectionActivity.Companion.newIntent(
+            SeatSelectionActivity.newIntent(
                 this,
                 title,
                 ticketCount,
@@ -335,16 +335,16 @@ class ReservationActivity :
             cinemaName: String,
             showtimePolicy: ShowtimePolicy,
         ): Intent =
-            Intent(context, woowacourse.movie.ui.view.reservation.ReservationActivity::class.java)
+            Intent(context, ReservationActivity::class.java)
                 .putExtra(
-                    woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.EXTRA_SCREENING,
+                    EXTRA_SCREENING,
                     screening,
                 ).putExtra(
-                    woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.EXTRA_CINEMA_NAME,
+                    EXTRA_CINEMA_NAME,
                     cinemaName,
                 )
                 .putExtra(
-                    woowacourse.movie.ui.view.reservation.ReservationActivity.Companion.EXTRA_SHOWTIME_POLICY,
+                    EXTRA_SHOWTIME_POLICY,
                     showtimePolicy,
                 )
     }

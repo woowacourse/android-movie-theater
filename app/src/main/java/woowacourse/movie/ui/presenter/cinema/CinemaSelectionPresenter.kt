@@ -6,6 +6,7 @@ import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
 import woowacourse.movie.ui.contract.cinema.CinemaSelectionContract
+import java.time.LocalDateTime
 
 class CinemaSelectionPresenter(
     private val view: CinemaSelectionContract.View,
@@ -14,7 +15,7 @@ class CinemaSelectionPresenter(
 ) : CinemaSelectionContract.Presenter {
     private val cinemas = cinemaData.value
     private val reservableCinemas: List<Cinema>
-        get() = cinemas.filter { it.showtimeCount(screening) != 0 }
+        get() = cinemas.filter { it.showtimeCount(LocalDateTime.now()) != 0 }
 
     override fun presentCinemas() {
         view.setCinemas(reservableCinemas)

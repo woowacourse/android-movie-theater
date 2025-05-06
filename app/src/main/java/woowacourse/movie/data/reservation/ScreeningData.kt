@@ -2,6 +2,7 @@ package woowacourse.movie.data.reservation
 
 import woowacourse.movie.domain.reservation.Screening
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 interface ScreeningData {
     val value: List<Screening>
@@ -51,7 +52,7 @@ class LocalScreeningData : ScreeningData {
                 LocalDate.of(2025, 7, 1),
                 LocalDate.of(2025, 7, 31),
             ),
-        ).filter { it.availableDates().isNotEmpty() }
+        ).filter { it.availableDates(LocalDateTime.now()).isNotEmpty() }
 }
 
 class FakeScreeningData(
