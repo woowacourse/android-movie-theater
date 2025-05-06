@@ -64,8 +64,8 @@
 - [x] HomeFragment | 데이터 이동의 책임을 view -> presenter로 이동
 - [x] HomeFragment | findViewById 삭제
 - [ ] HomeFragment | superCall의 필요성?
-- [ ] MovieAdapter |  areItemsTheSame, areContentsTheSame 역할 찾기
-- [ ] TheaterBottomSheetDialogFragment | 생성자 삭제
+- [x] MovieAdapter |  areItemsTheSame | 아이템을 비교하는 메서드 수정
+- [x] TheaterBottomSheetDialogFragment | 생성자 삭제
 - [ ] 데이터 바인딩
 
 

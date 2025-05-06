@@ -65,7 +65,15 @@ class MovieAdapter(
                     oldItem: MovieItem,
                     newItem: MovieItem,
                 ): Boolean {
-                    return oldItem == newItem
+                    return when (oldItem) {
+                        is MovieItem.ScreeningMovieUi ->
+                            newItem is MovieItem.ScreeningMovieUi &&
+                                oldItem.movieUi.movieId == newItem.movieUi.movieId
+
+                        is MovieItem.Advertisement ->
+                            newItem is MovieItem.Advertisement &&
+                                oldItem.adId == newItem.adId
+                    }
                 }
 
                 override fun areContentsTheSame(
