@@ -33,7 +33,7 @@ class MoviesActivity : AppCompatActivity() {
     }
 
     private fun setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.clMain) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.activityMoviesRootLayout) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -44,14 +44,14 @@ class MoviesActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add(R.id.fcv_main, moviesFragment, FRAGMENT_MOVIES)
+                add(R.id.activity_movies_fragment_container, moviesFragment, FRAGMENT_MOVIES)
             }
         }
     }
 
     private fun setupBottomNavigation() {
-        binding.bottomNavigationView.selectedItemId = R.id.fragment_movies
-        binding.bottomNavigationView.setOnItemSelectedListener { menuItem ->
+        binding.activityMoviesBottomNavigation.selectedItemId = R.id.fragment_movies
+        binding.activityMoviesBottomNavigation.setOnItemSelectedListener { menuItem ->
             val selectedFragment =
                 when (menuItem.itemId) {
                     R.id.fragment_movies -> {
@@ -73,7 +73,7 @@ class MoviesActivity : AppCompatActivity() {
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.fcv_main, fragment, getFragmentTag(fragment))
+            replace(R.id.activity_movies_fragment_container, fragment, getFragmentTag(fragment))
         }
     }
 
