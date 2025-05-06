@@ -9,9 +9,9 @@ class MovieSchedule(
         val date =
             generateSequence(date.startDate) {
                 if (it < date.endDate) it.plusDays(DATE_INTERVAL) else null
-            }.toList()
+            }.filter { it >= currentDate }
 
-        return date.filter { it >= currentDate }
+        return date.toList()
     }
 
     companion object {
