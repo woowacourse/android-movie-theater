@@ -21,8 +21,8 @@ class ReservationResultFragmentTest {
             "선릉 극장",
             LocalDateTime.of(2025, 4, 15, 11, 0),
             listOf(
+                SeatUiModel(0, 0, SeatTypeUiModel.B_CLASS),
                 SeatUiModel(0, 1, SeatTypeUiModel.B_CLASS),
-                SeatUiModel(0, 2, SeatTypeUiModel.B_CLASS),
             ),
             2,
             20_000,
