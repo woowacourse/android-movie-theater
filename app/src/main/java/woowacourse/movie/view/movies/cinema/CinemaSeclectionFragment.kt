@@ -26,7 +26,7 @@ class CinemaSeclectionFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val list = view.findViewById<RecyclerView>(R.id.lv_cinema)
+        val list = view.findViewById<RecyclerView>(R.id.rv_cinema)
         list.adapter =
             CinemaSelectionAdapter(
                 screenings,
