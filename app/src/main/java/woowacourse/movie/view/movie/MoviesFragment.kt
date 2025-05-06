@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentMoviesBinding
+import woowacourse.movie.view.model.MovieFixture
 import woowacourse.movie.view.model.MovieListItem
 import woowacourse.movie.view.model.MovieUiModel
+import woowacourse.movie.view.model.TheaterUiModels
 import woowacourse.movie.view.movie.adapter.MovieAdapter
 import woowacourse.movie.view.theater.TheaterBottomSheetDialogFragment
 
@@ -16,7 +18,9 @@ class MoviesFragment :
     MovieContract.View,
     MovieAdapter.Handler {
     private lateinit var binding: FragmentMoviesBinding
-    private val presenter: MovieContract.Presenter by lazy { MoviePresenter(this) }
+    private val presenter: MovieContract.Presenter by lazy {
+        MoviePresenter(this, MovieFixture.dummyTheaters)
+    }
     private val moviesAdapter: MovieAdapter by lazy { MovieAdapter(this) }
 
     override fun onCreateView(
