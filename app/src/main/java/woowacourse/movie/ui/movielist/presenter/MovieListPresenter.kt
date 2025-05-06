@@ -8,43 +8,44 @@ import woowacourse.movie.ui.movielist.contract.MovieListContract
 class MovieListPresenter(
     private val movieListView: MovieListContract.View,
 ) : MovieListContract.Presenter {
-    override fun getMovieList(): List<MovieListItem.MovieItem> =
-        DUMMY_MOVIES.map {
-            MovieListItem.MovieItem(
-                it,
-            )
-        }
-
-    override fun getAdvertisementList(): List<MovieListItem.AdItem> =
-        DUMMY_ADS.map {
-            MovieListItem.AdItem(
-                it,
-            )
-        }
-
     override fun loadMovieList() {
-        val movies = getMovieList()
-        val ads = getAdvertisementList()
-        movieListView.setMoveListItems(movieListItems(movies, ads))
+        val movies = movieItems()
+        val ads = advertisementItems()
+        movieListView.showMoveListItems(movieListItems(movies, ads))
     }
+
+    override fun startBooking(movieId: Long) {
+        movieListView.showTheaters(movieId)
+    }
+
+    private fun movieItems(): List<MovieListItem.MovieItem> =
+        DUMMY_MOVIES.values.map { movie ->
+            MovieListItem.MovieItem(movie)
+        }
+
+    private fun advertisementItems(): ArrayDeque<MovieListItem.AdItem> =
+        DUMMY_ADS.map {
+            MovieListItem.AdItem(it)
+        }.toCollection(ArrayDeque())
 
     private fun movieListItems(
         movies: List<MovieListItem.MovieItem>,
-        ads: List<MovieListItem.AdItem>,
+        ads: ArrayDeque<MovieListItem.AdItem>,
     ): List<MovieListItem> {
-        val adsIterator = ads.iterator()
-        val list: List<MovieListItem> =
-            buildList {
-                movies.forEachIndexed { index, movie ->
-                    add(movie)
-                    if (index % 3 == 2 && adsIterator.hasNext()) {
-                        add(adsIterator.next())
-                    }
-                }
-                while (adsIterator.hasNext()) {
-                    add(adsIterator.next())
+        var insertItemCount = 0
+        var curAds = ads.removeFirst()
+        return buildList {
+            movies.forEach { movie ->
+                add(movie)
+                ++insertItemCount
+                if (curAds.advertisement.isInsertAdvertise(insertItemCount)) {
+                    add(curAds)
+
+                    ads.addLast(curAds)
+                    curAds = ads.removeFirst()
+                    insertItemCount = 0
                 }
             }
-        return list
+        }
     }
 }
