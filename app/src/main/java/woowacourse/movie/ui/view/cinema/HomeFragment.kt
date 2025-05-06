@@ -38,7 +38,7 @@ class HomeFragment :
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        binding.home = this
+        binding.screeningAdapter = screeningAdapter
         return binding.root
     }
 

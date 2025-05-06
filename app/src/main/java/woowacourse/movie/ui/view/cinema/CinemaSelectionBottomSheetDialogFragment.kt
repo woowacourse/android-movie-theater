@@ -31,20 +31,8 @@ class CinemaSelectionBottomSheetDialogFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val screening =
-            arguments.screening ?: error(
-                ErrorMessage("screening").notProvided(),
-            )
-        presenter = CinemaSelectionPresenter(this, screening)
-        cinemaAdapter =
-            CinemaAdapter(
-                onClickItem = { cinemaName: String, showtimePolicy: ShowtimePolicy ->
-                    presenter?.onSelectCinema(cinemaName, showtimePolicy)
-                        ?: error(
-                            ErrorMessage("presenter").notProvided(),
-                        )
-                },
-            )
+        initPresenter()
+        initCinemaAdapter()
     }
 
     override fun onCreateView(
@@ -54,7 +42,7 @@ class CinemaSelectionBottomSheetDialogFragment :
     ): View {
         _binding =
             FragmentCinemaSelectionBottomSheetDialogBinding.inflate(inflater, container, false)
-        binding.cinemaSelection = this
+        binding.cinemaAdapter = cinemaAdapter
         return binding.root
     }
 
@@ -71,6 +59,26 @@ class CinemaSelectionBottomSheetDialogFragment :
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun initPresenter() {
+        val screening =
+            arguments.screening ?: error(
+                ErrorMessage("screening").notProvided(),
+            )
+        presenter = CinemaSelectionPresenter(this, screening)
+    }
+
+    private fun initCinemaAdapter() {
+        cinemaAdapter =
+            CinemaAdapter(
+                onClickItem = { cinemaName: String, showtimePolicy: ShowtimePolicy ->
+                    presenter?.onSelectCinema(cinemaName, showtimePolicy)
+                        ?: error(
+                            ErrorMessage("presenter").notProvided(),
+                        )
+                },
+            )
     }
 
     override fun setCinemas(cinemas: List<Cinema>) {

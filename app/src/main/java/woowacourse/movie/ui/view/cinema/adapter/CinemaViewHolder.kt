@@ -11,15 +11,10 @@ class CinemaViewHolder(
     private val binding: ItemCinemaBinding,
     val onClick: (cinemaName: String, showtimePolicy: ShowtimePolicy) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
-    var name = ""
-    var showtimesCount = 0
-    var onItemClickListener: OnClickListener? = null
-
     fun bind(cinema: Cinema) {
-        binding.cinema = this
-        name = cinema.name
-        showtimesCount = cinema.showtimeCount(LocalDateTime.now())
-        onItemClickListener =
+        binding.cinema = cinema
+        binding.currentTime = LocalDateTime.now()
+        binding.onCinemaClick =
             OnClickListener { this@CinemaViewHolder.onClick(cinema.name, cinema.showtimePolicy) }
     }
 }

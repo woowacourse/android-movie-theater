@@ -7,14 +7,22 @@
 
         <variable
             name="cinema"
-            type="woowacourse.movie.ui.view.cinema.adapter.CinemaViewHolder" />
+            type="woowacourse.movie.domain.cinema.Cinema" />
+
+        <variable
+            name="currentTime"
+            type="java.time.LocalDateTime" />
+
+        <variable
+            name="onCinemaClick"
+            type="android.view.View.OnClickListener" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{cinema.onItemClickListener}"
+        android:onClick="@{onCinemaClick}"
         android:padding="8dp">
 
         <TextView
@@ -40,7 +48,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{@string/item_cinema_showtime_count(cinema.showtimesCount)}"
+            android:text="@{@string/item_cinema_showtime_count(cinema.showtimeCount(currentTime))}"
             android:textColor="#5F5F5F"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"

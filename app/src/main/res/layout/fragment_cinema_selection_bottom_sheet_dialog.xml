@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="cinemaSelection"
-            type="woowacourse.movie.ui.view.cinema.CinemaSelectionBottomSheetDialogFragment" />
+            name="cinemaAdapter"
+            type="androidx.recyclerview.widget.ListAdapter" />
     </data>
 
     <FrameLayout
@@ -21,7 +21,7 @@
             android:id="@+id/recycler_view_cinema_selection"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:adapter="@{cinemaSelection.cinemaAdapter}"
+            android:adapter="@{cinemaAdapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </FrameLayout>
 </layout>

@@ -22,3 +22,4 @@
 - [x] adapter 생성하는 로직과 items를 초기화하는 로직분리
 - [x] Cinema를 class로 변경
 - [x] onCreate 함수 분리
+- [x] 데이터 바인딩에 필요한 값들만 대입하도록 수정
