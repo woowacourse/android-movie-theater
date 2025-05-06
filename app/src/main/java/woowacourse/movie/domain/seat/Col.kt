@@ -9,10 +9,15 @@ value class Col(
     val value: Int,
 ) : Parcelable {
     init {
-        require(value >= MINIMUM_COL) { "열은 0보다 큰 숫자만 올 수 있습니다." }
+        require(value >= MINIMUM_COL) { ColResult.OverOne }
     }
 
     companion object {
         private const val MINIMUM_COL = 0
     }
+}
+
+sealed class ColResult {
+    data class Success(val col: Col) : ColResult()
+    object OverOne : ColResult()
 }

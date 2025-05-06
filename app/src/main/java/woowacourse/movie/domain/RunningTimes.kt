@@ -23,7 +23,7 @@ class RunningTimes(
         val endDateTime = LocalDateTime.of(targetDate, endTime)
 
         if (currentDateTime.isAfter(endDateTime)) {
-            throw IllegalStateException(ERROR_TODAY_MOVIE_FINISH)
+            RunningTimesResult.AlreadyFinished
         }
 
         var movieTime = startDateTime
@@ -39,8 +39,9 @@ class RunningTimes(
         }
         return runningTimes
     }
+}
 
-    companion object {
-        private const val ERROR_TODAY_MOVIE_FINISH = "이미 오늘의 상영이 종료되었습니다."
-    }
+sealed class RunningTimesResult {
+    data class Success(val runningTimes : RunningTimes) : RunningTimesResult()
+    object AlreadyFinished : RunningTimesResult()
 }

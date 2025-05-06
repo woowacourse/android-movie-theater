@@ -1,10 +1,13 @@
 package woowacourse.movie.domain
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.time.LocalTime
 
+@Parcelize
 class Theaters(
     val values: List<Theater>,
-) {
+) : Parcelable {
     fun filterByMovie(movie: Movie): List<Theater> {
         return values.filter { theater -> theater.isShowing(movie) }
     }

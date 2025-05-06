@@ -2,6 +2,7 @@ package woowacourse.movie.domain.seat
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import woowacourse.movie.domain.BookingStatus
 
 @Parcelize
 data class BookingSeats(
@@ -12,7 +13,7 @@ data class BookingSeats(
         get() = _seats
 
     init {
-        require(value >= MINIMUM_NUMBER_OF_PEOPLE) { ERROR_PEOPLE_OVER_ONE }
+        require(value >= MINIMUM_NUMBER_OF_PEOPLE) { BookingSeatsResult.PeopleOverOne }
     }
 
     fun add(seat: Seat) {
@@ -31,6 +32,10 @@ data class BookingSeats(
 
     companion object {
         private const val MINIMUM_NUMBER_OF_PEOPLE = 1
-        private const val ERROR_PEOPLE_OVER_ONE = "영화 예매 수는 1명이상이어야합니다."
     }
+}
+
+sealed class BookingSeatsResult {
+    data class Success(val bookingSeats: BookingSeats) : BookingSeatsResult()
+    object PeopleOverOne : BookingSeatsResult()
 }

@@ -8,12 +8,13 @@ data class Title(
     val value: String,
 ) : Parcelable {
     init {
-        require(value.isNotEmpty()) { ERROR_EMPTY_MOVIE_TITLE }
-        require(value.isNotBlank()) { ERROR_BLANK_MOVIE_TITLE }
+        require(value.isNotEmpty()) { TitleResult.EmptyMovieTitle }
+        require(value.isNotBlank()) { TitleResult.BlankMovieTitle }
     }
+}
 
-    companion object {
-        private const val ERROR_EMPTY_MOVIE_TITLE = "영화 타이틀에 빈 글자는 올 수 없습니다."
-        private const val ERROR_BLANK_MOVIE_TITLE = "영화 타이틀에 공백이 올 수 없습니다."
-    }
+sealed class TitleResult {
+    data class Success(val title : Title) : TitleResult()
+    object EmptyMovieTitle : TitleResult()
+    object BlankMovieTitle : TitleResult()
 }
