@@ -93,7 +93,6 @@ class ReservationSeatFragment :
 
     override fun notifyPublishedTickets(ticket: TicketUiModel) {
         parentFragmentManager.commit {
-            setReorderingAllowed(true)
             add(R.id.fragment_container_view, ReservationResultFragment.newInstance(ticket))
             addToBackStack(null)
         }

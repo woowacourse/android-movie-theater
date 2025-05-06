@@ -63,7 +63,6 @@ class MovieTheaterActivity : BaseActivity<ActivityMovieTheaterBinding>(R.layout.
         tag: String,
     ) {
         supportFragmentManager.commit {
-            setReorderingAllowed(true)
             currentFragment?.let { hide(it) }
 
             if (findFragmentByTag(tag) == null) {

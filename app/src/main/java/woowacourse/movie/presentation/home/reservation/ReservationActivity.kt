@@ -75,7 +75,6 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(R.layout.ac
 
     private fun navigateToScreen(fragment: Fragment) {
         supportFragmentManager.commit {
-            setReorderingAllowed(true)
             replace(R.id.fragment_container_view, fragment)
             addToBackStack(null)
         }

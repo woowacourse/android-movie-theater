@@ -81,7 +81,6 @@ class ReservationDetailFragment :
     ) {
         val fragment = ReservationSeatFragment.newInstance(reservationInfo, screen)
         parentFragmentManager.commit {
-            setReorderingAllowed(true)
             add(R.id.fragment_container_view, fragment)
             addToBackStack(null)
         }
