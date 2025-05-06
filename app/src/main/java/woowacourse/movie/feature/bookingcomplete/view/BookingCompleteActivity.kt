@@ -11,7 +11,7 @@ import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.feature.bookingcomplete.contract.BookingCompleteContract
 import woowacourse.movie.feature.bookingcomplete.presenter.BookingCompletePresenter
 import woowacourse.movie.feature.model.BookingInfoUiModel
-import woowacourse.movie.util.getExtra
+import woowacourse.movie.util.getParcelableExtraCompat
 
 class BookingCompleteActivity :
     AppCompatActivity(),
@@ -22,7 +22,7 @@ class BookingCompleteActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        presenter.prepareBookingInfo(bookingInfo = intent.getExtra(BOOKING_INFO_KEY) ?: BookingInfoUiModel())
+        presenter.prepareBookingInfo(bookingInfo = intent.getParcelableExtraCompat(BOOKING_INFO_KEY) ?: BookingInfoUiModel())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

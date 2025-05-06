@@ -11,11 +11,11 @@ import woowacourse.movie.databinding.DialogFragmentTheatersBinding
 import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity
 import woowacourse.movie.feature.model.ScreeningUiModel
 import woowacourse.movie.feature.theaters.view.adapter.TheaterAdapter
-import woowacourse.movie.util.getExtras
+import woowacourse.movie.util.getParcelableArrayListCompat
 
 class TheatersDialogFragment : BottomSheetDialogFragment() {
     private val theaterAdapter: TheaterAdapter by lazy { TheaterAdapter(screenings, ::navigateToBookingDetail) }
-    private val screenings: List<ScreeningUiModel> by lazy { arguments?.getExtras(SCREENINGS_KEY) ?: emptyList() }
+    private val screenings: List<ScreeningUiModel> by lazy { arguments?.getParcelableArrayListCompat(SCREENINGS_KEY) ?: emptyList() }
     private lateinit var binding: DialogFragmentTheatersBinding
 
     override fun onCreateView(

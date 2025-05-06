@@ -18,7 +18,8 @@ import woowacourse.movie.feature.bookingseat.view.BookingSeatActivity
 import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.model.MovieDateUiModel
 import woowacourse.movie.feature.model.ScreeningUiModel
-import woowacourse.movie.util.getExtra
+import woowacourse.movie.util.getParcelableCompat
+import woowacourse.movie.util.getParcelableExtraCompat
 
 class BookingDetailActivity :
     AppCompatActivity(),
@@ -41,7 +42,7 @@ class BookingDetailActivity :
         setupDateSpinnerItemClickListener()
         setupTimeSpinnerItemClickListener()
         presenter.prepareBookingInfo(
-            intent.getExtra(SCREENING_KEY) ?: ScreeningUiModel(),
+            intent.getParcelableExtraCompat(SCREENING_KEY) ?: ScreeningUiModel(),
         )
     }
 
@@ -81,7 +82,7 @@ class BookingDetailActivity :
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         val bookingInfo: BookingInfoUiModel =
-            savedInstanceState.getExtra(BOOKING_INFO_KEY) ?: BookingInfoUiModel()
+            savedInstanceState.getParcelableCompat(BOOKING_INFO_KEY) ?: BookingInfoUiModel()
         presenter.loadBookingInfo(bookingInfo)
     }
 

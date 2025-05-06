@@ -5,7 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 
-inline fun <reified T : Parcelable> Intent.getExtra(key: String): T? =
+inline fun <reified T : Parcelable> Intent.getParcelableExtraCompat(key: String): T? =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getParcelableExtra(key, T::class.java)
     } else {
@@ -13,7 +13,7 @@ inline fun <reified T : Parcelable> Intent.getExtra(key: String): T? =
         getParcelableExtra(key)
     }
 
-inline fun <reified T : Parcelable> Bundle.getExtra(key: String): T? =
+inline fun <reified T : Parcelable> Bundle.getParcelableCompat(key: String): T? =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getParcelable(key, T::class.java)
     } else {
@@ -21,7 +21,7 @@ inline fun <reified T : Parcelable> Bundle.getExtra(key: String): T? =
         getParcelable(key)
     }
 
-inline fun <reified T : Parcelable> Bundle.getExtras(key: String): List<T> =
+inline fun <reified T : Parcelable> Bundle.getParcelableArrayListCompat(key: String): List<T> =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getParcelableArrayList(key, T::class.java) ?: emptyList()
     } else {

@@ -22,7 +22,7 @@ import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.model.MovieSeatUiModel
 import woowacourse.movie.feature.model.SeatSelectionUiState
 import woowacourse.movie.feature.model.SeatTypeUiModel
-import woowacourse.movie.util.getExtra
+import woowacourse.movie.util.getParcelableExtraCompat
 
 class BookingSeatActivity :
     AppCompatActivity(),
@@ -35,7 +35,7 @@ class BookingSeatActivity :
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.onSeatSelectCompleteClick = presenter::completeSeatSelection
-        presenter.prepareBookingInfo(bookingInfo = intent.getExtra(BOOKING_INFO_KEY) ?: BookingInfoUiModel())
+        presenter.prepareBookingInfo(bookingInfo = intent.getParcelableExtraCompat(BOOKING_INFO_KEY) ?: BookingInfoUiModel())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
