@@ -41,17 +41,11 @@ class MainActivity : AppCompatActivity() {
     private fun initBottomNav() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_home -> {
-                    replaceFragment(TAG_MOVIE_FRAGMENT, MovieFragment())
-                }
+                R.id.menu_home -> replaceFragment(TAG_MOVIE_FRAGMENT, MovieFragment())
 
-                R.id.menu_setting -> {
-                    replaceFragment(TAG_SETTING_FRAGMENT, SettingFragment())
-                }
+                R.id.menu_setting -> replaceFragment(TAG_SETTING_FRAGMENT, SettingFragment())
 
-                R.id.menu_reserve_list -> {
-                    replaceFragment(TAG_RESERVATION_LIST_FRAGMENT, ReservationListFragment())
-                }
+                R.id.menu_reserve_list -> replaceFragment(TAG_RESERVATION_LIST_FRAGMENT, ReservationListFragment())
             }
             true
         }

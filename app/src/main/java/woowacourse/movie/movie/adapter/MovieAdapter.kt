@@ -24,13 +24,8 @@ class MovieAdapter(
         viewType: Int,
     ): ViewHolder {
         return when (viewType) {
-            R.layout.movie_list_item -> {
-                MovieViewHolder(parent, onReserveClick)
-            }
-
-            R.layout.ad_banner_item -> {
-                AdViewHolder(parent)
-            }
+            R.layout.movie_list_item -> MovieViewHolder(parent, onReserveClick)
+            R.layout.ad_banner_item -> AdViewHolder(parent)
             else -> throw IllegalArgumentException(INVALID_VIEW_TYPE)
         }
     }
