@@ -17,8 +17,7 @@ import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.view.core.ext.getSerializableOrNull
 import woowacourse.movie.view.core.ext.showToastFromResource
-import woowacourse.movie.view.booking.BookingActionHandler
-import woowacourse.movie.view.movies.model.ScreeningInfo
+import woowacourse.movie.view.movies.ScreeningInfo
 import woowacourse.movie.view.seat.SeatActivity
 import woowacourse.movie.view.uiModel.toUiModel
 import java.time.LocalDate

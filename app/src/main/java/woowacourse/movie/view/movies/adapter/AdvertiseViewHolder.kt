@@ -1,10 +1,10 @@
-package woowacourse.movie.view.movies.viewholder
+package woowacourse.movie.view.movies.adapter
 
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import woowacourse.movie.databinding.AdvertisementItemBinding
 import woowacourse.movie.view.core.base.BaseViewHolder
-import woowacourse.movie.view.movies.model.MovieRvItem
+import woowacourse.movie.view.movies.adapter.model.MovieRvItem
 
 class AdvertiseViewHolder(
     parent: ViewGroup,

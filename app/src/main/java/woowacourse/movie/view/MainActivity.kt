@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         historyFragment: BookingHistoryFragment,
         movieListFragment: MovieListFragment,
         settingFragment: SettingFragment,
-    )  {
+    ) {
         binding.navigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_history -> {

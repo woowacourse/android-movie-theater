@@ -3,9 +3,7 @@ package woowacourse.movie.view.movies.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.view.core.base.BaseViewHolder
-import woowacourse.movie.view.movies.model.MovieRvItem
-import woowacourse.movie.view.movies.viewholder.AdvertiseViewHolder
-import woowacourse.movie.view.movies.viewholder.MovieViewHolder
+import woowacourse.movie.view.movies.adapter.model.MovieRvItem
 
 class MovieAdapter(
     private val handler: Handler,

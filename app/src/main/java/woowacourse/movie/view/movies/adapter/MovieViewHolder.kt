@@ -1,10 +1,10 @@
-package woowacourse.movie.view.movies.viewholder
+package woowacourse.movie.view.movies.adapter
 
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.view.core.base.BaseViewHolder
-import woowacourse.movie.view.movies.model.MovieRvItem.MovieItem
+import woowacourse.movie.view.movies.adapter.model.MovieRvItem.MovieItem
 
 class MovieViewHolder(
     parent: ViewGroup,

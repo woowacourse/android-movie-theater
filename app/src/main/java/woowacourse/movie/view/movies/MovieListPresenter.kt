@@ -3,9 +3,8 @@ package woowacourse.movie.view.movies
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.domain.model.Advertisement
-import woowacourse.movie.view.movies.model.MovieRvItem
-import woowacourse.movie.view.movies.model.ScreeningInfo
-import woowacourse.movie.view.movies.model.toItem
+import woowacourse.movie.view.movies.adapter.model.MovieRvItem
+import woowacourse.movie.view.movies.adapter.model.toItem
 
 class MovieListPresenter(
     private val view: MovieListContract.View,

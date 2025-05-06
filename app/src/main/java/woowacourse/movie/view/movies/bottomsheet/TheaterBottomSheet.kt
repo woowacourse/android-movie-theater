@@ -7,7 +7,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetBinding
 import woowacourse.movie.view.core.ext.getParcelableArrayListOrNull
 import woowacourse.movie.view.movies.adapter.TheaterAdapter
-import woowacourse.movie.view.movies.model.TheaterRvItem
+import woowacourse.movie.view.movies.adapter.model.TheaterRvItem
 
 class TheaterBottomSheet() : BottomSheetDialogFragment(R.layout.fragment_theater_bottom_sheet) {
     private val theaters: List<TheaterRvItem> by lazy {

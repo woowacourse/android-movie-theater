@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movies.model
+package woowacourse.movie.view.movies.adapter.model
 
 import android.os.Parcelable
 import androidx.annotation.LayoutRes

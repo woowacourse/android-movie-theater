@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movies.model
+package woowacourse.movie.view.movies.adapter.model
 
 import androidx.annotation.LayoutRes
 import woowacourse.movie.R
@@ -6,7 +6,7 @@ import woowacourse.movie.domain.model.Advertisement
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.view.core.bindingadapter.ImageSource
 import woowacourse.movie.view.core.util.StringFormatter
-import woowacourse.movie.view.movies.model.MovieRvItem.AdItem
+import woowacourse.movie.view.movies.adapter.model.MovieRvItem.AdItem
 
 sealed class MovieRvItem(val viewType: ViewType) {
     data class MovieItem(

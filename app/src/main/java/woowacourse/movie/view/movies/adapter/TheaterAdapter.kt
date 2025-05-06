@@ -3,8 +3,7 @@ package woowacourse.movie.view.movies.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.view.core.base.BaseViewHolder
-import woowacourse.movie.view.movies.model.TheaterRvItem
-import woowacourse.movie.view.movies.viewholder.TheaterViewHolder
+import woowacourse.movie.view.movies.adapter.model.TheaterRvItem
 
 class TheaterAdapter(
     private val items: List<TheaterRvItem>,

@@ -21,7 +21,6 @@ import woowacourse.movie.view.core.ext.getSerializableArrayList
 import woowacourse.movie.view.core.ext.getSerializableOrNull
 import woowacourse.movie.view.core.ext.showToastFromResource
 import woowacourse.movie.view.core.util.StringFormatter
-import woowacourse.movie.view.seat.SeatActionHandler
 
 class SeatActivity : AppCompatActivity(), SeatContract.View {
     private lateinit var binding: ActivitySeatBinding

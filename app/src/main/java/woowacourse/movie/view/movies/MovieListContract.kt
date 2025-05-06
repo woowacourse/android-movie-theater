@@ -1,8 +1,7 @@
 package woowacourse.movie.view.movies
 
-import woowacourse.movie.view.movies.model.MovieRvItem
-import woowacourse.movie.view.movies.model.ScreeningInfo
-import woowacourse.movie.view.movies.model.TheaterRvItem
+import woowacourse.movie.view.movies.adapter.model.MovieRvItem
+import woowacourse.movie.view.movies.adapter.model.TheaterRvItem
 
 interface MovieListContract {
     interface View {

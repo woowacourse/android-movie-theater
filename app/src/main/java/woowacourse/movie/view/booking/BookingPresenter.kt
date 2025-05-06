@@ -4,7 +4,7 @@ import woowacourse.movie.data.MovieStore
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.ScreeningDate
 import woowacourse.movie.domain.model.ScreeningTime
-import woowacourse.movie.view.movies.model.ScreeningInfo
+import woowacourse.movie.view.movies.ScreeningInfo
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

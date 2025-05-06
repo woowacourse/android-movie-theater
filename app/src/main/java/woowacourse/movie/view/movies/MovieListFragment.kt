@@ -11,15 +11,14 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.view.booking.BookingActivity
 import woowacourse.movie.view.core.ext.getParcelableOrNull
-import woowacourse.movie.view.movies.adapter.MovieAdapterEventHandler
 import woowacourse.movie.view.movies.adapter.MovieAdapter
+import woowacourse.movie.view.movies.adapter.MovieAdapterEventHandler
+import woowacourse.movie.view.movies.adapter.model.MovieRvItem
+import woowacourse.movie.view.movies.adapter.model.TheaterRvItem
 import woowacourse.movie.view.movies.bottomsheet.Result
 import woowacourse.movie.view.movies.bottomsheet.TheaterBottomSheet
 import woowacourse.movie.view.movies.bottomsheet.TheaterBottomSheet.Companion.KEY_REQUEST
 import woowacourse.movie.view.movies.bottomsheet.TheaterBottomSheet.Companion.KEY_RESULT
-import woowacourse.movie.view.movies.model.MovieRvItem
-import woowacourse.movie.view.movies.model.ScreeningInfo
-import woowacourse.movie.view.movies.model.TheaterRvItem
 
 class MovieListFragment : Fragment(R.layout.fragment_home), MovieListContract.View {
     private var _binding: FragmentHomeBinding? = null
