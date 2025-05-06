@@ -4,9 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,112 +13,105 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.ui.booking.contract.BookingContract
 import woowacourse.movie.ui.booking.presenter.BookingPresenter
+import woowacourse.movie.ui.booking.view.spinner.ScreeningDateSpinner
+import woowacourse.movie.ui.booking.view.spinner.ScreeningTimeSpinner
+import woowacourse.movie.ui.booking.view.spinner.listener.ScreeningDateListener
+import woowacourse.movie.ui.booking.view.spinner.listener.ScreeningTimeListener
 import woowacourse.movie.ui.seat.BookingSeatActivity
 import woowacourse.movie.utils.StringFormatter
-import woowacourse.movie.utils.bundleSerializable
 import woowacourse.movie.utils.intentSerializable
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 
 class BookingActivity :
     AppCompatActivity(),
     BookingContract.View {
     private lateinit var binding: ActivityBookingBinding
-
-    private val bookingPresenter = BookingPresenter(this)
-
-    private val dateSpinner: Spinner by lazy { findViewById(R.id.sp_date) }
-    private val timeSpinner: Spinner by lazy { findViewById(R.id.sp_time) }
+    private val bookingPresenter by lazy { BookingPresenter(this) }
+    private lateinit var screeningDateSpinner: ScreeningDateSpinner
+    private lateinit var screeningTimeSpinner: ScreeningTimeSpinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking)
-
         applyWindowInsets()
 
-        bookingPresenter.loadTheater()
-        bookingPresenter.updateViews()
+        bookingPresenter.loadBookingInfos(restoreTheater(), restoreMovieId())
         setButtonClickListeners()
     }
 
-    override fun getTheater(): Theater? = intent.intentSerializable(EXTRA_THEATER, Theater::class.java)
-
-    override fun getSelectedDateTime(): LocalDateTime =
-        LocalDateTime.of(
-            dateSpinner.selectedItem as LocalDate,
-            timeSpinner.selectedItem as LocalTime,
-        )
-
-    override fun getSelectedDate(): LocalDate = dateSpinner.selectedItem as LocalDate
-
-    override fun getSelectedTimePosition(): Int = timeSpinner.selectedItemPosition
-
-    override fun setMovieInfoViews(movie: Movie) {
+    override fun showMovie(movie: Movie) {
         binding.movie = movie
         binding.stringFormatter = StringFormatter
-        bookingPresenter.refreshHeadcountDisplay()
     }
 
-    override fun updateHeadcountDisplay(headcount: Headcount) {
+    override fun displayScreeningDateSpinner(dates: List<LocalDate>) {
+        screeningDateSpinner =
+            ScreeningDateSpinner(
+                binding.spDate,
+                dates,
+            )
+        screeningDateSpinner.setOnItemSelectedListener(
+            ScreeningDateListener(
+                onSelectDate = { screeningDate ->
+                    bookingPresenter.updateScreeningDate(screeningDate)
+                },
+            ),
+        )
+    }
+
+    override fun displayScreeningTimeSpinner(times: List<LocalTime>) {
+        screeningTimeSpinner =
+            ScreeningTimeSpinner(
+                binding.spTime,
+            )
+        screeningTimeSpinner.updateAdapter(times)
+        screeningTimeSpinner.setOnItemSelectedListener(
+            ScreeningTimeListener(
+                onSelectTime = { screeningTime ->
+                    bookingPresenter.updateScreeningTime(screeningTime)
+                },
+            ),
+        )
+    }
+
+    override fun displayScreeningTimeSpinnerItems(times: List<LocalTime>) {
+        screeningTimeSpinner.updateAdapter(times)
+    }
+
+    override fun showScreeningDate(position: Int) {
+        binding.spDate.setSelection(position, false)
+    }
+
+    override fun showScreeningTime(position: Int) {
+        binding.spTime.setSelection(position)
+    }
+
+    override fun showHeadCount(headcount: Headcount) {
         binding.headcount = headcount
     }
 
-    override fun setDateSpinner(
-        spinnerItems: List<LocalDate>,
-        position: Int,
-    ) {
-        with(dateSpinner) {
-            adapter =
-                ArrayAdapter(
-                    this@BookingActivity,
-                    android.R.layout.simple_spinner_item,
-                    spinnerItems,
-                )
-            if (spinnerItems.isNotEmpty()) {
-                setSelection(position)
-            }
-
-            onItemSelectedListener =
-                AdapterItemSelectedListener { pos ->
-                    bookingPresenter.setupTimeSpinner()
-                }
-        }
-        bookingPresenter.setupTimeSpinner()
-    }
-
-    override fun setTimeSpinner(
-        spinnerItems: List<LocalTime>,
-        position: Int,
-    ) {
-        with(timeSpinner) {
-            adapter =
-                ArrayAdapter(
-                    this@BookingActivity,
-                    android.R.layout.simple_spinner_item,
-                    spinnerItems,
-                )
-            if (spinnerItems.isNotEmpty()) {
-                setSelection(position)
-            }
-            onItemSelectedListener =
-                AdapterItemSelectedListener { pos ->
-                }
-        }
-    }
-
-    override fun startBookingSeatActivity(
-        movieTitle: String,
-        dateTime: LocalDateTime,
+    override fun moveToSelectSeat(
+        movieId: Long,
+        movieSchedule: MovieSchedule,
         headcount: Headcount,
-        theater: Theater,
+        theaterName: String,
     ) {
-        startActivity(BookingSeatActivity.newIntent(this, movieTitle, dateTime, headcount, theater))
+        startActivity(
+            BookingSeatActivity.newIntent(
+                this,
+                movieId,
+                movieSchedule,
+                headcount,
+                theaterName,
+            ),
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
@@ -136,25 +126,18 @@ class BookingActivity :
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putSerializable(KEY_PEOPLE_COUNT, bookingPresenter.headcount)
-        outState.putInt(KEY_SELECTED_DATE_POSITION, dateSpinner.selectedItemPosition)
-        outState.putInt(KEY_SELECTED_TIME_POSITION, timeSpinner.selectedItemPosition)
+        outState.putInt(KEY_PEOPLE_COUNT, binding.headcount?.count ?: 1)
+        outState.putInt(KEY_SELECTED_DATE_POSITION, binding.spDate.selectedItemPosition)
+        outState.putInt(KEY_SELECTED_TIME_POSITION, binding.spTime.selectedItemPosition)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-
-        val headcount =
-            savedInstanceState.bundleSerializable(
-                KEY_PEOPLE_COUNT,
-                Headcount::class.java,
-            ) as Headcount
+        val headcount = savedInstanceState.getInt(KEY_PEOPLE_COUNT)
         val selectedDatePosition: Int = savedInstanceState.getInt(KEY_SELECTED_DATE_POSITION)
         val selectedTimePosition: Int = savedInstanceState.getInt(KEY_SELECTED_TIME_POSITION)
 
-        bookingPresenter.setHeadcount(headcount)
-        bookingPresenter.setSelectedDatePosition(selectedDatePosition)
-        bookingPresenter.setSelectedTimePosition(selectedTimePosition)
+        bookingPresenter.restoreBookingInfos(headcount, selectedDatePosition, selectedTimePosition)
     }
 
     private fun applyWindowInsets() {
@@ -165,6 +148,10 @@ class BookingActivity :
         }
     }
 
+    private fun restoreTheater(): Theater? = intent.intentSerializable(EXTRA_THEATER, Theater::class.java)
+
+    private fun restoreMovieId(): Long = intent.getLongExtra(EXTRA_MOVIE_ID, 0L)
+
     private fun setButtonClickListeners() {
         setIncreaseButtonClickListener()
         setDecreaseButtonClickListener()
@@ -172,24 +159,19 @@ class BookingActivity :
     }
 
     private fun setIncreaseButtonClickListener() {
-        val increaseBtn: Button = findViewById(R.id.btn_increase)
-        increaseBtn.setOnClickListener {
+        binding.btnIncrease.setOnClickListener {
             bookingPresenter.increaseHeadcount()
-            bookingPresenter.refreshHeadcountDisplay()
         }
     }
 
     private fun setDecreaseButtonClickListener() {
-        val decreaseBtn: Button = findViewById(R.id.btn_decrease)
-        decreaseBtn.setOnClickListener {
+        binding.btnDecrease.setOnClickListener {
             bookingPresenter.decreaseHeadcount()
-            bookingPresenter.refreshHeadcountDisplay()
         }
     }
 
     private fun setBookingCompleteButtonClickListener() {
-        val bookingCompleteBtn: Button = findViewById(R.id.btn_booking_complete)
-        bookingCompleteBtn.setOnClickListener {
+        binding.btnBookingComplete.setOnClickListener {
             bookingPresenter.completeBooking()
         }
     }
@@ -198,9 +180,11 @@ class BookingActivity :
         fun newIntent(
             context: Context,
             theater: Theater,
+            movieId: Long,
         ): Intent =
             Intent(context, BookingActivity::class.java).apply {
                 putExtra(EXTRA_THEATER, theater)
+                putExtra(EXTRA_MOVIE_ID, movieId)
             }
 
         private const val KEY_SELECTED_DATE_POSITION = "SELECTED_DATE_POSITION"
@@ -208,5 +192,6 @@ class BookingActivity :
         private const val KEY_PEOPLE_COUNT = "SAVED_PEOPLE_COUNT"
 
         private const val EXTRA_THEATER = "EXTRA_THEATER"
+        private const val EXTRA_MOVIE_ID = "EXTRA_MOVIE_ID"
     }
 }

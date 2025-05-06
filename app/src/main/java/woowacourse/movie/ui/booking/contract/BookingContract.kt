@@ -2,64 +2,57 @@ package woowacourse.movie.ui.booking.contract
 
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Theater
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 
 interface BookingContract {
     interface Presenter {
+        fun loadBookingInfos(
+            theater: Theater?,
+            movieId: Long,
+        )
+
+        fun updateScreeningDate(screeningDate: LocalDate)
+
+        fun updateScreeningTime(screeningTime: LocalTime)
+
+        fun updateScreeningTimeSpinner()
+
         fun decreaseHeadcount()
 
         fun increaseHeadcount()
 
-        fun loadTheater(): Theater
-
         fun completeBooking()
 
-        fun refreshMovieInfo()
-
-        fun setHeadcount(headcount: Headcount)
-
-        fun refreshHeadcountDisplay()
-
-        fun setupDateSpinner()
-
-        fun setupTimeSpinner()
-
-        fun setSelectedDatePosition(position: Int)
-
-        fun setSelectedTimePosition(position: Int)
+        fun restoreBookingInfos(
+            count: Int,
+            selectedDatePosition: Int,
+            selectedTimePosition: Int,
+        )
     }
 
     interface View {
-        fun getTheater(): Theater?
+        fun showMovie(movie: Movie)
 
-        fun getSelectedDate(): LocalDate
+        fun displayScreeningDateSpinner(dates: List<LocalDate>)
 
-        fun getSelectedTimePosition(): Int
+        fun displayScreeningTimeSpinner(times: List<LocalTime>)
 
-        fun getSelectedDateTime(): LocalDateTime
+        fun displayScreeningTimeSpinnerItems(times: List<LocalTime>)
 
-        fun setMovieInfoViews(movie: Movie)
+        fun showScreeningDate(position: Int)
 
-        fun updateHeadcountDisplay(headcount: Headcount)
+        fun showScreeningTime(position: Int)
 
-        fun setDateSpinner(
-            spinnerItems: List<LocalDate>,
-            position: Int,
-        )
+        fun showHeadCount(headcount: Headcount)
 
-        fun setTimeSpinner(
-            spinnerItems: List<LocalTime>,
-            position: Int,
-        )
-
-        fun startBookingSeatActivity(
-            movieTitle: String,
-            dateTime: LocalDateTime,
+        fun moveToSelectSeat(
+            movieId: Long,
+            movieSchedule: MovieSchedule,
             headcount: Headcount,
-            theater: Theater,
+            theaterName: String,
         )
     }
 }
