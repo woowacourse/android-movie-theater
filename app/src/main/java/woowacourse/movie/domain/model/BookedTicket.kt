@@ -1,14 +1,12 @@
 package woowacourse.movie.domain.model
 
 import java.io.Serializable
-import java.time.LocalDateTime
 
 class BookedTicket(
-    val movieName: String,
-    val headcount: Headcount,
-    val dateTime: LocalDateTime,
-    val seats: Seats,
     val theaterName: String,
+    val movieTitle: String,
+    val movieSchedule: MovieSchedule,
+    val headcount: Headcount,
 ) : Serializable {
-    fun totalPrice(): Int = seats.totalPrice()
+    fun totalPrice(): Int = movieSchedule.seats.totalPrice()
 }
