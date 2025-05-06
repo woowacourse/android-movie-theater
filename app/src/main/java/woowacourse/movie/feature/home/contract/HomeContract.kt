@@ -1,6 +1,5 @@
 package woowacourse.movie.feature.home.contract
 
-import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.feature.model.MovieUiModel
 import woowacourse.movie.feature.model.ScreeningUiModel
 
@@ -17,7 +16,5 @@ interface HomeContract {
         fun prepareMovies()
 
         fun selectMovieForBooking(movie: MovieUiModel)
-
-        fun selectTheater(screening: Screening)
     }
 }
