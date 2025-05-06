@@ -5,6 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
@@ -43,31 +44,29 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavMenu.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_fragment_home -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container, HomeFragment())
-                    }
+                    displayFragment(HomeFragment())
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_fragment_history -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container, HistoryFragment())
-                    }
+                    displayFragment(HistoryFragment())
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_fragment_settings -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container, SettingFragment())
-                    }
+                    displayFragment(SettingFragment())
                     return@setOnItemSelectedListener true
                 }
 
                 else -> return@setOnItemSelectedListener false
             }
+        }
+    }
+
+    private fun displayFragment(fragment: Fragment) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.main_fragment_container, fragment)
         }
     }
 }

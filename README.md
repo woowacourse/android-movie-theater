@@ -56,7 +56,7 @@
 - [ ] Showings | 스스로 일을 할 수 있게 변경
 - [ ] Ticket | 15 값 enum class로 변경
 - [x] MovieSchedule | filter를 toList 전에 호출되도록 변경
-- [ ] MainActivity | commit 하는 부분 공통부분 메서드 분리
+- [x] MainActivity | commit 하는 부분 공통부분 메서드 분리
 - [ ] MainActivity | Fragment 의 전역으로 미리 생성하도록 변경
 - [ ] MainActivity | Fragment가 상태가 유지되도록 변경 (show, hide 사용)
 - [ ] HomeContract | navigate가 되는 책임 view에서만 담당하도록 변경
