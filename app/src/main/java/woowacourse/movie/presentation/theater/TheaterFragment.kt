@@ -20,7 +20,8 @@ class TheaterFragment :
     BottomSheetDialogFragment(),
     TheaterContract.View {
     private var movie: Movie? = null
-    private lateinit var binding: FragmentTheaterSelectBinding
+    private var _binding: FragmentTheaterSelectBinding? = null
+    private val binding get() = _binding!!
     private lateinit var presenter: TheaterContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ class TheaterFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
+        _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_theater_select, container, false)
         return binding.root
     }
@@ -62,6 +63,11 @@ class TheaterFragment :
                 putExtra(IntentKeys.SCREENING_INFO, screeningInfo)
             }
         startActivity(intent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

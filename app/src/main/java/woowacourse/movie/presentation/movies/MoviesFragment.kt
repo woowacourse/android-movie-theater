@@ -16,7 +16,8 @@ import woowacourse.movie.ui.adapter.MovieAdapter
 class MoviesFragment :
     Fragment(),
     MoviesContract.View {
-    private lateinit var binding: FragmentMoviesBinding
+    private var _binding: FragmentMoviesBinding? = null
+    private val binding get() = _binding!!
     private lateinit var presenter: MoviesContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +30,7 @@ class MoviesFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
         return binding.root
     }
 
@@ -53,5 +54,10 @@ class MoviesFragment :
     override fun showTheaterSelectDialog(movie: Movie) {
         val theaterFragment = TheaterFragment.newInstance(movie)
         theaterFragment.show(childFragmentManager, theaterFragment.tag)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
