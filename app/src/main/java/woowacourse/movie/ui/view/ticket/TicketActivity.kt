@@ -22,7 +22,7 @@ class TicketActivity :
     AppCompatActivity(),
     TicketContract.View {
     private var ticket: Ticket? = null
-    private var presenter: TicketContract.Presenter? = null
+    private lateinit var presenter: TicketContract.Presenter
 
     private lateinit var cancelDescriptionView: TextView
     private lateinit var priceView: TextView
@@ -97,7 +97,7 @@ class TicketActivity :
         }
 
     private fun initViews() {
-        (presenter ?: error(woowacourse.movie.ui.view.util.ErrorMessage(CAUSE_TICKET).notProvided())).run {
+        presenter.run {
             presentCancelDescription()
             presentTitle()
             presentShowtime()

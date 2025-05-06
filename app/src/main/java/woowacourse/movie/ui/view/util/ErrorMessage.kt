@@ -4,9 +4,9 @@ package woowacourse.movie.ui.view.util
 value class ErrorMessage(
     private val cause: String,
 ) {
-    fun notProvided() = "$cause ${woowacourse.movie.ui.view.util.ErrorMessage.Companion.ERROR_MESSAGE_NO_DATA_FORMAT}"
+    fun notProvided() = "$cause ${ERROR_MESSAGE_NO_DATA_FORMAT}"
 
-    fun notSelected() = "$cause ${woowacourse.movie.ui.view.util.ErrorMessage.Companion.ERROR_MESSAGE_NOT_SELECTED_YET_FORMAT}T"
+    fun notSelected() = "$cause ${ERROR_MESSAGE_NOT_SELECTED_YET_FORMAT}T"
 
     fun noSuch() = "no such $cause`"
 

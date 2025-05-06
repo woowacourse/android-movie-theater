@@ -36,7 +36,7 @@ class SeatSelectionActivity :
     SeatSelectionContract.View {
     private val showConfirmDialog by lazy { ShowReservationConfirmDialog(this) }
 
-    private var presenter: SeatSelectionContract.Presenter? = null
+    private lateinit var presenter: SeatSelectionContract.Presenter
 
     private lateinit var seatsLayout: TableLayout
     private lateinit var titleView: TextView
@@ -64,12 +64,12 @@ class SeatSelectionActivity :
 
     private fun setEventListeners() {
         completeView.setOnClickListener {
-            presenter?.tryReservation()
+            presenter.tryReservation()
         }
     }
 
     private fun presentModels() {
-        presenter?.let {
+        presenter.let {
             it.presentSeats()
             it.presentTitle()
             it.presentPrice()
@@ -79,7 +79,7 @@ class SeatSelectionActivity :
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        presenter?.getSelectedSeats()?.let { selectedSeats: Set<Seat> ->
+        presenter.getSelectedSeats().let { selectedSeats: Set<Seat> ->
             outState.putSerializable(KEY_SEATS, selectedSeats as Serializable)
         }
     }
@@ -87,14 +87,14 @@ class SeatSelectionActivity :
     private fun initPresenter(selectedSeats: Set<Seat>?) {
         val ticket =
             intent.getTicketExtra(EXTRA_TICKET) ?: error(
-                woowacourse.movie.ui.view.util.ErrorMessage(
+                ErrorMessage(
                     CAUSE_TICKET,
                 ).notProvided(),
             )
         val cinemaName =
             intent.getStringExtra(EXTRA_CINEMA_NAME)
                 ?: error(
-                    woowacourse.movie.ui.view.util.ErrorMessage(CAUSE_CINEMA_NAME).notProvided(),
+                    ErrorMessage(CAUSE_CINEMA_NAME).notProvided(),
                 )
         presenter =
             SeatSelectionPresenter(
@@ -102,7 +102,7 @@ class SeatSelectionActivity :
                 ticket,
                 cinemaName,
                 selectedSeats,
-            ) ?: error(ErrorMessage("presenter").notProvided())
+            )
     }
 
     @Suppress("DEPRECATION")
@@ -178,7 +178,7 @@ class SeatSelectionActivity :
                 )
             isSelected = seat in selectedSeats
             setOnClickListener { view: View ->
-                presenter?.onSeatSelect(seat)
+                presenter.onSeatSelect(seat)
             }
         }
 
@@ -202,7 +202,7 @@ class SeatSelectionActivity :
     ) {
         val seatView: TextView =
             seatViewMap[seat] ?: error(
-                woowacourse.movie.ui.view.util.ErrorMessage(
+                ErrorMessage(
                     "seat",
                 ).noSuch(),
             )
@@ -219,9 +219,7 @@ class SeatSelectionActivity :
             message = getString(R.string.ticket_dialog_message),
             positiveButtonText = getString(R.string.ticket_dialog_positive_button),
             positiveButtonAction = { _, _ ->
-                presenter?.confirmReservation() ?: error(
-                    woowacourse.movie.ui.view.util.ErrorMessage("presenter").notProvided(),
-                )
+                presenter.confirmReservation()
             },
             negativeButtonText = getString(R.string.ticket_dialog_nagative_button),
             negativeButtonAction = { dialog: DialogInterface, _ -> dialog.dismiss() },

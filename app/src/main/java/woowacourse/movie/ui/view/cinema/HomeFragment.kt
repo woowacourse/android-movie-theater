@@ -25,7 +25,7 @@ class HomeFragment :
             )
 
     private val presenter: ScreeningContract.Presenter = ScreeningPresenter(this)
-    lateinit var screeningAdapter: ScreeningAdapter
+    private lateinit var screeningAdapter: ScreeningAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

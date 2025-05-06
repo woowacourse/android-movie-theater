@@ -30,7 +30,7 @@ import java.time.LocalTime
 class ReservationActivity :
     AppCompatActivity(),
     ReservationContract.View {
-    private var presenter: ReservationContract.Presenter? = null
+    private lateinit var presenter: ReservationContract.Presenter
 
     private lateinit var posterImageView: ImageView
     private lateinit var titleView: TextView
@@ -46,13 +46,13 @@ class ReservationActivity :
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        presenter?.getTicketCount()?.let {
+        presenter.getTicketCount().let {
             outState.putInt(
                 TICKET_COUNT,
                 it,
             )
         }
-        presenter?.getItemPosition()?.let {
+        presenter.getItemPosition().let {
             outState.putInt(
                 TIME_ITEM_POSITION,
                 it,
@@ -203,31 +203,19 @@ class ReservationActivity :
 
     private fun initTicketCountPlusButtonClickEvent() {
         ticketCountPlusButton.setOnClickListener {
-            presenter?.plusTicketCount()
-                ?: error(
-                    ErrorMessage(CAUSE_SCREENING)
-                        .notProvided(),
-                )
+            presenter.plusTicketCount()
         }
     }
 
     private fun initTicketCountMinusButtonClickEvent() {
         ticketCountMinusButton.setOnClickListener {
-            presenter?.minusTicketCount()
-                ?: error(
-                    ErrorMessage(CAUSE_SCREENING)
-                        .notProvided(),
-                )
+            presenter.minusTicketCount()
         }
     }
 
     private fun initCompleteButtonClickEvent() {
         completeButton.setOnClickListener {
-            presenter?.presentAvailableSeats()
-                ?: error(
-                    ErrorMessage(CAUSE_SCREENING)
-                        .notProvided(),
-                )
+            presenter.presentAvailableSeats()
         }
     }
 

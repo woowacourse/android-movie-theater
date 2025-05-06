@@ -26,8 +26,8 @@ class CinemaSelectionBottomSheetDialogFragment :
                 ErrorMessage("_binding").notProvided(),
             )
 
-    var cinemaAdapter: CinemaAdapter? = null
-    private var presenter: CinemaSelectionPresenter? = null
+    private lateinit var cinemaAdapter: CinemaAdapter
+    private lateinit var presenter: CinemaSelectionPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +51,7 @@ class CinemaSelectionBottomSheetDialogFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter?.presentCinemas() ?: error(
-            ErrorMessage("presenter").notProvided(),
-        )
+        presenter.presentCinemas()
     }
 
     override fun onDestroyView() {
@@ -73,18 +71,13 @@ class CinemaSelectionBottomSheetDialogFragment :
         cinemaAdapter =
             CinemaAdapter(
                 onClickItem = { cinemaName: String, showtimePolicy: ShowtimePolicy ->
-                    presenter?.onSelectCinema(cinemaName, showtimePolicy)
-                        ?: error(
-                            ErrorMessage("presenter").notProvided(),
-                        )
+                    presenter.onSelectCinema(cinemaName, showtimePolicy)
                 },
             )
     }
 
     override fun setCinemas(cinemas: List<Cinema>) {
-        cinemaAdapter?.submitList(cinemas) ?: error(
-            ErrorMessage("cinemaAdapter").notProvided(),
-        )
+        cinemaAdapter.submitList(cinemas)
     }
 
     override fun navigateToReservationScreen(
