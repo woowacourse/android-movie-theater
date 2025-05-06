@@ -5,19 +5,15 @@ import woowacourse.movie.databinding.TheaterItemBinding
 import woowacourse.movie.domain.model.Theater
 
 class TheaterViewHolder(
+    private val movieId: Long,
     private val itemBinding: TheaterItemBinding,
-    val onClickTheater: (Theater) -> Unit,
+    private val onClickTheater: (Theater) -> Unit,
 ) : RecyclerView.ViewHolder(itemBinding.root) {
-    private var currentTheater: Theater? = null
-
-    init {
-        itemBinding.layoutTheaterItem.setOnClickListener {
-            currentTheater?.let { onClickTheater(it) }
-        }
-    }
-
     fun bind(theater: Theater) {
-        currentTheater = theater
+        itemBinding.layoutTheaterItem.setOnClickListener {
+            onClickTheater(theater)
+        }
+        itemBinding.movieId = movieId
         itemBinding.theater = theater
     }
 }

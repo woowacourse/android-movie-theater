@@ -1,16 +1,21 @@
 package woowacourse.movie.ui.movielist.contract
 
-import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.Theaters
 
 interface TheaterBottomSheetDialogContract {
     interface Presenter {
-        fun loadEntireTheaters(): Theaters
+        fun loadAvailableTheaters(movieId: Long)
 
-        fun loadAvailableTheaters(movie: Movie)
+        fun startBooking(theater: Theater)
     }
 
     interface View {
         fun showTheaters(theaters: Theaters)
+
+        fun showReservation(
+            theater: Theater,
+            movieId: Long,
+        )
     }
 }

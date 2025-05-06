@@ -9,27 +9,26 @@ import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
-import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.Theaters
-import woowacourse.movie.sample.DUMMY_MOVIES
 import woowacourse.movie.ui.booking.view.BookingActivity
 import woowacourse.movie.ui.movielist.contract.TheaterBottomSheetDialogContract
 import woowacourse.movie.ui.movielist.presenter.TheaterBottomSheetDialogPresenter
-import woowacourse.movie.utils.bundleSerializable
 
 class TheaterBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
     TheaterBottomSheetDialogContract.View {
-    private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
-    private val presenter = TheaterBottomSheetDialogPresenter(this)
+    private var _binding: FragmentTheaterBottomSheetDialogBinding? = null
+    private val binding get() = _binding!!
+    private val presenter by lazy { TheaterBottomSheetDialogPresenter(this) }
+    private val theaterAdapter: TheaterAdapter by lazy { generateAdapter(restoreMovieId()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding =
+        _binding =
             DataBindingUtil.inflate(
                 inflater,
                 R.layout.fragment_theater_bottom_sheet_dialog,
@@ -46,44 +45,53 @@ class TheaterBottomSheetDialogFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movie = restoreMovie()
-        presenter.loadAvailableTheaters(movie)
+        val movieId = restoreMovieId()
+
+        binding.theatersRecyclerView.adapter = theaterAdapter
+        presenter.loadAvailableTheaters(movieId)
     }
 
     override fun showTheaters(theaters: Theaters) {
-        val adapter =
-            TheaterAdapter { theater ->
-                startBookingActivity(binding.root, theater)
-            }
-        binding.theatersRecyclerView.adapter = adapter
-        adapter.submitList(theaters.theaters)
+        theaterAdapter.submitList(theaters.theaters)
     }
 
-    private fun restoreMovie(): Movie {
-        val movie =
-            arguments?.bundleSerializable("EXTRA_MOVIE", Movie::class.java) ?: DUMMY_MOVIES.first()
-        return movie
-    }
-
-    private fun startBookingActivity(
-        view: View,
+    override fun showReservation(
         theater: Theater,
+        movieId: Long,
     ) {
-        if (theater.movieSchedules.isNotEmpty()) {
-            startActivity(BookingActivity.newIntent(view.context, theater))
+        if (theater.theaterSchedules[movieId].isNotEmpty()) {
+            startActivity(BookingActivity.newIntent(binding.root.context, theater, movieId))
             parentFragmentManager.commit {
                 remove(this@TheaterBottomSheetDialogFragment)
             }
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun restoreMovieId(): Long {
+        val movieId = arguments?.getLong("EXTRA_MOVIE_ID") ?: 0L
+        return movieId
+    }
+
+    private fun generateAdapter(movieId: Long): TheaterAdapter {
+        return TheaterAdapter(movieId) { theater ->
+            presenter.startBooking(theater)
+        }
+    }
+
     companion object {
+        const val THEATER_DIALOG_TAG = "THEATER_BOTTOM_DIALOG"
+
         @JvmStatic
-        fun newInstance(movie: Movie) =
+        fun newInstance(movieId: Long) =
             TheaterBottomSheetDialogFragment().apply {
                 arguments =
                     Bundle().apply {
-                        putSerializable("EXTRA_MOVIE", movie)
+                        putLong("EXTRA_MOVIE_ID", movieId)
                     }
             }
     }
