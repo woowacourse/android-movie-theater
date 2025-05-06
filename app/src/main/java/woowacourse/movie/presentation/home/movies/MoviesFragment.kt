@@ -8,6 +8,7 @@ import woowacourse.movie.presentation.common.base.BaseFragment
 import woowacourse.movie.presentation.common.model.MovieUiModel
 import woowacourse.movie.presentation.common.model.TheatersUiModel
 import woowacourse.movie.presentation.home.movies.adapter.MoviesAdapter
+import woowacourse.movie.presentation.home.movies.adapter.item.MovieMainItem
 import woowacourse.movie.presentation.home.movies.dialog.TheaterBottomSheetDialogFragment
 
 class MoviesFragment :
@@ -25,7 +26,7 @@ class MoviesFragment :
         presenter.fetchData()
     }
 
-    override fun showScreen(movies: List<MovieUiModel>) {
+    override fun showScreen(movies: List<MovieMainItem>) {
         updateMovies(movies)
     }
 
@@ -42,8 +43,8 @@ class MoviesFragment :
         binding.rvMovie.adapter = moviesAdapter
     }
 
-    private fun updateMovies(movies: List<MovieUiModel>) {
-        binding.movieList = movies
+    private fun updateMovies(movies: List<MovieMainItem>) {
+        moviesAdapter.submitList(movies)
     }
 
     companion object {

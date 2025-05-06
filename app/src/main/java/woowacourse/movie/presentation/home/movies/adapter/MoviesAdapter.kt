@@ -17,10 +17,7 @@ class MoviesAdapter(
     ): BaseViewHolder<MovieMainItem, ViewBinding> =
         when (MovieMainItem.MovieViewType.entries[viewType]) {
             MovieMainItem.MovieViewType.MOVIE -> MovieViewHolder(parent, eventListener)
-            MovieMainItem.MovieViewType.AD ->
-                woowacourse.movie.presentation.home.movies.adapter.AdViewHolder(
-                    parent,
-                )
+            MovieMainItem.MovieViewType.AD -> AdViewHolder(parent)
         } as BaseViewHolder<MovieMainItem, ViewBinding>
 
     override fun onBindViewHolder(

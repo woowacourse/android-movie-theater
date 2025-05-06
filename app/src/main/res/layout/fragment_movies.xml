@@ -4,9 +4,6 @@
 
     <data>
 
-        <variable
-            name="movieList"
-            type="java.util.List&lt;woowacourse.movie.presentation.common.model.MovieUiModel>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -20,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:setItems="@{movieList}"
             tools:listitem="@layout/item_movie" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
