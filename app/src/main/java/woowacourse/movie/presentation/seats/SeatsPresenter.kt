@@ -4,6 +4,7 @@ import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.SeatPosition
 import woowacourse.movie.domain.model.seat.SelectedSeats
+import java.util.Locale
 
 class SeatsPresenter(
     private val view: SeatsContract.View,
