@@ -21,8 +21,4 @@ class ScreeningDateSpinner(
     fun setOnItemSelectedListener(listener: AdapterView.OnItemSelectedListener) {
         spinner.onItemSelectedListener = listener
     }
-
-    fun select(position: Int) {
-        spinner.setSelection(position)
-    }
 }

@@ -6,22 +6,18 @@ import android.widget.Spinner
 import java.time.LocalTime
 
 class ScreeningTimeSpinner(
-    private val spinner: Spinner
+    private val spinner: Spinner,
 ) {
-    fun updateAdapter(times: List<LocalTime>){
+    fun updateAdapter(times: List<LocalTime>) {
         spinner.adapter =
             ArrayAdapter(
                 spinner.context,
                 android.R.layout.simple_spinner_item,
-                times
+                times,
             )
     }
 
-    fun setOnItemSelectedListener(listener: AdapterView.OnItemSelectedListener){
+    fun setOnItemSelectedListener(listener: AdapterView.OnItemSelectedListener) {
         spinner.onItemSelectedListener = listener
-    }
-
-    fun select(position:Int){
-        spinner.setSelection(position)
     }
 }
