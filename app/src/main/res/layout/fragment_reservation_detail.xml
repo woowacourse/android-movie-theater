@@ -50,7 +50,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/movie_poster"
                 android:scaleType="centerCrop"
-                app:poster="@{movie.poster}"
+                app:bitmapFromRes="@{movie.poster.toInt()}"
                 tools:src="@drawable/harrypotter" />
 
             <LinearLayout

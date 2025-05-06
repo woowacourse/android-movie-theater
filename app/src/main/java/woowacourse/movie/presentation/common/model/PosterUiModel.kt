@@ -13,6 +13,12 @@ sealed class PosterUiModel : Parcelable {
     data class Url(
         val url: String,
     ) : PosterUiModel()
+
+    fun toInt() =
+        when (val poster = this) {
+            is Resource -> poster.resId
+            is Url -> 0
+        }
 }
 
 fun Poster.toUiModel(): PosterUiModel =

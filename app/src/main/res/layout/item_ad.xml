@@ -7,7 +7,7 @@
 
         <variable
             name="advertisement"
-            type="android.graphics.Bitmap" />
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +20,7 @@
             android:layout_height="0dp"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
-            app:srcBitmap="@{advertisement}"
+            app:bitmapFromRes="@{advertisement}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="360:96"
             app:layout_constraintTop_toTopOf="parent"

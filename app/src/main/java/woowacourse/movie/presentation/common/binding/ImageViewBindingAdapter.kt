@@ -1,13 +1,14 @@
 package woowacourse.movie.presentation.common.binding
 
-import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 
-@BindingAdapter("srcBitmap")
+@BindingAdapter("bitmapFromRes")
 fun setImageViewResource(
     imageView: ImageView,
-    bitmap: Bitmap,
+    resId: Int,
 ) {
+    val bitmap = BitmapFactory.decodeResource(imageView.resources, resId)
     imageView.setImageBitmap(bitmap)
 }
