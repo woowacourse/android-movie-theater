@@ -11,10 +11,9 @@ class ReservationCompletePresenter(
         ticket: Ticket,
         seats: Seats,
     ) {
-        view.showTicketInfo(ticket, seats)
+        view.showTicketInfo(ticket)
         view.showSeatsInfo(seats.toSeatString())
         view.showTicketMoney(seats.reservationPrice())
-        view.showTheaterName(ticket.theaterName)
     }
 
     private fun Seats.toSeatString(): String {

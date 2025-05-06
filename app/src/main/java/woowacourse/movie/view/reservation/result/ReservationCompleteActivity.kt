@@ -9,10 +9,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import woowacourse.movie.R
+import androidx.databinding.BindingAdapter
+import woowacourse.movie.databinding.ActivityReservationCompleteBinding
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Seats
 import woowacourse.movie.view.dialog.DialogFactory
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteContract.View {
@@ -20,11 +22,15 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         ReservationCompletePresenter(this)
     }
 
+    private var _binding: ActivityReservationCompleteBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        _binding = ActivityReservationCompleteBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_reservation_complete)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout_reservation_complete)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayoutReservationComplete) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -63,45 +69,19 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         }
     }
 
-    override fun showTicketInfo(
-        ticket: Ticket,
-        seats: Seats,
-    ) {
-        val formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN)
-        val dateTimeFormat = ticket.date.format(formatter)
-
-        val movieTitleTextView = findViewById<TextView>(R.id.tv_movie_title)
-        val movieCancelInfoTextView = findViewById<TextView>(R.id.tv_cancel_info)
-        val movieDateTextView = findViewById<TextView>(R.id.tv_movie_date)
-        val moviePersonnel = findViewById<TextView>(R.id.tv_movie_personnel)
-
-        movieTitleTextView.text = ticket.title
-        movieCancelInfoTextView.text =
-            getString(R.string.movie_cancel_deadline, Ticket.CANCEL_DEADLINE)
-        movieDateTextView.text = dateTimeFormat
-        moviePersonnel.text = getString(R.string.moviePersonnel, ticket.personnel)
+    override fun showTicketInfo(ticket: Ticket) {
+        binding.ticket = ticket
     }
 
     override fun showSeatsInfo(seats: String) {
-        val movieSeatsTextView = findViewById<TextView>(R.id.tv_seat_list)
-        movieSeatsTextView.text = getString(R.string.seat_list, seats)
-    }
-
-    override fun showTheaterName(theaterName: String) {
-        val theaterNameTextView = findViewById<TextView>(R.id.tv_selected_theater_name)
-        theaterNameTextView.text = getString(R.string.theater_name, theaterName)
+        binding.seats = seats
     }
 
     override fun showTicketMoney(moviePrice: Int) {
-        val priceFormatter = java.text.DecimalFormat(PRICE_PATTERN)
-        val movieTotalPrice = findViewById<TextView>(R.id.tv_movie_total_price)
-        movieTotalPrice.text =
-            getString(R.string.movieTotalPrice, priceFormatter.format(moviePrice))
+        binding.price = moviePrice.toString()
     }
 
     companion object {
-        private const val DATETIME_PATTERN = "yyyy.M.d. HH:mm"
-        private const val PRICE_PATTERN = "#,###"
         private const val KEY_TICKET = "ticket"
         private const val KET_SEATS = "seats"
 
@@ -114,4 +94,29 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
                 .putExtra(KEY_TICKET, ticket)
                 .putExtra(KET_SEATS, seats)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+}
+
+@BindingAdapter("dateTime")
+fun setDateTime(
+    view: TextView,
+    date: LocalDateTime,
+) {
+    val formatter = DateTimeFormatter.ofPattern("yyyy.M.d. HH:mm")
+    val dateTimeFormat = date.format(formatter)
+    view.text = dateTimeFormat.toString()
+}
+
+@BindingAdapter("price")
+fun setPrice(
+    view: TextView,
+    price: String,
+) {
+    val formatter = java.text.DecimalFormat("#,###")
+    val priceFormat = formatter.format(price.toInt())
+    view.text = "${priceFormat}원 (현장 결제)"
 }

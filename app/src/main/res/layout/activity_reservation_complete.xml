@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_layout_reservation_complete"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".view.reservation.result.ReservationCompleteActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="ticket"
+            type="woowacourse.movie.domain.Ticket" />
+
+        <variable
+            name="seats"
+            type="String" />
+
+        <variable
+            name="price"
+            type="String" />
+    </data>
+
+    <ScrollView
+        android:id="@+id/root_layout_reservation_complete"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".view.reservation.result.ReservationCompleteActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +45,8 @@
                 android:paddingBottom="10dp"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                tools:text="@string/movie_cancel_deadline" />
+                tools:text="@string/movie_cancel_deadline"
+                android:text="@{String.format(@string/movie_cancel_deadline, ticket.CANCEL_DEADLINE)}"/>
 
         </LinearLayout>
 
@@ -48,7 +65,8 @@
                 android:textColor="@color/black"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                tools:text="@string/movie_title">
+                tools:text="@string/movie_title"
+                android:text="@{ticket.title}">
 
             </TextView>
 
@@ -60,7 +78,8 @@
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 android:textStyle="bold"
-                tools:text="@string/default_movie_date_time" />
+                tools:text="@string/default_movie_date_time"
+                app:dateTime="@{ticket.date}"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -89,7 +108,8 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:textSize="25sp"
-                            tools:text="@string/moviePersonnel" />
+                            tools:text="@string/moviePersonnel"
+                            android:text='@{String.format(@string/moviePersonnel, ticket.personnel)}'/>
 
                         <TextView
                             android:id="@+id/tv_seat_list"
@@ -98,7 +118,8 @@
                             android:layout_marginStart="10dp"
                             android:textColor="@color/black"
                             android:textSize="25sp"
-                            tools:text="@string/seat_list" />
+                            tools:text="@string/seat_list"
+                            android:text="@{String.format(@string/seat_list, seats)}"/>
 
                         <TextView
                             android:id="@+id/tv_selected_theater_name"
@@ -108,7 +129,8 @@
                             android:ellipsize="marquee"
                             android:textColor="@color/black"
                             android:textSize="25sp"
-                            tools:text="@string/theater_name" />
+                            tools:text="@string/theater_name"
+                            android:text="@{String.format(@string/theater_name, ticket.theaterName)}"/>
 
                     </LinearLayout>
                 </HorizontalScrollView>
@@ -122,10 +144,12 @@
                 android:layout_marginTop="30dp"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                tools:text="@string/movieTotalPrice" />
+                tools:text="@string/movieTotalPrice"
+                app:price="@{price}"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
 </ScrollView>
+</layout>

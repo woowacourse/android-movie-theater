@@ -14,15 +14,10 @@ class ReservationCompleteContract {
     interface View {
         fun handleInvalidTicket()
 
-        fun showTicketInfo(
-            ticket: Ticket,
-            seats: Seats,
-        )
+        fun showTicketInfo(ticket: Ticket)
 
         fun showSeatsInfo(seats: String)
 
         fun showTicketMoney(moviePrice: Int)
-
-        fun showTheaterName(theaterName: String)
     }
 }
