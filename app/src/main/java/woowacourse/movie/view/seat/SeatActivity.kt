@@ -140,5 +140,5 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         }
     }
 
-    interface Handler : SeatRow.Handler
+    interface Handler : SeatRowView.Handler
 }

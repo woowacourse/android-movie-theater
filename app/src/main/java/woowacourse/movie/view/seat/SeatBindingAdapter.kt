@@ -10,7 +10,7 @@ import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
 
 @BindingAdapter("onClickSeat")
-fun TableLayout.seatClickListener(handler: SeatRow.Handler) {
+fun TableLayout.seatClickListener(handler: SeatRowView.Handler) {
     children
         .filterIsInstance<TableRow>()
         .forEachIndexed { rowIdx, row ->

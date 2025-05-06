@@ -9,7 +9,7 @@ import woowacourse.movie.domain.model.seat.Column
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
 
-class SeatRow(
+class SeatRowView(
     private val row: TableRow,
     private val rowIndex: Int,
 ) {
