@@ -119,3 +119,6 @@
 
 - [x] refactor: xml 레이아웃 아이디를 뷰 타입으로 갖도록 변경
 - Sealed class로 FeedItem 정의
+
+## 1,2단계 2차 변경 사항
+- [x] refactor: 하드코딩된 text strings.xml로 변경
