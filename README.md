@@ -48,3 +48,9 @@
 - [x] MovieFragment | Bundle 사용 시 스코프 함수 활용
 - [x] Ticket | 불변 객체 보장
 - [x] SeatSelectionActivityTest | 중복되는 코드 함수로 분리
+
+- [ ] TheaterViewHolder | 리스너 중복 연결 고민
+- [ ] MovieFragment | Bundle 생성 위치 이동
+- [ ] SeatSelectionActivity | 좌석 색깔 변경 로직 고민
+- [ ] PresenterTest | Capturing 사용
+- [ ] TheaterBottomSheetFragment | MVP 구조로 변경
