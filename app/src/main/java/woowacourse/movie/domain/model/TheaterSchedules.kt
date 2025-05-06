@@ -12,11 +12,12 @@ class TheaterSchedules(
 
     fun screeningDates(
         movieId: Long,
-        dateTime: LocalDateTime,
+        dateTime: LocalDateTime = LocalDateTime.now(),
     ): List<LocalDate> {
         val movieSchedules = schedules[movieId] ?: return emptyList()
         return movieSchedules.filter { movieSchedule -> movieSchedule.isScreeningDate(dateTime) }
             .map { movieSchedule -> movieSchedule.screeningDate }
+            .distinct()
     }
 
     fun screeningTimes(
@@ -26,12 +27,14 @@ class TheaterSchedules(
         val movieSchedules = schedules[movieId] ?: return emptyList()
 
         if (isToday(dateTime)) {
-            return movieSchedules.filter { movieSchedule -> movieSchedule.isTodayScreening(now) }
-                .map { movieSchedule -> movieSchedule.screeningTime }
+            return movieSchedules.filter { movieSchedule ->
+                movieSchedule.isTodayAvailableScreening(now)
+            }.map { movieSchedule -> movieSchedule.screeningTime }
         }
 
-        return movieSchedules.filter { movieSchedule -> movieSchedule.isFutureScreening(dateTime) }
-            .map { movieSchedule -> movieSchedule.screeningTime }
+        return movieSchedules.filter { movieSchedule ->
+            movieSchedule.isFutureAvailableScreeningByDate(dateTime)
+        }.map { movieSchedule -> movieSchedule.screeningTime }
     }
 
     fun movieScheduleByMovieIdAndDateTime(
