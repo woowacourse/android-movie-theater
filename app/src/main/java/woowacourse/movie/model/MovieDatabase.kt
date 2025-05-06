@@ -3,8 +3,8 @@ package woowacourse.movie.model
 import woowacourse.movie.R
 import java.time.LocalDate
 
-object MovieDatabase {
-    val screenings =
+class MovieDatabase : MovieDatabaseSchema {
+    override val screenings =
         mapOf(
             "선릉" to
                 mapOf(
@@ -31,7 +31,7 @@ object MovieDatabase {
                 ),
         )
 
-    val movies =
+    override val movies =
         mapOf(
             "라라랜드" to
                 Movie(
