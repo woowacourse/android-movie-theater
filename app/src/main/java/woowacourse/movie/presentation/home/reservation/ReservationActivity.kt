@@ -89,9 +89,9 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(R.layout.ac
             movieUiModel: MovieUiModel,
             theaterUiModel: TheaterUiModel,
         ): Intent =
-            Intent(context, woowacourse.movie.presentation.home.reservation.ReservationActivity::class.java).apply {
-                putExtra(woowacourse.movie.presentation.home.reservation.ReservationActivity.Companion.BUNDLE_KEY_MOVIE, movieUiModel)
-                putExtra(woowacourse.movie.presentation.home.reservation.ReservationActivity.Companion.BUNDLE_KEY_THEATER, theaterUiModel)
+            Intent(context, ReservationActivity::class.java).apply {
+                putExtra(BUNDLE_KEY_MOVIE, movieUiModel)
+                putExtra(BUNDLE_KEY_THEATER, theaterUiModel)
             }
     }
 }
