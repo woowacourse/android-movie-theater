@@ -91,7 +91,7 @@ class ReservationDetailPresenter(
         val ticket =
             MovieTicket(
                 title = reservationUIModel.movie.title,
-                date = reservationUIModel.movieDate.value,
+                date = reservationUIModel.movieDate.selectedDate,
                 time = ReservationUiFormatter.movieTimeToUI(reservationUIModel.movieTime.value),
                 count = reservationUIModel.ticketCount,
                 theaterName = reservationUIModel.theaterName,

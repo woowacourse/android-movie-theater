@@ -6,13 +6,13 @@ class MovieDate(
     private val startDate: LocalDate,
     private val endDate: LocalDate,
 ) {
-    var value: LocalDate = LocalDate.now()
+    var selectedDate: LocalDate = LocalDate.now()
         private set
 
     fun getDateTable(currentDate: LocalDate): List<LocalDate> = dateRangeToTable(currentDate)
 
     fun updateDate(newDate: LocalDate) {
-        value = newDate
+        selectedDate = newDate
     }
 
     private fun dateRangeToTable(currentDate: LocalDate): List<LocalDate> {
