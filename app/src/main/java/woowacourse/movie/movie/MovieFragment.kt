@@ -10,8 +10,6 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieBinding
 import woowacourse.movie.movie.adapter.MovieAdapter
 import woowacourse.movie.theater.TheaterBottomSheetFragment
-import woowacourse.movie.theater.TheaterBottomSheetFragment.Companion.KEY_MOVIE
-import woowacourse.movie.theater.TheaterBottomSheetFragment.Companion.KEY_THEATERS
 import woowacourse.movie.ui.model.MovieFeedUiModel
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
@@ -52,12 +50,7 @@ class MovieFragment : Fragment(), MovieContract.View {
         theaters: ArrayList<TheaterUiModel>,
         movie: MovieUiModel,
     ) {
-        val fragment = TheaterBottomSheetFragment()
-        fragment.arguments =
-            Bundle().apply {
-                putParcelableArrayList(KEY_THEATERS, theaters)
-                putParcelable(KEY_MOVIE, movie)
-            }
+        val fragment = TheaterBottomSheetFragment.newInstance(movie, theaters)
         fragment.show(parentFragmentManager, fragment.tag)
     }
 

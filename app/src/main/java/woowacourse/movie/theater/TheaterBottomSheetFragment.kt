@@ -69,7 +69,24 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment() {
 
     companion object {
         private const val ERROR_NOT_FOUND_DATA = "%s 데이터를 찾을 수 없습니다"
-        const val KEY_THEATERS = "THEATERS_DATA"
-        const val KEY_MOVIE = "MOVIE_DATA"
+        private const val KEY_THEATERS = "THEATERS_DATA"
+        private const val KEY_MOVIE = "MOVIE_DATA"
+
+        fun newInstance(
+            movie: MovieUiModel,
+            theater: ArrayList<TheaterUiModel>,
+        ): TheaterBottomSheetFragment =
+            TheaterBottomSheetFragment().apply {
+                arguments = newBundle(movie, theater)
+            }
+
+        private fun newBundle(
+            movie: MovieUiModel,
+            theater: ArrayList<TheaterUiModel>,
+        ): Bundle =
+            Bundle().apply {
+                putParcelable(KEY_MOVIE, movie)
+                putParcelableArrayList(KEY_THEATERS, theater)
+            }
     }
 }
