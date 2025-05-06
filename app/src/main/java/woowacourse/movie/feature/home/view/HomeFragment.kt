@@ -12,7 +12,7 @@ import woowacourse.movie.feature.home.contract.HomeContract
 import woowacourse.movie.feature.home.presenter.HomePresenter
 import woowacourse.movie.feature.home.view.adapter.MovieItem
 import woowacourse.movie.feature.home.view.adapter.MoviesAdapter
-import woowacourse.movie.feature.model.MovieUiModel
+import woowacourse.movie.feature.model.ContentUiModel
 import woowacourse.movie.feature.model.ScreeningUiModel
 import woowacourse.movie.feature.theaters.view.TheatersDialogFragment
 
@@ -37,11 +37,11 @@ class HomeFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.prepareMovies()
+        presenter.prepareContents()
     }
 
-    override fun showMovies(movies: List<MovieUiModel>) {
-        moviesAdapter.submitList(MovieItem.from(movies))
+    override fun showContents(contents: List<ContentUiModel>) {
+        moviesAdapter.submitList(contents.map { MovieItem.from(it) })
         binding.moviesAdapter = moviesAdapter
     }
 

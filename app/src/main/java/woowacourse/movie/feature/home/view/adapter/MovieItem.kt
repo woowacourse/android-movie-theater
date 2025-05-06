@@ -1,5 +1,7 @@
 package woowacourse.movie.feature.home.view.adapter
 
+import woowacourse.movie.feature.model.AdvertisementUiModel
+import woowacourse.movie.feature.model.ContentUiModel
 import woowacourse.movie.feature.model.MovieUiModel
 
 sealed class MovieItem(
@@ -18,16 +20,10 @@ sealed class MovieItem(
     ) : MovieItem(MovieItemViewType.ADVERTISEMENT)
 
     companion object {
-        fun from(movies: List<MovieUiModel>): List<MovieItem> {
-            var id = 0
-            val movieItems = mutableListOf<MovieItem>()
-
-            movies.chunked(3).forEach { movieChunk ->
-                movieChunk.forEach { movie -> movieItems.add(Movie(id++, movie)) }
-                if (movieChunk.size == 3) movieItems.add(Advertisement(id++))
+        fun from(content: ContentUiModel): MovieItem =
+            when (content) {
+                is MovieUiModel -> Movie(0, content)
+                is AdvertisementUiModel -> Advertisement(0)
             }
-
-            return movieItems
-        }
     }
 }

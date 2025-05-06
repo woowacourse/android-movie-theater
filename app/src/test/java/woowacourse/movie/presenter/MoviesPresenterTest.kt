@@ -4,8 +4,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.Movie.Companion.movies
-import woowacourse.movie.domain.model.Screenings.Companion.screenings
+import woowacourse.movie.data.ContentService.getAllContents
+import woowacourse.movie.data.ContentService.getMovieScreenings
+import woowacourse.movie.data.ContentService.movies
 import woowacourse.movie.feature.home.contract.HomeContract
 import woowacourse.movie.feature.home.presenter.HomePresenter
 import woowacourse.movie.feature.mapper.toUi
@@ -21,13 +22,13 @@ class MoviesPresenterTest {
     }
 
     @Test
-    fun `prepareMovies 호출 시 영화 목록을 보여준다`() {
+    fun `prepareContents 호출 시 영화 목록을 보여준다`() {
         // given & when
-        presenter.prepareMovies()
+        presenter.prepareContents()
 
         // then
         verify {
-            view.showMovies(movies.map { it.toUi() })
+            view.showContents(getAllContents().map { it.toUi() })
         }
     }
 
@@ -35,7 +36,7 @@ class MoviesPresenterTest {
     fun `selectMovieForBooking 호출 시 극장 목록을 보여준다`() {
         // given
         val movieUiModel = movies.first().toUi()
-        val screening = screenings.getMovieScreenings(movieUiModel.title).toUi()
+        val screening = getMovieScreenings(movieUiModel.title).toUi()
 
         // when
         presenter.selectMovieForBooking(movieUiModel)

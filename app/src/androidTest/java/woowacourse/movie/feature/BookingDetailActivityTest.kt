@@ -32,7 +32,7 @@ class BookingDetailActivityTest {
                 context = getApplicationContext(),
                 screening =
                     ScreeningUiModel(
-                        movie = MovieUiModel("해리 포터와 마법사의 돌", MovieDateUiModel(2025, 4, 1), MovieDateUiModel(2025, 4, 25), 152),
+                        movie = MovieUiModel(0, "해리 포터와 마법사의 돌", MovieDateUiModel(2025, 4, 1), MovieDateUiModel(2025, 4, 25), 152),
                         theaterName = "혜화",
                         times = listOf<MovieTimeUiModel>(MovieTimeUiModel(9, 0), MovieTimeUiModel(12, 0), MovieTimeUiModel(15, 0)),
                     ),

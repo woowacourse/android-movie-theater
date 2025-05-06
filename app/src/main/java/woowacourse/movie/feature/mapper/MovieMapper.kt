@@ -1,6 +1,8 @@
 package woowacourse.movie.feature.mapper
 
+import woowacourse.movie.domain.model.Advertisement
 import woowacourse.movie.domain.model.BookingInfo
+import woowacourse.movie.domain.model.Content
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieDate
 import woowacourse.movie.domain.model.MovieSeat
@@ -10,7 +12,9 @@ import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.Screenings
 import woowacourse.movie.domain.model.SeatType
 import woowacourse.movie.domain.model.TicketCount
+import woowacourse.movie.feature.model.AdvertisementUiModel
 import woowacourse.movie.feature.model.BookingInfoUiModel
+import woowacourse.movie.feature.model.ContentUiModel
 import woowacourse.movie.feature.model.MovieDateUiModel
 import woowacourse.movie.feature.model.MovieSeatUiModel
 import woowacourse.movie.feature.model.MovieTimeUiModel
@@ -101,3 +105,9 @@ fun Screening.toUi(): ScreeningUiModel = ScreeningUiModel(movie.toUi(), theaterN
 fun ScreeningUiModel.toDomain(): Screening = Screening(movie.toDomain(), theaterName, times.map { it.toDomain() })
 
 fun Screenings.toUi(): List<ScreeningUiModel> = value.map { it.toUi() }
+
+fun Content.toUi(): ContentUiModel =
+    when (this) {
+        is Advertisement -> AdvertisementUiModel(id)
+        is Movie -> this.toUi()
+    }

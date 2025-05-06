@@ -1,7 +1,6 @@
 package woowacourse.movie.feature
 
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentFactory
+import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -12,21 +11,39 @@ import org.hamcrest.Matchers.allOf
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.MovieDate
-import woowacourse.movie.domain.model.MovieTime
-import woowacourse.movie.domain.model.Screening
-import woowacourse.movie.feature.mapper.toUi
+import woowacourse.movie.feature.model.MovieDateUiModel
+import woowacourse.movie.feature.model.MovieTimeUiModel
+import woowacourse.movie.feature.model.MovieUiModel
+import woowacourse.movie.feature.model.ScreeningUiModel
 import woowacourse.movie.feature.theaters.view.TheatersDialogFragment
 import woowacourse.movie.nthChildOf
 
 @Suppress("ktlint:standard:function-naming")
 class TheatersDialogFragmentTest {
-    val factory = createTheatersDialogFragmentFactory()
-
     @Before
     fun setup() {
-        launchFragmentInContainer<TheatersDialogFragment>(factory = factory)
+        launchFragmentInContainer<TheatersDialogFragment>(
+            fragmentArgs =
+                Bundle().apply {
+                    putParcelableArrayList(
+                        "SCREENINGS",
+                        arrayListOf(
+                            ScreeningUiModel(
+                                movie =
+                                    MovieUiModel(
+                                        id = 0,
+                                        title = "레디 플레이어 원",
+                                        startDate = MovieDateUiModel(2025, 5, 1),
+                                        endDate = MovieDateUiModel(2025, 5, 10),
+                                        runningTime = 148,
+                                    ),
+                                theaterName = "혜화",
+                                times = listOf(MovieTimeUiModel(10, 0)),
+                            ),
+                        ),
+                    )
+                },
+        )
     }
 
     @Test
@@ -48,28 +65,4 @@ class TheatersDialogFragmentTest {
             ),
         ).check(matches(withText("1개의 상영 시간")))
     }
-
-    private fun createTheatersDialogFragmentFactory(): FragmentFactory =
-        object : FragmentFactory() {
-            override fun instantiate(
-                classLoader: ClassLoader,
-                className: String,
-            ): Fragment =
-                TheatersDialogFragment(
-                    screenings =
-                        listOf(
-                            Screening(
-                                Movie(
-                                    title = "레디 플레이어 원",
-                                    startDate = MovieDate(2025, 5, 1),
-                                    endDate = MovieDate(2025, 5, 10),
-                                    runningTime = 148,
-                                ),
-                                "혜화",
-                                listOf(MovieTime(10, 0)),
-                            ).toUi(),
-                        ),
-                    navigateToBookingDetail = {},
-                )
-        }
 }

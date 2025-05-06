@@ -43,7 +43,7 @@ class TheatersDialogFragment : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "SCREENS_DIALOG_FRAGMENT"
-        private const val SCREENINGS_KEY = "screenings"
+        private const val SCREENINGS_KEY = "SCREENINGS"
 
         fun newInstance(screenings: List<ScreeningUiModel>): TheatersDialogFragment =
             TheatersDialogFragment().apply {
