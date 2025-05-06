@@ -34,13 +34,8 @@ class ReservationDetailPresenter(
     }
 
     override fun updateReservationCount(updateCount: Int) {
-        if (updateCount >= 0 && reservationCount.value >= seats.seats.size) {
-            view.notifyReservationLimitReached()
-            return
-        }
-
-        validUpdateReservationCount(updateCount)
-        view.updateReservationCount(reservationCount.value, !reservationCount.isMin())
+        reservationCount += updateCount
+        view.updateReservationCount(reservationCount.toUiModel(seats.size))
     }
 
     override fun onSelectDate(
@@ -64,17 +59,13 @@ class ReservationDetailPresenter(
 
     private fun setupInitialView(dateTime: LocalDateTime?) {
         view.showScreen(movie.toUiModel())
-        view.updateReservationCount(reservationCount.value, !reservationCount.isMin())
+        view.updateReservationCount(reservationCount.toUiModel(seats.size))
         updateAvailableDatesAndTimes(dateTime)
     }
 
     private fun initializeReservationCount(count: Int) {
         runCatching { ReservationCount(count) }
             .onSuccess { reservationCount = it }
-    }
-
-    private fun validUpdateReservationCount(updateCount: Int) {
-        runCatching { reservationCount += updateCount }
     }
 
     private fun updateAvailableDatesAndTimes(selectedDateTime: LocalDateTime?) {

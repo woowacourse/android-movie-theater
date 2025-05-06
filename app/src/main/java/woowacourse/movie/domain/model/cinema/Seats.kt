@@ -5,6 +5,8 @@ class Seats(
 ) {
     val seats: List<Seat> = buildSeats(size)
 
+    val size: Int = seats.size
+
     private fun buildSeats(size: SeatingSize): List<Seat> =
         (STARTING_INDEX until size.rowSize).flatMap { row ->
             (STARTING_INDEX until size.colSize).map { col ->

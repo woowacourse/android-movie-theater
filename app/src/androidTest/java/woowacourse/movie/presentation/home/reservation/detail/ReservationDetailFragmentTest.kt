@@ -8,6 +8,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.isNotEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
@@ -134,6 +135,32 @@ class ReservationDetailFragmentTest {
         Thread.sleep(1000)
         onView(withText("선택 가능한 날짜/시간이 없습니다"))
             .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun `현재_예매_인원_수가_최소이면_마이너스_버튼이_비활성화된다`() {
+        onView(withId(R.id.tv_reservation_count))
+            .check(matches(withText("1")))
+
+        onView(withId(R.id.btn_reservation_count_minus))
+            .check(matches(isNotEnabled()))
+    }
+
+    @Test
+    fun `현재_예매_인원_수가_최대이면_플러스_버튼이_비활성화된다`() {
+        val plusButton = onView(withId(R.id.btn_reservation_count_plus))
+        val countTextView = onView(withId(R.id.tv_reservation_count))
+
+        val maxCount = 20
+
+        countTextView.check(matches(withText("1")))
+
+        repeat(maxCount - 1) {
+            plusButton.perform(click())
+        }
+
+        countTextView.check(matches(withText(maxCount.toString())))
+        plusButton.check(matches(isNotEnabled()))
     }
 
     private fun formatPeriod(movie: MovieUiModel): String {

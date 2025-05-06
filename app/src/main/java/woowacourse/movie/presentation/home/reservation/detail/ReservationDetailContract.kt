@@ -1,6 +1,7 @@
 package woowacourse.movie.presentation.home.reservation.detail
 
 import woowacourse.movie.presentation.common.model.MovieUiModel
+import woowacourse.movie.presentation.common.model.ReservationCountUiModel
 import woowacourse.movie.presentation.common.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.common.model.ScreenUiModel
 import woowacourse.movie.presentation.common.model.TheaterUiModel
@@ -41,10 +42,7 @@ interface ReservationDetailContract {
             selectedTime: LocalTime? = null,
         )
 
-        fun updateReservationCount(
-            count: Int,
-            isEnabled: Boolean,
-        )
+        fun updateReservationCount(reservationCount: ReservationCountUiModel)
 
         fun notifyNoAvailableDates()
 
@@ -53,7 +51,5 @@ interface ReservationDetailContract {
             screen: ScreenUiModel,
             theaterName: String,
         )
-
-        fun notifyReservationLimitReached()
     }
 }

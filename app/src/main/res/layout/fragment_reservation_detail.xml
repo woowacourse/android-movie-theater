@@ -11,11 +11,7 @@
 
         <variable
             name="reservationCount"
-            type="Integer" />
-
-        <variable
-            name="isEnabled"
-            type="Boolean" />
+            type="woowacourse.movie.presentation.common.model.ReservationCountUiModel" />
 
         <variable
             name="dates"
@@ -133,7 +129,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:enabled="@{isEnabled}"
+                        android:enabled="@{!reservationCount.isMin()}"
                         android:text="@string/reservation_count_minus"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -144,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="@{String.valueOf(reservationCount)}"
+                        android:text="@{String.valueOf(reservationCount.count)}"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         tools:text="1" />
@@ -155,6 +151,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/reservation_count_plus"
+                        android:enabled="@{!reservationCount.isMax()}"
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>

@@ -13,6 +13,7 @@ import woowacourse.movie.presentation.common.custom.DialogInfo
 import woowacourse.movie.presentation.common.extension.getParcelableCompat
 import woowacourse.movie.presentation.common.extension.toDateTimeFormatter
 import woowacourse.movie.presentation.common.model.MovieUiModel
+import woowacourse.movie.presentation.common.model.ReservationCountUiModel
 import woowacourse.movie.presentation.common.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.common.model.ScreenUiModel
 import woowacourse.movie.presentation.common.model.TheaterUiModel
@@ -58,12 +59,8 @@ class ReservationDetailFragment :
         saveReservationCount(outState)
     }
 
-    override fun updateReservationCount(
-        count: Int,
-        isEnabled: Boolean,
-    ) {
-        binding.reservationCount = count
-        binding.isEnabled = isEnabled
+    override fun updateReservationCount(reservationCount: ReservationCountUiModel) {
+        binding.reservationCount = reservationCount
     }
 
     override fun showScreen(movie: MovieUiModel) {
@@ -106,10 +103,6 @@ class ReservationDetailFragment :
     ) {
         binding.times = times
         if (binding.selectedTime == null) binding.selectedTime = selectedTime
-    }
-
-    override fun notifyReservationLimitReached() {
-        showToast(getString(R.string.reservation_count_limit_reached_message))
     }
 
     private fun setupReservationCountControls() {

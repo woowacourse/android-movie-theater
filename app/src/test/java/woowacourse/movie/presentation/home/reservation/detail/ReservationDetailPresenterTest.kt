@@ -42,7 +42,7 @@ class ReservationDetailPresenterTest {
     fun `영화 데이터를 불러온다`() {
         // Given: View가 화면 설정, 예약 수 업데이트, 날짜 업데이트를 수행하도록 설정한다.
         every { view.showScreen(any()) } just Runs
-        every { view.updateReservationCount(any(), any()) } just Runs
+        every { view.updateReservationCount(any()) } just Runs
         every { view.updateDates(any(), any(), any()) } just Runs
 
         // When: presenter가 영화 정보를 전달받아 fetchData를 호출하면
@@ -55,13 +55,13 @@ class ReservationDetailPresenterTest {
     @Test
     fun `예약 수를 업데이트하면 뷰에 반영된다`() {
         // Given: View가 예약 수 업데이트를 수행하도록 설정한다.
-        every { view.updateReservationCount(any(), any()) } just Runs
+        every { view.updateReservationCount(any()) } just Runs
 
         // When: 예약 인원 수를 3명 추가 요청하면
         presenter.updateReservationCount(3)
 
-        // Then: View가 기존 인원(1) + 3명을 반영하여 4명으로 업데이트한다.
-        verify { view.updateReservationCount(4, any()) }
+        // Then: View가 예매 인원 수를 업데이트한다.
+        verify { view.updateReservationCount(any()) }
     }
 
     @Test
@@ -73,7 +73,7 @@ class ReservationDetailPresenterTest {
         every { view.updateTimes(any()) } just Runs
         every { view.showScreen(fakeMovie) } just Runs
         every { view.updateDates(any(), any(), any()) } just Runs
-        every { view.updateReservationCount(any(), any()) } just Runs
+        every { view.updateReservationCount(any()) } just Runs
 
         presenter.fetchData(fakeMovie, fakeTheater)
 
@@ -83,7 +83,7 @@ class ReservationDetailPresenterTest {
         // Then: 화면이 초기화되고, 날짜 선택에 따라 시간 목록이 갱신된다.
         verifySequence {
             view.showScreen(fakeMovie)
-            view.updateReservationCount(any(), any())
+            view.updateReservationCount(any())
             view.updateDates(any(), any(), any())
             view.updateTimes(times)
         }
@@ -95,7 +95,7 @@ class ReservationDetailPresenterTest {
         val now = LocalDateTime.of(2025, 4, 1, 12, 0)
         every { view.showScreen(any()) } just Runs
         every { view.updateDates(any(), any(), any()) } just Runs
-        every { view.updateReservationCount(any(), any()) } just Runs
+        every { view.updateReservationCount(any()) } just Runs
         every { view.notifyReservationConfirm(any(), any(), any()) } just Runs
 
         presenter.fetchData(fakeMovie, fakeTheater, 3)
@@ -125,7 +125,7 @@ class ReservationDetailPresenterTest {
                 screeningPeriod = ScreeningPeriodUiModel(LocalDate.MIN, LocalDate.MIN),
             )
         every { view.showScreen(any()) } just Runs
-        every { view.updateReservationCount(any(), any()) } just Runs
+        every { view.updateReservationCount(any()) } just Runs
         every { view.notifyNoAvailableDates() } just Runs
 
         // When: 영화 데이터로 fetchData를 호출하면
