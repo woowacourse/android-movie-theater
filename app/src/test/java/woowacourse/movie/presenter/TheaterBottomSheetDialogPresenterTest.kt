@@ -8,6 +8,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.dummyMovie
+import woowacourse.movie.domain.model.dummyTheaters
 import woowacourse.movie.view.theater.TheaterContract
 import woowacourse.movie.view.theater.TheaterPresenter
 
@@ -18,7 +19,7 @@ class TheaterBottomSheetDialogPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk()
-        presenter = TheaterPresenter(view, dummyMovie)
+        presenter = TheaterPresenter(view)
     }
 
     @Test
@@ -27,7 +28,7 @@ class TheaterBottomSheetDialogPresenterTest {
         every { view.showTheaters(any()) } just Runs
 
         // When
-        presenter.fetchTheaters()
+        presenter.fetchTheaters(dummyMovie, dummyTheaters)
 
         // Then
         verify { view.showTheaters(any()) }

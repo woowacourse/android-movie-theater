@@ -10,7 +10,9 @@ import io.mockk.verifySequence
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.dummyTheaterUIModel
+import woowacourse.movie.domain.model.dummyMovie
+import woowacourse.movie.domain.model.dummyTheater
+import woowacourse.movie.view.model.MovieFixture
 import woowacourse.movie.view.reservation.detail.ReservationDetailContract
 import woowacourse.movie.view.reservation.detail.ReservationDetailPresenter
 import java.time.LocalDate
@@ -22,7 +24,7 @@ class ReservationDetailPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk()
-        presenter = ReservationDetailPresenter(view)
+        presenter = ReservationDetailPresenter(view, MovieFixture.dummyTheaters)
     }
 
     @Test
@@ -31,7 +33,7 @@ class ReservationDetailPresenterTest {
         every { view.showMovieInfo(any()) } just Runs
 
         // when: 영화 목록을 조회하면
-        presenter.fetchData(dummyTheaterUIModel)
+        presenter.fetchData(dummyMovie, dummyTheater)
 
         // then: 영화 정보를 설정한다
         verify { view.showMovieInfo(any()) }
@@ -41,7 +43,7 @@ class ReservationDetailPresenterTest {
     fun `영화 정보를 불러오지 못하는 경우 다이얼로그를 보여준다`() {
         every { view.showErrorDialog() } just Runs
 
-        presenter.fetchData(null)
+        presenter.fetchData(null, null)
 
         verify { view.showErrorDialog() }
     }
@@ -50,18 +52,18 @@ class ReservationDetailPresenterTest {
     fun `날짜 스피너에서 날짜를 선택하면 해당 날짜의 시간 목록을 보여준다`() {
         // given
         val timetableSlot = slot<List<String>>()
-        val now = LocalDate.of(2025, 4, 25)
+        val now = LocalDate.of(2025, 5, 6)
         every { view.showMovieInfo(any()) } just Runs
-        every { view.updateTimeAdapter(capture(timetableSlot)) } just Runs
+        every { view.updateTimeAdapter(now, capture(timetableSlot)) } just Runs
 
         // when
-        presenter.fetchData(dummyTheaterUIModel)
+        presenter.fetchData(dummyMovie, dummyTheater)
         presenter.selectDate(now)
 
         // then
         verifySequence {
             view.showMovieInfo(any())
-            view.updateTimeAdapter(any())
+            view.updateTimeAdapter(any(), any())
         }
 
         val expected =
@@ -76,7 +78,7 @@ class ReservationDetailPresenterTest {
         every { view.showMovieInfo(any()) } just Runs
         every { view.showTicketCount(capture(countSlot)) } just Runs
 
-        presenter.fetchData(dummyTheaterUIModel)
+        presenter.fetchData(dummyMovie, dummyTheater)
         presenter.plusTicketCount()
 
         verify { view.showTicketCount(any()) }
@@ -90,7 +92,7 @@ class ReservationDetailPresenterTest {
         every { view.showMovieInfo(any()) } just Runs
         every { view.showTicketCount(capture(countSlot)) } just Runs
 
-        presenter.fetchData(dummyTheaterUIModel)
+        presenter.fetchData(dummyMovie, dummyTheater)
         presenter.plusTicketCount()
         presenter.minusTicketCount()
 

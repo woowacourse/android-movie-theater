@@ -9,7 +9,7 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.dummyTicket
+import woowacourse.movie.domain.model.dummyReservationInfo
 import woowacourse.movie.view.reservation.seat.SeatSelectContract
 import woowacourse.movie.view.reservation.seat.SeatSelectPresenter
 
@@ -31,7 +31,7 @@ class SeatSelectPresenterTest {
         every { view.showReservationInfo(capture(slot1), capture(slot2)) } just Runs
 
         // when
-        presenter.fetchData(dummyTicket)
+        presenter.fetchData(dummyReservationInfo)
 
         // then
         assertThat(slot1.captured).isEqualTo("라라랜드")
@@ -55,7 +55,7 @@ class SeatSelectPresenterTest {
         every { view.showTotalPrice(any()) } just Runs
         every { view.updateConfirmButtonEnabled(any()) } just Runs
 
-        presenter.fetchData(dummyTicket)
+        presenter.fetchData(dummyReservationInfo)
         presenter.seatSelect("A1")
 
         verify { view.showSelectedSeat("A1") }
@@ -70,7 +70,7 @@ class SeatSelectPresenterTest {
         every { view.showTotalPrice(any()) } just Runs
         every { view.updateConfirmButtonEnabled(any()) } just Runs
 
-        presenter.fetchData(dummyTicket)
+        presenter.fetchData(dummyReservationInfo)
         presenter.seatSelect("A1")
         presenter.seatSelect("A1")
 
@@ -87,8 +87,8 @@ class SeatSelectPresenterTest {
         every { view.showTotalPrice(any()) } just Runs
         every { view.updateConfirmButtonEnabled(capture(buttonSlot)) } just Runs
 
-        val ticket = dummyTicket.copy(count = 2)
-        presenter.fetchData(ticket)
+        val reservationInfo = dummyReservationInfo.copy(count = 2)
+        presenter.fetchData(reservationInfo)
         presenter.seatSelect("A1")
         presenter.seatSelect("A2")
 
@@ -104,9 +104,9 @@ class SeatSelectPresenterTest {
         every { view.showSelectedSeat(any()) } just Runs
         every { view.showTotalPrice(any()) } just Runs
         every { view.updateConfirmButtonEnabled(any()) } just Runs
-        val ticket = dummyTicket.copy(count = 1)
+        val reservationInfo = dummyReservationInfo.copy(count = 1)
 
-        presenter.fetchData(ticket)
+        presenter.fetchData(reservationInfo)
         presenter.seatSelect("A1")
         presenter.seatSelect("A2")
 

@@ -7,6 +7,7 @@ import woowacourse.movie.view.model.ReservationInfoUiModel
 import woowacourse.movie.view.model.SeatUiModel
 import woowacourse.movie.view.model.SeatsUiModel
 import woowacourse.movie.view.model.TheaterUiModel
+import woowacourse.movie.view.model.TheatersUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -22,17 +23,20 @@ val dummyMovie =
         120,
     )
 
-val dummyTheaterUIModel =
+val dummyTheater =
     TheaterUiModel("선릉", 20)
+
+val dummyTheaters =
+    TheatersUiModel(listOf(dummyTheater))
 
 val dummySeats =
     SeatsUiModel(listOf(SeatUiModel("A1", 10000), SeatUiModel("C1", 15000)))
 
-val dummyReservationInfoUiModel =
+val dummyReservationInfo =
     ReservationInfoUiModel(
         "라라랜드",
         LocalDateTime.of(LocalDate.of(2025, 4, 1), LocalTime.of(14, 0)),
         dummySeats,
-        20000,
+        2,
         "선릉",
     )
