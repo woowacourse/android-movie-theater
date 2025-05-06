@@ -11,20 +11,24 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.view.Extras
-import woowacourse.movie.view.model.ReservationInfo
+import woowacourse.movie.view.model.ReservationInfoUiModel
+import woowacourse.movie.view.model.SeatUiModel
+import woowacourse.movie.view.model.SeatsUiModel
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 class ReservationCompleteActivityTest {
     private lateinit var scenario: ActivityScenario<ReservationCompleteActivity>
-    private val fakeReservationInfo =
-        ReservationInfo(
+    private val dummySeats =
+        SeatsUiModel(listOf(SeatUiModel("A1", 10000), SeatUiModel("C1", 15000)))
+    private val fakeReservationInfoUiModel =
+        ReservationInfoUiModel(
             "라라랜드",
-            LocalDate.of(2025, 4, 1),
-            "18:00",
-            Seats.create(),
-            25000,
+            LocalDateTime.of(LocalDate.of(2025, 4, 1), LocalTime.of(14, 0)),
+            dummySeats,
+            20000,
             "선릉",
         )
     private val fakeContext: Context = ApplicationProvider.getApplicationContext()
@@ -35,14 +39,38 @@ class ReservationCompleteActivityTest {
             ActivityScenario.launch(
                 Intent(fakeContext, ReservationCompleteActivity::class.java).putExtra(
                     Extras.ReservationInfoData.RESERVATION_KEY,
-                    fakeReservationInfo,
+                    fakeReservationInfoUiModel,
                 ),
             )
     }
 
     @Test
-    fun `영화_예매_정보가_화면에_표시된다`() {
+    fun `티켓_취소정책이_화면에_표시된다`() {
+        onView(withId(R.id.tv_reservation_complete_information))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun `예매한_영화_제목이_화면에_표시된다`() {
         onView(withId(R.id.tv_reservation_complete_title))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun `예매한_영화의_날짜와_시간이_화면에_표시된다`() {
+        onView(withId(R.id.tv_reservation_complete_timestamp))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun `예매한_영화의_좌석과_극장_정보가_화면에_표시된다`() {
+        onView(withId(R.id.tv_reservation_complete_count_seats))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun `예매한_티켓_총_가격이_화면에_표시된다`() {
+        onView(withId(R.id.tv_reservation_complete_ticket_price))
             .check(matches(isDisplayed()))
     }
 }
