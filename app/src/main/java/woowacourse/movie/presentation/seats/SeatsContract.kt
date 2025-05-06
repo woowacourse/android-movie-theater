@@ -2,6 +2,7 @@ package woowacourse.movie.presentation.seats
 
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
+import woowacourse.movie.domain.model.seat.SelectedSeats
 
 interface SeatsContract {
     interface View {
@@ -29,6 +30,6 @@ interface SeatsContract {
 
         fun publishMovieTicket()
 
-        fun restoreSeats(seats: List<Seat>)
+        fun restoreSeats(selectedSeats: SelectedSeats?)
     }
 }

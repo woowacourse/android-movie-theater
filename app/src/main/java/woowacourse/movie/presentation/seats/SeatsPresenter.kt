@@ -43,8 +43,9 @@ class SeatsPresenter(
         view.navigateToSummary(movieTicket)
     }
 
-    override fun restoreSeats(seats: List<Seat>) {
-        selectedSeats = SelectedSeats(movieTicket.headCount, seats.toMutableSet())
+    override fun restoreSeats(selectedSeats: SelectedSeats?) {
+        if (selectedSeats == null) return
+        this.selectedSeats = selectedSeats
         selectedSeats.value.forEach { seat -> view.updateSelectedSeat(seat, true) }
         view.updateAmount(selectedSeats.getTotalPrice())
         view.updateConfirmButtonEnabled(selectedSeats.isFull())

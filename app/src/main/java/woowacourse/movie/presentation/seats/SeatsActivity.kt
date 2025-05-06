@@ -11,11 +11,13 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
+import woowacourse.movie.domain.model.seat.SelectedSeats
 import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
 import woowacourse.movie.ui.DataBindingBaseActivity
 import woowacourse.movie.ui.constant.IntentKeys
 import woowacourse.movie.ui.util.TicketUiFormatter
-import woowacourse.movie.ui.util.intentSerializable
+import woowacourse.movie.ui.util.getSerializableCompat
+import woowacourse.movie.ui.util.getSerializableExtraCompat
 import java.io.Serializable
 
 class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
@@ -31,13 +33,13 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        val selectedSeats = presenter.selectedSeats.value
-        outState.putSerializable(SEATS_KEY, selectedSeats as Serializable)
+        val selectedSeats = presenter.selectedSeats
+        outState.putSerializable(SEATS_KEY, selectedSeats)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val selectedSeats = savedInstanceState.getSerializable(SEATS_KEY) as List<Seat>
+        val selectedSeats = savedInstanceState.getSerializableCompat(SEATS_KEY, SelectedSeats::class.java)
         presenter.restoreSeats(selectedSeats)
     }
 
@@ -98,7 +100,7 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
     }
 
     private fun fetchTicketFromIntent(): Boolean {
-        val data = intent.intentSerializable(IntentKeys.TICKET, MovieTicket::class.java)
+        val data = intent.getSerializableExtraCompat(IntentKeys.TICKET, MovieTicket::class.java)
         if (data == null) {
             Toast.makeText(this, TICKET_INTENT_ERROR, Toast.LENGTH_SHORT).show()
             finish()

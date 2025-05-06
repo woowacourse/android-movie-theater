@@ -1,9 +1,11 @@
 package woowacourse.movie.domain.model.seat
 
+import java.io.Serializable
+
 class SelectedSeats(
     private val headCount: Int,
     private val _seats: MutableSet<Seat> = mutableSetOf(),
-) {
+): Serializable {
     val value: List<Seat>
         get() = _seats.toList()
 
