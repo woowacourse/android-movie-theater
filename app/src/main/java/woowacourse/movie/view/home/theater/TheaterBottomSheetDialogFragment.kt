@@ -10,13 +10,12 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.MovieId
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.view.dialog.DialogFactory
-import woowacourse.movie.view.home.movies.OnBottomSheetDialogEventListener
+import woowacourse.movie.view.home.movies.MovieUi
 import woowacourse.movie.view.home.movies.adapter.TheaterAdapter
 import woowacourse.movie.view.home.movies.getMovieById
+import woowacourse.movie.view.reservation.detail.ReservationActivity
 
-class TheaterBottomSheetDialogFragment(
-    val eventListener: OnBottomSheetDialogEventListener,
-) : BottomSheetDialogFragment(), TheaterContract.View {
+class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), TheaterContract.View {
     private val presenter: TheaterContract.Presenter by lazy {
         TheaterPresenter(this)
     }
@@ -40,7 +39,8 @@ class TheaterBottomSheetDialogFragment(
         if (movieId == null) {
             handleInvalidTicket()
         } else {
-            presenter.fetchData(getMovieById(movieId))
+            val movie = getMovieById(movieId)
+            presenter.fetchData(movie)
         }
     }
 
@@ -50,14 +50,17 @@ class TheaterBottomSheetDialogFragment(
         }
     }
 
-    override fun showTheaterList(showings: List<Showings>) {
+    override fun showTheaterList(
+        showings: List<Showings>,
+        movieUi: MovieUi,
+    ) {
         val recyclerView: RecyclerView? = view?.findViewById(R.id.rv_theater_category)
 
         val theaterAdapter: TheaterAdapter =
             TheaterAdapter(
                 object : OnTheaterEventListener {
                     override fun onClickReservation(showings: Showings) {
-                        eventListener.onClick(showings)
+                        navigateToReservation(movieUi, showings)
                         dismiss()
                     }
                 },
@@ -67,14 +70,19 @@ class TheaterBottomSheetDialogFragment(
         theaterAdapter.submitList(showings)
     }
 
+    private fun navigateToReservation(
+        movieUi: MovieUi,
+        showings: Showings,
+    ) {
+        val intent = ReservationActivity.newIntent(requireContext(), movieUi.movieId, showings)
+        startActivity(intent)
+    }
+
     companion object {
         private const val KEY_MOVIE_ID = "MOVIE_ID"
 
-        fun newInstance(
-            movieId: MovieId,
-            eventListener: OnBottomSheetDialogEventListener,
-        ): TheaterBottomSheetDialogFragment {
-            return TheaterBottomSheetDialogFragment(eventListener).apply {
+        fun newInstance(movieId: MovieId): TheaterBottomSheetDialogFragment {
+            return TheaterBottomSheetDialogFragment().apply {
                 arguments =
                     Bundle().apply {
                         putSerializable(KEY_MOVIE_ID, movieId)

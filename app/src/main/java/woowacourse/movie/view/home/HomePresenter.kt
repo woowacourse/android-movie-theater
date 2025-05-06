@@ -8,10 +8,6 @@ class HomePresenter(
 ) : HomeContract.Presenter {
     override fun fetchData() {
         val movies: List<Movie> = Movie.dummy
-        view.showMoviesScreen(movies.map { it.toMovieUi() }) { movieUi ->
-            view.showTheaterSelectDialog(movieUi) { showings ->
-                view.navigateToReservation(movieUi, showings)
-            }
-        }
+        view.showMoviesScreen(movies.map { it.toMovieUi() })
     }
 }
