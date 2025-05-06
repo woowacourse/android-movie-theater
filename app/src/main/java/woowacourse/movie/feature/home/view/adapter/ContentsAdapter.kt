@@ -1,43 +1,26 @@
 package woowacourse.movie.feature.home.view.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
-import woowacourse.movie.feature.model.MovieUiModel
 
 class ContentsAdapter(
-    private val onBookingClick: (MovieUiModel) -> Unit,
-) : ListAdapter<ContentItem, RecyclerView.ViewHolder>(DiffCallback) {
+    private val handler: Handler,
+) : ListAdapter<ContentItem, ContentViewHolder<ContentItem, ViewDataBinding>>(DiffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return when (ContentItemViewType.entries[viewType]) {
-            ContentItemViewType.MOVIE ->
-                MovieViewHolder(
-                    inflater.inflate(R.layout.item_movie, parent, false),
-                )
-
-            ContentItemViewType.ADVERTISEMENT ->
-                AdvertisementViewHolder(
-                    inflater.inflate(R.layout.item_advertisement, parent, false),
-                )
-        }
-    }
+    ): ContentViewHolder<ContentItem, ViewDataBinding> =
+        when (ContentItemViewType.entries[viewType]) {
+            ContentItemViewType.MOVIE -> MovieViewHolder(parent, handler)
+            ContentItemViewType.ADVERTISEMENT -> AdvertisementViewHolder(parent)
+        } as ContentViewHolder<ContentItem, ViewDataBinding>
 
     override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
+        holder: ContentViewHolder<ContentItem, ViewDataBinding>,
         position: Int,
     ) {
-        val contentItem: ContentItem = getItem(position)
-
-        when (holder) {
-            is MovieViewHolder -> holder.bind(contentItem as ContentItem.Movie, onBookingClick)
-            is AdvertisementViewHolder -> holder.bind(contentItem as ContentItem.Advertisement)
-        }
+        holder.bind(getItem(position))
     }
 
     override fun getItemViewType(position: Int): Int = getItem(position).viewType.ordinal
@@ -45,6 +28,8 @@ class ContentsAdapter(
     override fun submitList(list: List<ContentItem?>?) {
         if (itemCount + (list?.size ?: 0) > MAX_ITEM_COUNT) return else super.submitList(list)
     }
+
+    interface Handler : MovieViewHolder.Handler
 
     companion object {
         private const val MAX_ITEM_COUNT = 10000

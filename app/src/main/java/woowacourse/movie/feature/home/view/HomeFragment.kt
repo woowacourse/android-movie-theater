@@ -13,6 +13,7 @@ import woowacourse.movie.feature.home.presenter.HomePresenter
 import woowacourse.movie.feature.home.view.adapter.ContentItem
 import woowacourse.movie.feature.home.view.adapter.ContentsAdapter
 import woowacourse.movie.feature.model.ContentUiModel
+import woowacourse.movie.feature.model.MovieUiModel
 import woowacourse.movie.feature.model.ScreeningUiModel
 import woowacourse.movie.feature.theaters.view.TheatersDialogFragment
 
@@ -20,7 +21,7 @@ class HomeFragment :
     Fragment(),
     HomeContract.View {
     private lateinit var binding: FragmentHomeBinding
-    private val contentsAdapter by lazy { ContentsAdapter { movie -> presenter.selectMovieForBooking(movie) } }
+    private val contentsAdapter by lazy { ContentsAdapter(setupAdapterClickListeners()) }
     private val presenter: HomeContract.Presenter by lazy { HomePresenter(this) }
 
     override fun onCreateView(
@@ -50,4 +51,11 @@ class HomeFragment :
             .newInstance(screenings)
             .show(childFragmentManager, TheatersDialogFragment.TAG)
     }
+
+    private fun setupAdapterClickListeners(): ContentsAdapter.Handler =
+        object : ContentsAdapter.Handler {
+            override fun onBookingClick(movie: MovieUiModel) {
+                presenter.selectMovieForBooking(movie)
+            }
+        }
 }

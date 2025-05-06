@@ -1,42 +1,23 @@
 package woowacourse.movie.feature.home.view.adapter
 
-import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.feature.model.MovieUiModel
 
 class MovieViewHolder(
-    private val view: View,
-) : RecyclerView.ViewHolder(view) {
-    private val title: TextView = view.findViewById(R.id.tv_movie_title)
-    private val poster: ImageView = view.findViewById(R.id.iv_movie_poster)
-    private val date: TextView = view.findViewById(R.id.tv_movie_date)
-    private val runningTime: TextView = view.findViewById(R.id.tv_movie_running_time)
-    private val bookingButton: Button = view.findViewById(R.id.btn_movie_booking)
-
-    fun bind(
-        movie: ContentItem.Movie,
-        onBookingClick: (MovieUiModel) -> Unit,
+    parent: ViewGroup,
+    private val handler: Handler,
+) : ContentViewHolder<ContentItem.Movie, ItemMovieBinding>(
+        ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false),
     ) {
-        title.text = movie.value.title
-        poster.setImageResource(movie.value.poster)
+    override fun bind(item: ContentItem.Movie) {
+        super.bind(item)
+        binding.movie = item.value
+        binding.handler = handler
+    }
 
-        date.text =
-            view.context.getString(
-                R.string.movies_movie_date_with_tilde,
-                movie.value.startDate,
-                movie.value.endDate,
-            )
-
-        runningTime.text =
-            view.context.getString(
-                R.string.movies_movie_running_time,
-                movie.value.runningTime,
-            )
-
-        bookingButton.setOnClickListener { onBookingClick(movie.value) }
+    interface Handler {
+        fun onBookingClick(movie: MovieUiModel)
     }
 }
