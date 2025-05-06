@@ -124,3 +124,5 @@
 - [x] refactor: 하드코딩된 text strings.xml로 변경
 
 - [x] fix: Column의 검증 조건을 0 이상에서 1 이상으로 수정
+
+- [x] refactor: therter에서 theater로 오타 수정
