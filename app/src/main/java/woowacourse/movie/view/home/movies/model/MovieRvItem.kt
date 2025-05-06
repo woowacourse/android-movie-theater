@@ -2,7 +2,7 @@ package woowacourse.movie.view.home.movies.model
 
 import androidx.annotation.LayoutRes
 import woowacourse.movie.R
-import woowacourse.movie.view.bindingadapter.ImageSource
+import woowacourse.movie.view.core.bindingadapter.ImageSource
 
 sealed class MovieRvItem(val viewType: ViewType) {
     data class MovieItem(

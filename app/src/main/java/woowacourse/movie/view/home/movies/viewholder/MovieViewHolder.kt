@@ -3,7 +3,7 @@ package woowacourse.movie.view.home.movies.viewholder
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import woowacourse.movie.databinding.MovieItemBinding
-import woowacourse.movie.view.base.BaseViewHolder
+import woowacourse.movie.view.core.base.BaseViewHolder
 import woowacourse.movie.view.home.movies.model.MovieRvItem
 
 class MovieViewHolder(

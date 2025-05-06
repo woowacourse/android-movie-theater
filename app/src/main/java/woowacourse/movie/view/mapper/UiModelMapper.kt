@@ -2,8 +2,8 @@ package woowacourse.movie.view.mapper
 
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.view.StringFormatter
-import woowacourse.movie.view.bindingadapter.ImageSource
+import woowacourse.movie.view.core.util.StringFormatter
+import woowacourse.movie.view.core.bindingadapter.ImageSource
 import woowacourse.movie.view.uiModel.MovieUiModel
 import woowacourse.movie.view.uiModel.TicketUiModel
 

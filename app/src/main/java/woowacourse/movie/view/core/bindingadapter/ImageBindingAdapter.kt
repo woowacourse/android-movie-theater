@@ -1,8 +1,8 @@
-package woowacourse.movie.view.bindingadapter
+package woowacourse.movie.view.core.bindingadapter
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import woowacourse.movie.view.ext.toDrawableResourceId
+import woowacourse.movie.view.core.ext.toDrawableResourceId
 
 sealed interface ImageSource {
     data class Url(val url: String) : ImageSource

@@ -2,7 +2,7 @@ package woowacourse.movie.view.home.movies.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.view.base.BaseViewHolder
+import woowacourse.movie.view.core.base.BaseViewHolder
 import woowacourse.movie.view.home.movies.model.MovieRvItem
 import woowacourse.movie.view.home.movies.viewholder.AdvertiseViewHolder
 import woowacourse.movie.view.home.movies.viewholder.MovieViewHolder

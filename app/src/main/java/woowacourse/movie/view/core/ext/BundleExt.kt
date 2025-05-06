@@ -1,4 +1,4 @@
-package woowacourse.movie.view.ext
+package woowacourse.movie.view.core.ext
 
 import android.os.Build
 import android.os.Bundle

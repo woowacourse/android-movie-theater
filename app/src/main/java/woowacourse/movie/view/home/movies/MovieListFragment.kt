@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
-import woowacourse.movie.view.ext.getParcelableOrNull
+import woowacourse.movie.view.core.ext.getParcelableOrNull
 import woowacourse.movie.view.handler.MovieAdapterEventHandler
 import woowacourse.movie.view.home.booking.BookingActivity
 import woowacourse.movie.view.home.movies.adapter.MovieAdapter

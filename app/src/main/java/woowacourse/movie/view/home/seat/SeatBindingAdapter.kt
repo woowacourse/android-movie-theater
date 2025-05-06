@@ -1,4 +1,4 @@
-package woowacourse.movie.view.bindingadapter
+package woowacourse.movie.view.home.seat
 
 import android.widget.TableLayout
 import android.widget.TableRow
@@ -8,7 +8,6 @@ import androidx.databinding.BindingAdapter
 import woowacourse.movie.domain.model.seat.Column
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
-import woowacourse.movie.view.home.seat.SeatRow
 
 @BindingAdapter("onClickSeat")
 fun TableLayout.seatClickListener(handler: SeatRow.Handler) {

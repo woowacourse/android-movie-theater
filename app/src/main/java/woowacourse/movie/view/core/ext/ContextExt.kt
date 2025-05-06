@@ -1,4 +1,4 @@
-package woowacourse.movie.view.ext
+package woowacourse.movie.view.core.ext
 
 import android.content.Context
 import android.widget.Toast

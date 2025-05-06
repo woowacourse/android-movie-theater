@@ -1,6 +1,6 @@
 package woowacourse.movie.view.uiModel
 
-import woowacourse.movie.view.bindingadapter.ImageSource
+import woowacourse.movie.view.core.bindingadapter.ImageSource
 
 data class MovieUiModel(
     val title: String,

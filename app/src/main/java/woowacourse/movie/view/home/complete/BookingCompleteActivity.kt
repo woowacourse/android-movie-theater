@@ -12,8 +12,8 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.view.ext.getSerializableOrNull
-import woowacourse.movie.view.ext.showToastFromResource
+import woowacourse.movie.view.core.ext.getSerializableOrNull
+import woowacourse.movie.view.core.ext.showToastFromResource
 import woowacourse.movie.view.mapper.toUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {

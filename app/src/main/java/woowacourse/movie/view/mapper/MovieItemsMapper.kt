@@ -2,8 +2,8 @@ package woowacourse.movie.view.mapper
 
 import woowacourse.movie.domain.model.Advertisement
 import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.view.StringFormatter
-import woowacourse.movie.view.bindingadapter.ImageSource
+import woowacourse.movie.view.core.util.StringFormatter
+import woowacourse.movie.view.core.bindingadapter.ImageSource
 import woowacourse.movie.view.home.movies.model.MovieRvItem
 
 fun Movie.toItem(): MovieRvItem.MovieItem {

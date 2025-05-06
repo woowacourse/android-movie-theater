@@ -15,8 +15,8 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.view.ext.getSerializableOrNull
-import woowacourse.movie.view.ext.showToastFromResource
+import woowacourse.movie.view.core.ext.getSerializableOrNull
+import woowacourse.movie.view.core.ext.showToastFromResource
 import woowacourse.movie.view.handler.BookingActionHandler
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.home.seat.SeatActivity
