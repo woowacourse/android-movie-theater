@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.movies.cinema.CinemaSeclectionFragment">
+    tools:context=".view.movies.cinema.CinemaSelectionFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_cinema"

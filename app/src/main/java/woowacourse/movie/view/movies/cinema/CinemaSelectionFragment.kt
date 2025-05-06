@@ -12,14 +12,14 @@ import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.view.extension.getParcelableCompat
 import woowacourse.movie.view.reservation.ReservationActivity
 
-class CinemaSeclectionFragment : BottomSheetDialogFragment() {
+class CinemaSelectionFragment : BottomSheetDialogFragment() {
     private lateinit var screenings: List<Screening>
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? = inflater.inflate(R.layout.fragment_cinema_seclection, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_cinema_selection, container, false)
 
     override fun onViewCreated(
         view: View,
@@ -56,8 +56,8 @@ class CinemaSeclectionFragment : BottomSheetDialogFragment() {
     companion object {
         private const val SCREENING_KEY = "SCREENING_KEY"
 
-        fun newInstance(screenings: List<Screening>): CinemaSeclectionFragment {
-            val fragment = CinemaSeclectionFragment()
+        fun newInstance(screenings: List<Screening>): CinemaSelectionFragment {
+            val fragment = CinemaSelectionFragment()
             val args = Bundle()
             args.putParcelableArray(SCREENING_KEY, screenings.toTypedArray())
             fragment.arguments = args

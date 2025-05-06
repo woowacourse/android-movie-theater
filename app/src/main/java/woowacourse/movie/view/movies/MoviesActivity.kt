@@ -7,7 +7,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMoviesBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.view.base.BaseActivity
-import woowacourse.movie.view.movies.cinema.CinemaSeclectionFragment
+import woowacourse.movie.view.movies.cinema.CinemaSelectionFragment
 
 class MoviesActivity :
     BaseActivity<ActivityMoviesBinding>(R.layout.activity_movies),
@@ -27,7 +27,7 @@ class MoviesActivity :
                 object : OnMovieEventListener {
                     override fun onReserveButtonClick(movie: Movie) {
                         val instance =
-                            CinemaSeclectionFragment.newInstance(
+                            CinemaSelectionFragment.newInstance(
                                 movie.screening,
                             )
                         instance.show(supportFragmentManager, "CinemaSelectionFragment")
