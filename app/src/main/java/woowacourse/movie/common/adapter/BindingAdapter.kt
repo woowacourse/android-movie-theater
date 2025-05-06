@@ -11,7 +11,7 @@ import woowacourse.movie.presentation.seat.model.toUiModel
 
 @BindingAdapter("posterImage")
 fun ImageView.setPosterImage(movie: Movie?) {
-    if (movie == null) return
+    movie ?: return
     setImageResource(MovieData.getDrawableResId(movie))
 }
 
@@ -23,6 +23,7 @@ fun ImageView.setImageViewResource(
 }
 
 @BindingAdapter("seats")
-fun TextView.setSeats(seats: Seats) {
+fun TextView.setSeats(seats: Seats?) {
+    seats ?: return
     text = seats.seats.map { it.toUiModel() }.joinToString()
 }
