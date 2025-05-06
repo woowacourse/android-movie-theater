@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
@@ -36,13 +35,7 @@ class TheaterBottomSheetDialogFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_theater_bottom_sheet_dialog,
-                container,
-                false,
-            )
+        binding = FragmentTheaterBottomSheetDialogBinding.inflate(layoutInflater)
         return binding.root
     }
 

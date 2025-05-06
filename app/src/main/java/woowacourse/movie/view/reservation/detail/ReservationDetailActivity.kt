@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.R.layout
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
@@ -33,7 +32,8 @@ class ReservationDetailActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation)
+        binding = ActivityReservationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         binding.presenter = presenter
         ViewCompat.setOnApplyWindowInsetsListener(binding.svReservation) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

@@ -5,7 +5,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
@@ -29,7 +28,8 @@ class MoviesActivity : AppCompatActivity() {
     }
 
     private fun setupBinding() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movies)
+        binding = ActivityMoviesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     private fun setupWindowInsets() {
