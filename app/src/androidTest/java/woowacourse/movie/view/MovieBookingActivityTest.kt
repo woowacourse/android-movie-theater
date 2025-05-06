@@ -33,15 +33,16 @@ class MovieBookingActivityTest {
                 MovieBookingActivity::class.java,
             ).apply {
                 putExtra("movie", MovieFixture.MOVIE)
+                putExtra("theater", MovieFixture.THEATER)
             }
         scenario = ActivityScenario.launch(intent)
     }
 
     @Test
     fun 영화정보가_올바르게_표시된다() {
-        onView(withText(MovieFixture.HARRY_POTTER_TITLE)).check(matches(isDisplayed()))
-        onView(withText(MovieFixture.HARRY_POTTER_DATE)).check(matches(isDisplayed()))
-        onView(withText(MovieFixture.HARRY_POTTER_RUNNING_TIME)).check(matches(isDisplayed()))
+        onView(withId(R.id.movie_title)).check(matches(isDisplayed()))
+        onView(withId(R.id.movie_date)).check(matches(isDisplayed()))
+        onView(withId(R.id.movie_running_time)).check(matches(isDisplayed()))
     }
 
     @Test
