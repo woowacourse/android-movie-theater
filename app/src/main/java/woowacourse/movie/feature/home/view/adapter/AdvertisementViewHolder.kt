@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 
-internal class AdvertisementViewHolder(
+class AdvertisementViewHolder(
     private val view: View,
 ) : RecyclerView.ViewHolder(view) {
     fun bind(advertisement: MovieItem.Advertisement) {

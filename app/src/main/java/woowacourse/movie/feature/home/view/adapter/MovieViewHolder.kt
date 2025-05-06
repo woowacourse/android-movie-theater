@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.feature.model.MovieUiModel
 
-internal class MovieViewHolder(
+class MovieViewHolder(
     private val view: View,
 ) : RecyclerView.ViewHolder(view) {
     private val title: TextView = view.findViewById(R.id.tv_movie_title)
