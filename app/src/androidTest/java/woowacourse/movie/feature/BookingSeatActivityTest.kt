@@ -54,7 +54,7 @@ class BookingSeatActivityTest {
             .perform(click())
 
         onView(withId(R.id.tv_booking_seat_movie_price))
-            .check(matches(withText("10000원")))
+            .check(matches(withText("10,000원")))
     }
 
     @Test
