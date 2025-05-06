@@ -38,135 +38,137 @@
         android:background="@color/white"
         tools:context=".presentation.view.reservation.detail.ReservationDetailActivity">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv_reservation_poster"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:contentDescription="@string/movie_poster"
                 android:scaleType="centerCrop"
                 app:bitmapFromRes="@{movie.poster.toInt()}"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/harrypotter" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_reservation_title"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="28dp"
+                android:text="@{movie.title}"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/iv_reservation_poster"
+                tools:text="해리 포터와 마법사의 돌" />
+
+            <TextView
+                android:id="@+id/tv_screening_period"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="28dp"
+                android:text="@{String.format(@string/movie_date, movie.screeningPeriod.formatedStartDate(@string/movie_screening_period_format), movie.screeningPeriod.formatedEndDate(@string/movie_screening_period_format))}"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/tv_reservation_title"
+                tools:text="상영일: 2025.4.1 ~ 2025.4.25" />
+
+            <TextView
+                android:id="@+id/tv_reservation_running_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:text="@{String.format(@string/running_time, movie.runningTime)}"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/tv_screening_period"
+                tools:text="러닝타임: 152분" />
+
+            <Spinner
+                android:id="@+id/spinner_reservation_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="36dp"
+                app:items="@{dates}"
+                app:layout_constraintEnd_toStartOf="@id/spinner_reservation_time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_reservation_running_time"
+                app:selectedItem="@{selectedDate}" />
+
+            <Spinner
+                android:id="@+id/spinner_reservation_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                app:items="@{times}"
+                app:layout_constraintBottom_toBottomOf="@id/spinner_reservation_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/spinner_reservation_date"
+                app:layout_constraintTop_toTopOf="@id/spinner_reservation_date"
+                app:selectedItem="@{selectedTime}" />
+
+            <Button
+                android:id="@+id/btn_reservation_count_minus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:enabled="@{!reservationCount.isMin()}"
+                android:text="@string/reservation_count_minus"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/tv_reservation_count"
+                app:layout_constraintEnd_toStartOf="@id/tv_reservation_count"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_reservation_count" />
+
+            <TextView
+                android:id="@+id/tv_reservation_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="28dp"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:paddingHorizontal="20dp">
+                android:text="@{String.valueOf(reservationCount.count)}"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@id/btn_reservation_count_plus"
+                app:layout_constraintStart_toEndOf="@id/btn_reservation_count_minus"
+                app:layout_constraintTop_toBottomOf="@id/spinner_reservation_date"
+                tools:text="1" />
 
-                <TextView
-                    android:id="@+id/tv_reservation_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{movie.title}"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    tools:text="해리 포터와 마법사의 돌" />
+            <Button
+                android:id="@+id/btn_reservation_count_plus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:enabled="@{!reservationCount.isMax()}"
+                android:text="@string/reservation_count_plus"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/tv_reservation_count"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_reservation_count"
+                app:layout_constraintTop_toTopOf="@id/tv_reservation_count" />
 
-                <TextView
-                    android:id="@+id/tv_screening_period"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="29dp"
-                    android:text="@{String.format(@string/movie_date, movie.screeningPeriod.formatedStartDate(@string/movie_screening_period_format), movie.screeningPeriod.formatedEndDate(@string/movie_screening_period_format))}"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    tools:text="상영일: 2025.4.1 ~ 2025.4.25" />
+            <Button
+                android:id="@+id/btn_reservation_finish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/reservation_finish_button_text"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_reservation_count" />
 
-                <TextView
-                    android:id="@+id/tv_reservation_running_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{String.format(@string/running_time, movie.runningTime)}"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    tools:text="러닝타임: 152분" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="37dp"
-                    android:orientation="horizontal">
-
-                    <Spinner
-                        android:id="@+id/spinner_reservation_date"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:items="@{dates}"
-                        app:selectedItem="@{selectedDate}" />
-
-                    <Space
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content" />
-
-                    <Spinner
-                        android:id="@+id/spinner_reservation_time"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:items="@{times}"
-                        app:selectedItem="@{selectedTime}" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btn_reservation_count_minus"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:enabled="@{!reservationCount.isMin()}"
-                        android:text="@string/reservation_count_minus"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_reservation_count"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="center"
-                        android:text="@{String.valueOf(reservationCount.count)}"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        tools:text="1" />
-
-                    <Button
-                        android:id="@+id/btn_reservation_count_plus"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/reservation_count_plus"
-                        android:enabled="@{!reservationCount.isMax()}"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/btn_reservation_finish"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/reservation_finish_button_text"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 </layout>
