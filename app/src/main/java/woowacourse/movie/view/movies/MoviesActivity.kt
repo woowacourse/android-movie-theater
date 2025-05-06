@@ -20,7 +20,7 @@ class MoviesActivity :
     }
 
     override fun showMovies(movies: List<MovieListItem>) {
-        val lvMovie = findViewById<RecyclerView>(R.id.rv_movie)
+        val lvMovie = findViewById<RecyclerView>(R.id.rv_main_movies)
         lvMovie.adapter =
             MovieListAdapter(
                 movies,
