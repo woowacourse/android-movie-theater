@@ -20,3 +20,4 @@
 - [x] 탭을 savedInstanceState가 없을 시점에만 main으로 변경하도록 수정
 - [x] fragment를 재사용하도록 수정
 - [x] adapter 생성하는 로직과 items를 초기화하는 로직분리
+- [x] Cinema를 class로 변경
