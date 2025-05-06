@@ -16,8 +16,8 @@ object DefaultMovieData {
                         ScreeningInfo(
                             Movie(
                                 title = "해리 포터와 마법사의 돌",
-                                screeningStartDate = LocalDate.of(2025, 4, 1),
-                                screeningEndDate = LocalDate.of(2025, 5, 30),
+                                screeningStartDate = LocalDate.of(2025, 5, 10),
+                                screeningEndDate = LocalDate.of(2025, 5, 15),
                                 runningTime = 152,
                             ),
                             listOf(LocalTime.of(11, 0), LocalTime.of(15, 0)),
