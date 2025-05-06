@@ -30,7 +30,7 @@ class MovieBookingActivity : AppCompatActivity() {
             )
 
         applyWindowInsets()
-        
+
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)

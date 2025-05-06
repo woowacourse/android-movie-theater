@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
@@ -61,11 +60,10 @@ class TheaterBottomSheetDialogFragment :
     ) {
         if (theater.theaterSchedules[movieId].isNotEmpty()) {
             startActivity(BookingActivity.newIntent(binding.root.context, theater, movieId))
-            parentFragmentManager.commit {
-                remove(this@TheaterBottomSheetDialogFragment)
-            }
+            dismiss()
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
