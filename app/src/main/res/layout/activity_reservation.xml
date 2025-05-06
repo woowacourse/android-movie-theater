@@ -13,6 +13,14 @@
             name="presenter"
             type="woowacourse.movie.view.reservation.detail.ReservationDetailPresenter" />
 
+        <variable
+            name="selectedDate"
+            type="java.time.LocalDate" />
+
+        <variable
+            name="selectedTime"
+            type="java.time.LocalTime" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

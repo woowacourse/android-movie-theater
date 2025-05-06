@@ -9,19 +9,6 @@ import woowacourse.movie.domain.model.Theaters
 import java.time.LocalDate
 
 object MovieFixture {
-    val dummyTheaters: Theaters =
-        Theaters(
-            listOf("선릉", "잠실", "강남").map { theaterName ->
-                val schedule = dummyTheaterMap[theaterName] ?: emptyMap()
-                val screenings =
-                    schedule.mapNotNull { (title, times) ->
-                        val movie = dummyMovies[title] ?: error("Movie not found: $title")
-                        if (times.isEmpty()) null else Screening(movie, times)
-                    }
-                Theater(theaterName, screenings)
-            },
-        )
-
     private val dummyMovies =
         mapOf(
             "라라랜드" to
@@ -100,5 +87,18 @@ object MovieFixture {
                     "줄무늬 파자마를 입은 소년" to listOf(19),
                     "야당" to listOf(10, 14),
                 ),
+        )
+
+    val dummyTheaters: Theaters =
+        Theaters(
+            listOf("선릉", "잠실", "강남").map { theaterName ->
+                val schedule = dummyTheaterMap[theaterName] ?: emptyMap()
+                val screenings =
+                    schedule.mapNotNull { (title, times) ->
+                        val movie = dummyMovies[title] ?: error("Movie not found: $title")
+                        if (times.isEmpty()) null else Screening(movie, times)
+                    }
+                Theater(theaterName, screenings)
+            },
         )
 }
