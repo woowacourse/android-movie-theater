@@ -15,17 +15,16 @@ class TheaterSchedules(
         movieId: Long,
         dateTime: LocalDateTime = now,
     ): Int {
-        return schedules[movieId]?.filter { movieSchedule -> movieSchedule.isScreeningDate(dateTime) }?.size
-            ?: 0
+        val availableSchedules = availableScreeningMovieSchedules(movieId, dateTime)
+        return availableSchedules.size
     }
 
     fun screeningDates(
         movieId: Long,
         dateTime: LocalDateTime = LocalDateTime.now(),
     ): List<LocalDate> {
-        val movieSchedules = schedules[movieId] ?: return emptyList()
-        return movieSchedules.filter { movieSchedule -> movieSchedule.isScreeningDate(dateTime) }
-            .map { movieSchedule -> movieSchedule.screeningDate }
+        val movieSchedules = availableScreeningMovieSchedules(movieId, dateTime)
+        return movieSchedules.map { movieSchedule -> movieSchedule.screeningDate }
             .distinct()
             .sorted()
     }
@@ -34,7 +33,7 @@ class TheaterSchedules(
         movieId: Long,
         dateTime: LocalDateTime,
     ): List<LocalTime> {
-        val movieSchedules = schedules[movieId] ?: return emptyList()
+        val movieSchedules = availableScreeningMovieSchedules(movieId, dateTime)
 
         if (isToday(dateTime)) {
             return movieSchedules.filter { movieSchedule ->
@@ -51,7 +50,7 @@ class TheaterSchedules(
         movieId: Long,
         dateTime: LocalDateTime,
     ): MovieSchedule? {
-        val movieSchedules = schedules[movieId] ?: return null
+        val movieSchedules = availableScreeningMovieSchedules(movieId, dateTime)
         return movieSchedules.firstOrNull { movieSchedule -> movieSchedule.isEqual(dateTime) }
     }
 
@@ -59,5 +58,13 @@ class TheaterSchedules(
 
     private fun isToday(dateTime: LocalDateTime): Boolean {
         return now.toLocalDate().isEqual(dateTime.toLocalDate())
+    }
+
+    private fun availableScreeningMovieSchedules(
+        movieId: Long,
+        dateTime: LocalDateTime,
+    ): List<MovieSchedule> {
+        return schedules[movieId]?.filter { movieSchedule -> movieSchedule.isScreeningDate(dateTime) }
+            ?: emptyList()
     }
 }
