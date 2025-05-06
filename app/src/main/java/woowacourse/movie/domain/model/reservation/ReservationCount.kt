@@ -8,11 +8,14 @@ value class ReservationCount(
         require(value >= RESERVATION_MIN_COUNT) { INVALID_RESERVATION_COUNT_MESSAGE }
     }
 
-    operator fun plus(other: Int): ReservationCount = ReservationCount(value + other)
-
-    operator fun minus(other: Int): ReservationCount = ReservationCount(value - other)
+    operator fun plus(other: Int): ReservationCount =
+        runCatching {
+            ReservationCount(value + other)
+        }.getOrDefault(this)
 
     fun isMin(): Boolean = value == RESERVATION_MIN_COUNT
+
+    fun isMax(max: Int): Boolean = value == max
 
     companion object {
         const val RESERVATION_MIN_COUNT = 1

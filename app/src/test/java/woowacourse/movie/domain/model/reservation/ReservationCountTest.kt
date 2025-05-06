@@ -37,21 +37,31 @@ class ReservationCountTest {
     @Test
     fun `현재 예매 인원에서 Int를 뺄 수 있다`() {
         val count = ReservationCount(5)
-        val result = count - 2
+        val result = count + -2
         val expected = 3
         assertThat(result.value).isEqualTo(expected)
     }
 
     @Test
-    fun `빼기 연산 결과가 최소값 미만이면 예외를 던진다`() {
-        assertThrows<IllegalArgumentException> {
-            ReservationCount(2) - 2
-        }
+    fun `빼기 연산 결과가 최소값 미만이면 값이 변경되지 않는다`() {
+        val count = ReservationCount(2)
+        val result = count + -2
+
+        assertThat(result).isEqualTo(count)
     }
 
     @Test
     fun `현재 예매 인원이 최소 인원인 지 확인할 수 있다`() {
         val count = ReservationCount(1)
         assertThat(count.isMin()).isTrue()
+    }
+
+    @Test
+    fun `현재 예매 인원이 최대 인원인 지 확인할 수 있다`() {
+        val max = 3
+        val count = ReservationCount(max)
+        val result = count.isMax(max)
+
+        assertThat(result).isTrue()
     }
 }
