@@ -1,5 +1,11 @@
-package woowacourse.movie.domain.model
+package woowacourse.movie.fixture
 
+import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.MovieSchedule
+import woowacourse.movie.domain.model.ScreeningPeriod
+import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.TheaterSchedules
+import woowacourse.movie.domain.model.Theaters
 import java.time.LocalDate
 import java.time.LocalDateTime
 
