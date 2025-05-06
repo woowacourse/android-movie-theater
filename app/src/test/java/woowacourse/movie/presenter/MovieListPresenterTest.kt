@@ -1,13 +1,13 @@
-package woowacourse.movie.presenter
+ package woowacourse.movie.presenter
 
-import io.mockk.mockk
-import io.mockk.verify
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import woowacourse.movie.ui.movielist.contract.MovieListContract
-import woowacourse.movie.ui.movielist.presenter.MovieListPresenter
+ import io.mockk.mockk
+ import io.mockk.verify
+ import org.junit.jupiter.api.BeforeEach
+ import org.junit.jupiter.api.Test
+ import woowacourse.movie.ui.movielist.contract.MovieListContract
+ import woowacourse.movie.ui.movielist.presenter.MovieListPresenter
 
-class MovieListPresenterTest {
+ class MovieListPresenterTest {
     private lateinit var presenter: MovieListPresenter
     private lateinit var view: MovieListContract.View
 
@@ -18,8 +18,8 @@ class MovieListPresenterTest {
     }
 
     @Test
-    fun `프레젠터의 loadMovieList가 호출되면 뷰의 setMoveListItems이 호출된다`() {
+    fun `프레젠터의 loadMovieList가 호출되면 뷰의 showMoveListItems가 호출된다`() {
         presenter.loadMovieList()
-        verify { view.setMoveListItems(any()) }
+        verify { view.showMoveListItems(any()) }
     }
-}
+ }
