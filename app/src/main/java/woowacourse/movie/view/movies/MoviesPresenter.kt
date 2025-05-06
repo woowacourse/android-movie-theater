@@ -15,10 +15,16 @@ class MoviesPresenter(
         val result = mutableListOf<MovieListItem>()
         movies.forEachIndexed { index, movie ->
             result.add(MovieListItem.MovieItem(movie))
-            if ((index + 1) % 3 == 0) {
+            if ((index + INDEX_INTERVAL) % AD_INTERVAL == ZERO) {
                 result.add(MovieListItem.AdItem(DummyAdvertisement.advertisement))
             }
         }
         return result
+    }
+
+    companion object {
+        private const val INDEX_INTERVAL = 1
+        private const val AD_INTERVAL = 3
+        private const val ZERO = 0
     }
 }
