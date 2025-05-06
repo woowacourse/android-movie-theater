@@ -5,8 +5,11 @@ import androidx.databinding.BindingAdapter
 import woowacourse.movie.presentation.common.model.PosterUiModel
 
 @BindingAdapter("poster")
-fun ImageView.setImageViewResource(poster: PosterUiModel) {
+fun setImageViewResource(
+    imageView: ImageView,
+    poster: PosterUiModel,
+) {
     if (poster is PosterUiModel.Resource) {
-        this.setImageResource(poster.resId)
+        imageView.setImageResource(poster.resId)
     }
 }

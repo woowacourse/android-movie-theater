@@ -5,6 +5,9 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 
 @BindingAdapter("srcBitmap")
-fun ImageView.setImageViewResource(bitmap: Bitmap) {
-    this.setImageBitmap(bitmap)
+fun setImageViewResource(
+    imageView: ImageView,
+    bitmap: Bitmap,
+) {
+    imageView.setImageBitmap(bitmap)
 }

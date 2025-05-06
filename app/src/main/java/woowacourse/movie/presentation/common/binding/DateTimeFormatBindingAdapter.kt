@@ -6,7 +6,8 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @BindingAdapter("dateTime", "formatPattern")
-fun TextView.setFormattedDateTime(
+fun setFormattedDateTime(
+    textView: TextView,
     dateTime: LocalDateTime,
     formatPattern: String?,
 ) {
@@ -14,8 +15,8 @@ fun TextView.setFormattedDateTime(
         val formatter = DateTimeFormatter.ofPattern(formatPattern)
         dateTime.format(formatter)
     }.onFailure {
-        this.text = dateTime.toString()
+        textView.text = dateTime.toString()
     }.onSuccess {
-        this.text = it
+        textView.text = it
     }
 }
