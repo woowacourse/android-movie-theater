@@ -10,6 +10,7 @@ import androidx.test.filters.LargeTest
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.movie.MainActivity
 import woowacourse.movie.MovieFixture
 import woowacourse.movie.R
 
@@ -17,7 +18,7 @@ import woowacourse.movie.R
 @LargeTest
 class MovieTicketActivityTest {
     @get:Rule
-    val activityRule = ActivityScenarioRule(MovieActivity::class.java)
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     fun `초기_화면에는_영화_목록이_있다`() {
