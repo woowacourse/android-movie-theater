@@ -17,9 +17,9 @@ class BookingStatusTest {
 
         val newBookingStatus = bookingStatus.book()
 
-        val actual = newBookingStatus.isBooked
+        val actual = newBookingStatus
 
-        Assertions.assertThat(actual).isTrue
+        Assertions.assertThat(actual).isEqualTo(BookingResult.AlreadyBooked)
     }
 
     @Test
@@ -29,9 +29,11 @@ class BookingStatusTest {
         val bookedTime = LocalDateTime.of(2025, 4, 1, 9, 0, 0)
         val bookingStatus = BookingStatus(movie, true, seat, bookedTime)
 
-        assertThrows<IllegalStateException> {
-            bookingStatus.book()
-        }
+        val newBookingStatus = bookingStatus.book()
+
+        val actual = newBookingStatus
+
+        Assertions.assertThat(actual).isEqualTo(BookingResult.AlreadyBooked)
     }
 
     @Test
@@ -43,7 +45,12 @@ class BookingStatusTest {
 
         val actual = bookingStatus.cancel()
 
-        Assertions.assertThat(actual.isBooked).isFalse
+        when (actual) {
+            is BookingResult.Success -> {
+                Assertions.assertThat(actual.status.isBooked).isFalse()
+            }
+            else -> throw AssertionError("예매가 되어있지 않습니다.")
+        }
     }
 
     @Test

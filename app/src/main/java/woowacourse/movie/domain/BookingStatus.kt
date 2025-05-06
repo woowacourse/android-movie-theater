@@ -21,26 +21,23 @@ data class BookingStatus(
         return seat.calculateTicketPrices()
     }
 
-    fun book(): BookingStatus {
+    fun book(): BookingResult {
         return if (!isBooked) {
-            this.copy(isBooked = true)
+            BookingResult.Success(this.copy(isBooked = true))
         } else {
-            throw IllegalStateException(ERROR_ALREADY_BOOKED)
+            BookingResult.AlreadyBooked
         }
     }
 
-    fun cancel(): BookingStatus {
+    fun cancel(): BookingResult {
         return if (isBooked) {
-            this.copy(isBooked = false)
+            BookingResult.Success(this.copy(isBooked = false))
         } else {
-            throw IllegalStateException(ERROR_NOT_BOOKED)
+            BookingResult.NotBook
         }
     }
 
     companion object {
-        private const val ERROR_ALREADY_BOOKED = "이미 예매된 상태입니다."
-        private const val ERROR_NOT_BOOKED = "예매가 되어있지 않습니다"
-
         private fun from(
             movie: Movie,
             count: Int,
@@ -62,4 +59,10 @@ data class BookingStatus(
             bookedTime: LocalTime,
         ): BookingStatus = from(movie, count, bookedDate, bookedTime)
     }
+}
+
+sealed class BookingResult {
+    data class Success(val status: BookingStatus) : BookingResult()
+    object AlreadyBooked : BookingResult()
+    object NotBook : BookingResult()
 }
