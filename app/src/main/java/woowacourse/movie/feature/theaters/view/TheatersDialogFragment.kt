@@ -11,19 +11,24 @@ import woowacourse.movie.databinding.DialogFragmentTheatersBinding
 import woowacourse.movie.feature.model.ScreeningUiModel
 import woowacourse.movie.feature.theaters.view.adapter.TheaterAdapter
 
-class TheatersDialogFragment(
-    screenings: List<ScreeningUiModel>,
-    navigateToBookingDetail: (ScreeningUiModel) -> Unit,
-) : BottomSheetDialogFragment() {
-    private val theaterAdapter: TheaterAdapter by lazy { TheaterAdapter(screenings, navigateToBookingDetail) }
+class TheatersDialogFragment : BottomSheetDialogFragment() {
+    private lateinit var theaterAdapter: TheaterAdapter
     private lateinit var binding: DialogFragmentTheatersBinding
+    private var screenings: List<ScreeningUiModel> = emptyList()
+    var navigateToBookingDetail: ((ScreeningUiModel) -> Unit)? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        screenings = requireArguments().getParcelableArrayList(ARG_SCREENINGS) ?: emptyList()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_fragment_theaters, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.dialog_fragment_theaters, container, false)
         return binding.root
     }
 
@@ -32,10 +37,24 @@ class TheatersDialogFragment(
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        theaterAdapter =
+            TheaterAdapter(screenings) { screening ->
+                navigateToBookingDetail?.invoke(screening)
+            }
+
         binding.theaterAdapter = theaterAdapter
     }
 
     companion object {
+        private const val ARG_SCREENINGS = "ARG_SCREENINGS"
         const val TAG = "SCREENS_DIALOG_FRAGMENT"
+
+        fun newInstance(screenings: List<ScreeningUiModel>): TheatersDialogFragment =
+            TheatersDialogFragment().apply {
+                arguments =
+                    Bundle().apply {
+                        putParcelableArrayList(ARG_SCREENINGS, ArrayList(screenings))
+                    }
+            }
     }
 }

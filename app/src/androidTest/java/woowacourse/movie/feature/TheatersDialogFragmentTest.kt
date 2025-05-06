@@ -1,5 +1,6 @@
 package woowacourse.movie.feature
 
+import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -26,11 +27,31 @@ import woowacourse.movie.feature.theaters.view.TheatersDialogFragment
 
 @Suppress("ktlint:standard:function-naming")
 class TheatersDialogFragmentTest {
-    val factory = createTheatersDialogFragmentFactory()
+    private val factory = createTheatersDialogFragmentFactory()
 
     @Before
     fun setup() {
-        launchFragmentInContainer<TheatersDialogFragment>(factory = factory)
+        launchFragmentInContainer<TheatersDialogFragment>(
+            fragmentArgs =
+                Bundle().apply {
+                    putParcelableArrayList(
+                        "ARG_SCREENINGS",
+                        arrayListOf(
+                            Screening(
+                                Movie(
+                                    title = "레디 플레이어 원",
+                                    startDate = MovieDate(2025, 5, 1),
+                                    endDate = MovieDate(2025, 5, 10),
+                                    runningTime = 148,
+                                ),
+                                "혜화",
+                                listOf(MovieTime(10, 0)),
+                            ).toUi(),
+                        ),
+                    )
+                },
+            factory = factory,
+        )
     }
 
     @Test
@@ -74,22 +95,6 @@ class TheatersDialogFragmentTest {
             override fun instantiate(
                 classLoader: ClassLoader,
                 className: String,
-            ): Fragment =
-                TheatersDialogFragment(
-                    screenings =
-                        listOf(
-                            Screening(
-                                Movie(
-                                    title = "레디 플레이어 원",
-                                    startDate = MovieDate(2025, 5, 1),
-                                    endDate = MovieDate(2025, 5, 10),
-                                    runningTime = 148,
-                                ),
-                                "혜화",
-                                listOf(MovieTime(10, 0)),
-                            ).toUi(),
-                        ),
-                    navigateToBookingDetail = {},
-                )
+            ): Fragment = TheatersDialogFragment()
         }
 }

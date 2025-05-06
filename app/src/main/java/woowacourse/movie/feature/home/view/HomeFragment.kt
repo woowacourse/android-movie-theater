@@ -53,9 +53,13 @@ class HomeFragment :
     }
 
     override fun showTheaters(screenings: List<ScreeningUiModel>) {
-        TheatersDialogFragment(screenings) { screening ->
-            navigateToBookingDetail(screening)
-        }.show(childFragmentManager, TheatersDialogFragment.TAG)
+        val dialog =
+            TheatersDialogFragment.newInstance(screenings).apply {
+                navigateToBookingDetail = { selectedScreening ->
+                    navigateToBookingDetail(selectedScreening)
+                }
+            }
+        dialog.show(childFragmentManager, TheatersDialogFragment.TAG)
     }
 
     override fun navigateToBookingDetail(screening: ScreeningUiModel) {
