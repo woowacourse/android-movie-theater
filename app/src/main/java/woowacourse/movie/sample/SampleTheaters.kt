@@ -1,19 +1,10 @@
 package woowacourse.movie.sample
 
-import woowacourse.movie.R
-import woowacourse.movie.domain.model.Advertisement
+import java.time.LocalDateTime
 import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.TheaterSchedules
 import woowacourse.movie.domain.model.Theaters
-import java.time.LocalDateTime
-
-val DUMMY_ADS =
-    listOf(
-        Advertisement(
-            R.drawable.woowacourse,
-        ),
-    )
 
 val DUMMY_THEATERS =
     Theaters(
