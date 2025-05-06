@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemTheaterBinding
-import woowacourse.movie.view.model.TheaterUIModel
+import woowacourse.movie.view.model.TheaterUiModel
 
 class TheaterAdapter(
     private val clickListener: TheaterClickListener,
-) : ListAdapter<TheaterUIModel, RecyclerView.ViewHolder>(TheaterDiffUtil) {
+) : ListAdapter<TheaterUiModel, RecyclerView.ViewHolder>(TheaterDiffUtil) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,

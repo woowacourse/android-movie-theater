@@ -1,7 +1,7 @@
 package woowacourse.movie.view.theater
 
-import woowacourse.movie.view.model.TheaterUIModel
+import woowacourse.movie.view.model.TheaterUiModel
 
 interface TheaterClickListener {
-    fun onTheaterClick(theaterUIModel: TheaterUIModel)
+    fun onTheaterClick(theaterUIModel: TheaterUiModel)
 }

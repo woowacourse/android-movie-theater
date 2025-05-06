@@ -7,7 +7,7 @@
 
         <variable
             name="theater"
-            type="woowacourse.movie.view.model.TheaterUIModel" />
+            type="woowacourse.movie.view.model.TheaterUiModel" />
 
         <variable
             name="theaterClickListener"
@@ -27,11 +27,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="@{String.format(@string/bottom_sheet_dialog_theater_name, theater.name)}"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:theaterNameText="@{theater}"
             tools:text="선릉 극장" />
 
         <TextView
@@ -39,11 +39,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@{String.format(@string/bottom_sheet_dialog_time_slot, theater.timeSlotCount)}"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_theater_name"
             app:layout_constraintTop_toBottomOf="@id/tv_theater_name"
+            app:timeSlotText="@{theater}"
             tools:text="3개의 상영 시간" />
 
         <ImageButton

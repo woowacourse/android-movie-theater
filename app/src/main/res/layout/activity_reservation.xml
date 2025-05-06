@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="reservationState"
-            type="woowacourse.movie.view.model.ReservationUiModel" />
+            name="reservationInfo"
+            type="woowacourse.movie.view.model.ReservationInfoUiModel" />
 
         <variable
             name="presenter"
