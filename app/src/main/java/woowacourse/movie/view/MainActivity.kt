@@ -14,7 +14,8 @@ import woowacourse.movie.view.reservation.history.HistoryFragment
 import woowacourse.movie.view.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
     private val homeFragment: HomeFragment by lazy { HomeFragment() }
     private val historyFragment: HistoryFragment by lazy { HistoryFragment() }
     private val settingFragment: SettingFragment by lazy { SettingFragment() }
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
 
         enableEdgeToEdge()
         setContentView(binding.root)
@@ -89,5 +90,10 @@ class MainActivity : AppCompatActivity() {
             show(target)
         }
         activeFragment = target
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

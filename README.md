@@ -67,9 +67,4 @@
 - [x] MovieAdapter |  areItemsTheSame | 아이템을 비교하는 메서드 수정
 - [x] TheaterBottomSheetDialogFragment | 생성자 삭제
 - [ ] 데이터 바인딩
-
-
-
-
-
-
+- [ ] 
