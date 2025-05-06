@@ -2,7 +2,7 @@ package woowacourse.movie.presentation.common.custom
 
 import android.content.DialogInterface
 
-class DialogInfo(
+data class DialogInfo(
     val title: String,
     val message: String,
     val isCancelable: Boolean = false,
