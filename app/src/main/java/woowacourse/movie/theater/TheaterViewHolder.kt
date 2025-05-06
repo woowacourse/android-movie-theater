@@ -9,14 +9,17 @@ import woowacourse.movie.ui.model.TheaterUiModel
 
 class TheaterViewHolder(
     parent: ViewGroup,
-    private val onSelectClick: SelectClickListener,
+    onSelectClick: SelectClickListener,
 ) : RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.theater_item, parent, false),
     ) {
     private val binding = TheaterItemBinding.bind(itemView)
 
+    init {
+        binding.clickListener = onSelectClick
+    }
+
     fun bind(theater: TheaterUiModel) {
         binding.theater = theater
-        binding.clickListener = onSelectClick
     }
 }

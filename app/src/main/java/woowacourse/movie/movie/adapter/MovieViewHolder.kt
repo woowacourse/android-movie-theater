@@ -9,14 +9,17 @@ import woowacourse.movie.ui.model.MovieUiModel
 
 class MovieViewHolder(
     parent: ViewGroup,
-    private val onReserveClick: ReserveClickListener,
+    onReserveClick: ReserveClickListener,
 ) : RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.movie_list_item, parent, false),
     ) {
     private val binding = MovieListItemBinding.bind(itemView)
 
+    init {
+        binding.clickListener = onReserveClick
+    }
+
     fun bind(movie: MovieUiModel) {
         binding.movie = movie
-        binding.clickListener = onReserveClick
     }
 }
