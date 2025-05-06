@@ -14,7 +14,7 @@ class BookingPresenter(
 ) : BookingContract.Presenter {
     private var selectedDate: LocalDate? = null
     private var selectedTime: LocalTime? = null
-    private var headCount: HeadCount = HeadCount()
+    private var headCount: HeadCount = HeadCount.of()
     private val movieScheduler: MovieScheduler by lazy {
         MovieScheduler(
             screeningInfo.movie.startScreeningDate,
@@ -44,12 +44,12 @@ class BookingPresenter(
     }
 
     override fun onIncreaseHeadCount() {
-        headCount.increase()
+        headCount = headCount.increase()
         view.updateHeadCount(headCount.value)
     }
 
     override fun onDecreaseHeadCount() {
-        headCount.decrease()
+        headCount = headCount.decrease()
         view.updateHeadCount(headCount.value)
     }
 
@@ -69,7 +69,7 @@ class BookingPresenter(
         date: LocalDate?,
         time: LocalTime?,
     ) {
-        count?.let { headCount = HeadCount(it) }
+        count?.let { headCount = HeadCount.of(it) }
         selectedDate = date
         selectedTime = time
         view.updateHeadCount(headCount.value)
