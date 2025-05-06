@@ -22,10 +22,10 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        binding.navView.selectedItemId = R.id.navigation_home
+        binding.bottomNavigation.selectedItemId = R.id.navigation_home
         setFrag(R.id.navigation_home)
 
-        binding.navView.setOnItemSelectedListener { item ->
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
             setFrag(item.itemId)
             true
         }
