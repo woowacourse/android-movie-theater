@@ -14,23 +14,25 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.view.Extras
+import woowacourse.movie.view.model.MovieDateUiModel
 import woowacourse.movie.view.model.MovieUiModel
-import woowacourse.movie.view.model.TheaterUIModel
+import woowacourse.movie.view.model.TheaterUiModel
+import java.time.LocalDate
 
 class ReservationDetailActivityTest {
     private lateinit var scenario: ActivityScenario<ReservationDetailActivity>
-    private val fakeUIModel: TheaterUIModel =
-        TheaterUIModel(
-            "선릉",
-            MovieUiModel(
-                "라라랜드",
-                R.drawable.lalaland,
-                "2025.04.01",
-                "2025.04.30",
-                123,
+    private val fakeMovie: MovieUiModel =
+        MovieUiModel(
+            "라라랜드",
+            R.drawable.lalaland,
+            MovieDateUiModel(
+                LocalDate.of(2025, 5, 1),
+                LocalDate.of(2025, 5, 30),
             ),
-            2,
+            120,
         )
+    private val fakeTheater: TheaterUiModel =
+        TheaterUiModel("선릉", 20)
 
     private val fakeContext: Context = ApplicationProvider.getApplicationContext()
 
@@ -38,10 +40,16 @@ class ReservationDetailActivityTest {
     fun setUp() {
         scenario =
             ActivityScenario.launch(
-                Intent(fakeContext, ReservationDetailActivity::class.java).putExtra(
-                    Extras.TheaterData.THEATER_UI_MODEL_KEY,
-                    fakeUIModel,
-                ),
+                Intent(
+                    fakeContext,
+                    ReservationDetailActivity::class.java,
+                ).apply {
+                    putExtra(Extras.MovieData.MOVIE_KEY, fakeMovie)
+                    putExtra(
+                        Extras.TheaterData.THEATER_UI_MODEL_KEY,
+                        fakeTheater,
+                    )
+                },
             )
     }
 
