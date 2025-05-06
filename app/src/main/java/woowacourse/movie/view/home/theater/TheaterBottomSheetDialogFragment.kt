@@ -57,14 +57,10 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), TheaterCon
         val recyclerView: RecyclerView? = view?.findViewById(R.id.rv_theater_category)
 
         val theaterAdapter: TheaterAdapter =
-            TheaterAdapter(
-                object : OnTheaterEventListener {
-                    override fun onClickReservation(showings: Showings) {
-                        navigateToReservation(movieUi, showings)
-                        dismiss()
-                    }
-                },
-            )
+            TheaterAdapter { showing ->
+                navigateToReservation(movieUi, showing)
+                dismiss()
+            }
 
         recyclerView?.adapter = theaterAdapter
         theaterAdapter.submitList(showings)

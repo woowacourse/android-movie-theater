@@ -11,7 +11,6 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.view.home.movies.MovieItem
 import woowacourse.movie.view.home.movies.MovieUi
-import woowacourse.movie.view.home.movies.OnMovieEventListener
 import woowacourse.movie.view.home.movies.adapter.MovieAdapter
 import woowacourse.movie.view.home.theater.TheaterBottomSheetDialogFragment
 
@@ -39,13 +38,7 @@ class HomeFragment : Fragment(), HomeContract.View {
     override fun showMoviesScreen(movieUis: List<MovieUi>) {
         val recyclerView: RecyclerView = binding.root.findViewById(R.id.recycler_view)
         val movieAdapter: MovieAdapter =
-            MovieAdapter(
-                object : OnMovieEventListener {
-                    override fun onClickShowTheater(movieUi: MovieUi) {
-                        showTheaterSelectDialog(movieUi)
-                    }
-                },
-            )
+            MovieAdapter { movieUi -> showTheaterSelectDialog(movieUi) }
 
         val movieItems = mutableListOf<MovieItem>()
         movieUis.forEachIndexed { index, movieUi ->
