@@ -12,8 +12,8 @@ class MoviesPresenter(
         view.showMovies(movies)
     }
 
-    override fun selectedMovie(movie: Movie) {
-        if (movie.screeningPeriod.isEnd(LocalDate.now())) {
+    override fun selectedMovie(movie: Movie, targetDate: LocalDate) {
+        if (movie.screeningPeriod.isEnd(targetDate)) {
             view.showError(R.string.error_over_end_date)
             return
         }

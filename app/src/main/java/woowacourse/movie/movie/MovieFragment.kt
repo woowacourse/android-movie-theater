@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieBinding
 import woowacourse.movie.domain.Movie
+import java.time.LocalDate
 
 class MovieFragment : Fragment(), Movies.View {
     private lateinit var binding: FragmentMovieBinding
@@ -34,7 +35,7 @@ class MovieFragment : Fragment(), Movies.View {
         binding.movies.adapter =
             MovieListAdapter(
                 movies,
-                { movie -> presenter.selectedMovie(movie) },
+                { movie -> presenter.selectedMovie(movie, LocalDate.now()) },
                 { presenter.selectedAd() },
             )
     }

@@ -1,6 +1,7 @@
 package woowacourse.movie.movie
 
 import woowacourse.movie.domain.Movie
+import java.time.LocalDate
 
 interface Movies {
     interface View {
@@ -16,7 +17,7 @@ interface Movies {
     interface Presenter {
         fun loadMovies()
 
-        fun selectedMovie(movie: Movie)
+        fun selectedMovie(movie: Movie, targetDate: LocalDate)
 
         fun selectedAd()
     }
