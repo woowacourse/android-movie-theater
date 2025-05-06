@@ -12,8 +12,8 @@
             type="woowacourse.movie.feature.model.BookingInfoUiModel" />
 
         <variable
-            name="onClick"
-            type="woowacourse.movie.feature.bookingdetail.view.BookingDetailClickListener" />
+            name="presenter"
+            type="woowacourse.movie.feature.bookingdetail.contract.BookingDetailContract.Presenter" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -139,7 +139,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:onClick="@{() -> onClick.onDecreaseTicketCountClick()}"
+                    android:onClick="@{() -> presenter.decreaseTicketCount()}"
                     android:paddingVertical="12dp"
                     android:text="@string/booking_detail_decrease_count"
                     android:textStyle="bold"
@@ -150,7 +150,7 @@
                     android:id="@+id/btn_booking_detail_count_up"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{() -> onClick.onIncreaseTicketCountClick()}"
+                    android:onClick="@{() -> presenter.increaseTicketCount()}"
                     android:paddingVertical="12dp"
                     android:text="@string/booking_detail_increase_count"
                     android:textStyle="bold"
@@ -176,7 +176,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:onClick="@{() -> onClick.onSelectCompleteClick()}"
+                    android:onClick="@{() -> presenter.confirmBookingInfo()}"
                     android:paddingVertical="12dp"
                     android:text="@string/booking_detail_select_complete"
                     android:textColor="@color/white"

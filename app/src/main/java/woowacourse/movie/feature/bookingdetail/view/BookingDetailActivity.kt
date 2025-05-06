@@ -38,7 +38,9 @@ class BookingDetailActivity :
         super.onCreate(savedInstanceState)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setupBookingDetailClickListeners()
+
+        binding.presenter = presenter
+
         setupDateSpinnerItemClickListener()
         setupTimeSpinnerItemClickListener()
         presenter.prepareBookingInfo(
@@ -84,23 +86,6 @@ class BookingDetailActivity :
         val bookingInfo: BookingInfoUiModel =
             savedInstanceState.getExtra(BOOKING_INFO_KEY) ?: BookingInfoUiModel()
         presenter.loadBookingInfo(bookingInfo)
-    }
-
-    private fun setupBookingDetailClickListeners() {
-        binding.onClick =
-            object : BookingDetailClickListener {
-                override fun onDecreaseTicketCountClick() {
-                    presenter.decreaseTicketCount()
-                }
-
-                override fun onIncreaseTicketCountClick() {
-                    presenter.increaseTicketCount()
-                }
-
-                override fun onSelectCompleteClick() {
-                    presenter.confirmBookingInfo()
-                }
-            }
     }
 
     private fun setupDateSpinnerItemClickListener() {
