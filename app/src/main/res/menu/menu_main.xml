@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_menu_main_reservation_history"
+        android:icon="@drawable/list_icon"
+        android:title="@string/menu_main_reservation_history_title" />
+    <item
+        android:id="@+id/item_menu_main_home"
+        android:icon="@drawable/home_icon"
+        android:title="@string/menu_main_home_title" />
+    <item
+        android:id="@+id/item_menu_main_setting"
+        android:icon="@drawable/settings_icon"
+        android:title="@string/menu_main_setting_title" />
+</menu>
