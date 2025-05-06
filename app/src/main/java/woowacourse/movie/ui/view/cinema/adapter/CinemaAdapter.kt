@@ -10,28 +10,27 @@ import woowacourse.movie.domain.reservation.ShowtimePolicy
 
 class CinemaAdapter(
     private val onClickItem: (cinemaName: String, showtimePolicy: ShowtimePolicy) -> Unit,
-) :
-    ListAdapter<Cinema, CinemaViewHolder>(
-            object : DiffUtil.ItemCallback<Cinema>() {
-                override fun areItemsTheSame(
-                    oldItem: Cinema,
-                    newItem: Cinema,
-                ): Boolean {
-                    return oldItem === newItem
-                }
+) : ListAdapter<Cinema, BaseViewHolder<Cinema>>(
+        object : DiffUtil.ItemCallback<Cinema>() {
+            override fun areItemsTheSame(
+                oldItem: Cinema,
+                newItem: Cinema,
+            ): Boolean {
+                return oldItem === newItem
+            }
 
-                override fun areContentsTheSame(
-                    oldItem: Cinema,
-                    newItem: Cinema,
-                ): Boolean {
-                    return oldItem == newItem
-                }
-            },
-        ) {
+            override fun areContentsTheSame(
+                oldItem: Cinema,
+                newItem: Cinema,
+            ): Boolean {
+                return oldItem == newItem
+            }
+        },
+    ) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): CinemaViewHolder {
+    ): BaseViewHolder<Cinema> {
         val binding: ItemCinemaBinding =
             ItemCinemaBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -42,7 +41,7 @@ class CinemaAdapter(
     }
 
     override fun onBindViewHolder(
-        holder: CinemaViewHolder,
+        holder: BaseViewHolder<Cinema>,
         position: Int,
     ) {
         holder.bind(getItem(position))
