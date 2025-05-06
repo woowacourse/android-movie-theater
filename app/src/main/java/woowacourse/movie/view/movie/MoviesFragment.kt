@@ -18,13 +18,9 @@ class MoviesFragment :
     private lateinit var binding: FragmentMoviesBinding
     private val presenter: MoviePresenter by lazy { MoviePresenter(this) }
     private val moviesAdapter: MovieAdapter by lazy {
-        MovieAdapter(
-            object : MovieClickListener {
-                override fun onReservationClick(movie: Movie) {
-                    showBottomSheetDialog(movie)
-                }
-            },
-        )
+        MovieAdapter { movie ->
+            showBottomSheetDialog(movie)
+        }
     }
 
     override fun onCreateView(
