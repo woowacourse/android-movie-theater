@@ -102,7 +102,7 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
     private fun fetchTicketFromIntent(): Boolean {
         val data = intent.getSerializableExtraCompat(IntentKeys.TICKET, MovieTicket::class.java)
         if (data == null) {
-            Toast.makeText(this, TICKET_INTENT_ERROR, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.ticket_intent_error), Toast.LENGTH_SHORT).show()
             finish()
             return false
         }
@@ -122,7 +122,6 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
     }
 
     companion object {
-        private const val TICKET_INTENT_ERROR = "[ERROR] 예매 정보에 대한 키 값이 올바르지 않습니다."
         private const val SEATS_KEY = "Seats"
     }
 }
