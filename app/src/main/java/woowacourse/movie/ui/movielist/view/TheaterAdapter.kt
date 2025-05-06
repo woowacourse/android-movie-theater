@@ -9,6 +9,7 @@ import woowacourse.movie.databinding.TheaterItemBinding
 import woowacourse.movie.domain.model.Theater
 
 class TheaterAdapter(
+    private val movieId: Long,
     private val onClickTheater: (Theater) -> Unit,
 ) : ListAdapter<Theater, RecyclerView.ViewHolder>(
         object : DiffUtil.ItemCallback<Theater>() {
@@ -33,7 +34,7 @@ class TheaterAdapter(
     ): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val itemBinding = TheaterItemBinding.inflate(inflater, parent, false)
-        return TheaterViewHolder(itemBinding, onClickTheater)
+        return TheaterViewHolder(movieId, itemBinding, onClickTheater)
     }
 
     override fun onBindViewHolder(
