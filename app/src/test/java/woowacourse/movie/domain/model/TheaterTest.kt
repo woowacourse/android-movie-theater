@@ -1,30 +1,33 @@
 package woowacourse.movie.domain.model
 
+import java.time.LocalDateTime
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import java.time.LocalDate
-import java.time.LocalTime
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class TheaterTest {
-    @Test
-    fun `극장은 영화와 날짜, 시간으로 상영 가능한 극장을 반환한다`() {
-        val movie = MOVIE_HARRY_POTTER_AND_THE_PHILOSOPHERS_STONE
-
+    @ParameterizedTest
+    @CsvSource(value = ["1,2", "2,0"])
+    fun `극장은 영화id를 통해 해당 영화의 상영수를 알 수 있다`(movieId: String, expected: String) {
         val theater =
             Theater(
                 name = "선릉 극장",
-                movieSchedules =
-                    listOf(
-                        SCHEDULE_HARRY_PHILOSOPHERS_STONE_2025_04_10_1300,
-                        SCHEDULE_HARRY_PHILOSOPHERS_STONE_2025_04_15_1630,
+                theaterSchedules =
+                    TheaterSchedules(
+                        mutableMapOf(
+                            1L to
+                                    setOf(
+                                        MovieSchedule(LocalDateTime.of(2025, 4, 10, 13, 0)),
+                                        MovieSchedule(LocalDateTime.of(2025, 4, 15, 16, 30)),
+                                    ),
+                            2L to
+                                    setOf()
+                        ),
                     ),
             )
-        val date = LocalDate.of(2025, 4, 14)
-        val time = LocalTime.of(10, 0)
-        val expected = Theater("선릉 극장", listOf(SCHEDULE_HARRY_PHILOSOPHERS_STONE_2025_04_15_1630))
 
-        val actual: Theater = theater.theaterByMovie(movie, date, time)
+        val actual: Int = theater.scheduleCountByMovieId(movieId.toLong())
 
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isEqualTo(expected.toInt())
     }
 }
