@@ -10,13 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.booking.detail.BookingDetailActivity
-import woowacourse.movie.databinding.FragmentTheaterBinding
+import woowacourse.movie.databinding.FragmentTheaterBottomSheetBinding
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
 
-class TheaterFragment : BottomSheetDialogFragment() {
-//    private lateinit var binding: FragmentTheaterBinding
-    private var _binding: FragmentTheaterBinding? = null
+class TheaterBottomSheetFragment : BottomSheetDialogFragment() {
+    private var _binding: FragmentTheaterBottomSheetBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -24,7 +23,7 @@ class TheaterFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_theater, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_theater_bottom_sheet, container, false)
         return binding.root
     }
 

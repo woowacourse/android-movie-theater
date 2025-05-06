@@ -146,7 +146,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun restoreSeats(seats: List<SeatUiModel>) {
-        val selectedColor = ContextCompat.getColor(this, R.color.seat_selected_background)
+        val selectedColor = getColor(R.color.seat_selected_background)
 
         seats.forEach { seat ->
             seatViews[seat]?.setBackgroundColor(selectedColor)
