@@ -10,8 +10,8 @@ class MovieViewHolder(
     parent: ViewGroup,
     @LayoutRes layoutId: Int,
     private val handler: Handler,
-) : BaseViewHolder<MovieItem>(parent, layoutId) {
-    override fun bind(item: MovieItem) {
+) : BaseViewHolder(parent, layoutId) {
+    fun bind(item: MovieItem) {
         MovieItemBinding.bind(itemView).apply {
             model = item
             eventListener = handler

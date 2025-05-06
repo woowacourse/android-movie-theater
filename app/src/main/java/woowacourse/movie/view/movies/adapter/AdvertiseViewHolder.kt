@@ -9,8 +9,9 @@ import woowacourse.movie.view.movies.adapter.model.MovieRvItem
 class AdvertiseViewHolder(
     parent: ViewGroup,
     @LayoutRes viewType: Int,
-) : BaseViewHolder<MovieRvItem.AdItem>(parent, viewType) {
-    override fun bind(item: MovieRvItem.AdItem) {
+) : BaseViewHolder(parent, viewType) {
+
+    fun bind(item: MovieRvItem.AdItem) {
         AdvertisementItemBinding.bind(itemView).apply {
             model = item
         }

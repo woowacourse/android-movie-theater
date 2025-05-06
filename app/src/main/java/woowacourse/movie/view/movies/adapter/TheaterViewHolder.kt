@@ -10,8 +10,8 @@ class TheaterViewHolder(
     parent: ViewGroup,
     @LayoutRes layoutRes: Int,
     private val handler: Handler,
-) : BaseViewHolder<TheaterRvItem.TheaterItem>(parent, layoutRes) {
-    override fun bind(item: TheaterRvItem.TheaterItem) {
+) : BaseViewHolder(parent, layoutRes) {
+    fun bind(item: TheaterRvItem.TheaterItem) {
         TheaterItemBinding.bind(itemView).apply {
             model = item
             eventListener = handler

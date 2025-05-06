@@ -5,11 +5,9 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseViewHolder<T>(
+abstract class BaseViewHolder(
     parent: ViewGroup,
     @LayoutRes layoutRes: Int,
 ) : RecyclerView.ViewHolder(
-        LayoutInflater.from(parent.context).inflate(layoutRes, parent, false),
-    ) {
-    abstract fun bind(item: T)
-}
+    LayoutInflater.from(parent.context).inflate(layoutRes, parent, false),
+)

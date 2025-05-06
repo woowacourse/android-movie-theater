@@ -8,7 +8,7 @@ import woowacourse.movie.view.movies.adapter.model.MovieRvItem
 class MovieAdapter(
     private val handler: Handler,
     private val movieRvItems: List<MovieRvItem>,
-) : RecyclerView.Adapter<BaseViewHolder<MovieRvItem>>() {
+) : RecyclerView.Adapter<BaseViewHolder>() {
     override fun getItemCount(): Int = movieRvItems.size
 
     override fun getItemViewType(position: Int): Int = movieRvItems[position].viewType.ordinal
@@ -16,7 +16,7 @@ class MovieAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): BaseViewHolder<MovieRvItem> {
+    ): BaseViewHolder {
         return when (val type = MovieRvItem.ViewType.entries[viewType]) {
             MovieRvItem.ViewType.VIEW_TYPE_ADVERTISEMENT ->
                 AdvertiseViewHolder(
@@ -30,14 +30,17 @@ class MovieAdapter(
                     type.layoutRes,
                     handler,
                 )
-        } as BaseViewHolder<MovieRvItem>
+        } as BaseViewHolder
     }
 
     override fun onBindViewHolder(
-        holder: BaseViewHolder<MovieRvItem>,
+        holder: BaseViewHolder,
         position: Int,
     ) {
-        holder.bind(movieRvItems[position])
+        when (holder) {
+            is AdvertiseViewHolder -> holder.bind(movieRvItems[position] as MovieRvItem.AdItem)
+            is MovieViewHolder -> holder.bind(movieRvItems[position] as MovieRvItem.MovieItem)
+        }
     }
 
     interface Handler : MovieViewHolder.Handler

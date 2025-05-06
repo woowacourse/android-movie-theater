@@ -8,13 +8,13 @@ import woowacourse.movie.view.movies.adapter.model.TheaterRvItem
 class TheaterAdapter(
     private val items: List<TheaterRvItem>,
     private val handler: Handler,
-) : RecyclerView.Adapter<BaseViewHolder<TheaterRvItem>>() {
+) : RecyclerView.Adapter<BaseViewHolder>() {
     override fun getItemCount(): Int = items.size
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): BaseViewHolder<TheaterRvItem> {
+    ): BaseViewHolder {
         return when (val type = TheaterRvItem.ViewType.entries[viewType]) {
             TheaterRvItem.ViewType.VIEW_TYPE_THEATER ->
                 TheaterViewHolder(
@@ -22,14 +22,16 @@ class TheaterAdapter(
                     type.layoutRes,
                     handler,
                 )
-        } as BaseViewHolder<TheaterRvItem>
+        } as BaseViewHolder
     }
 
     override fun onBindViewHolder(
-        holder: BaseViewHolder<TheaterRvItem>,
+        holder: BaseViewHolder,
         position: Int,
     ) {
-        holder.bind(items[position])
+        when (holder) {
+            is TheaterViewHolder -> holder.bind(items[position] as TheaterRvItem.TheaterItem)
+        }
     }
 
     interface Handler : TheaterViewHolder.Handler
