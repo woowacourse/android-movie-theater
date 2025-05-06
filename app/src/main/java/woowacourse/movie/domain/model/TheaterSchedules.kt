@@ -10,6 +10,14 @@ class TheaterSchedules(
     private val now get() = LocalDateTime.now()
     val schedules get() = _schedules.toMap()
 
+    fun availableScreeningMovieSchedulesCount(
+        movieId: Long,
+        dateTime: LocalDateTime = now,
+    ): Int {
+        return schedules[movieId]?.filter { movieSchedule -> movieSchedule.isScreeningDate(dateTime) }?.size
+            ?: 0
+    }
+
     fun screeningDates(
         movieId: Long,
         dateTime: LocalDateTime = LocalDateTime.now(),

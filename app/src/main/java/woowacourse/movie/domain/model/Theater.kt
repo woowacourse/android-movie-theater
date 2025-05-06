@@ -6,5 +6,5 @@ data class Theater(
     val name: String,
     val theaterSchedules: TheaterSchedules,
 ) : Serializable {
-    fun scheduleCountByMovieId(movieId: Long) = theaterSchedules[movieId].size
+    fun scheduleCountByMovieId(movieId: Long) = theaterSchedules.availableScreeningMovieSchedulesCount(movieId)
 }
