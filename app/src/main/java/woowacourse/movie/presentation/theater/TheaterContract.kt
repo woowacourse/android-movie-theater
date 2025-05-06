@@ -1,6 +1,7 @@
 package woowacourse.movie.presentation.theater
 
 import woowacourse.movie.domain.model.ScreeningInfo
+import woowacourse.movie.domain.model.movie.Movie
 
 interface TheaterContract {
     interface View {
@@ -9,7 +10,7 @@ interface TheaterContract {
     }
 
     interface Presenter {
-        fun onViewCreated()
-        fun onTheaterClicked(screeningInfo: ScreeningInfo)
+        fun initializeTheater(movie: Movie)
+        fun selectTheater(screeningInfo: ScreeningInfo)
     }
 }

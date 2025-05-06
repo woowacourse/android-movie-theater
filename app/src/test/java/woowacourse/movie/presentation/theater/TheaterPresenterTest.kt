@@ -16,13 +16,13 @@ class TheaterPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = TheaterPresenter(view, movie)
+        presenter = TheaterPresenter(view)
     }
 
     @Test
     fun `극장 목록을 가져와서 화면에 출력한다`() {
         // When
-        presenter.onViewCreated()
+        presenter.initializeTheater(movie)
 
         // Then
         verify { view.showTheaters(any()) }
@@ -38,7 +38,7 @@ class TheaterPresenterTest {
         )
 
         // When
-        presenter.onTheaterClicked(screeningInfo)
+        presenter.selectTheater(screeningInfo)
 
         // Then
         verify { view.navigateToBooking(screeningInfo) }

@@ -22,14 +22,13 @@ class TheaterFragment :
     private var movie: Movie? = null
     private var _binding: FragmentTheaterSelectBinding? = null
     private val binding get() = _binding!!
-    private lateinit var presenter: TheaterContract.Presenter
+    private val presenter: TheaterPresenter by lazy { TheaterPresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             movie = it.getSerializableCompat(IntentKeys.MOVIE, Movie::class.java)
         }
-        movie?.let { presenter = TheaterPresenter(this, it) }
     }
 
     override fun onCreateView(
@@ -47,13 +46,13 @@ class TheaterFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.onViewCreated()
+        movie?.let { presenter.initializeTheater(it) }
     }
 
     override fun showTheaters(theaters: List<ScreeningInfo>) {
         binding.recyclerviewTheaters.adapter =
             TheaterAdapter(theaters) {
-                presenter.onTheaterClicked(it)
+                presenter.selectTheater(it)
             }
     }
 
