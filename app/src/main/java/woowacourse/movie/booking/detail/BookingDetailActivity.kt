@@ -67,8 +67,7 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View {
     }
 
     private fun initReserveConfirm() {
-        val btnReserveConfirm = binding.btnSelectionConfirm
-        btnReserveConfirm.setOnClickListener {
+        binding.btnSelectionConfirm.setOnClickListener {
             presenter.confirmReservation()
         }
     }

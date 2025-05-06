@@ -70,8 +70,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun setupConfirmButton() {
-        val confirmButton = binding.btnBookingConfirm
-        confirmButton.setOnClickListener {
+        binding.btnBookingConfirm.setOnClickListener {
             presenter.completeBooking()
         }
     }

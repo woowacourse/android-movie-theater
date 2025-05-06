@@ -38,12 +38,10 @@ class MovieFragment : Fragment(), MovieContract.View {
     }
 
     override fun setupMovieList(movies: List<MovieFeedUiModel>) {
-        val adapter =
+        binding.recyclerViewLayout.adapter =
             MovieAdapter(movies) { movie ->
                 presenter.selectMovie(movie)
             }
-        val recyclerView = binding.recyclerViewLayout
-        recyclerView.adapter = adapter
     }
 
     override fun showTheaterDialog(
