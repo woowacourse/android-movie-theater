@@ -6,16 +6,17 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import java.time.LocalDateTime
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
+import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.TicketType
 import woowacourse.movie.fixture.fakeContext
-import java.time.LocalDateTime
 
 class BookingCompleteActivityTest {
     @Before
@@ -25,14 +26,16 @@ class BookingCompleteActivityTest {
                 putExtra(
                     "bookedTicket",
                     BookedTicket(
-                        "해리 포터와 마법사의 돌",
-                        Headcount(2),
-                        LocalDateTime.of(2025, 4, 1, 12, 0),
-                        Seats().apply {
-                            add(Seat(0, 0, TicketType.B_GRADE))
-                            add(Seat(2, 3, TicketType.S_GRADE))
-                        },
-                        "선릉 극장",
+                        theaterName = "선릉 극장",
+                        movieTitle = "해리 포터와 마법사의 돌",
+                        movieSchedule = MovieSchedule(
+                            LocalDateTime.of(2025, 4, 1, 12, 0),
+                            Seats().apply {
+                                reserve(Seat(0, 0, TicketType.B_GRADE))
+                                reserve(Seat(2, 3, TicketType.S_GRADE))
+                            }
+                        ),
+                        headcount = Headcount(2)
                     ),
                 )
             }
@@ -56,7 +59,7 @@ class BookingCompleteActivityTest {
     @Test
     fun `예매_인원을_출력한다`() {
         Espresso
-            .onView(withId(R.id.tv_headcount))
+            .onView(withId(R.id.tv_detail_info))
             .check(matches(withText("일반 2명 | A1, C4 | 선릉 극장")))
     }
 
