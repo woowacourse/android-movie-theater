@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private val homeFragment: HomeFragment by lazy { HomeFragment() }
     private val historyFragment: HistoryFragment by lazy { HistoryFragment() }
     private val settingFragment: SettingFragment by lazy { SettingFragment() }
+    private lateinit var activeFragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (savedInstanceState == null) {
+            displayAddAndHideFragment(historyFragment)
+            displayAddAndHideFragment(settingFragment)
             displayAddFragment(homeFragment)
         }
 
@@ -44,17 +47,17 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavMenu.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_fragment_home -> {
-                    displayReplaceFragment(homeFragment)
+                    switchFragment(homeFragment)
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_fragment_history -> {
-                    displayReplaceFragment(historyFragment)
+                    switchFragment(historyFragment)
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_fragment_settings -> {
-                    displayReplaceFragment(settingFragment)
+                    switchFragment(settingFragment)
                     return@setOnItemSelectedListener true
                 }
 
@@ -63,20 +66,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun displayReplaceFragment(fragment: Fragment) {
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container)
-        if (currentFragment?.javaClass == fragment.javaClass) return
-
+    private fun displayAddAndHideFragment(fragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.main_fragment_container, fragment)
+            add(R.id.main_fragment_container, fragment).hide(fragment)
         }
     }
 
     private fun displayAddFragment(fragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.main_fragment_container, fragment)
+            add(R.id.main_fragment_container, fragment)
+            activeFragment = fragment
         }
+    }
+
+    private fun switchFragment(target: Fragment) {
+        if (activeFragment == target) return
+
+        supportFragmentManager.commit {
+            hide(activeFragment)
+            show(target)
+        }
+        activeFragment = target
     }
 }
