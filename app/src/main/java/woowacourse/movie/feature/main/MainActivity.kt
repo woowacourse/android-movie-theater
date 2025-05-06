@@ -30,18 +30,19 @@ class MainActivity : AppCompatActivity() {
             item_setting to SettingFragment(),
         )
 
-    private var activeFragment: Fragment? = fragments[item_home]
+    private var activeFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            activeFragment?.let {
-                supportFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    add(fcv_main, it)
-                }
+            activeFragment = fragments[item_home]
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add(fcv_main, activeFragment!!, item_home.toString())
             }
+        } else {
+            activeFragment = supportFragmentManager.findFragmentById(fcv_main)
         }
 
         binding.bottomNavMain.selectedItemId = item_home
@@ -51,30 +52,32 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavigationItemClickListener() {
         binding.bottomNavMain.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                item_booking_history -> switchFragment(item_booking_history)
-
-                item_home -> switchFragment(item_home)
-
-                item_setting -> switchFragment(item_setting)
+                item_home,
+                item_booking_history,
+                item_setting,
+                -> switchFragment(item.itemId)
 
                 else -> false
             }
-            true
         }
     }
 
     private fun switchFragment(id: Int): Boolean {
-        val newFragment = fragments[id] ?: return false
+        val newFragment =
+            supportFragmentManager.findFragmentByTag(id.toString())
+                ?: fragments[id] ?: return false
 
         if (newFragment == activeFragment) return false
 
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             activeFragment?.let { hide(it) }
+
             if (!newFragment.isAdded) {
-                add(fcv_main, newFragment)
+                add(fcv_main, newFragment, id.toString())
+            } else {
+                show(newFragment)
             }
-            show(newFragment)
         }
 
         activeFragment = newFragment
