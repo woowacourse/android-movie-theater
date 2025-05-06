@@ -9,8 +9,16 @@ class TheaterViewHolder(
     private val binding: ItemTheaterBinding,
     private val onClickTheater: (TheaterUiModel) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
+    private var theater: TheaterUiModel? = null
+
+    init {
+        binding.onClickTheater =
+            View.OnClickListener {
+                theater?.let(onClickTheater)
+            }
+    }
+
     fun bind(theater: TheaterUiModel) {
         binding.theater = theater
-        binding.onClickTheater = View.OnClickListener { onClickTheater(theater) }
     }
 }

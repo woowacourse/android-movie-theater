@@ -15,9 +15,12 @@ class MovieViewHolder(
 ) : BaseViewHolder<MovieItem, ItemMovieBinding>(
         DataBindingUtil.inflate(LayoutInflater.from(view.context), R.layout.item_movie, view, false),
     ) {
+    init {
+        binding.onClickListener = eventListener
+    }
+
     override fun bind(item: MovieItem) {
         binding.itemMovie = item.movie
-        binding.onClickListener = eventListener
     }
 
     interface OnMovieEventListener {
