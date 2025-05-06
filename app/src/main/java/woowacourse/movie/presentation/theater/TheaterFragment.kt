@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
+import woowacourse.movie.data.ScreeningInfoData
 import woowacourse.movie.databinding.FragmentTheaterSelectBinding
 import woowacourse.movie.domain.model.ScreeningInfo
 import woowacourse.movie.domain.model.movie.Movie
@@ -22,7 +23,7 @@ class TheaterFragment :
     private var movie: Movie? = null
     private var _binding: FragmentTheaterSelectBinding? = null
     private val binding get() = _binding!!
-    private val presenter: TheaterPresenter by lazy { TheaterPresenter(this) }
+    private val presenter: TheaterPresenter by lazy { TheaterPresenter(this, ScreeningInfoData) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
