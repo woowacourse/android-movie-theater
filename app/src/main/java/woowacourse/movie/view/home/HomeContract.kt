@@ -1,6 +1,6 @@
 package woowacourse.movie.view.home
 
-import woowacourse.movie.view.home.movies.MovieUi
+import woowacourse.movie.view.home.movies.MovieItem
 
 interface HomeContract {
     interface Presenter {
@@ -8,6 +8,6 @@ interface HomeContract {
     }
 
     interface View {
-        fun showMoviesScreen(movieUis: List<MovieUi>)
+        fun showMoviesScreen(movieItems: List<MovieItem>)
     }
 }

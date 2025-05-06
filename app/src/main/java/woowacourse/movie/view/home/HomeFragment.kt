@@ -35,18 +35,11 @@ class HomeFragment : Fragment(), HomeContract.View {
         presenter.fetchData()
     }
 
-    override fun showMoviesScreen(movieUis: List<MovieUi>) {
+    override fun showMoviesScreen(movieItems: List<MovieItem>) {
         val recyclerView: RecyclerView = binding.root.findViewById(R.id.recycler_view)
         val movieAdapter: MovieAdapter =
             MovieAdapter { movieUi -> showTheaterSelectDialog(movieUi) }
 
-        val movieItems = mutableListOf<MovieItem>()
-        movieUis.forEachIndexed { index, movieUi ->
-            movieItems.add(MovieItem.ScreeningMovieUi(movieUi))
-            if ((index + 1) % 3 == 0) {
-                movieItems.add(MovieItem.Advertisement)
-            }
-        }
         recyclerView.adapter = movieAdapter
         movieAdapter.submitList(movieItems)
     }
