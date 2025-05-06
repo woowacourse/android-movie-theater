@@ -13,5 +13,6 @@ class TheaterViewHolder(
     ) {
         binding.screening = screening
         binding.onBookingClick = onBookingClick
+        binding.executePendingBindings()
     }
 }
