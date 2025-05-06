@@ -1,13 +1,13 @@
- package woowacourse.movie.presenter
+package woowacourse.movie.presenter
 
- import io.mockk.mockk
- import io.mockk.verify
- import org.junit.jupiter.api.BeforeEach
- import org.junit.jupiter.api.Test
- import woowacourse.movie.ui.movielist.contract.TheaterBottomSheetDialogContract
- import woowacourse.movie.ui.movielist.presenter.TheaterBottomSheetDialogPresenter
+import io.mockk.mockk
+import io.mockk.verify
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import woowacourse.movie.ui.movielist.contract.TheaterBottomSheetDialogContract
+import woowacourse.movie.ui.movielist.presenter.TheaterBottomSheetDialogPresenter
 
- class TheaterBottomSheetDialogPresenterTest {
+class TheaterBottomSheetDialogPresenterTest {
     private lateinit var presenter: TheaterBottomSheetDialogPresenter
     private lateinit var view: TheaterBottomSheetDialogContract.View
 
@@ -22,4 +22,4 @@
         presenter.loadAvailableTheaters(1L)
         verify { view.showTheaters(any()) }
     }
- }
+}

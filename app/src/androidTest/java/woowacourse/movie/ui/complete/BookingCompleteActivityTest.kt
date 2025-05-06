@@ -6,7 +6,6 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import java.time.LocalDateTime
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
@@ -17,6 +16,7 @@ import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.TicketType
 import woowacourse.movie.fixture.fakeContext
+import java.time.LocalDateTime
 
 class BookingCompleteActivityTest {
     @Before
@@ -28,14 +28,15 @@ class BookingCompleteActivityTest {
                     BookedTicket(
                         theaterName = "선릉 극장",
                         movieTitle = "해리 포터와 마법사의 돌",
-                        movieSchedule = MovieSchedule(
-                            LocalDateTime.of(2025, 4, 1, 12, 0),
-                            Seats().apply {
-                                reserve(Seat(0, 0, TicketType.B_GRADE))
-                                reserve(Seat(2, 3, TicketType.S_GRADE))
-                            }
-                        ),
-                        headcount = Headcount(2)
+                        movieSchedule =
+                            MovieSchedule(
+                                LocalDateTime.of(2025, 4, 1, 12, 0),
+                                Seats().apply {
+                                    reserve(Seat(0, 0, TicketType.B_GRADE))
+                                    reserve(Seat(2, 3, TicketType.S_GRADE))
+                                },
+                            ),
+                        headcount = Headcount(2),
                     ),
                 )
             }

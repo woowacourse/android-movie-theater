@@ -2,7 +2,6 @@ package woowacourse.movie.presenter
 
 import io.mockk.mockk
 import io.mockk.verify
-import java.time.LocalDateTime
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.Headcount
@@ -10,6 +9,7 @@ import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.ui.seat.BookingSeatContract
 import woowacourse.movie.ui.seat.BookingSeatPresenter
+import java.time.LocalDateTime
 
 class BookingSeatPresenterTest {
     private lateinit var view: BookingSeatContract.View
@@ -20,8 +20,10 @@ class BookingSeatPresenterTest {
         view = mockk(relaxed = true)
         presenter = BookingSeatPresenter(view)
         presenter.loadBookingSeatInfo(
-            1L, MovieSchedule(LocalDateTime.of(2025, 5, 7, 10, 0)),
-            Headcount(2), "선릉 극장"
+            1L,
+            MovieSchedule(LocalDateTime.of(2025, 5, 7, 10, 0)),
+            Headcount(2),
+            "선릉 극장",
         )
     }
 

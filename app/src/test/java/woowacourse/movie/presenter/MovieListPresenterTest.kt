@@ -1,13 +1,13 @@
- package woowacourse.movie.presenter
+package woowacourse.movie.presenter
 
- import io.mockk.mockk
- import io.mockk.verify
- import org.junit.jupiter.api.BeforeEach
- import org.junit.jupiter.api.Test
- import woowacourse.movie.ui.movielist.contract.MovieListContract
- import woowacourse.movie.ui.movielist.presenter.MovieListPresenter
+import io.mockk.mockk
+import io.mockk.verify
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import woowacourse.movie.ui.movielist.contract.MovieListContract
+import woowacourse.movie.ui.movielist.presenter.MovieListPresenter
 
- class MovieListPresenterTest {
+class MovieListPresenterTest {
     private lateinit var presenter: MovieListPresenter
     private lateinit var view: MovieListContract.View
 
@@ -22,4 +22,4 @@
         presenter.loadMovieList()
         verify { view.showMoveListItems(any()) }
     }
- }
+}

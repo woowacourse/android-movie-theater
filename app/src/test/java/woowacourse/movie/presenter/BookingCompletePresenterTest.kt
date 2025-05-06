@@ -1,19 +1,19 @@
- package woowacourse.movie.presenter
+package woowacourse.movie.presenter
 
- import io.mockk.mockk
- import io.mockk.verify
- import java.time.LocalDateTime
- import org.junit.jupiter.api.BeforeEach
- import org.junit.jupiter.api.Test
- import woowacourse.movie.domain.model.BookedTicket
- import woowacourse.movie.domain.model.Headcount
- import woowacourse.movie.domain.model.MovieSchedule
- import woowacourse.movie.domain.model.Seat
- import woowacourse.movie.domain.model.Seats
- import woowacourse.movie.ui.complete.BookingCompleteContract
- import woowacourse.movie.ui.complete.BookingCompletePresenter
+import io.mockk.mockk
+import io.mockk.verify
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.model.BookedTicket
+import woowacourse.movie.domain.model.Headcount
+import woowacourse.movie.domain.model.MovieSchedule
+import woowacourse.movie.domain.model.Seat
+import woowacourse.movie.domain.model.Seats
+import woowacourse.movie.ui.complete.BookingCompleteContract
+import woowacourse.movie.ui.complete.BookingCompletePresenter
+import java.time.LocalDateTime
 
- class BookingCompletePresenterTest {
+class BookingCompletePresenterTest {
     private lateinit var view: BookingCompleteContract.View
     private lateinit var presenter: BookingCompletePresenter
 
@@ -22,13 +22,13 @@
         view = mockk(relaxed = true)
         presenter = BookingCompletePresenter(view)
         presenter.loadBookedTicket(
-            bookedTicket = BookedTicket(
-                theaterName = "선릉 극장",
-                movieTitle = "해리 포터",
-                movieSchedule = MovieSchedule(LocalDateTime.of(2025, 1, 1, 12, 0)
-                ,Seats().apply { reserve(Seat(1,1)) }),
-                headcount = Headcount(1)
-            )
+            bookedTicket =
+                BookedTicket(
+                    theaterName = "선릉 극장",
+                    movieTitle = "해리 포터",
+                    movieSchedule = MovieSchedule(LocalDateTime.of(2025, 1, 1, 12, 0), Seats().apply { reserve(Seat(1, 1)) }),
+                    headcount = Headcount(1),
+                ),
         )
     }
 
@@ -42,7 +42,7 @@
         verify {
             view.showMovieTitle(any())
             view.showScreeningDateTime(any())
-            view.showDetailInfos(any(),any(),any())
+            view.showDetailInfos(any(), any(), any())
         }
     }
- }
+}
