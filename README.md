@@ -62,7 +62,7 @@
 - [x] HomeContract | navigate가 되는 책임 view에서만 담당하도록 변경
 - [x] HomeFragment | 함수형 인터페이스로 변경
 - [x] HomeFragment | 데이터 이동의 책임을 view -> presenter로 이동
-- [ ] HomeFragment | findViewById 삭제
+- [x] HomeFragment | findViewById 삭제
 - [ ] HomeFragment | superCall의 필요성?
 - [ ] MovieAdapter |  areItemsTheSame, areContentsTheSame 역할 찾기
 - [ ] TheaterBottomSheetDialogFragment | 생성자 삭제

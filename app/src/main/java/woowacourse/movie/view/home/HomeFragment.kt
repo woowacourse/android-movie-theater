@@ -36,7 +36,7 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun showMoviesScreen(movieItems: List<MovieItem>) {
-        val recyclerView: RecyclerView = binding.root.findViewById(R.id.recycler_view)
+        val recyclerView: RecyclerView = binding.recyclerView
         val movieAdapter: MovieAdapter =
             MovieAdapter { movieUi -> showTheaterSelectDialog(movieUi) }
 
