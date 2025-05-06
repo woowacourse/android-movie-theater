@@ -1,50 +1,42 @@
 package woowacourse.movie.ui.seat
 
 import woowacourse.movie.domain.model.Headcount
+import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seat
-import woowacourse.movie.domain.model.Seats
-import woowacourse.movie.domain.model.Theater
 
 interface BookingSeatContract {
     interface Presenter {
-        fun loadHeadcount(): Headcount
+        fun loadBookingSeatInfo(
+            movieId: Long,
+            movieSchedule: MovieSchedule,
+            headcount: Headcount,
+            theaterName: String,
+        )
 
-        fun loadMovieTitle(): String
+        fun updateSeat(seatTag: String)
 
-        fun loadTheater(theater: Theater)
+        fun updateConfirmButton()
 
-        fun refreshTotalPrice()
-
-        fun refreshMovieTitle()
-
-        fun selectSeat(seatTag: String)
-
-        fun refreshConfirmButton()
-
-        fun completeBookingSeat()
+        fun loadBookedTicket()
     }
 
     interface View {
-        fun getHeadcount(): Headcount?
+        fun showMovieTitle(movieTitle: String)
 
-        fun getMovieTitle(): String?
+        fun showTotalPrice(totalPrice: Int)
 
-        fun setTotalPrice(totalPrice: Int)
-
-        fun setMovieTitle(movieTitle: String)
-
-        fun toggleSeat(
+        fun showSeatView(
             seatPosition: Seat,
             isOccupied: Boolean,
         )
 
-        fun setConfirmButton(isEnabled: Boolean)
+        fun showConfirmButton(isEnabled: Boolean)
 
-        fun startBookingCompleteActivity(
+        fun moveToBookedTicket(
+            theaterName: String,
             movieTitle: String,
+            schedule: MovieSchedule,
             headcount: Headcount,
-            seats: Seats,
-            theater: Theater,
         )
     }
 }

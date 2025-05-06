@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -16,123 +14,81 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.databinding.DataBindingUtil
-import java.time.LocalDateTime
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seat
-import woowacourse.movie.domain.model.Seats
-import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.ui.complete.BookingCompleteActivity
-import woowacourse.movie.utils.StringFormatter.thousandFormat
+import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.intentSerializable
 
 class BookingSeatActivity :
     AppCompatActivity(),
     BookingSeatContract.View {
-    private val bookingSeatPresenter = BookingSeatPresenter(this)
-    private lateinit var binding : ActivityBookingSeatBinding
-    private val seatTextViews: MutableMap<String, TextView> = mutableMapOf()
-    private val confirmButton: Button by lazy { findViewById(R.id.btn_confirm) }
+    private val bookingSeatPresenter by lazy { BookingSeatPresenter(this) }
+    private lateinit var binding: ActivityBookingSeatBinding
+    private val cachedSeats: MutableMap<String, TextView> = mutableMapOf()
+    private val occupiedSeatBackGroundColor: Int by lazy {
+        resources.getColor(R.color.selected_seat, null)
+    }
+    private val nonOccupiedSeatBackGroundColor: Int by lazy {
+        resources.getColor(R.color.white, null)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = DataBindingUtil.setContentView(this@BookingSeatActivity,R.layout.activity_booking_seat)
+        binding =
+            DataBindingUtil.setContentView(this@BookingSeatActivity, R.layout.activity_booking_seat)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         applyWindowInsets()
-        initializeSeatTextViews()
-        bookingSeatPresenter.fetchData()
-        bookingSeatPresenter.updateViews()
+        initializeSeatTables()
 
-//        bookingSeatPresenter.loadTheater(restoreTheater())
+        bookingSeatPresenter.loadBookingSeatInfo(
+            movieId = restoreMovieId(),
+            movieSchedule = restoreMovieSchedule(),
+            headcount = restoreHeadcount(),
+            theaterName = restoreTheaterName(),
+        )
+
         setConfirmButtonClickListener()
     }
 
-    private fun applyWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+    override fun showMovieTitle(movieTitle: String) {
+        binding.movieTitle = movieTitle
     }
 
-//    private fun restoreTheater() =
-//        intent.intentSerializable(EXTRA_THEATER, Theater::class.java)
-//            ?: DUMMY_THEATERS.theaters.first()
-
-    override fun getHeadcount(): Headcount? =
-        intent.intentSerializable(EXTRA_HEADCOUNT, Headcount::class.java)
-
-    override fun getMovieTitle(): String? {
-        return null
+    override fun showTotalPrice(totalPrice: Int) {
+        binding.totalPrice = totalPrice
+        binding.stringFormatter = StringFormatter
     }
 
-//    override fun getMovieTitle(): String? = intent.getStringExtra(EXTRA_MOVIE_TITLE)
-
-    override fun setTotalPrice(totalPrice: Int) {
-        val totalPriceView: TextView = findViewById(R.id.tv_price)
-        totalPriceView.text = getString(R.string.text_korean_won).format(thousandFormat(totalPrice))
-    }
-
-    override fun setMovieTitle(movieTitle: String) {
-        val movieTitleView: TextView = findViewById(R.id.tv_movie_title)
-        movieTitleView.text = movieTitle
-    }
-
-    override fun toggleSeat(
+    override fun showSeatView(
         seatPosition: Seat,
         isOccupied: Boolean,
     ) {
-        val seatView: TextView? = seatTextViews[seatPosition.toSeatTag()]
+        val seatView: TextView? = cachedSeats[seatPosition.toSeatTag()]
         when (isOccupied) {
-            true -> seatView?.setBackgroundColor(getColor(R.color.selected_seat))
-            false -> seatView?.setBackgroundColor(getColor(R.color.white))
+            true -> seatView?.setBackgroundColor(occupiedSeatBackGroundColor)
+            false -> seatView?.setBackgroundColor(nonOccupiedSeatBackGroundColor)
         }
     }
 
-    private fun initializeSeatTextViews() {
-        val tableLayout: TableLayout = findViewById(R.id.table_layout_seats)
-        tableLayout
-            .children
-            .filterIsInstance<TableRow>()
-            .forEachIndexed { rowIndex, tableRow ->
-                tableRow.forEachIndexed { colIndex, textView ->
-                    setSeatTag(textView as TextView, rowIndex, colIndex)
-                    setSeatColor(textView, rowIndex)
-                    textView.setOnClickListener {
-                        bookingSeatPresenter.selectSeat(textView.getTag(R.id.seat_tag).toString())
-                    }
-                }
-            }
+    override fun showConfirmButton(isEnabled: Boolean) {
+        binding.btnConfirm.isEnabled = isEnabled
     }
 
-    override fun setConfirmButton(isEnabled: Boolean) {
-        confirmButton.isEnabled = isEnabled
-    }
-
-    override fun startBookingCompleteActivity(
+    override fun moveToBookedTicket(
+        theaterName: String,
         movieTitle: String,
+        schedule: MovieSchedule,
         headcount: Headcount,
-        seats: Seats,
-        theater: Theater,
     ) {
-        val bookedDateTime =
-            LocalDateTime.now()
-//            intent.intentSerializable(EXTRA_DATETIME, LocalDateTime::class.java)
-                ?: LocalDateTime.now()
-        val bookedTicket =
-            BookedTicket(
-                movieTitle,
-                headcount,
-                bookedDateTime,
-                seats,
-                theater.name,
-            )
-        startActivity(BookingCompleteActivity.newIntent(this, bookedTicket))
+        val bookedTicket = BookedTicket(theaterName, movieTitle, schedule, headcount)
+        startActivity(BookingCompleteActivity.newIntent(this@BookingSeatActivity, bookedTicket))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
@@ -145,8 +101,32 @@ class BookingSeatActivity :
             else -> super.onOptionsItemSelected(item)
         }
 
+    private fun applyWindowInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+
+    private fun initializeSeatTables() {
+        binding.tableLayoutSeats
+            .children
+            .filterIsInstance<TableRow>()
+            .forEachIndexed { rowIndex, tableRow ->
+                tableRow.forEachIndexed { colIndex, textView ->
+                    setSeatTag(textView as TextView, rowIndex, colIndex)
+                    setSeatColor(textView, rowIndex)
+                    textView.setOnClickListener {
+                        bookingSeatPresenter.updateSeat(textView.getTag(R.id.seat_tag).toString())
+                        bookingSeatPresenter.updateConfirmButton()
+                    }
+                }
+            }
+    }
+
     private fun setConfirmButtonClickListener() {
-        confirmButton.setOnClickListener {
+        binding.btnConfirm.setOnClickListener {
             showDialog(
                 getString(R.string.text_booking_dialog_title),
                 getString(R.string.text_booking_dialog_description),
@@ -161,7 +141,7 @@ class BookingSeatActivity :
     ) {
         val seatText = "${ASCII_A + rowIndex}${colIndex + 1}"
         textView.setTag(R.id.seat_tag, seatText)
-        seatTextViews[seatText] = textView
+        cachedSeats[seatText] = textView
         textView.text = seatText
     }
 
@@ -185,13 +165,21 @@ class BookingSeatActivity :
             .setTitle(title)
             .setMessage(description)
             .setPositiveButton(getString(R.string.text_booking_dialog_positive_button)) { _, _ ->
-                bookingSeatPresenter.completeBookingSeat()
+                bookingSeatPresenter.loadBookedTicket()
             }
             .setNegativeButton(getString(R.string.text_booking_dialog_negative_button)) { dialog, _ ->
                 dialog.dismiss()
             }.setCancelable(false)
             .show()
     }
+
+    private fun restoreMovieId() = intent.getLongExtra(EXTRA_MOVIE_ID, 0L)
+
+    private fun restoreMovieSchedule() = intent.intentSerializable(EXTRA_MOVIE_SCHEDULE, MovieSchedule::class.java)!!
+
+    private fun restoreHeadcount() = intent.intentSerializable(EXTRA_HEADCOUNT, Headcount::class.java)!!
+
+    private fun restoreTheaterName() = intent.getStringExtra(EXTRA_THEATER_NAME)!!
 
     private fun Seat.toSeatTag(): String = "${ASCII_A + row}${col + 1}"
 

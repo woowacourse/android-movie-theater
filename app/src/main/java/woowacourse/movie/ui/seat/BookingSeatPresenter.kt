@@ -1,68 +1,77 @@
 package woowacourse.movie.ui.seat
 
 import woowacourse.movie.domain.model.Headcount
+import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
-import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.sample.DUMMY_MOVIES
 
 class BookingSeatPresenter(
     private val bookingSeatView: BookingSeatContract.View,
 ) : BookingSeatContract.Presenter {
-    private val headcount: Headcount by lazy { loadHeadcount() }
-    private val movieTitle: String by lazy { loadMovieTitle() }
-    private lateinit var theater: Theater
-    private var seats: Seats = Seats()
+    private lateinit var movie: Movie
+    private lateinit var headcount: Headcount
+    private lateinit var theaterName: String
+    private lateinit var movieSchedule: MovieSchedule
+    private lateinit var seats : Seats
 
-    fun fetchData() {
-        loadHeadcount()
-        loadMovieTitle()
+    override fun loadBookingSeatInfo(
+        movieId: Long,
+        movieSchedule: MovieSchedule,
+        headcount: Headcount,
+        theaterName: String,
+    ) {
+        movie = DUMMY_MOVIES[movieId]!!
+        this.headcount = headcount
+        this.movieSchedule = movieSchedule
+        this.theaterName = theaterName
+        seats = movieSchedule.seats
+
+        bookingSeatView.showMovieTitle(movie.title)
+        bookingSeatView.showTotalPrice(seats.totalPrice())
     }
 
-    fun updateViews() {
-        refreshMovieTitle()
-        refreshTotalPrice()
-        refreshConfirmButton()
-    }
+    override fun updateSeat(seatTag: String) {
+        val targetSeat = Seat.fromSeatTag(seatTag)
+        val isReserved = seats.isReservedSeat(targetSeat)
 
-    override fun loadTheater(theater: Theater) {
-        this.theater = theater
-    }
-
-    override fun loadHeadcount(): Headcount = bookingSeatView.getHeadcount() ?: Headcount()
-
-    override fun loadMovieTitle(): String = bookingSeatView.getMovieTitle() ?: "EMPTY"
-
-    override fun refreshTotalPrice() {
-        bookingSeatView.setTotalPrice(seats.totalPrice())
-    }
-
-    override fun refreshMovieTitle() {
-        bookingSeatView.setMovieTitle(movieTitle)
-    }
-
-    override fun selectSeat(seatTag: String) {
-        val seat = Seat.fromSeatTag(seatTag)
-
-        if (seats.contains(seat)) {
-            seats.remove(seat)
-            bookingSeatView.toggleSeat(seat, false)
-        } else if (seats.size < headcount.count) {
-            seats.add(seat)
-            bookingSeatView.toggleSeat(seat, true)
+        if (seats.isSeatSelectionComplete(headcount)) {
+            allSeatSelectionByIsReserved(isReserved, targetSeat)
+            return
         }
-        refreshTotalPrice()
-        refreshConfirmButton()
-    }
 
-    override fun refreshConfirmButton() {
-        if (seats.size != headcount.count) {
-            bookingSeatView.setConfirmButton(false)
+        if (!isReserved) {
+            seats.reserve(targetSeat)
         } else {
-            bookingSeatView.setConfirmButton(true)
+            seats.cancelReserve(targetSeat)
         }
+
+        bookingSeatView.showSeatView(targetSeat, !isReserved)
+        bookingSeatView.showTotalPrice(seats.totalPrice())
     }
 
-    override fun completeBookingSeat() {
-        bookingSeatView.startBookingCompleteActivity(movieTitle, headcount, seats, theater)
+    override fun updateConfirmButton() {
+        bookingSeatView.showConfirmButton(seats.isSeatSelectionComplete(headcount))
+    }
+
+    override fun loadBookedTicket() {
+        bookingSeatView.moveToBookedTicket(
+            theaterName = theaterName,
+            movieTitle = movie.title,
+            schedule = movieSchedule,
+            headcount = headcount,
+        )
+    }
+
+    private fun allSeatSelectionByIsReserved(
+        isReserved: Boolean,
+        targetSeat: Seat,
+    ) {
+        if (isReserved) {
+            seats.cancelReserve(targetSeat)
+            bookingSeatView.showSeatView(targetSeat, false)
+            bookingSeatView.showTotalPrice(seats.totalPrice())
+        }
     }
 }
