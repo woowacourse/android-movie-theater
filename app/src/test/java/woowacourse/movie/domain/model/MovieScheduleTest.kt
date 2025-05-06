@@ -1,16 +1,16 @@
 package woowacourse.movie.domain.model
 
-import java.time.LocalDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import java.time.LocalDateTime
 
 class MovieScheduleTest {
     private lateinit var movieSchedule: MovieSchedule
 
     @BeforeEach
-    fun setUp()  {
+    fun setUp() {
         val screeningDateTime = LocalDateTime.of(2025, 5, 10, 10, 0)
         movieSchedule = MovieSchedule(screeningDateTime)
     }
