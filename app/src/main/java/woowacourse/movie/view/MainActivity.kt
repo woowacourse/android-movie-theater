@@ -32,10 +32,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add(R.id.main_fragment_container, homeFragment)
-            }
+            displayAddFragment(homeFragment)
         }
 
         initBottomNavigation()
@@ -47,17 +44,17 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavMenu.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_fragment_home -> {
-                    displayFragment(homeFragment)
+                    displayReplaceFragment(homeFragment)
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_fragment_history -> {
-                    displayFragment(historyFragment)
+                    displayReplaceFragment(historyFragment)
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_fragment_settings -> {
-                    displayFragment(settingFragment)
+                    displayReplaceFragment(settingFragment)
                     return@setOnItemSelectedListener true
                 }
 
@@ -66,7 +63,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun displayFragment(fragment: Fragment) {
+    private fun displayReplaceFragment(fragment: Fragment) {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container)
+        if (currentFragment?.javaClass == fragment.javaClass) return
+
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.main_fragment_container, fragment)
+        }
+    }
+
+    private fun displayAddFragment(fragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.main_fragment_container, fragment)
