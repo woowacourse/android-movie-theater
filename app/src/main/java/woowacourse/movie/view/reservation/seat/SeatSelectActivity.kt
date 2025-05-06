@@ -18,8 +18,7 @@ import woowacourse.movie.databinding.ActivitySeatSelectBinding
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.ReservationUiFormatter
 import woowacourse.movie.view.getParcelableExtraCompat
-import woowacourse.movie.view.model.MovieTicket
-import woowacourse.movie.view.model.ReservationInfo
+import woowacourse.movie.view.model.ReservationInfoUiModel
 import woowacourse.movie.view.reservation.complete.ReservationCompleteActivity
 import woowacourse.movie.view.reservation.detail.ReservationDetailDialog
 
@@ -65,8 +64,9 @@ class SeatSelectActivity :
 
         setupSeatView(binding.tlSeat)
 
-        val ticket = intent?.getParcelableExtraCompat<MovieTicket>(Extras.TicketData.TICKET_KEY)
-        presenter.fetchData(ticket)
+        val reservationInfo =
+            intent?.getParcelableExtraCompat<ReservationInfoUiModel>(Extras.ReservationInfoData.RESERVATION_KEY)
+        presenter.fetchData(reservationInfo)
 
         setupConfirmButton()
 
@@ -117,10 +117,10 @@ class SeatSelectActivity :
         )
     }
 
-    override fun navigateToComplete(reservationInfo: ReservationInfo) {
+    override fun navigateToComplete(reservationInfoUiModel: ReservationInfoUiModel) {
         val intent =
             Intent(this, ReservationCompleteActivity::class.java).apply {
-                putExtra(Extras.ReservationInfoData.RESERVATION_KEY, reservationInfo)
+                putExtra(Extras.ReservationInfoData.RESERVATION_KEY, reservationInfoUiModel)
             }
         startActivity(intent)
         finish()

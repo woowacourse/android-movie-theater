@@ -15,19 +15,27 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.getParcelableExtraCompat
-import woowacourse.movie.view.model.MovieTicket
+import woowacourse.movie.view.model.MovieFixture
 import woowacourse.movie.view.model.MovieUiModel
-import woowacourse.movie.view.model.TheaterUIModel
+import woowacourse.movie.view.model.ReservationInfoUiModel
+import woowacourse.movie.view.model.TheaterUiModel
 import woowacourse.movie.view.movie.MoviesActivity
 import woowacourse.movie.view.reservation.seat.SeatSelectActivity
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 class ReservationDetailActivity :
     AppCompatActivity(),
     ReservationDetailContract.View {
     private lateinit var binding: ActivityReservationBinding
     private val reservationDialog by lazy { ReservationDetailDialog() }
-    private val presenter: ReservationDetailPresenter by lazy { ReservationDetailPresenter(this) }
+    private val presenter: ReservationDetailPresenter by lazy {
+        ReservationDetailPresenter(
+            this,
+            MovieFixture.dummyTheaters,
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +48,10 @@ class ReservationDetailActivity :
             insets
         }
 
+        val movie = intent?.getParcelableExtraCompat<MovieUiModel>(Extras.MovieData.MOVIE_KEY)
         val theater =
-            intent?.getParcelableExtraCompat<TheaterUIModel>(Extras.TheaterData.THEATER_UI_MODEL_KEY)
-        presenter.fetchData(theater)
+            intent?.getParcelableExtraCompat<TheaterUiModel>(Extras.TheaterData.THEATER_UI_MODEL_KEY)
+        presenter.fetchData(movie, theater)
 
         setupButtonClickListener()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -104,7 +113,10 @@ class ReservationDetailActivity :
         }
     }
 
-    override fun updateTimeAdapter(times: List<String>) {
+    override fun updateTimeAdapter(
+        date: LocalDate,
+        times: List<String>,
+    ) {
         val timeAdapter =
             ArrayAdapter(
                 this,
@@ -122,7 +134,7 @@ class ReservationDetailActivity :
                         position: Int,
                         id: Long,
                     ) {
-                        presenter.selectTime(position)
+                        presenter.selectTime(date, position)
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -130,10 +142,10 @@ class ReservationDetailActivity :
         }
     }
 
-    override fun navigateToSeatSelect(ticket: MovieTicket) {
+    override fun navigateToSeatSelect(reservationInfo: ReservationInfoUiModel) {
         val intent =
             Intent(this, SeatSelectActivity::class.java).apply {
-                putExtra(Extras.TicketData.TICKET_KEY, ticket)
+                putExtra(Extras.ReservationInfoData.RESERVATION_KEY, reservationInfo)
             }
         startActivity(intent)
     }
@@ -150,14 +162,26 @@ class ReservationDetailActivity :
         binding.ivReservationPoster.setImageResource(movie.poster)
         binding.tvReservationTitle.text = movie.name
         binding.tvReservationScreeningDate.text =
-            resources.getString(R.string.movie_screening_date, movie.startDate, movie.endDate)
+            resources.getString(
+                R.string.movie_screening_date,
+                movie.date.startDate,
+                movie.date.endDate,
+            )
         binding.tvReservationRunningTime.text =
             getString(R.string.movie_running_time).format(movie.runningTime)
     }
 
+    private fun selectedSpinnerDateAndTime(): Pair<LocalDate?, LocalTime?> {
+        val selectedDate = binding.spinnerReservationDate.selectedItem as? LocalDate
+        val selectedTimeText = binding.spinnerReservationTime.selectedItem as? String
+        val selectedTime = selectedTimeText?.let { LocalTime.parse(it) }
+        return selectedDate to selectedTime
+    }
+
     private fun setupCompleteButtonClick() {
         binding.btnReservationSelectComplete.setOnClickListener {
-            presenter.completeSelected()
+            val (date, time) = selectedSpinnerDateAndTime()
+            presenter.completeSelected(LocalDateTime.of(date, time))
         }
     }
 

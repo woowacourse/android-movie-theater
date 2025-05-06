@@ -1,9 +1,10 @@
 package woowacourse.movie.view.reservation.detail
 
-import woowacourse.movie.view.model.MovieTicket
 import woowacourse.movie.view.model.MovieUiModel
-import woowacourse.movie.view.model.TheaterUIModel
+import woowacourse.movie.view.model.ReservationInfoUiModel
+import woowacourse.movie.view.model.TheaterUiModel
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 interface ReservationDetailContract {
     interface View {
@@ -18,9 +19,12 @@ interface ReservationDetailContract {
             selected: Int,
         )
 
-        fun updateTimeAdapter(times: List<String>)
+        fun updateTimeAdapter(
+            date: LocalDate,
+            times: List<String>,
+        )
 
-        fun navigateToSeatSelect(ticket: MovieTicket)
+        fun navigateToSeatSelect(reservationInfo: ReservationInfoUiModel)
 
         fun showToast(stringResId: Int)
 
@@ -28,18 +32,24 @@ interface ReservationDetailContract {
     }
 
     interface Presenter {
-        fun fetchData(theater: TheaterUIModel?)
+        fun fetchData(
+            movie: MovieUiModel?,
+            theater: TheaterUiModel?,
+        )
 
         fun initDateAdapter(movie: MovieUiModel)
 
         fun selectDate(date: LocalDate)
 
-        fun selectTime(position: Int)
+        fun selectTime(
+            date: LocalDate,
+            position: Int,
+        )
 
         fun plusTicketCount()
 
         fun minusTicketCount()
 
-        fun completeSelected()
+        fun completeSelected(selectedDateTime: LocalDateTime?)
     }
 }

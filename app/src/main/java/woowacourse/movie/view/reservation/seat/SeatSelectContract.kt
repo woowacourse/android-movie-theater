@@ -1,7 +1,6 @@
 package woowacourse.movie.view.reservation.seat
 
-import woowacourse.movie.view.model.MovieTicket
-import woowacourse.movie.view.model.ReservationInfo
+import woowacourse.movie.view.model.ReservationInfoUiModel
 
 interface SeatSelectContract {
     interface View {
@@ -27,11 +26,11 @@ interface SeatSelectContract {
             message: String,
         )
 
-        fun navigateToComplete(reservationInfo: ReservationInfo)
+        fun navigateToComplete(reservationInfoUiModel: ReservationInfoUiModel)
     }
 
     interface Presenter {
-        fun fetchData(ticket: MovieTicket?)
+        fun fetchData(reservationInfo: ReservationInfoUiModel?)
 
         fun seatSelect(seatId: String)
 
