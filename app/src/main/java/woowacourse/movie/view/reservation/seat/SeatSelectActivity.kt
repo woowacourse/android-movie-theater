@@ -2,7 +2,6 @@ package woowacourse.movie.view.reservation.seat
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -11,38 +10,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectBinding
 import woowacourse.movie.view.Extras
-import woowacourse.movie.view.ReservationUiFormatter
 import woowacourse.movie.view.getParcelableExtraCompat
 import woowacourse.movie.view.model.ReservationInfoUiModel
 import woowacourse.movie.view.reservation.complete.ReservationCompleteActivity
 import woowacourse.movie.view.reservation.detail.ReservationDetailDialog
-
-@BindingAdapter("totalPrice")
-fun setTotalPrice(
-    view: TextView,
-    totalPrice: Int,
-) {
-    val context = view.context
-    val formatted =
-        context
-            .getString(R.string.seat_select_ticket_price)
-            .format(ReservationUiFormatter.priceToUI(totalPrice))
-    view.text = formatted
-}
-
-@BindingAdapter("enabledAlpha")
-fun setButtonEnabledAlpha(
-    button: Button,
-    isEnabled: Boolean,
-) {
-    button.isClickable = isEnabled
-    button.alpha = if (isEnabled) 1f else 0.1f
-}
 
 class SeatSelectActivity :
     AppCompatActivity(),
