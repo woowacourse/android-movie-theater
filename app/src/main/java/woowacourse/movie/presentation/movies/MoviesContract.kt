@@ -10,8 +10,8 @@ interface MoviesContract {
     }
 
     interface Presenter {
-        fun onViewCreated()
+        fun initializeMovies()
 
-        fun onMovieClicked(movie: Movie)
+        fun selectMovie(movie: Movie)
     }
 }

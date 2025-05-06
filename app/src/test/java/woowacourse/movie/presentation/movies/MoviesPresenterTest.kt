@@ -37,7 +37,7 @@ class MoviesPresenterTest {
         every { movieData.getData() } returns testMovies
 
         // When
-        presenter.onViewCreated()
+        presenter.initializeMovies()
 
         // Then
         verify { movieData.getData() }
@@ -50,7 +50,7 @@ class MoviesPresenterTest {
         val movie = testMovies[0]
 
         // When
-        presenter.onMovieClicked(movie)
+        presenter.selectMovie(movie)
 
         // Then
         verify { view.showTheaterSelectDialog(movie) }

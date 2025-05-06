@@ -18,12 +18,7 @@ class MoviesFragment :
     MoviesContract.View {
     private var _binding: FragmentMoviesBinding? = null
     private val binding get() = _binding!!
-    private lateinit var presenter: MoviesContract.Presenter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter = MoviesPresenter(this, MovieData)
-    }
+    private val presenter: MoviesPresenter by lazy { MoviesPresenter(this, MovieData) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,13 +34,13 @@ class MoviesFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.onViewCreated()
+        presenter.initializeMovies()
     }
 
     override fun showMovies(moviesItems: List<MoviesItem>) {
         val adapter =
             MovieAdapter {
-                presenter.onMovieClicked(it)
+                presenter.selectMovie(it)
             }
         adapter.submitList(moviesItems)
         binding.recyclerviewMovies.adapter = adapter
