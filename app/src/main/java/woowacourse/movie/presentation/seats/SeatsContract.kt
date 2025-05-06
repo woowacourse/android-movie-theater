@@ -11,11 +11,11 @@ interface SeatsContract {
 
         fun showConfirmDialog()
 
-        fun showToast(message: String)
+        fun showMessage(message: String)
 
         fun updateAmount(amount: Int)
 
-        fun updateSelectedSeats(seats: List<Seat>)
+        fun updateSelectedSeat(seat: Seat, isSelected: Boolean)
 
         fun updateConfirmButtonEnabled(canConfirm: Boolean)
 
@@ -23,21 +23,12 @@ interface SeatsContract {
     }
 
     interface Presenter {
-        fun onViewCreated()
+        fun initializeSeats(movieTicket: MovieTicket)
 
-        fun getSeat(
-            x: Int,
-            y: Int,
-        ): Seat
+        fun selectSeat(seat: Seat)
 
-        fun getSelectedSeats(): List<Seat>
+        fun publishMovieTicket()
 
-        fun isSelectedSeat(seat: Seat): Boolean
-
-        fun onSeatClicked(seat: Seat)
-
-        fun onConfirmClicked()
-
-        fun onConfigurationChanged(seats: List<Seat>)
+        fun restoreSeats(seats: List<Seat>)
     }
 }

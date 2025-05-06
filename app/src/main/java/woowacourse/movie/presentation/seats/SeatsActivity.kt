@@ -20,38 +20,36 @@ import java.io.Serializable
 
 class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
     private val binding by binding<ActivitySeatsBinding>(R.layout.activity_seats)
-    private lateinit var movieTicket: MovieTicket
-    private lateinit var presenter: SeatsContract.Presenter
+    private val presenter: SeatsPresenter by lazy { SeatsPresenter(this) }
     private var confirmDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupScreen(binding.root)
         if (!fetchTicketFromIntent()) return
-        presenter = SeatsPresenter(this, movieTicket)
-        presenter.onViewCreated()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        val selectedSeats = presenter.getSelectedSeats()
+        val selectedSeats = presenter.selectedSeats.value
         outState.putSerializable(SEATS_KEY, selectedSeats as Serializable)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         val selectedSeats = savedInstanceState.getSerializable(SEATS_KEY) as List<Seat>
-        presenter.onConfigurationChanged(selectedSeats)
+        presenter.restoreSeats(selectedSeats)
     }
 
     override fun initSeats() {
-        binding.tablelayoutSeats.children.filterIsInstance<TableRow>().forEachIndexed { rowIndex, row ->
-            row.children.filterIsInstance<TextView>().forEachIndexed { colIndex, view ->
-                val seat = presenter.getSeat(colIndex, rowIndex)
-                view.tag = seat
-                setSeatClickListener(view, seat)
+        binding.tablelayoutSeats.children.filterIsInstance<TableRow>()
+            .forEachIndexed { rowIndex, row ->
+                row.children.filterIsInstance<TextView>().forEachIndexed { colIndex, view ->
+                    val seat = Seat.of(colIndex, rowIndex)
+                    view.tag = seat.seatPosition
+                    view.setOnClickListener { presenter.selectSeat(seat) }
+                }
             }
-        }
     }
 
     override fun showMovieTitle(title: String) {
@@ -63,23 +61,18 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
         confirmDialog?.show()
     }
 
-    override fun showToast(message: String) {
+    override fun showMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun updateAmount(amount: Int) {
-        binding.textviewAmount.text = TicketUiFormatter.formatAmount(getString(R.string.amount_message), amount)
+        binding.textviewAmount.text =
+            TicketUiFormatter.formatAmount(getString(R.string.amount_message), amount)
     }
 
-    override fun updateSelectedSeats(seats: List<Seat>) {
-        binding.tablelayoutSeats.children.filterIsInstance<TableRow>().forEach { row ->
-            row.children.filterIsInstance<TextView>().forEach seat@{ seatView ->
-                val seat = seatView.tag as? Seat ?: return@seat
-                seatView.setBackgroundColor(
-                    if (presenter.isSelectedSeat(seat)) getColor(R.color.selected_seat) else getColor(R.color.white),
-                )
-            }
-        }
+    override fun updateSelectedSeat(seat: Seat, isSelected: Boolean) {
+        val view = binding.tablelayoutSeats.findViewWithTag<TextView>(seat.seatPosition)
+        view.setBackgroundResource(if (isSelected) R.color.selected_seat else R.color.white)
     }
 
     override fun updateConfirmButtonEnabled(canConfirm: Boolean) {
@@ -104,20 +97,6 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
         startActivity(intent)
     }
 
-    private fun setSeatClickListener(
-        view: TextView,
-        seat: Seat,
-    ) {
-        view.setOnClickListener {
-            presenter.onSeatClicked(seat)
-            if (presenter.isSelectedSeat(seat)) {
-                view.setBackgroundColor(getColor(R.color.selected_seat))
-            } else {
-                view.setBackgroundColor(getColor(R.color.white))
-            }
-        }
-    }
-
     private fun fetchTicketFromIntent(): Boolean {
         val data = intent.intentSerializable(IntentKeys.TICKET, MovieTicket::class.java)
         if (data == null) {
@@ -125,7 +104,7 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
             finish()
             return false
         }
-        movieTicket = data
+        presenter.initializeSeats(data)
         return true
     }
 
@@ -134,7 +113,7 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
             AlertDialog.Builder(this)
                 .setTitle(getString(R.string.dialog_title))
                 .setMessage(getString(R.string.dialog_message))
-                .setPositiveButton(getString(R.string.complete)) { _, _ -> presenter.onConfirmClicked() }
+                .setPositiveButton(getString(R.string.complete)) { _, _ -> presenter.publishMovieTicket() }
                 .setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.dismiss() }
                 .setCancelable(false)
                 .create()

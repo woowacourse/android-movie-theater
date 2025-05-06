@@ -2,45 +2,35 @@ package woowacourse.movie.presentation.seats
 
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
-import woowacourse.movie.domain.model.seat.SeatPosition
 import woowacourse.movie.domain.model.seat.SelectedSeats
-import java.util.Locale
 
 class SeatsPresenter(
     private val view: SeatsContract.View,
-    private val movieTicket: MovieTicket,
 ) : SeatsContract.Presenter {
-    private var selectedSeats = SelectedSeats(movieTicket.headCount)
+    private lateinit var movieTicket: MovieTicket
+    lateinit var selectedSeats: SelectedSeats
+        private set
 
-    override fun onViewCreated() {
+    override fun initializeSeats(movieTicket: MovieTicket) {
+        this.movieTicket = movieTicket
+        selectedSeats = SelectedSeats(movieTicket.headCount)
         view.initSeats()
         view.showMovieTitle(movieTicket.movieTitle)
         view.updateAmount(movieTicket.amount)
     }
 
-    override fun getSeat(
-        x: Int,
-        y: Int,
-    ): Seat {
-        val seatPosition = SeatPosition(x, y)
-        return Seat(seatPosition)
-    }
-
-    override fun getSelectedSeats(): List<Seat> = selectedSeats.value
-
-    override fun isSelectedSeat(seat: Seat): Boolean = selectedSeats.isSelected(seat)
-
-    override fun onSeatClicked(seat: Seat) {
+    override fun selectSeat(seat: Seat) {
         runCatching {
             selectedSeats.updateSelection(seat)
+            view.updateSelectedSeat(seat, selectedSeats.isSelected(seat))
             view.updateAmount(selectedSeats.getTotalPrice())
             view.updateConfirmButtonEnabled(selectedSeats.isFull())
         }.onFailure {
-            view.showToast(it.message ?: it.stackTraceToString())
+            view.showMessage(it.message ?: it.stackTraceToString())
         }
     }
 
-    override fun onConfirmClicked() {
+    override fun publishMovieTicket() {
         val movieTicket =
             MovieTicket(
                 movieTitle = this.movieTicket.movieTitle,
@@ -53,9 +43,9 @@ class SeatsPresenter(
         view.navigateToSummary(movieTicket)
     }
 
-    override fun onConfigurationChanged(seats: List<Seat>) {
+    override fun restoreSeats(seats: List<Seat>) {
         selectedSeats = SelectedSeats(movieTicket.headCount, seats.toMutableSet())
-        view.updateSelectedSeats(selectedSeats.value)
+        selectedSeats.value.forEach { seat -> view.updateSelectedSeat(seat, true) }
         view.updateAmount(selectedSeats.getTotalPrice())
         view.updateConfirmButtonEnabled(selectedSeats.isFull())
     }
