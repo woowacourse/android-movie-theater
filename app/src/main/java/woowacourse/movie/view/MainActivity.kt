@@ -15,6 +15,9 @@ import woowacourse.movie.view.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val homeFragment: HomeFragment by lazy { HomeFragment() }
+    private val historyFragment: HistoryFragment by lazy { HistoryFragment() }
+    private val settingFragment: SettingFragment by lazy { SettingFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add(R.id.main_fragment_container, HomeFragment())
+                add(R.id.main_fragment_container, homeFragment)
             }
         }
 
@@ -44,17 +47,17 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavMenu.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_fragment_home -> {
-                    displayFragment(HomeFragment())
+                    displayFragment(homeFragment)
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_fragment_history -> {
-                    displayFragment(HistoryFragment())
+                    displayFragment(historyFragment)
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_fragment_settings -> {
-                    displayFragment(SettingFragment())
+                    displayFragment(settingFragment)
                     return@setOnItemSelectedListener true
                 }
 
