@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
@@ -81,17 +80,16 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         binding.ticket = ticket
     }
 
-    override fun showSeatState(seat: SeatUiModel) {
+    override fun showSeatState(
+        seat: SeatUiModel,
+        selected: Boolean,
+    ) {
         val seatView = seatViews[seat] ?: return
 
-        val currentColor = (seatView.background as? ColorDrawable)?.color
-        val selectedColor = ContextCompat.getColor(this, R.color.seat_selected_background)
-        val unselectedColor = ContextCompat.getColor(this, R.color.seat_unselected_background)
-
-        if (currentColor == selectedColor) {
-            seatView.setBackgroundColor(unselectedColor)
+        if (selected) {
+            seatView.setBackgroundColor(getColor(R.color.seat_selected_background))
         } else {
-            seatView.setBackgroundColor(selectedColor)
+            seatView.setBackgroundColor(getColor(R.color.seat_unselected_background))
         }
     }
 
@@ -99,7 +97,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         val confirmButton = binding.btnBookingConfirm
         val colorRes =
             if (canBook) R.color.btn_activate_background else R.color.btn_deactivate_background
-        confirmButton.setBackgroundColor(ContextCompat.getColor(this, colorRes))
+        confirmButton.setBackgroundColor(getColor(colorRes))
         confirmButton.isEnabled = canBook
     }
 
@@ -125,7 +123,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        val selectedColor = ContextCompat.getColor(this, R.color.seat_selected_background)
+        val selectedColor = getColor(R.color.seat_selected_background)
 
         val selectedSeats =
             seatViews

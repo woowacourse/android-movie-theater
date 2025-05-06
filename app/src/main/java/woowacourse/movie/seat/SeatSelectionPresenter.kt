@@ -32,7 +32,7 @@ class SeatSelectionPresenter(
                 ticket.selectSeat(seat)
             }
 
-        view.showSeatState(seat.toUiModel())
+        view.showSeatState(seat.toUiModel(), ticket.hasSeat(seat))
 
         updateBookingState()
     }

@@ -7,7 +7,10 @@ interface SeatSelectionContract {
     interface View {
         fun showTicket(ticket: TicketUiModel)
 
-        fun showSeatState(seat: SeatUiModel)
+        fun showSeatState(
+            seat: SeatUiModel,
+            selected: Boolean,
+        )
 
         fun updateCanBook(canBook: Boolean)
 

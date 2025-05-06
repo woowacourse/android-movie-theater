@@ -30,7 +30,7 @@ class SeatSelectionPresenterTest {
         presenter.updateSeats(0, 0)
 
         // then
-        verify { mockView.showSeatState(SEAT_A1.toUiModel()) }
+        verify { mockView.showSeatState(SEAT_A1.toUiModel(), true) }
         verify { mockView.updateCanBook(any()) }
         verify { mockView.showTicket(match { it.seats == setOf(SEAT_A1.toUiModel()) && it.totalPrice == "10,000" }) }
     }
