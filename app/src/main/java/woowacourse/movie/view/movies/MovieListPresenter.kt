@@ -5,7 +5,7 @@ import woowacourse.movie.data.TheaterStore
 import woowacourse.movie.domain.model.Advertisement
 import woowacourse.movie.view.movies.model.MovieRvItem
 import woowacourse.movie.view.movies.model.ScreeningInfo
-import woowacourse.movie.view.mapper.toItem
+import woowacourse.movie.view.movies.model.toItem
 
 class MovieListPresenter(
     private val view: MovieListContract.View,

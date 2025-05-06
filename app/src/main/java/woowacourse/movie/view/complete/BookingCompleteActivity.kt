@@ -14,7 +14,7 @@ import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.core.ext.getSerializableOrNull
 import woowacourse.movie.view.core.ext.showToastFromResource
-import woowacourse.movie.view.mapper.toUiModel
+import woowacourse.movie.view.uiModel.toUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
     private lateinit var binding: ActivityBookingCompleteBinding

@@ -2,7 +2,11 @@ package woowacourse.movie.view.movies.model
 
 import androidx.annotation.LayoutRes
 import woowacourse.movie.R
+import woowacourse.movie.domain.model.Advertisement
+import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.view.core.bindingadapter.ImageSource
+import woowacourse.movie.view.core.util.StringFormatter
+import woowacourse.movie.view.movies.model.MovieRvItem.AdItem
 
 sealed class MovieRvItem(val viewType: ViewType) {
     data class MovieItem(
@@ -24,4 +28,21 @@ sealed class MovieRvItem(val viewType: ViewType) {
         VIEW_TYPE_ADVERTISEMENT(R.layout.advertisement_item),
         VIEW_TYPE_MOVIE(R.layout.movie_item),
     }
+}
+
+fun Movie.toItem(): MovieRvItem.MovieItem {
+    return MovieRvItem.MovieItem(
+        id = id,
+        title = title,
+        imgName = ImageSource.Resource(posterResource),
+        releaseStartDate = StringFormatter.dotDateFormat(screeningStartDate),
+        releaseEndDate = StringFormatter.dotDateFormat(screeningEndDate),
+        runningTime = runningTime,
+    )
+}
+
+fun Advertisement.toItem(): AdItem {
+    return AdItem(
+        imgResource = ImageSource.Resource(imgResource),
+    )
 }

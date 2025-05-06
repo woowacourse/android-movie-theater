@@ -12,7 +12,6 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.fixture.fakeContext
-import woowacourse.movie.view.booking.BookingActivity
 import woowacourse.movie.view.movies.model.ScreeningInfo
 import java.time.LocalDateTime
 

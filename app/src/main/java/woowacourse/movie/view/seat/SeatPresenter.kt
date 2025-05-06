@@ -1,11 +1,11 @@
 package woowacourse.movie.view.seat
 
 import woowacourse.movie.domain.model.Booking
+import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Column
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.Seats
-import woowacourse.movie.domain.model.Ticket
 
 class SeatPresenter(
     private val view: SeatContract.View,

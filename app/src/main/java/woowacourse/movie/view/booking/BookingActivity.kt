@@ -20,7 +20,7 @@ import woowacourse.movie.view.core.ext.showToastFromResource
 import woowacourse.movie.view.handler.BookingActionHandler
 import woowacourse.movie.view.movies.model.ScreeningInfo
 import woowacourse.movie.view.seat.SeatActivity
-import woowacourse.movie.view.mapper.toUiModel
+import woowacourse.movie.view.uiModel.toUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

@@ -9,8 +9,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.domain.fixture.harryPotter1MoviesFixture
-import woowacourse.movie.domain.model.PeopleCount
 import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.PeopleCount
 import woowacourse.movie.view.booking.BookingContract
 import woowacourse.movie.view.booking.BookingPresenter
 import woowacourse.movie.view.movies.model.ScreeningInfo

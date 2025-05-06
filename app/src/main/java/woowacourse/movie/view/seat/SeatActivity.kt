@@ -13,15 +13,15 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatBinding
 import woowacourse.movie.domain.model.Booking
+import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.Seats
-import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.view.core.util.StringFormatter
+import woowacourse.movie.view.complete.BookingCompleteActivity
 import woowacourse.movie.view.core.ext.getSerializableArrayList
 import woowacourse.movie.view.core.ext.getSerializableOrNull
 import woowacourse.movie.view.core.ext.showToastFromResource
+import woowacourse.movie.view.core.util.StringFormatter
 import woowacourse.movie.view.handler.SeatActionHandler
-import woowacourse.movie.view.complete.BookingCompleteActivity
 
 class SeatActivity : AppCompatActivity(), SeatContract.View {
     private lateinit var binding: ActivitySeatBinding

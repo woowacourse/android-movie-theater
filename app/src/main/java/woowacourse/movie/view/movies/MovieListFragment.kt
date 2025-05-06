@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
+import woowacourse.movie.view.booking.BookingActivity
 import woowacourse.movie.view.core.ext.getParcelableOrNull
 import woowacourse.movie.view.handler.MovieAdapterEventHandler
-import woowacourse.movie.view.booking.BookingActivity
 import woowacourse.movie.view.movies.adapter.MovieAdapter
 import woowacourse.movie.view.movies.bottomsheet.Result
 import woowacourse.movie.view.movies.bottomsheet.TheaterBottomSheet
