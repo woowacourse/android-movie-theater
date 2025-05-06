@@ -24,22 +24,35 @@ class MainActivity :
     private val homeFragment by lazy { HomeFragment() }
     private val reservationHistoryFragment by lazy { ReservationHistoryFragment() }
     private val settingFragment by lazy { SettingFragment() }
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val binding: ActivityMainBinding =
+        binding =
             DataBindingUtil.setContentView(
                 this,
                 R.layout.activity_main,
             )
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.layout_main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        setBottomNavigation()
 
-        binding.main = this
+        if (savedInstanceState == null) {
+            initBottomNavigation()
+        }
+    }
+
+    private fun initBottomNavigation() {
+        presenter.presentScreen(MainScreen.HOME)
+        binding.bottomNavigationViewMain.selectedItemId = R.id.item_menu_main_home
+    }
+
+    private fun setBottomNavigation() {
         binding.bottomNavigationViewMain.setOnItemSelectedListener { menuItem ->
             val mainScreen: MainScreen =
                 when (menuItem.itemId) {
@@ -50,11 +63,6 @@ class MainActivity :
                 }
             presenter.presentScreen(mainScreen)
             true
-        }
-
-        if (savedInstanceState == null) {
-            presenter.presentScreen(MainScreen.HOME)
-            binding.bottomNavigationViewMain.selectedItemId = R.id.item_menu_main_home
         }
     }
 

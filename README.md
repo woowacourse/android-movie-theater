@@ -21,3 +21,4 @@
 - [x] fragment를 재사용하도록 수정
 - [x] adapter 생성하는 로직과 items를 초기화하는 로직분리
 - [x] Cinema를 class로 변경
+- [x] onCreate 함수 분리
