@@ -3,6 +3,7 @@ package woowacourse.movie.ui.adapter
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -78,8 +79,7 @@ class MovieAdapter(
         private val binding: ItemAdvertisementBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind() {
-            binding.adImage =
-                BitmapFactory.decodeResource(binding.root.resources, R.drawable.advertisement)
+            binding.adImage = ContextCompat.getDrawable(binding.root.context, R.drawable.advertisement)
         }
     }
 

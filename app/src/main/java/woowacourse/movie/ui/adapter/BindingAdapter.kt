@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.adapter
 
-import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -20,8 +20,8 @@ fun ImageView.setPosterImage(title: String?) {
 }
 
 @BindingAdapter("imgRes")
-fun ImageView.setImageViewResource(resId: Bitmap) {
-    setImageBitmap(resId)
+fun ImageView.setImageViewResource(resId: Drawable) {
+    setImageDrawable(resId)
 }
 
 @BindingAdapter("formattedDateTime")
