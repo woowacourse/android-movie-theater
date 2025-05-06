@@ -36,8 +36,8 @@ class BookingActivityTest {
         val movie =
             Movie(
                 "Test",
-                LocalDate.of(2025, 4, 17),
-                LocalDate.of(2025, 4, 30),
+                LocalDate.of(2025, 12, 30),
+                LocalDate.of(2025, 12, 31),
                 100,
             )
 
