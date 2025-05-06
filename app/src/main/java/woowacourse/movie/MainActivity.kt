@@ -3,6 +3,7 @@ package woowacourse.movie
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.bookinglist.BookingListFragment
 import woowacourse.movie.presentation.movies.MoviesFragment
@@ -16,39 +17,26 @@ class MainActivity : DataBindingBaseActivity() {
         super.onCreate(savedInstanceState)
         setupScreen(binding.root)
         setBottomNavigationView()
-
-        if (savedInstanceState == null) {
-            binding.bottomNavigationView.selectedItemId = R.id.action_home
-        }
     }
 
     private fun setBottomNavigationView() {
-        binding.bottomNavigationView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.action_list -> {
-                    replaceFragment(BookingListFragment())
-                    true
+        binding.bottomNavigationView.run {
+            setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.action_list -> switchFragment<BookingListFragment>()
+                    R.id.action_home -> switchFragment<MoviesFragment>()
+                    R.id.action_settings -> switchFragment<SettingFragment>()
                 }
-
-                R.id.action_home -> {
-                    replaceFragment(MoviesFragment())
-                    true
-                }
-
-                R.id.action_settings -> {
-                    replaceFragment(SettingFragment())
-                    true
-                }
-
-                else -> false
+                true
             }
+            selectedItemId = R.id.action_home
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private inline fun <reified T : Fragment> switchFragment() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(binding.mainContainer.id, fragment)
+            replace<T>(binding.mainContainer.id)
         }
     }
 }
