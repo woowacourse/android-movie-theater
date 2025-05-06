@@ -8,10 +8,7 @@ class SeatTest {
     @Test
     fun `위치와 등급을 가진다`() {
         // Given
-        val seatPosition = SeatPosition(1, 1)
-
-        // When
-        val seat = Seat(seatPosition)
+        val seat = Seat.of(1, 1)
 
         // Then
         assertSoftly(seat) {
