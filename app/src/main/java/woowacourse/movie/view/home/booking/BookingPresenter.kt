@@ -1,9 +1,9 @@
 package woowacourse.movie.view.home.booking
 
 import woowacourse.movie.data.MovieStore
-import woowacourse.movie.domain.model.booking.Booking
-import woowacourse.movie.domain.model.booking.ScreeningDate
-import woowacourse.movie.domain.model.booking.ScreeningTime
+import woowacourse.movie.domain.model.Booking
+import woowacourse.movie.domain.model.ScreeningDate
+import woowacourse.movie.domain.model.ScreeningTime
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import java.time.LocalDate
 import java.time.LocalDateTime

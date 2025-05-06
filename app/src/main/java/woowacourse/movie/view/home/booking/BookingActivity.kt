@@ -13,8 +13,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
-import woowacourse.movie.domain.model.booking.Booking
-import woowacourse.movie.domain.model.movies.Movie
+import woowacourse.movie.domain.model.Booking
+import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.view.ext.getSerializableOrNull
 import woowacourse.movie.view.ext.showToastFromResource
 import woowacourse.movie.view.handler.BookingActionHandler

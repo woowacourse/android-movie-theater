@@ -1,6 +1,6 @@
 package woowacourse.movie.view.home.complete
 
-import woowacourse.movie.domain.model.ticket.Ticket
+import woowacourse.movie.domain.model.Ticket
 
 interface BookingCompleteContract {
     interface View {

@@ -12,10 +12,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatBinding
-import woowacourse.movie.domain.model.booking.Booking
+import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.Seats
-import woowacourse.movie.domain.model.ticket.Ticket
+import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.StringFormatter
 import woowacourse.movie.view.ext.getSerializableArrayList
 import woowacourse.movie.view.ext.getSerializableOrNull

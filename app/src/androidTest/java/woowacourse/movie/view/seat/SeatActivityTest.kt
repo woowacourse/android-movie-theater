@@ -11,8 +11,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.domain.model.booking.Booking
-import woowacourse.movie.domain.model.booking.PeopleCount
+import woowacourse.movie.domain.model.Booking
+import woowacourse.movie.domain.model.PeopleCount
 import woowacourse.movie.fixture.fakeContext
 import woowacourse.movie.view.home.seat.SeatActivity
 import woowacourse.movie.view.home.seat.SeatActivity.Companion.newIntent

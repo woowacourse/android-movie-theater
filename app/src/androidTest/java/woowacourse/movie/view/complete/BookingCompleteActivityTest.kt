@@ -7,11 +7,11 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.domain.model.booking.PeopleCount
+import woowacourse.movie.domain.model.PeopleCount
 import woowacourse.movie.domain.model.seat.Column
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
-import woowacourse.movie.domain.model.ticket.Ticket
+import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.fixture.fakeContext
 import woowacourse.movie.view.home.complete.BookingCompleteActivity
 import java.time.LocalDate

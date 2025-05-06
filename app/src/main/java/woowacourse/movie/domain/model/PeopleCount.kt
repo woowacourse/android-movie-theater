@@ -1,4 +1,4 @@
-package woowacourse.movie.domain.model.booking
+package woowacourse.movie.domain.model
 
 @JvmInline
 value class PeopleCount(val value: Int = MIN_PEOPLE_COUNT) {

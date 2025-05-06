@@ -2,7 +2,7 @@ package woowacourse.movie.view.home.movies
 
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.data.TheaterStore
-import woowacourse.movie.domain.model.ad.Advertisement
+import woowacourse.movie.domain.model.Advertisement
 import woowacourse.movie.view.home.movies.model.MovieRvItem
 import woowacourse.movie.view.home.movies.model.ScreeningInfo
 import woowacourse.movie.view.mapper.toItem

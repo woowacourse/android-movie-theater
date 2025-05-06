@@ -1,7 +1,5 @@
-package woowacourse.movie.domain.model.ticket
+package woowacourse.movie.domain.model
 
-import woowacourse.movie.domain.model.booking.Booking
-import woowacourse.movie.domain.model.booking.PeopleCount
 import woowacourse.movie.domain.model.seat.Seat
 import java.io.Serializable
 import java.time.LocalDate
