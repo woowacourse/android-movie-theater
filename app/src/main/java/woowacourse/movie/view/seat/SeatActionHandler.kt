@@ -1,8 +1,6 @@
-package woowacourse.movie.view.handler
+package woowacourse.movie.view.seat
 
 import woowacourse.movie.domain.model.seat.Seat
-import woowacourse.movie.view.seat.SeatActivity
-import woowacourse.movie.view.seat.SeatContract
 
 class SeatActionHandler(
     private val presenter: SeatContract.Presenter,

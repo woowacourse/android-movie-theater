@@ -1,7 +1,4 @@
-package woowacourse.movie.view.handler
-
-import woowacourse.movie.view.booking.BookingActivity
-import woowacourse.movie.view.booking.BookingContract
+package woowacourse.movie.view.booking
 
 class BookingActionHandler(
     private val presenter: BookingContract.Presenter,

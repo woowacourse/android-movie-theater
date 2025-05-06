@@ -10,7 +10,7 @@
 
         <variable
             name="eventHandler"
-            type="woowacourse.movie.view.handler.BookingActionHandler" />
+            type="woowacourse.movie.view.booking.BookingActionHandler" />
     </data>
     
     <androidx.constraintlayout.widget.ConstraintLayout
