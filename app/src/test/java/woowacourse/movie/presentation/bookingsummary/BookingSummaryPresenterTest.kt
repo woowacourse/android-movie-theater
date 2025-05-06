@@ -22,15 +22,16 @@ class BookingSummaryPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = BookingSummaryPresenter(view, testTicket)
+        presenter = BookingSummaryPresenter(view)
     }
 
     @Test
     fun `티켓의 정보가 출력된다`() {
         // When
-        presenter.onViewCreated()
+        presenter.initializeBookingSummary(testTicket)
 
         // Then
         verify { view.showTicket(testTicket) }
+        verify { view.showCancelableTime(any()) }
     }
 }

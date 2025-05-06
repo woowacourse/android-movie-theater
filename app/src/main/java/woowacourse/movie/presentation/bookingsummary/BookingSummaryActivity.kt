@@ -13,21 +13,20 @@ class BookingSummaryActivity :
     DataBindingBaseActivity(),
     BookingSummaryContract.View {
     private val binding by binding<ActivityBookingsummaryBinding>(R.layout.activity_bookingsummary)
-    private lateinit var presenter: BookingSummaryPresenter
-    private lateinit var ticket: MovieTicket
+    private val presenter: BookingSummaryPresenter by lazy { BookingSummaryPresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!fetchTicketFromIntent()) return
         setupScreen(binding.root)
-        presenter = BookingSummaryPresenter(this, ticket)
-        presenter.onViewCreated()
     }
 
     override fun showTicket(ticket: MovieTicket) {
         binding.ticket = ticket
-        binding.textviewNotice.text =
-            String.format(getString(R.string.cancel_notice), CANCELABLE_TIME)
+    }
+
+    override fun showCancelableTime(cancelableTime: Int) {
+        binding.textviewNotice.text = String.format(getString(R.string.cancel_notice), cancelableTime)
     }
 
     private fun fetchTicketFromIntent(): Boolean {
@@ -37,12 +36,11 @@ class BookingSummaryActivity :
             finish()
             return false
         }
-        ticket = data
+        presenter.initializeBookingSummary(data)
         return true
     }
 
     companion object {
-        private const val CANCELABLE_TIME = 15
         private const val TICKET_INTENT_ERROR = "[ERROR] 예매 정보에 대한 키 값이 올바르지 않습니다."
     }
 }
