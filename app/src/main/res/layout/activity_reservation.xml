@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_layout_reservation"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".view.reservation.detail.ReservationActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="movieUi"
+            type="woowacourse.movie.view.home.movies.MovieUi" />
+
+        <variable
+            name="reservationPresent"
+            type="woowacourse.movie.view.reservation.detail.ReservationPresent" />
+    </data>
+
+    <ScrollView
+        android:id="@+id/root_layout_reservation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".view.reservation.detail.ReservationActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="450dp"
             android:scaleType="centerCrop"
-            tools:src="@drawable/poster_suzume" />
+            tools:src="@drawable/poster_suzume"
+            app:imageRes="@{movieUi.image}"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,7 +48,8 @@
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 android:textStyle="bold"
-                tools:text="@string/movie_title">
+                tools:text="@string/movie_title"
+                android:text="@{movieUi.title}">
 
             </TextView>
 
@@ -44,7 +59,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-                tools:text="@string/movieDate">
+                tools:text="@string/movieDate"
+                app:dateRange="@{movieUi.date}">
 
             </TextView>
 
@@ -55,7 +71,8 @@
                 android:layout_marginBottom="30dp"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-                tools:text="@string/movieTime" />
+                tools:text="@string/movieTime"
+                android:text='@{String.format(@string/movieTime, movieUi.time)}'/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,7 +105,8 @@
                     android:layout_weight="1"
                     android:text="@string/minus"
                     android:textSize="25sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:onClick="@{reservationPresent::decreasedCount}"/>
 
                 <TextView
                     android:id="@+id/tv_personnel"
@@ -96,7 +114,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="9"
                     android:gravity="center"
-                    android:text="@string/default_personnel"
+                    tools:text="1"
+                    android:text='@{String.valueOf(reservationPresent.count)}'
                     android:textColor="@color/black"
                     android:textSize="25sp"
                     android:textStyle="bold" />
@@ -108,7 +127,8 @@
                     android:layout_weight="1"
                     android:text="@string/plus"
                     android:textSize="25sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:onClick="@{reservationPresent::increasedCount}"/>
 
             </LinearLayout>
 
@@ -127,3 +147,4 @@
     </LinearLayout>
 
 </ScrollView>
+</layout>

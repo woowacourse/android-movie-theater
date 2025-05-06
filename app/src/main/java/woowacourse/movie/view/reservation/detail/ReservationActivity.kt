@@ -7,20 +7,23 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.MovieId
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.Ticket
+import woowacourse.movie.domain.movietime.Date
 import woowacourse.movie.domain.movietime.MovieSchedule
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.home.movies.MovieUi
@@ -38,25 +41,21 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     private lateinit var spinnerDate: Spinner
     private lateinit var spinnerTime: Spinner
-    private lateinit var counterTextView: TextView
-    private lateinit var plusButton: Button
-    private lateinit var minusButton: Button
+    private lateinit var binding: ActivityReservationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityReservationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_reservation)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout_reservation)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayoutReservation) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        spinnerDate = findViewById(R.id.spinner_date)
-        spinnerTime = findViewById(R.id.spinner_time)
-        counterTextView = findViewById(R.id.tv_personnel)
-        plusButton = findViewById(R.id.btn_plus_button)
-        minusButton = findViewById(R.id.btn_minus_button)
+        spinnerDate = binding.spinnerDate
+        spinnerTime = binding.spinnerTime
 
         val movieId: MovieId? =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -111,37 +110,12 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     override fun showMovieReservationScreen(movieUi: MovieUi) {
-        val movieTitleTextView = findViewById<TextView>(R.id.tv_movie_title)
-        val movieDateTextView = findViewById<TextView>(R.id.tv_movie_date)
-        val movieTimeTextView = findViewById<TextView>(R.id.tv_movie_time)
-        val moviePosterImageView = findViewById<ImageView>(R.id.iv_movie_image)
-
-        val formatter = DateTimeFormatter.ofPattern(DATE_PATTERN)
-        val start = movieUi.date.startDate.format(formatter)
-        val end = movieUi.date.endDate.format(formatter)
-
-        movieTitleTextView.text = movieUi.title
-        movieDateTextView.text = getString(R.string.movieDate, start, end)
-        movieTimeTextView.text = getString(R.string.movieTime, movieUi.time.toString())
-        moviePosterImageView.setImageResource(movieUi.image)
-    }
-
-    override fun showCount(count: Int) {
-        counterTextView.text = count.toString()
-    }
-
-    override fun setCountButtons() {
-        plusButton.setOnClickListener {
-            present.increasedCount()
-        }
-
-        minusButton.setOnClickListener {
-            present.decreasedCount()
-        }
+        binding.movieUi = movieUi
+        binding.reservationPresent = present as ReservationPresent
     }
 
     override fun setReservationButton(showings: Showings) {
-        val reservationButton = findViewById<Button>(R.id.btn_reservation)
+        val reservationButton = binding.btnReservation
 
         reservationButton.setOnClickListener {
             val selectedDate: LocalDate = spinnerDate.selectedItem as LocalDate
@@ -239,7 +213,6 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     companion object {
         private const val KEY_MOVIE_ID = "MOVIE_ID"
         private const val KEY_SHOWINGS = "SHOWINGS"
-        private const val DATE_PATTERN = "yyyy.M.d"
 
         fun newIntent(
             context: Context,
@@ -256,4 +229,23 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
                     showings,
                 )
     }
+}
+
+@BindingAdapter("imageRes")
+fun setImageResource(
+    view: ImageView,
+    @DrawableRes resId: Int,
+) {
+    view.setImageResource(resId)
+}
+
+@BindingAdapter("dateRange")
+fun setDateRange(
+    view: TextView,
+    date: Date,
+) {
+    val formatter = DateTimeFormatter.ofPattern("yyyy.M.d")
+    val start = date.startDate.format(formatter)
+    val end = date.endDate.format(formatter)
+    view.text = "$start ~ $end"
 }
