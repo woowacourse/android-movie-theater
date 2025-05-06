@@ -13,7 +13,7 @@ data class BookingInfo(
     val selectedSeats: Set<MovieSeat> get() = seats.value
     val totalPrice: TicketPrice get() = seats.totalPrice
     val currentTicketCount: Int get() = ticketCount.value
-    val isSeatAllSelected: Boolean get() = selectedSeats.size == currentTicketCount
+    val isRequiredSeatsSelected: Boolean get() = selectedSeats.size == currentTicketCount
 
     fun updateDate(date: MovieDate) {
         this.date = date

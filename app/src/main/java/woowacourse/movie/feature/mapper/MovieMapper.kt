@@ -45,7 +45,7 @@ fun BookingInfo.toUi(): BookingInfoUiModel =
         ticketCount = currentTicketCount,
         totalPrice = totalPrice.value,
         selectedSeats = selectedSeats.map { it.toUi() }.toSet(),
-        isSeatAllSelected = isSeatAllSelected,
+        isRequiredSeatsSelected = isRequiredSeatsSelected,
     )
 
 fun BookingInfoUiModel.toDomain(): BookingInfo =
