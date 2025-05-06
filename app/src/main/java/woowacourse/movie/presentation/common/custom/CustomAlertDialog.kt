@@ -7,39 +7,30 @@ class CustomAlertDialog(
     private val context: Context,
 ) {
     private var dialog: AlertDialog? = null
+    private var currentInfo: DialogInfo? = null
 
     fun show(dialogInfo: DialogInfo) {
-        if (dialog == null) {
-            dialog = create(dialogInfo)
-        } else {
-            update(dialog!!, dialogInfo)
+        if (dialog == null || currentInfo != dialogInfo) {
+            dialog = AlertDialog.Builder(context).create(dialogInfo)
+            currentInfo = dialogInfo
         }
+
         dialog?.show()
     }
 
-    private fun create(dialogInfo: DialogInfo): AlertDialog {
-        val builder = AlertDialog.Builder(context)
-        builder.setCancelable(dialogInfo.isCancelable)
-        return builder.create().apply {
-            update(this, dialogInfo)
-        }
-    }
+    private fun AlertDialog.Builder.create(dialogInfo: DialogInfo): AlertDialog {
+        setTitle(dialogInfo.title)
+        setMessage(dialogInfo.message)
+        setCancelable(dialogInfo.isCancelable)
 
-    private fun update(
-        dialog: AlertDialog,
-        dialogInfo: DialogInfo,
-    ) {
-        dialog.setTitle(dialogInfo.title)
-        dialog.setMessage(dialogInfo.message)
-
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, dialogInfo.positiveButtonText ?: "") { _, _ ->
-            dialogInfo.onClickPositiveButton(dialog)
+        dialogInfo.positiveButtonText?.let { text ->
+            setPositiveButton(text) { dialog, _ -> dialogInfo.onClickPositiveButton(dialog) }
         }
 
-        dialogInfo.negativeButtonText?.let {
-            dialog.setButton(AlertDialog.BUTTON_NEGATIVE, it) { _, _ ->
-                dialogInfo.onClickNegativeButton(dialog)
-            }
+        dialogInfo.negativeButtonText?.let { text ->
+            setNegativeButton(text) { dialog, _ -> dialogInfo.onClickNegativeButton(dialog) }
         }
+
+        return this.create()
     }
 }
