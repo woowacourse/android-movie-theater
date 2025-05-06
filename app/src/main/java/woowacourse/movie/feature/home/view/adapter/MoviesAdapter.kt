@@ -36,7 +36,7 @@ class MoviesAdapter(
 
         when (holder) {
             is MovieViewHolder -> holder.bind(movieItem as MovieItem.Movie, onBookingClick)
-            is AdvertisementViewHolder -> Unit
+            is AdvertisementViewHolder -> holder.bind(movieItem as MovieItem.Advertisement)
         }
     }
 

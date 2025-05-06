@@ -8,22 +8,23 @@ sealed class MovieItem(
     movieItemViewType: MovieItemViewType,
 ) {
     val viewType: MovieItemViewType = movieItemViewType
-    abstract val id: Int
+    abstract val id: Long
 
     data class Movie(
-        override val id: Int,
+        override val id: Long,
         val value: MovieUiModel,
     ) : MovieItem(MovieItemViewType.MOVIE)
 
     data class Advertisement(
-        override val id: Int,
+        override val id: Long,
+        val value: AdvertisementUiModel,
     ) : MovieItem(MovieItemViewType.ADVERTISEMENT)
 
     companion object {
         fun from(content: ContentUiModel): MovieItem =
             when (content) {
-                is MovieUiModel -> Movie(0, content)
-                is AdvertisementUiModel -> Advertisement(0)
+                is MovieUiModel -> Movie(content.id, content)
+                is AdvertisementUiModel -> Advertisement(content.id, content)
             }
     }
 }
