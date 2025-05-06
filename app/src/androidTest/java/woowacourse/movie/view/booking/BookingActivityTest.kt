@@ -28,11 +28,11 @@ class BookingActivityTest {
                     0,
                     "선릉 극장",
                     listOf(
-                        LocalDateTime.of(2025, 5, 1, 12, 0),
-                        LocalDateTime.of(2025, 5, 2, 12, 0),
-                        LocalDateTime.of(2025, 5, 3, 12, 0),
-                        LocalDateTime.of(2025, 5, 4, 12, 0),
-                        LocalDateTime.of(2025, 5, 5, 12, 0),
+                        LocalDateTime.of(2025, 5, 25, 12, 0),
+                        LocalDateTime.of(2025, 5, 26, 12, 0),
+                        LocalDateTime.of(2025, 5, 27, 12, 0),
+                        LocalDateTime.of(2025, 5, 28, 12, 0),
+                        LocalDateTime.of(2025, 5, 20, 12, 0),
                     ),
                 ),
             )
@@ -42,7 +42,7 @@ class BookingActivityTest {
     @Test
     fun `전달_받은_영화_이름_상영일_상영_시간을_출력한다`() {
         onView(withText("해리 포터와 마법사의 돌")).check(matches(isDisplayed()))
-        onView(withText("2025.5.1 ~ 2025.5.5")).check(matches(isDisplayed()))
+        onView(withText("2025.5.1 ~ 2025.6.5")).check(matches(isDisplayed()))
         onView(withText("152분")).check(matches(isDisplayed()))
     }
 

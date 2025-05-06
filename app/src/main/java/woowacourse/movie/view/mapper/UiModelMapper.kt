@@ -11,7 +11,10 @@ fun Movie.toUiModel(
     datePeriodFormatter: String,
     runningTimeFormatter: String,
 ): MovieUiModel {
-    val screeningPeriod = datePeriodFormatter.format(screeningStartDate, screeningEndDate)
+    val startDate = StringFormatter.dotDateFormat(screeningStartDate)
+    val endDate = StringFormatter.dotDateFormat(screeningEndDate)
+
+    val screeningPeriod = datePeriodFormatter.format(startDate, endDate)
     val formattedRunningTimme = runningTimeFormatter.format(runningTime)
 
     return MovieUiModel(
