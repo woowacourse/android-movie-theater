@@ -7,7 +7,7 @@ import woowacourse.movie.presentation.common.base.BaseViewHolder
 import woowacourse.movie.presentation.home.movies.adapter.item.MovieMainItem
 
 class MoviesAdapter(
-    private val eventListener: OnMovieEventListener,
+    private val eventListener: MovieViewHolder.OnMovieEventListener,
 ) : ListAdapter<MovieMainItem, BaseViewHolder<MovieMainItem, ViewBinding>>(MoviesDiffUtil) {
     override fun getItemViewType(position: Int): Int = getItem(position).viewType
 
@@ -28,6 +28,4 @@ class MoviesAdapter(
     }
 
     override fun getItemCount(): Int = currentList.size
-
-    interface OnMovieEventListener : MovieViewHolder.OnMovieEventListener
 }

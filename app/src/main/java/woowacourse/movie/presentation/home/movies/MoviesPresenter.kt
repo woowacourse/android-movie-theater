@@ -33,6 +33,8 @@ class MoviesPresenter(
 
     private fun List<Movie>.toMovieContent(): List<MovieContent> {
         val entries = this.map { MovieContent.MovieEntry(it) }
-        return adInsertionPolicy.insert(entries) { MovieContent.MovieAd(R.drawable.woowacourse_ad) }
+        return adInsertionPolicy.insert(entries) {
+            MovieContent.MovieAd(R.drawable.woowacourse_ad)
+        }
     }
 }
