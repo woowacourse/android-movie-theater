@@ -14,7 +14,7 @@ import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.presentation.booking.BookingActivity
 import woowacourse.movie.ui.adapter.TheaterAdapter
 import woowacourse.movie.ui.constant.IntentKeys
-import woowacourse.movie.ui.util.bundleSerializable
+import woowacourse.movie.ui.util.getSerializableCompat
 
 class TheaterFragment :
     BottomSheetDialogFragment(),
@@ -26,7 +26,7 @@ class TheaterFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            movie = it.bundleSerializable(IntentKeys.MOVIE, Movie::class.java)
+            movie = it.getSerializableCompat(IntentKeys.MOVIE, Movie::class.java)
         }
         movie?.let { presenter = TheaterPresenter(this, it) }
     }

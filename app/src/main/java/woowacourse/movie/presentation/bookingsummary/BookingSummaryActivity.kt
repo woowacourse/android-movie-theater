@@ -7,7 +7,7 @@ import woowacourse.movie.databinding.ActivityBookingsummaryBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.ui.DataBindingBaseActivity
 import woowacourse.movie.ui.constant.IntentKeys
-import woowacourse.movie.ui.util.intentSerializable
+import woowacourse.movie.ui.util.getSerializableExtraCompat
 
 class BookingSummaryActivity :
     DataBindingBaseActivity(),
@@ -30,7 +30,7 @@ class BookingSummaryActivity :
     }
 
     private fun fetchTicketFromIntent(): Boolean {
-        val data = intent.intentSerializable(IntentKeys.TICKET, MovieTicket::class.java)
+        val data = intent.getSerializableExtraCompat(IntentKeys.TICKET, MovieTicket::class.java)
         if (data == null) {
             Toast.makeText(this, TICKET_INTENT_ERROR, Toast.LENGTH_SHORT).show()
             finish()

@@ -14,7 +14,7 @@ import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.presentation.seats.SeatsActivity
 import woowacourse.movie.ui.DataBindingBaseActivity
 import woowacourse.movie.ui.constant.IntentKeys
-import woowacourse.movie.ui.util.intentSerializable
+import woowacourse.movie.ui.util.getSerializableExtraCompat
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Locale
@@ -126,7 +126,7 @@ class BookingActivity :
     }
 
     private fun fetchMovieFromIntent(): Boolean {
-        val data = intent.intentSerializable(IntentKeys.SCREENING_INFO, ScreeningInfo::class.java)
+        val data = intent.getSerializableExtraCompat(IntentKeys.SCREENING_INFO, ScreeningInfo::class.java)
         if (data == null) {
             Toast.makeText(this, MOVIE_INTENT_ERROR, Toast.LENGTH_SHORT).show()
             finish()

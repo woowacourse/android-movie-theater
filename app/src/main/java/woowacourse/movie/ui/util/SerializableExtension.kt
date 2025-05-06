@@ -6,7 +6,7 @@ import android.os.Bundle
 import java.io.Serializable
 
 @Suppress("UNCHECKED_CAST")
-fun <T : Serializable> Intent.intentSerializable(
+fun <T : Serializable> Intent.getSerializableExtraCompat(
     key: String,
     customClass: Class<T>,
 ): T? =
@@ -17,7 +17,7 @@ fun <T : Serializable> Intent.intentSerializable(
     }
 
 @Suppress("UNCHECKED_CAST")
-fun <T : Serializable> Bundle.bundleSerializable(
+fun <T : Serializable> Bundle.getSerializableCompat(
     key: String,
     customClass: Class<T>,
 ): T? =
