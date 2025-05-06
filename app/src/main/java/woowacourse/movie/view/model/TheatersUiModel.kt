@@ -4,6 +4,6 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class TheaterUiModels(
+data class TheatersUiModel(
     val value: List<TheaterUiModel>,
 ) : Parcelable

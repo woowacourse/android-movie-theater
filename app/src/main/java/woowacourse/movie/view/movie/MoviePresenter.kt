@@ -6,7 +6,7 @@ import woowacourse.movie.view.model.AdUiModel
 import woowacourse.movie.view.model.MovieListItem
 import woowacourse.movie.view.model.MovieUiModel
 import woowacourse.movie.view.model.TheaterUiModel
-import woowacourse.movie.view.model.TheaterUiModels
+import woowacourse.movie.view.model.TheatersUiModel
 import woowacourse.movie.view.model.toDomain
 import woowacourse.movie.view.model.toPresentation
 import java.time.LocalDateTime
@@ -22,7 +22,18 @@ class MoviePresenter(
     }
 
     override fun reservationSelected(movie: MovieUiModel) {
-        view.showTheaterInfo(movie)
+        val now = LocalDateTime.now()
+        val theaterScreeningCounts: List<Pair<String, Int>> =
+            dummyTheaters.getScreeningCountsPerTheater(movie.toDomain(), now)
+
+        val theaterInfo =
+            TheatersUiModel(
+                theaterScreeningCounts.map { (name, count) ->
+                    TheaterUiModel(name = name, totalScreeningTimes = count)
+                },
+            )
+
+        view.showTheaterInfo(movie, theaterInfo)
     }
 
     private fun generateMovieListWithAds(movies: List<MovieUiModel>): List<MovieListItem> =

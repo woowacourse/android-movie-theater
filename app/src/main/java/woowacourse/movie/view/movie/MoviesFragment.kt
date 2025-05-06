@@ -9,7 +9,7 @@ import woowacourse.movie.databinding.FragmentMoviesBinding
 import woowacourse.movie.view.model.MovieFixture
 import woowacourse.movie.view.model.MovieListItem
 import woowacourse.movie.view.model.MovieUiModel
-import woowacourse.movie.view.model.TheaterUiModels
+import woowacourse.movie.view.model.TheatersUiModel
 import woowacourse.movie.view.movie.adapter.MovieAdapter
 import woowacourse.movie.view.theater.TheaterBottomSheetDialogFragment
 
@@ -45,8 +45,11 @@ class MoviesFragment :
         moviesAdapter.submitList(items)
     }
 
-    override fun showTheaterInfo(movie: MovieUiModel) {
-        val bottomSheet = TheaterBottomSheetDialogFragment.newInstance(movie)
+    override fun showTheaterInfo(
+        movie: MovieUiModel,
+        theaterInfo: TheatersUiModel,
+    ) {
+        val bottomSheet = TheaterBottomSheetDialogFragment.newInstance(movie, theaterInfo)
         bottomSheet.show(parentFragmentManager, BOTTOM_SHEET_TAG)
     }
 
