@@ -94,10 +94,10 @@ class BookingDetailPresenter(
                 headCount = HeadCount(headCount),
                 selectedDate =
                     screeningDate?.let { formatStringDateHyphenSeparated(it) }
-                        ?: LocalDate.now(),
+                        ?: movie.screeningStartDate,
                 selectedTime =
                     screeningTime?.let { formatStringTimeWithMidnight24(it) }
-                        ?: LocalTime.now(),
+                        ?: theater.screeningInfo.screeningTimes.first(),
                 seats = Seats(),
             )
     }
@@ -108,8 +108,8 @@ class BookingDetailPresenter(
                 theater = theater.place,
                 title = movie.title,
                 headCount = HeadCount(1),
-                selectedDate = LocalDate.now(),
-                selectedTime = LocalTime.now(),
+                selectedDate = movie.screeningStartDate,
+                selectedTime = theater.screeningInfo.screeningTimes.first(),
                 seats = Seats(),
             )
     }
