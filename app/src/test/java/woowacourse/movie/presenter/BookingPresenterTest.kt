@@ -11,9 +11,9 @@ import woowacourse.movie.data.MovieStore
 import woowacourse.movie.domain.fixture.harryPotter1MoviesFixture
 import woowacourse.movie.domain.model.PeopleCount
 import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.view.home.booking.BookingContract
-import woowacourse.movie.view.home.booking.BookingPresenter
-import woowacourse.movie.view.home.movies.model.ScreeningInfo
+import woowacourse.movie.view.booking.BookingContract
+import woowacourse.movie.view.booking.BookingPresenter
+import woowacourse.movie.view.movies.model.ScreeningInfo
 import java.time.LocalDate
 import java.time.LocalDateTime
 

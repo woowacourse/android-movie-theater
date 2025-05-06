@@ -6,11 +6,11 @@
     <data>
         <variable
             name="model"
-            type="woowacourse.movie.view.home.movies.model.MovieRvItem.MovieItem" />
+            type="woowacourse.movie.view.movies.model.MovieRvItem.MovieItem" />
         
         <variable
             name="eventListener"
-            type="woowacourse.movie.view.home.movies.viewholder.MovieViewHolder.Handler" />
+            type="woowacourse.movie.view.movies.viewholder.MovieViewHolder.Handler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

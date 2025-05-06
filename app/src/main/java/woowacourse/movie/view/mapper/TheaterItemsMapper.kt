@@ -1,7 +1,7 @@
 package woowacourse.movie.view.mapper
 
 import woowacourse.movie.domain.model.theater.Theater
-import woowacourse.movie.view.home.movies.model.TheaterRvItem
+import woowacourse.movie.view.movies.model.TheaterRvItem
 
 fun Theater.toItem(movieId: Int): TheaterRvItem.TheaterItem {
     val count = screeningTimeCount(movieId)

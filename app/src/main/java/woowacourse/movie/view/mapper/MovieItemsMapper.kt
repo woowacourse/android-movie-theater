@@ -4,7 +4,8 @@ import woowacourse.movie.domain.model.Advertisement
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.view.core.util.StringFormatter
 import woowacourse.movie.view.core.bindingadapter.ImageSource
-import woowacourse.movie.view.home.movies.model.MovieRvItem
+import woowacourse.movie.view.movies.model.MovieRvItem
+import woowacourse.movie.view.movies.model.MovieRvItem.AdItem
 
 fun Movie.toItem(): MovieRvItem.MovieItem {
     return MovieRvItem.MovieItem(
@@ -17,8 +18,8 @@ fun Movie.toItem(): MovieRvItem.MovieItem {
     )
 }
 
-fun Advertisement.toItem(): MovieRvItem.AdItem {
-    return MovieRvItem.AdItem(
+fun Advertisement.toItem(): AdItem {
+    return AdItem(
         imgResource = ImageSource.Resource(imgResource),
     )
 }

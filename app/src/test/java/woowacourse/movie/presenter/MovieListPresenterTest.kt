@@ -6,9 +6,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.view.home.movies.MovieListContract
-import woowacourse.movie.view.home.movies.MovieListPresenter
-import woowacourse.movie.view.home.movies.model.MovieRvItem
+import woowacourse.movie.view.movies.MovieListContract
+import woowacourse.movie.view.movies.MovieListPresenter
+import woowacourse.movie.view.movies.model.MovieRvItem
 
 class MovieListPresenterTest {
     private val view: MovieListContract.View = mockk<MovieListContract.View>(relaxed = true)

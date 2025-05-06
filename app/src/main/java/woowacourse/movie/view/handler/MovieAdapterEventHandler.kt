@@ -1,7 +1,7 @@
 package woowacourse.movie.view.handler
 
-import woowacourse.movie.view.home.movies.MovieListContract
-import woowacourse.movie.view.home.movies.adapter.MovieAdapter
+import woowacourse.movie.view.movies.MovieListContract
+import woowacourse.movie.view.movies.adapter.MovieAdapter
 
 class MovieAdapterEventHandler(
     private val presenter: MovieListContract.Presenter,
