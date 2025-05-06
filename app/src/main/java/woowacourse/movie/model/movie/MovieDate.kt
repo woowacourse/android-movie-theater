@@ -1,0 +1,28 @@
+package woowacourse.movie.model.movie
+
+import java.io.Serializable
+import java.time.LocalDate
+
+data class MovieDate(
+    val startDate: LocalDate,
+    val endDate: LocalDate,
+) : Serializable {
+    var value: LocalDate = LocalDate.now()
+        private set
+
+    fun getDateTable(currentDate: LocalDate): List<LocalDate> = dateRangeToTable(currentDate)
+
+    fun updateDate(newDate: LocalDate) {
+        value = newDate
+    }
+
+    private fun dateRangeToTable(currentDate: LocalDate): List<LocalDate> {
+        var minDate: LocalDate = maxOf(startDate, currentDate)
+        val dates: MutableList<LocalDate> = mutableListOf<LocalDate>()
+        while (minDate <= endDate) {
+            dates.add(minDate)
+            minDate = minDate.plusDays(1)
+        }
+        return dates
+    }
+}
