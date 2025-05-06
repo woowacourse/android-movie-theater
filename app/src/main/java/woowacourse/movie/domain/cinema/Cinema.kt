@@ -10,7 +10,7 @@ class Cinema(
     private val _screenings: List<Screening>,
     val showtimePolicy: ShowtimePolicy,
 ) {
-    val screening get() = _screenings.map { it.copy() }
+    val screenings get() = _screenings.map { it.copy() }
 
     fun showtimeCount(current: LocalDateTime) = showtimes(current).size
 
@@ -25,13 +25,13 @@ class Cinema(
         other as Cinema
 
         return name == other.name &&
-            screening == other.screening &&
+            screenings == other.screenings &&
             showtimePolicy == other.showtimePolicy
     }
 
     override fun hashCode(): Int {
         var result = name.hashCode()
-        result = 31 * result + screening.hashCode()
+        result = 31 * result + screenings.hashCode()
         result = 31 * result + showtimePolicy.hashCode()
         return result
     }

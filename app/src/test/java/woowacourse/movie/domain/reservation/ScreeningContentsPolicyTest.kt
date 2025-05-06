@@ -24,25 +24,21 @@ class ScreeningContentsPolicyTest {
                     harryPotterPhilosopersStone,
                     LocalDate.of(2025, 4, 1),
                     LocalDate.of(2025, 4, 25),
-                    fakeCurrent,
                 ),
                 Screening(
                     harryPotterChamberOfSecrets,
                     LocalDate.of(2025, 4, 1),
                     LocalDate.of(2025, 4, 28),
-                    fakeCurrent,
                 ),
                 Screening(
                     harryPotterPrisonerOfAzkaban,
                     LocalDate.of(2025, 5, 1),
                     LocalDate.of(2025, 5, 31),
-                    fakeCurrent,
                 ),
                 Screening(
                     harryPotterGobletOfFire,
                     LocalDate.of(2025, 6, 1),
                     LocalDate.of(2025, 6, 30),
-                    fakeCurrent,
                 ),
             )
         val advertisements = Advertisements(listOf(Advertisement(0)))
@@ -59,26 +55,22 @@ class ScreeningContentsPolicyTest {
                     harryPotterPhilosopersStone,
                     LocalDate.of(2025, 4, 1),
                     LocalDate.of(2025, 4, 25),
-                    fakeCurrent,
                 ),
                 Screening(
                     harryPotterChamberOfSecrets,
                     LocalDate.of(2025, 4, 1),
                     LocalDate.of(2025, 4, 28),
-                    fakeCurrent,
                 ),
                 Screening(
                     harryPotterPrisonerOfAzkaban,
                     LocalDate.of(2025, 5, 1),
                     LocalDate.of(2025, 5, 31),
-                    fakeCurrent,
                 ),
                 Advertisement(0),
                 Screening(
                     harryPotterGobletOfFire,
                     LocalDate.of(2025, 6, 1),
                     LocalDate.of(2025, 6, 30),
-                    fakeCurrent,
                 ),
             ),
         )
@@ -93,7 +85,6 @@ class ScreeningContentsPolicyTest {
                     harryPotterPhilosopersStone,
                     LocalDate.of(2025, 4, 1),
                     LocalDate.of(2025, 4, 25),
-                    fakeCurrent,
                 )
             }
         val advertisements = Advertisements(listOf(Advertisement(0)))

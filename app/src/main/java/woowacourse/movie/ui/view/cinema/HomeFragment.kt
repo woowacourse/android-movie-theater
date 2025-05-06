@@ -56,7 +56,12 @@ class HomeFragment :
     }
 
     override fun setScreeningContents(screeningContents: List<ScreeningContent>) {
-        screeningAdapter.submitList(screeningContents)
+        val arguments = arguments?.screenings
+        if (arguments == null) {
+            screeningAdapter.submitList(screeningContents)
+        } else {
+            screeningAdapter.submitList(arguments)
+        }
     }
 
     @Suppress("DEPRECATION")

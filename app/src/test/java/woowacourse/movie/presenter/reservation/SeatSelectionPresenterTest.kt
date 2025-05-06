@@ -7,9 +7,10 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.contract.reservation.SeatSelectionContract
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.ui.contract.reservation.SeatSelectionContract
+import woowacourse.movie.ui.presenter.reservation.SeatSelectionPresenter
 import java.time.LocalDateTime
 
 class SeatSelectionPresenterTest {

@@ -11,11 +11,12 @@ import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.FakeCancelTimePolicy
 import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.ui.contract.ticket.TicketContract
+import woowacourse.movie.ui.presenter.ticket.TicketPresenter
 import java.time.LocalDateTime
 
 class TicketPresenterTest {
-    private lateinit var view: woowacourse.movie.ui.contract.ticket.TicketContract.View
-    private lateinit var presenter: woowacourse.movie.ui.contract.ticket.TicketContract.Presenter
+    private lateinit var view: TicketContract.View
+    private lateinit var presenter: TicketContract.Presenter
 
     @BeforeEach
     fun setUp() {

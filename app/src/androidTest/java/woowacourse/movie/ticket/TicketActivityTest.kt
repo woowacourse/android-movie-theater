@@ -14,7 +14,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.domain.reservation.Seat
-import woowacourse.movie.view.ticket.TicketActivity
+import woowacourse.movie.ui.view.ticket.TicketActivity
 import java.time.LocalDateTime
 
 class TicketActivityTest {

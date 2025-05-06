@@ -7,12 +7,13 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.contract.cinema.CinemaSelectionContract
 import woowacourse.movie.data.cinema.FakeCinemaData
 import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.Movie
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
+import woowacourse.movie.ui.contract.cinema.CinemaSelectionContract
+import woowacourse.movie.ui.presenter.cinema.CinemaSelectionPresenter
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -43,7 +44,6 @@ class CinemaSelectionPresenterTest {
                 Movie(0, "해리 포터와 마법사의 돌", 152),
                 LocalDate.of(2025, 4, 1),
                 LocalDate.of(2025, 4, 25),
-                fakeCurrent,
             )
         jamsilCinema = Cinema("잠실 극장", listOf(fakeScreening), jamsilShowtimePolicy)
         gangnamCinema = Cinema("강남 극장", listOf(fakeScreening), gangnamShowtimePolicy)

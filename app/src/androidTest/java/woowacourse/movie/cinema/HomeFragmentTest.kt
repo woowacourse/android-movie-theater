@@ -17,7 +17,7 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.reservation.Advertisement
 import woowacourse.movie.domain.reservation.Movie
 import woowacourse.movie.domain.reservation.Screening
-import woowacourse.movie.view.cinema.HomeFragment
+import woowacourse.movie.ui.view.cinema.HomeFragment
 import java.time.LocalDate
 
 @RunWith(AndroidJUnit4::class)
@@ -102,7 +102,7 @@ class HomeFragmentTest {
     @Test
     fun `상영_정보에는_상영일이_표시된다`() {
         onView(withId(R.id.recycler_view_home_screening_movies))
-            .perform(scrollToPosition<RecyclerView.ViewHolder>(2))
+            .perform(scrollToPosition<RecyclerView.ViewHolder>(3))
 
         onView(ViewMatchers.withText("상영일: 2025.4.1 ~ 2025.4.25"))
             .check(matches(isDisplayed()))
@@ -111,7 +111,7 @@ class HomeFragmentTest {
     @Test
     fun `상영_정보에는_러닝타임이_표시된다`() {
         onView(withId(R.id.recycler_view_home_screening_movies))
-            .perform(scrollToPosition<RecyclerView.ViewHolder>(2))
+            .perform(scrollToPosition<RecyclerView.ViewHolder>(1))
 
         onView(ViewMatchers.withText("러닝타임: 141분"))
             .check(matches(isDisplayed()))

@@ -20,14 +20,13 @@ class ScreeningTest {
                 ),
                 start = LocalDate.of(2025, 4, 1),
                 end = LocalDate.of(2025, 4, 5),
-                current = LocalDateTime.of(2025, 4, 3, 12, 0),
             )
     }
 
     @Test
     fun `상영일 중 가능한 날짜의 목록을 얻을 수 있다`() {
         // when
-        val availableDates = screening.availableDates()
+        val availableDates = screening.availableDates(LocalDateTime.of(2025, 4, 3, 12, 0))
 
         // then
         assertThat(availableDates)

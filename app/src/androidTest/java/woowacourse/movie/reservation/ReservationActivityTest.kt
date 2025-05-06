@@ -26,8 +26,8 @@ import java.time.LocalTime
 class ReservationActivityTest {
     @get:Rule
     val activityRule =
-        ActivityScenarioRule<woowacourse.movie.ui.view.reservation.ReservationActivity>(
-            woowacourse.movie.ui.view.reservation.ReservationActivity.newIntent(
+        ActivityScenarioRule<ReservationActivity>(
+            ReservationActivity.newIntent(
                 ApplicationProvider.getApplicationContext(),
                 Screening(
                     movie =
@@ -36,13 +36,12 @@ class ReservationActivityTest {
                             "해리 포터와 마법사의 돌",
                             runningTime = 152,
                         ),
-                    start = LocalDate.of(2025, 4, 18),
-                    end = LocalDate.of(2025, 4, 21),
-                    current = LocalDateTime.of(2025, 4, 19, 8, 0),
+                    start = LocalDate.of(2025, 5, 10),
+                    end = LocalDate.of(2025, 5, 30),
                 ),
                 "선릉 극장",
                 object : ShowtimePolicy() {
-                    override fun showtimes(current: LocalDateTime): List<LocalTime> = listOf(LocalTime.of(22, 0))
+                    override fun showtimes(current: LocalDateTime): List<LocalTime> = listOf(LocalTime.of(12, 0), LocalTime.of(22, 0))
                 },
             ),
         )
@@ -93,7 +92,7 @@ class ReservationActivityTest {
         onData(
             allOf(
                 `is`(instanceOf(LocalDate::class.java)),
-                `is`(LocalDate.of(2025, 4, 20)),
+                `is`(LocalDate.of(2025, 5, 20)),
             ),
         ).perform(click())
 

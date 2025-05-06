@@ -7,10 +7,11 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.contract.reservation.ReservationContract
 import woowacourse.movie.domain.reservation.Movie
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
+import woowacourse.movie.ui.contract.reservation.ReservationContract
+import woowacourse.movie.ui.presenter.reservation.ReservationPresenter
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -105,12 +106,12 @@ class ReservationPresenterTest {
                     ),
                     LocalDate.of(2025, 4, 1),
                     LocalDate.of(2025, 4, 25),
-                ).availableDates(),
+                ).availableDates(LocalDateTime.of(2025, 4, 1, 8, 0)),
             )
         } just Runs
 
         // when
-        presenter.presentDates()
+        presenter.presentDates(LocalDateTime.of(2025, 4, 1, 8, 0))
 
         // then
         verify {
@@ -123,7 +124,7 @@ class ReservationPresenterTest {
                     ),
                     LocalDate.of(2025, 4, 1),
                     LocalDate.of(2025, 4, 25),
-                ).availableDates(),
+                ).availableDates(LocalDateTime.of(2025, 4, 1, 8, 0)),
             )
         }
     }

@@ -7,10 +7,11 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.contract.cinema.ScreeningContract
 import woowacourse.movie.data.reservation.FakeScreeningData
 import woowacourse.movie.domain.reservation.Movie
 import woowacourse.movie.domain.reservation.Screening
+import woowacourse.movie.ui.contract.cinema.ScreeningContract
+import woowacourse.movie.ui.presenter.cinema.ScreeningPresenter
 import java.time.LocalDate
 
 class ScreeningPresenterTest {

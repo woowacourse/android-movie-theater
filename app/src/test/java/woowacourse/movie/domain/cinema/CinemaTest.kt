@@ -51,7 +51,7 @@ class CinemaTest {
     @Test
     fun `극장은 상영 시간들을 제공한다`() {
         // when
-        val showtimes: List<LocalTime> = cinema.showtimes(screening, LocalDate.of(2025, 4, 2))
+        val showtimes: List<LocalTime> = cinema.showtimes(LocalDateTime.of(2025, 4, 2, 21, 0))
 
         // then
         assertThat(showtimes).isEqualTo(listOf(LocalTime.of(22, 0)))
