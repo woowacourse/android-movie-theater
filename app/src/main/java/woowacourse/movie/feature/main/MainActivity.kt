@@ -36,10 +36,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            activeFragment = fragments[item_home]
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add(fcv_main, activeFragment!!, item_home.toString())
+            val fragment = fragments[item_home]
+            activeFragment = fragment
+            fragment?.let {
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    add(fcv_main, it, item_home.toString())
+                }
             }
         } else {
             activeFragment = supportFragmentManager.findFragmentById(fcv_main)
