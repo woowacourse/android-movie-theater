@@ -10,20 +10,21 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
-import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.ReservationUiFormatter
 import woowacourse.movie.view.getParcelableExtraCompat
-import woowacourse.movie.view.model.ReservationInfo
-import java.time.LocalDate
+import woowacourse.movie.view.model.ReservationInfoUiModel
+import woowacourse.movie.view.model.SeatsUiModel
+import java.time.LocalDateTime
 
-@BindingAdapter(value = ["date", "time"])
+@BindingAdapter("dateTime")
 fun setDateTime(
     view: TextView,
-    date: LocalDate,
-    time: String,
+    dateTime: LocalDateTime,
 ) {
     val context = view.context
+    val date = dateTime.toLocalDate()
+    val time = dateTime.toLocalTime()
 
     val formatted =
         context.getString(
@@ -37,7 +38,7 @@ fun setDateTime(
 @BindingAdapter(value = ["seats", "theaterName"])
 fun setSeatInfo(
     view: TextView,
-    seats: Seats,
+    seats: SeatsUiModel,
     theaterName: String,
 ) {
     val context = view.context
@@ -83,9 +84,9 @@ class ReservationCompleteActivity :
             insets
         }
 
-        val reservationInfo =
-            intent?.getParcelableExtraCompat<ReservationInfo>(Extras.ReservationInfoData.RESERVATION_KEY)
-        presenter.fetchData(reservationInfo)
+        val reservationInfoUiModel =
+            intent?.getParcelableExtraCompat<ReservationInfoUiModel>(Extras.ReservationInfoData.RESERVATION_KEY)
+        presenter.fetchData(reservationInfoUiModel)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -93,7 +94,7 @@ class ReservationCompleteActivity :
     override fun showErrorDialog() {
     }
 
-    override fun showReservationInfo(reservationInfo: ReservationInfo) {
-        binding.reservationInfo = reservationInfo
+    override fun showReservationInfo(reservationInfoUiModel: ReservationInfoUiModel) {
+        binding.reservationInfo = reservationInfoUiModel
     }
 }

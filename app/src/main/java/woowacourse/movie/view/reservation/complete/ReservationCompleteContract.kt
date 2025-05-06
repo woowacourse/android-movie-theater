@@ -1,15 +1,15 @@
 package woowacourse.movie.view.reservation.complete
 
-import woowacourse.movie.view.model.ReservationInfo
+import woowacourse.movie.view.model.ReservationInfoUiModel
 
 interface ReservationCompleteContract {
     interface View {
         fun showErrorDialog()
 
-        fun showReservationInfo(reservationInfo: ReservationInfo)
+        fun showReservationInfo(reservationInfoUiModel: ReservationInfoUiModel)
     }
 
     interface Presenter {
-        fun fetchData(reservationInfo: ReservationInfo?)
+        fun fetchData(reservationInfoUiModel: ReservationInfoUiModel?)
     }
 }

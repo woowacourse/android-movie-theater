@@ -1,16 +1,16 @@
 package woowacourse.movie.view.reservation.complete
 
-import woowacourse.movie.view.model.ReservationInfo
+import woowacourse.movie.view.model.ReservationInfoUiModel
 
 class ReservationCompletePresenter(
     val view: ReservationCompleteContract.View,
 ) : ReservationCompleteContract.Presenter {
-    override fun fetchData(reservationInfo: ReservationInfo?) {
-        if (reservationInfo == null) {
+    override fun fetchData(reservationInfoUiModel: ReservationInfoUiModel?) {
+        if (reservationInfoUiModel == null) {
             view.showErrorDialog()
             return
         }
 
-        view.showReservationInfo(reservationInfo)
+        view.showReservationInfo(reservationInfoUiModel)
     }
 }

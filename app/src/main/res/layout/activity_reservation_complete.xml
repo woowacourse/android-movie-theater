@@ -7,7 +7,7 @@
 
         <variable
             name="reservationInfo"
-            type="woowacourse.movie.view.model.ReservationInfo" />
+            type="woowacourse.movie.view.model.ReservationInfoUiModel" />
     </data>
 
     <ScrollView
@@ -57,11 +57,10 @@
                 android:text="@string/reservation_complete_date_time"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                app:date="@{reservationInfo.date}"
+                app:dateTime="@{reservationInfo.dateTime}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_reservation_complete_title"
-                app:time="@{reservationInfo.time}"
                 tools:text="2025.4.15 11:00" />
 
             <TextView
@@ -93,7 +92,7 @@
                 app:layout_constraintEnd_toEndOf="@id/tv_reservation_complete_count_seats"
                 app:layout_constraintStart_toStartOf="@id/tv_reservation_complete_count_seats"
                 app:layout_constraintTop_toBottomOf="@id/tv_reservation_complete_count_seats"
-                app:reservationCompleteTotalPrice="@{reservationInfo.price}"
+                app:reservationCompleteTotalPrice="@{reservationInfo.seats.totalPrice}"
                 tools:text="@string/reservation_complete_ticket_price" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
