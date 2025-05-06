@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test
 
 class SeatsTest {
     @Test
-    fun `좌석을 추가할 수 있다`() {
+    fun `좌석을_추가할_수_있다`() {
         // given
         val seats = Seats()
-        seats.add(Seat(1, 1))
-        val actual = seats.size
+        seats.reserve(Seat(1, 1))
+        val actual = seats.reservingSeats.size
 
         // when
         val expected = 1
@@ -19,11 +19,11 @@ class SeatsTest {
     }
 
     @Test
-    fun `이미 점유된 좌석인지 알 수 있다`() {
+    fun `이미_점유된_좌석인지_알_수_있다`() {
         // given
         val targetSeat = Seat(1, 1)
-        val seats = Seats().apply { add(targetSeat) }
-        val actual = seats.contains(targetSeat)
+        val seats = Seats().apply { reserve(targetSeat) }
+        val actual = seats.isReservedSeat(targetSeat)
 
         // when
         val expected = true
@@ -33,15 +33,15 @@ class SeatsTest {
     }
 
     @Test
-    fun `좌석을 선택 취소할 수 있다`() {
+    fun `좌석을_선택_취소할_수_있다`() {
         // given
         val targetSeat = Seat(1, 1)
         val seats =
             Seats().apply {
-                add(targetSeat)
-                remove(targetSeat)
+                reserve(targetSeat)
+                cancelReserve(targetSeat)
             }
-        val actual = seats.contains(targetSeat)
+        val actual = seats.reservingSeats.contains(targetSeat)
 
         // when
         val expected = false
@@ -51,13 +51,13 @@ class SeatsTest {
     }
 
     @Test
-    fun `좌석 가격의 총합을 알 수 있다`() {
+    fun `좌석_가격의_총합을_알_수_있다`() {
         // given
         val seats =
             Seats().apply {
-                add(Seat(1, 2, TicketType.B_GRADE))
-                add(Seat(3, 3, TicketType.S_GRADE))
-                add(Seat(5, 5, TicketType.A_GRADE))
+                reserve(Seat(1, 2, TicketType.B_GRADE))
+                reserve(Seat(3, 3, TicketType.S_GRADE))
+                reserve(Seat(5, 5, TicketType.A_GRADE))
             }
         val actual = seats.totalPrice()
 
