@@ -14,14 +14,14 @@ class MovieSchedule(
 
     fun isScreeningDate(dateTime: LocalDateTime): Boolean {
         val date = dateTime.toLocalDate()
-        return screeningDate.isAfter(date) || screeningDate.isEqual(date)
+        return !screeningDate.isBefore(date)
     }
 
-    fun isTodayScreening(dateTime: LocalDateTime): Boolean {
-        return screeningDate.isEqual(dateTime.toLocalDate()) && screeningTime.isAfter(dateTime.toLocalTime())
+    fun isTodayAvailableScreening(dateTime: LocalDateTime): Boolean {
+        return screeningDate.isEqual(dateTime.toLocalDate()) && !screeningTime.isAfter(dateTime.toLocalTime())
     }
 
-    fun isFutureScreening(dateTime: LocalDateTime): Boolean {
+    fun isFutureAvailableScreeningByDate(dateTime: LocalDateTime): Boolean {
         return screeningDate.isEqual(dateTime.toLocalDate())
     }
 
