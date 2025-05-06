@@ -11,7 +11,7 @@ import woowacourse.movie.presentation.home.movies.adapter.item.MovieItem
 
 class MovieViewHolder(
     view: ViewGroup,
-    private val eventListener: OnMovieEventListener,
+    eventListener: OnMovieEventListener,
 ) : BaseViewHolder<MovieItem, ItemMovieBinding>(
         DataBindingUtil.inflate(LayoutInflater.from(view.context), R.layout.item_movie, view, false),
     ) {
@@ -24,6 +24,6 @@ class MovieViewHolder(
     }
 
     interface OnMovieEventListener {
-        fun onClick(movie: MovieUiModel)
+        fun onMovieClick(movie: MovieUiModel)
     }
 }

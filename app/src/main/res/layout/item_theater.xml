@@ -8,8 +8,8 @@
             type="woowacourse.movie.presentation.common.model.TheaterUiModel" />
 
         <variable
-            name="onClickTheater"
-            type="android.view.View.OnClickListener" />
+            name="onTheaterClick"
+            type="woowacourse.movie.presentation.home.movies.dialog.TheaterViewHolder.OnTheaterEventListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,7 +50,7 @@
             android:background="@null"
             android:contentDescription="@null"
             android:enabled="@{theater.times.size() > 0}"
-            android:onClick="@{onClickTheater}"
+            android:onClick="@{() -> onTheaterClick.onTheaterClick(theater)}"
             android:src="@drawable/ic_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

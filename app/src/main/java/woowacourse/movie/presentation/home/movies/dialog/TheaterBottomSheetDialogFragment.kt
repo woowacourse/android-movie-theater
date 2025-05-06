@@ -17,19 +17,15 @@ import woowacourse.movie.presentation.home.reservation.ReservationActivity
 
 class TheaterBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
-    TheaterBottomSheetDialogContract.View {
+    TheaterBottomSheetDialogContract.View,
+    TheaterViewHolder.OnTheaterEventListener {
     private var _binding: FragmentTheaterBottomSheetDialogBinding? = null
     private val binding get() = _binding!!
+    private val theaterAdapter: TheatersAdapter by lazy { TheatersAdapter(this) }
     private val presenter: TheaterBottomSheetDialogPresenter by lazy {
         TheaterBottomSheetDialogPresenter(
             this,
         )
-    }
-
-    private val theaterAdapter: TheatersAdapter by lazy {
-        TheatersAdapter {
-            presenter.presentTheaterItem(it)
-        }
     }
 
     override fun onCreateView(
@@ -70,6 +66,10 @@ class TheaterBottomSheetDialogFragment :
         val intent = ReservationActivity.newIntent(requireContext(), movie, theater)
         startActivity(intent)
         dismiss()
+    }
+
+    override fun onTheaterClick(theater: TheaterUiModel) {
+        presenter.presentTheaterItem(theater)
     }
 
     companion object {

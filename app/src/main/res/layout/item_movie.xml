@@ -80,7 +80,7 @@
             android:id="@+id/btn_reservation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> onClickListener.onClick(itemMovie)}"
+            android:onClick="@{() -> onClickListener.onMovieClick(itemMovie)}"
             android:text="@string/reservation_button_text"
             android:textSize="14sp"
             android:textStyle="bold"

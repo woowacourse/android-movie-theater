@@ -9,7 +9,7 @@ import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.presentation.common.model.TheaterUiModel
 
 class TheatersAdapter(
-    private val onClickTheater: (TheaterUiModel) -> Unit,
+    private val eventListener: TheaterViewHolder.OnTheaterEventListener,
 ) : ListAdapter<TheaterUiModel, TheaterViewHolder>(TheatersDiffUtil) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -17,7 +17,7 @@ class TheatersAdapter(
     ): TheaterViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<ItemTheaterBinding>(inflater, R.layout.item_theater, parent, false)
-        return TheaterViewHolder(binding, onClickTheater)
+        return TheaterViewHolder(binding, eventListener)
     }
 
     override fun onBindViewHolder(
