@@ -7,13 +7,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.AdvertisementItemBinding
 import woowacourse.movie.databinding.MovieItemBinding
-import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieListItem
 import woowacourse.movie.domain.model.MovieListItem.AdItem
 import woowacourse.movie.domain.model.MovieListItem.MovieItem
 
 class MovieAdapter(
-    private val onClickBooking: (Movie) -> Unit,
+    private val onClickBooking: (Long) -> Unit,
 ) : ListAdapter<MovieListItem, RecyclerView.ViewHolder>(
         object : DiffUtil.ItemCallback<MovieListItem>() {
             override fun areItemsTheSame(
@@ -21,7 +20,7 @@ class MovieAdapter(
                 newItem: MovieListItem,
             ): Boolean =
                 when {
-                    oldItem is MovieItem && newItem is MovieItem -> oldItem.movie.title == newItem.movie.title
+                    oldItem is MovieItem && newItem is MovieItem -> oldItem.movie.id == newItem.movie.id
                     oldItem is AdItem && newItem is AdItem -> oldItem.advertisement.image == newItem.advertisement.image
                     else -> false
                 }
