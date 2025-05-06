@@ -18,7 +18,7 @@ class MovieSchedule(
     }
 
     fun isTodayAvailableScreening(dateTime: LocalDateTime): Boolean {
-        return screeningDate.isEqual(dateTime.toLocalDate()) && !screeningTime.isAfter(dateTime.toLocalTime())
+        return screeningDate.isEqual(dateTime.toLocalDate()) && !screeningTime.isBefore(dateTime.toLocalTime())
     }
 
     fun isFutureAvailableScreeningByDate(dateTime: LocalDateTime): Boolean {

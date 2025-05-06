@@ -1,10 +1,10 @@
 package woowacourse.movie.domain.model
 
+import java.time.LocalDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import java.time.LocalDateTime
 
 class MovieScheduleTest {
     private lateinit var movieSchedule: MovieSchedule
@@ -31,7 +31,7 @@ class MovieScheduleTest {
     }
 
     @ParameterizedTest(name = "예매 하려는 날짜 : {0} 결과 : {1}")
-    @CsvSource(value = ["2025.5.10.9.30,false", "2025.5.10.10.0,true", "2025.5.10.12.0,true", "2025.5.11.12.0,false"])
+    @CsvSource(value = ["2025.5.10.9.30,true", "2025.5.10.10.0,true", "2025.5.10.12.0,false", "2025.5.11.12.0,false"])
     fun `오늘 상영 가능한 시간인지 판단한다`(
         wantDateTime: String,
         _expected: String,
