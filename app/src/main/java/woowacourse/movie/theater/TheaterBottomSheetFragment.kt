@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.booking.detail.BookingDetailActivity
@@ -14,7 +13,8 @@ import woowacourse.movie.databinding.FragmentTheaterBottomSheetBinding
 import woowacourse.movie.ui.model.MovieUiModel
 import woowacourse.movie.ui.model.TheaterUiModel
 
-class TheaterBottomSheetFragment : BottomSheetDialogFragment() {
+class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterBottomSheetContract.View {
+    private val presenter = TheaterBottomSheetPresenter(this)
     private var _binding: FragmentTheaterBottomSheetBinding? = null
     private val binding get() = _binding!!
 
@@ -33,29 +33,37 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val theaters = initTheaters()
+        presenter.initializeInfo(requireMovieOrDismiss(), requireTheatersOrDismiss())
+    }
 
-        val recyclerView: RecyclerView = binding.rvTheater
-        recyclerView.adapter =
+    override fun setUpTheaterList(theaters: List<TheaterUiModel>) {
+        binding.rvTheater.adapter =
             TheaterAdapter(theaters) { theater ->
-                parentFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    val intent = BookingDetailActivity.newIntent(requireActivity(), initMovie(), theater)
-                    startActivity(intent)
-                    dismiss()
-                }
+                presenter.selectTheater(theater)
             }
     }
 
-    private fun initTheaters(): ArrayList<TheaterUiModel> {
-        val theaters: ArrayList<TheaterUiModel>? = arguments?.getParcelableArrayList(KEY_THEATERS)
+    override fun startBookingDetail(
+        movie: MovieUiModel,
+        theater: TheaterUiModel,
+    ) {
+        parentFragmentManager.commit {
+            setReorderingAllowed(true)
+            val intent = BookingDetailActivity.newIntent(requireActivity(), movie, theater)
+            startActivity(intent)
+            dismiss()
+        }
+    }
+
+    private fun requireTheatersOrDismiss(): List<TheaterUiModel> {
+        val theaters: List<TheaterUiModel>? = arguments?.getParcelableArrayList(KEY_THEATERS)
         return theaters ?: run {
             dismiss()
             throw IllegalArgumentException(ERROR_NOT_FOUND_DATA.format(KEY_THEATERS))
         }
     }
 
-    private fun initMovie(): MovieUiModel {
+    private fun requireMovieOrDismiss(): MovieUiModel {
         return arguments?.getParcelable(KEY_MOVIE) ?: run {
             dismiss()
             throw IllegalArgumentException(ERROR_NOT_FOUND_DATA.format(KEY_MOVIE))

@@ -7,7 +7,14 @@ import woowacourse.movie.ui.model.TheaterUiModel
 fun Theater.toUiModel(movie: Movie): TheaterUiModel {
     return TheaterUiModel(
         place = place,
-        schedule = screeningInfos.find { it.movie == movie }?.toUiModel() ?: throw IllegalArgumentException(ERROR_NOT_FOUND_MOVIE),
+        screeningInfo = screeningInfos.find { it.movie == movie }?.toUiModel() ?: throw IllegalArgumentException(ERROR_NOT_FOUND_MOVIE),
+    )
+}
+
+fun TheaterUiModel.toDomain(): Theater {
+    return Theater(
+        place = place,
+        screeningInfos = listOf(screeningInfo.toDomain()),
     )
 }
 

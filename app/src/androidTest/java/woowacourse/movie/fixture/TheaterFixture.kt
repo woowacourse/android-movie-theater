@@ -14,7 +14,7 @@ fun createTheater(
 ): TheaterUiModel {
     return TheaterUiModel(
         place = name,
-        schedule =
+        screeningInfo =
             ScreeningInfo(
                 movie = movie,
                 screeningTimes = listOf(LocalTime.of(11, 0), LocalTime.of(12, 0)),

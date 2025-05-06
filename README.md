@@ -53,4 +53,4 @@
 - [x] MovieFragment | Bundle 생성 위치 이동
 - [x] SeatSelectionActivity | 좌석 색깔 변경 로직 고민
 - [ ] PresenterTest | Capturing 사용
-- [ ] TheaterBottomSheetFragment | MVP 구조로 변경
+- [x] TheaterBottomSheetFragment | MVP 구조로 변경

@@ -34,7 +34,7 @@ class BookingDetailPresenterTest {
         val mockTheaterUiData =
             TheaterUiModel(
                 place = "선릉",
-                schedule = ScreeningInfo(mockMovie, listOf(LocalTime.of(23, 0), LocalTime.of(11, 0))).toUiModel(),
+                screeningInfo = ScreeningInfo(mockMovie, listOf(LocalTime.of(23, 0), LocalTime.of(11, 0))).toUiModel(),
             )
 
         mockMovieUiData = mockMovie.toUiModel()

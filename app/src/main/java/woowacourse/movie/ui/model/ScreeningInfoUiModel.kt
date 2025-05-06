@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import java.time.LocalTime
 
 @Parcelize
-class ScheduleUiModel(
+class ScreeningInfoUiModel(
     val movie: MovieUiModel,
     val screeningTimes: List<LocalTime>,
 ) : Parcelable

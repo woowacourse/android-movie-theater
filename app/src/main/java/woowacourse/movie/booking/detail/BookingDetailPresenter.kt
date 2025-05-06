@@ -36,19 +36,19 @@ class BookingDetailPresenter(
             selected = ticket.selectedDate,
         )
         view.showScreeningTimes(
-            times = Scheduler.screeningTimes(ticket.selectedDate, theater.schedule.screeningTimes),
+            times = Scheduler.screeningTimes(ticket.selectedDate, theater.screeningInfo.screeningTimes),
             selected = ticket.selectedTime,
         )
     }
 
     override fun selectDate(date: LocalDate) {
         ticket = ticket.updateDate(date)
-        val times = Scheduler.screeningTimes(date, theater.schedule.screeningTimes)
+        val times = Scheduler.screeningTimes(date, theater.screeningInfo.screeningTimes)
 
         if (times.isEmpty()) {
             val nextDate = date.plusDays(1)
             ticket = ticket.updateDate(nextDate)
-            view.showScreeningTimes(theater.schedule.screeningTimes, ticket.selectedTime)
+            view.showScreeningTimes(theater.screeningInfo.screeningTimes, ticket.selectedTime)
         } else {
             ticket = ticket.updateTime(times.first())
             view.showScreeningTimes(times, ticket.selectedTime)
@@ -62,7 +62,7 @@ class BookingDetailPresenter(
         view.showScreeningTimes(
             Scheduler.screeningTimes(
                 ticket.selectedDate,
-                theater.schedule.screeningTimes,
+                theater.screeningInfo.screeningTimes,
             ),
             ticket.selectedTime,
         )
