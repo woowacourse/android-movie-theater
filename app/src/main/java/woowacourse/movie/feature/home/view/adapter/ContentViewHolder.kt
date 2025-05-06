@@ -4,7 +4,7 @@ import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
-sealed class ContentViewHolder<ITEM : ContentItem, BINDING : ViewDataBinding>(
+abstract class ContentViewHolder<ITEM : ContentItem, BINDING : ViewDataBinding>(
     protected val binding: BINDING,
 ) : RecyclerView.ViewHolder(binding.root) {
     protected lateinit var item: ContentItem
