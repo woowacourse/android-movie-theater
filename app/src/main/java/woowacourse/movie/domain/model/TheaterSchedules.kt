@@ -1,12 +1,13 @@
 package woowacourse.movie.domain.model
 
+import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
 class TheaterSchedules(
     private val _schedules: MutableMap<Long, Set<MovieSchedule>>,
-) {
+) : Serializable {
     private val now get() = LocalDateTime.now()
     val schedules get() = _schedules.toMap()
 
