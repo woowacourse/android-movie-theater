@@ -10,7 +10,6 @@ class AdvertiseViewHolder(
     parent: ViewGroup,
     @LayoutRes viewType: Int,
 ) : BaseViewHolder(parent, viewType) {
-
     fun bind(item: MovieRvItem.AdItem) {
         AdvertisementItemBinding.bind(itemView).apply {
             model = item

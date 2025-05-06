@@ -9,5 +9,5 @@ abstract class BaseViewHolder(
     parent: ViewGroup,
     @LayoutRes layoutRes: Int,
 ) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(layoutRes, parent, false),
-)
+        LayoutInflater.from(parent.context).inflate(layoutRes, parent, false),
+    )

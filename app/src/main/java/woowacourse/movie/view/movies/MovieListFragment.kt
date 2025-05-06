@@ -10,7 +10,7 @@ import androidx.fragment.app.setFragmentResultListener
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.view.booking.BookingActivity
-import woowacourse.movie.view.core.ext.getParcelableOrNull
+import woowacourse.movie.view.core.ext.requireParcelable
 import woowacourse.movie.view.movies.adapter.MovieAdapter
 import woowacourse.movie.view.movies.adapter.MovieAdapterEventHandler
 import woowacourse.movie.view.movies.adapter.model.MovieRvItem
@@ -45,8 +45,8 @@ class MovieListFragment : Fragment(R.layout.fragment_home), MovieListContract.Vi
         presenter.loadUiData()
 
         setFragmentResultListener(KEY_REQUEST) { _, bundle ->
-            bundle.getParcelableOrNull<Result>(KEY_RESULT)?.let {
-                presenter.loadMovieScreening(it.movieId, it.theaterName)
+            bundle.requireParcelable<Result>(KEY_RESULT).apply {
+                presenter.loadMovieScreening(movieId, theaterName)
             }
         }
     }

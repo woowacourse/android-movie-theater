@@ -1,7 +1,6 @@
 package woowacourse.movie.view.movies.adapter
 
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.view.core.base.BaseViewHolder

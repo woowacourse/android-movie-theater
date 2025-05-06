@@ -12,8 +12,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.view.core.ext.getSerializableOrNull
-import woowacourse.movie.view.core.ext.showToastFromResource
+import woowacourse.movie.view.core.ext.requireSerializable
 import woowacourse.movie.view.uiModel.toUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
@@ -25,11 +24,8 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
 
-        intent.getSerializableOrNull<Ticket>(KEY_TICKET)?.let {
-            presenter = BookingCompletePresenter(this, it)
-        } ?: run {
-            showToastFromResource(R.string.error_missing_booking_info)
-            finish()
+        intent.requireSerializable<Ticket>(KEY_TICKET).apply {
+            presenter = BookingCompletePresenter(this@BookingCompleteActivity, this)
         }
 
         initView()

@@ -18,8 +18,7 @@ import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.Seats
 import woowacourse.movie.view.complete.BookingCompleteActivity
 import woowacourse.movie.view.core.ext.getSerializableArrayList
-import woowacourse.movie.view.core.ext.getSerializableOrNull
-import woowacourse.movie.view.core.ext.showToastFromResource
+import woowacourse.movie.view.core.ext.requireSerializable
 import woowacourse.movie.view.core.util.StringFormatter
 
 class SeatActivity : AppCompatActivity(), SeatContract.View {
@@ -31,17 +30,14 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat)
 
-        intent.getSerializableOrNull<Booking>(KEY_BOOKING)?.let {
-            presenter = SeatPresenter(this, Seats(), it)
+        intent.requireSerializable<Booking>(KEY_BOOKING).apply {
+            presenter = SeatPresenter(this@SeatActivity, Seats(), this)
             val handler = SeatActionHandler(presenter)
 
             binding.handler = handler
-            binding.movieTitle = it.movieTitle
+            binding.movieTitle = this.movieTitle
 
             initView()
-        } ?: run {
-            showToastFromResource(R.string.error_missing_movie_seat)
-            finish()
         }
     }
 

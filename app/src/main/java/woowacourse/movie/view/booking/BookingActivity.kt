@@ -15,7 +15,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.view.core.ext.getSerializableOrNull
+import woowacourse.movie.view.core.ext.requireSerializable
 import woowacourse.movie.view.core.ext.showToastFromResource
 import woowacourse.movie.view.movies.ScreeningInfo
 import woowacourse.movie.view.seat.SeatActivity
@@ -33,13 +33,9 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking)
 
-        intent.getSerializableOrNull<ScreeningInfo>(KEY_SCREENING)
-            ?.let {
-                presenter = BookingPresenter.initialize(this, it)
-                initView()
-            } ?: run {
-            showToastFromResource(R.string.error_missing_movie_info)
-            finish()
+        intent.requireSerializable<ScreeningInfo>(KEY_SCREENING).apply {
+            presenter = BookingPresenter.initialize(this@BookingActivity, this)
+            initView()
         }
     }
 

@@ -1,10 +1,10 @@
 package woowacourse.movie.view.movies.adapter.model
 
-import woowacourse.movie.view.movies.adapter.MovieAdapter.ViewType
 import woowacourse.movie.domain.model.Advertisement
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.view.core.bindingadapter.ImageSource
 import woowacourse.movie.view.core.util.StringFormatter
+import woowacourse.movie.view.movies.adapter.MovieAdapter.ViewType
 import woowacourse.movie.view.movies.adapter.model.MovieRvItem.AdItem
 
 sealed class MovieRvItem(val viewType: ViewType) {

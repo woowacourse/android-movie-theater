@@ -12,7 +12,6 @@ sealed class TheaterRvItem(val viewType: TheaterAdapter.ViewType) : Parcelable {
         val movieId: Int,
         val bookingAbleTimeCount: Int,
     ) : TheaterRvItem(TheaterAdapter.ViewType.VIEW_TYPE_THEATER)
-
 }
 
 fun Theater.toItem(movieId: Int): TheaterRvItem.TheaterItem {
