@@ -44,7 +44,7 @@ class MovieFragment : Fragment(), Movies.View {
         val dialog = TheaterBottomSheetDialogFragment()
         val bundle =
             Bundle().apply {
-                putParcelable("movie", movie)
+                putParcelable(KEY_MOVIE, movie)
             }
         dialog.arguments = bundle
         dialog.show(parentFragmentManager, "TheaterBottomSheet")
@@ -64,5 +64,9 @@ class MovieFragment : Fragment(), Movies.View {
             .setPositiveButton(R.string.error_dialog_okay, null)
             .show()
             .setCancelable(false)
+    }
+    
+    companion object {
+        private const val KEY_MOVIE = "movie"
     }
 }

@@ -65,7 +65,8 @@
 - [X] xml id도 축약어 지양
 - [ ] Fragment 재생성 지양 + Fragment에 데이터를 넘겨주는 방법
 - [X] 예약된 곳에 예약을 다시 누르는 것은 정말로 예측 불가능한 "오류"인지 고민
-- [ ] Movie 도메인 고민
+- [X] Movie 도메인 고민
 - [ ] BindingAdapter 필요한 이유
 - [X] LayoutManager xml에서 설정
-- [ ] MoviePresenter 테스트 가능하게 변경
+- [X] MoviePresenter 테스트 가능하게 변경
+- [X] 하드코딩된 값 상수화
