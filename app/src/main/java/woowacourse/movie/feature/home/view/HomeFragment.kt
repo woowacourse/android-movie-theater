@@ -21,8 +21,14 @@ class HomeFragment :
     Fragment(),
     HomeContract.View {
     private lateinit var binding: FragmentHomeBinding
-    private val moviesAdapter by lazy { MoviesAdapter { movie -> presenter.selectMovieForBooking(movie) } }
-    private val presenter: HomeContract.Presenter by lazy { HomePresenter(this) }
+    private val moviesAdapter by lazy {
+        MoviesAdapter { movie ->
+            presenter.selectMovieForBooking(
+                movie,
+            )
+        }
+    }
+    private val presenter: HomeContract.Presenter by lazy { HomePresenter(this).apply { prepareMovies() } }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +44,7 @@ class HomeFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.prepareMovies()
+        presenter
     }
 
     override fun showMovies(movies: List<MovieUiModel>) {
