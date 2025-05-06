@@ -7,7 +7,7 @@ import woowacourse.movie.R
 class AdvertisementViewHolder(
     private val view: View,
 ) : RecyclerView.ViewHolder(view) {
-    fun bind(advertisement: MovieItem.Advertisement) {
+    fun bind(advertisement: ContentItem.Advertisement) {
         view.findViewById<View>(R.id.iv_advertisement).setBackgroundResource(advertisement.value.image)
     }
 }

@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.home.view.adapter
 
-enum class MovieItemViewType {
+enum class ContentItemViewType {
     MOVIE,
     ADVERTISEMENT,
 }

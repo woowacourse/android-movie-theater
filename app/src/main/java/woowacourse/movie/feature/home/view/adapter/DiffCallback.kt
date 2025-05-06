@@ -2,14 +2,14 @@ package woowacourse.movie.feature.home.view.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 
-object DiffCallback : DiffUtil.ItemCallback<MovieItem>() {
+object DiffCallback : DiffUtil.ItemCallback<ContentItem>() {
     override fun areItemsTheSame(
-        oldMovieItem: MovieItem,
-        newMovieItem: MovieItem,
-    ): Boolean = oldMovieItem.id == newMovieItem.id && oldMovieItem::class == newMovieItem::class
+        oldContentItem: ContentItem,
+        newContentItem: ContentItem,
+    ): Boolean = oldContentItem.id == newContentItem.id && oldContentItem::class == newContentItem::class
 
     override fun areContentsTheSame(
-        oldMovieItem: MovieItem,
-        newMovieItem: MovieItem,
-    ): Boolean = oldMovieItem == newMovieItem
+        oldContentItem: ContentItem,
+        newContentItem: ContentItem,
+    ): Boolean = oldContentItem == newContentItem
 }

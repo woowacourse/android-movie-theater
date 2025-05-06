@@ -7,21 +7,21 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.feature.model.MovieUiModel
 
-class MoviesAdapter(
+class ContentsAdapter(
     private val onBookingClick: (MovieUiModel) -> Unit,
-) : ListAdapter<MovieItem, RecyclerView.ViewHolder>(DiffCallback) {
+) : ListAdapter<ContentItem, RecyclerView.ViewHolder>(DiffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return when (MovieItemViewType.entries[viewType]) {
-            MovieItemViewType.MOVIE ->
+        return when (ContentItemViewType.entries[viewType]) {
+            ContentItemViewType.MOVIE ->
                 MovieViewHolder(
                     inflater.inflate(R.layout.item_movie, parent, false),
                 )
 
-            MovieItemViewType.ADVERTISEMENT ->
+            ContentItemViewType.ADVERTISEMENT ->
                 AdvertisementViewHolder(
                     inflater.inflate(R.layout.item_advertisement, parent, false),
                 )
@@ -32,17 +32,17 @@ class MoviesAdapter(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
-        val movieItem: MovieItem = getItem(position)
+        val contentItem: ContentItem = getItem(position)
 
         when (holder) {
-            is MovieViewHolder -> holder.bind(movieItem as MovieItem.Movie, onBookingClick)
-            is AdvertisementViewHolder -> holder.bind(movieItem as MovieItem.Advertisement)
+            is MovieViewHolder -> holder.bind(contentItem as ContentItem.Movie, onBookingClick)
+            is AdvertisementViewHolder -> holder.bind(contentItem as ContentItem.Advertisement)
         }
     }
 
     override fun getItemViewType(position: Int): Int = getItem(position).viewType.ordinal
 
-    override fun submitList(list: List<MovieItem?>?) {
+    override fun submitList(list: List<ContentItem?>?) {
         if (itemCount + (list?.size ?: 0) > MAX_ITEM_COUNT) return else super.submitList(list)
     }
 
