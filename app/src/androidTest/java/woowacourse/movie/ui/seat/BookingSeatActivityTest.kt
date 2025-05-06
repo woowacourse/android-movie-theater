@@ -10,15 +10,16 @@ import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withTagKey
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import java.time.LocalDateTime
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.Matchers.not
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Headcount
-import woowacourse.movie.fixture.THEATER_MEGA_BOX
+import woowacourse.movie.domain.model.MovieSchedule
+import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.fixture.fakeContext
-import java.time.LocalDateTime
 
 class BookingSeatActivityTest {
     @Before
@@ -26,10 +27,10 @@ class BookingSeatActivityTest {
         val intent =
             BookingSeatActivity.newIntent(
                 fakeContext,
-                "해리 포터와 마법사의 돌",
-                LocalDateTime.of(2025, 5, 1, 12, 0),
-                Headcount(2),
-                THEATER_MEGA_BOX,
+                movieId = 1L,
+                movieSchedule = MovieSchedule( LocalDateTime.of(2025, 5, 1, 12, 0), Seats()),
+                headcount =  Headcount(2),
+                theaterName = "메가 박스"
             )
         ActivityScenario.launch<BookingSeatActivity>(intent)
     }

@@ -14,7 +14,7 @@ class BookingSeatPresenter(
     private lateinit var headcount: Headcount
     private lateinit var theaterName: String
     private lateinit var movieSchedule: MovieSchedule
-    private lateinit var seats : Seats
+    private lateinit var seats: Seats
 
     override fun loadBookingSeatInfo(
         movieId: Long,
@@ -30,6 +30,7 @@ class BookingSeatPresenter(
 
         bookingSeatView.showMovieTitle(movie.title)
         bookingSeatView.showTotalPrice(seats.totalPrice())
+        bookingSeatView.showConfirmButton(seats.isSeatSelectionComplete(headcount))
     }
 
     override fun updateSeat(seatTag: String) {
