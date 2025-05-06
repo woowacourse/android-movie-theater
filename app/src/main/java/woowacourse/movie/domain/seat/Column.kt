@@ -13,6 +13,6 @@ value class Column(
     }
 
     companion object {
-        private const val MINIMUM_COL = 0
+        private const val MINIMUM_COL = 1
     }
 }

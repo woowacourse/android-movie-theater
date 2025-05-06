@@ -122,3 +122,5 @@
 
 ## 1,2단계 2차 변경 사항
 - [x] refactor: 하드코딩된 text strings.xml로 변경
+
+- [x] fix: Column의 검증 조건을 0 이상에서 1 이상으로 수정
