@@ -18,18 +18,15 @@ import woowacourse.movie.ui.util.TicketUiFormatter
 import woowacourse.movie.ui.util.intentSerializable
 import java.io.Serializable
 
-class SeatsActivity : DataBindingBaseActivity<ActivitySeatsBinding>(), SeatsContract.View {
-    override val layoutRes: Int
-        get() = R.layout.activity_seats
-
-    override lateinit var binding: ActivitySeatsBinding
+class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
+    private val binding by binding<ActivitySeatsBinding>(R.layout.activity_seats)
     private lateinit var movieTicket: MovieTicket
     private lateinit var presenter: SeatsContract.Presenter
     private var confirmDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupScreen()
+        setupScreen(binding.root)
         if (!fetchTicketFromIntent()) return
         presenter = SeatsPresenter(this, movieTicket)
         presenter.onViewCreated()

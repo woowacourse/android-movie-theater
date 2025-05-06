@@ -10,27 +10,24 @@ import woowacourse.movie.ui.constant.IntentKeys
 import woowacourse.movie.ui.util.intentSerializable
 
 class BookingSummaryActivity :
-    DataBindingBaseActivity<ActivityBookingsummaryBinding>(),
+    DataBindingBaseActivity(),
     BookingSummaryContract.View {
-    override val layoutRes: Int
-        get() = R.layout.activity_bookingsummary
-
-    override lateinit var binding: ActivityBookingsummaryBinding
-
+    private val binding by binding<ActivityBookingsummaryBinding>(R.layout.activity_bookingsummary)
     private lateinit var presenter: BookingSummaryPresenter
     private lateinit var ticket: MovieTicket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!fetchTicketFromIntent()) return
-        setupScreen()
+        setupScreen(binding.root)
         presenter = BookingSummaryPresenter(this, ticket)
         presenter.onViewCreated()
     }
 
     override fun showTicket(ticket: MovieTicket) {
         binding.ticket = ticket
-        binding.textviewNotice.text = String.format(getString(R.string.cancel_notice), CANCELABLE_TIME)
+        binding.textviewNotice.text =
+            String.format(getString(R.string.cancel_notice), CANCELABLE_TIME)
     }
 
     private fun fetchTicketFromIntent(): Boolean {

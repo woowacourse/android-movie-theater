@@ -1,6 +1,6 @@
 package woowacourse.movie.ui
 
-import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -8,21 +8,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import woowacourse.movie.R
 
-abstract class DataBindingBaseActivity<T: ViewDataBinding> : AppCompatActivity() {
-    abstract val layoutRes: Int @LayoutRes get
-    abstract var binding: T
+open class DataBindingBaseActivity : AppCompatActivity() {
+    protected inline fun <reified T : ViewDataBinding> binding(@LayoutRes resId: Int): Lazy<T> =
+        lazy { DataBindingUtil.setContentView(this, resId) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setupScreen()
-    }
-
-    protected fun setupScreen() {
+    protected fun setupScreen(view: View) {
         enableEdgeToEdge()
-        binding = DataBindingUtil.setContentView(this, layoutRes)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets

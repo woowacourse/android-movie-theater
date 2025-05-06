@@ -9,15 +9,12 @@ import woowacourse.movie.presentation.movies.MoviesFragment
 import woowacourse.movie.presentation.setting.SettingFragment
 import woowacourse.movie.ui.DataBindingBaseActivity
 
-class MainActivity : DataBindingBaseActivity<ActivityMainBinding>() {
-    override val layoutRes: Int
-        get() = R.layout.activity_main
-
-    override lateinit var binding: ActivityMainBinding
+class MainActivity : DataBindingBaseActivity() {
+    private val binding by binding<ActivityMainBinding>(R.layout.activity_main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupScreen()
+        setupScreen(binding.root)
         setBottomNavigationView()
 
         if (savedInstanceState == null) {

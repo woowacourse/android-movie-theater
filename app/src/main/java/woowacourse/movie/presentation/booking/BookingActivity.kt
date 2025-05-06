@@ -20,13 +20,9 @@ import java.time.LocalTime
 import java.util.Locale
 
 class BookingActivity :
-    DataBindingBaseActivity<ActivityBookingBinding>(),
+    DataBindingBaseActivity(),
     BookingContract.View {
-    override val layoutRes: Int
-        get() = R.layout.activity_booking
-
-    override lateinit var binding: ActivityBookingBinding
-
+    private val binding by binding<ActivityBookingBinding>(R.layout.activity_booking)
     private lateinit var presenter: BookingContract.Presenter
     private lateinit var screeningInfo: ScreeningInfo
     private var dateItemPosition: Int = DEFAULT_POSITION
@@ -35,7 +31,7 @@ class BookingActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!fetchMovieFromIntent()) return
-        setupScreen()
+        setupScreen(binding.root)
         presenter = BookingPresenter(this, screeningInfo)
         presenter.onViewCreated()
     }
