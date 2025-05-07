@@ -11,9 +11,9 @@ import woowacourse.movie.R.id.item_booking_history
 import woowacourse.movie.R.id.item_home
 import woowacourse.movie.R.id.item_setting
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.feature.bookinghistory.BookingHistoryFragment
+import woowacourse.movie.feature.bookinghistory.view.BookingHistoryFragment
 import woowacourse.movie.feature.home.view.HomeFragment
-import woowacourse.movie.feature.setting.SettingFragment
+import woowacourse.movie.feature.setting.view.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {

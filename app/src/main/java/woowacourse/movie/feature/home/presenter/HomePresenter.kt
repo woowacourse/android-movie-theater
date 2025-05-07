@@ -1,6 +1,6 @@
 package woowacourse.movie.feature.home.presenter
 
-import woowacourse.movie.data.ContentService.getAllContents
+import woowacourse.movie.data.ContentService.contents
 import woowacourse.movie.data.ContentService.getMovieScreenings
 import woowacourse.movie.feature.home.contract.HomeContract
 import woowacourse.movie.feature.mapper.toUi
@@ -10,7 +10,7 @@ class HomePresenter(
     private val view: HomeContract.View,
 ) : HomeContract.Presenter {
     override fun prepareContents() {
-        view.showContents(getAllContents().map { it.toUi() })
+        view.showContents(contents.map { it.toUi() })
     }
 
     override fun selectMovieForBooking(movie: MovieUiModel) {
