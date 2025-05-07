@@ -40,13 +40,15 @@ class ReservationPresent(
     }
 
     override fun increasedCount() {
-        view.showCount(count++)
+        count++
+        view.showCount(count)
     }
 
     override fun decreasedCount() {
         if (count > 1) {
-            view.showCount(--count)
+            count--
         }
+        view.showCount(count)
     }
 
     override fun selectedDate(position: Int) {
