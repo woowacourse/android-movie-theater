@@ -7,14 +7,14 @@ import java.time.LocalTime
 
 class ScreeningTimes(
     private val now: LocalDateTime,
-    private val timesOnSelectedDate: List<LocalTime>,
+    private val times: List<LocalTime>,
 ) : Serializable {
     fun bookableTimes(selectedDate: LocalDate): List<LocalTime> {
         val isToday = selectedDate.isEqual(now.toLocalDate())
         return if (isToday) {
-            timesOnSelectedDate.filter { time -> time.isAfter(now.toLocalTime()) }
+            times.filter { time -> time.isAfter(now.toLocalTime()) }
         } else {
-            timesOnSelectedDate
+            times
         }
     }
 }

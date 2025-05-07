@@ -14,77 +14,78 @@ class BookingPresenter(
     private val view: BookingContract.View,
     private val screeningInfo: ScreeningInfo,
 ) : BookingContract.Presenter {
-    private val movies = MovieStore()
-    private var count = AdmissionCount()
+    lateinit var booking: Booking
 
-    override fun loadAdmissionCount() {
-        view.showAdmissionCount(count.value)
-    }
-
-    override fun loadMovieDetail() {
+    override fun initBooking(now: LocalDateTime) {
+        val movie = MovieStore().movies[screeningInfo.movieId]
         val screenings = screeningInfo.screenings
-        val screeningDates = screenings.map { screening -> screening.toLocalDate() }
-        val screeningBookingDates = ScreeningDates(screeningDates)
 
-        loadScreeningDates(screenings, LocalDateTime.now())
-        view.showScreeningPeriod(screeningBookingDates.startDate, screeningBookingDates.endDate)
-        view.showMovieDetail(movies.movies[screeningInfo.movieId], screenings)
-    }
+        val screeningDates = ScreeningDates(screenings.map { screening -> screening.toLocalDate() })
+        val bookableDates: List<LocalDate> = screeningDates.bookableDates(now.toLocalDate())
+        if (bookableDates.isEmpty()) {
+            view.notifyNoAvailableTime()
+            return
+        }
+        val defaultDate: LocalDate = bookableDates.first()
 
-    override fun loadScreeningDates(
-        screeningDateTimes: List<LocalDateTime>,
-        now: LocalDateTime,
-    ) {
-        val screeningDates = screeningDateTimes.map { dateTime -> dateTime.toLocalDate() }
-        val bookableDates: List<LocalDate> =
-            ScreeningDates(screeningDates).bookableDates(now.toLocalDate())
+        val screeningTimes = ScreeningTimes(now, screeningInfo.screeningTimes(defaultDate))
+        val bookableTimes: List<LocalTime> = screeningTimes.bookableTimes(defaultDate)
+        if (bookableTimes.isEmpty()) {
+            view.notifyNoAvailableTime()
+            return
+        }
+        val defaultTime: LocalTime = bookableTimes.first()
+
+        booking =
+            Booking(
+                movie.title,
+                screeningInfo.theaterName,
+                defaultDate,
+                defaultTime,
+                AdmissionCount(),
+            )
+
+        view.showMovieDetail(movie, screenings)
+        view.showScreeningPeriod(screeningDates.startDate, screeningDates.endDate)
         view.showScreeningDates(bookableDates)
+        view.showScreeningTimes(bookableTimes, defaultTime)
+        view.showAdmissionCount(booking.count.value)
     }
 
-    override fun loadScreeningTimes(
-        selectedDate: LocalDate,
-        now: LocalDateTime,
-    ) {
-        val timeOnSelectedDate = screeningInfo.screeningTimes(selectedDate)
-        val bookableTimes = ScreeningTimes(now, timeOnSelectedDate).bookableTimes(selectedDate)
+    override fun loadBooking(booking: Booking) {
+        this.booking = booking
+        view.showAdmissionCount(booking.count.value)
+    }
+
+    override fun completeBooking() {
+        view.moveToBookingComplete(booking)
+    }
+
+    override fun selectDate(date: LocalDate) {
+        val timesOnSelectedDate = screeningInfo.screeningTimes(date)
+        val bookableTimes =
+            ScreeningTimes(LocalDateTime.now(), timesOnSelectedDate).bookableTimes(date)
 
         if (bookableTimes.isEmpty()) {
             view.notifyNoAvailableTime()
         } else {
-            view.showScreeningTimes(bookableTimes)
+            view.showScreeningTimes(bookableTimes, booking.screeningTime)
         }
+
+        booking = booking.copy(screeningDate = date)
     }
 
-    override fun loadBooking(
-        movieTitle: String,
-        screeningDate: String,
-        screeningTime: String,
-        admissionCount: String,
-    ) {
-        val booking =
-            Booking(
-                movieTitle = movieTitle,
-                theaterName = screeningInfo.theaterName,
-                screeningDate = LocalDate.parse(screeningDate),
-                screeningTime = LocalTime.parse(screeningTime),
-                count = AdmissionCount(admissionCount.toInt()),
-            )
-
-        view.moveToBookingComplete(booking)
+    override fun selectTime(time: LocalTime) {
+        booking = booking.copy(screeningTime = time)
     }
 
     override fun decreaseAdmissionCount() {
-        count = count.decrease()
-        view.showAdmissionCount(count.value)
+        booking = booking.copy(count = booking.count.decrease())
+        view.showAdmissionCount(booking.count.value)
     }
 
     override fun increaseAdmissionCount(limit: Int) {
-        count = count.increase(limit)
-        view.showAdmissionCount(count.value)
-    }
-
-    override fun restoreAdmissionCount(savedCount: Int) {
-        count = AdmissionCount(savedCount)
-        view.showAdmissionCount(count.value)
+        booking = booking.copy(count = booking.count.increase(limit))
+        view.showAdmissionCount(booking.count.value)
     }
 }

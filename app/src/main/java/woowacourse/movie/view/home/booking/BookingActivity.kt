@@ -5,8 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -29,7 +27,7 @@ import java.time.LocalTime
 
 class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventHandler {
     private lateinit var binding: ActivityBookingBinding
-    private lateinit var presenter: BookingContract.Presenter
+    private lateinit var presenter: BookingPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +41,8 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
                 finish()
                 return
             }
-
         presenter = BookingPresenter(this, screeningInfo)
-        presenter.loadAdmissionCount()
+        presenter.initBooking(LocalDateTime.of(2025,5,8,23,55))
         initView()
     }
 
@@ -55,26 +52,23 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        presenter.loadMovieDetail()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
-        outState.putInt(KEY_PEOPLE_COUNT, binding.tvAdmissionCount.text.toString().toInt())
-        outState.putInt(KEY_SELECTED_TIME_POSITION, binding.spTime.selectedItemPosition)
+        outState.putSerializable("booking", presenter.booking)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-
-        with(savedInstanceState) {
-            presenter.restoreAdmissionCount(getInt(KEY_PEOPLE_COUNT))
-            val savedTimePosition = getInt(KEY_SELECTED_TIME_POSITION)
-            binding.spTime.setSelection(savedTimePosition)
-        }
+        val booking: Booking =
+            savedInstanceState.getSerializableCompat("booking") ?: run {
+                showToast(getString(R.string.text_error))
+                finish()
+                return
+            }
+        presenter.loadBooking(booking)
     }
 
     override fun showMovieDetail(
@@ -82,13 +76,10 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
         screeningTimes: List<LocalDateTime>,
     ) {
         with(movie) {
-            initTitleView(title)
-            initPosterView(posterResource)
-            initRunningTimeView(runningTime)
-            presenter.loadScreeningTimes(
-                binding.spDate.selectedItem as LocalDate,
-                LocalDateTime.now(),
-            )
+            binding.tvTitle.text = title
+            binding.imgMoviePoster.setImageResource(posterResource.toDrawableResourceId(this@BookingActivity))
+            binding.tvRunningTime.text =
+                getString(R.string.text_running_time_minute_unit).format(runningTime)
         }
     }
 
@@ -108,29 +99,39 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
     }
 
     override fun showScreeningDates(bookableDates: List<LocalDate>) {
-        with(binding.spDate) {
-            adapter =
+        with(binding) {
+            spDate.adapter =
                 ArrayAdapter(
                     this@BookingActivity,
                     android.R.layout.simple_spinner_item,
                     bookableDates,
                 )
 
-            onItemSelectedListener =
-                AdapterItemSelectedListener { pos ->
-                    presenter.loadScreeningTimes(bookableDates[pos], LocalDateTime.now())
+            spDate.onItemSelectedListener =
+                AdapterItemSelectedListener { position ->
+                    presenter.selectDate(bookableDates[position])
                 }
         }
     }
 
-    override fun showScreeningTimes(bookableTimes: List<LocalTime>) {
-        with(binding.spTime) {
-            adapter =
+    override fun showScreeningTimes(
+        bookableTimes: List<LocalTime>,
+        savedTime: LocalTime,
+    ) {
+        with(binding) {
+            spTime.adapter =
                 ArrayAdapter(
                     this@BookingActivity,
                     android.R.layout.simple_spinner_item,
                     bookableTimes,
                 )
+
+            spTime.onItemSelectedListener =
+                AdapterItemSelectedListener { position ->
+                    presenter.selectTime(bookableTimes[position])
+                }
+
+            spTime.setSelection(bookableTimes.indexOf(savedTime))
         }
     }
 
@@ -143,21 +144,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
         startActivity(intent)
     }
 
-    private fun initTitleView(title: String) {
-        binding.tvTitle.text = title
-    }
-
-    private fun initPosterView(imgName: String) {
-        val moviePosterView = findViewById<ImageView>(R.id.img_movie_poster)
-        moviePosterView.setImageResource(imgName.toDrawableResourceId(this@BookingActivity))
-    }
-
-    private fun initRunningTimeView(runningTime: Int) {
-        val movieRunningTimeView = findViewById<TextView>(R.id.tv_running_time)
-        movieRunningTimeView.text =
-            getString(R.string.text_running_time_minute_unit).format(runningTime)
-    }
-
     override fun onIncreaseAdmissionCount() {
         presenter.increaseAdmissionCount(MAX_SEAT)
     }
@@ -167,14 +153,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
     }
 
     override fun onBookingComplete() {
-        with(binding) {
-            presenter.loadBooking(
-                movieTitle = tvTitle.text.toString(),
-                screeningDate = spDate.selectedItem.toString(),
-                screeningTime = spTime.selectedItem.toString(),
-                admissionCount = tvAdmissionCount.text.toString(),
-            )
-        }
+        presenter.completeBooking()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -192,8 +171,6 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
         private const val MAX_SEAT = 20
 
         const val KEY_SCREENING = "MOVIE_SCREENING"
-        private const val KEY_SELECTED_TIME_POSITION = "SELECTED_TIME_POSITION"
-        private const val KEY_PEOPLE_COUNT = "SAVED_PEOPLE_COUNT"
 
         fun newIntent(
             context: Context,

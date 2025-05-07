@@ -8,6 +8,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.booking.AdmissionCount
+import woowacourse.movie.domain.model.booking.Booking
 import woowacourse.movie.view.home.booking.BookingContract
 import woowacourse.movie.view.home.booking.BookingPresenter
 import woowacourse.movie.view.home.model.ScreeningInfo
@@ -30,13 +31,11 @@ class BookingPresenterTest {
                     screenings = listOf(LocalDateTime.of(2025, 4, 10, 12, 10)),
                 ),
             )
+        presenter.initBooking(LocalDateTime.of(2025, 4, 10, 12, 0))
     }
 
     @Test
     fun `영화 정보를 UI에 표시한다`() {
-        // when
-        presenter.loadMovieDetail()
-
         // then
         verify { view.showMovieDetail(any(), any()) }
     }
@@ -67,19 +66,8 @@ class BookingPresenterTest {
 
     @Test
     fun `인원이 1명 감소한다`() {
-        // given
-        val presenter =
-            BookingPresenter(
-                view,
-                ScreeningInfo(
-                    movieId = 0,
-                    theaterName = "CGV",
-                    screenings = listOf(LocalDateTime.of(2025, 4, 10, 12, 10)),
-                ),
-            )
-
         // when
-        presenter.restoreAdmissionCount(5)
+        presenter.booking = presenter.booking.copy(count = AdmissionCount(5))
         presenter.decreaseAdmissionCount()
 
         // then
@@ -88,19 +76,25 @@ class BookingPresenterTest {
 
     @Test
     fun `예약 버튼을 누르면 예약 완료 화면으로 이동하며 예약 정보 Booking 객체를 전달한다`() {
+        // given
+        presenter.booking =
+            Booking(
+                movieTitle = "테스트 영화 1",
+                theaterName = "테스트 극장 1",
+                screeningDate = LocalDate.of(2025, 4, 24),
+                screeningTime = LocalTime.of(12, 0),
+                count = AdmissionCount(3),
+            )
+
         // when
-        presenter.loadBooking(
-            movieTitle = "테스트 영화 1",
-            screeningDate = "2025-04-24",
-            screeningTime = "12:00",
-            admissionCount = "3",
-        )
+        presenter.completeBooking()
 
         // then
         verify {
             view.moveToBookingComplete(
                 match {
                     it.movieTitle == "테스트 영화 1" &&
+                        it.theaterName == "테스트 극장 1" &&
                         it.screeningDate == LocalDate.of(2025, 4, 24) &&
                         it.screeningTime == LocalTime.of(12, 0) &&
                         it.count == AdmissionCount(3)
