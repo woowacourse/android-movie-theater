@@ -22,7 +22,7 @@ import woowacourse.movie.model.seat.Row
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.ui.model.TicketUiModel
 
-class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
+class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View, SeatConfirmListener {
     private val presenter = SeatSelectionPresenter(this)
     private lateinit var binding: ActivitySeatSelectionBinding
 
@@ -31,6 +31,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
         setUi()
+        binding.seatConfirmListener = this
 
         val ticket = requireTicketOrFinish()
 
@@ -49,8 +50,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         }
 
         setupSeatClickListeners()
-        setupConfirmButton()
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -87,14 +86,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             for (colIndex in 0 until row.childCount) {
                 val seat = row.getChildAt(colIndex) as? TextView ?: continue
                 action(rowIndex, colIndex, seat)
-            }
-        }
-    }
-
-    private fun setupConfirmButton() {
-        binding.btnBookingConfirm.setOnClickListener {
-            if (it.isEnabled) {
-                presenter.onButtonClicked()
             }
         }
     }
@@ -170,6 +161,10 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         if (ticketUiModel.seats.isNotBlank()) {
             outState.putString(KEY_SEATS, ticketUiModel.seats)
         }
+    }
+
+    override fun onConfirmSeat() {
+        presenter.onButtonClicked()
     }
 
     companion object {

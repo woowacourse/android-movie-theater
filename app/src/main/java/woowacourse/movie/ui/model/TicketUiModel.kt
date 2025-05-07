@@ -12,4 +12,7 @@ data class TicketUiModel(
     val selectedTimeText: String,
     val totalPrice: String,
     val seats: String,
-) : Parcelable
+) : Parcelable {
+    val confirmEnabled: Boolean
+        get() = seats.split(",").map { it.trim() }.size == headCount
+}

@@ -9,6 +9,10 @@
             name="ticket"
             type="woowacourse.movie.ui.model.TicketUiModel" />
 
+        <variable
+            name="seatConfirmListener"
+            type="woowacourse.movie.seat.SeatConfirmListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -397,6 +401,8 @@
                 tools:text="0원" />
 
             <TextView
+                android:enabled="@{ticket.confirmEnabled}"
+                android:onClick="@{() -> seatConfirmListener.onConfirmSeat()}"
                 android:background="@color/btn_deactivate_background"
                 android:id="@+id/btn_booking_confirm"
                 android:layout_width="88dp"
