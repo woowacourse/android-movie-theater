@@ -11,9 +11,7 @@ interface SeatSelectionContract {
             selected: List<Seat>,
         )
 
-        fun showTotalPrice(price: Int)
-
-        fun enableConfirmButton(enabled: Boolean)
+        fun updateTicketInfo(ticket: Ticket)
 
         fun showError(message: String?)
 
@@ -24,6 +22,11 @@ interface SeatSelectionContract {
 
     interface Presenter {
         fun loadSeats(reservationInfo: ReservationInfo)
+
+        fun loadSeats(
+            reservationInfo: ReservationInfo,
+            ticket: Ticket,
+        )
 
         fun selectSeat(seat: Seat)
 

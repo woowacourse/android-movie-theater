@@ -21,6 +21,15 @@ class SeatSelectionPresenter(
         updateScreen()
     }
 
+    override fun loadSeats(
+        reservationInfo: ReservationInfo,
+        ticket: Ticket,
+    ) {
+        this.ticket = ticket
+        view.showSeats(seats, ticket.seats)
+        updateScreen()
+    }
+
     override fun selectSeat(seat: Seat) {
         runCatching {
             ticket = ticket.updateSeats(seat)
@@ -32,8 +41,7 @@ class SeatSelectionPresenter(
     }
 
     private fun updateScreen() {
-        view.showTotalPrice(ticket.totalPrice())
-        view.enableConfirmButton(ticket.isCompleted())
+        view.updateTicketInfo(ticket)
     }
 
     override fun showConfirmButton() {

@@ -14,7 +14,7 @@ import woowacourse.movie.domain.model.ReservationCount
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.view.base.BaseActivity
-import woowacourse.movie.view.extension.getParcelableCompat
+import woowacourse.movie.view.extension.getParcelableCompatList
 import woowacourse.movie.view.reservation.seat.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -50,7 +50,7 @@ class ReservationActivity :
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val screening = intent.getParcelableCompat<Screening>(BUNDLE_KEY_MOVIE)
+        val screening = intent.getParcelableCompatList<Screening>(BUNDLE_KEY_MOVIE)
         val count = savedInstanceState?.getInt(RESTORE_BUNDLE_KEY_RESERVATION_NUMBER)
         val reservationDateTime =
             savedInstanceState?.getString(RESTORE_BUNDLE_KEY_RESERVATION_DATETIME)

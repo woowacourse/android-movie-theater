@@ -10,7 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentCinemaSeclectionBinding
 import woowacourse.movie.domain.model.Screening
-import woowacourse.movie.view.extension.getParcelableCompat
+import woowacourse.movie.view.extension.getParcelableCompatList
 import woowacourse.movie.view.reservation.ReservationActivity
 
 class CinemaSelectionFragment : BottomSheetDialogFragment() {
@@ -58,7 +58,7 @@ class CinemaSelectionFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val bundle = arguments?.takeIf { it.containsKey(SCREENING_KEY) }
-        screenings = bundle?.getParcelableCompat(SCREENING_KEY) ?: throw IllegalArgumentException()
+        screenings = bundle?.getParcelableCompatList(SCREENING_KEY) ?: throw IllegalArgumentException()
     }
 
     companion object {

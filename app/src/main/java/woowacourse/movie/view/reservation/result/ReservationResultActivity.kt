@@ -7,7 +7,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationResultBinding
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.base.BaseActivity
-import woowacourse.movie.view.extension.getParcelableCompat
+import woowacourse.movie.view.extension.getParcelableCompatList
 
 class ReservationResultActivity :
     BaseActivity<ActivityReservationResultBinding>(R.layout.activity_reservation_result),
@@ -18,7 +18,7 @@ class ReservationResultActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        ticket = intent.getParcelableCompat<Ticket>(BUNDLE_KEY_RESERVATION_INFO)
+        ticket = intent.getParcelableCompatList<Ticket>(BUNDLE_KEY_RESERVATION_INFO)
         presenter.loadReservationInfo(ticket)
     }
 

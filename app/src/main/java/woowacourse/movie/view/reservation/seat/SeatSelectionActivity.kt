@@ -18,12 +18,15 @@ import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.base.BaseActivity
 import woowacourse.movie.view.extension.getParcelableCompat
+import woowacourse.movie.view.extension.getParcelableCompatList
 import woowacourse.movie.view.reservation.result.ReservationResultActivity
 
 class SeatSelectionActivity :
     BaseActivity<ActivitySeatSelectionBinding>(R.layout.activity_seat_selection),
     SeatSelectionContract.View {
     private val presenter: SeatSelectionPresenter by lazy { SeatSelectionPresenter(this) }
+    private lateinit var currentTicket: Ticket
+    private lateinit var reservation: ReservationInfo
 
     private val showReservationDialog by lazy {
         AlertDialog
@@ -38,11 +41,21 @@ class SeatSelectionActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val reservation = intent.getParcelableCompat<ReservationInfo>(BUNDLE_KEY_RESERVATION_INFO)
-
+        reservation = intent.getParcelableCompatList<ReservationInfo>(BUNDLE_KEY_RESERVATION_INFO)
         presenter.loadSeats(reservation)
         binding.reservationInfo = reservation
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable(BUNDLE_KEY_RESERVATION_INFO, currentTicket)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val ticket = savedInstanceState.getParcelableCompat<Ticket>(BUNDLE_KEY_RESERVATION_INFO)
+        presenter.loadSeats(reservation, ticket)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -99,12 +112,10 @@ class SeatSelectionActivity :
         }
     }
 
-    override fun showTotalPrice(price: Int) {
-        binding.price = price
-    }
-
-    override fun enableConfirmButton(enabled: Boolean) {
-        binding.btnSeatSelectConfirm.isEnabled = enabled
+    override fun updateTicketInfo(ticket: Ticket) {
+        binding.price = ticket.totalPrice()
+        binding.btnSeatSelectConfirm.isEnabled = ticket.isCompleted()
+        currentTicket = ticket
     }
 
     override fun showError(message: String?) {
