@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
-        <variable
-            name="home"
-            type="woowacourse.movie.view.home.HomeFragment" />
 
         <variable
             name="movieItems"
