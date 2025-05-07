@@ -1,7 +1,6 @@
 package woowacourse.movie.domain
 
 import woowacourse.movie.domain.movietime.Date
-import java.io.Serializable
 import java.time.LocalDate
 
 data class Movie(
@@ -9,7 +8,7 @@ data class Movie(
     val title: String,
     val date: Date,
     val time: Int,
-) : Serializable {
+) {
     companion object {
         val dummy: List<Movie> =
             listOf(
