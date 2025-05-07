@@ -14,13 +14,17 @@ import woowacourse.movie.R
 import woowacourse.movie.fixture.fakeContext
 import woowacourse.movie.view.home.booking.BookingActivity
 import woowacourse.movie.view.home.model.ScreeningInfo
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 class BookingActivityTest {
     private lateinit var scenario: ActivityScenario<BookingActivity>
 
     @Before
     fun setUp() {
+        val baseDate = LocalDate.now()
         val intent =
             BookingActivity.newIntent(
                 fakeContext,
@@ -28,11 +32,11 @@ class BookingActivityTest {
                     0,
                     "선릉 극장",
                     listOf(
-                        LocalDateTime.of(2025, 5, 1, 12, 0),
-                        LocalDateTime.of(2025, 5, 2, 12, 0),
-                        LocalDateTime.of(2025, 5, 3, 12, 0),
-                        LocalDateTime.of(2025, 5, 4, 12, 0),
-                        LocalDateTime.of(2025, 5, 5, 12, 0),
+                        LocalDateTime.of(baseDate.plusDays(0), LocalTime.of(12, 0)),
+                        LocalDateTime.of(baseDate.plusDays(1), LocalTime.of(12, 0)),
+                        LocalDateTime.of(baseDate.plusDays(2), LocalTime.of(12, 0)),
+                        LocalDateTime.of(baseDate.plusDays(3), LocalTime.of(12, 0)),
+                        LocalDateTime.of(baseDate.plusDays(4), LocalTime.of(12, 0)),
                     ),
                 ),
             )
@@ -41,8 +45,10 @@ class BookingActivityTest {
 
     @Test
     fun 전달_받은_영화_이름_상영일_상영_시간을_출력한다() {
+        val startDate = LocalDate.now().plusDays(0).format(DateTimeFormatter.ofPattern("yyyy.M.d"))
+        val endDate = LocalDate.now().plusDays(4).format(DateTimeFormatter.ofPattern("yyyy.M.d"))
         onView(withText("해리 포터와 마법사의 돌")).check(matches(isDisplayed()))
-        onView(withText("2025.5.1 ~ 2025.5.5")).check(matches(isDisplayed()))
+        onView(withText("%s ~ %s".format(startDate, endDate))).check(matches(isDisplayed()))
         onView(withText("152분")).check(matches(isDisplayed()))
     }
 

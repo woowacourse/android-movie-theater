@@ -183,6 +183,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
                 finish()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

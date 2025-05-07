@@ -3,7 +3,7 @@ package woowacourse.movie.view.home.seat
 import android.widget.TableLayout
 import android.widget.TableRow
 import androidx.core.view.children
-import woowacourse.movie.domain.model.seat.Column
+import woowacourse.movie.domain.model.seat.Col
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
 
@@ -24,7 +24,7 @@ class SeatView(
     }
 
     fun updateSeats(selectedSeats: Set<Seat>) {
-        val selectedPositions = selectedSeats.map { Seat(Column(it.x.value), Row(it.y.value)) }.toSet()
+        val selectedPositions = selectedSeats.map { Seat(Col(it.col.value), Row(it.row.value)) }.toSet()
         rows.forEach { it.updateSeats(selectedPositions) }
     }
 }

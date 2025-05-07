@@ -18,8 +18,8 @@ sealed interface SeatPolicy {
     companion object {
         fun get(row: Int) =
             when (row) {
-                1, 2 -> BGradePolicy
-                3, 4 -> SGradePolicy
+                0, 1 -> BGradePolicy
+                2, 3 -> SGradePolicy
                 else -> AGradePolicy
             }
     }

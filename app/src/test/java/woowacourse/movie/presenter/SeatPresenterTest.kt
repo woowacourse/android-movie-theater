@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.booking.Booking
-import woowacourse.movie.domain.model.seat.Column
+import woowacourse.movie.domain.model.seat.Col
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.Seats
@@ -44,7 +44,7 @@ class SeatPresenterTest {
     @Test
     fun `좌석을 추가할 수 없으면 토스트 메시지를 보여준다`() {
         // given
-        val position = Seat(Column(1), Row(1))
+        val position = Seat(Col(1), Row(1))
         every { seats.toggleSeat(any()) }
 
         // when
@@ -71,7 +71,7 @@ class SeatPresenterTest {
     fun `예매 버튼 클릭 시 좌석이 충분하면 예매 완료 화면으로 이동한다`() {
         // given
         every { seats.isNotSelectDone(booking.count.value) } returns false
-        every { seats.item } returns setOf(Seat(Column(1), Row(1)))
+        every { seats.item } returns setOf(Seat(Col(1), Row(1)))
         every { seats.totalPrice() } returns 10000
 
         // when

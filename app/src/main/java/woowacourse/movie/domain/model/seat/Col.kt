@@ -1,4 +1,4 @@
 package woowacourse.movie.domain.model.seat
 
 @JvmInline
-value class Column(val value: Int)
+value class Col(val value: Int)

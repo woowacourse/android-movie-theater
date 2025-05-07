@@ -7,7 +7,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.MovieStore
 import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.view.home.booking.BookingContract
 import woowacourse.movie.view.home.booking.BookingPresenter
@@ -18,17 +17,13 @@ import java.time.LocalTime
 
 class BookingPresenterTest {
     private val view: BookingContract.View = mockk<BookingContract.View>(relaxed = true)
-    private lateinit var model: MovieStore
     private lateinit var presenter: BookingPresenter
 
     @BeforeEach
     fun setUp() {
-        model = MovieStore()
         presenter =
             BookingPresenter(
                 view,
-                MovieStore(),
-                AdmissionCount(1),
                 ScreeningInfo(
                     movieId = 0,
                     theaterName = "CGV",
@@ -76,17 +71,15 @@ class BookingPresenterTest {
         val presenter =
             BookingPresenter(
                 view,
-                model,
-                AdmissionCount(5),
                 ScreeningInfo(
                     movieId = 0,
                     theaterName = "CGV",
                     screenings = listOf(LocalDateTime.of(2025, 4, 10, 12, 10)),
                 ),
             )
-        every { view.showAdmissionCount(4) } just Runs
 
         // when
+        presenter.restoreAdmissionCount(5)
         presenter.decreaseAdmissionCount()
 
         // then

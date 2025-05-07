@@ -108,9 +108,9 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     }
 
     private fun seatToLabel(seats: Set<Seat>): String {
-        return seats.joinToString {
-            val rowLetter = ('A' + it.y.value - 1)
-            val columnNumber = it.x.value
+        return seats.joinToString { seat ->
+            val rowLetter = (ROW_STARTING_VALUE + seat.row.value)
+            val columnNumber = COL_STARTING_VALUE + seat.col.value
             "$rowLetter$columnNumber"
         }
     }
@@ -135,6 +135,9 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
     companion object {
         const val KEY_TICKET = "BOOKING_TICKET"
+
+        private const val ROW_STARTING_VALUE = 'A'
+        private const val COL_STARTING_VALUE = 1
 
         fun newIntent(
             context: Context,

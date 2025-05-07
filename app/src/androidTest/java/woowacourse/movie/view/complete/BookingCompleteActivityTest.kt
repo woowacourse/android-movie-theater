@@ -8,7 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.domain.model.booking.AdmissionCount
-import woowacourse.movie.domain.model.seat.Column
+import woowacourse.movie.domain.model.seat.Col
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.ticket.Ticket
@@ -31,7 +31,7 @@ class BookingCompleteActivityTest {
                     LocalDate.parse("2025-04-01"),
                     LocalTime.parse("12:00"),
                     AdmissionCount(2),
-                    setOf(Seat(Column(1), Row(1)), Seat(Column(1), Row(2))),
+                    setOf(Seat(Col(1), Row(1)), Seat(Col(1), Row(2))),
                     26000,
                 ),
             )
