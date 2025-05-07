@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import woowacourse.movie.R
+import woowacourse.movie.databinding.TheaterItemBinding
 import woowacourse.movie.domain.Showing
 import woowacourse.movie.view.home.theater.OnTheaterEventListener
 
@@ -15,11 +15,10 @@ class TheaterAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): TheaterViewHolder {
-        val view =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.theater_item, parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding: TheaterItemBinding = TheaterItemBinding.inflate(inflater, parent, false)
 
-        return TheaterViewHolder(view, eventListener)
+        return TheaterViewHolder(eventListener, binding)
     }
 
     override fun onBindViewHolder(

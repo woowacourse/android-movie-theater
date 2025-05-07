@@ -1,32 +1,23 @@
 package woowacourse.movie.view.home.movies.adapter
 
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.View.OnClickListener
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.TheaterItemBinding
 import woowacourse.movie.domain.Showing
 import woowacourse.movie.view.home.theater.OnTheaterEventListener
-import java.time.LocalTime
 
 class TheaterViewHolder(
-    view: View,
     eventListener: OnTheaterEventListener,
-) : RecyclerView.ViewHolder(view) {
-    private val theaterNameTextView: TextView = view.findViewById(R.id.tv_theater_name)
-    private val theaterTimeTextView: TextView = view.findViewById(R.id.tv_theater_time)
-    private val selectButton: ImageView = view.findViewById(R.id.btn_arrow)
-    private var showings: Showing? = null
+    val binding: TheaterItemBinding,
+) : RecyclerView.ViewHolder(binding.root) {
+    private var showing: Showing? = null
 
     init {
-        selectButton.setOnClickListener {
-            showings?.let { eventListener.onClickReservation(it) }
-        }
+        binding.onConfirm = OnClickListener { showing?.let { eventListener.onClickReservation(it) } }
     }
 
-    fun bind(showings: Showing) {
-        this.showings = showings
-        theaterNameTextView.text = showings.theaterName
-        theaterTimeTextView.text = showings.scheduleTime.afterCurrentTimeSchedule(LocalTime.now()).size.toString()
+    fun bind(showing: Showing) {
+        this.showing = showing
+        binding.showing = showing
     }
 }
