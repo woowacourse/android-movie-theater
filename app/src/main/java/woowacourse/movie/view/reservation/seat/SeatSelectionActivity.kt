@@ -10,6 +10,7 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.R
@@ -25,15 +26,19 @@ class SeatSelectionActivity :
     SeatSelectionContract.View {
     private val presenter: SeatSelectionPresenter by lazy { SeatSelectionPresenter(this) }
 
-    private val showReservationDialog by lazy {
+    private fun showDialog(
+        @StringRes title: Int,
+        @StringRes content: Int,
+    ) {
         AlertDialog
             .Builder(this)
-            .setTitle(R.string.reservation_dialog_title)
-            .setMessage(R.string.reservation_dialog_message)
+            .setTitle(title)
+            .setMessage(content)
             .setCancelable(false)
             .setPositiveButton(R.string.reservation_dialog_positive) { _, _ ->
                 submitReservation()
             }.setNegativeButton(R.string.reservation_dialog_negative) { dialog, _ -> dialog.dismiss() }
+            .show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,7 +122,7 @@ class SeatSelectionActivity :
     }
 
     override fun showReservationDialog() {
-        showReservationDialog.show()
+        showDialog(R.string.reservation_dialog_title, R.string.reservation_dialog_message)
     }
 
     override fun navigateToResult(reservationInfo: ReservationInfo) {
