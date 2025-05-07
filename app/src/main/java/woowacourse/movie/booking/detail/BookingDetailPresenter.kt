@@ -1,0 +1,116 @@
+package woowacourse.movie.booking.detail
+
+import woowacourse.movie.mapper.toDomain
+import woowacourse.movie.mapper.toUiModel
+import woowacourse.movie.model.HeadCount
+import woowacourse.movie.model.Scheduler
+import woowacourse.movie.model.Seats
+import woowacourse.movie.model.Ticket
+import woowacourse.movie.ui.model.MovieUiModel
+import woowacourse.movie.ui.model.TheaterUiModel
+import woowacourse.movie.util.Formatter.formatStringDateHyphenSeparated
+import woowacourse.movie.util.Formatter.formatStringTimeWithMidnight24
+import java.time.LocalDate
+import java.time.LocalTime
+
+class BookingDetailPresenter(
+    private val view: BookingDetailContract.View,
+) : BookingDetailContract.Presenter {
+    private lateinit var movie: MovieUiModel
+    private lateinit var theater: TheaterUiModel
+    private lateinit var ticket: Ticket
+
+    override fun initializeData(
+        movie: MovieUiModel,
+        theater: TheaterUiModel,
+    ) {
+        this.movie = movie
+        this.theater = theater
+    }
+
+    override fun setUpTicket() {
+        view.showMovieInfo(movie)
+        view.showHeadCount(ticket.headCount.value)
+        view.showScreeningDates(
+            dates = Scheduler.screeningPeriods(movie.toDomain()),
+            selected = ticket.selectedDate,
+        )
+        view.showScreeningTimes(
+            times = Scheduler.screeningTimes(ticket.selectedDate, theater.screeningInfo.screeningTimes),
+            selected = ticket.selectedTime,
+        )
+    }
+
+    override fun selectDate(date: LocalDate) {
+        ticket = ticket.updateDate(date)
+        val times = Scheduler.screeningTimes(date, theater.screeningInfo.screeningTimes)
+
+        if (times.isEmpty()) {
+            val nextDate = date.plusDays(1)
+            ticket = ticket.updateDate(nextDate)
+            view.showScreeningTimes(theater.screeningInfo.screeningTimes, ticket.selectedTime)
+        } else {
+            ticket = ticket.updateTime(times.first())
+            view.showScreeningTimes(times, ticket.selectedTime)
+        }
+    }
+
+    override fun selectTime(time: LocalTime) {
+        if (ticket.selectedTime == time) return
+
+        ticket = ticket.updateTime(time)
+        view.showScreeningTimes(
+            Scheduler.screeningTimes(
+                ticket.selectedDate,
+                theater.screeningInfo.screeningTimes,
+            ),
+            ticket.selectedTime,
+        )
+    }
+
+    override fun increaseHeadCount() {
+        ticket = ticket.plusHeadCount()
+        view.showHeadCount(ticket.headCount.value)
+    }
+
+    override fun decreaseHeadCount() {
+        ticket = ticket.minusHeadCount()
+        view.showHeadCount(ticket.headCount.value)
+    }
+
+    override fun confirmReservation() {
+        view.startSeatSelectionActivity(ticket.toUiModel())
+    }
+
+    override fun restoreTicketData(
+        headCount: Int,
+        screeningDate: String?,
+        screeningTime: String?,
+    ) {
+        ticket =
+            Ticket(
+                theater = theater.place,
+                title = movie.title,
+                headCount = HeadCount(headCount),
+                selectedDate =
+                    screeningDate?.let { formatStringDateHyphenSeparated(it) }
+                        ?: movie.screeningStartDate,
+                selectedTime =
+                    screeningTime?.let { formatStringTimeWithMidnight24(it) }
+                        ?: theater.screeningInfo.screeningTimes.first(),
+                seats = Seats(),
+            )
+    }
+
+    override fun createDefaultTicket() {
+        ticket =
+            Ticket(
+                theater = theater.place,
+                title = movie.title,
+                headCount = HeadCount(1),
+                selectedDate = movie.screeningStartDate,
+                selectedTime = theater.screeningInfo.screeningTimes.first(),
+                seats = Seats(),
+            )
+    }
+}

@@ -1,1 +1,56 @@
-# android-movie-theater
+# android-movie-ticket
+
+### 기능 목록
+
+- [x] 하나의 영화가 목록에서 보인다.
+- [x] 지금 예매 버튼을 누르면 기본 정보를 담은 화면이 표시된다.
+- [x] 영화를 선택 후 나타나며, 예약할 인원을 선택할 수 있다.
+- [x] 영화를 선택 후 날짜와 시간을 정할 수 있다.
+- [x] 영화 티켓 한 장은 13,000원이다.
+- [x] 화면이 회전되어도 입력한 정보는 유지되어야 한다.
+- [x] 예매 완료를 확인하는 다이얼로그가 표시되고 배경을 터치해도 사라지지 않아야 한다.
+- [x] 다이얼로그에서 예매 완료를 선택하면 예매 내역 화면으로 이동한다.
+- [x] 각 영화의 상영일은 각자의 범위를 갖는다(예: 2025.4.1 ~ 2025.4.25).
+- [x] 영화 상영 시간 범위는 오전 9시부터 자정까지다.
+- [x] 주말에는 오전 9시부터 두 시간 간격으로 상영한다.
+- [x] 평일에는 오전 10시부터 두 시간 간격으로 상영한다.
+- [x] 날짜와 시간은 기본값으로 초기화되어있다.
+
+- [x] MVP 패턴 적용하기
+- [x] 예매인원에 따라 좌석을 선택할 수 있다.
+- [x] 선택한 좌석의 등급에 따라 가격을 지정해줄 수 있다.
+- [x] 예매인원보다 많은 좌석을 선택할 수 없다.
+- [x] 예매인원에 맞는 좌석을 선택하면 확인버튼이 활성화된다.
+- [x] 활성화된 버튼을 누르면 최종 예매 결과를 확인할 수 있다.
+
+- [x] 영화를 선택하면 상영 가능한 극장을 선택할 수 있다
+- [x] 극장에 따라 상영 가능한 시간 개수를 확인할 수 있다
+
+- [x] 각 영화관은 이름, 상영 가능한 영화 정보를 갖는다
+- [x] 각 영화는 이름, 상영일, 러닝타임, 상영 가능한 시간을 갖는다
+
+### TODO
+
+- [x] SeatSelectionActivity | 화면 회전 시 데이터 복원
+- [x] SeatSelectionActivity | 버튼 비활성화 버그 수정
+- [x] 매직 넘버 상수화
+- [x] Scheduler | 현재 날짜 & 시간 고정되어 있는 버그 수정
+- [x] Seat | 행 & 열로 좌석 구분하도록 변경
+- [x] Seats | toggle 함수 고민
+- [x] MovieAdapter | 광고 삽입 로직 이동
+- [x] Presenter | 반환값이 없도록 수정
+- [x] layout | ConstraintLayout 중첩 구조 개선
+
+- [x] SeatSelectionActivity | 좌석을 더 선택할 수 있는 점 개선하기
+- [x] MainActivity | fragment 재사용에 대한 고민
+- [x] TheaterAdapter | inflate 위치 이동
+- [x] MovieFragment | Binding 객체 null 처리하기
+- [x] MovieFragment | Bundle 사용 시 스코프 함수 활용
+- [x] Ticket | 불변 객체 보장
+- [x] SeatSelectionActivityTest | 중복되는 코드 함수로 분리
+
+- [x] TheaterViewHolder | 리스너 중복 연결 고민
+- [x] MovieFragment | Bundle 생성 위치 이동
+- [x] SeatSelectionActivity | 좌석 색깔 변경 로직 고민
+- [ ] PresenterTest | Capturing 사용
+- [x] TheaterBottomSheetFragment | MVP 구조로 변경
