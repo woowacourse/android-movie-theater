@@ -17,9 +17,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.fixture.TestData
-import woowacourse.movie.matchers.BackgroundColorMatcher.withBackgroundColor
 import woowacourse.movie.matchers.isDisplayed
 import woowacourse.movie.matchers.performClick
+import woowacourse.movie.matchers.withBackgroundColor
 import woowacourse.movie.view.reservation.seat.SeatSelectionActivity
 
 @RunWith(AndroidJUnit4::class)
