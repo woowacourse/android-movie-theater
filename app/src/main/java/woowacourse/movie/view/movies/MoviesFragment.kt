@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMoviesBinding
 import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.MovieListItem
 import woowacourse.movie.view.base.BaseFragment
 import woowacourse.movie.view.movies.cinema.CinemaSelectionFragment
 

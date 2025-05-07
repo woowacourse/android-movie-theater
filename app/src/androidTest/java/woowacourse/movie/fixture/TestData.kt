@@ -4,11 +4,11 @@ import woowacourse.movie.R
 import woowacourse.movie.data.DummyMovie
 import woowacourse.movie.domain.model.Cinema
 import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.domain.model.MovieListItem
 import woowacourse.movie.domain.model.ReservationCount
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.RunningTime
 import woowacourse.movie.domain.model.Screening
-import woowacourse.movie.view.movies.MovieListItem
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

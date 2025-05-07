@@ -1,7 +1,4 @@
-package woowacourse.movie.view.movies
-
-import woowacourse.movie.domain.model.Advertisement
-import woowacourse.movie.domain.model.Movie
+package woowacourse.movie.domain.model
 
 sealed class MovieListItem {
     data class MovieItem(

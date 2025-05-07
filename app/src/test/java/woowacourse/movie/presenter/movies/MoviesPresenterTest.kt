@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.DummyAdvertisement
 import woowacourse.movie.data.DummyMovie
-import woowacourse.movie.view.movies.MovieListItem
+import woowacourse.movie.domain.model.MovieListItem
 import woowacourse.movie.view.movies.MoviesContract
 import woowacourse.movie.view.movies.MoviesPresenter
 

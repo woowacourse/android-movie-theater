@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.databinding.ItemAdvertisementBinding
 import woowacourse.movie.databinding.ItemMovieBinding
+import woowacourse.movie.domain.model.MovieListItem
 
 class MovieListAdapter(
     private val items: List<MovieListItem>,
