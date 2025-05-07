@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
 import woowacourse.movie.presentation.Extras
+import woowacourse.movie.presentation.ReservationUiFormatter
 import woowacourse.movie.presentation.getParcelableExtraCompat
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 
@@ -44,5 +45,7 @@ class ReservationCompleteActivity :
 
     override fun showReservationInfo(reservationInfoUiModel: ReservationInfoUiModel) {
         binding.reservationInfo = reservationInfoUiModel
+        binding.totalPrice =
+            ReservationUiFormatter.priceToUI(reservationInfoUiModel.seats.totalPrice)
     }
 }
