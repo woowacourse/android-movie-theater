@@ -18,9 +18,9 @@ interface ReservationContract {
 
         fun onRestoreState(outState: Bundle)
 
-        fun increasedCount(view: android.view.View)
+        fun increasedCount()
 
-        fun decreasedCount(view: android.view.View)
+        fun decreasedCount()
 
         fun selectedDate(position: Int)
 
@@ -42,6 +42,8 @@ interface ReservationContract {
         fun navigateToReservationComplete(ticket: Ticket)
 
         fun setReservationButton(showings: Showings)
+
+        fun showCount(count: Int)
 
         fun showSpinnerData(
             movie: Movie,

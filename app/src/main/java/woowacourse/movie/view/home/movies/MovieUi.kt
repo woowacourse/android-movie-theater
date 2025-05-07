@@ -6,6 +6,7 @@ import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.MovieId
 import woowacourse.movie.domain.movietime.Date
 import java.io.Serializable
+import java.time.format.DateTimeFormatter
 
 data class MovieUi(
     val movieId: MovieId,
@@ -13,7 +14,14 @@ data class MovieUi(
     val title: String,
     val date: Date,
     val time: Int,
-) : Serializable
+) : Serializable {
+    fun formattedDate(formatPattern: String): String {
+        val formatter = DateTimeFormatter.ofPattern(formatPattern)
+        val start = date.startDate.format(formatter)
+        val end = date.endDate.format(formatter)
+        return "$start ~ $end"
+    }
+}
 
 fun Movie.toMovieUi(): MovieUi {
     return MovieUi(

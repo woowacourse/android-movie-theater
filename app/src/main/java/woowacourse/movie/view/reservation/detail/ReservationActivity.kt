@@ -7,23 +7,18 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.MovieId
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.Ticket
-import woowacourse.movie.domain.movietime.Date
 import woowacourse.movie.domain.movietime.MovieSchedule
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.home.movies.MovieUi
@@ -32,20 +27,17 @@ import woowacourse.movie.view.reservation.seat.ReservationSeatActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     private val present: ReservationContract.Presenter by lazy {
         ReservationPresent(this)
     }
-
-    private lateinit var spinnerDate: Spinner
-    private lateinit var spinnerTime: Spinner
-    private lateinit var binding: ActivityReservationBinding
+    private var _binding: ActivityReservationBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityReservationBinding.inflate(layoutInflater)
+        _binding = ActivityReservationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayoutReservation) { v, insets ->
@@ -53,9 +45,6 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        spinnerDate = binding.spinnerDate
-        spinnerTime = binding.spinnerTime
 
         val movieId: MovieId? =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -70,6 +59,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
                 intent.getSerializableExtra(KEY_SHOWINGS) as? Showings
             }
         checkTheater(movieId, showings)
+        bindButtonListeners()
     }
 
     private fun checkTheater(
@@ -83,10 +73,19 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         }
     }
 
+    private fun bindButtonListeners() {
+        binding.onClickPlus = View.OnClickListener { present.increasedCount() }
+        binding.onClickMinus = View.OnClickListener { present.decreasedCount() }
+    }
+
     override fun showErrorInvalidMovie() {
         DialogFactory().showError(this) {
             onBackPressedDispatcher.onBackPressed()
         }
+    }
+
+    override fun showCount(count: Int) {
+        binding.count = count
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -104,22 +103,21 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         selectedDatePosition: Int,
         showings: Showings,
     ) {
-        setDateSpinner(movie, LocalDate.now(), spinnerTime, showings)
+        setDateSpinner(movie, LocalDate.now(), binding.spinnerTime, showings)
 
-        spinnerDate.setSelection(selectedDatePosition)
+        binding.spinnerDate.setSelection(selectedDatePosition)
     }
 
     override fun showMovieReservationScreen(movieUi: MovieUi) {
         binding.movieUi = movieUi
-        binding.reservationPresent = present as ReservationPresent
     }
 
     override fun setReservationButton(showings: Showings) {
         val reservationButton = binding.btnReservation
 
         reservationButton.setOnClickListener {
-            val selectedDate: LocalDate = spinnerDate.selectedItem as LocalDate
-            val selectedTime: LocalTime? = spinnerTime.selectedItem as? LocalTime?
+            val selectedDate: LocalDate = binding.spinnerDate.selectedItem as LocalDate
+            val selectedTime: LocalTime? = binding.spinnerTime.selectedItem as? LocalTime?
             if (selectedTime == null) {
                 Toast.makeText(
                     this,
@@ -146,14 +144,14 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         val movieSchedule = MovieSchedule(movie.date)
         val currentDateSpinner = movieSchedule.selectableDates(localDate)
 
-        spinnerDate.adapter =
+        binding.spinnerDate.adapter =
             ArrayAdapter(
                 this,
                 android.R.layout.simple_spinner_item,
                 currentDateSpinner,
             )
 
-        spinnerDate.onItemSelectedListener =
+        binding.spinnerDate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -207,7 +205,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     override fun setTimeSelection(position: Int) {
-        spinnerTime.setSelection(position)
+        binding.spinnerTime.setSelection(position)
     }
 
     companion object {
@@ -229,23 +227,4 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
                     showings,
                 )
     }
-}
-
-@BindingAdapter("imageRes")
-fun setImageResource(
-    view: ImageView,
-    @DrawableRes resId: Int,
-) {
-    view.setImageResource(resId)
-}
-
-@BindingAdapter("dateRange")
-fun setDateRange(
-    view: TextView,
-    date: Date,
-) {
-    val formatter = DateTimeFormatter.ofPattern("yyyy.M.d")
-    val start = date.startDate.format(formatter)
-    val end = date.endDate.format(formatter)
-    view.text = "$start ~ $end"
 }

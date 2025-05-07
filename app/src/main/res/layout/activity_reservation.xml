@@ -9,8 +9,16 @@
             type="woowacourse.movie.view.home.movies.MovieUi" />
 
         <variable
-            name="reservationPresent"
-            type="woowacourse.movie.view.reservation.detail.ReservationPresent" />
+            name="onClickPlus"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="onClickMinus"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="count"
+            type="Integer" />
     </data>
 
     <ScrollView
@@ -60,7 +68,7 @@
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 tools:text="@string/movieDate"
-                app:dateRange="@{movieUi.date}">
+                android:text="@{movieUi.formattedDate(`yyyy.M.d`)}">
 
             </TextView>
 
@@ -106,7 +114,7 @@
                     android:text="@string/minus"
                     android:textSize="25sp"
                     android:textStyle="bold"
-                    android:onClick="@{reservationPresent::decreasedCount}"/>
+                    android:onClick="@{onClickMinus}"/>
 
                 <TextView
                     android:id="@+id/tv_personnel"
@@ -115,7 +123,7 @@
                     android:layout_weight="9"
                     android:gravity="center"
                     tools:text="1"
-                    android:text='@{String.valueOf(reservationPresent.count)}'
+                    android:text='@{String.valueOf(count)}'
                     android:textColor="@color/black"
                     android:textSize="25sp"
                     android:textStyle="bold" />
@@ -128,7 +136,7 @@
                     android:text="@string/plus"
                     android:textSize="25sp"
                     android:textStyle="bold"
-                    android:onClick="@{reservationPresent::increasedCount}"/>
+                    android:onClick="@{onClickPlus}"/>
 
             </LinearLayout>
 
