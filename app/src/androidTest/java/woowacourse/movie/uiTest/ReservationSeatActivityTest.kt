@@ -12,8 +12,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestName
 import woowacourse.movie.R
-import woowacourse.movie.domain.Ticket
 import woowacourse.movie.uiTest.fixture.fakeContext
+import woowacourse.movie.view.reservation.Ticket
 import woowacourse.movie.view.reservation.seat.ReservationSeatActivity
 import java.time.LocalDateTime
 

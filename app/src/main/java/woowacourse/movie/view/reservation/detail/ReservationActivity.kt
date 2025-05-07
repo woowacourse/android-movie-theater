@@ -16,12 +16,12 @@ import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movietime.MovieSchedule
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.home.movies.MovieUi
 import woowacourse.movie.view.home.movies.getMovieById
 import woowacourse.movie.view.home.theater.Showing
+import woowacourse.movie.view.reservation.Ticket
 import woowacourse.movie.view.reservation.seat.ReservationSeatActivity
 import java.time.LocalDate
 import java.time.LocalDateTime

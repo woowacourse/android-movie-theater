@@ -1,7 +1,7 @@
 package woowacourse.movie.view.reservation.result
 
-import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Seats
+import woowacourse.movie.view.reservation.Ticket
 
 class ReservationCompleteContract {
     interface Presenter {

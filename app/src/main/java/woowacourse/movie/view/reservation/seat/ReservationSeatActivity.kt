@@ -16,11 +16,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationSeatBinding
-import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.domain.movieseat.Seats
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.dialog.DialogInfo
+import woowacourse.movie.view.reservation.Ticket
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
 
 class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.View {

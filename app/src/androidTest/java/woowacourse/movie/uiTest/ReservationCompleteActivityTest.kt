@@ -11,11 +11,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestName
 import woowacourse.movie.R
-import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.domain.movieseat.Seat
 import woowacourse.movie.domain.movieseat.Seats
 import woowacourse.movie.uiTest.fixture.fakeContext
+import woowacourse.movie.view.reservation.Ticket
 import woowacourse.movie.view.reservation.detail.ReservationActivity
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
 import java.time.LocalDateTime

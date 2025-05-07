@@ -6,7 +6,7 @@
     <data>
         <variable
             name="ticket"
-            type="woowacourse.movie.domain.Ticket" />
+            type="woowacourse.movie.view.reservation.Ticket" />
 
         <variable
             name="seats"
@@ -15,6 +15,11 @@
         <variable
             name="price"
             type="Integer" />
+
+        <variable
+            name="purchasePolicy"
+            type="woowacourse.movie.domain.PurchasePolicy" />
+
     </data>
 
     <ScrollView
@@ -46,7 +51,8 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 tools:text="@string/movie_cancel_deadline"
-                android:text="@{String.format(@string/movie_cancel_deadline, ticket.CANCEL_DEADLINE)}"/>
+                android:text="@{String.format(@string/movie_cancel_deadline,ticket.formattedDate(purchasePolicy.NormalPolicy,`mm`))}"
+                />
 
         </LinearLayout>
 

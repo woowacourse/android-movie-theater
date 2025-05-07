@@ -1,9 +1,9 @@
 package woowacourse.movie.view.reservation.seat
 
 import android.os.Bundle
-import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.domain.movieseat.Seats
+import woowacourse.movie.view.reservation.Ticket
 
 interface ReservationSeatContract {
     interface Present {

@@ -11,9 +11,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
-import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Seats
 import woowacourse.movie.view.dialog.DialogFactory
+import woowacourse.movie.view.reservation.Ticket
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

@@ -2,9 +2,9 @@ package woowacourse.movie.view.reservation.detail
 
 import android.os.Bundle
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.Ticket
 import woowacourse.movie.view.home.movies.toMovieUi
 import woowacourse.movie.view.home.theater.Showing
+import woowacourse.movie.view.reservation.Ticket
 import java.time.LocalDateTime
 
 class ReservationPresent(
