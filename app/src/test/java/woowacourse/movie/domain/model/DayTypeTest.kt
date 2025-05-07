@@ -18,7 +18,7 @@ class DayTypeTest {
     }
 
     @Test
-    fun `날짜가 토요일 또는 일요일인 경우 WEEKLY를 반환한다`() {
+    fun `날짜가 토요일 또는 일요일인 경우 WEEKEND를 반환한다`() {
         // Given
         val date = LocalDate.of(2025, 4, 13)
 

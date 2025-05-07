@@ -30,7 +30,7 @@ fun TextView.setFormattedDateTime(dateTime: LocalDateTime) {
 }
 
 @BindingAdapter("formattedHeadCount")
-fun TextView.setFormattedDateTime(headCount: Int) {
+fun TextView.setFormattedHeadCount(headCount: Int) {
     text = formatHeadCount(context.getString(R.string.headCount_message), headCount)
 }
 

@@ -1,6 +1,5 @@
 package woowacourse.movie.ui.adapter
 
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat

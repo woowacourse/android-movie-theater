@@ -12,7 +12,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.movie.MovieTicket
-import woowacourse.movie.presentation.booking.BookingActivity
 import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
@@ -30,7 +29,7 @@ class BookingSummaryActivityTest {
             )
 
         val intent = BookingSummaryActivity.newIntent(ApplicationProvider.getApplicationContext(), ticket)
-        ActivityScenario.launch<BookingActivity>(intent)
+        ActivityScenario.launch<BookingSummaryActivity>(intent)
     }
 
     @Test
