@@ -65,11 +65,11 @@ class CinemaSelectionFragment : BottomSheetDialogFragment() {
         private const val SCREENING_KEY = "SCREENING_KEY"
 
         fun newInstance(screenings: List<Screening>): CinemaSelectionFragment {
-            val fragment = CinemaSelectionFragment()
-            val args = Bundle()
-            args.putParcelableArray(SCREENING_KEY, screenings.toTypedArray())
-            fragment.arguments = args
-            return fragment
+            return CinemaSelectionFragment().apply {
+                val args = Bundle()
+                args.putParcelableArray(SCREENING_KEY, screenings.toTypedArray())
+                arguments = args
+            }
         }
     }
 }
