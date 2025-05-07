@@ -200,8 +200,7 @@ class ReservationActivity :
         binding.tvReservationRunningTime.text =
             getString(
                 R.string.running_time,
-                screening.movie.runningTime.minute
-                    .toString(),
+                screening.movie.runningTime.minute,
             )
     }
 

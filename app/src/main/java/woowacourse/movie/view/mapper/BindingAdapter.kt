@@ -4,6 +4,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.RunningTime
+import woowacourse.movie.domain.model.Seat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -30,30 +31,18 @@ fun setRunningTime(
     view.text =
         view.context.getString(
             R.string.running_time,
-            runningTime.minute.toString(),
+            runningTime.minute,
         )
 }
 
-@BindingAdapter("android:cinemaName")
-fun setCinemaName(
+@BindingAdapter("android:seat")
+fun seatBindingAdapter(
     view: TextView,
-    cinemaName: String,
+    seat: List<Seat>,
 ) {
-    view.text =
+    val text =
         view.context.getString(
-            R.string.cinema,
-            cinemaName,
-        )
-}
-
-@BindingAdapter("android:screeningTimes")
-fun setScreeningItems(
-    view: TextView,
-    size: Int,
-) {
-    view.text =
-        view.context.getString(
-            R.string.screenig_times,
-            size,
+            R.string.seat_split_line,
+            seat.joinToString(", ") { "${'A' + it.row}${it.column + 1}" },
         )
 }

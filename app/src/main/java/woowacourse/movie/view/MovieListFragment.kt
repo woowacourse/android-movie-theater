@@ -46,11 +46,6 @@ class MovieListFragment :
         presenter.loadData()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun showMovies(movies: List<MovieListItem>) {
         val adapter =
             MovieListAdapter(
@@ -66,5 +61,10 @@ class MovieListFragment :
                 },
             )
         binding.rvMainMovies.adapter = adapter
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
