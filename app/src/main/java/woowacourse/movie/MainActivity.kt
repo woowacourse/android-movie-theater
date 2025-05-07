@@ -10,7 +10,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.view.home.HomeFragment
 import woowacourse.movie.view.reservationDetails.ReservationDetailsFragment
@@ -52,9 +51,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private inline fun <reified T : Fragment> replaceFragment() {
+        val tag: String = T::class.java.name
+        val fragment =
+            supportFragmentManager.findFragmentByTag(tag) as? T ?: T::class.java.newInstance()
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace<T>(binding.mainFragmentContainer.id)
+            supportFragmentManager.fragments.forEach { hide(it) }
+            if (fragment.isAdded) {
+                show(fragment)
+                return
+            }
+            add(binding.mainFragmentContainer.id, fragment, tag)
         }
     }
 
