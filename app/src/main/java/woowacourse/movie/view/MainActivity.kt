@@ -102,7 +102,6 @@ class MainActivity : AppCompatActivity() {
 
             if (supportFragmentManager.findFragmentByTag(target.tag) == null) {
                 add(R.id.main_fragment_container, target, tag)
-                println("add가 되었다.")
             } else {
                 show(target)
             }

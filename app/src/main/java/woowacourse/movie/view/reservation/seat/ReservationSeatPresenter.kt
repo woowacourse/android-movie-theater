@@ -14,13 +14,7 @@ class ReservationSeatPresenter(
 
     override fun fetchData(ticket: Ticket) {
         this.ticket = ticket
-        view.setSeatTag()
-        view.setSeatInit()
         view.showMovieName(ticket.title)
-        view.setSeatClickListener()
-        view.setReservationButton {
-            view.showReservationDialog(ticket, seats)
-        }
         updateMoney()
     }
 
@@ -58,11 +52,11 @@ class ReservationSeatPresenter(
     }
 
     private fun canSelectedButton() {
-        if (seats.canSelect(ticket.personnel)) {
-            view.selectableButton()
-        } else {
-            view.deSelectableButton()
-        }
+        view.setButton(seats.canSelect(ticket.personnel))
+    }
+
+    override fun handle() {
+        view.handleReservationComplete(ticket, seats)
     }
 
     companion object {

@@ -6,7 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TableLayout
+import android.view.View.OnClickListener
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -15,27 +15,27 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityReservationSeatBinding
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.domain.movieseat.Seats
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.dialog.DialogInfo
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
-import java.text.DecimalFormat
 
 class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.View {
     private val presenter: ReservationSeatContract.Present by lazy {
         ReservationSeatPresenter(this)
     }
-    private lateinit var seat: TableLayout
-    private val moviePriceTextView by lazy { findViewById<TextView>(R.id.reservation_movie_money) }
-    private val movieSelectableButton by lazy { findViewById<TextView>(R.id.btn_confirm) }
+    private var _binding: ActivityReservationSeatBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        _binding = ActivityReservationSeatBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_reservation_seat)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -46,11 +46,16 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
             } else {
                 intent.getSerializableExtra(KEY_TICKET) as? Ticket
             }
-        seat = findViewById<TableLayout>(R.id.tv_seat)
-
         checkTicket(ticket)
-
+        initialize()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun initialize() {
+        setSeatTag()
+        setSeatInit()
+        setSeatClickListener()
+        setReservationButton()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -79,14 +84,14 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
     }
 
     private fun getAllSeatTextViews(): Sequence<TextView> {
-        return seat
+        return binding.tvSeat
             .children
             .filterIsInstance<TableRow>()
             .flatMap { it.children }
             .filterIsInstance<TextView>()
     }
 
-    override fun setSeatTag() {
+    private fun setSeatTag() {
         getAllSeatTextViews().forEachIndexed { index, textView ->
             val row = index / 4
             val column = index % 4
@@ -94,7 +99,7 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
         }
     }
 
-    override fun setSeatInit() {
+    private fun setSeatInit() {
         getAllSeatTextViews().forEach { textView ->
             val position = textView.tag as Position
             textView.text = getSeatName(position)
@@ -102,7 +107,7 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
         }
     }
 
-    override fun setSeatClickListener() {
+    private fun setSeatClickListener() {
         getAllSeatTextViews().forEachIndexed { _, textView ->
             textView.setOnClickListener {
                 toggleSeatSelection(textView)
@@ -111,20 +116,15 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
     }
 
     override fun showMovieName(movieName: String) {
-        val movieTitleTextView = findViewById<TextView>(R.id.reservation_movie_title)
-        movieTitleTextView.text = movieName
+        binding.movieName = movieName
     }
 
-    override fun showTicketMoney(moviePrice: Int) {
-        val priceFormatter = DecimalFormat(PRICE_PATTERN)
-        moviePriceTextView.text = getString(R.string.movie_money, priceFormatter.format(moviePrice))
+    override fun showTicketMoney(seatsPrice: Int) {
+        binding.seatsPrice = seatsPrice
     }
 
-    override fun setReservationButton(onClickConfirm: () -> Unit) {
-        movieSelectableButton.setOnClickListener {
-            onClickConfirm()
-        }
-        movieSelectableButton.isEnabled = false
+    private fun setReservationButton() {
+        binding.onConfirm = OnClickListener { showReservationDialog() }
     }
 
     private fun toggleSeatSelection(textView: TextView) {
@@ -148,20 +148,11 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
         textView.isSelected = false
     }
 
-    override fun selectableButton() {
-        movieSelectableButton.setBackgroundColor(getColor(R.color.purple_500))
-        movieSelectableButton.isEnabled = true
+    override fun setButton(isSelectable: Boolean) {
+        binding.isSelectable = isSelectable
     }
 
-    override fun deSelectableButton() {
-        movieSelectableButton.setBackgroundColor(getColor(R.color.gray))
-        movieSelectableButton.isEnabled = false
-    }
-
-    override fun showReservationDialog(
-        ticket: Ticket,
-        seats: Seats,
-    ) {
+    private fun showReservationDialog() {
         DialogFactory().show(
             DialogInfo(
                 this,
@@ -171,12 +162,12 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
                 R.string.cancel,
             ),
         ) {
-            navigateToReservationComplete(ticket, seats)
+            presenter.handle()
             finish()
         }
     }
 
-    override fun navigateToReservationComplete(
+    override fun handleReservationComplete(
         ticket: Ticket,
         seats: Seats,
     ) {
@@ -213,9 +204,13 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     companion object {
         private const val KEY_TICKET = "ticket"
-        private const val PRICE_PATTERN = "#,###"
 
         fun newIntent(
             context: Context,

@@ -18,39 +18,26 @@ interface ReservationSeatContract {
         fun onSaveState(outState: Bundle)
 
         fun onRestoreState(outState: Bundle)
+
+        fun handle()
     }
 
     interface View {
         fun handleInvalidTicket()
 
-        fun setSeatTag()
-
-        fun setSeatInit()
-
         fun showMovieName(movieName: String)
 
-        fun showTicketMoney(moviePrice: Int)
-
-        fun setSeatClickListener()
+        fun showTicketMoney(seatsPrice: Int)
 
         fun selectSeatView(position: Position)
 
         fun deselectSeatView(position: Position)
 
-        fun navigateToReservationComplete(
+        fun handleReservationComplete(
             ticket: Ticket,
             seats: Seats,
         )
 
-        fun showReservationDialog(
-            ticket: Ticket,
-            seats: Seats,
-        )
-
-        fun selectableButton()
-
-        fun deSelectableButton()
-
-        fun setReservationButton(onClickConfirm: () -> Unit)
+        fun setButton(isSelectable: Boolean)
     }
 }
