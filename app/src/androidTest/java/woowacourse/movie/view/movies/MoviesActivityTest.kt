@@ -12,10 +12,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
+import woowacourse.movie.view.MainActivity
 
 class MoviesActivityTest {
     @get:Rule
-    val activityRule = ActivityScenarioRule(MoviesActivity::class.java)
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     private lateinit var movieItem: DataInteraction
 
