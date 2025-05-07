@@ -8,14 +8,11 @@ class MovieViewHolder(
     val binding: ItemMovieBinding,
     private val eventListener: OnMovieEventListener,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private lateinit var item: Movie
-
     init {
         binding.eventListener = eventListener
     }
 
     fun bind(movie: Movie) {
-        item = movie
         binding.movie = movie
         binding.executePendingBindings()
     }
