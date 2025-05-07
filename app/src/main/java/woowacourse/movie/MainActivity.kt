@@ -30,23 +30,24 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.mainBottomNavigationBar.setOnItemSelectedListener { item ->
-            when (item.itemId) {
+            return@setOnItemSelectedListener when (item.itemId) {
                 R.id.bottom_navigation_reservation_details -> {
                     replaceFragment<ReservationDetailsFragment>()
-                    return@setOnItemSelectedListener true
+                    true
                 }
 
                 R.id.bottom_navigation_home -> {
                     replaceFragment<HomeFragment>()
-                    return@setOnItemSelectedListener true
+                    true
                 }
 
                 R.id.bottom_navigation_setting -> {
                     replaceFragment<SettingFragment>()
-                    return@setOnItemSelectedListener true
+                    true
                 }
+
+                else -> false
             }
-            false
         }
     }
 
