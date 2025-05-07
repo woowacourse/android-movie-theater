@@ -14,10 +14,10 @@ import woowacourse.movie.view.setting.SettingFragment
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        init()
+        setMenuBarEventListener()
     }
 
-    private fun init() {
+    private fun setMenuBarEventListener() {
         binding.bottomNavView.setOnItemSelectedListener { item ->
             supportFragmentManager.commit {
                 replace(R.id.fragment_container_main, menuFragment(item))
