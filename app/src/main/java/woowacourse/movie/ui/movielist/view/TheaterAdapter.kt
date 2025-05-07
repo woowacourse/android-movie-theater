@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.TheaterItemBinding
 import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.ui.movielist.view.listener.TheaterClickListener
 
 class TheaterAdapter(
     private val movieId: Long,
-    private val onClickTheater: (Theater) -> Unit,
+    private val clickListener: TheaterClickListener,
 ) : ListAdapter<Theater, RecyclerView.ViewHolder>(
         object : DiffUtil.ItemCallback<Theater>() {
             override fun areItemsTheSame(
@@ -34,7 +35,7 @@ class TheaterAdapter(
     ): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val itemBinding = TheaterItemBinding.inflate(inflater, parent, false)
-        return TheaterViewHolder(movieId, itemBinding, onClickTheater)
+        return TheaterViewHolder(movieId, itemBinding, clickListener)
     }
 
     override fun onBindViewHolder(
