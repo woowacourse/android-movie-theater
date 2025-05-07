@@ -16,6 +16,15 @@ class ReservationCompletePresenter(
             return
         }
         reservationInfo = result
-        view.showReservationInfo(reservationInfo)
+        view.showReservationInfo(reservationInfo, getSeatLabels())
     }
+
+    private fun getSeatLabels(): List<String> =
+        reservationInfo.seats.value.map {
+            getRowSeatText(it.row.index) + getColSeatText(it.col.index)
+        }
+
+    private fun getColSeatText(index: Int) = (index + 1).toString()
+
+    private fun getRowSeatText(index: Int) = ('A'.code + index).toChar().toString()
 }

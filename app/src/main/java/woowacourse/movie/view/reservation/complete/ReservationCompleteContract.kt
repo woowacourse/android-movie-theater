@@ -9,7 +9,10 @@ interface ReservationCompleteContract {
             @StringRes messageResId: Int,
         )
 
-        fun showReservationInfo(reservationInfo: ReservationInfo)
+        fun showReservationInfo(
+            reservationInfo: ReservationInfo,
+            seatLabels: List<String>,
+        )
 
         fun finishView()
     }

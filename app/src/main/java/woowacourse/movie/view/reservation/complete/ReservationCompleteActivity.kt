@@ -43,7 +43,10 @@ class ReservationCompleteActivity :
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showReservationInfo(reservationInfo: ReservationInfo) {
+    override fun showReservationInfo(
+        reservationInfo: ReservationInfo,
+        seatLabels: List<String>,
+    ) {
         binding.tvReservationCompleteTitle.text = reservationInfo.title
         binding.tvReservationCompleteTimestamp.text =
             resources.getString(
@@ -55,8 +58,7 @@ class ReservationCompleteActivity :
             resources.getString(
                 R.string.reservation_complete_ticket_count,
                 reservationInfo.seats.size,
-                reservationInfo.seats
-                    .labels()
+                seatLabels
                     .sorted()
                     .joinToString(),
                 reservationInfo.theaterName,
