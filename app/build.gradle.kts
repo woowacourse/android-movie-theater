@@ -50,20 +50,22 @@ android {
 }
 
 dependencies {
+    val fragmentVersion = "1.8.6"
+    val mockVersion = "1.14.0"
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.google.material)
-    implementation("androidx.fragment:fragment-ktx:1.8.6")
+    implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
     testImplementation(libs.assertj.core)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.kotest.runner.junit5)
-    testImplementation("io.mockk:mockk:1.14.0")
-    debugImplementation("androidx.fragment:fragment-testing-manifest:1.8.6")
-    androidTestImplementation("io.mockk:mockk-android:1.14.0")
+    testImplementation("io.mockk:mockk:$mockVersion")
+    debugImplementation("androidx.fragment:fragment-testing-manifest:$fragmentVersion")
+    androidTestImplementation("io.mockk:mockk-android:$mockVersion")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.6.1")
-    androidTestImplementation("androidx.fragment:fragment-testing:1.8.6")
+    androidTestImplementation("androidx.fragment:fragment-testing:$fragmentVersion")
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.runner)
