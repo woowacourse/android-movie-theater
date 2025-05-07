@@ -18,6 +18,7 @@ import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.fixture.TestData
 import woowacourse.movie.matchers.isDisplayed
+import woowacourse.movie.matchers.matchText
 import woowacourse.movie.matchers.performClick
 import woowacourse.movie.matchers.withBackgroundColor
 import woowacourse.movie.view.reservation.seat.SeatSelectionActivity
@@ -111,7 +112,7 @@ class SeatSelectionActivityTest {
             .performClick()
 
         onView(withId(R.id.tv_seat_select_total_price))
-            .check(matches(withText("25,000원")))
+            .matchText("25,000원")
     }
 
     @Test

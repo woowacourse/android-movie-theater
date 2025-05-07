@@ -2,10 +2,8 @@ package woowacourse.movie.view.movies
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.assertj.core.api.Assertions.assertThat
@@ -17,6 +15,7 @@ import woowacourse.movie.R
 import woowacourse.movie.fixture.TestData
 import woowacourse.movie.matchers.RecyclerViewMatcher.Companion.withRecyclerView
 import woowacourse.movie.matchers.isDisplayed
+import woowacourse.movie.matchers.matchText
 import woowacourse.movie.matchers.performClick
 import woowacourse.movie.matchers.scrollToPosition
 import woowacourse.movie.view.MainActivity
@@ -39,13 +38,13 @@ class MoviesFragmentTest {
             .isDisplayed()
 
         onView(withRecyclerView(R.id.lv_movie).atPositionOnView(0, R.id.tv_title))
-            .check(matches(withText("해리 포터와 마법사의 돌")))
+            .matchText("해리 포터와 마법사의 돌")
         onView(withRecyclerView(R.id.lv_movie).atPositionOnView(0, R.id.tv_date))
-            .check(matches(withText("상영일: 2025.5.1 ~ 2025.5.30")))
+            .matchText("상영일: 2025.5.1 ~ 2025.5.30")
         onView(withRecyclerView(R.id.lv_movie).atPositionOnView(0, R.id.tv_running_time))
-            .check(matches(withText("러닝타임: 152분")))
+            .matchText("러닝타임: 152분")
         onView(withRecyclerView(R.id.lv_movie).atPositionOnView(0, R.id.btn_reservation))
-            .check(matches(withText("지금 예매")))
+            .matchText("지금 예매")
     }
 
     @Test
@@ -58,9 +57,9 @@ class MoviesFragmentTest {
         onView(withId(R.id.lv_cinema))
             .isDisplayed()
         onView(withRecyclerView(R.id.lv_cinema).atPositionOnView(0, R.id.tv_cinema))
-            .check(matches(withText("선릉 극장")))
+            .matchText("선릉 극장")
         onView(withRecyclerView(R.id.lv_cinema).atPositionOnView(0, R.id.tv_screening_time))
-            .check(matches(withText("2개의 상영 시간")))
+            .matchText("2개의 상영 시간")
     }
 
     @Test

@@ -3,9 +3,7 @@ package woowacourse.movie.view.reservation
 import android.content.pm.ActivityInfo
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.After
@@ -14,6 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
 import woowacourse.movie.fixture.TestData
+import woowacourse.movie.matchers.matchText
 import woowacourse.movie.matchers.performClick
 
 @RunWith(AndroidJUnit4::class)
@@ -38,25 +37,25 @@ class ReservationActivityTest {
     @Test
     fun `영화_제목을_보여준다`() {
         onView(withId(R.id.tv_reservation_title))
-            .check(matches(withText("해리 포터와 마법사의 돌")))
+            .matchText("해리 포터와 마법사의 돌")
     }
 
     @Test
     fun `영화_상영기간을_보여준다`() {
         onView(withId(R.id.tv_screening_period))
-            .check(matches(withText("상영일: 2025.5.1 ~ 2025.5.25")))
+            .matchText("상영일: 2025.5.1 ~ 2025.5.25")
     }
 
     @Test
     fun `영화_러닝타임을_보여준다`() {
         onView(withId(R.id.tv_reservation_running_time))
-            .check(matches(withText("러닝타임: 152분")))
+            .matchText("러닝타임: 152분")
     }
 
     @Test
     fun `예매_인원수의_초기값은_1이다`() {
         onView(withId(R.id.tv_reservation_count))
-            .check(matches(withText("1")))
+            .matchText("1")
     }
 
     @Test
@@ -72,7 +71,7 @@ class ReservationActivityTest {
 
         // then
         onView(withId(R.id.tv_reservation_count))
-            .check(matches(withText("2")))
+            .matchText("2")
     }
 
     @Test
@@ -84,6 +83,6 @@ class ReservationActivityTest {
             activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
         onView(withId(R.id.tv_reservation_count))
-            .check(matches(withText("2")))
+            .matchText("2")
     }
 }
