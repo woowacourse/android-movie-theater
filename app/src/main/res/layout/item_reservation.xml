@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="66dp"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/tv_reservation_date"
+        style="@style/ReservationInfoTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2024.3.2" />
+
+    <TextView
+        android:id="@+id/tv_divider1"
+        style="@style/DividerTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="4dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_reservation_date"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/divider" />
+
+    <TextView
+        android:id="@+id/tv_reservation_time"
+        style="@style/ReservationInfoTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/tv_divider1"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="17:00" />
+
+    <TextView
+        android:id="@+id/tv_divider2"
+        style="@style/DividerTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="4dp"
+        android:text="@string/divider"
+        app:layout_constraintStart_toEndOf="@+id/tv_reservation_time"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_theater"
+        style="@style/ReservationInfoTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/tv_divider2"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="선릉 극장" />
+
+    <TextView
+        android:id="@+id/tv_movie_title"
+        style="@style/ReservationMovieTitleTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_reservation_date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="해리 포터와 마법사의 돌" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,4 +25,6 @@
     <string name="title_home">홈</string>
     <string name="title_dashboard">예매 내역</string>
     <string name="title_settings">설정</string>
+    <!--  예매 내역 사용  -->
+    <string name="divider"> | </string>
 </resources>

@@ -11,6 +11,7 @@
     <color name="blue">#1B48E9</color>
     <color name="yellow">#FAFF00</color>
     <color name="gray_300">#EAEAEA</color>
+    <color name="gray_400">#D0D0D0</color>
     <color name="gray_500">#B7B7B7</color>
     <color name="gray_700">#494949</color>
     <color name="black">#FF000000</color>
