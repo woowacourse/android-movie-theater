@@ -3,11 +3,11 @@ package woowacourse.movie.domain.model.theater
 import java.io.Serializable
 
 class Theaters(
-    private val value: List<Theater>,
+    private val items: List<Theater>,
 ) : Serializable {
-    operator fun get(index: Int) = value[index]
+    operator fun get(index: Int) = items[index]
 
-    fun availableTheaters(movieId: Int) = Theaters(value.filter { it.screeningsCount(movieId) > 0 })
+    fun availableTheaters(movieId: Int) = Theaters(items.filter { theater -> theater.screeningCount(movieId) > 0 })
 
-    fun size() = value.size
+    fun size() = items.size
 }

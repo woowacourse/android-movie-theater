@@ -12,13 +12,10 @@ import java.time.LocalTime
 
 class BookingPresenter(
     private val view: BookingContract.View,
-    private val movies: MovieStore,
-    private var count: AdmissionCount,
     private val screeningInfo: ScreeningInfo,
 ) : BookingContract.Presenter {
-    init {
-        loadAdmissionCount()
-    }
+    private val movies = MovieStore()
+    private var count = AdmissionCount()
 
     override fun loadAdmissionCount() {
         view.showAdmissionCount(count.value)
@@ -39,7 +36,8 @@ class BookingPresenter(
         now: LocalDateTime,
     ) {
         val screeningDates = screeningDateTimes.map { dateTime -> dateTime.toLocalDate() }
-        val bookableDates: List<LocalDate> = ScreeningDates(screeningDates).bookableDates(now.toLocalDate())
+        val bookableDates: List<LocalDate> =
+            ScreeningDates(screeningDates).bookableDates(now.toLocalDate())
         view.showScreeningDates(bookableDates)
     }
 

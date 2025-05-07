@@ -22,7 +22,7 @@ class TheaterTest {
         val theater = Theater("잠실 극장", screening)
 
         // then
-        val excepted = theater.screeningsCount(1)
+        val excepted = theater.screeningCount(1)
         assertEquals(excepted, 3)
     }
 

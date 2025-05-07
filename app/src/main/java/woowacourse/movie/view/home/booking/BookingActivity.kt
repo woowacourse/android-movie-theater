@@ -14,9 +14,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieStore
 import woowacourse.movie.databinding.ActivityBookingBinding
-import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.booking.Booking
 import woowacourse.movie.domain.model.feed.Feed.Movie
 import woowacourse.movie.view.home.model.ScreeningInfo
@@ -30,8 +28,8 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventHandler {
-    private lateinit var presenter: BookingContract.Presenter
     private lateinit var binding: ActivityBookingBinding
+    private lateinit var presenter: BookingContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +44,8 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
                 return
             }
 
-        presenter = BookingPresenter(this, MovieStore(), AdmissionCount(), screeningInfo)
+        presenter = BookingPresenter(this, screeningInfo)
+        presenter.loadAdmissionCount()
         initView()
     }
 

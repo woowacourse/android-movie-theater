@@ -6,7 +6,7 @@ data class Theater(
     val name: String,
     val screenings: List<Screening>,
 ) {
-    fun screeningsCount(movieId: Int) =
+    fun screeningCount(movieId: Int) =
         screenings.count { screening ->
             screening.movieId == movieId
         }

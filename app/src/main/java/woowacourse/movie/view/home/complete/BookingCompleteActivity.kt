@@ -22,8 +22,8 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
-    private lateinit var presenter: BookingCompleteContract.Presenter
     private lateinit var binding: ActivityBookingCompleteBinding
+    private lateinit var presenter: BookingCompleteContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
