@@ -61,7 +61,7 @@ class MovieListFragment :
                             CinemaSelectionFragment.newInstance(
                                 movie.screening,
                             )
-                        instance.show(childFragmentManager, "CinemaSelectionFragment")
+                        instance.show(parentFragmentManager, "CinemaSelectionFragment")
                     }
                 },
             )
