@@ -16,10 +16,25 @@ import woowacourse.movie.view.setting.SettingFragment
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-    private val homeFragment: HomeFragment by lazy { HomeFragment() }
-    private val historyFragment: HistoryFragment by lazy { HistoryFragment() }
-    private val settingFragment: SettingFragment by lazy { SettingFragment() }
-    private lateinit var activeFragment: Fragment
+    private val homeFragment: Fragment by lazy {
+        findOrCreateFragment(
+            HomeFragment::class.java.simpleName,
+            HomeFragment(),
+        )
+    }
+    private val historyFragment: Fragment by lazy {
+        findOrCreateFragment(
+            HistoryFragment::class.java.simpleName,
+            HistoryFragment(),
+        )
+    }
+    private val settingFragment: Fragment by lazy {
+        findOrCreateFragment(
+            SettingFragment::class.java.simpleName,
+            SettingFragment(),
+        )
+    }
+    private var activeFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,32 +48,41 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        if (savedInstanceState == null) {
-            displayAddAndHideFragment(historyFragment)
-            displayAddAndHideFragment(settingFragment)
-            displayAddFragment(homeFragment)
-        }
-
         initBottomNavigation()
+
+        if (savedInstanceState == null) {
+            binding.bottomNavMenu.selectedItemId = R.id.menu_fragment_home
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_FRAGMENT_TAG, activeFragment?.tag)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState.let {
+            activeFragment =
+                supportFragmentManager.findFragmentByTag(it.getString(KEY_FRAGMENT_TAG))
+        }
     }
 
     private fun initBottomNavigation() {
-        binding.bottomNavMenu.selectedItemId = R.id.menu_fragment_home
-
         binding.bottomNavMenu.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_fragment_home -> {
-                    switchFragment(homeFragment)
+                    switchFragment(homeFragment, HomeFragment::class.java.simpleName)
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_fragment_history -> {
-                    switchFragment(historyFragment)
+                    switchFragment(historyFragment, HistoryFragment::class.java.simpleName)
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_fragment_settings -> {
-                    switchFragment(settingFragment)
+                    switchFragment(settingFragment, SettingFragment::class.java.simpleName)
                     return@setOnItemSelectedListener true
                 }
 
@@ -67,33 +91,38 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun displayAddAndHideFragment(fragment: Fragment) {
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            add(R.id.main_fragment_container, fragment).hide(fragment)
-        }
-    }
-
-    private fun displayAddFragment(fragment: Fragment) {
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            add(R.id.main_fragment_container, fragment)
-            activeFragment = fragment
-        }
-    }
-
-    private fun switchFragment(target: Fragment) {
+    private fun switchFragment(
+        target: Fragment,
+        tag: String,
+    ) {
         if (activeFragment == target) return
 
         supportFragmentManager.commit {
-            hide(activeFragment)
-            show(target)
+            activeFragment?.let { hide(it) }
+
+            if (supportFragmentManager.findFragmentByTag(target.tag) == null) {
+                add(R.id.main_fragment_container, target, tag)
+                println("add가 되었다.")
+            } else {
+                show(target)
+            }
         }
         activeFragment = target
+    }
+
+    private fun findOrCreateFragment(
+        tag: String,
+        fragment: Fragment,
+    ): Fragment {
+        return supportFragmentManager.findFragmentByTag(tag) ?: fragment
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        private const val KEY_FRAGMENT_TAG = "fragment"
     }
 }

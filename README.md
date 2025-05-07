@@ -27,7 +27,6 @@
 - [x] 선택 완료 버튼을 누르면 좌석 선택 화면으로 이동한다
 - [x] 화면이 회전되어도 입력한 정보는 유지되어야 한다
 
-
 ### 영화 예매 - 좌석
 - [x] 구매할 좌석을 선택할 수 있다
 - [x] 좌석을 선택하면 선택된 좌석은 색이 변경된다
@@ -48,7 +47,6 @@
 - [x] 티켓의 총 가격을 보여준다
 
 ### 피드백 반영
-
 - [x] HomeFragmentTest | 테스트 명 변경
 - [x] Movie | UiModel 만들기
 - [x] MovieItem | Movie 네이밍 변경
@@ -67,4 +65,4 @@
 - [x] MovieAdapter |  areItemsTheSame | 아이템을 비교하는 메서드 수정
 - [x] TheaterBottomSheetDialogFragment | 생성자 삭제
 - [ ] 데이터 바인딩
-- [ ] 
+- [x] MainActivity | 화면이 회전되어도 현재 Fragment가 유지되도록 수정
