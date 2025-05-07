@@ -10,9 +10,10 @@ import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.domain.model.MovieListItem
 import woowacourse.movie.domain.model.MovieListItem.AdItem
 import woowacourse.movie.domain.model.MovieListItem.MovieItem
+import woowacourse.movie.ui.movielist.view.listener.MovieClickListener
 
 class MovieAdapter(
-    private val onClickBooking: (Long) -> Unit,
+    private val movieClickListener: MovieClickListener,
 ) : ListAdapter<MovieListItem, RecyclerView.ViewHolder>(
         object : DiffUtil.ItemCallback<MovieListItem>() {
             override fun areItemsTheSame(
@@ -44,7 +45,7 @@ class MovieAdapter(
         val inflater = LayoutInflater.from(parent.context)
         if (viewType == VIEW_TYPE_MOVIE) {
             val movieItemBinding = MovieItemBinding.inflate(inflater, parent, false)
-            return MovieViewHolder(movieItemBinding, onClickBooking)
+            return MovieViewHolder(movieItemBinding, movieClickListener)
         }
         val advertisementBinding = AdvertisementItemBinding.inflate(inflater, parent, false)
         return AdvertisementViewHolder(advertisementBinding)

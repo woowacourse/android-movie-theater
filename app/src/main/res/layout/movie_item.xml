@@ -12,6 +12,10 @@
         <variable
             name="stringFormatter"
             type="woowacourse.movie.utils.StringFormatter" />
+
+        <variable
+            name="movieClickListener"
+            type="woowacourse.movie.ui.movielist.view.listener.MovieClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -99,6 +103,7 @@
             android:id="@+id/btn_booking"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:onClick="@{()->movieClickListener.onclick(movie.id)}"
             android:text="@string/text_booking"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

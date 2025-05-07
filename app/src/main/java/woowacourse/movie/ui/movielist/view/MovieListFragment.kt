@@ -54,10 +54,8 @@ class MovieListFragment :
     }
 
     private fun generateMovieAdapter(): MovieAdapter {
-        return MovieAdapter(
-            onClickBooking = { movieId ->
-                movieListPresenter.startBooking(movieId)
-            },
-        )
+        return MovieAdapter { movieId ->
+            movieListPresenter.startBooking(movieId)
+        }
     }
 }
