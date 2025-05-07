@@ -14,7 +14,7 @@
 
         <variable
             name="price"
-            type="String" />
+            type="Integer" />
     </data>
 
     <ScrollView
@@ -144,8 +144,8 @@
                 android:layout_marginTop="30dp"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                tools:text="@string/movieTotalPrice"
-                app:price="@{price}"/>
+                android:text="@{String.format(@string/movieTotalPrice, price)}"
+                tools:text="@string/movieTotalPrice" />
 
         </LinearLayout>
 

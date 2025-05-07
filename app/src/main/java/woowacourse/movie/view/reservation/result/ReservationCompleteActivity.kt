@@ -78,7 +78,7 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
     }
 
     override fun showTicketMoney(moviePrice: Int) {
-        binding.price = moviePrice.toString()
+        binding.price = moviePrice
     }
 
     companion object {
@@ -109,14 +109,4 @@ fun setDateTime(
     val formatter = DateTimeFormatter.ofPattern("yyyy.M.d. HH:mm")
     val dateTimeFormat = date.format(formatter)
     view.text = dateTimeFormat.toString()
-}
-
-@BindingAdapter("price")
-fun setPrice(
-    view: TextView,
-    price: String,
-) {
-    val formatter = java.text.DecimalFormat("#,###")
-    val priceFormat = formatter.format(price.toInt())
-    view.text = "${priceFormat}원 (현장 결제)"
 }
