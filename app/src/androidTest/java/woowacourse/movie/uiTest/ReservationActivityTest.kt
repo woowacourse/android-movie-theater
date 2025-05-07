@@ -14,19 +14,16 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestName
 import woowacourse.movie.R
-import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.ScheduleTime
 import woowacourse.movie.domain.Showings
-import woowacourse.movie.domain.movietime.Date
 import woowacourse.movie.uiTest.fixture.fakeContext
 import woowacourse.movie.view.reservation.detail.ReservationActivity
-import java.time.LocalDate
 import java.time.LocalTime
 
 class ReservationActivityTest {
     private lateinit var scenario: ActivityScenario<ReservationActivity>
     private lateinit var testName: String
-    private lateinit var movie: Movie
+    private var movieId: Int = 0
     private lateinit var showings: Showings
 
     @get:Rule
@@ -34,13 +31,7 @@ class ReservationActivityTest {
 
     @Before
     fun setUp() {
-        movie =
-            Movie(
-                MovieId.Harry1,
-                "해리 포터와 마법사의 돌",
-                Date(LocalDate.of(2025, 4, 1), LocalDate.of(2025, 4, 25)),
-                152,
-            )
+        movieId = 1
 
         showings =
             Showings(
@@ -52,20 +43,20 @@ class ReservationActivityTest {
             )
         testName = nameRule.methodName
         if (testName == "`null값이_Intent된_경우_ErrorDialog를_띄운다`") return
-        val intent = ReservationActivity.newIntent(fakeContext, movie.movieId, showings)
+        val intent = ReservationActivity.newIntent(fakeContext, movieId, showings)
         scenario = ActivityScenario.launch<ReservationActivity>(intent)
     }
 
     @Test
     fun `선택한_아이템의_영화_제목을_보여준다`() {
         onView(withId(R.id.tv_movie_title))
-            .check(matches(withText("해리 포터와 마법사의 돌")))
+            .check(matches(withText("해리포터")))
     }
 
     @Test
     fun `선택한_아이템의_영화_상영_기간을_보여준다`() {
         onView(withId(R.id.tv_movie_date))
-            .check(matches(withText("상영일: 2025.4.1 ~ 2025.4.25")))
+            .check(matches(withText("상영일: 2025.4.1 ~ 2025.5.30")))
     }
 
     @Test

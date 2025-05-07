@@ -68,7 +68,7 @@
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 tools:text="@string/movieDate"
-                android:text="@{movieUi.formattedDate(`yyyy.M.d`)}">
+                android:text="@{String.format(@string/movieDate,movieUi.formattedDate(`yyyy.M.d`))}">
 
             </TextView>
 

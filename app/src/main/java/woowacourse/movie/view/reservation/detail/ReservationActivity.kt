@@ -209,7 +209,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
         fun newIntent(
             context: Context,
-            movieId: Int,
+            movieId: Int?,
             showings: Showings?,
         ): Intent =
             Intent(context, ReservationActivity::class.java)
