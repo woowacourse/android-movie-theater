@@ -15,7 +15,6 @@ import org.junit.Test
 import org.junit.rules.TestName
 import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.MovieId
 import woowacourse.movie.domain.ScheduleTime
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.movietime.Date

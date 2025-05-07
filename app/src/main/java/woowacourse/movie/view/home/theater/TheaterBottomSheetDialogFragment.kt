@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
-import woowacourse.movie.domain.MovieId
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.home.movies.MovieUi
@@ -34,9 +33,9 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), TheaterCon
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movieId = arguments?.getSerializable(KEY_MOVIE_ID) as? MovieId?
+        val movieId = arguments?.getInt(KEY_MOVIE_ID, 0)
 
-        if (movieId == null) {
+        if (movieId == null || movieId == 0) {
             handleInvalidTicket()
         } else {
             val movie = getMovieById(movieId)
@@ -77,7 +76,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), TheaterCon
     companion object {
         private const val KEY_MOVIE_ID = "MOVIE_ID"
 
-        fun newInstance(movieId: MovieId): TheaterBottomSheetDialogFragment {
+        fun newInstance(movieId: Int): TheaterBottomSheetDialogFragment {
             return TheaterBottomSheetDialogFragment().apply {
                 arguments =
                     Bundle().apply {

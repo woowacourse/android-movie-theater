@@ -3,13 +3,12 @@ package woowacourse.movie.view.home.movies
 import androidx.annotation.DrawableRes
 import woowacourse.movie.R
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.MovieId
 import woowacourse.movie.domain.movietime.Date
 import java.io.Serializable
 import java.time.format.DateTimeFormatter
 
 data class MovieUi(
-    val movieId: MovieId,
+    val movieId: Int,
     @DrawableRes val image: Int,
     val title: String,
     val date: Date,
@@ -33,18 +32,19 @@ fun Movie.toMovieUi(): MovieUi {
     )
 }
 
-fun getMovieById(movieId: MovieId): Movie {
+fun getMovieById(movieId: Int): Movie {
     return Movie.dummy.find { it.movieId == movieId }
         ?: throw NoSuchElementException()
 }
 
-private fun getDrawableResId(imageId: MovieId): Int {
+private fun getDrawableResId(imageId: Int): Int {
     return when (imageId) {
-        MovieId.Harry1 -> R.drawable.harry
-        MovieId.Suzume -> R.drawable.poster_suzume
-        MovieId.CastAway -> R.drawable.poster_castaway
-        MovieId.StringStreet -> R.drawable.poster_singstreet
-        MovieId.Agustrush -> R.drawable.poster_agugustrush
-        MovieId.CriminalCity3 -> R.drawable.poster_criminalcity
+        1 -> R.drawable.harry
+        2 -> R.drawable.poster_suzume
+        3 -> R.drawable.poster_castaway
+        4 -> R.drawable.poster_singstreet
+        5 -> R.drawable.poster_agugustrush
+        6 -> R.drawable.poster_criminalcity
+        else -> throw IllegalArgumentException()
     }
 }

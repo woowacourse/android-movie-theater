@@ -16,7 +16,6 @@ import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.MovieId
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movietime.MovieSchedule
@@ -46,12 +45,8 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
             insets
         }
 
-        val movieId: MovieId? =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getSerializableExtra(KEY_MOVIE_ID, MovieId::class.java)
-            } else {
-                intent.getSerializableExtra(KEY_MOVIE_ID) as? MovieId
-            }
+        val movieId: Int = intent.getIntExtra(KEY_MOVIE_ID, 0)
+
         val showings: Showings? =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 intent.getSerializableExtra(KEY_SHOWINGS, Showings::class.java)
@@ -63,10 +58,10 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     }
 
     private fun checkTheater(
-        movieId: MovieId?,
+        movieId: Int,
         showings: Showings?,
     ) {
-        if (movieId == null || showings == null) {
+        if (movieId == 0 || showings == null) {
             showErrorInvalidMovie()
         } else {
             present.fetchData(getMovieById(movieId), showings)
@@ -214,7 +209,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
         fun newIntent(
             context: Context,
-            movieId: MovieId?,
+            movieId: Int,
             showings: Showings?,
         ): Intent =
             Intent(context, ReservationActivity::class.java)

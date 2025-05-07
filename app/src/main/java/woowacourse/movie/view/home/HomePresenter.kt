@@ -1,6 +1,5 @@
 package woowacourse.movie.view.home
 
-import woowacourse.movie.domain.AdvertisementId
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.view.home.movies.MovieItem
 import woowacourse.movie.view.home.movies.MovieUi
@@ -20,7 +19,7 @@ class HomePresenter(
         movieUis.forEachIndexed { index, movieUi ->
             items.add(MovieItem.ScreeningMovieUi(movieUi))
             if (index.isAdInsertionPosition()) {
-                items.add(MovieItem.Advertisement(AdvertisementId.Woowa))
+                items.add(MovieItem.Advertisement(0))
             }
         }
         return items
