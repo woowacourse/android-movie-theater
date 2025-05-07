@@ -10,6 +10,8 @@ import java.time.LocalDateTime
 data class TheaterUiModel(
     val name: String,
     val times: List<LocalDateTime>,
-) : Parcelable
+) : Parcelable {
+    fun checkEnabledTheater(minimumCount: Int) = times.size > minimumCount
+}
 
 fun TheaterUiModel.toModel(movieId: Int): Theater = Theater(name, listOf(MovieSchedule(movieId, times)))

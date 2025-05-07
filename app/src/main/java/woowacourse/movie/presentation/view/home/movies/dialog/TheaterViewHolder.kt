@@ -14,7 +14,7 @@ class TheaterViewHolder(
     init {
         binding.ibNavigate.setOnClickListener {
             theater?.let {
-                if (it.checkEnabledTheater()) onClickTheater(it)
+                if (it.checkEnabledTheater(MINIMUM_AVAILABLE_RESERVATION_TIME_COUNT)) onClickTheater(it)
             }
         }
     }
@@ -28,12 +28,10 @@ class TheaterViewHolder(
                 theater.times.count(),
             )
 
-        val isEnabledTheater = theater.checkEnabledTheater()
+        val isEnabledTheater = theater.checkEnabledTheater(MINIMUM_AVAILABLE_RESERVATION_TIME_COUNT)
         binding.ibNavigate.isEnabled = isEnabledTheater
         itemView.alpha = if (isEnabledTheater) ENABLED_ALPHA_VALUE else DISABLED_ALPHA_VALUE
     }
-
-    private fun TheaterUiModel.checkEnabledTheater() = this.times.count() > MINIMUM_AVAILABLE_RESERVATION_TIME_COUNT
 
     companion object {
         private const val MINIMUM_AVAILABLE_RESERVATION_TIME_COUNT = 0
