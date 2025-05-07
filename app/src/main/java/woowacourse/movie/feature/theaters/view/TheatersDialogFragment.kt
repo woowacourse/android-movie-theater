@@ -14,7 +14,7 @@ import woowacourse.movie.feature.theaters.view.adapter.TheaterAdapter
 import woowacourse.movie.util.getParcelableArrayListCompat
 
 class TheatersDialogFragment : BottomSheetDialogFragment() {
-    private val theaterAdapter: TheaterAdapter by lazy { TheaterAdapter(screenings, ::navigateToBookingDetail) }
+    private val theaterAdapter: TheaterAdapter by lazy { TheaterAdapter(screenings, setupClickListeners()) }
     private val screenings: List<ScreeningUiModel> by lazy { arguments?.getParcelableArrayListCompat(SCREENINGS_KEY) ?: emptyList() }
     private lateinit var binding: DialogFragmentTheatersBinding
 
@@ -34,6 +34,13 @@ class TheatersDialogFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.theaterAdapter = theaterAdapter
     }
+
+    private fun setupClickListeners(): TheaterAdapter.Handler =
+        object : TheaterAdapter.Handler {
+            override fun onBookingClick(screening: ScreeningUiModel) {
+                navigateToBookingDetail(screening)
+            }
+        }
 
     private fun navigateToBookingDetail(screening: ScreeningUiModel) {
         val intent = BookingDetailActivity.newIntent(requireContext(), screening)
