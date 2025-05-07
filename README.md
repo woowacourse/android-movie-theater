@@ -130,3 +130,7 @@
 - [x] refactor: 객체 전달 오류 메시지 추가
 
 - [x] refactor: 외부 리소스 사용 후 참조 해제하도록 변경
+
+- [x] refactor: main2 네이밍 변경
+- MainActivity -> HomeActivity로 변경
+- activity_main2 -> activity_home으로 변경

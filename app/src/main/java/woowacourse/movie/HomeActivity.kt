@@ -7,11 +7,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
-import woowacourse.movie.databinding.ActivityMain2Binding
+import woowacourse.movie.databinding.ActivityHomeBinding
 import woowacourse.movie.movie.MovieFragment
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMain2Binding
+class HomeActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initBinding() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main2)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
     }
 
     private fun setFrag(itemId: Int) {
