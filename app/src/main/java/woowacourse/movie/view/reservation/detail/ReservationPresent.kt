@@ -2,7 +2,7 @@ package woowacourse.movie.view.reservation.detail
 
 import android.os.Bundle
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.Showings
+import woowacourse.movie.domain.Showing
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.view.home.movies.toMovieUi
 import java.time.LocalDateTime
@@ -17,7 +17,7 @@ class ReservationPresent(
 
     override fun fetchData(
         movie: Movie,
-        showings: Showings,
+        showings: Showing,
     ) {
         this.movie = movie
         view.showMovieReservationScreen(this.movie.toMovieUi())

@@ -1,7 +1,7 @@
 package woowacourse.movie.view.home.theater
 
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.Showings
+import woowacourse.movie.domain.Showing
 import woowacourse.movie.view.home.movies.MovieUi
 
 interface TheaterContract {
@@ -13,7 +13,7 @@ interface TheaterContract {
         fun handleInvalidTicket()
 
         fun showTheaterList(
-            showings: List<Showings>,
+            showings: List<Showing>,
             movieUi: MovieUi,
         )
     }

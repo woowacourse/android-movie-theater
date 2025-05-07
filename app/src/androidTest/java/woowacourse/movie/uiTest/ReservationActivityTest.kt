@@ -15,7 +15,7 @@ import org.junit.Test
 import org.junit.rules.TestName
 import woowacourse.movie.R
 import woowacourse.movie.domain.ScheduleTime
-import woowacourse.movie.domain.Showings
+import woowacourse.movie.domain.Showing
 import woowacourse.movie.uiTest.fixture.fakeContext
 import woowacourse.movie.view.reservation.detail.ReservationActivity
 import java.time.LocalTime
@@ -24,7 +24,7 @@ class ReservationActivityTest {
     private lateinit var scenario: ActivityScenario<ReservationActivity>
     private lateinit var testName: String
     private var movieId: Int = 0
-    private lateinit var showings: Showings
+    private lateinit var showings: Showing
 
     @get:Rule
     val nameRule = TestName()
@@ -34,9 +34,9 @@ class ReservationActivityTest {
         movieId = 1
 
         showings =
-            Showings(
+            Showing(
                 theaterName = "선릉 극장",
-                showings =
+                scheduleTime =
                     ScheduleTime(
                         times = listOf(LocalTime.of(1, 1)),
                     ),

@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.Showings
+import woowacourse.movie.domain.Showing
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movietime.MovieSchedule
 import woowacourse.movie.view.dialog.DialogFactory
@@ -47,11 +47,11 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
         val movieId: Int = intent.getIntExtra(KEY_MOVIE_ID, 0)
 
-        val showings: Showings? =
+        val showings: Showing? =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getSerializableExtra(KEY_SHOWINGS, Showings::class.java)
+                intent.getSerializableExtra(KEY_SHOWINGS, Showing::class.java)
             } else {
-                intent.getSerializableExtra(KEY_SHOWINGS) as? Showings
+                intent.getSerializableExtra(KEY_SHOWINGS) as? Showing
             }
         checkTheater(movieId, showings)
         bindButtonListeners()
@@ -59,7 +59,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
 
     private fun checkTheater(
         movieId: Int,
-        showings: Showings?,
+        showings: Showing?,
     ) {
         if (movieId == 0 || showings == null) {
             showErrorInvalidMovie()
@@ -96,7 +96,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     override fun showSpinnerData(
         movie: Movie,
         selectedDatePosition: Int,
-        showings: Showings,
+        showings: Showing,
     ) {
         setDateSpinner(movie, LocalDate.now(), binding.spinnerTime, showings)
 
@@ -107,7 +107,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         binding.movieUi = movieUi
     }
 
-    override fun setReservationButton(showings: Showings) {
+    override fun setReservationButton(showings: Showing) {
         val reservationButton = binding.btnReservation
 
         reservationButton.setOnClickListener {
@@ -134,7 +134,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         movie: Movie,
         localDate: LocalDate,
         spinnerTime: Spinner,
-        showings: Showings,
+        showings: Showing,
     ) {
         val movieSchedule = MovieSchedule(movie.date)
         val currentDateSpinner = movieSchedule.selectableDates(localDate)
@@ -167,10 +167,10 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
     private fun setTimeSpinner(
         spinner: Spinner,
         localDate: LocalDate,
-        showings: Showings,
+        showings: Showing,
     ) {
         val currentTimeTable =
-            showings.showings.afterCurrentDateSchedule(
+            showings.scheduleTime.afterCurrentDateSchedule(
                 localDate.atStartOfDay(),
                 LocalDateTime.now(),
             )
@@ -210,7 +210,7 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         fun newIntent(
             context: Context,
             movieId: Int?,
-            showings: Showings?,
+            showings: Showing?,
         ): Intent =
             Intent(context, ReservationActivity::class.java)
                 .putExtra(

@@ -8,7 +8,7 @@ data class Theater(
     val schedule: List<Schedule>,
 ) : Serializable {
     companion object {
-        fun findTheatersShowingMovie(targetMovieTitle: String): List<Showings> {
+        fun findTheatersShowingMovie(targetMovieTitle: String): List<Showing> {
             return theatersDummy.map { theater ->
                 val totalShowings =
                     theater.schedule
@@ -19,7 +19,7 @@ data class Theater(
                         totalShowings?.scheduleTime?.times ?: emptyList(),
                     )
 
-                Showings(theater.name, todayFilter)
+                Showing(theater.name, todayFilter)
             }
         }
 

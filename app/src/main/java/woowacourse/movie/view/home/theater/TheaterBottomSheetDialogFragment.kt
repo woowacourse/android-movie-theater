@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
-import woowacourse.movie.domain.Showings
+import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
+import woowacourse.movie.domain.Showing
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.home.movies.MovieUi
-import woowacourse.movie.view.home.movies.adapter.TheaterAdapter
 import woowacourse.movie.view.home.movies.getMovieById
 import woowacourse.movie.view.reservation.detail.ReservationActivity
 
@@ -18,13 +18,16 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), TheaterCon
     private val presenter: TheaterContract.Presenter by lazy {
         TheaterPresenter(this)
     }
+    private var _binding: FragmentTheaterBottomSheetDialogBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        return inflater.inflate(R.layout.fragment_theater_bottom_sheet_dialog, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_theater_bottom_sheet_dialog, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(
@@ -50,27 +53,29 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), TheaterCon
     }
 
     override fun showTheaterList(
-        showings: List<Showings>,
+        showings: List<Showing>,
         movieUi: MovieUi,
     ) {
-        val recyclerView: RecyclerView? = view?.findViewById(R.id.rv_theater_category)
+        binding.showings = showings
 
-        val theaterAdapter: TheaterAdapter =
-            TheaterAdapter { showing ->
+        binding.onItemClick =
+            OnTheaterEventListener { showing ->
                 navigateToReservation(movieUi, showing)
                 dismiss()
             }
-
-        recyclerView?.adapter = theaterAdapter
-        theaterAdapter.submitList(showings)
     }
 
     private fun navigateToReservation(
         movieUi: MovieUi,
-        showings: Showings,
+        showings: Showing,
     ) {
         val intent = ReservationActivity.newIntent(requireContext(), movieUi.movieId, showings)
         startActivity(intent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
