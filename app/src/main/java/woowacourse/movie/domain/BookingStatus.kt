@@ -13,6 +13,7 @@ data class BookingStatus(
     val isBooked: Boolean = true,
     val seat: BookingSeats,
     val bookedTime: LocalDateTime,
+    val theater: Theater,
 ) : Parcelable {
     val memberCount: Int
         get() = seat.value
@@ -43,12 +44,14 @@ data class BookingStatus(
             count: Int,
             bookedDate: LocalDate,
             bookedTime: LocalTime,
+            theater: Theater
         ): BookingStatus {
             val bookedDateTime = LocalDateTime.of(bookedDate, bookedTime)
             return BookingStatus(
                 movie = movie,
                 seat = BookingSeats(count),
                 bookedTime = bookedDateTime,
+                theater = theater,
             )
         }
 
@@ -57,7 +60,8 @@ data class BookingStatus(
             count: Int,
             bookedDate: LocalDate,
             bookedTime: LocalTime,
-        ): BookingStatus = from(movie, count, bookedDate, bookedTime)
+            theater: Theater,
+        ): BookingStatus = from(movie, count, bookedDate, bookedTime, theater)
     }
 }
 

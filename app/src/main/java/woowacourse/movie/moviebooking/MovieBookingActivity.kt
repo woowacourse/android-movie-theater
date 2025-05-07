@@ -48,7 +48,7 @@ class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
             )
 
         presenter = MovieBookingPresenter(this@MovieBookingActivity)
-        presenter.loadMovie(movie)
+        presenter.loadMovie(movie, theater)
 
         setupDatePicker()
         setupTimePicker()

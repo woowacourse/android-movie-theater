@@ -4,6 +4,7 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.RunningTimes
+import woowacourse.movie.domain.Theater
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -11,13 +12,15 @@ class MovieBookingPresenter(
     private val view: MovieBooking.View,
 ) : MovieBooking.Presenter {
     private lateinit var movie: Movie
+    private lateinit var theater: Theater
     private var count: Int = 1
     private var bookedDate: LocalDate = LocalDate.now()
     private var bookedDates: List<LocalDate> = emptyList()
     private var bookedTime: LocalTime = LocalTime.now()
 
-    override fun loadMovie(movie: Movie) {
+    override fun loadMovie(movie: Movie, theater: Theater) {
         this.movie = movie
+        this.theater = theater
         bookedDates = movie.screeningPeriod.betweenDates()
         bookedDate = bookedDates.first()
         view.showMovieInfo()
@@ -50,7 +53,7 @@ class MovieBookingPresenter(
     }
 
     override fun confirmBooking() {
-        val bookingStatus = BookingStatus.Companion(movie, count, bookedDate, bookedTime)
+        val bookingStatus = BookingStatus.Companion(movie, count, bookedDate, bookedTime, theater)
         view.navigateToMovieBookingSeat(bookingStatus)
     }
 }

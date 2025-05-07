@@ -2,6 +2,7 @@ package woowacourse.movie.moviebooking
 
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.Theater
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -21,7 +22,7 @@ interface MovieBooking {
     }
 
     interface Presenter {
-        fun loadMovie(movie: Movie)
+        fun loadMovie(movie: Movie, theater: Theater)
 
         fun increaseCount()
 
