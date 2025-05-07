@@ -1,0 +1,14 @@
+package woowacourse.movie.domain.model.ticketing
+
+import woowacourse.movie.domain.model.cinema.Seat
+import java.time.LocalDateTime
+
+class Ticket(
+    val title: String,
+    val theaterName: String,
+    val reservationDateTime: LocalDateTime,
+    val seats: List<Seat>,
+    val price: Int,
+) {
+    val count = seats.count()
+}

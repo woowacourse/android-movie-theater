@@ -1,0 +1,34 @@
+package woowacourse.movie.presentation.common.model
+
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import woowacourse.movie.domain.model.movie.Poster
+
+@Parcelize
+sealed class PosterUiModel : Parcelable {
+    data class Resource(
+        val resId: Int,
+    ) : PosterUiModel()
+
+    data class Url(
+        val url: String,
+    ) : PosterUiModel()
+
+    fun toInt() =
+        when (val poster = this) {
+            is Resource -> poster.resId
+            is Url -> 0
+        }
+}
+
+fun Poster.toUiModel(): PosterUiModel =
+    when (this) {
+        is Poster.Resource -> PosterUiModel.Resource(this.resId)
+        is Poster.Url -> PosterUiModel.Url(this.url)
+    }
+
+fun PosterUiModel.toDomain(): Poster =
+    when (this) {
+        is PosterUiModel.Resource -> Poster.Resource(this.resId)
+        is PosterUiModel.Url -> Poster.Url(this.url)
+    }
