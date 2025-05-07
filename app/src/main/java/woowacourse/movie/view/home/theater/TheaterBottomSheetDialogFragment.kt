@@ -2,6 +2,7 @@ package woowacourse.movie.view.home.theater
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.BottomSheetFragmentTheaterBinding
@@ -70,10 +71,7 @@ class TheaterBottomSheetDialogFragment :
         @JvmStatic
         fun newInstance(theaterMovieSchedules: TheaterMovieSchedules): TheaterBottomSheetDialogFragment =
             TheaterBottomSheetDialogFragment().apply {
-                arguments =
-                    Bundle().apply {
-                        putSerializable(THEATER_KEY, theaterMovieSchedules)
-                    }
+                arguments = bundleOf(THEATER_KEY to theaterMovieSchedules)
             }
     }
 }
