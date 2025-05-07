@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import woowacourse.movie.R
@@ -59,6 +58,8 @@ class ReservationActivity :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val screening = intent?.getParcelableCompat<Screening>(BUNDLE_KEY_MOVIE)
+        binding.reservation = screening?.movie
+
         val count = savedInstanceState?.getInt(RESTORE_BUNDLE_KEY_RESERVATION_NUMBER)
         val reservationDateTime =
             savedInstanceState?.getString(RESTORE_BUNDLE_KEY_RESERVATION_DATETIME)
@@ -187,16 +188,16 @@ class ReservationActivity :
     private fun setMovieInfo(screening: Screening) {
         val formatter =
             DateTimeFormatter.ofPattern(getString(R.string.movie_screening_period_format))
-        findViewById<ImageView>(R.id.iv_reservation_poster).setImageResource(screening.movie.poster.toInt())
-        findViewById<TextView>(R.id.tv_reservation_title).text = screening.movie.title
-        findViewById<TextView>(R.id.tv_screening_period).text =
+        binding.ivReservationPoster.setImageResource(screening.movie.poster.toInt())
+        binding.tvReservationTitle.text = screening.movie.title
+        binding.tvScreeningPeriod.text =
             getString(
                 R.string.movie_date,
                 screening.movie.startDate.format(formatter),
                 screening.movie.endDate
                     .format(formatter),
             )
-        findViewById<TextView>(R.id.tv_reservation_running_time).text =
+        binding.tvReservationRunningTime.text =
             getString(
                 R.string.running_time,
                 screening.movie.runningTime.minute

@@ -5,8 +5,7 @@
     <data>
         <variable
             name="reservation"
-            type="woowacourse.movie.domain.model.ReservationInfo" />
-
+            type="woowacourse.movie.domain.model.Movie" />
     </data>
 
     <LinearLayout
@@ -35,6 +34,7 @@
 
         <TextView
             android:id="@+id/tv_reservation_title"
+            android:text="@{reservation.title}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
@@ -44,6 +44,7 @@
 
         <TextView
             android:id="@+id/tv_screening_period"
+            android:text="@{}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="29dp"
@@ -53,6 +54,7 @@
 
         <TextView
             android:id="@+id/tv_reservation_running_time"
+            android:text="@{reservation.runningTime.minute}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
