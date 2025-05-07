@@ -36,21 +36,20 @@ class TheaterBottomSheetFragment : BottomSheetDialogFragment(), TheaterContract.
 
         val movie = initMovie()
         val theaters = initTheaters()
-        presenter.initialize(movie, theaters)
+
+        if (movie == null || theaters == null) {
+            dismiss()
+        } else {
+            presenter.initialize(movie, theaters)
+        }
     }
 
-    private fun initTheaters(): ArrayList<TheaterUiModel> {
-        val theaters: ArrayList<TheaterUiModel>? = arguments?.getParcelableArrayList(KEY_THEATERS)
-        if (theaters == null) dismiss()
-
-        return theaters!!
+    private fun initTheaters(): ArrayList<TheaterUiModel>? {
+        return arguments?.getParcelableArrayList(KEY_THEATERS)
     }
 
-    private fun initMovie(): MovieUiModel {
-        val movie: MovieUiModel? = arguments?.getParcelable(KEY_MOVIE)
-        if (movie == null) dismiss()
-
-        return movie!!
+    private fun initMovie(): MovieUiModel? {
+        return arguments?.getParcelable(KEY_MOVIE)
     }
 
     override fun showTheaters(theaters: List<TheaterUiModel>) {

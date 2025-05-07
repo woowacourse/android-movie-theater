@@ -27,8 +27,12 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
         setUpUi()
 
-        val ticket = requireTicketOrFinish() ?: return
-        presenter.initializeData(ticket)
+        val ticket = requireTicketOrFinish()
+        if (ticket == null) {
+            showToastErrorAndFinish(getString(R.string.booking_toast_message))
+        } else {
+            presenter.initializeData(ticket)
+        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -42,18 +46,11 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     }
 
     private fun requireTicketOrFinish(): TicketUiModel? {
-        val ticket =
-            IntentCompat.getParcelableExtra(
-                intent,
-                KEY_BOOKING_RESULT,
-                TicketUiModel::class.java,
-            )
-
-        if (ticket == null) {
-            showToastErrorAndFinish(getString(R.string.booking_toast_message))
-            return null
-        }
-        return ticket
+        return IntentCompat.getParcelableExtra(
+            intent,
+            KEY_BOOKING_RESULT,
+            TicketUiModel::class.java,
+        )
     }
 
     override fun showBookingCompleteResult(ticket: TicketUiModel) {

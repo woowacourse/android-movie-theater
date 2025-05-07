@@ -32,8 +32,13 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
         setUi()
 
-        val ticket = requireTicketOrFinish() ?: return
-        presenter.initializeData(ticket)
+        val ticket = requireTicketOrFinish()
+
+        if (ticket == null) {
+            showToastErrorAndFinish(getString(R.string.booking_toast_message))
+        } else {
+            presenter.initializeData(ticket)
+        }
 
         savedInstanceState?.let { bundle ->
             val seats = bundle.getString(KEY_SEATS)
@@ -58,17 +63,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun requireTicketOrFinish(): TicketUiModel? {
-        val ticket =
-            IntentCompat.getParcelableExtra(
-                intent,
-                KEY_TICKET,
-                TicketUiModel::class.java,
-            )
-        if (ticket == null) {
-            showToastErrorAndFinish(getString(R.string.booking_toast_message))
-            return null
-        }
-        return ticket
+        return IntentCompat.getParcelableExtra(
+            intent,
+            KEY_TICKET,
+            TicketUiModel::class.java,
+        )
     }
 
     private fun setupSeatClickListeners() {
