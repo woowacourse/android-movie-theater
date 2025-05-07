@@ -1,6 +1,7 @@
 package woowacourse.movie.view
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
@@ -13,27 +14,25 @@ import woowacourse.movie.view.setting.SettingFragment
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        init()
+    }
 
-        lateinit var selectedFragment: Fragment
-
+    private fun init() {
         binding.bottomNavView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.reservation_list -> selectedFragment = reservationListFragment
-                R.id.home -> selectedFragment = moviesFragment
-                R.id.settings -> selectedFragment = settingFragment
-            }
-
             supportFragmentManager.commit {
-                replace(R.id.fragment_container_main, selectedFragment)
+                replace(R.id.fragment_container_main, menuFragment(item))
             }
             true
         }
         binding.bottomNavView.setSelectedItemId(R.id.home)
     }
 
-    companion object {
-        private val reservationListFragment = ReservationListFragment()
-        private val moviesFragment = MoviesFragment()
-        private val settingFragment = SettingFragment()
+    private fun menuFragment(item: MenuItem): Fragment {
+        return when (item.itemId) {
+            R.id.reservation_list -> ReservationListFragment()
+            R.id.home -> MoviesFragment()
+            R.id.settings -> SettingFragment()
+            else -> MoviesFragment()
+        }
     }
 }
