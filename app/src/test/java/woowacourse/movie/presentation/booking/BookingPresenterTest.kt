@@ -1,0 +1,103 @@
+package woowacourse.movie.presentation.booking
+
+import io.mockk.mockk
+import io.mockk.verify
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.model.ScreeningInfo
+import woowacourse.movie.domain.model.movie.Movie
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+
+class BookingPresenterTest {
+    private lateinit var view: BookingContract.View
+    private lateinit var presenter: BookingPresenter
+
+    private val testMovie =
+        Movie(
+            "test",
+            LocalDate.of(2025, 12, 30),
+            LocalDate.of(2025, 12, 31),
+            100,
+        )
+
+    private val testScreeningInfo =
+        ScreeningInfo(
+            "잠실 극장",
+            testMovie,
+            listOf(10, 12, 14, 17, 20, 22).map { LocalTime.of(it, 0) },
+        )
+
+    @BeforeEach
+    fun setUp() {
+        view = mockk(relaxed = true)
+        presenter = BookingPresenter(view)
+        presenter.initializeBooking(testScreeningInfo)
+    }
+
+    @Test
+    fun `영화의 정보와 예매 가능 날짜, 인원 수가 화면에 출력된다`() {
+        // Then
+        verify { view.initBooking() }
+        verify { view.showMovie(testMovie) }
+        verify { view.showBookableDates(any()) }
+        verify { view.updateHeadCount(1) }
+    }
+
+    @Test
+    fun `날짜를 선택하면 예약 가능한 시간들이 출력된다`() {
+        // Given
+        val date = LocalDate.of(2025, 4, 29)
+
+        // When
+        presenter.selectDate(date)
+
+        // Then
+        verify { view.showBookableTimes(any()) }
+    }
+
+    @Test
+    fun `증가 버튼을 누르면 예매 인원을 증가시키고 출력한다`() {
+        // When
+        presenter.increaseHeadCount()
+
+        // Then
+        verify { view.updateHeadCount(2) }
+    }
+
+    @Test
+    fun `현재 인원이 2 이상일 때 감소 버튼을 누르면 예매 인원을 감소시키고 출력한다`() {
+        // Given
+        presenter.increaseHeadCount()
+
+        // When
+        presenter.decreaseHeadCount()
+
+        // Then
+        verify { view.updateHeadCount(1) }
+    }
+
+    @Test
+    fun `선택 완료 버튼을 누르면 티켓을 생성하고 화면을 이동한다`() {
+        // Given
+        val date = LocalDate.of(2025, 12, 31)
+        val time = LocalTime.of(12, 0)
+        presenter.selectDate(date)
+        presenter.selectTime(time)
+
+        // When
+        presenter.confirmBooking()
+
+        // Then
+        verify {
+            view.navigateToSeats(
+                match {
+                    it.movieTitle == testMovie.title &&
+                            it.screeningDateTime == LocalDateTime.of(date, time) &&
+                            it.headCount == 1
+                },
+            )
+        }
+    }
+}

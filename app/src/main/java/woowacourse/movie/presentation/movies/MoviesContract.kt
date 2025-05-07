@@ -1,0 +1,17 @@
+package woowacourse.movie.presentation.movies
+
+import woowacourse.movie.domain.model.movie.Movie
+
+interface MoviesContract {
+    interface View {
+        fun showMovies(moviesItems: List<MoviesItem>)
+
+        fun showTheaterSelectDialog(movie: Movie)
+    }
+
+    interface Presenter {
+        fun initializeMovies()
+
+        fun selectMovie(movie: Movie)
+    }
+}
