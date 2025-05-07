@@ -64,7 +64,6 @@ class TheaterBottomSheetDialogFragment :
         }
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
