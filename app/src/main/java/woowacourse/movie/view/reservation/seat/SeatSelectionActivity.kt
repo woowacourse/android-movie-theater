@@ -101,7 +101,6 @@ class SeatSelectionActivity :
 
     override fun showTotalPrice(price: Int) {
         binding.price = price
-        binding.invalidateAll()
     }
 
     override fun enableConfirmButton(enabled: Boolean) {

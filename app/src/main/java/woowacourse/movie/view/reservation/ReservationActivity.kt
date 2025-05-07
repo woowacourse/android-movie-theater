@@ -84,7 +84,6 @@ class ReservationActivity :
 
     override fun updateReservationCount(count: Int) {
         binding.count = count
-        binding.invalidateAll()
     }
 
     override fun updateDateSet(
