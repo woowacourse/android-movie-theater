@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.booking.BookingActivity">
+
+    <data>
+
+        <import type="woowacourse.movie.common.util.StringFormatter" />
+
+        <variable
+            name="movie"
+            type="woowacourse.movie.domain.model.Movie" />
+
+        <variable
+            name="headCount"
+            type="java.lang.Integer" />
+
+        <variable
+            name="eventHandler"
+            type="woowacourse.movie.presentation.booking.BookingEventHandler" />
+    </data>
+
+    <ScrollView
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageview_poster"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:posterImage="@{movie}"
+                tools:src="@drawable/harry_potter_01" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearlayout_movie_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageview_poster">
+
+                <TextView
+                    android:id="@+id/textview_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:text="@{movie.title}"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:text="해리 포터와 마법사의 돌" />
+
+                <TextView
+                    android:id="@+id/textview_screeningdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.format(@string/date_text, StringFormatter.date(movie.startDate), StringFormatter.date(movie.endDate))}"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:text="상영일: 2025.4.1 ~ 2025.4.25" />
+
+                <TextView
+                    android:id="@+id/textview_runningtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.format(@string/runningTime_text, movie.runningTime)}"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:text="러닝타임: 152분" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearlayout_spinners"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                app:layout_constraintBottom_toTopOf="@id/linearlayout_buttons"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linearlayout_movie_info">
+
+                <Spinner
+                    android:id="@+id/spinner_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Space
+                    android:layout_width="24dp"
+                    android:layout_height="0dp" />
+
+                <Spinner
+                    android:id="@+id/spinner_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearlayout_buttons"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@id/button_select"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linearlayout_spinners">
+
+                <Button
+                    android:id="@+id/button_decrease"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> eventHandler.onDecreaseButtonClicked()}"
+                    android:text="@string/decrease_sign"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textview_headcount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:freezesText="true"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:text="@{String.valueOf(headCount)}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="1" />
+
+                <Button
+                    android:id="@+id/button_increase"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> eventHandler.onIncreaseButtonClicked()}"
+                    android:text="@string/increase_sign"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <Button
+                android:id="@+id/button_select"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:paddingVertical="12dp"
+                android:text="@string/select_text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:onClick="@{() -> eventHandler.onConfirmButtonClicked()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linearlayout_buttons" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

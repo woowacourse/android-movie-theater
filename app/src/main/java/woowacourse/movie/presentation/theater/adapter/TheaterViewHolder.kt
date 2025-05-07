@@ -1,0 +1,23 @@
+package woowacourse.movie.presentation.theater.adapter
+
+import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.common.adapter.ItemClickListener
+import woowacourse.movie.databinding.ItemTheaterBinding
+import woowacourse.movie.domain.model.Screening
+
+class TheaterViewHolder(
+    private val binding: ItemTheaterBinding,
+    private val onClickTheater: (Screening) -> Unit,
+) : RecyclerView.ViewHolder(binding.root) {
+    private lateinit var currentItem: Screening
+
+    init {
+        binding.handler = ItemClickListener<Screening> { onClickTheater(currentItem) }
+    }
+
+    fun bind(item: Screening) {
+        currentItem = item
+        binding.screening = item
+        binding.executePendingBindings()
+    }
+}
