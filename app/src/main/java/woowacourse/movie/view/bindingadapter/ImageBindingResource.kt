@@ -1,4 +1,4 @@
-package woowacourse.movie.view
+package woowacourse.movie.view.bindingadapter
 
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
