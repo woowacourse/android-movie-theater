@@ -1,0 +1,38 @@
+package woowacourse.movie.view
+
+import android.os.Bundle
+import android.view.MenuItem
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityMainBinding
+import woowacourse.movie.view.base.BaseActivity
+import woowacourse.movie.view.movies.MoviesFragment
+import woowacourse.movie.view.reservelist.ReservationListFragment
+import woowacourse.movie.view.setting.SettingFragment
+
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setMenuBarEventListener()
+    }
+
+    private fun setMenuBarEventListener() {
+        binding.bottomNavView.setOnItemSelectedListener { item ->
+            supportFragmentManager.commit {
+                replace(R.id.fragment_container_main, menuFragment(item))
+            }
+            true
+        }
+        binding.bottomNavView.setSelectedItemId(R.id.home)
+    }
+
+    private fun menuFragment(item: MenuItem): Fragment {
+        return when (item.itemId) {
+            R.id.reservation_list -> ReservationListFragment()
+            R.id.home -> MoviesFragment()
+            R.id.settings -> SettingFragment()
+            else -> MoviesFragment()
+        }
+    }
+}

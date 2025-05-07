@@ -1,0 +1,153 @@
+package woowacourse.movie.view.reservation.seat
+
+import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.view.MenuItem
+import android.view.View
+import android.widget.TableRow
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.view.children
+import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivitySeatSelectionBinding
+import woowacourse.movie.domain.model.ReservationInfo
+import woowacourse.movie.domain.model.Seat
+import woowacourse.movie.domain.model.Ticket
+import woowacourse.movie.view.base.BaseActivity
+import woowacourse.movie.view.extension.getParcelableCompat
+import woowacourse.movie.view.extension.getParcelableCompatList
+import woowacourse.movie.view.reservation.result.ReservationResultActivity
+
+class SeatSelectionActivity :
+    BaseActivity<ActivitySeatSelectionBinding>(R.layout.activity_seat_selection),
+    SeatSelectionContract.View {
+    private val presenter: SeatSelectionPresenter by lazy { SeatSelectionPresenter(this) }
+    private lateinit var currentTicket: Ticket
+    private lateinit var reservation: ReservationInfo
+
+    private val showReservationDialog by lazy {
+        AlertDialog
+            .Builder(this)
+            .setTitle(R.string.reservation_dialog_title)
+            .setMessage(R.string.reservation_dialog_message)
+            .setCancelable(false)
+            .setPositiveButton(R.string.reservation_dialog_positive) { _, _ ->
+                submitReservation()
+            }.setNegativeButton(R.string.reservation_dialog_negative) { dialog, _ -> dialog.dismiss() }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        reservation = intent.getParcelableCompatList<ReservationInfo>(BUNDLE_KEY_RESERVATION_INFO)
+        presenter.loadSeats(reservation)
+        binding.reservationInfo = reservation
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable(BUNDLE_KEY_RESERVATION_INFO, currentTicket)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val ticket = savedInstanceState.getParcelableCompat<Ticket>(BUNDLE_KEY_RESERVATION_INFO)
+        presenter.loadSeats(reservation, ticket)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressedDispatcher.onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun showSeats(
+        seats: List<Seat>,
+        selected: List<Seat>,
+    ) {
+        binding.tlSeat
+            .children
+            .filterIsInstance<TableRow>()
+            .forEachIndexed { rowIndex, row ->
+                row.children
+                    .filterIsInstance<TextView>()
+                    .forEachIndexed { colIndex, view ->
+                        val seat = findSeat(seats, rowIndex, colIndex)
+                        updateSeat(seat, selected, view)
+                    }
+            }
+    }
+
+    private fun findSeat(
+        seats: List<Seat>,
+        rowIndex: Int,
+        colIndex: Int,
+    ): Seat {
+        return seats.find { it.row == rowIndex && it.column == colIndex }
+            ?: throw IllegalStateException("찾을 수 없는 죄석")
+    }
+
+    private fun updateSeat(
+        seat: Seat,
+        selected: List<Seat>,
+        view: TextView,
+    ) {
+        if (selected.contains(seat)) {
+            view.background =
+                ContextCompat.getDrawable(this, R.color.yellow)
+        } else {
+            view.background =
+                ContextCompat.getDrawable(this, R.color.white)
+        }
+
+        if (!view.hasOnClickListeners()) {
+            view.setOnClickListener {
+                presenter.selectSeat(seat)
+            }
+        }
+    }
+
+    override fun updateTicketInfo(ticket: Ticket) {
+        binding.price = ticket.totalPrice()
+        binding.btnSeatSelectConfirm.isEnabled = ticket.isCompleted()
+        currentTicket = ticket
+    }
+
+    override fun showError(message: String?) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showReservationDialog() {
+        showReservationDialog.show()
+    }
+
+    override fun navigateToResult(ticket: Ticket) {
+        startActivity(ReservationResultActivity.newIntent(this, ticket))
+    }
+
+    private fun submitReservation() {
+        presenter.completeReservation()
+    }
+
+    fun showConfirmButton(view: View) {
+        presenter.showConfirmButton()
+    }
+
+    companion object {
+        private const val BUNDLE_KEY_RESERVATION_INFO = "reservation_info"
+
+        fun newIntent(
+            context: Context,
+            reservationInfo: ReservationInfo,
+        ): Intent =
+            Intent(context, SeatSelectionActivity::class.java).putExtra(
+                BUNDLE_KEY_RESERVATION_INFO,
+                reservationInfo,
+            )
+    }
+}
