@@ -3,8 +3,8 @@ package woowacourse.movie.view.home.movies.adapter
 import android.view.View.OnClickListener
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.TheaterItemBinding
-import woowacourse.movie.domain.Showing
 import woowacourse.movie.view.home.theater.OnTheaterEventListener
+import woowacourse.movie.view.home.theater.Showing
 
 class TheaterViewHolder(
     eventListener: OnTheaterEventListener,

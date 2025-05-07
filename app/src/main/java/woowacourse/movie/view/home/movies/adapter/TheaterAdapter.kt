@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.databinding.TheaterItemBinding
-import woowacourse.movie.domain.Showing
 import woowacourse.movie.view.home.theater.OnTheaterEventListener
+import woowacourse.movie.view.home.theater.Showing
 
 class TheaterAdapter(
     private val eventListener: OnTheaterEventListener,

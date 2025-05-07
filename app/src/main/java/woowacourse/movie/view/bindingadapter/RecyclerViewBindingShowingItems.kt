@@ -2,9 +2,9 @@ package woowacourse.movie.view.bindingadapter
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.domain.Showing
 import woowacourse.movie.view.home.movies.adapter.TheaterAdapter
 import woowacourse.movie.view.home.theater.OnTheaterEventListener
+import woowacourse.movie.view.home.theater.Showing
 
 @BindingAdapter(value = ["items", "itemClickListener"])
 fun setRecyclerViewItem(

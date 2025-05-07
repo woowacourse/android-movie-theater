@@ -1,5 +1,6 @@
-package woowacourse.movie.domain
+package woowacourse.movie.view.home.theater
 
+import woowacourse.movie.domain.ScheduleTime
 import java.io.Serializable
 import java.time.LocalTime
 

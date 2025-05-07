@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
-import woowacourse.movie.domain.Showing
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.home.movies.MovieUi
 import woowacourse.movie.view.home.movies.getMovieById

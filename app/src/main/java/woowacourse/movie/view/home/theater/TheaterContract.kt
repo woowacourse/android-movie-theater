@@ -1,7 +1,6 @@
 package woowacourse.movie.view.home.theater
 
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.Showing
 import woowacourse.movie.view.home.movies.MovieUi
 
 interface TheaterContract {
