@@ -7,11 +7,11 @@
 
         <variable
             name="formatter"
-            type="woowacourse.movie.view.ReservationUiFormatter" />
+            type="woowacourse.movie.presentation.ReservationUiFormatter" />
 
         <variable
             name="reservationInfo"
-            type="woowacourse.movie.view.model.ReservationInfoUiModel" />
+            type="woowacourse.movie.presentation.model.ReservationInfoUiModel" />
     </data>
 
     <ScrollView

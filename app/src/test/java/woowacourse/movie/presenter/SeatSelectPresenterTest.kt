@@ -10,8 +10,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.dummyReservationInfo
-import woowacourse.movie.view.reservation.seat.SeatSelectContract
-import woowacourse.movie.view.reservation.seat.SeatSelectPresenter
+import woowacourse.movie.presentation.view.reservation.seat.SeatSelectContract
+import woowacourse.movie.presentation.view.reservation.seat.SeatSelectPresenter
 
 class SeatSelectPresenterTest {
     private lateinit var presenter: SeatSelectContract.Presenter

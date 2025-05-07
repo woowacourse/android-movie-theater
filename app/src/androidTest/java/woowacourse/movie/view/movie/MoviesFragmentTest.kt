@@ -7,6 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import org.junit.jupiter.api.Test
 import woowacourse.movie.R
+import woowacourse.movie.presentation.view.movie.MoviesFragment
 
 class MoviesFragmentTest {
     @Test

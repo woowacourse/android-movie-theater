@@ -1,13 +1,13 @@
 package woowacourse.movie.domain.model
 
 import woowacourse.movie.R
-import woowacourse.movie.view.model.MovieDateUiModel
-import woowacourse.movie.view.model.MovieUiModel
-import woowacourse.movie.view.model.ReservationInfoUiModel
-import woowacourse.movie.view.model.SeatUiModel
-import woowacourse.movie.view.model.SeatsUiModel
-import woowacourse.movie.view.model.TheaterUiModel
-import woowacourse.movie.view.model.TheatersUiModel
+import woowacourse.movie.presentation.model.MovieDateUiModel
+import woowacourse.movie.presentation.model.MovieUiModel
+import woowacourse.movie.presentation.model.ReservationInfoUiModel
+import woowacourse.movie.presentation.model.SeatUiModel
+import woowacourse.movie.presentation.model.SeatsUiModel
+import woowacourse.movie.presentation.model.TheaterUiModel
+import woowacourse.movie.presentation.model.TheatersUiModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

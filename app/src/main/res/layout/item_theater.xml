@@ -7,11 +7,11 @@
 
         <variable
             name="theater"
-            type="woowacourse.movie.view.model.TheaterUiModel" />
+            type="woowacourse.movie.presentation.model.TheaterUiModel" />
 
         <variable
             name="theaterClickListener"
-            type="woowacourse.movie.view.theater.TheaterClickListener" />
+            type="woowacourse.movie.presentation.view.theater.TheaterClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -10,9 +10,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.dummyReservationInfo
-import woowacourse.movie.view.model.ReservationInfoUiModel
-import woowacourse.movie.view.reservation.complete.ReservationCompleteContract
-import woowacourse.movie.view.reservation.complete.ReservationCompletePresenter
+import woowacourse.movie.presentation.model.ReservationInfoUiModel
+import woowacourse.movie.presentation.view.reservation.complete.ReservationCompleteContract
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -24,7 +23,10 @@ class ReservationCompletePresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk()
-        presenter = ReservationCompletePresenter(view)
+        presenter =
+            _root_ide_package_.woowacourse.movie.presentation.view.reservation.complete.ReservationCompletePresenter(
+                view,
+            )
     }
 
     @Test

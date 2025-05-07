@@ -13,10 +13,11 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.view.Extras
-import woowacourse.movie.view.model.MovieDateUiModel
-import woowacourse.movie.view.model.MovieUiModel
-import woowacourse.movie.view.model.TheaterUiModel
+import woowacourse.movie.presentation.Extras
+import woowacourse.movie.presentation.model.MovieDateUiModel
+import woowacourse.movie.presentation.model.MovieUiModel
+import woowacourse.movie.presentation.model.TheaterUiModel
+import woowacourse.movie.presentation.view.reservation.detail.ReservationDetailActivity
 import java.time.LocalDate
 
 class ReservationDetailActivityTest {
