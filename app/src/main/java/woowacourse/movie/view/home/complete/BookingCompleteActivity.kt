@@ -37,7 +37,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
                 return
             }
         presenter = BookingCompletePresenter(this, ticket)
-
+        presenter.loadTicket()
         initView()
         setBackAction()
     }

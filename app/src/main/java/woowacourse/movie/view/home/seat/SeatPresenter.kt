@@ -12,10 +12,6 @@ class SeatPresenter(
     val seats: Seats,
     private val booking: Booking,
 ) : SeatContract.Presenter {
-    init {
-        loadBookingInfo()
-    }
-
     private val limit = booking.count.value
 
     override fun loadBookingInfo() {

@@ -13,9 +13,9 @@ import woowacourse.movie.view.home.movies.adapter.MovieAdapter
 import woowacourse.movie.view.home.theaters.TheaterListFragment
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContract.View, MovieListEventHandler {
-    private val presenter: MovieListContract.Presenter by lazy { MovieListPresenter(this) }
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
+    private lateinit var presenter: MovieListContract.Presenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +31,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        presenter = MovieListPresenter(this)
         presenter.loadMovies()
     }
 

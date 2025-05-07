@@ -38,6 +38,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
             }
 
         presenter = SeatPresenter(this, Seats(), booking)
+        presenter.loadBookingInfo()
         initView()
     }
 
