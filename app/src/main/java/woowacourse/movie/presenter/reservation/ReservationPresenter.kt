@@ -37,13 +37,8 @@ class ReservationPresenter(
     }
 
     override fun decreaseTicketCount() {
-        runCatching {
-            ticketCount -= 1
-        }.onSuccess {
-            view.showTicketCount(ticketCount.value)
-        }.onFailure { error ->
-            view.showErrorToastMessage(error.message.toString())
-        }
+        ticketCount -= 1
+        view.showTicketCount(ticketCount.value)
     }
 
     override fun requestMovieToReserve() {
