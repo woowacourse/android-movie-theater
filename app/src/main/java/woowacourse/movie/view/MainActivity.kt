@@ -8,14 +8,11 @@ import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.view.base.BaseActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
-    private val reservationHistoryFragment = ReservationHistoryFragment()
-    private val movieListFragment = MovieListFragment()
-    private val settingsFragment = SettingsFragment()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
+            navigateToFragment(MovieListFragment())
             binding.bottomNavigationView.selectedItemId = R.id.menu_home
         }
 
