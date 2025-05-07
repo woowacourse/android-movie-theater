@@ -35,7 +35,7 @@ class ReservationPresenterTest {
         every { view.showMovieInfo(any()) } just Runs
         every { view.showTicketCount(any()) } just Runs
         every { view.setupDateAdapter(any()) } just Runs
-        every { view.updateTimes(any()) } just Runs
+        every { view.setupTimeAdapter(any()) } just Runs
 
         // when:
         presenter.updateMovieData(THEATER_MOVIE_SCHEDULE_CGV)
@@ -44,7 +44,7 @@ class ReservationPresenterTest {
         verify { view.showMovieInfo(any()) }
         verify { view.showTicketCount(any()) }
         verify { view.setupDateAdapter(any()) }
-        verify { view.updateTimes(any()) }
+        verify { view.setupTimeAdapter(any()) }
     }
 
     @Test
@@ -92,7 +92,7 @@ class ReservationPresenterTest {
         every { view.showMovieInfo(any()) } just Runs
         every { view.showTicketCount(any()) } just Runs
         every { view.setupDateAdapter(any()) } just Runs
-        every { view.updateTimes(any()) } just Runs
+        every { view.setupTimeAdapter(any()) } just Runs
         every { view.showSeatSelectionView(any()) } just Runs
 
         presenter.updateMovieData(THEATER_MOVIE_SCHEDULE_CGV)

@@ -29,7 +29,6 @@ class ReservationActivity :
     AppCompatActivity(),
     ReservationContract.View {
     private val presenter: ReservationContract.Presenter = ReservationPresenter(this)
-    private lateinit var timeSpinnerAdapter: TimeSpinnerAdapter
     private lateinit var binding: ActivityReservationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +42,6 @@ class ReservationActivity :
         }
 
         setupClickListener()
-        setupTimeAdapter()
         updateMovieToPresenter()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -98,10 +96,15 @@ class ReservationActivity :
         }
     }
 
-    private fun setupTimeAdapter() {
-        timeSpinnerAdapter = TimeSpinnerAdapter(this, mutableListOf())
+    override fun setupTimeAdapter(times: List<LocalTime>) {
+        val timeAdapter =
+            ArrayAdapter(
+                this,
+                com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
+                times,
+            )
         binding.spinnerReservationTime.apply {
-            adapter = timeSpinnerAdapter
+            adapter = timeAdapter
             onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
@@ -110,7 +113,7 @@ class ReservationActivity :
                         position: Int,
                         id: Long,
                     ) {
-                        val selectedTime: LocalTime = timeSpinnerAdapter.getItem(position) ?: return
+                        val selectedTime: LocalTime = timeAdapter.getItem(position) ?: return
                         presenter.updateMovieTime(selectedTime)
                     }
 
@@ -171,10 +174,6 @@ class ReservationActivity :
 
     override fun showSeatSelectionView(movieToReserve: MovieToReserve) {
         startActivity(SeatSelectionActivity.getIntent(this, movieToReserve))
-    }
-
-    override fun updateTimes(times: List<LocalTime>) {
-        timeSpinnerAdapter.updateTimeItems(times)
     }
 
     override fun showSelectedDate(position: Int) {

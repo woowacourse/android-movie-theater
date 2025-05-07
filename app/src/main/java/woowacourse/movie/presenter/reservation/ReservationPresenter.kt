@@ -35,7 +35,7 @@ class ReservationPresenter(
         view.showMovieInfo(movie)
         view.showTicketCount(ticketCount.value)
         view.setupDateAdapter(movieDate.getDateTable(LocalDate.now()))
-        view.updateTimes(movieTimes.screeningTimes.map { it.value })
+        view.setupTimeAdapter(movieTimes.screeningTimes.map { it.value })
     }
 
     override fun increaseTicketCount() {

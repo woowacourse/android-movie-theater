@@ -10,6 +10,8 @@ interface ReservationContract {
     interface View {
         fun setupDateAdapter(dates: List<LocalDate>)
 
+        fun setupTimeAdapter(times: List<LocalTime>)
+
         fun showTicketCount(count: Int)
 
         fun showMovieInfo(movie: Movie)
@@ -17,8 +19,6 @@ interface ReservationContract {
         fun showErrorToastMessage(message: String)
 
         fun showSeatSelectionView(movieToReserve: MovieToReserve)
-
-        fun updateTimes(times: List<LocalTime>)
 
         fun showSelectedDate(position: Int)
 
