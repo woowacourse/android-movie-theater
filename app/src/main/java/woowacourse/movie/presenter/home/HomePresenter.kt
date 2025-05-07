@@ -6,21 +6,19 @@ import woowacourse.movie.model.theater.TheaterMovieSchedules
 class HomePresenter(
     private val view: HomeContracts.View,
 ) : HomeContracts.Presenter {
-    private lateinit var theaterMovieSchedules: TheaterMovieSchedules
-
     override fun initView() {
         view.showMovies(Movie.values)
     }
 
     override fun onTheaterRequested(movieId: Long) {
-        theaterMovieSchedules = TheaterMovieSchedules()
-        val theaterMovieSchedules =
+        val theaterMovieSchedules = TheaterMovieSchedules()
+        val selectedMovieSchedules =
             TheaterMovieSchedules(
                 theaterMovieSchedules.findTheaterMovieSchedulesById(
                     movieId,
                 ),
             )
-        view.showTheaters(theaterMovieSchedules)
+        view.showTheaters(selectedMovieSchedules)
     }
 
     override fun requestAdvertisement(url: String) {
