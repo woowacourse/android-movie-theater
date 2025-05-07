@@ -1,8 +1,7 @@
-package woowacourse.movie.ui.presenter.reservation
+package woowacourse.movie.ui.view.reservation
 
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
-import woowacourse.movie.ui.contract.reservation.ReservationContract
 import java.time.LocalDateTime
 import java.time.LocalTime
 

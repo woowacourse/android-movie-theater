@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.presenter.cinema
+package woowacourse.movie.ui.view.screening
 
 import woowacourse.movie.data.reservation.AdvertisementData
 import woowacourse.movie.data.reservation.LocalAdvertisementData
@@ -7,7 +7,6 @@ import woowacourse.movie.data.reservation.ScreeningData
 import woowacourse.movie.domain.reservation.DefaultScreeningContentsPolicy
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ScreeningContentsPolicy
-import woowacourse.movie.ui.contract.cinema.ScreeningContract
 
 class ScreeningPresenter(
     private val view: ScreeningContract.View,

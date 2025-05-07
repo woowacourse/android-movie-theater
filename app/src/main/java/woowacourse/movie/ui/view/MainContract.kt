@@ -1,6 +1,4 @@
-package woowacourse.movie.ui.contract
-
-import woowacourse.movie.ui.view.MainScreen
+package woowacourse.movie.ui.view
 
 interface MainContract {
     interface Presenter {

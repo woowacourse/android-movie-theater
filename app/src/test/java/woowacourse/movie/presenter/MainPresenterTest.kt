@@ -7,8 +7,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.ui.contract.MainContract
-import woowacourse.movie.ui.presenter.MainPresenter
+import woowacourse.movie.ui.view.MainContract
+import woowacourse.movie.ui.view.MainPresenter
 import woowacourse.movie.ui.view.MainScreen
 
 class MainPresenterTest {

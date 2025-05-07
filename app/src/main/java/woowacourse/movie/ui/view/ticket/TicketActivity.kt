@@ -13,8 +13,6 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
-import woowacourse.movie.ui.contract.ticket.TicketContract
-import woowacourse.movie.ui.presenter.ticket.TicketPresenter
 import java.io.Serializable
 import java.time.LocalDateTime
 

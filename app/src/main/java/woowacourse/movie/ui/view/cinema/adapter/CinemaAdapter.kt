@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.databinding.ItemCinemaBinding
 import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.ShowtimePolicy
+import woowacourse.movie.ui.view.screening.adapter.BaseViewHolder
 
 class CinemaAdapter(
     private val onClickItem: (cinemaName: String, showtimePolicy: ShowtimePolicy) -> Unit,

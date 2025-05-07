@@ -10,10 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.ui.contract.MainContract
-import woowacourse.movie.ui.presenter.MainPresenter
-import woowacourse.movie.ui.view.cinema.HomeFragment
-import woowacourse.movie.ui.view.reservation.ReservationHistoryFragment
+import woowacourse.movie.ui.view.history.ReservationHistoryFragment
+import woowacourse.movie.ui.view.screening.ScreeningFragment
 import woowacourse.movie.ui.view.setting.SettingFragment
 import woowacourse.movie.ui.view.util.ErrorMessage
 
@@ -21,7 +19,7 @@ class MainActivity :
     AppCompatActivity(),
     MainContract.View {
     private val presenter: MainContract.Presenter = MainPresenter(this)
-    private val homeFragment by lazy { HomeFragment() }
+    private val screeningFragment by lazy { ScreeningFragment() }
     private val reservationHistoryFragment by lazy { ReservationHistoryFragment() }
     private val settingFragment by lazy { SettingFragment() }
     private lateinit var binding: ActivityMainBinding
@@ -70,7 +68,7 @@ class MainActivity :
         val fragment =
             when (mainScreen) {
                 MainScreen.RESERVATION_HISTORY -> reservationHistoryFragment
-                MainScreen.HOME -> homeFragment
+                MainScreen.HOME -> screeningFragment
                 MainScreen.SETTING -> settingFragment
             }
         replaceWith(fragment)

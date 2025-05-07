@@ -10,8 +10,6 @@ import woowacourse.movie.databinding.FragmentCinemaSelectionBottomSheetDialogBin
 import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
-import woowacourse.movie.ui.contract.cinema.CinemaSelectionContract
-import woowacourse.movie.ui.presenter.cinema.CinemaSelectionPresenter
 import woowacourse.movie.ui.view.cinema.adapter.CinemaAdapter
 import woowacourse.movie.ui.view.reservation.ReservationActivity
 import woowacourse.movie.ui.view.util.ErrorMessage

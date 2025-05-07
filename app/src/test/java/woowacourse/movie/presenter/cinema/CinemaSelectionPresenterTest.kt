@@ -12,8 +12,8 @@ import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.Movie
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
-import woowacourse.movie.ui.contract.cinema.CinemaSelectionContract
-import woowacourse.movie.ui.presenter.cinema.CinemaSelectionPresenter
+import woowacourse.movie.ui.view.cinema.CinemaSelectionContract
+import woowacourse.movie.ui.view.cinema.CinemaSelectionPresenter
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -45,8 +45,8 @@ class CinemaSelectionPresenterTest {
                 LocalDate.of(2025, 4, 1),
                 LocalDate.of(2025, 4, 25),
             )
-        jamsilCinema = Cinema("잠실 극장", listOf(fakeScreening), jamsilShowtimePolicy)
-        gangnamCinema = Cinema("강남 극장", listOf(fakeScreening), gangnamShowtimePolicy)
+        jamsilCinema = Cinema("잠실 극장", jamsilShowtimePolicy)
+        gangnamCinema = Cinema("강남 극장", gangnamShowtimePolicy)
         view = mockk()
         presenter =
             CinemaSelectionPresenter(

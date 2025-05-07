@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.view.cinema
+package woowacourse.movie.ui.view.screening
 
 import android.os.Build
 import android.os.Bundle
@@ -9,12 +9,11 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ScreeningContent
-import woowacourse.movie.ui.contract.cinema.ScreeningContract
-import woowacourse.movie.ui.presenter.cinema.ScreeningPresenter
-import woowacourse.movie.ui.view.cinema.adapter.ScreeningAdapter
+import woowacourse.movie.ui.view.cinema.CinemaSelectionBottomSheetDialogFragment
+import woowacourse.movie.ui.view.screening.adapter.ScreeningAdapter
 import woowacourse.movie.ui.view.util.ErrorMessage
 
-class HomeFragment :
+class ScreeningFragment :
     Fragment(),
     ScreeningContract.View {
     private var _binding: FragmentHomeBinding? = null
@@ -27,18 +26,12 @@ class HomeFragment :
     private val presenter: ScreeningContract.Presenter = ScreeningPresenter(this)
     private lateinit var screeningAdapter: ScreeningAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        screeningAdapter = ScreeningAdapter(presenter::selectScreening)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        binding.screeningAdapter = screeningAdapter
         return binding.root
     }
 
@@ -47,12 +40,18 @@ class HomeFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        initScreeningAdapter()
         presenter.presentScreeningContents()
     }
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun initScreeningAdapter() {
+        screeningAdapter = ScreeningAdapter(presenter::selectScreening)
+        binding.screeningAdapter = screeningAdapter
     }
 
     override fun setScreeningContents(screeningContents: List<ScreeningContent>) {

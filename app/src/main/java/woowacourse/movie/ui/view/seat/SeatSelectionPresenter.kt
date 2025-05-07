@@ -1,8 +1,7 @@
-package woowacourse.movie.ui.presenter.reservation
+package woowacourse.movie.ui.view.seat
 
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
-import woowacourse.movie.ui.contract.reservation.SeatSelectionContract
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,

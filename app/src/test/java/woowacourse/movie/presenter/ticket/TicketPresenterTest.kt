@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.FakeCancelTimePolicy
 import woowacourse.movie.domain.ticket.Ticket
-import woowacourse.movie.ui.contract.ticket.TicketContract
-import woowacourse.movie.ui.presenter.ticket.TicketPresenter
+import woowacourse.movie.ui.view.ticket.TicketContract
+import woowacourse.movie.ui.view.ticket.TicketPresenter
 import java.time.LocalDateTime
 
 class TicketPresenterTest {

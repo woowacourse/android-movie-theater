@@ -19,9 +19,8 @@ import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
-import woowacourse.movie.ui.contract.reservation.ReservationContract
-import woowacourse.movie.ui.presenter.reservation.ReservationPresenter
 import woowacourse.movie.ui.view.reservation.Poster.posterId
+import woowacourse.movie.ui.view.seat.SeatSelectionActivity
 import woowacourse.movie.ui.view.util.ErrorMessage
 import java.time.LocalDate
 import java.time.LocalDateTime

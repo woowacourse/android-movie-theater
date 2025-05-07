@@ -1,17 +1,13 @@
 package woowacourse.movie.domain.cinema
 
-import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
 import java.time.LocalDateTime
 import java.time.LocalTime
 
 class Cinema(
     val name: String,
-    private val _screenings: List<Screening>,
     val showtimePolicy: ShowtimePolicy,
 ) {
-    val screenings get() = _screenings.map { it.copy() }
-
     fun showtimeCount(current: LocalDateTime) = showtimes(current).size
 
     fun showtimes(current: LocalDateTime): List<LocalTime> {
@@ -25,13 +21,11 @@ class Cinema(
         other as Cinema
 
         return name == other.name &&
-            screenings == other.screenings &&
             showtimePolicy == other.showtimePolicy
     }
 
     override fun hashCode(): Int {
         var result = name.hashCode()
-        result = 31 * result + screenings.hashCode()
         result = 31 * result + showtimePolicy.hashCode()
         return result
     }

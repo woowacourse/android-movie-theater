@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.view.reservation
+package woowacourse.movie.ui.view.seat
 
 import android.content.Context
 import android.content.DialogInterface
@@ -24,8 +24,7 @@ import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.reservation.SeatGrade
 import woowacourse.movie.domain.ticket.Ticket
-import woowacourse.movie.ui.contract.reservation.SeatSelectionContract
-import woowacourse.movie.ui.presenter.reservation.SeatSelectionPresenter
+import woowacourse.movie.ui.view.reservation.ShowReservationConfirmDialog
 import woowacourse.movie.ui.view.ticket.TicketActivity
 import woowacourse.movie.ui.view.util.ErrorMessage
 import java.io.Serializable

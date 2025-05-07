@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.view.reservation
+package woowacourse.movie.ui.view.history
 
 import android.os.Bundle
 import android.view.LayoutInflater

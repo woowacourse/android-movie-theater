@@ -1,10 +1,9 @@
-package woowacourse.movie.ui.presenter.ticket
+package woowacourse.movie.ui.view.ticket
 
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.CancelTimePolicy
 import woowacourse.movie.domain.ticket.DefaultCancelTimePolicy
 import woowacourse.movie.domain.ticket.Ticket
-import woowacourse.movie.ui.contract.ticket.TicketContract
 
 class TicketPresenter(
     private val view: TicketContract.View,

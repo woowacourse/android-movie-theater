@@ -1,11 +1,10 @@
-package woowacourse.movie.ui.presenter.cinema
+package woowacourse.movie.ui.view.cinema
 
 import woowacourse.movie.data.cinema.CinemaData
 import woowacourse.movie.data.cinema.LocalCinemaData
 import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
-import woowacourse.movie.ui.contract.cinema.CinemaSelectionContract
 import java.time.LocalDateTime
 
 class CinemaSelectionPresenter(

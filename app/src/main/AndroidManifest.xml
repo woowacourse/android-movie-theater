@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.view.reservation.SeatSelectionActivity"
+            android:name=".ui.view.seat.SeatSelectionActivity"
             android:exported="false" />
         <activity
             android:name=".ui.view.reservation.ReservationActivity"

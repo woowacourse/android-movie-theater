@@ -17,11 +17,11 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.reservation.Advertisement
 import woowacourse.movie.domain.reservation.Movie
 import woowacourse.movie.domain.reservation.Screening
-import woowacourse.movie.ui.view.cinema.HomeFragment
+import woowacourse.movie.ui.view.screening.ScreeningFragment
 import java.time.LocalDate
 
 @RunWith(AndroidJUnit4::class)
-class HomeFragmentTest {
+class ScreeningFragmentTest {
     private val harryPotterChamberOfSecrets =
         Movie(
             1,
@@ -43,7 +43,7 @@ class HomeFragmentTest {
         )
 
     val fragmentArguments =
-        HomeFragment.arguments(
+        ScreeningFragment.arguments(
             listOf(
                 Screening(
                     harryPotterChamberOfSecrets,
@@ -64,12 +64,12 @@ class HomeFragmentTest {
             ),
         )
 
-    private lateinit var scenario: FragmentScenario<HomeFragment>
+    private lateinit var scenario: FragmentScenario<ScreeningFragment>
 
     @BeforeEach
     fun setUp() {
         scenario =
-            launchFragmentInContainer<HomeFragment>(
+            launchFragmentInContainer<ScreeningFragment>(
                 fragmentArguments,
                 R.style.Theme_Movie,
             )

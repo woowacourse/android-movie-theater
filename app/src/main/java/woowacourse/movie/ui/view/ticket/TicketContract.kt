@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.contract.ticket
+package woowacourse.movie.ui.view.ticket
 
 import woowacourse.movie.domain.reservation.Seat
 import java.time.LocalDateTime
