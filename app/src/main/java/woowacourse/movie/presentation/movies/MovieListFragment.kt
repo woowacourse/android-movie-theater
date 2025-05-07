@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.data.repository.DefaultMovieRepository
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.presentation.movies.adapter.MovieAdapter
@@ -24,7 +23,7 @@ class MovieListFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = MovieListPresenter(this, DefaultMovieRepository())
+        presenter = MovieListPresenter(this)
     }
 
     override fun onCreateView(

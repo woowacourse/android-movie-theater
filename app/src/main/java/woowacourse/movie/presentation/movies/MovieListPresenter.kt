@@ -1,12 +1,13 @@
 package woowacourse.movie.presentation.movies
 
+import woowacourse.movie.data.repository.DefaultMovieRepository
 import woowacourse.movie.data.repository.MovieRepository
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.presentation.movies.adapter.MovieListItem
 
 class MovieListPresenter(
     private val view: MovieListContract.View,
-    private val movieRepository: MovieRepository,
+    private val movieRepository: MovieRepository = DefaultMovieRepository(),
 ) : MovieListContract.Presenter {
     override fun loadMovieList() {
         val movies = movieRepository.fetch()
