@@ -5,15 +5,18 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.MovieFixture
 import woowacourse.movie.R
 import woowacourse.movie.checkIsDisplayed
+import woowacourse.movie.moviebooked.MovieBookedActivity
 import woowacourse.movie.moviebookingseat.MovieBookingSeatActivity
 import woowacourse.movie.performClick
 
 class MovieBookingSeatActivityTest {
+    private lateinit var scenario: ActivityScenario<MovieBookingSeatActivity>
     @Before
     fun setUp() {
         val bookingStatus = MovieFixture.BOOKING_STATUS
@@ -21,7 +24,7 @@ class MovieBookingSeatActivityTest {
 
         val intent = MovieBookingSeatActivity.movieBookingSeatIntent(ApplicationProvider.getApplicationContext(), bookingStatus, theater)
 
-        ActivityScenario.launch<MovieBookingSeatActivity>(intent)
+        scenario = ActivityScenario.launch(intent)
     }
 
     @Test
@@ -55,5 +58,10 @@ class MovieBookingSeatActivityTest {
         onView(withText("A2")).performClick()
         onView(withId(R.id.seat_confirm_button)).performClick()
         onView(withText(R.string.confirm_reservation_message)).checkIsDisplayed()
+    }
+
+    @After
+    fun tearDown() {
+        scenario.close()
     }
 }

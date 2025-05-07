@@ -4,6 +4,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.MovieFixture
@@ -16,6 +17,8 @@ import woowacourse.movie.domain.seat.SeatGrade
 import woowacourse.movie.moviebooked.MovieBookedActivity
 
 class MovieBookedActivityTest {
+    private lateinit var scenario: ActivityScenario<MovieBookedActivity>
+
     @Before
     fun setUp() {
         val bookingStatus = MovieFixture.BOOKING_STATUS
@@ -26,7 +29,7 @@ class MovieBookedActivityTest {
 
         val intent = MovieBookedActivity.movieBookedIntent(ApplicationProvider.getApplicationContext(), bookingStatus, theater)
 
-        ActivityScenario.launch<MovieBookedActivity>(intent)
+        scenario = ActivityScenario.launch(intent)
     }
 
     @Test
@@ -69,5 +72,10 @@ class MovieBookedActivityTest {
     fun 영화_티켓_가격이_보여야_한다() {
         onView(withId(R.id.booked_ticket_price))
             .checkIsDisplayed()
+    }
+
+    @After
+    fun tearDown() {
+        scenario.close()
     }
 }

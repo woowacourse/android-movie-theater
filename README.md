@@ -128,3 +128,5 @@
 - [x] refactor: therter에서 theater로 오타 수정
 
 - [x] refactor: 객체 전달 오류 메시지 추가
+
+- [x] refactor: 외부 리소스 사용 후 참조 해제하도록 변경

@@ -4,15 +4,19 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
 import woowacourse.movie.MovieFixture
 import woowacourse.movie.R
 import woowacourse.movie.checkIsDisplayed
 import woowacourse.movie.checkWithText
+import woowacourse.movie.moviebooked.MovieBookedActivity
 import woowacourse.movie.moviebooking.MovieBookingActivity
 
 class MovieBookingActivityTest {
+    private lateinit var scenario: ActivityScenario<MovieBookingActivity>
     @Before
     fun setUp() {
         val movie = MovieFixture.MOVIE
@@ -20,7 +24,7 @@ class MovieBookingActivityTest {
 
         val intent = MovieBookingActivity.movieBookingIntent(ApplicationProvider.getApplicationContext(), movie, theater)
 
-        ActivityScenario.launch<MovieBookingActivity>(intent)
+        scenario = ActivityScenario.launch(intent)
     }
 
     @Test
@@ -72,4 +76,9 @@ class MovieBookingActivityTest {
 //    fun 예매할_시간이_보인다() {
 //        onView(withId(R.id.booking_time_picker)).checkWithText("10:00")
 //    }
+
+    @After
+    fun tearDown() {
+        scenario.close()
+    }
 }
