@@ -53,11 +53,11 @@ class ReservationDetailPresenterTest {
 
     @Test
     fun `영화 정보를 불러오지 못하는 경우 다이얼로그를 보여준다`() {
-        every { view.showErrorDialog() } just Runs
+        every { view.showErrorMessage() } just Runs
 
         presenter.fetchData { null }
 
-        verify { view.showErrorDialog() }
+        verify { view.showErrorMessage() }
     }
 
     @Test

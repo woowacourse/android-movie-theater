@@ -1,11 +1,14 @@
 package woowacourse.movie.view.reservation.seat
 
+import androidx.annotation.StringRes
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.model.ReservationInfo
 
 interface SeatSelectContract {
     interface View {
-        fun showErrorDialog()
+        fun showErrorMessage(
+            @StringRes messageResId: Int,
+        )
 
         fun showReservationInfo(
             title: String,
@@ -26,6 +29,8 @@ interface SeatSelectContract {
             title: String,
             message: String,
         )
+
+        fun finishView()
 
         fun navigateToComplete(reservationInfo: ReservationInfo)
     }

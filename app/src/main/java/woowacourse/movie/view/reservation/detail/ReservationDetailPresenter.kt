@@ -23,7 +23,8 @@ class ReservationDetailPresenter(
     override fun fetchData(getMovie: () -> TheaterUIModel?) {
         val theaterUIModel = getMovie()
         if (theaterUIModel == null) {
-            view.showErrorDialog()
+            view.showErrorMessage(R.string.reservation_error_theater_model_load_failed)
+            view.finishView()
             return
         }
 

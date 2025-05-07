@@ -40,11 +40,11 @@ class SeatSelectPresenterTest {
 
     @Test
     fun `티켓 정보를 불러오지 못하면 에러 다이얼로그를 호출한다`() {
-        every { view.showErrorDialog() } just Runs
+        every { view.showErrorMessage() } just Runs
 
         presenter.fetchData { null }
 
-        verify { view.showErrorDialog() }
+        verify { view.showErrorMessage() }
     }
 
     @Test

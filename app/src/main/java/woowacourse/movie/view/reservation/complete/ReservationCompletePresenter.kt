@@ -1,5 +1,6 @@
 package woowacourse.movie.view.reservation.complete
 
+import woowacourse.movie.R
 import woowacourse.movie.model.ReservationInfo
 
 class ReservationCompletePresenter(
@@ -10,10 +11,10 @@ class ReservationCompletePresenter(
     override fun fetchData(getReservationInfo: () -> ReservationInfo?) {
         val result = getReservationInfo()
         if (result == null) {
-            view.showErrorDialog()
+            view.showErrorMessage(R.string.reservation_complete_error_reservation_info_load_failed)
+            view.finishView()
             return
         }
-
         reservationInfo = result
         view.showReservationInfo(reservationInfo)
     }

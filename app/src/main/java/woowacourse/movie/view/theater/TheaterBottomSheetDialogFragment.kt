@@ -12,7 +12,7 @@ import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.Extras
-import woowacourse.movie.view.compatParcelable
+import woowacourse.movie.view.getParcelableCompat
 import woowacourse.movie.view.reservation.detail.ReservationDetailActivity
 
 class TheaterBottomSheetDialogFragment :
@@ -45,10 +45,9 @@ class TheaterBottomSheetDialogFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         setupTheaterAdapter()
-        presenter.fetchTheaters(
-            requireArguments().compatParcelable(Extras.MovieData.MOVIE_KEY)
-                ?: error(ERROR_ARGUMENT),
-        )
+        presenter.fetchTheaters {
+            requireArguments().getParcelableCompat(Extras.MovieData.MOVIE_KEY)
+        }
     }
 
     override fun showTheaters(theaters: List<TheaterUIModel>) {
@@ -62,6 +61,14 @@ class TheaterBottomSheetDialogFragment :
             }
         startActivity(intent)
         dismiss()
+    }
+
+    override fun dismissView() {
+        dismiss()
+    }
+
+    override fun showErrorMessage(messageResId: Int) {
+        Toast.makeText(requireContext(), messageResId, Toast.LENGTH_SHORT).show()
     }
 
     private fun setupTheaterAdapter() {

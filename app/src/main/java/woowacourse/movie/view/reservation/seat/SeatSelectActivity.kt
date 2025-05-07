@@ -7,6 +7,7 @@ import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -49,7 +50,10 @@ class SeatSelectActivity :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun showErrorDialog() {
+    override fun showErrorMessage(
+        @StringRes messageResId: Int,
+    ) {
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
     }
 
     override fun showReservationInfo(
@@ -106,6 +110,10 @@ class SeatSelectActivity :
                 }
             },
         )
+    }
+
+    override fun finishView() {
+        finish()
     }
 
     override fun navigateToComplete(reservationInfo: ReservationInfo) {

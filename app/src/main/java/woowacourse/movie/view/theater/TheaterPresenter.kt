@@ -1,5 +1,6 @@
 package woowacourse.movie.view.theater
 
+import woowacourse.movie.R
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.MovieDao
 import woowacourse.movie.model.Theater
@@ -10,7 +11,13 @@ class TheaterPresenter(
 ) : TheaterContract.Presenter {
     private val movieDao: MovieDao by lazy { MovieDao() }
 
-    override fun fetchTheaters(movie: Movie) {
+    override fun fetchTheaters(getMovie: () -> Movie?) {
+        val movie = getMovie()
+        if (movie == null) {
+            view.showErrorMessage(R.string.bottom_sheet_dialog_error_movie_load_failed)
+            view.dismissView()
+            return
+        }
         val theaterUIModels =
             movieDao
                 .getTheaterNames()

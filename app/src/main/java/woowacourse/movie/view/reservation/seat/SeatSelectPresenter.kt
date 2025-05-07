@@ -1,5 +1,6 @@
 package woowacourse.movie.view.reservation.seat
 
+import woowacourse.movie.R
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.model.ReservationInfo
 import woowacourse.movie.model.Seats
@@ -13,7 +14,7 @@ class SeatSelectPresenter(
     override fun fetchData(getMovieTicket: () -> MovieTicket?) {
         val result = getMovieTicket()
         if (result == null) {
-            view.showErrorDialog()
+            view.showErrorMessage(R.string.seat_select_error_movie_ticket_load_failed)
             return
         }
 

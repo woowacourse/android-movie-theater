@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.ViewCompat
@@ -18,7 +19,6 @@ import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.getParcelableExtraCompat
-import woowacourse.movie.view.movie.MoviesActivity
 import woowacourse.movie.view.reservation.seat.SeatSelectActivity
 import java.time.LocalDate
 
@@ -63,17 +63,10 @@ class ReservationDetailActivity :
         presenter.initDateAdapter()
     }
 
-    override fun showErrorDialog() {
-        reservationDialog.show(
-            this,
-            getString(R.string.reservation_error_dialog_title),
-            getString(R.string.reservation_error_dialog_message),
-            null,
-        ) { _ ->
-            val intent = Intent(this, MoviesActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+    override fun showErrorMessage(
+        @StringRes messageResId: Int,
+    ) {
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
     }
 
     override fun showTicketCount(count: Int) {
@@ -189,6 +182,10 @@ class ReservationDetailActivity :
 
     override fun showToast(stringResId: Int) {
         Toast.makeText(this, getString(stringResId), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun finishView() {
+        finish()
     }
 
     private fun setupSavedData(savedInstanceState: Bundle?) {

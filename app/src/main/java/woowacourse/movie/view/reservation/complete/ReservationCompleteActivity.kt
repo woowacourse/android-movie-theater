@@ -1,7 +1,9 @@
 package woowacourse.movie.view.reservation.complete
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -35,7 +37,10 @@ class ReservationCompleteActivity :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun showErrorDialog() {
+    override fun showErrorMessage(
+        @StringRes messageResId: Int,
+    ) {
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
     }
 
     override fun showReservationInfo(reservationInfo: ReservationInfo) {
@@ -61,5 +66,9 @@ class ReservationCompleteActivity :
                 R.string.reservation_complete_ticket_price,
                 ReservationUiFormatter.priceToUI(reservationInfo.price),
             )
+    }
+
+    override fun finishView() {
+        finish()
     }
 }
