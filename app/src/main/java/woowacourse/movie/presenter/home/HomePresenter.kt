@@ -9,11 +9,14 @@ class HomePresenter(
 ) : HomeContracts.Presenter {
     override fun updateView() {
         view.showMovies(
-            Movie.values.mapIndexed { i, v ->
+            Movie.values.flatMapIndexed { i, v ->
                 if (i % 10 == 0) {
-                    MovieType.AdvertisementItem("https://www.woowacourse.io/")
+                    listOf(
+                        MovieType.AdvertisementItem("https://www.woowacourse.io/"),
+                        MovieType.MovieItem(v),
+                    )
                 } else {
-                    MovieType.MovieItem(v)
+                    listOf(MovieType.MovieItem(v))
                 }
             },
         )
