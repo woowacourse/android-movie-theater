@@ -7,13 +7,6 @@ import woowacourse.movie.domain.Showings
 interface HomeContract {
     interface Presenter {
         fun loadMovies()
-
-        fun onMovieSelected(movie: Movie)
-
-        fun onTheaterSelected(
-            movie: Movie,
-            showings: Showings,
-        )
     }
 
     interface View {

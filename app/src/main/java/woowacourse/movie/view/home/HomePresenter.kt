@@ -4,7 +4,6 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.AdType
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.MovieListItem
-import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.moviesDummy
 
 class HomePresenter(
@@ -32,21 +31,5 @@ class HomePresenter(
             }
         }
         return movieListItems
-    }
-
-    override fun onMovieSelected(movie: Movie) {
-        view.showTheaterSelectDialog(
-            movie = movie,
-        )
-    }
-
-    override fun onTheaterSelected(
-        movie: Movie,
-        showings: Showings,
-    ) {
-        view.navigateToReservation(
-            movie = movie,
-            showings = showings,
-        )
     }
 }

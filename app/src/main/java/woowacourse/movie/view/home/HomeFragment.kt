@@ -50,7 +50,7 @@ class HomeFragment : Fragment(), HomeContract.View {
             MovieAdapter(
                 object : OnMovieEventListener {
                     override fun onClickShowTheater(movie: Movie) {
-                        presenter.onMovieSelected(movie)
+                        showTheaterSelectDialog(movie)
                     }
                 },
             )
@@ -64,7 +64,7 @@ class HomeFragment : Fragment(), HomeContract.View {
                 movie,
                 object : OnBottomSheetDialogEventListener {
                     override fun onClick(showings: Showings) {
-                        presenter.onTheaterSelected(movie, showings)
+                        navigateToReservation(movie, showings)
                     }
                 },
             )
