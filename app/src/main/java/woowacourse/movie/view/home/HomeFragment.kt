@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.MovieItem
+import woowacourse.movie.domain.MovieListItem
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.view.home.movies.OnBottomSheetDialogEventListener
 import woowacourse.movie.view.home.movies.OnMovieEventListener
@@ -45,7 +45,7 @@ class HomeFragment : Fragment(), HomeContract.View {
         _binding = null
     }
 
-    override fun showMovies(movieItems: List<MovieItem>) {
+    override fun showMovies(movieItems: List<MovieListItem>) {
         movieAdapter =
             MovieAdapter(
                 object : OnMovieEventListener {

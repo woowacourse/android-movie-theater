@@ -5,14 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
+import woowacourse.movie.databinding.AdvertisementItemBinding
 import woowacourse.movie.databinding.MovieItemBinding
-import woowacourse.movie.domain.MovieItem
+import woowacourse.movie.domain.AdType
+import woowacourse.movie.domain.ItemType
+import woowacourse.movie.domain.MovieListItem
 import woowacourse.movie.view.home.movies.OnMovieEventListener
 
 class MovieAdapter(
     private val eventListener: OnMovieEventListener,
-) : ListAdapter<MovieItem, RecyclerView.ViewHolder>(MovieItemDiffCallback) {
+) : ListAdapter<MovieListItem, RecyclerView.ViewHolder>(MovieListItemDiffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -20,14 +22,14 @@ class MovieAdapter(
         val inflater = LayoutInflater.from(parent.context)
 
         return when (viewType) {
-            MovieItem.TYPE_MOVIE -> {
+            ItemType.MOVIE.viewType -> {
                 val binding = MovieItemBinding.inflate(inflater, parent, false)
                 MovieViewHolder(eventListener, binding)
             }
 
-            MovieItem.TYPE_AD -> {
-                val view = inflater.inflate(R.layout.advertisement_item, parent, false)
-                AdViewHolder(view)
+            ItemType.AD_BANNER.viewType -> {
+                val binding = AdvertisementItemBinding.inflate(inflater, parent, false)
+                AdViewHolder(binding)
             }
 
             else -> throw IllegalArgumentException("존재하지 않는 뷰타입입니다.")
@@ -39,13 +41,17 @@ class MovieAdapter(
         position: Int,
     ) {
         when (val item = getItem(position)) {
-            is MovieItem.ItemMovie -> {
+            is MovieListItem.ItemMovie -> {
                 if (holder is MovieViewHolder) {
                     holder.bind(item.movie)
                 }
             }
 
-            is MovieItem.ItemAd -> {}
+            is MovieListItem.ItemAd -> {
+                when (val ad = item.ad) {
+                    is AdType.Banner -> (holder as? AdViewHolder)?.bind(ad.imageUrl)
+                }
+            }
         }
     }
 
@@ -54,17 +60,17 @@ class MovieAdapter(
     }
 
     companion object {
-        private val MovieItemDiffCallback =
-            object : DiffUtil.ItemCallback<MovieItem>() {
+        private val MovieListItemDiffCallback =
+            object : DiffUtil.ItemCallback<MovieListItem>() {
                 override fun areItemsTheSame(
-                    oldItem: MovieItem,
-                    newItem: MovieItem,
+                    oldItem: MovieListItem,
+                    newItem: MovieListItem,
                 ): Boolean {
                     return when {
-                        oldItem is MovieItem.ItemMovie && newItem is MovieItem.ItemMovie ->
+                        oldItem is MovieListItem.ItemMovie && newItem is MovieListItem.ItemMovie ->
                             oldItem.movie.title == newItem.movie.title
 
-                        oldItem is MovieItem.ItemAd && newItem is MovieItem.ItemAd ->
+                        oldItem is MovieListItem.ItemAd && newItem is MovieListItem.ItemAd ->
                             true
 
                         else -> false
@@ -72,8 +78,8 @@ class MovieAdapter(
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: MovieItem,
-                    newItem: MovieItem,
+                    oldItem: MovieListItem,
+                    newItem: MovieListItem,
                 ): Boolean {
                     return oldItem == newItem
                 }

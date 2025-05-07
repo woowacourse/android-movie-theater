@@ -1,7 +1,9 @@
 package woowacourse.movie.view.home
 
+import woowacourse.movie.R
+import woowacourse.movie.domain.AdType
 import woowacourse.movie.domain.Movie
-import woowacourse.movie.domain.MovieItem
+import woowacourse.movie.domain.MovieListItem
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.moviesDummy
 
@@ -14,16 +16,22 @@ class HomePresenter(
         view.showMovies(movieItems)
     }
 
-    private fun addAdItemToMovieItem(movies: List<Movie>): MutableList<MovieItem> {
-        val movieItems = mutableListOf<MovieItem>()
+    private fun addAdItemToMovieItem(movies: List<Movie>): MutableList<MovieListItem> {
+        val movieListItems = mutableListOf<MovieListItem>()
 
         movies.forEachIndexed { index, movie ->
-            movieItems.add(MovieItem.ItemMovie(movie))
+            movieListItems.add(MovieListItem.ItemMovie(movie))
             if ((index + 1) % 3 == 0) {
-                movieItems.add(MovieItem.ItemAd)
+                movieListItems.add(
+                    MovieListItem.ItemAd(
+                        AdType.Banner(
+                            imageUrl = R.drawable.advertisement,
+                        ),
+                    ),
+                )
             }
         }
-        return movieItems
+        return movieListItems
     }
 
     override fun onMovieSelected(movie: Movie) {
