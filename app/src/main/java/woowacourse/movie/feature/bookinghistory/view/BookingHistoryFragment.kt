@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.feature.bookinghistory.contract.BookingHistoryContract
 
-class BookingHistoryFragment : Fragment() {
+class BookingHistoryFragment :
+    Fragment(),
+    BookingHistoryContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
