@@ -1,11 +1,16 @@
 package woowacourse.movie.presenter
 
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.model.movie.Headcount
+import woowacourse.movie.domain.model.theater.Theater
+import woowacourse.movie.sample.DUMMY_MOVIES
 import woowacourse.movie.ui.booking.contract.BookingContract
 import woowacourse.movie.ui.booking.presenter.BookingPresenter
+import java.time.LocalDate
 
 class BookingPresenterTest {
     private lateinit var view: BookingContract.View
@@ -15,6 +20,13 @@ class BookingPresenterTest {
     fun setUp() {
         view = mockk(relaxed = true)
         presenter = BookingPresenter(view)
+        presenter.loadState(
+            theater = Theater(),
+            headcount = Headcount(2),
+            movie = DUMMY_MOVIES.first(),
+            selectedDatePosition = 0,
+            selectedTimePosition = 0,
+        )
     }
 
     @Test
@@ -49,15 +61,21 @@ class BookingPresenterTest {
 
     @Test
     fun `날짜 스피너의 목록 포지션이 바뀌면 날짜 스피너가 업데이트 된다`() {
-        val position = 1
+        val capturedPosition = slot<Int>()
+        presenter.loadSelectedDate(LocalDate.MIN, 1)
         presenter.setupDateSpinner()
-        verify { view.setDateSpinner(any(), position) }
+
+        verify { view.setDateSpinner(any(), capture(capturedPosition)) }
+        assert(capturedPosition.captured == 1)
     }
 
     @Test
     fun `시간 스피너의 목록 포지션이 바뀌면 시간 스피너가 업데이트 된다`() {
-        val position = 2
+        val capturedPosition = slot<Int>()
+        presenter.loadSelectedTime(2)
         presenter.setupTimeSpinner()
-        verify { view.setTimeSpinner(any(), position) }
+
+        verify { view.setTimeSpinner(any(), capture(capturedPosition)) }
+        assert(capturedPosition.captured == 2)
     }
 }
