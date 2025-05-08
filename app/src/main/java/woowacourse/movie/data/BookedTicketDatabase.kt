@@ -16,12 +16,13 @@ abstract class BookedTicketDatabase : RoomDatabase() {
 
         @Volatile
         private var INSTANCE: BookedTicketDatabase? = null
+
         fun getInstance(context: Context): BookedTicketDatabase {
             return INSTANCE ?: synchronized(this) {
                 Room.databaseBuilder(
                     context.applicationContext,
                     BookedTicketDatabase::class.java,
-                    DATABASE_NAME
+                    DATABASE_NAME,
                 ).build().also { INSTANCE = it }
             }
         }

@@ -1,7 +1,7 @@
 package woowacourse.movie.domain.model
 
-import java.io.Serializable
 import woowacourse.movie.data.BookedTicketEntity
+import java.io.Serializable
 
 class BookedTicket(
     val theaterName: String,

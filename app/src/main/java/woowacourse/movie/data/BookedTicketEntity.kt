@@ -3,12 +3,12 @@ package woowacourse.movie.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.LocalDateTime
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
+import java.time.LocalDateTime
 
 @Entity(tableName = "booked_tickets")
 data class BookedTicketEntity(

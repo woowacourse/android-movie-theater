@@ -3,9 +3,9 @@ package woowacourse.movie.data
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import woowacourse.movie.domain.model.Seat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import woowacourse.movie.domain.model.Seat
 
 class BookedTicketConverter {
     private val dateTimeFormat = DateTimeFormatter.ISO_LOCAL_DATE_TIME
