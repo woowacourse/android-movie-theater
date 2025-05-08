@@ -59,7 +59,22 @@ class ReservationActivityTest {
     }
 
     @Test
-    fun `예매_인원수가_3일때_마이너스_버튼을_한_번_누르면_2가_된다`() {
+    fun `플러스_버튼을_누르면_인원수가_1명씩_는다`() {
+        // given
+        onView(withId(R.id.btn_reservation_count_plus))
+            .performClick()
+
+        // when
+        onView(withId(R.id.btn_reservation_count_plus))
+            .performClick()
+
+        // then
+        onView(withId(R.id.tv_reservation_count))
+            .matchText("3")
+    }
+
+    @Test
+    fun `마이너스_버튼을_누르면_인원수가_1명씩_준다`() {
         // given
         onView(withId(R.id.btn_reservation_count_plus))
             .performClick()
