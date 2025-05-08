@@ -12,17 +12,18 @@ import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.seatsToUI
 @BindingAdapter("movieDate")
 fun setFormatLocalDate(
     textView: TextView,
-    movieDate: MovieDate,
+    movieDate: MovieDate?,
 ) {
-    val formattedStartDate: String = localDateToUI(movieDate.startDate)
-    val formattedEndDate: String = localDateToUI(movieDate.endDate)
-
-    textView.text =
-        textView.context.getString(
-            R.string.movie_screening_date,
-            formattedStartDate,
-            formattedEndDate,
-        )
+    movieDate?.let {
+        val formattedStartDate: String = localDateToUI(movieDate.startDate)
+        val formattedEndDate: String = localDateToUI(movieDate.endDate)
+        textView.text =
+            textView.context.getString(
+                R.string.movie_screening_date,
+                formattedStartDate,
+                formattedEndDate,
+            )
+    } ?: ""
 }
 
 @BindingAdapter("imageRes")

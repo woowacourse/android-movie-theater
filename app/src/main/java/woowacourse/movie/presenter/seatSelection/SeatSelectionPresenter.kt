@@ -60,4 +60,8 @@ class SeatSelectionPresenter(
             )
         view.showReservationCompleteView(movieTicket)
     }
+
+    override fun requestErrorDialogMessage() {
+        view.showErrorDialogMessage()
+    }
 }

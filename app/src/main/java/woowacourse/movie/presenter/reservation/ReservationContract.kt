@@ -23,6 +23,8 @@ interface ReservationContract {
         fun showSelectedDate(position: Int)
 
         fun showSelectedTime(position: Int)
+
+        fun showErrorDialogMessage()
     }
 
     interface Presenter {
@@ -43,5 +45,7 @@ interface ReservationContract {
         fun updateSelectedDatePosition(position: Int)
 
         fun updateSelectedTimePosition(position: Int)
+
+        fun requestErrorDialogMessage()
     }
 }

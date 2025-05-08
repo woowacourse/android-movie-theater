@@ -20,6 +20,7 @@ import woowacourse.movie.model.seat.SeatGrade
 import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.presenter.seatSelection.SeatSelectionContracts
 import woowacourse.movie.presenter.seatSelection.SeatSelectionPresenter
+import woowacourse.movie.view.extension.dialogMessage
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.columnToUI
@@ -49,9 +50,13 @@ class SeatSelectionActivity :
             getSeatsLayoutRowCount(),
             getSeatsLayoutColumnCount(),
         )
-        presenter.updateMovieToReserve(
-            intent.getSerializableExtraData<MovieToReserve>(MOVIE_TO_RESERVE_DATA_KEY),
-        )
+        val intentMovieToReserveData: MovieToReserve? =
+            intent.getSerializableExtraData<MovieToReserve>(MOVIE_TO_RESERVE_DATA_KEY)
+        if (intentMovieToReserveData == null) {
+            presenter.requestErrorDialogMessage()
+            return
+        }
+        presenter.updateMovieToReserve(intentMovieToReserveData)
     }
 
     private fun getSeatsLayoutRowCount(): Int = binding.tlSeatSelection.childCount
@@ -175,6 +180,10 @@ class SeatSelectionActivity :
     override fun showReservationCompleteView(movieTicket: MovieTicket) {
         startActivity(ReservationCompleteActivity.getIntent(this, movieTicket))
         finish()
+    }
+
+    override fun showErrorDialogMessage() {
+        dialogMessage(this, R.string.not_found_data_error_message)
     }
 
     companion object {

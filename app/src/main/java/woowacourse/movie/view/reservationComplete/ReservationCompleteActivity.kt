@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
@@ -15,6 +14,7 @@ import woowacourse.movie.databinding.ActivityReservationCompleteBinding
 import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.presenter.reservationComplete.ReservationCompleteContracts
 import woowacourse.movie.presenter.reservationComplete.ReservationCompletePresenter
+import woowacourse.movie.view.extension.dialogMessage
 import woowacourse.movie.view.extension.getSerializableExtraData
 
 class ReservationCompleteActivity :
@@ -34,13 +34,13 @@ class ReservationCompleteActivity :
             insets
         }
 
-        val movieTicket: MovieTicket? =
+        val intentMovieTicketData: MovieTicket? =
             intent.getSerializableExtraData<MovieTicket>(TICKET_DATA_KEY)
-        if (movieTicket == null) {
+        if (intentMovieTicketData == null) {
             presenter.requestErrorDialogMessage()
             return
         }
-        presenter.updateTicketData(movieTicket)
+        presenter.updateTicketData(intentMovieTicketData)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupBackPressedDispatcher()
     }
@@ -68,13 +68,7 @@ class ReservationCompleteActivity :
     }
 
     override fun showErrorDialogMessage() {
-        AlertDialog.Builder(this).run {
-            setMessage(R.string.reservation_complete_error_message)
-                .setCancelable(false)
-                .setPositiveButton(R.string.reservation_complete_go_back) { _, _ ->
-                    finish()
-                }.show()
-        }
+        dialogMessage(this, R.string.not_found_data_error_message)
     }
 
     companion object {

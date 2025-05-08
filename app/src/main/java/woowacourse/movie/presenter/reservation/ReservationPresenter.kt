@@ -77,4 +77,8 @@ class ReservationPresenter(
     override fun updateSelectedTimePosition(position: Int) {
         view.showSelectedTime(position)
     }
+
+    override fun requestErrorDialogMessage() {
+        view.showErrorDialogMessage()
+    }
 }

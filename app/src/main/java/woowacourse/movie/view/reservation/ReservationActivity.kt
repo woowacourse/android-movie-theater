@@ -16,6 +16,7 @@ import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.theater.TheaterMovieSchedule
 import woowacourse.movie.presenter.reservation.ReservationContract
 import woowacourse.movie.presenter.reservation.ReservationPresenter
+import woowacourse.movie.view.extension.dialogMessage
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.extension.showShortToast
 import woowacourse.movie.view.seatSelection.SeatSelectionActivity
@@ -46,8 +47,12 @@ class ReservationActivity :
     }
 
     private fun updateMovieToPresenter() {
-        val intentMovieData: TheaterMovieSchedule =
+        val intentMovieData: TheaterMovieSchedule? =
             intent.getSerializableExtraData<TheaterMovieSchedule>(SCREENING_INFO_KEY)
+        if (intentMovieData == null) {
+            presenter.requestErrorDialogMessage()
+            return
+        }
         presenter.updateMovieData(intentMovieData)
     }
 
@@ -148,6 +153,10 @@ class ReservationActivity :
 
     override fun showSelectedTime(position: Int) {
         binding.spinnerReservationTime.setSelection(position)
+    }
+
+    override fun showErrorDialogMessage() {
+        dialogMessage(this, R.string.not_found_data_error_message)
     }
 
     companion object {
