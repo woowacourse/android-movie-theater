@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+
+        <variable
+            name="movieItems"
+            type="java.util.List&lt;woowacourse.movie.view.home.movies.MovieItem>" />
+
+        <variable
+            name="onItemClick"
+            type="woowacourse.movie.view.home.movies.OnMovieEventListener" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/home_fragment"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.home.HomeFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="10"
+        tools:listitem="@layout/movie_item"
+        app:items="@{movieItems}"
+        app:itemClickListener="@{onItemClick}"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

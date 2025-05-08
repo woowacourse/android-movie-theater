@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="ticket"
+            type="woowacourse.movie.view.reservation.Ticket" />
+
+        <variable
+            name="seats"
+            type="String" />
+
+        <variable
+            name="price"
+            type="Integer" />
+
+        <variable
+            name="purchasePolicy"
+            type="woowacourse.movie.domain.PurchasePolicy" />
+
+    </data>
+
+    <ScrollView
+        android:id="@+id/root_layout_reservation_complete"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".view.reservation.result.ReservationCompleteActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:background="@color/purple_300"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_cancel_info"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:paddingBottom="10dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                tools:text="@string/movie_cancel_deadline"
+                android:text="@{String.format(@string/movie_cancel_deadline,ticket.formattedDate(purchasePolicy.NormalPolicy,`mm`))}"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_movie_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:gravity="center"
+                android:padding="20sp"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:text="@string/movie_title"
+                android:text="@{ticket.title}">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_movie_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                tools:text="@string/default_movie_date_time"
+                app:dateTime="@{ticket.date}"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp">
+
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/tv_movie_personnel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            tools:text="@string/moviePersonnel"
+                            android:text='@{String.format(@string/moviePersonnel, ticket.personnel)}'/>
+
+                        <TextView
+                            android:id="@+id/tv_seat_list"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            tools:text="@string/seat_list"
+                            android:text="@{String.format(@string/seat_list, seats)}"/>
+
+                        <TextView
+                            android:id="@+id/tv_selected_theater_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:ellipsize="marquee"
+                            android:textColor="@color/black"
+                            android:textSize="25sp"
+                            tools:text="@string/theater_name"
+                            android:text="@{String.format(@string/theater_name, ticket.theaterName)}"/>
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_movie_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:text="@{String.format(@string/movieTotalPrice, price)}"
+                tools:text="@string/movieTotalPrice" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+</layout>
