@@ -21,7 +21,7 @@ class TicketAdapter : ListAdapter<Ticket, TicketViewHolder>(diffUtil) {
         holder: TicketViewHolder,
         position: Int,
     ) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position != itemCount - 1)
     }
 
     companion object {
