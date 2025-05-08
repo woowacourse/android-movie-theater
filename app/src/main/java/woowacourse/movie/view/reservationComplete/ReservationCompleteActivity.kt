@@ -44,6 +44,15 @@ class ReservationCompleteActivity :
                 return
             },
         )
+
+        presenter.updateTicketData2(
+            intent.getSerializableExtraData<MovieTicket>(TICKET_DATA_KEY) ?: run {
+                showShortToast("예상치 못한 오류로 영화 예매가 취소 되었습니다. 메인 화면으로 돌아갑니다.")
+                startActivity(MainActivity.getIntent(this@ReservationCompleteActivity))
+                return
+            },
+            this,
+        )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupBackPressedDispatcher()
     }
