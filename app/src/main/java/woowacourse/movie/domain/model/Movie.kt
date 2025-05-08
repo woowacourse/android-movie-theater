@@ -2,7 +2,7 @@ package woowacourse.movie.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.movie.data.DummyScreening
+import woowacourse.movie.data.dummy.DummyScreening
 import java.time.LocalDate
 import java.time.LocalDateTime
 

@@ -7,7 +7,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.DummyScreening
+import woowacourse.movie.data.dummy.DummyScreening
 import woowacourse.movie.domain.model.Cinema
 import woowacourse.movie.domain.model.ReservationCount
 import woowacourse.movie.domain.model.ReservationInfo

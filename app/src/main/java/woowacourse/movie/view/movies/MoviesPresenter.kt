@@ -1,7 +1,7 @@
 package woowacourse.movie.view.movies
 
-import woowacourse.movie.data.DummyAdvertisement
-import woowacourse.movie.data.DummyMovie
+import woowacourse.movie.data.dummy.DummyAdvertisement
+import woowacourse.movie.data.dummy.DummyMovie
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieListItem
 import woowacourse.movie.domain.model.MovieListItemRule

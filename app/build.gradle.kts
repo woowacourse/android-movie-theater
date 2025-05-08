@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.androidx.fragment.testing)
     implementation(libs.androidx.junit.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.room.runtime)
+    kapt(libs.androidx.room.compiler.v261)
     testImplementation(libs.assertj.core)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.kotest.runner.junit5)

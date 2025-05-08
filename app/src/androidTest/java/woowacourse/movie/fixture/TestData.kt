@@ -1,7 +1,7 @@
 package woowacourse.movie.fixture
 
 import woowacourse.movie.R
-import woowacourse.movie.data.DummyMovie
+import woowacourse.movie.data.dummy.DummyMovie
 import woowacourse.movie.domain.model.Cinema
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieListItem
