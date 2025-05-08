@@ -43,7 +43,7 @@ class SeatSelectionActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val reservation = intent.getParcelableCompat<ReservationInfo>(BUNDLE_KEY_RESERVATION_INFO)
+        val reservation: ReservationInfo = intent.getParcelableCompat<ReservationInfo>(BUNDLE_KEY_RESERVATION_INFO)
 
         presenter.loadSeats(reservation)
         setupViews(reservation.title)

@@ -5,21 +5,18 @@ import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 
 @Parcelize
-class ReservationInfo(
+data class ReservationInfo(
     val title: String,
     val reservationDateTime: LocalDateTime,
     val reservationCount: ReservationCount,
-    private val _seats: MutableList<Seat> = mutableListOf(),
+    val seats: List<Seat> = listOf(),
     val cinema: Cinema,
 ) : Parcelable {
-    val seats: List<Seat> get() = _seats.toList()
-
     // 좌석 선택/해제
-    fun updateSeats(seat: Seat) {
+    fun updateSeats(seat: Seat): ReservationInfo {
         if (seats.contains(seat)) {
-            _seats.remove(seat)
             seat.isSelected = false
-            return
+            return this.copy(seats = seats - seat)
         }
 
         require(reservationCount.value > seats.count()) {
@@ -27,7 +24,7 @@ class ReservationInfo(
         }
 
         seat.isSelected = true
-        _seats.add(seat)
+        return this.copy(seats = seats + seat)
     }
 
     fun totalPrice(): Int = seats.sumOf { it.price() }

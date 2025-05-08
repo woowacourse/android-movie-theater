@@ -8,7 +8,7 @@ import woowacourse.movie.domain.model.TicketMachine
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
 ) : SeatSelectionContract.Presenter {
-    private var reservationInfo: ReservationInfo? = null
+    var reservationInfo: ReservationInfo? = null
     private val seatFactory = SeatFactory.default()
     private val ticketMachine = TicketMachine()
 
@@ -22,7 +22,7 @@ class SeatSelectionPresenter(
 
     override fun selectSeat(seat: Seat) {
         try {
-            reservationInfo?.updateSeats(seat)
+            reservationInfo = reservationInfo?.updateSeats(seat)
             view.updateSeatSelection(seat, seat.isSelected)
             updateScreen()
         } catch (e: IllegalArgumentException) {
