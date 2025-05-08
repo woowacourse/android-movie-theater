@@ -10,7 +10,6 @@ import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.util.getSerializableCompat
 import woowacourse.movie.view.dialog.DialogFactory
-import woowacourse.movie.view.home.movies.adapter.TheaterAdapter
 import woowacourse.movie.view.reservation.detail.ReservationActivity
 
 class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), TheaterContract.View {
