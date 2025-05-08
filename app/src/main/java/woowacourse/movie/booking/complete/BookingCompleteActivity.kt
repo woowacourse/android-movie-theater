@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -34,6 +35,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             presenter.initializeData(ticket)
         }
 
+        onBackPressedDispatcher.addCallback(this, callback)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -68,7 +70,6 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
-                onBackPressed()
                 true
             }
 
@@ -76,12 +77,14 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
-    }
+    private val callback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val intent = Intent(this@BookingCompleteActivity, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+            }
+        }
 
     companion object {
         private const val KEY_BOOKING_RESULT = "bookingResult"
