@@ -6,15 +6,23 @@
     <data>
 
         <variable
-            name="cinema"
-            type="woowacourse.movie.view.cinema.adapter.CinemaViewHolder" />
+            name="name"
+            type="String" />
+
+        <variable
+            name="showtimesCount"
+            type="int" />
+
+        <variable
+            name="onItemClickListener"
+            type="android.view.View.OnClickListener" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{cinema.onItemClickListener}"
+        android:onClick="@{onItemClickListener}"
         android:padding="8dp">
 
         <TextView
@@ -25,7 +33,7 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{cinema.name}"
+            android:text="@{name}"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/text_view_item_cinema_showtime_count"
@@ -40,7 +48,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{@string/item_cinema_showtime_count(cinema.showtimesCount)}"
+            android:text="@{@string/item_cinema_showtime_count(showtimesCount)}"
             android:textColor="#5F5F5F"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"

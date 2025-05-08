@@ -8,19 +8,32 @@ import woowacourse.movie.domain.reservation.Screening
 
 class CinemaViewHolder(
     private val binding: ItemCinemaBinding,
-    val onClick: (cinema: Cinema) -> Unit,
+    private val onClick: (cinema: Cinema) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
-    var name = ""
-    var showtimesCount = 0
-    var onItemClickListener: OnClickListener? = null
+    private var name: String = ""
+    private var showtimesCount: Int = 0
+    private var onItemClickListener: OnClickListener? = null
 
     fun bind(
         cinema: Cinema,
         screening: Screening,
     ) {
-        binding.cinema = this
+        initData(cinema, screening)
+        bindData()
+    }
+
+    private fun initData(
+        cinema: Cinema,
+        screening: Screening,
+    ) {
         name = cinema.name
         showtimesCount = cinema.showtimeCount(screening)
-        onItemClickListener = OnClickListener { this@CinemaViewHolder.onClick(cinema) }
+        onItemClickListener = OnClickListener { onClick(cinema) }
+    }
+
+    private fun bindData() {
+        binding.name = name
+        binding.showtimesCount = showtimesCount
+        binding.onItemClickListener = onItemClickListener
     }
 }
