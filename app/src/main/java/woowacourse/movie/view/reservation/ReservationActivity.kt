@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +17,7 @@ import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.theater.TheaterMovieSchedule
 import woowacourse.movie.presenter.reservation.ReservationContract
 import woowacourse.movie.presenter.reservation.ReservationPresenter
+import woowacourse.movie.presenter.reservation.ScreeningSelectListener
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.extension.showShortToast
 import woowacourse.movie.view.seatSelection.SeatSelectionActivity
@@ -77,18 +77,7 @@ class ReservationActivity :
         binding.spinnerReservationDate.apply {
             adapter = dateAdapter
             onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long,
-                    ) {
-                        presenter.updateMovieDate(dates[position])
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-                }
+                ScreeningSelectListener(dates) { presenter.updateMovieDate(it) }
         }
     }
 
@@ -97,19 +86,7 @@ class ReservationActivity :
         binding.spinnerReservationTime.apply {
             adapter = timeSpinnerAdapter
             onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long,
-                    ) {
-                        val selectedTime: LocalTime = timeSpinnerAdapter.getItem(position) ?: return
-                        presenter.updateMovieTime(selectedTime)
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-                }
+                ScreeningSelectListener(mutableListOf<LocalTime>()) { presenter.updateMovieTime(it) }
         }
     }
 
