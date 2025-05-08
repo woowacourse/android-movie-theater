@@ -18,12 +18,16 @@ abstract class ReservationDatabase : RoomDatabase() {
         private var instance: ReservationDatabase? = null
 
         fun getInstance(context: Context): ReservationDatabase =
-            instance ?: Room
+            instance ?: synchronized(this) {
+                instance ?: createDatabase(context).also { instance = it }
+            }
+
+        private fun createDatabase(context: Context): ReservationDatabase =
+            Room
                 .databaseBuilder(
                     context.applicationContext,
                     ReservationDatabase::class.java,
                     DB_NAME,
                 ).build()
-                .also { instance = it }
     }
 }
