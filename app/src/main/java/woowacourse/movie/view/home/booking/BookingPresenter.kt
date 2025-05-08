@@ -21,10 +21,6 @@ class BookingPresenter(
         val screenings = screeningInfo.screenings
 
         val bookableDates = this.schedule.bookableDates(now)
-        if (bookableDates.isEmpty()) {
-            view.notifyNoAvailableTime()
-            return
-        }
         val defaultDate: LocalDate =
             bookableDates.firstOrNull() ?: run {
                 view.notifyNoAvailableTime()
