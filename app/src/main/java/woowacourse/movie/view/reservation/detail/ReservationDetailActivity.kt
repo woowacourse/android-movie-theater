@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.R.layout
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
+import woowacourse.movie.model.DummyMovieDao
 import woowacourse.movie.model.MovieTicket
 import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.Extras
@@ -27,7 +28,12 @@ class ReservationDetailActivity :
     ReservationDetailContract.View {
     private lateinit var binding: ActivityReservationBinding
     private val reservationDialog by lazy { ReservationDetailDialog() }
-    private val presenter: ReservationDetailPresenter by lazy { ReservationDetailPresenter(this) }
+    private val presenter: ReservationDetailPresenter by lazy {
+        ReservationDetailPresenter(
+            this,
+            DummyMovieDao,
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

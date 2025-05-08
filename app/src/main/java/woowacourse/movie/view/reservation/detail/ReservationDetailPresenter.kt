@@ -14,10 +14,10 @@ import java.time.LocalDateTime
 
 class ReservationDetailPresenter(
     val view: ReservationDetailContract.View,
+    private val movieDao: MovieDao,
 ) : ReservationDetailContract.Presenter {
     lateinit var reservationUIModel: ReservationUIModel
     private var currentTimeTable: List<Int> = emptyList()
-    private val movieDao by lazy { MovieDao() }
     var isTimeSelected = false
 
     override fun fetchData(getMovie: () -> TheaterUIModel?) {

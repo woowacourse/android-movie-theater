@@ -4,9 +4,10 @@ import woowacourse.movie.model.MovieDao
 
 class MoviePresenter(
     val view: MovieContract.View,
+    val movieDao: MovieDao,
 ) : MovieContract.Presenter {
     override fun fetchMovies() {
-        val movies = MovieDao().getShowingMovies()
+        val movies = movieDao.getShowingMovies()
         view.showMovies(movies)
     }
 }

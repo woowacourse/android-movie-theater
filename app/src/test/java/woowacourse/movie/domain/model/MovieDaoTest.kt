@@ -3,18 +3,18 @@ package woowacourse.movie.domain.model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.model.MovieDao
+import woowacourse.movie.model.DummyMovieDao
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 class MovieDaoTest {
-    private lateinit var movieDao: MovieDao
+    private lateinit var movieDao: DummyMovieDao
     private lateinit var dummyMovieDatabase: DummyMovieDatabase
 
     @BeforeEach
     fun setUp() {
         dummyMovieDatabase = DummyMovieDatabase()
-        movieDao = MovieDao(dummyMovieDatabase)
+        movieDao = MovieDaoImpl(dummyMovieDatabase)
     }
 
     @Test

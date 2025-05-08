@@ -8,9 +8,8 @@ import woowacourse.movie.model.TheaterUIModel
 
 class TheaterPresenter(
     val view: TheaterContract.View,
+    val movieDao: MovieDao,
 ) : TheaterContract.Presenter {
-    private val movieDao: MovieDao by lazy { MovieDao() }
-
     override fun fetchTheaters(getMovie: () -> Movie?) {
         val movie = getMovie()
         if (movie == null) {
@@ -22,7 +21,7 @@ class TheaterPresenter(
             movieDao
                 .getTheaterNames()
                 .map {
-                    val theater = Theater(it, movieDao.getMovies(it))
+                    val theater = Theater(it, movieDao.getMovies(it), movieDao)
                     TheaterUIModel(it, movie, theater.getTotalTimeSlotCount(movie))
                 }
         view.showTheaters(theaterUIModels)

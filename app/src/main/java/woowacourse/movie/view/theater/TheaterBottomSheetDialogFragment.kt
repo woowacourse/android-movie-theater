@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
+import woowacourse.movie.model.DummyMovieDao
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.TheaterUIModel
 import woowacourse.movie.view.Extras
@@ -19,7 +20,7 @@ class TheaterBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
     TheaterContract.View {
     private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
-    private val presenter: TheaterPresenter by lazy { TheaterPresenter(this) }
+    private val presenter: TheaterPresenter by lazy { TheaterPresenter(this, DummyMovieDao) }
     private val theaterAdapter: TheaterAdapter by lazy {
         TheaterAdapter(
             object : TheaterClickListener {
