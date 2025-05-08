@@ -12,9 +12,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
+import androidx.room.Room
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.model.movie.MovieToReserve
+import woowacourse.movie.model.reservation.ReservationDatabase
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.seat.SeatGrade
 import woowacourse.movie.model.ticket.MovieTicket
@@ -29,11 +31,18 @@ import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.rowToUI
 class SeatSelectionActivity :
     AppCompatActivity(),
     SeatSelectionContracts.View {
-    private val presenter: SeatSelectionContracts.Presenter = SeatSelectionPresenter(this)
+    private lateinit var db: ReservationDatabase
+    private lateinit var presenter: SeatSelectionContracts.Presenter
     private lateinit var binding: ActivitySeatSelectionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        db =
+            Room
+                .databaseBuilder(this, ReservationDatabase::class.java, "reservation")
+                .build()
+        presenter = SeatSelectionPresenter(this, db)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.seat_selection_main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
