@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -58,7 +57,7 @@ class BookingActivity :
             intent.intentSerializable(EXTRA_MOVIE, Movie::class.java)
                 ?: DUMMY_MOVIES.first(),
             0,
-            0
+            0,
         )
     }
 
@@ -116,8 +115,8 @@ class BookingActivity :
                     bookingPresenter.loadSelectedDateTime(
                         LocalDateTime.of(
                             binding.spDate.selectedItem as LocalDate,
-                            selectedItem as LocalTime
-                        )
+                            selectedItem as LocalTime,
+                        ),
                     )
                 }
         }
@@ -143,10 +142,10 @@ class BookingActivity :
         }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         outState.putSerializable(KEY_HEADCOUNT, binding.headcount)
         outState.putInt(KEY_SELECTED_DATE_POSITION, dateSpinner.selectedItemPosition)
         outState.putInt(KEY_SELECTED_TIME_POSITION, timeSpinner.selectedItemPosition)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -166,7 +165,7 @@ class BookingActivity :
             intent.intentSerializable(EXTRA_MOVIE, Movie::class.java)
                 ?: DUMMY_MOVIES.first(),
             selectedDatePosition,
-            selectedTimePosition
+            selectedTimePosition,
         )
         bookingPresenter.updateViews()
     }
