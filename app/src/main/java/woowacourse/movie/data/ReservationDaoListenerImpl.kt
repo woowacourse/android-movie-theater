@@ -19,7 +19,7 @@ class ReservationDaoListenerImpl(
                 entity.theaterName,
                 entity.dateTime,
                 entity.seats,
-                entity.reservationCount,
+                entity.totalPrice,
             )
         }
 
