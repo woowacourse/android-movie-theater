@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.db
 
 import android.content.Context
 import androidx.room.Database

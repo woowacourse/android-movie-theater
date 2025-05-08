@@ -7,9 +7,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.data.ReservationDao
-import woowacourse.movie.data.ReservationDatabase
-import woowacourse.movie.data.ReservationEntity
+import woowacourse.movie.data.db.ReservationDao
+import woowacourse.movie.data.db.ReservationDatabase
+import woowacourse.movie.data.db.ReservationEntity
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import java.time.LocalDateTime

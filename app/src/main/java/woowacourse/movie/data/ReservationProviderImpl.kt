@@ -1,7 +1,8 @@
 package woowacourse.movie.data
 
-import woowacourse.movie.data.mapper.ReservationMapper.toDomain
-import woowacourse.movie.data.mapper.ReservationMapper.toEntity
+import woowacourse.movie.data.ReservationMapper.toDomain
+import woowacourse.movie.data.ReservationMapper.toEntity
+import woowacourse.movie.data.db.ReservationDao
 import woowacourse.movie.domain.ReservationProvider
 import woowacourse.movie.domain.model.ReservationInfo
 

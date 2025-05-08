@@ -1,6 +1,6 @@
-package woowacourse.movie.data.mapper
+package woowacourse.movie.data
 
-import woowacourse.movie.data.ReservationEntity
+import woowacourse.movie.data.db.ReservationEntity
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.TicketCount
 
