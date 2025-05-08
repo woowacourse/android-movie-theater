@@ -21,11 +21,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.setPadding
 import woowacourse.movie.R
 import woowacourse.movie.data.local.adapter.TicketAdapter
-import woowacourse.movie.domain.data.TicketDataAdapter
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.reservation.SeatGrade
 import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.ui.view.data.TicketDataAdapter
 import woowacourse.movie.ui.view.reservation.ShowReservationConfirmDialog
 import woowacourse.movie.ui.view.ticket.TicketActivity
 import woowacourse.movie.ui.view.util.ErrorMessage
