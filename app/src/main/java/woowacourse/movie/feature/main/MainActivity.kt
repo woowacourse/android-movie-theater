@@ -1,7 +1,12 @@
 package woowacourse.movie.feature.main
 
+import android.Manifest.permission.POST_NOTIFICATIONS
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -35,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavMain.selectedItemId = item_home
         setupNavigationItemClickListener()
+        setupNotificationPermissionHandler()
     }
 
     private fun setupNavigationItemClickListener() {
@@ -57,5 +63,20 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(fcv_main, fragment)
             .commit()
+    }
+
+    private fun setupNotificationPermissionHandler() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(
+                this,
+                POST_NOTIFICATIONS,
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this, arrayOf(POST_NOTIFICATIONS), REQUEST_CODE_NOTIFICATION_PERMISSION)
+        }
+    }
+
+    companion object {
+        private const val REQUEST_CODE_NOTIFICATION_PERMISSION = 1
     }
 }
