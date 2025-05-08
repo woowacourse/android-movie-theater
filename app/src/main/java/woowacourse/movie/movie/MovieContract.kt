@@ -2,9 +2,9 @@ package woowacourse.movie.movie
 
 import woowacourse.movie.domain.Movie
 
-interface Movies {
+interface MovieContract {
     interface View {
-        fun showMovies(movies: List<Movie>)
+        fun showMovies(movies: List<FeedItem>)
 
         fun navigateToBook(movie: Movie)
 

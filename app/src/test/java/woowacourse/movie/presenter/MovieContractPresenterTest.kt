@@ -8,12 +8,12 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.fixture.MovieFixture
-import woowacourse.movie.movie.Movies
+import woowacourse.movie.movie.MovieContract
 import woowacourse.movie.movie.MoviesPresenter
 
-class MoviesPresenterTest {
-    private lateinit var view: Movies.View
-    private lateinit var presenter: Movies.Presenter
+class MovieContractPresenterTest {
+    private lateinit var view: MovieContract.View
+    private lateinit var presenter: MovieContract.Presenter
 
     @BeforeEach
     fun setUp() {

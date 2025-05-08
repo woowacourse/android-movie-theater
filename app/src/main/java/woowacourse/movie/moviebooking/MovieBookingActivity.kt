@@ -21,7 +21,7 @@ import woowacourse.movie.moviebookingseat.MovieBookingSeatActivity
 import java.time.LocalDate
 import java.time.LocalTime
 
-class MovieBookingActivity : AppCompatActivity(), MovieBooking.View {
+class MovieBookingActivity : AppCompatActivity(), MovieBookingContract.View {
     private lateinit var binding: MovieBookingBinding
     private lateinit var presenter: MovieBookingPresenter
     private lateinit var movie: Movie

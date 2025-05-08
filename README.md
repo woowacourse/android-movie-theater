@@ -140,3 +140,6 @@
 
 - [x] refactor: binding clickListener 한 번만 할당하도록 변경
 - 중복 익명 객체 제거
+
+- [x] refactor: 피드아이템 생성 분리
+- MVP 인터페이스 -> XXContract로 이름 변경

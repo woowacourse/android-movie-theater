@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import woowacourse.movie.fixture.MovieFixture
 
-class MoviesTest {
+class MovieContractTest {
     @Test
     fun 영화들의_key와_value의_title이_일치해야한다() {
         val movie = MovieFixture.movies2

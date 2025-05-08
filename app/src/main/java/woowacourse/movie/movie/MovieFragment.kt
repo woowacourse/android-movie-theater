@@ -13,7 +13,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieBinding
 import woowacourse.movie.domain.Movie
 
-class MovieFragment : Fragment(), Movies.View {
+class MovieFragment : Fragment(), MovieContract.View {
     private var _binding: FragmentMovieBinding? = null
     private val binding get() = _binding!!
     private lateinit var presenter: MoviesPresenter
@@ -33,7 +33,7 @@ class MovieFragment : Fragment(), Movies.View {
         _binding = null
     }
 
-    override fun showMovies(movies: List<Movie>) {
+    override fun showMovies(movies: List<FeedItem>) {
         binding.movies.adapter =
             MovieListAdapter(
                 movies,

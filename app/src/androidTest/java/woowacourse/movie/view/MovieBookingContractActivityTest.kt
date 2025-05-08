@@ -15,7 +15,7 @@ import woowacourse.movie.checkWithText
 import woowacourse.movie.moviebooked.MovieBookedActivity
 import woowacourse.movie.moviebooking.MovieBookingActivity
 
-class MovieBookingActivityTest {
+class MovieBookingContractActivityTest {
     private lateinit var scenario: ActivityScenario<MovieBookingActivity>
     @Before
     fun setUp() {

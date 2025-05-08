@@ -6,13 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.AdItemBinding
 import woowacourse.movie.databinding.MovieItemBinding
-import woowacourse.movie.domain.Movie
 
 class MovieListAdapter(
-    private val value: List<Movie>,
+    private val items: List<FeedItem>,
     private val movieClickListener: MovieClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val items = createFeedItems()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -22,7 +20,7 @@ class MovieListAdapter(
             R.layout.movie_item -> {
                 val binding =
                     MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                MovieViewHolder(binding)
+                MovieViewHolder(binding, movieClickListener)
             }
 
             R.layout.ad_item -> {
@@ -48,7 +46,7 @@ class MovieListAdapter(
     ) {
         when (items[position]) {
             is FeedItem.MovieItem -> {
-                (holder as MovieViewHolder).bindMovie(items[position] as FeedItem.MovieItem, movieClickListener)
+                (holder as MovieViewHolder).bindMovie(items[position] as FeedItem.MovieItem)
             }
             is FeedItem.AdvertiseItem -> {
                 (holder as AdViewHolder).bindAd(movieClickListener)
@@ -57,15 +55,4 @@ class MovieListAdapter(
     }
 
     override fun getItemCount(): Int = items.size
-
-    private fun createFeedItems(): List<FeedItem> {
-        val result = mutableListOf<FeedItem>()
-        value.forEachIndexed { index, movie ->
-            result.add(FeedItem.MovieItem(movie))
-            if ((index + 1) % 3 == 0) {
-                result.add(FeedItem.AdvertiseItem)
-            }
-        }
-        return result.toList()
-    }
 }

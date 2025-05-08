@@ -3,7 +3,7 @@ package woowacourse.movie.moviebooked
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Theater
 
-interface MovieBooked {
+interface MovieBookedContract {
     interface View {
         fun fetchBookingStatus()
 

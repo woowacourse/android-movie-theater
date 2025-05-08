@@ -14,7 +14,7 @@ import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.helper.BuildVersion
 
-class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
+class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
     private lateinit var binding: MovieBookedBinding
     private lateinit var presenter: MovieBookedPresenter
 

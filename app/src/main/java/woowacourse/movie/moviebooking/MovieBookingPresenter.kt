@@ -8,8 +8,8 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class MovieBookingPresenter(
-    private val view: MovieBooking.View,
-) : MovieBooking.Presenter {
+    private val view: MovieBookingContract.View,
+) : MovieBookingContract.Presenter {
     private lateinit var movie: Movie
     private var count: Int = 1
     private var bookedDate: LocalDate = LocalDate.now()

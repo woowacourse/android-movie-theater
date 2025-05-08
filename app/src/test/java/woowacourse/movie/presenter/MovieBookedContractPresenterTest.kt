@@ -9,12 +9,12 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.fixture.MovieFixture
-import woowacourse.movie.moviebooked.MovieBooked
+import woowacourse.movie.moviebooked.MovieBookedContract
 import woowacourse.movie.moviebooked.MovieBookedPresenter
 
-class MovieBookedPresenterTest {
-    private lateinit var view: MovieBooked.View
-    private lateinit var presenter: MovieBooked.Presenter
+class MovieBookedContractPresenterTest {
+    private lateinit var view: MovieBookedContract.View
+    private lateinit var presenter: MovieBookedContract.Presenter
 
     @BeforeEach
     fun setUp() {

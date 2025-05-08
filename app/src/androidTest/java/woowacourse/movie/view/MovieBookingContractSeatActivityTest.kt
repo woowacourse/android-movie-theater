@@ -15,7 +15,7 @@ import woowacourse.movie.moviebooked.MovieBookedActivity
 import woowacourse.movie.moviebookingseat.MovieBookingSeatActivity
 import woowacourse.movie.performClick
 
-class MovieBookingSeatActivityTest {
+class MovieBookingContractSeatActivityTest {
     private lateinit var scenario: ActivityScenario<MovieBookingSeatActivity>
     @Before
     fun setUp() {

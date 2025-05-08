@@ -5,7 +5,7 @@ import woowacourse.movie.domain.Movie
 import java.time.LocalDate
 import java.time.LocalTime
 
-interface MovieBooking {
+interface MovieBookingContract {
     interface View {
         fun showMovieInfo()
 

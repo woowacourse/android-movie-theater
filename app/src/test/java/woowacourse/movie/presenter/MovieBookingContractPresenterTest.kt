@@ -11,13 +11,13 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.R
 import woowacourse.movie.domain.ScreeningPeriod
 import woowacourse.movie.fixture.MovieFixture
-import woowacourse.movie.moviebooking.MovieBooking
+import woowacourse.movie.moviebooking.MovieBookingContract
 import woowacourse.movie.moviebooking.MovieBookingPresenter
 import java.time.LocalDate
 
-class MovieBookingPresenterTest {
-    private lateinit var view: MovieBooking.View
-    private lateinit var presenter: MovieBooking.Presenter
+class MovieBookingContractPresenterTest {
+    private lateinit var view: MovieBookingContract.View
+    private lateinit var presenter: MovieBookingContract.Presenter
 
     @BeforeEach
     fun setUp() {

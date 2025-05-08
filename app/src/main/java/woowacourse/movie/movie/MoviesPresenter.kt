@@ -1,15 +1,17 @@
 package woowacourse.movie.movie
 
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieFactory
 import woowacourse.movie.domain.Movie
+import woowacourse.movie.domain.Movies
 import java.time.LocalDate
 
 class MoviesPresenter(
-    private val view: Movies.View,
-) : Movies.Presenter {
+    private val view: MovieContract.View,
+) : MovieContract.Presenter {
     override fun loadMovies() {
-        val movies = woowacourse.movie.domain.Movies.value.toList()
-        view.showMovies(movies)
+        val items = MovieFactory(Movies.value.toList()).items
+        view.showMovies(items)
     }
 
     override fun selectedMovie(movie: Movie) {

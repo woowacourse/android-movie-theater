@@ -16,7 +16,7 @@ import woowacourse.movie.domain.seat.Seat
 import woowacourse.movie.domain.seat.SeatGrade
 import woowacourse.movie.moviebooked.MovieBookedActivity
 
-class MovieBookedActivityTest {
+class MovieBookedContractActivityTest {
     private lateinit var scenario: ActivityScenario<MovieBookedActivity>
 
     @Before
