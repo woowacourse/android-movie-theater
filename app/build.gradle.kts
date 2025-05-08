@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.android.junit5)
     alias(libs.plugins.kotlin.android)
-    id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 android {
@@ -52,12 +52,15 @@ android {
 dependencies {
     val fragmentVersion = "1.8.6"
     val mockVersion = "1.14.0"
+    val roomVersion = "2.7.1"
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.google.material)
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
     testImplementation(libs.assertj.core)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.kotest.runner.junit5)
