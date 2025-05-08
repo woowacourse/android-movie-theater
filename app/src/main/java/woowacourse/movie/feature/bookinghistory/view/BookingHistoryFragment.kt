@@ -9,23 +9,13 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
-import woowacourse.movie.domain.model.BookingInfo
-import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.domain.model.MovieDate
-import woowacourse.movie.domain.model.MovieSeat
-import woowacourse.movie.domain.model.MovieSeats
-import woowacourse.movie.domain.model.MovieTime
-import woowacourse.movie.domain.model.TicketCount
 import woowacourse.movie.domain.repository.BookingRepository
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookinghistory.contract.BookingHistoryContract
 import woowacourse.movie.feature.bookinghistory.presenter.BookingHistoryPresenter
 import woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryAdapter
 import woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryAdapter.Handler
-import woowacourse.movie.feature.mapper.toUi
 import woowacourse.movie.feature.model.BookingInfoUiModel
-import java.time.LocalDate
-import java.time.LocalTime
 
 class BookingHistoryFragment :
     Fragment(),
@@ -39,25 +29,6 @@ class BookingHistoryFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val bookingInfo =
-            BookingInfo(
-                movie =
-                    Movie(
-                        id = 1,
-                        title = "레디 플레이어 원",
-                        startDate = MovieDate(),
-                        endDate = MovieDate(),
-                        runningTime = 120,
-                    ),
-                theaterName = "잠실",
-                date = MovieDate(LocalDate.now()),
-                time = MovieTime(LocalTime.now()),
-                seats = MovieSeats(setOf(MovieSeat(1, 1), MovieSeat(1, 2))),
-                ticketCount = TicketCount(4),
-            )
-
-        bookingRepository.insertAll(bookingInfo)
-        bookingHistoryAdapter = BookingHistoryAdapter(bookingRepository.getAll().map { it.toUi() }, setupAdapterClickListener())
         presenter.getBookingHistory()
     }
 
@@ -79,7 +50,7 @@ class BookingHistoryFragment :
     }
 
     override fun showBookingHistory(bookingHistory: List<BookingInfoUiModel>) {
-        bookingHistoryAdapter = BookingHistoryAdapter(bookingRepository.getAll().map { it.toUi() }, setupAdapterClickListener())
+        bookingHistoryAdapter = BookingHistoryAdapter(bookingHistory, setupAdapterClickListener())
     }
 
     override fun navigateToBookingComplete(bookingInfo: BookingInfoUiModel) {
