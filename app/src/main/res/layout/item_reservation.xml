@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="reservation"
+            type="woowacourse.movie.presentation.model.ReservationInfoUiModel" />
+
+        <variable
+            name="clickListener"
+            type="woowacourse.movie.presentation.view.reservationlist.ReservationClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:onClick="@{() -> clickListener.onReservationClick(reservation)}"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tv_reservation_list_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:reservationDateTime="@{reservation.dateTime}"
+            app:reservationTheaterName="@{reservation.theaterName}"
+            tools:text="2024.3.2 | 17:00 | 선릉 극장" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{reservation.title}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tv_reservation_list_info"
+            app:layout_constraintTop_toBottomOf="@id/tv_reservation_list_info"
+            tools:text="라라랜드" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
