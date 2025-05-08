@@ -66,9 +66,9 @@ class SeatSelectPresenter(
         view.navigateToComplete(reservationInfo)
     }
 
-    fun getSelectedSeatIds(): List<String> = selectedSeats.labels()
+    override fun getSelectedSeatIds(): List<String> = selectedSeats.labels()
 
-    fun restoreSelectedSeats(seatIds: List<String>) {
+    override fun restoreSelectedSeats(seatIds: List<String>) {
         for (seatId in seatIds) {
             selectedSeats.add(seatId)
             view.showSelectedSeat(seatId)
@@ -77,7 +77,7 @@ class SeatSelectPresenter(
         view.updateConfirmButtonEnabled(selectedSeats.size == reservationInfo.count.value)
     }
 
-    fun restoreButtonState() {
+    override fun restoreButtonState() {
         val isEnabled = selectedSeats.size == reservationInfo.count.value
         view.updateConfirmButtonEnabled(isEnabled)
     }

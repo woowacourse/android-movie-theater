@@ -39,6 +39,12 @@ interface SeatSelectContract {
             message: String,
         )
 
+        fun getSelectedSeatIds(): List<String>
+
         fun reservationConfirmed()
+
+        fun restoreSelectedSeats(seatIds: List<String>)
+
+        fun restoreButtonState()
     }
 }

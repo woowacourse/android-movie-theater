@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationDatabase
+import woowacourse.movie.data.ReservationProviderImpl
 import woowacourse.movie.databinding.ActivitySeatSelectBinding
 import woowacourse.movie.presentation.Extras
 import woowacourse.movie.presentation.getParcelableExtraCompat
