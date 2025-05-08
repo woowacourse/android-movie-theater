@@ -4,18 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout.VERTICAL
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.booking.complete.BookingCompleteActivity
-import woowacourse.movie.databinding.FragmentReservationListBinding
+import woowacourse.movie.databinding.FragmentTicketListBinding
 import woowacourse.movie.ui.model.TicketUiModel
 
 class TicketListFragment : Fragment(), TicketListContract.View {
     private val presenter = TicketListPresenter(this)
-    private var _binding: FragmentReservationListBinding? = null
+    private var _binding: FragmentTicketListBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -23,7 +23,7 @@ class TicketListFragment : Fragment(), TicketListContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reservation_list, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_ticket_list, container, false)
         return binding.root
     }
 
@@ -33,7 +33,7 @@ class TicketListFragment : Fragment(), TicketListContract.View {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter.initializeData(requireActivity().applicationContext)
+        presenter.initializeData(requireContext().applicationContext)
     }
 
     override fun setUpReservationList(reservations: List<TicketUiModel>) {
@@ -42,6 +42,6 @@ class TicketListFragment : Fragment(), TicketListContract.View {
                 val intent = BookingCompleteActivity.newIntent(requireContext(), ticket)
                 startActivity(intent)
             }
-        binding.rvReservation.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager(context).orientation))
+        binding.rvReservation.addItemDecoration(DividerItemDecoration(context, VERTICAL))
     }
 }
