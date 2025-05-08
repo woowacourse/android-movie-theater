@@ -29,28 +29,9 @@
 - [x] 각 영화관은 이름, 상영 가능한 영화 정보를 갖는다
 - [x] 각 영화는 이름, 상영일, 러닝타임, 상영 가능한 시간을 갖는다
 
-### TODO
+- [ ] 예매를 완료하면 내역을 저장한다
 
-- [x] SeatSelectionActivity | 화면 회전 시 데이터 복원
-- [x] SeatSelectionActivity | 버튼 비활성화 버그 수정
-- [x] 매직 넘버 상수화
-- [x] Scheduler | 현재 날짜 & 시간 고정되어 있는 버그 수정
-- [x] Seat | 행 & 열로 좌석 구분하도록 변경
-- [x] Seats | toggle 함수 고민
-- [x] MovieAdapter | 광고 삽입 로직 이동
-- [x] Presenter | 반환값이 없도록 수정
-- [x] layout | ConstraintLayout 중첩 구조 개선
-
-- [x] SeatSelectionActivity | 좌석을 더 선택할 수 있는 점 개선하기
-- [x] MainActivity | fragment 재사용에 대한 고민
-- [x] TheaterAdapter | inflate 위치 이동
-- [x] MovieFragment | Binding 객체 null 처리하기
-- [x] MovieFragment | Bundle 사용 시 스코프 함수 활용
-- [x] Ticket | 불변 객체 보장
-- [x] SeatSelectionActivityTest | 중복되는 코드 함수로 분리
-
-- [x] TheaterViewHolder | 리스너 중복 연결 고민
-- [x] MovieFragment | Bundle 생성 위치 이동
-- [x] SeatSelectionActivity | 좌석 색깔 변경 로직 고민
-- [ ] PresenterTest | Capturing 사용
-- [x] TheaterBottomSheetFragment | MVP 구조로 변경
+### 예매 내역 화면
+- [ ] 예매 내역을 보여 준다
+- [ ] 예매 내역을 터치하면 예매 정보를 보여 준다
+- [ ] 리스트 항목을 누르는 효과를 줘야 한다
