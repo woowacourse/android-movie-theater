@@ -12,6 +12,7 @@ import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.model.DummyMovieDao
 import woowacourse.movie.model.Movie
 import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.util.ExceptionMessages.FRAGMENT_BINDING_STATE_EXCEPTION
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.getParcelableCompat
 import woowacourse.movie.view.reservation.detail.ReservationDetailActivity
@@ -19,7 +20,10 @@ import woowacourse.movie.view.reservation.detail.ReservationDetailActivity
 class TheaterBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
     TheaterContract.View {
-    private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
+    @Suppress("ktlint:standard:backing-property-naming")
+    private var _binding: FragmentTheaterBottomSheetDialogBinding? = null
+    private val binding: FragmentTheaterBottomSheetDialogBinding
+        get() = _binding ?: throw IllegalStateException(FRAGMENT_BINDING_STATE_EXCEPTION)
     private val presenter: TheaterPresenter by lazy { TheaterPresenter(this, DummyMovieDao) }
     private val theaterAdapter: TheaterAdapter by lazy {
         TheaterAdapter(
@@ -36,7 +40,7 @@ class TheaterBottomSheetDialogFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentTheaterBottomSheetDialogBinding.inflate(layoutInflater)
+        _binding = FragmentTheaterBottomSheetDialogBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -97,7 +101,5 @@ class TheaterBottomSheetDialogFragment :
                         putParcelable(Extras.MovieData.MOVIE_KEY, movie)
                     }
             }
-
-        private const val ERROR_ARGUMENT = "arguments가 없습니다."
     }
 }
