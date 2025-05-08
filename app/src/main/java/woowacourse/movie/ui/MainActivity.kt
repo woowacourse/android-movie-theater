@@ -8,13 +8,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import woowacourse.movie.R
-import woowacourse.movie.databinding.ActivityMovieBookingBinding
+import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.ui.history.view.BookingHistoryFragment
 import woowacourse.movie.ui.movielist.view.MovieListFragment
 import woowacourse.movie.ui.settings.view.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMovieBookingBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         binding =
             DataBindingUtil.setContentView(
                 this@MainActivity,
-                R.layout.activity_movie_booking,
+                R.layout.activity_main,
             )
 
         applyWindowInsets()
