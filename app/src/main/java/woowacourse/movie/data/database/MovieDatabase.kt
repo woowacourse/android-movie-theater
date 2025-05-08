@@ -5,12 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import woowacourse.movie.data.Converter
+import woowacourse.movie.data.MovieConverter
 import woowacourse.movie.data.dao.TicketDao
 import woowacourse.movie.data.entity.TicketEntity
 
 @Database(entities = [TicketEntity::class], version = 2)
-@TypeConverters(Converter::class)
+@TypeConverters(MovieConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun TicketDao(): TicketDao
 
