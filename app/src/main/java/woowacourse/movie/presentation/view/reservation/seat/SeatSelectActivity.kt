@@ -30,7 +30,6 @@ class SeatSelectActivity :
         val provider = ReservationProviderImpl(dao)
         SeatSelectPresenter(this, provider)
     }
-    private val presenter: SeatSelectPresenter by lazy { SeatSelectPresenter(this, reservationDao) }
     private val reservationDialog by lazy { ReservationDetailDialog() }
     private val seatViews: MutableMap<String, TextView> = mutableMapOf()
 

@@ -11,9 +11,10 @@ object ReservationMapper {
             dateTime = dateTime,
             seats = seats,
             count = TicketCount(ticketCount),
+            theaterName = theaterName,
         )
 
-    fun ReservationInfo.toEntity(theaterName: String): ReservationEntity =
+    fun ReservationInfo.toEntity(): ReservationEntity =
         ReservationEntity(
             movieTitle = title,
             dateTime = dateTime,

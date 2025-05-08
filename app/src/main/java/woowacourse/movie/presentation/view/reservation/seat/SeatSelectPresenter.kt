@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
-import woowacourse.movie.data.ReservationProviderImpl
+import woowacourse.movie.domain.ReservationProvider
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
@@ -10,7 +10,7 @@ import kotlin.concurrent.thread
 
 class SeatSelectPresenter(
     val view: SeatSelectContract.View,
-    private val provider: ReservationProviderImpl,
+    private val provider: ReservationProvider,
 ) : SeatSelectContract.Presenter {
     private lateinit var reservationInfo: ReservationInfo
     private lateinit var theaterName: String
