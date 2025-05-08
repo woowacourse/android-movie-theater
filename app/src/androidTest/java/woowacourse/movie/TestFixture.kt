@@ -28,28 +28,29 @@ val MOVIE: Movie =
 val MOVIE_TO_RESERVE: MovieToReserve =
     MovieToReserve(
         1,
-        "라라랜드",
+        MOVIE,
+        MOVIE.title,
         MovieDate(
             LocalDate.of(2025, 4, 1),
             LocalDate.of(2025, 5, 30),
         ),
         MovieTime(LocalTime.of(10, 0)),
         TicketCount(2),
-        Theater("JAY 극장"),
+        Theater(1, "JAY 극장"),
     )
 
 val MOVIE_TICKET_B1_C3: MovieTicket =
     MovieTicket(
-        "라라랜드",
+        MOVIE,
         LocalDate.of(2025, 4, 1),
         MovieTime(LocalTime.of(10, 0)),
         listOf(Seat(1, 0), Seat(2, 2)),
-        Theater("JAY 극장"),
+        Theater(1, "JAY 극장"),
     )
 
 val THEATER_MOVIE_SCHEDULE: TheaterMovieSchedule =
     TheaterMovieSchedule(
-        theater = Theater("제이 영화관"),
+        theater = Theater(1, "제이 영화관"),
         movie = MOVIE,
         screeningInfo =
             ScreeningInfo(
