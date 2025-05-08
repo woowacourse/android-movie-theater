@@ -27,4 +27,7 @@
     <string name="title_settings">설정</string>
     <!--  예매 내역 사용  -->
     <string name="divider"> | </string>
+    <string name="reservation_date">%d.%d.%d</string>
+    <string name="reservation_running_Time">%02d:%02d</string>
+    <string name="reservation_theater">%s 극장</string>
 </resources>
