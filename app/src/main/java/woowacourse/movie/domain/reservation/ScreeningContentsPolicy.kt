@@ -16,7 +16,8 @@ class DefaultScreeningContentsPolicy(
             if (screeningContents.size == CONTENTS_SIZE_MAX) break
             screeningContents.add(screening)
             screeningCount++
-            if (screeningCount % 3 == 0) {
+
+            if (screeningCount.shouldAddAdvertisement) {
                 screeningContents.add(advertisements.fetchAdvertisement())
             }
         }
@@ -24,7 +25,10 @@ class DefaultScreeningContentsPolicy(
         return screeningContents
     }
 
+    private val Int.shouldAddAdvertisement: Boolean get() = this % SCREENINGS_PER_ADVERTISEMENT == 0
+
     companion object {
-        const val CONTENTS_SIZE_MAX = 10_000
+        private const val SCREENINGS_PER_ADVERTISEMENT = 3
+        private const val CONTENTS_SIZE_MAX = 10_000
     }
 }
