@@ -23,7 +23,7 @@ fun setFormatLocalDate(
                 formattedStartDate,
                 formattedEndDate,
             )
-    } ?: ""
+    } ?: return
 }
 
 @BindingAdapter("imageRes")
@@ -37,31 +37,35 @@ fun setImage(
 @BindingAdapter("reserveDate")
 fun setFormatReserveDate(
     textView: TextView,
-    movieTicket: MovieTicket,
+    movieTicket: MovieTicket?,
 ) {
-    val formatMovieDate: String = localDateToUI(movieTicket.movieDate)
-    val formatMovieTime: String = movieTicket.movieTime.value.toString()
+    movieTicket?.let {
+        val formatMovieDate: String = localDateToUI(movieTicket.movieDate)
+        val formatMovieTime: String = movieTicket.movieTime.value.toString()
 
-    textView.text =
-        textView.context.getString(
-            R.string.reservation_complete_ticket_timestamp,
-            formatMovieDate,
-            formatMovieTime,
-        )
+        textView.text =
+            textView.context.getString(
+                R.string.reservation_complete_ticket_timestamp,
+                formatMovieDate,
+                formatMovieTime,
+            )
+    } ?: return
 }
 
 @BindingAdapter("theaterInfo")
 fun setTheaterInfo(
     textView: TextView,
-    movieTicket: MovieTicket,
+    movieTicket: MovieTicket?,
 ) {
-    val formateSeats: String = seatsToUI(movieTicket.seats)
+    movieTicket?.let {
+        val formateSeats: String = seatsToUI(movieTicket.seats)
 
-    textView.text =
-        textView.context.getString(
-            R.string.reservation_complete_seat_theater_name_info,
-            movieTicket.seats.size,
-            formateSeats,
-            movieTicket.theater.name,
-        )
+        textView.text =
+            textView.context.getString(
+                R.string.reservation_complete_seat_theater_name_info,
+                movieTicket.seats.size,
+                formateSeats,
+                movieTicket.theater.name,
+            )
+    } ?: return
 }
