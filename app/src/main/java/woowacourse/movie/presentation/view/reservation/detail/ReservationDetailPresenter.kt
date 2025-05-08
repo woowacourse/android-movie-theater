@@ -97,8 +97,8 @@ class ReservationDetailPresenter(
                 selectedDateTime,
                 Seats.create(),
                 ticketCount,
-            ).toPresentation(theaterName)
-
+                theaterName,
+            ).toPresentation()
         view.navigateToSeatSelect(reservationInfo)
     }
 
