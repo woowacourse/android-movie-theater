@@ -40,4 +40,7 @@
     <string name="bottom_nav_booking_history">예매 내역</string>
     <string name="bottom_nav_home">홈</string>
     <string name="bottom_nav_setting">설정</string>
+
+    <!--    BookingHistoryFragment-->
+    <string name="booking_history_divider">\u00A0|\u00A0</string>
 </resources>
