@@ -8,8 +8,11 @@ import java.time.LocalDateTime
 
 @Entity(tableName = "reservations")
 data class ReservationEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo(name = "movie_title") val title: String,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @ColumnInfo(name = "movie_title") val movieTitle: String,
     @ColumnInfo(name = "date_time") val dateTime: LocalDateTime,
+    @ColumnInfo(name = "ticket_count") val ticketCount: Int,
     @ColumnInfo(name = "seats") val seats: Seats,
+    @ColumnInfo(name = "theater_name") val theaterName: String,
+    @ColumnInfo(name = "total_price") val totalPrice: Int,
 )
