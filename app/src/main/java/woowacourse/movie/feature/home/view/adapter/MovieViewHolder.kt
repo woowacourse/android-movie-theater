@@ -13,9 +13,9 @@ class MovieViewHolder(
     ) {
     override fun bind(item: ContentItem.Movie) {
         super.bind(item)
-        binding.executePendingBindings()
         binding.movie = item.value
         binding.handler = handler
+        binding.executePendingBindings()
     }
 
     interface Handler {

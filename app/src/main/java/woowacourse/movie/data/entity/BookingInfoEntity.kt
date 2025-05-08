@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "booking_info")
 data class BookingInfoEntity(
-    @PrimaryKey(autoGenerate = true) val uid: Long = 0L,
+    @PrimaryKey(autoGenerate = true) val id: Long? = 0L,
     @ColumnInfo(name = "movie_id") val movieId: Long,
     @ColumnInfo(name = "movie_title") val movieTitle: String,
     @ColumnInfo(name = "start_date") val startDate: String,

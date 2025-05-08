@@ -16,6 +16,7 @@ import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.BookingInfo
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieDate
+import woowacourse.movie.domain.model.MovieSeat
 import woowacourse.movie.domain.model.MovieSeats
 import woowacourse.movie.domain.model.MovieTime
 import woowacourse.movie.domain.model.TicketCount
@@ -49,8 +50,8 @@ class BookingHistoryFragment :
                 theaterName = "잠실",
                 date = MovieDate(LocalDate.now()),
                 time = MovieTime(LocalTime.now()),
-                seats = MovieSeats(),
-                ticketCount = TicketCount(20),
+                seats = MovieSeats(setOf(MovieSeat(1, 1), MovieSeat(1, 2))),
+                ticketCount = TicketCount(4),
             )
         val database =
             Room

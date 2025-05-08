@@ -11,6 +11,7 @@ class TheaterViewHolder(
     fun bind(screening: ScreeningUiModel) {
         binding.screening = screening
         binding.handler = handler
+        binding.executePendingBindings()
     }
 
     interface Handler {

@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class BookingInfoUiModel(
+    val id: Long? = null,
     val movie: MovieUiModel = MovieUiModel(),
     val theaterName: String = "",
     val date: MovieDateUiModel = MovieDateUiModel(),

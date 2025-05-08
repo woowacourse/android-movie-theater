@@ -24,6 +24,7 @@ class TheatersDialogFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_fragment_theaters, container, false)
+        binding.executePendingBindings()
         return binding.root
     }
 

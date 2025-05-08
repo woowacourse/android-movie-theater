@@ -21,7 +21,7 @@ class BookingDetailPresenter(
 
     override fun prepareBookingInfo(screeningUiModel: ScreeningUiModel) {
         val screening: Screening = screeningUiModel.toDomain()
-        bookingInfo = BookingInfo(screening.movie, screening.theaterName)
+        bookingInfo = BookingInfo(movie = screening.movie, theaterName = screening.theaterName)
         bookingInfo.updateMovieTime(screening.times.first())
 
         val movieDates =

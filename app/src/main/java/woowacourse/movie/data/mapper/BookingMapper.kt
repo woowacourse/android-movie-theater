@@ -15,10 +15,9 @@ import woowacourse.movie.domain.model.TicketCount
 import java.time.LocalDate
 import java.time.LocalTime
 
-private val gson = Gson()
-
 fun BookingInfo.toData(): BookingInfoEntity =
     BookingInfoEntity(
+        id = id,
         movieId = movie.id,
         movieTitle = movie.title,
         startDate = movie.startDate.value.toString(),
@@ -35,6 +34,7 @@ fun BookingInfoEntity.toDomain(): BookingInfo {
     val seatType = object : TypeToken<List<MovieSeatEntity>>() {}.type
     val dataSeats: List<MovieSeatEntity> = gson.fromJson(seatList, seatType)
     return BookingInfo(
+        id = id,
         movie =
             Movie(
                 id = movieId,
@@ -54,3 +54,5 @@ fun BookingInfoEntity.toDomain(): BookingInfo {
 fun MovieSeat.toData(): MovieSeatEntity = MovieSeatEntity(row, column, seatType.name, isSelected)
 
 fun MovieSeatEntity.toDomain(): MovieSeat = MovieSeat(row, column, SeatType.valueOf(seatType), isSelected)
+
+private val gson = Gson()
