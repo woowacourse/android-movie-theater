@@ -21,3 +21,5 @@ fun Seats.toPresentation(): SeatsUiModel =
     SeatsUiModel(
         value = this.value.map { it.toPresentation() },
     )
+
+fun SeatsUiModel.toDomain(): Seats = Seats.of(value.map { it.toDomain() })

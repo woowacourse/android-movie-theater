@@ -3,7 +3,6 @@ package woowacourse.movie.presentation.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import woowacourse.movie.domain.model.ReservationInfo
-import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.TicketCount
 import java.time.LocalDateTime
 
@@ -29,6 +28,6 @@ fun ReservationInfoUiModel.toDomain(): ReservationInfo =
     ReservationInfo(
         title,
         dateTime,
-        Seats.create(),
+        seats.toDomain(),
         TicketCount(count),
     )

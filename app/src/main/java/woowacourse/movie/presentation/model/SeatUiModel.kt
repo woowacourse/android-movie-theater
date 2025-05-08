@@ -11,3 +11,5 @@ data class SeatUiModel(
 ) : Parcelable
 
 fun Seat.toPresentation(): SeatUiModel = SeatUiModel(label, price)
+
+fun SeatUiModel.toDomain(): Seat = Seat(label)
