@@ -117,18 +117,6 @@ class ReservationPresenterTest {
     }
 
     @Test
-    fun `티켓 개수 업데이트 시 null이 들어오면 티켓 개수가 그대로 보인다`() {
-        // given:
-        every { view.showTicketCount(any()) } just Runs
-
-        // when:
-        presenter.updateTicketCount(null)
-
-        // then:
-        verify { view.showTicketCount(1) }
-    }
-
-    @Test
     fun `선택한 날짜 포지션을 업데이트하면 선택된 날짜가 보인다`() {
         // given:
         every { view.showSelectedDate(any()) } just Runs

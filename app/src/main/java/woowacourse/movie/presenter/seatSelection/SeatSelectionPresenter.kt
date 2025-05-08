@@ -8,7 +8,7 @@ class SeatSelectionPresenter(
     private val view: SeatSelectionContracts.View,
 ) : SeatSelectionContracts.Presenter {
     private lateinit var movieToReserve: MovieToReserve
-    private var seats: MutableList<Seat> = mutableListOf()
+    private val seats: MutableList<Seat> = mutableListOf()
 
     override fun loadSeats(
         row: Int,

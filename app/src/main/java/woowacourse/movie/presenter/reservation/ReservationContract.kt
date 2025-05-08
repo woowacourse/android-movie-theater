@@ -38,7 +38,7 @@ interface ReservationContract {
 
         fun updateMovieTime(time: LocalTime)
 
-        fun updateTicketCount(count: Int?)
+        fun updateTicketCount(count: Int)
 
         fun updateSelectedDatePosition(position: Int)
 
