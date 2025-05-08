@@ -12,6 +12,8 @@ abstract class ReservationDatabase : RoomDatabase() {
     abstract fun reservationDao(): ReservationDao
 
     companion object {
+        private const val DB_NAME = "reservations"
+
         @Volatile
         private var instance: ReservationDatabase? = null
 
@@ -20,7 +22,7 @@ abstract class ReservationDatabase : RoomDatabase() {
                 .databaseBuilder(
                     context.applicationContext,
                     ReservationDatabase::class.java,
-                    "reservations",
+                    DB_NAME,
                 ).build()
                 .also { instance = it }
     }
