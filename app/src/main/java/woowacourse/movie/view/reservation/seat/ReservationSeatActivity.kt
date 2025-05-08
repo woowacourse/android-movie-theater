@@ -34,6 +34,7 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
     private lateinit var seatLayout: TableLayout
 
     private lateinit var movieSelectableButton: TextView
+    private var currentSeats: Seats = Seats()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +59,7 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putSerializable(KEY_SEATS, presenter.getCurrentSeat())
+        outState.putSerializable(KEY_SEATS, currentSeats)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -107,6 +108,10 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
             textView.text = getSeatName(position)
             setSeatColor(textView, position)
         }
+    }
+
+    override fun setSeat(seats: Seats) {
+        currentSeats = seats
     }
 
     override fun setSeatClickListener() {

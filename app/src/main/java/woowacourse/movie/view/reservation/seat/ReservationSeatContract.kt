@@ -14,8 +14,6 @@ interface ReservationSeatContract {
 
         fun deselectSeat(position: Position)
 
-        fun getCurrentSeat(): Seats
-
         fun restoreSeat(seats: Seats)
     }
 
@@ -25,6 +23,8 @@ interface ReservationSeatContract {
         fun setSeatTag()
 
         fun setSeatInit()
+
+        fun setSeat(seats: Seats)
 
         fun setReservationButton(onClickConfirm: () -> Unit)
 

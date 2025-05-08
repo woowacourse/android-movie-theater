@@ -11,10 +11,6 @@ class ReservationSeatPresenter(
     private lateinit var ticket: Ticket
     private var seats = Seats()
 
-    override fun getCurrentSeat(): Seats {
-        return seats
-    }
-
     override fun fetchData(ticket: Ticket) {
         this.ticket = ticket
         view.setSeatTag()
@@ -30,6 +26,7 @@ class ReservationSeatPresenter(
     override fun selectSeat(position: Position) {
         if (seats.selectedLimit(ticket.personnel).not()) {
             seats = seats.addSeat(Seat(position))
+            view.setSeat(seats)
             view.selectSeatView(position)
             refreshUI()
         }
@@ -37,6 +34,7 @@ class ReservationSeatPresenter(
 
     override fun deselectSeat(position: Position) {
         seats = seats.removeSeat(Seat(position))
+        view.setSeat(seats)
         view.deselectSeatView(position)
         refreshUI()
     }
