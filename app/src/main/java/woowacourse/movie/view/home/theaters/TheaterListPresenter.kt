@@ -15,12 +15,11 @@ class TheaterListPresenter(
 
     override fun selectTheater(
         movieId: Int,
-        selectedTheater: Theater,
+        theater: Theater,
     ) {
-        val theaterName = selectedTheater.name
-        val screeningTimes = selectedTheater.screeningTimes(movieId)
+        val theaterName = theater.name
+        val screeningTimes = theater.screenings(movieId)
         val screeningInfo = ScreeningInfo(movieId, theaterName, screeningTimes)
-
         view.moveToBooking(screeningInfo)
     }
 }

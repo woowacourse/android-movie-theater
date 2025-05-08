@@ -42,7 +42,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
                 return
             }
         presenter = BookingPresenter(this, screeningInfo)
-        presenter.initBooking(LocalDateTime.of(2025,5,8,23,55))
+        presenter.initBooking(LocalDateTime.now())
         initView()
     }
 

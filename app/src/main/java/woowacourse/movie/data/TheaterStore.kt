@@ -9,47 +9,47 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 class TheaterStore {
-    fun createTheaters(): Theaters {
-        val movies = MovieStore().movies
+    private val movies = MovieStore().movies
 
+    fun createTheaters(): Theaters {
         val theaters =
             listOf(
                 Theater(
                     "선릉 극장",
-                    generateScreeningsForTheater(
-                        movies,
+                    generateTheaterScreenings(
                         listOf(0, 1, 2, 3, 5),
                         listOf(
-                            LocalTime.of(10, 10),
-                            LocalTime.of(14, 40),
-                            LocalTime.of(18, 20),
+                            LocalTime.of(13, 20),
+                            LocalTime.of(15, 35),
+                            LocalTime.of(16, 0),
+                            LocalTime.of(18, 5),
+                            LocalTime.of(19, 55),
                         ),
                     ),
                 ),
                 Theater(
                     "잠실 극장",
-                    generateScreeningsForTheater(
-                        movies,
+                    generateTheaterScreenings(
                         listOf(1, 2, 4, 6, 7),
                         listOf(
-                            LocalTime.of(9, 30),
-                            LocalTime.of(12, 0),
-                            LocalTime.of(15, 20),
-                            LocalTime.of(19, 40),
-                            LocalTime.of(22, 50),
+                            LocalTime.of(10, 45),
+                            LocalTime.of(13, 20),
+                            LocalTime.of(15, 35),
+                            LocalTime.of(16, 0),
                         ),
                     ),
                 ),
                 Theater(
                     "강남 극장",
-                    generateScreeningsForTheater(
-                        movies,
+                    generateTheaterScreenings(
                         listOf(1, 2, 5, 6, 7),
                         listOf(
-                            LocalTime.of(9, 15),
-                            LocalTime.of(13, 30),
-                            LocalTime.of(17, 0),
-                            LocalTime.of(21, 20),
+                            LocalTime.of(10, 45),
+                            LocalTime.of(11, 35),
+                            LocalTime.of(13, 20),
+                            LocalTime.of(16, 0),
+                            LocalTime.of(18, 5),
+                            LocalTime.of(19, 55),
                         ),
                     ),
                 ),
@@ -58,32 +58,28 @@ class TheaterStore {
         return Theaters(theaters)
     }
 
-    private fun generateScreeningsForTheater(
-        movies: List<Movie>,
+    private fun generateTheaterScreenings(
         movieIds: List<Int>,
-        timeslots: List<LocalTime>,
-    ): List<Screening> {
-        return movieIds
-            .mapNotNull { id -> movies.find { movie -> movie.id == id } }
-            .flatMap { movie -> generateScreeningsForMovie(movie, timeslots) }
-    }
+        screeningTimes: List<LocalTime>,
+    ): List<Screening> =
+        movieIds.mapNotNull { movieId ->
+            movies.find { movie -> movie.id == movieId }
+        }.flatMap { movie -> generateMovieScreenings(movie, screeningTimes) }
 
-    private fun generateScreeningsForMovie(
+    private fun generateMovieScreenings(
         movie: Movie,
-        timeSlots: List<LocalTime>,
+        screeningTimes: List<LocalTime>,
     ): List<Screening> {
-        val dateRange = generateDateRange(movie.screeningDates.startDate, movie.screeningDates.endDate)
-        return dateRange.flatMap { date ->
-            timeSlots.map { time -> Screening(movie.id, LocalDateTime.of(date, time)) }
+        val screeningDates = generateDateRange(movie.startDate, movie.endDate)
+        return screeningDates.flatMap { date ->
+            screeningTimes.map { time -> Screening(movie.id, LocalDateTime.of(date, time)) }
         }
     }
 
     private fun generateDateRange(
         startDate: LocalDate,
         endDate: LocalDate,
-    ): List<LocalDate> {
-        return generateSequence(startDate) { current ->
-            if (current.isBefore(endDate)) current.plusDays(1) else null
-        }.toList()
-    }
+    ) = generateSequence(startDate) { date ->
+        if (date.isBefore(endDate)) date.plusDays(1) else null
+    }.toList()
 }

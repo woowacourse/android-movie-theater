@@ -19,8 +19,8 @@ private fun Movie.toUiModel(): MovieUiModel {
         id = id,
         title = title,
         imgName = posterResource,
-        startDate = StringFormatter.dotDateFormat(screeningDates.startDate),
-        endDate = StringFormatter.dotDateFormat(screeningDates.endDate),
+        startDate = StringFormatter.dotDateFormat(startDate),
+        endDate = StringFormatter.dotDateFormat(endDate),
         runningTime = runningTime,
     )
 }

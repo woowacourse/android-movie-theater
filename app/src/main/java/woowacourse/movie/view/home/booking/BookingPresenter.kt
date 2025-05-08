@@ -3,8 +3,7 @@ package woowacourse.movie.view.home.booking
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.booking.Booking
-import woowacourse.movie.domain.model.booking.ScreeningDates
-import woowacourse.movie.domain.model.booking.ScreeningTimes
+import woowacourse.movie.domain.model.booking.Schedule
 import woowacourse.movie.view.home.model.ScreeningInfo
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -15,26 +14,28 @@ class BookingPresenter(
     private val screeningInfo: ScreeningInfo,
 ) : BookingContract.Presenter {
     lateinit var booking: Booking
+    val schedule = Schedule(screeningInfo.screenings)
 
     override fun initBooking(now: LocalDateTime) {
         val movie = MovieStore().movies[screeningInfo.movieId]
         val screenings = screeningInfo.screenings
 
-        val screeningDates = ScreeningDates(screenings.map { screening -> screening.toLocalDate() })
-        val bookableDates: List<LocalDate> = screeningDates.bookableDates(now.toLocalDate())
+        val bookableDates = this.schedule.bookableDates(LocalDateTime.now())
         if (bookableDates.isEmpty()) {
             view.notifyNoAvailableTime()
             return
         }
-        val defaultDate: LocalDate = bookableDates.first()
-
-        val screeningTimes = ScreeningTimes(now, screeningInfo.screeningTimes(defaultDate))
-        val bookableTimes: List<LocalTime> = screeningTimes.bookableTimes(defaultDate)
-        if (bookableTimes.isEmpty()) {
-            view.notifyNoAvailableTime()
-            return
-        }
-        val defaultTime: LocalTime = bookableTimes.first()
+        val defaultDate: LocalDate =
+            bookableDates.firstOrNull() ?: run {
+                view.notifyNoAvailableTime()
+                return
+            }
+        val bookableTimes = this.schedule.bookableTimes(defaultDate, LocalDateTime.now())
+        val defaultTime: LocalTime =
+            bookableTimes.firstOrNull() ?: run {
+                view.notifyNoAvailableTime()
+                return
+            }
 
         booking =
             Booking(
@@ -46,7 +47,7 @@ class BookingPresenter(
             )
 
         view.showMovieDetail(movie, screenings)
-        view.showScreeningPeriod(screeningDates.startDate, screeningDates.endDate)
+        view.showScreeningPeriod(this.schedule.startDate, this.schedule.endDate)
         view.showScreeningDates(bookableDates)
         view.showScreeningTimes(bookableTimes, defaultTime)
         view.showAdmissionCount(booking.count.value)
@@ -62,10 +63,7 @@ class BookingPresenter(
     }
 
     override fun selectDate(date: LocalDate) {
-        val timesOnSelectedDate = screeningInfo.screeningTimes(date)
-        val bookableTimes =
-            ScreeningTimes(LocalDateTime.now(), timesOnSelectedDate).bookableTimes(date)
-
+        val bookableTimes = schedule.bookableTimes(date, LocalDateTime.now())
         if (bookableTimes.isEmpty()) {
             view.notifyNoAvailableTime()
         } else {
