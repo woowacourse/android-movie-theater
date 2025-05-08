@@ -1,0 +1,27 @@
+package woowacourse.movie.reservation
+
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.ui.model.TicketUiModel
+
+class TicketAdapter(
+    private val reservations: List<TicketUiModel>,
+) : RecyclerView.Adapter<TicketViewHolder>() {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): TicketViewHolder {
+        return TicketViewHolder(parent)
+    }
+
+    override fun getItemCount(): Int = reservations.size
+
+    override fun onBindViewHolder(
+        holder: TicketViewHolder,
+        position: Int,
+    ) {
+        val reservation = reservations[position]
+
+        holder.bind(reservation)
+    }
+}

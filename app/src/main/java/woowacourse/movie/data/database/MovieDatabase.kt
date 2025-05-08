@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import woowacourse.movie.data.Converter
 import woowacourse.movie.data.dao.TicketDao
 import woowacourse.movie.data.entity.TicketEntity
 
-@Database(entities = [TicketEntity::class], version = 1)
+@Database(entities = [TicketEntity::class], version = 2)
+@TypeConverters(Converter::class)
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun TicketDao(): TicketDao
 
@@ -22,7 +25,9 @@ abstract class MovieDatabase : RoomDatabase() {
                         context.applicationContext,
                         MovieDatabase::class.java,
                         "movie",
-                    ).build()
+                    )
+                        .fallbackToDestructiveMigration()
+                        .build()
                 this.instance = instance
                 instance
             }

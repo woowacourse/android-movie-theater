@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityMovieBinding
 import woowacourse.movie.movie.MovieFragment
+import woowacourse.movie.reservation.TicketListFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieBinding
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.menu_setting -> replaceFragment(TAG_SETTING_FRAGMENT, SettingFragment())
 
-                R.id.menu_reserve_list -> replaceFragment(TAG_RESERVATION_LIST_FRAGMENT, ReservationListFragment())
+                R.id.menu_reserve_list -> replaceFragment(TAG_RESERVATION_LIST_FRAGMENT, TicketListFragment())
             }
             true
         }

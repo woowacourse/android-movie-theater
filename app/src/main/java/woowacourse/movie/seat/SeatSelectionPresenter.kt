@@ -2,8 +2,8 @@ package woowacourse.movie.seat
 
 import android.content.Context
 import woowacourse.movie.data.database.MovieDatabase
-import woowacourse.movie.data.entity.TicketEntity
 import woowacourse.movie.mapper.toDomain
+import woowacourse.movie.mapper.toEntity
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Seat
 import woowacourse.movie.model.Seats
@@ -57,22 +57,8 @@ class SeatSelectionPresenter(
         val db = MovieDatabase.getDatabase(context)
         thread {
             db.TicketDao().saveTicket(
-                TicketEntity(
-                    title = ticket.title,
-                    date = ticket.selectedDate.toString(),
-                    time = ticket.selectedTime.toString(),
-                    headCount = ticket.headCount.value,
-                    seat = convertSeat(),
-                    theater = ticket.theater,
-                    price = ticket.amount.toString(),
-                ),
+                ticket.toEntity(),
             )
-        }
-    }
-
-    private fun convertSeat(): String {
-        return ticket.seats.seats.joinToString(", ") { point ->
-            "${'A' + point.row}${point.col + 1}"
         }
     }
 
