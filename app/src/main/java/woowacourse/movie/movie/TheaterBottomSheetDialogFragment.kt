@@ -52,6 +52,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     ) {
         val intent = MovieBookingActivity.movieBookingIntent(requireContext(), movie, theater)
         startActivity(intent)
+        dismiss()
     }
 
     companion object {

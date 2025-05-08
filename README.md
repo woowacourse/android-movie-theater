@@ -143,3 +143,5 @@
 
 - [x] refactor: 피드아이템 생성 분리
 - MVP 인터페이스 -> XXContract로 이름 변경
+
+- [x] refactor: bottomSheet 뒤로가기 시 사라지도록 변경
