@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.booking.complete.BookingCompleteActivity
 import woowacourse.movie.booking.complete.BookingType
@@ -43,10 +45,15 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
     }
 
     override fun showReservationList(reservations: List<TicketUiModel>) {
-        binding.recyclerViewReservationList.adapter =
+        val adapter =
             ReservationListAdapter(reservations) { reservation ->
                 presenter.setReservations(reservation)
             }
+
+        binding.recyclerViewReservationList.adapter = adapter
+
+        val divider = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
+        binding.recyclerViewReservationList.addItemDecoration(divider)
     }
 
     override fun showToast(message: String) {

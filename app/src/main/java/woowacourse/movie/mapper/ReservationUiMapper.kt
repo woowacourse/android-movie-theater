@@ -5,12 +5,12 @@ import woowacourse.movie.ui.model.TicketUiModel
 
 fun Reservation.toUiModel(): TicketUiModel {
     return TicketUiModel(
-        theater = theater,
-        title = title,
-        headCount = headCount,
-        selectedDateText = selectedDate,
-        selectedTimeText = selectedTime,
-        totalPrice = price,
-        seats = seats,
+        theater = this.theater,
+        title = this.title,
+        headCount = this.headCount,
+        selectedDateText = this.selectedDate,
+        selectedTimeText = this.selectedTime,
+        totalPrice = this.price,
+        seats = this.seats,
     )
 }
