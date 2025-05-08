@@ -4,37 +4,54 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.databinding.ActivityBookingCompleteBinding
+import woowacourse.movie.domain.model.movie.Headcount
 import woowacourse.movie.domain.model.theater.BookedTicket
 import woowacourse.movie.domain.model.theater.Seat
+import woowacourse.movie.domain.model.theater.Seats
 import woowacourse.movie.ui.MainActivity
 import woowacourse.movie.ui.complete.contract.BookingCompleteContract
 import woowacourse.movie.ui.complete.presenter.BookingCompletePresenter
 import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.intentSerializable
+import java.time.LocalDateTime
 
 class BookingCompleteActivity :
     AppCompatActivity(),
     BookingCompleteContract.View {
+    private lateinit var binding: ActivityBookingCompleteBinding
     private val bookingCompletePresenter = BookingCompletePresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_booking_complete)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
 
         applyWindowInsets()
-        bookingCompletePresenter.loadBookedTicket()
+        initializeFromIntent()
         bookingCompletePresenter.updateViews()
-
         setOnBackPressedCallback()
+    }
+
+    private fun initializeFromIntent() {
+        val bookedTicket =
+            intent.intentSerializable(EXTRA_BOOKED_TICKET, BookedTicket::class.java)
+                ?: BookedTicket(
+                    DEFAULT_MOVIE_TITLE,
+                    Headcount(),
+                    LocalDateTime.MIN,
+                    Seats(),
+                    DEFAULT_THEATER_NAME,
+                )
+        bookingCompletePresenter.loadBookedTicket(bookedTicket)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
@@ -47,18 +64,13 @@ class BookingCompleteActivity :
             else -> super.onOptionsItemSelected(item)
         }
 
-    override fun getBookedTicket(): BookedTicket? = intent.intentSerializable(EXTRA_BOOKED_TICKET, BookedTicket::class.java)
-
     override fun setBookedTicket(bookedTicket: BookedTicket) {
-        val movieNameTextView: TextView = findViewById(R.id.tv_title)
-        val releaseDateTextView: TextView = findViewById(R.id.tv_release_date)
-        val headcountTextView: TextView = findViewById(R.id.tv_headcount)
-        headcountTextView.isSelected = true
+        binding.tvHeadcount.isSelected = true
 
         with(bookedTicket) {
-            releaseDateTextView.text = StringFormatter.dateTimeFormat(dateTime)
-            movieNameTextView.text = movieName
-            headcountTextView.text =
+            binding.tvReleaseDate.text = StringFormatter.dateTimeFormat(dateTime)
+            binding.tvTitle.text = movieName
+            binding.tvHeadcount.text =
                 getString(R.string.text_headcount_with_seats_and_theater).format(
                     headcount.count,
                     seats.seats
@@ -72,8 +84,7 @@ class BookingCompleteActivity :
 
     override fun setBookedTicketPrice(price: Int) {
         val priceFormat: String = StringFormatter.thousandFormat(price)
-        val priceTextView: TextView = findViewById(R.id.tv_price)
-        priceTextView.text = getString(R.string.text_on_site_payment).format(priceFormat)
+        binding.tvPrice.text = getString(R.string.text_on_site_payment).format(priceFormat)
     }
 
     private fun applyWindowInsets() {
@@ -117,5 +128,8 @@ class BookingCompleteActivity :
 
         private const val EXTRA_BOOKED_TICKET = "bookedTicket"
         private const val ASCII_A = 'A'
+
+        private const val DEFAULT_MOVIE_TITLE = "DEFAULT_MOVIE_TITLE"
+        private const val DEFAULT_THEATER_NAME = "DEFAULT_THEATER_NAME"
     }
 }
