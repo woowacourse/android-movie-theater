@@ -4,7 +4,7 @@ import woowacourse.movie.domain.ticket.Ticket
 
 interface ReservationHistoryContract {
     interface Presenter {
-        fun presentScreen(tickets: List<Ticket>)
+        fun presentScreen()
     }
 
     interface View {
