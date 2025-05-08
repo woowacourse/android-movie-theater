@@ -1,16 +1,30 @@
-package woowacourse.movie
+package woowacourse.movie.presentation.base
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import woowacourse.movie.R
 
-class MainActivity : AppCompatActivity() {
+abstract class BaseActivity<T : ViewDataBinding>(
+    @LayoutRes private val layoutResId: Int,
+) : AppCompatActivity(layoutResId) {
+    protected lateinit var binding: T
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = DataBindingUtil.setContentView(this, layoutResId)
+
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        setWindowInsets()
+    }
+
+    private fun setWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
