@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
@@ -33,7 +34,13 @@ class ReservationCompleteActivity :
             insets
         }
 
-        presenter.updateTicketData(intent.getSerializableExtraData<MovieTicket>(TICKET_DATA_KEY))
+        val movieTicket: MovieTicket? =
+            intent.getSerializableExtraData<MovieTicket>(TICKET_DATA_KEY)
+        if (movieTicket == null) {
+            presenter.requestErrorDialogMessage()
+            return
+        }
+        presenter.updateTicketData(movieTicket)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupBackPressedDispatcher()
     }
@@ -58,6 +65,16 @@ class ReservationCompleteActivity :
 
     override fun showMovieTicket(movieTicket: MovieTicket) {
         binding.movieTicket = movieTicket
+    }
+
+    override fun showErrorDialogMessage() {
+        AlertDialog.Builder(this).run {
+            setMessage(R.string.reservation_complete_error_message)
+                .setCancelable(false)
+                .setPositiveButton(R.string.reservation_complete_go_back) { _, _ ->
+                    finish()
+                }.show()
+        }
     }
 
     companion object {

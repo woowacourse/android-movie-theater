@@ -7,20 +7,14 @@ import java.io.Serializable
 
 const val SERIALIZABLE_EXTRA_ERROR_MESSAGE = "Serializable extra '%s'를 찾을 수 없습니다."
 
-inline fun <reified T : Serializable> Intent.getSerializableExtraData(key: String): T =
+inline fun <reified T : Serializable> Intent.getSerializableExtraData(key: String): T? =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        requireNotNull(
-            getSerializableExtra(
-                key,
-                T::class.java,
-            ),
-        ) { SERIALIZABLE_EXTRA_ERROR_MESSAGE.format(key) }
+        getSerializableExtra(
+            key,
+            T::class.java,
+        )
     } else {
-        requireNotNull(getSerializableExtra(key) as? T) {
-            SERIALIZABLE_EXTRA_ERROR_MESSAGE.format(
-                key,
-            )
-        }
+        getSerializableExtra(key) as? T
     }
 
 inline fun <reified T : Serializable> Bundle.getSerializableExtraData(key: String): T =

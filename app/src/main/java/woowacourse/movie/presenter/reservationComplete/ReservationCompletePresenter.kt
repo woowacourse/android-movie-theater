@@ -8,4 +8,8 @@ class ReservationCompletePresenter(
     override fun updateTicketData(movieTicket: MovieTicket) {
         view.showMovieTicket(movieTicket)
     }
+
+    override fun requestErrorDialogMessage() {
+        view.showErrorDialogMessage()
+    }
 }
