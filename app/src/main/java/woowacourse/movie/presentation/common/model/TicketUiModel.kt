@@ -7,7 +7,7 @@ import woowacourse.movie.domain.model.ticketing.Ticket
 import java.time.LocalDateTime
 
 @Parcelize
-class TicketUiModel(
+data class TicketUiModel(
     val title: String,
     val theaterName: String,
     val dateTime: LocalDateTime,
