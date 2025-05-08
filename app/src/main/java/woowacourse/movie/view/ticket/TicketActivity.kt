@@ -16,7 +16,6 @@ import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.presenter.ticket.TicketPresenter
 import woowacourse.movie.view.util.ErrorMessage
-import java.io.Serializable
 import java.time.LocalDateTime
 
 class TicketActivity :
@@ -50,28 +49,9 @@ class TicketActivity :
             intent?.getTicketExtra(EXTRA_TICKET) ?: error(
                 ErrorMessage(CAUSE_TICKET).notProvided(),
             )
-        val seats: Set<Seat> =
-            intent.getSeatsExtra() ?: error(
-                ErrorMessage(CAUSE_SEATS).notProvided(),
-            )
-        val cinemaName =
-            intent.getStringExtra(EXTRA_CINEMA_NAME)
-                ?: error(ErrorMessage(CAUSE_CINEMA).notProvided())
 
-        presenter = TicketPresenter(this, ticket, seats, cinemaName)
+        presenter = TicketPresenter(this, ticket)
     }
-
-    @Suppress("DEPRECATION")
-    private fun Intent.getSeatsExtra(): Set<Seat>? =
-        when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ->
-                getSerializableExtra(
-                    EXTRA_SEATS,
-                    LinkedHashSet::class.java,
-                ) as Set<Seat>
-
-            else -> (getSerializableExtra(EXTRA_SEATS) as? Set<Seat>)
-        }
 
     private fun findViews() {
         cancelDescriptionView = findViewById<TextView>(R.id.tv_ticket_cancel_description)
@@ -123,15 +103,14 @@ class TicketActivity :
     }
 
     override fun setCount(
-        count: Int,
         seats: Set<Seat>,
         cinemaName: String,
     ) {
         descriptionView.text =
             getString(
                 R.string.ticket_description,
-                count,
-                seats.joinToString { it.prettyString },
+                seats.size,
+                seats.map { it.prettyString }.sorted().joinToString(),
                 cinemaName,
             )
     }
@@ -150,23 +129,14 @@ class TicketActivity :
         private const val CAUSE_CINEMA = "cinemaName"
 
         private const val EXTRA_TICKET = "woowacourse.movie.EXTRA_TICKET"
-        private const val EXTRA_SEATS = "woowacourse.movie.EXTRA_SEATS"
-        private const val EXTRA_CINEMA_NAME = "woowacourse.movie.EXTRA_CINEMA_NAME"
 
         fun newIntent(
             context: Context,
-            title: String,
-            count: Int,
-            showtime: LocalDateTime,
-            seats: Set<Seat>,
-            cinemaName: String,
+            ticket: Ticket,
         ): Intent =
             run {
-                val ticket = Ticket(title, count, showtime)
                 Intent(context, TicketActivity::class.java)
                     .putExtra(EXTRA_TICKET, ticket)
-                    .putExtra(EXTRA_SEATS, seats as? Serializable)
-                    .putExtra(EXTRA_CINEMA_NAME, cinemaName)
             }
     }
 }

@@ -85,15 +85,20 @@ class SeatSelectionActivity :
     }
 
     private fun initPresenter(selectedSeats: Set<Seat>?) {
-        val ticket =
-            intent.getTicketExtra(EXTRA_TICKET) ?: error(ErrorMessage(CAUSE_TICKET).notProvided())
+        val intent = intent ?: error("")
+
+        val title: String = intent.getStringExtra(EXTRA_TITLE) ?: ""
+        val count: Int = intent.getIntExtra(EXTRA_COUNT, -1)
+        val showtime: LocalDateTime = intent.showtimeExtra
         val cinemaName =
             intent.getStringExtra(EXTRA_CINEMA_NAME)
                 ?: error(ErrorMessage(CAUSE_CINEMA_NAME).notProvided())
         presenter =
             SeatSelectionPresenter(
                 this,
-                ticket,
+                title,
+                count,
+                showtime,
                 cinemaName,
                 selectedSeats,
             )
@@ -124,6 +129,19 @@ class SeatSelectionActivity :
 
             else -> getSerializableExtra(key) as? Ticket
         }
+
+    @Suppress("DEPRECATION")
+    private val Intent.showtimeExtra: LocalDateTime
+        get() =
+            when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ->
+                    getSerializableExtra(
+                        EXTRA_SHOWTIME,
+                        LocalDateTime::class.java,
+                    ) ?: error("")
+
+                else -> getSerializableExtra(EXTRA_SHOWTIME) as LocalDateTime
+            }
 
     private fun findViews() {
         seatsLayout = findViewById(R.id.layout_seat_selection_seats)
@@ -217,22 +235,8 @@ class SeatSelectionActivity :
         )
     }
 
-    override fun navigateToTicketScreen(
-        title: String,
-        count: Int,
-        showtime: LocalDateTime,
-        seats: Set<Seat>,
-        cinemaName: String,
-    ) {
-        val intent =
-            TicketActivity.newIntent(
-                this,
-                title,
-                count,
-                showtime,
-                seats,
-                cinemaName,
-            )
+    override fun navigateToTicketScreen(ticket: Ticket) {
+        val intent = TicketActivity.newIntent(this, ticket)
         startActivity(intent)
         finish()
     }
@@ -245,7 +249,9 @@ class SeatSelectionActivity :
         private const val CAUSE_SEAT_VIEW = "seatView"
         private const val IN_SEAT_LAYOUT = "seatLayout"
 
-        private const val EXTRA_TICKET = "woowacourse.movie.EXTRA_TICKET"
+        private const val EXTRA_TITLE = "woowacourse.movie.TITLE"
+        private const val EXTRA_COUNT = "woowacourse.movie.COUNT"
+        private const val EXTRA_SHOWTIME = "woowacourse.movie.SHOWTIME"
         private const val EXTRA_CINEMA_NAME = "woowacourse.movie.CINEMA_NAME"
 
         fun newIntent(
@@ -255,11 +261,10 @@ class SeatSelectionActivity :
             showtime: LocalDateTime,
             cinemaName: String,
         ): Intent =
-            run {
-                val ticket = Ticket(title, count, showtime)
-                Intent(context, SeatSelectionActivity::class.java)
-                    .putExtra(EXTRA_TICKET, ticket)
-                    .putExtra(EXTRA_CINEMA_NAME, cinemaName)
-            }
+            Intent(context, SeatSelectionActivity::class.java)
+                .putExtra(EXTRA_TITLE, title)
+                .putExtra(EXTRA_COUNT, count)
+                .putExtra(EXTRA_SHOWTIME, showtime)
+                .putExtra(EXTRA_CINEMA_NAME, cinemaName)
     }
 }

@@ -24,7 +24,6 @@ interface TicketContract {
         fun setShowtime(showtime: LocalDateTime)
 
         fun setCount(
-            count: Int,
             seats: Set<Seat>,
             cinemaName: String,
         )

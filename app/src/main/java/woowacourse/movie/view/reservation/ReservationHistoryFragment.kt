@@ -8,21 +8,12 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.TicketAdapter
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.domain.ticket.Ticket
-import java.time.LocalDateTime
 
 class ReservationHistoryFragment : Fragment() {
     private var _binding: FragmentReservationHistoryBinding? = null
     private val binding get() = requireNotNull(_binding) { "_binding is null" }
     private var adapter: TicketAdapter? = null
-    private val mockData: List<Ticket> =
-        listOf(
-            Ticket("영화 제목", 3, LocalDateTime.now()),
-            Ticket("영화 제목", 3, LocalDateTime.now()),
-            Ticket("영화 제목", 3, LocalDateTime.now()),
-            Ticket("영화 제목", 3, LocalDateTime.now()),
-            Ticket("영화 제목", 3, LocalDateTime.now()),
-            Ticket("영화 제목", 3, LocalDateTime.now()),
-        )
+    private val mockData: List<Ticket> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
