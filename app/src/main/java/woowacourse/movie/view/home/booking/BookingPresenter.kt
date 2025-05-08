@@ -14,13 +14,13 @@ class BookingPresenter(
     private val screeningInfo: ScreeningInfo,
 ) : BookingContract.Presenter {
     lateinit var booking: Booking
-    val schedule = Schedule(screeningInfo.screenings)
+    private val schedule = Schedule(screeningInfo.screenings)
 
     override fun initBooking(now: LocalDateTime) {
         val movie = MovieStore().movies[screeningInfo.movieId]
         val screenings = screeningInfo.screenings
 
-        val bookableDates = this.schedule.bookableDates(LocalDateTime.now())
+        val bookableDates = this.schedule.bookableDates(now)
         if (bookableDates.isEmpty()) {
             view.notifyNoAvailableTime()
             return
@@ -30,7 +30,7 @@ class BookingPresenter(
                 view.notifyNoAvailableTime()
                 return
             }
-        val bookableTimes = this.schedule.bookableTimes(defaultDate, LocalDateTime.now())
+        val bookableTimes = this.schedule.bookableTimes(defaultDate, now)
         val defaultTime: LocalTime =
             bookableTimes.firstOrNull() ?: run {
                 view.notifyNoAvailableTime()
@@ -69,7 +69,6 @@ class BookingPresenter(
         } else {
             view.showScreeningTimes(bookableTimes, booking.screeningTime)
         }
-
         booking = booking.copy(screeningDate = date)
     }
 
