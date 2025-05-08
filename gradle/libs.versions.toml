@@ -14,6 +14,7 @@ google-material = "1.12.0"
 junit-jupiter = "5.12.0"
 kotest-runner-junit5 = "5.9.1"
 kotlin = "2.1.0"
+kotlinx-serialization-json = "1.8.1"
 ktlint = "12.1.0"
 mannodermaus-junit5 = "1.7.0"
 mockk = "1.13.8"
@@ -42,9 +43,11 @@ mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 androidx-espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "espresso-contrib" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "android-junit5" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
