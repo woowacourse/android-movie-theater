@@ -70,7 +70,7 @@ class TheaterBottomSheetDialogFragment :
         theater: Theater,
     ) {
         if (theater.allSchedules.isNotEmpty()) {
-            startActivity(BookingActivity.newIntent(view.context, theater))
+            startActivity(BookingActivity.newIntent(view.context, theater, restoreMovie()))
             parentFragmentManager.commit {
                 remove(this@TheaterBottomSheetDialogFragment)
             }

@@ -1,84 +1,109 @@
 package woowacourse.movie.ui.booking.presenter
 
 import woowacourse.movie.domain.model.movie.Headcount
+import woowacourse.movie.domain.model.movie.Movie
+import woowacourse.movie.domain.model.theater.Schedule
+import woowacourse.movie.domain.model.theater.ScreeningTimeSchedule
 import woowacourse.movie.domain.model.theater.Theater
-import woowacourse.movie.sample.DUMMY_THEATERS
 import woowacourse.movie.ui.booking.contract.BookingContract
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 class BookingPresenter(
     private val bookingView: BookingContract.View,
 ) : BookingContract.Presenter {
-    private var _headcount: Headcount = Headcount()
-    val headcount get() = _headcount.deepCopy()
-
-    private val theater: Theater by lazy { loadTheater() }
-
+    private lateinit var headcount: Headcount
+    private lateinit var availableTheater: Theater
+    private lateinit var movie: Movie
     private var selectedDatePosition: Int = 0
     private var selectedTimePosition: Int = 0
-    private val selectedDateTime: LocalDateTime get() = bookingView.getSelectedDateTime()
+
+    private var selectedDate: LocalDate = LocalDate.MIN
+    private lateinit var selectedDateTime: LocalDateTime
 
     fun updateViews() {
         refreshMovieInfo()
         setupDateSpinner()
     }
 
+    override fun loadState(
+        theater: Theater,
+        headcount: Headcount,
+        movie: Movie,
+        selectedDatePosition: Int,
+        selectedTimePosition: Int
+    ) {
+        this.availableTheater = theater
+        this.headcount = headcount
+        this.movie = movie
+        this.selectedDatePosition = selectedDatePosition
+        this.selectedTimePosition = selectedTimePosition
+    }
+
+    override fun loadSelectedDate(
+        selectedDate: LocalDate,
+        selectedDatePosition: Int
+    ) {
+        this.selectedDate = selectedDate
+        this.selectedDatePosition = selectedDatePosition
+    }
+
+    override fun loadSelectedTime(selectedTimePosition: Int) {
+        this.selectedTimePosition = selectedTimePosition
+    }
+
+    override fun loadSelectedDateTime(selectedDateTime: LocalDateTime) {
+        this.selectedDateTime = selectedDateTime
+    }
+
     override fun increaseHeadcount() {
-        _headcount.increase()
-        bookingView.updateHeadcountDisplay(_headcount)
+        headcount.increase()
+        bookingView.updateHeadcountDisplay(headcount)
     }
 
     override fun decreaseHeadcount() {
-        _headcount.decrease()
-        bookingView.updateHeadcountDisplay(_headcount)
+        headcount.decrease()
+        bookingView.updateHeadcountDisplay(headcount)
     }
-
-    override fun loadTheater(): Theater = bookingView.getTheater() ?: DUMMY_THEATERS.theaters.first()
 
     override fun refreshMovieInfo() {
-        bookingView.setMovieInfoViews(theater.schedules[0].movie)
-    }
-
-    override fun setHeadcount(headcount: Headcount) {
-        this._headcount = headcount
+        bookingView.setMovieInfoViews(movie)
     }
 
     override fun refreshHeadcountDisplay() {
-        bookingView.updateHeadcountDisplay(_headcount)
+        bookingView.updateHeadcountDisplay(headcount)
     }
 
     override fun setupDateSpinner() {
-        val screeningDateTime: List<LocalDate> =
-            theater.schedules.map { it.screeningTimeSchedule.date }
-        bookingView.setDateSpinner(screeningDateTime, selectedDatePosition)
+        val schedules: List<Schedule> = availableTheater.allSchedules[movie] ?: emptyList()
+        val screeningTimeSchedules: List<Schedule> =
+            schedules.mapNotNull { it.bookableSchedule(movie, LocalDateTime.now()) }
+        val screeningDates: List<LocalDate> =
+            screeningTimeSchedules.map { it.screeningTimeSchedule.date }
+
+        bookingView.setDateSpinner(screeningDates, selectedDatePosition)
     }
 
     override fun setupTimeSpinner() {
-        val selectedDate = bookingView.getSelectedDate()
-        val screeningTimesItems =
-            theater.schedules
-                .filter { it.screeningTimeSchedule.date.isEqual(selectedDate) }
-                .map { it.screeningTimeSchedule.time }
-        bookingView.setTimeSpinner(screeningTimesItems, selectedTimePosition)
-    }
+        val schedules: List<Schedule> = availableTheater.allSchedules[movie] ?: emptyList()
+        val screeningSchedules: List<Schedule> =
+            schedules.mapNotNull { it.bookableSchedule(movie, LocalDateTime.now()) }
+        val screeningTimeSchedules: List<ScreeningTimeSchedule> =
+            screeningSchedules.map { it.screeningTimeSchedule }
+        val filteredScreeningTimeSchedules: ScreeningTimeSchedule? =
+            screeningTimeSchedules.find { it.date == selectedDate }
+        val screeningTimes: List<LocalTime> = filteredScreeningTimeSchedules?.time ?: emptyList()
 
-    override fun setSelectedDatePosition(position: Int) {
-        selectedDatePosition = position
-        setupDateSpinner()
-    }
-
-    override fun setSelectedTimePosition(position: Int) {
-        selectedTimePosition = position
-        setupTimeSpinner()
+        bookingView.setTimeSpinner(screeningTimes, selectedTimePosition)
     }
 
     override fun completeBooking() {
         bookingView.startBookingSeatActivity(
-            theater.schedules[0].movie.title,
+            movie.title,
             selectedDateTime,
             headcount,
-            theater,
+            availableTheater,
         )
     }
 }

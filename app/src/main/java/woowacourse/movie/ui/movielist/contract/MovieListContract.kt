@@ -10,7 +10,5 @@ interface MovieListContract {
 
     interface View {
         fun setMoveListItems(items: List<MovieListItem>)
-
-        fun startBookingActivity(theater: Theater)
     }
 }

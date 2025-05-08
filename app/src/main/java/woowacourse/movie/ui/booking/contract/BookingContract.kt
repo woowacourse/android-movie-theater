@@ -13,13 +13,9 @@ interface BookingContract {
 
         fun increaseHeadcount()
 
-        fun loadTheater(): Theater
-
         fun completeBooking()
 
         fun refreshMovieInfo()
-
-        fun setHeadcount(headcount: Headcount)
 
         fun refreshHeadcountDisplay()
 
@@ -27,20 +23,22 @@ interface BookingContract {
 
         fun setupTimeSpinner()
 
-        fun setSelectedDatePosition(position: Int)
+        fun loadState(
+            theater: Theater,
+            headcount: Headcount,
+            movie: Movie,
+            selectedDatePosition: Int,
+            selectedTimePosition: Int
+        )
 
-        fun setSelectedTimePosition(position: Int)
+        fun loadSelectedDate(selectedDate: LocalDate, selectedDatePosition: Int)
+
+        fun loadSelectedTime(selectedTimePosition: Int)
+
+        fun loadSelectedDateTime(selectedLocalDateTime: LocalDateTime)
     }
 
     interface View {
-        fun getTheater(): Theater?
-
-        fun getSelectedDate(): LocalDate
-
-        fun getSelectedTimePosition(): Int
-
-        fun getSelectedDateTime(): LocalDateTime
-
         fun setMovieInfoViews(movie: Movie)
 
         fun updateHeadcountDisplay(headcount: Headcount)

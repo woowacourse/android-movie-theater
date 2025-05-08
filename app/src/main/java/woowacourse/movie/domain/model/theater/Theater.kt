@@ -5,8 +5,8 @@ import java.io.Serializable
 import java.time.LocalDateTime
 
 data class Theater(
-    val name: String,
-    val allSchedules: Map<Movie, List<Schedule>>,
+    val name: String = "DEFAULT_THEATER",
+    val allSchedules: Map<Movie, List<Schedule>> = mapOf(),
 ) : Serializable {
     fun bookableTheater(
         movie: Movie,
@@ -19,6 +19,5 @@ data class Theater(
         return Theater(name, filteredSchedules)
     }
 
-    fun isBookable() {
-    }
+    fun availableTheaterSize(): Int = allSchedules.entries.first().value.size
 }

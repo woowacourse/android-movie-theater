@@ -30,10 +30,6 @@ class MovieListFragment :
         return binding.root
     }
 
-    override fun startBookingActivity(theater: Theater) {
-        startActivity(BookingActivity.newIntent(requireActivity(), theater))
-    }
-
     override fun setMoveListItems(items: List<MovieListItem>) {
         val adapter =
             MovieAdapter(
