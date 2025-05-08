@@ -11,9 +11,9 @@ import woowacourse.movie.presentation.model.SeatUiModel
 class ReservationSeatViews(
     private val context: Context,
     private val binding: FragmentReservationSeatBinding,
+    private val seatViewFactory: SeatViewFactory,
 ) {
     private val cachedSeatViews = mutableMapOf<SeatUiModel, TextView>()
-    private val seatViewFactory = SeatViewFactory(context)
 
     fun setData(
         screen: ScreenUiModel,

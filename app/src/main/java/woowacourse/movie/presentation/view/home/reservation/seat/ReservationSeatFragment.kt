@@ -37,7 +37,7 @@ class ReservationSeatFragment :
 
     private fun initPresenterAndViews() {
         presenter = ReservationSeatPresenter(this)
-        views = ReservationSeatViews(requireContext(), binding)
+        views = ReservationSeatViews(requireContext(), binding, SeatViewFactory(requireContext()))
     }
 
     private fun setupDialogInfo() {
