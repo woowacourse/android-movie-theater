@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.presentation.model.MovieUiModel
 
@@ -23,7 +24,7 @@ class MoviesAdapter(
                 MovieViewHolder(binding, eventListener)
             }
             AD_VIEW_TYPE -> {
-                val view = inflater.inflate(woowacourse.movie.R.layout.item_ad, parent, false)
+                val view = inflater.inflate(R.layout.item_ad, parent, false)
                 AdViewHolder(view)
             }
             else -> error(INVALID_UNKNOWN_VIEW_TYPE.format(viewType))
@@ -36,7 +37,7 @@ class MoviesAdapter(
     ) {
         when (holder) {
             is MovieViewHolder -> getMovieForPosition(position)?.let(holder::bind)
-            is AdViewHolder -> holder.bind(woowacourse.movie.R.drawable.woowacourse_ad)
+            is AdViewHolder -> holder.bind(R.drawable.woowacourse_ad)
         }
     }
 
