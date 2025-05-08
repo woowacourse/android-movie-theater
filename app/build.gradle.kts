@@ -73,4 +73,6 @@ dependencies {
     androidTestImplementation(libs.mannodermaus.junit5.core)
     androidTestRuntimeOnly(libs.mannodermaus.junit5.runner)
     testImplementation(kotlin("test"))
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
 }
