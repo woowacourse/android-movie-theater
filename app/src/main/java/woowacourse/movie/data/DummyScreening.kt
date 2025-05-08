@@ -50,7 +50,27 @@ object DummyScreening {
             Screening(
                 listOf(LocalTime.of(13, 0, 0), LocalTime.of(15, 0, 0)),
                 Cinema(3, "강남"),
-                DummyMovie.dummyMovie[2],
+                DummyMovie.dummyMovie[3],
+            ),
+            Screening(
+                listOf(LocalTime.of(13, 0, 0), LocalTime.of(15, 0, 0)),
+                Cinema(3, "강남"),
+                DummyMovie.dummyMovie[4],
+            ),
+            Screening(
+                listOf(LocalTime.of(13, 0, 0), LocalTime.of(15, 0, 0)),
+                Cinema(3, "강남"),
+                DummyMovie.dummyMovie[5],
+            ),
+            Screening(
+                listOf(LocalTime.of(13, 0, 0), LocalTime.of(15, 0, 0)),
+                Cinema(3, "강남"),
+                DummyMovie.dummyMovie[6],
+            ),
+            Screening(
+                listOf(LocalTime.of(13, 0, 0)),
+                Cinema(3, "잠실"),
+                DummyMovie.dummyMovie[6],
             ),
         )
 }
