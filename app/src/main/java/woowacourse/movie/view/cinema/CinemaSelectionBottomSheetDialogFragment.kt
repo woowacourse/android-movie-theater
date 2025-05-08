@@ -27,16 +27,18 @@ class CinemaSelectionBottomSheetDialogFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val screening = arguments.screening ?: error(ErrorMessage("screening").notProvided())
-        presenter = CinemaSelectionPresenter(this, screening)
-        cinemaAdapter =
-            CinemaAdapter(
-                screening = screening,
-                onClickItem = { cinemaName: String, showtimePolicy: ShowtimePolicy ->
-                    presenter?.onSelectCinema(cinemaName, showtimePolicy)
-                        ?: error(ErrorMessage("presenter").notProvided())
-                },
-            )
+        CinemaSelectionPresenter(this, screening).also {
+            presenter = it
+            cinemaAdapter =
+                CinemaAdapter(
+                    screening = screening,
+                    onClickItem = { cinemaName: String, showtimePolicy: ShowtimePolicy ->
+                        it.onSelectCinema(cinemaName, showtimePolicy)
+                    },
+                )
+        }
     }
 
     override fun onCreateView(
