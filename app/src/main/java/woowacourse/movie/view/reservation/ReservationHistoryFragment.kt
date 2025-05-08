@@ -9,6 +9,7 @@ import woowacourse.movie.ReservationHistoryPresenter
 import woowacourse.movie.TicketAdapter
 import woowacourse.movie.contract.reservation.ReservationHistoryContract
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
+import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.view.ticket.TicketActivity
 import java.time.LocalDateTime
@@ -22,10 +23,30 @@ class ReservationHistoryFragment :
     private var adapter: TicketAdapter? = null
     private val mockData: List<Ticket> =
         listOf(
-            Ticket("해리 포터와 마법사의 돌", LocalDateTime.of(2024, 3, 2, 17, 0), emptySet(), "선릉 극장"),
-            Ticket("해리 포터와 마법사의 돌", LocalDateTime.of(2024, 3, 3, 13, 0), emptySet(), "선릉 극장"),
-            Ticket("해리 포터와 비밀의 방", LocalDateTime.of(2024, 4, 2, 16, 0), emptySet(), "잠실 극장"),
-            Ticket("해리 포터와 아즈카반의 죄수", LocalDateTime.of(2024, 5, 2, 17, 0), emptySet(), "강남 극장"),
+            Ticket(
+                "해리 포터와 마법사의 돌",
+                LocalDateTime.of(2024, 3, 2, 17, 0),
+                setOf(Seat(2, 3), Seat(4, 2)),
+                "선릉 극장",
+            ),
+            Ticket(
+                "해리 포터와 마법사의 돌",
+                LocalDateTime.of(2024, 3, 3, 13, 0),
+                setOf(Seat(2, 3), Seat(4, 2)),
+                "선릉 극장",
+            ),
+            Ticket(
+                "해리 포터와 비밀의 방",
+                LocalDateTime.of(2024, 4, 2, 16, 0),
+                setOf(Seat(2, 3), Seat(4, 2)),
+                "잠실 극장",
+            ),
+            Ticket(
+                "해리 포터와 아즈카반의 죄수",
+                LocalDateTime.of(2024, 5, 2, 17, 0),
+                setOf(Seat(2, 3), Seat(4, 2)),
+                "강남 극장",
+            ),
         )
 
     override fun onCreate(savedInstanceState: Bundle?) {
