@@ -4,24 +4,24 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import woowacourse.movie.data.dao.ReservationDao
-import woowacourse.movie.data.entity.Reservation
+import woowacourse.movie.data.dao.TicketDao
+import woowacourse.movie.data.entity.TicketEntity
 
-@Database(entities = [Reservation::class], version = 1)
-abstract class ReservationDatabase : RoomDatabase() {
-    abstract fun reservationDao(): ReservationDao
+@Database(entities = [TicketEntity::class], version = 1)
+abstract class MovieDatabase : RoomDatabase() {
+    abstract fun TicketDao(): TicketDao
 
     companion object {
         @Volatile
-        private var instance: ReservationDatabase? = null
+        private var instance: MovieDatabase? = null
 
-        fun getDatabase(context: Context): ReservationDatabase {
+        fun getDatabase(context: Context): MovieDatabase {
             return this.instance ?: synchronized(this) {
                 val instance =
                     Room.databaseBuilder(
                         context.applicationContext,
-                        ReservationDatabase::class.java,
-                        "reservation",
+                        MovieDatabase::class.java,
+                        "movie",
                     ).build()
                 this.instance = instance
                 instance

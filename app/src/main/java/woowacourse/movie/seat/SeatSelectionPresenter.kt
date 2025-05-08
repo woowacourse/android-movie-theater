@@ -1,8 +1,8 @@
 package woowacourse.movie.seat
 
 import android.content.Context
-import woowacourse.movie.data.database.ReservationDatabase
-import woowacourse.movie.data.entity.Reservation
+import woowacourse.movie.data.database.MovieDatabase
+import woowacourse.movie.data.entity.TicketEntity
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Seat
@@ -54,10 +54,10 @@ class SeatSelectionPresenter(
     }
 
     override fun storeSeats(context: Context) {
-        val db = ReservationDatabase.getDatabase(context)
+        val db = MovieDatabase.getDatabase(context)
         thread {
-            db.reservationDao().saveReservation(
-                Reservation(
+            db.TicketDao().saveTicket(
+                TicketEntity(
                     title = ticket.title,
                     date = ticket.selectedDate.toString(),
                     time = ticket.selectedTime.toString(),
