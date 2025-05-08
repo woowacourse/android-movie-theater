@@ -1,6 +1,5 @@
 package woowacourse.movie.presenter
 
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -21,14 +20,15 @@ class BookingCompletePresenterTest {
     fun setUp() {
         view = mockk(relaxed = true)
         presenter = BookingCompletePresenter(view)
-        every { view.getBookedTicket() } returns
+        presenter.loadBookedTicket(
             BookedTicket(
                 "해리 포터",
                 Headcount(1),
                 LocalDateTime.of(2025, 1, 1, 12, 0),
                 Seats().apply { Seat(1, 1) },
                 "선릉 극장",
-            )
+            ),
+        )
     }
 
     @Test

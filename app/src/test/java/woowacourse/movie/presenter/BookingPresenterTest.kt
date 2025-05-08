@@ -1,31 +1,20 @@
 package woowacourse.movie.presenter
 
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.movie.Movie
-import woowacourse.movie.sample.DUMMY_MOVIES
 import woowacourse.movie.ui.booking.contract.BookingContract
 import woowacourse.movie.ui.booking.presenter.BookingPresenter
-import java.time.LocalDate
 
 class BookingPresenterTest {
     private lateinit var view: BookingContract.View
     private lateinit var presenter: BookingPresenter
 
-    private lateinit var dummyMovie: Movie
-    private val dummySelectedDate = LocalDate.of(2025, 6, 1)
-
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
         presenter = BookingPresenter(view)
-
-        dummyMovie = DUMMY_MOVIES.first()
-
-        every { view.getSelectedDate() } returns dummySelectedDate
     }
 
     @Test
@@ -38,12 +27,6 @@ class BookingPresenterTest {
     fun `인원 수가 감소하면 인원 수 텍스트가 업데이트 된다`() {
         presenter.decreaseHeadcount()
         verify { view.updateHeadcountDisplay(any()) }
-    }
-
-    @Test
-    fun `뷰에서 극장을 받아올 수 있다`() {
-        presenter.loadTheater()
-        verify { view.getTheater() }
     }
 
     @Test
@@ -67,14 +50,14 @@ class BookingPresenterTest {
     @Test
     fun `날짜 스피너의 목록 포지션이 바뀌면 날짜 스피너가 업데이트 된다`() {
         val position = 1
-        presenter.setSelectedDatePosition(position)
+        presenter.setupDateSpinner()
         verify { view.setDateSpinner(any(), position) }
     }
 
     @Test
     fun `시간 스피너의 목록 포지션이 바뀌면 시간 스피너가 업데이트 된다`() {
         val position = 2
-        presenter.setSelectedTimePosition(position)
+        presenter.setupTimeSpinner()
         verify { view.setTimeSpinner(any(), position) }
     }
 }

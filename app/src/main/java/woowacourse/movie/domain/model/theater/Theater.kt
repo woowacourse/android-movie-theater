@@ -19,5 +19,8 @@ data class Theater(
         return Theater(name, filteredSchedules)
     }
 
-    fun availableTheaterSize(): Int = allSchedules.entries.first().value.size
+    fun availableTheaterSize(): Int =
+        allSchedules.entries
+            .first()
+            .value.size
 }
