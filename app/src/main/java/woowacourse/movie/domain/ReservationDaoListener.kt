@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.domain
 
 import woowacourse.movie.domain.model.ticketing.Ticket
 

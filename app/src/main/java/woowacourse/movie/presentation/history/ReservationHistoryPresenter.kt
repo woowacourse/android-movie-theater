@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.history
 
-import woowacourse.movie.data.ReservationDaoListener
+import woowacourse.movie.domain.ReservationDaoListener
 import woowacourse.movie.presentation.common.model.toUiModel
 import kotlin.concurrent.thread
 

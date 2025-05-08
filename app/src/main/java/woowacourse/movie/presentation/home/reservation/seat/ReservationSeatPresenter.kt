@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.home.reservation.seat
 
-import woowacourse.movie.data.ReservationDaoListener
+import woowacourse.movie.domain.ReservationDaoListener
 import woowacourse.movie.domain.model.cinema.Seat
 import woowacourse.movie.domain.model.cinema.Seats
 import woowacourse.movie.domain.model.reservation.ReservationInfo

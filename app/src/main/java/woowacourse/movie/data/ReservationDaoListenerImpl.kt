@@ -1,5 +1,6 @@
 package woowacourse.movie.data
 
+import woowacourse.movie.domain.ReservationDaoListener
 import woowacourse.movie.domain.model.ticketing.Ticket
 
 class ReservationDaoListenerImpl(
