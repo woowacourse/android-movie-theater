@@ -1,5 +1,6 @@
 package woowacourse.movie.seat
 
+import android.content.Context
 import woowacourse.movie.ui.model.SeatUiModel
 import woowacourse.movie.ui.model.TicketUiModel
 
@@ -26,6 +27,8 @@ interface SeatSelectionContract {
         )
 
         fun completeBooking()
+
+        fun storeSeats(context: Context)
 
         fun restoreSeats(selectedSeats: List<SeatUiModel>)
     }

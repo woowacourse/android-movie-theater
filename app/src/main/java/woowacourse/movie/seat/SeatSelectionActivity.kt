@@ -105,6 +105,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             .setTitle(getString(R.string.dig_title))
             .setMessage(getString(R.string.dig_message))
             .setPositiveButton(getString(R.string.dig_btn_positive_message)) { _, _ ->
+                presenter.storeSeats(applicationContext)
                 startBookingCompleteActivity(ticket)
             }
             .setNegativeButton(getString(R.string.dig_btn_negative_message)) { dialog, _ ->
