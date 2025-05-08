@@ -56,6 +56,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             android.R.id.home -> {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 startActivity(intent)
                 true
             }
