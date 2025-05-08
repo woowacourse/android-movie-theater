@@ -2,7 +2,9 @@ package woowacourse.movie.domain
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import woowacourse.movie.R
 import woowacourse.movie.domain.seat.BookingSeats
+import woowacourse.movie.domain.seat.Seat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -62,6 +64,33 @@ data class BookingStatus(
             bookedTime: LocalTime,
             theater: Theater,
         ): BookingStatus = from(movie, count, bookedDate, bookedTime, theater)
+
+        val value = listOf(
+            BookingStatus(
+                Movie(
+                    Title("해리포터와 마법사의 돌"),
+                    R.drawable.movie_poster,
+                    ScreeningPeriod.ofDot("2025.04.01", "2025.04.25"),
+                    152,
+                ),
+                true,
+                BookingSeats(2, mutableListOf(Seat.of(0, 0))),
+                LocalDateTime.of(2025, 6, 5, 9, 0),
+                Theater("선릉", Movies.seolleungMovies, mapOf(Title("해리포터와 마법사의 돌") to listOf(LocalTime.of(9, 0))))
+            ),
+            BookingStatus(
+                Movie(
+                    Title("해리포터와 마법사의 돌"),
+                    R.drawable.movie_poster,
+                    ScreeningPeriod.ofDot("2025.04.01", "2025.04.25"),
+                    152,
+                ),
+                true,
+                BookingSeats(2, mutableListOf(Seat.of(0, 0))),
+                LocalDateTime.of(2025, 6, 5, 9, 0),
+                Theater("선릉", Movies.seolleungMovies, mapOf(Title("해리포터와 마법사의 돌") to listOf(LocalTime.of(9, 0))))
+            )
+        )
     }
 }
 
