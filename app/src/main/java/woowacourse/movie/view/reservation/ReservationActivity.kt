@@ -3,7 +3,6 @@ package woowacourse.movie.view.reservation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +16,6 @@ import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.theater.TheaterMovieSchedule
 import woowacourse.movie.presenter.reservation.ReservationContract
 import woowacourse.movie.presenter.reservation.ReservationPresenter
-import woowacourse.movie.presenter.reservation.ScreeningSelectListener
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.extension.showShortToast
 import woowacourse.movie.view.seatSelection.SeatSelectionActivity
