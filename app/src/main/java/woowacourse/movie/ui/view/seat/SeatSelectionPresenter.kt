@@ -49,9 +49,7 @@ class SeatSelectionPresenter(
     }
 
     override fun confirmReservation() {
-        ticket.run {
-            view.navigateToTicketScreen(title, count, showtime, selectedSeats, cinemaName)
-        }
+        view.saveTicket(ticket, selectedSeats, cinemaName)
     }
 
     private fun canSelectSeat(): Boolean = selectedSeats.size < ticket.count

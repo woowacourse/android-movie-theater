@@ -20,6 +20,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.setPadding
 import woowacourse.movie.R
+import woowacourse.movie.data.local.adapter.TicketAdapter
+import woowacourse.movie.domain.data.TicketDataAdapter
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.reservation.SeatGrade
@@ -29,6 +31,7 @@ import woowacourse.movie.ui.view.ticket.TicketActivity
 import woowacourse.movie.ui.view.util.ErrorMessage
 import java.io.Serializable
 import java.time.LocalDateTime
+import kotlin.concurrent.thread
 
 class SeatSelectionActivity :
     AppCompatActivity(),
@@ -36,6 +39,7 @@ class SeatSelectionActivity :
     private val showConfirmDialog by lazy { ShowReservationConfirmDialog(this) }
 
     private lateinit var presenter: SeatSelectionContract.Presenter
+    private val ticketAdapter: TicketDataAdapter by lazy { TicketAdapter(this) }
 
     private lateinit var seatsLayout: TableLayout
     private lateinit var titleView: TextView
@@ -225,7 +229,26 @@ class SeatSelectionActivity :
         )
     }
 
-    override fun navigateToTicketScreen(
+    override fun saveTicket(
+        ticket: Ticket,
+        seats: Set<Seat>,
+        cinemaName: String,
+    ) {
+        thread {
+            ticket.run {
+                ticketAdapter.insert(ticket)
+                navigateToTicketScreen(
+                    title,
+                    count,
+                    showtime,
+                    seats,
+                    cinemaName,
+                )
+            }
+        }
+    }
+
+    private fun navigateToTicketScreen(
         title: String,
         count: Int,
         showtime: LocalDateTime,
