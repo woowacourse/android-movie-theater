@@ -3,14 +3,14 @@ package woowacourse.movie
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.presentation.bookinglist.BookingListFragment
+import woowacourse.movie.presentation.bookinghistory.BookingHistoryFragment
 import woowacourse.movie.presentation.movies.MoviesFragment
 import woowacourse.movie.presentation.setting.SettingFragment
 import woowacourse.movie.ui.DataBindingBaseActivity
 
 class MainActivity : DataBindingBaseActivity() {
     private val binding by binding<ActivityMainBinding>(R.layout.activity_main)
-    private val bookingListFragment: BookingListFragment by lazy { BookingListFragment() }
+    private val bookingHistoryFragment: BookingHistoryFragment by lazy { BookingHistoryFragment() }
     private val moviesFragment: MoviesFragment by lazy { MoviesFragment() }
     private val settingFragment: SettingFragment by lazy { SettingFragment() }
 
@@ -25,8 +25,8 @@ class MainActivity : DataBindingBaseActivity() {
             setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.action_list -> showFragment(
-                        bookingListFragment,
-                        BookingListFragment::class.java.name
+                        bookingHistoryFragment,
+                        BookingHistoryFragment::class.java.name
                     )
 
                     R.id.action_home -> showFragment(
