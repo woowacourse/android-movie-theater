@@ -70,4 +70,6 @@ dependencies {
     androidTestRuntimeOnly(libs.mannodermaus.junit5.runner)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
 }
