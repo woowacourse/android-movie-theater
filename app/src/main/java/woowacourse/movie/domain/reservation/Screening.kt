@@ -1,0 +1,68 @@
+package woowacourse.movie.domain.reservation
+
+import java.io.Serializable
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.Period
+
+class Screening(
+    private val movie: Movie,
+    private val start: LocalDate,
+    private val end: LocalDate,
+    private val current: LocalDateTime = LocalDateTime.now(),
+) : ScreeningContent,
+    Serializable {
+    val id: Int = movie.id
+    val title: String = movie.title
+    val runningTime: Int = movie.runningTime
+
+    val startYear: Int = start.year
+    val startMonth: Int = start.monthValue
+    val startDay: Int = start.dayOfMonth
+
+    val endYear: Int = end.year
+    val endMonth: Int = end.monthValue
+    val endDay: Int = end.dayOfMonth
+
+    fun availableDates(): List<LocalDate> = dates.filterNot { date -> date.isBefore(current.toLocalDate()) }
+
+    fun showtimes(showTimePolicy: ShowtimePolicy): List<LocalTime> = showTimePolicy.showtimes(current)
+
+    fun showtimes(
+        date: LocalDate,
+        showTimePolicy: ShowtimePolicy = DefaultShowtimePolicy(date),
+    ): List<LocalTime> = showTimePolicy.showtimes(current)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Screening
+
+        if (movie != other.movie) return false
+        if (start != other.start) return false
+        if (end != other.end) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = movie.hashCode()
+        result = 31 * result + start.hashCode()
+        result = 31 * result + end.hashCode()
+        return result
+    }
+
+    fun copy(
+        movie: Movie = this.movie,
+        start: LocalDate = this.start,
+        end: LocalDate = this.end,
+        current: LocalDateTime = this.current,
+    ) = Screening(movie, start, end, current)
+
+    private val dates: List<LocalDate>
+        get() = List(start.between(end).days) { daysToAdd: Int -> start.plusDays(daysToAdd.toLong()) }
+
+    private fun LocalDate.between(inclusiveEnd: LocalDate): Period = until(inclusiveEnd).plusDays(1)
+}
