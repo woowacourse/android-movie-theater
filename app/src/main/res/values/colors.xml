@@ -17,4 +17,5 @@
     <color name="a_grade_text_color">#1B48E9</color>
     <color name="btn_deactivate_background">#B7B7B7</color>
     <color name="btn_activate_background">#6200EE</color>
+    <color name="reservation_pressed">#E0E0E0</color>
 </resources>

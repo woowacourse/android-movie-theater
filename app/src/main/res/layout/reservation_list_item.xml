@@ -15,6 +15,8 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:onClick="@{() -> clickListener.onReservationClick(reservation)}"
+        android:background="@drawable/reservation_list_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp">
@@ -92,7 +94,6 @@
             android:id="@+id/reserved_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> clickListener.onReservationClick(reservation)}"
             android:text="@{reservation.title}"
             android:textColor="@color/black"
             android:textSize="16sp"
