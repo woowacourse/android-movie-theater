@@ -1,8 +1,11 @@
-package woowacourse.movie.domain.model
+package woowacourse.movie.domain.model.theater
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.theater.Theaters
+import woowacourse.movie.domain.model.MOVIE_HARRY_POTTER_AND_THE_PHILOSOPHERS_STONE
+import woowacourse.movie.domain.model.THEATER_CGV_GANGNAM
+import woowacourse.movie.domain.model.THEATER_LOTTE_SINEMA
+import woowacourse.movie.domain.model.THEATER_MEGA_BOX
 import java.time.LocalDate
 import java.time.LocalTime
 

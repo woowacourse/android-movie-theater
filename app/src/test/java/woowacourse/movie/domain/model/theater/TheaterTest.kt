@@ -1,8 +1,10 @@
-package woowacourse.movie.domain.model
+package woowacourse.movie.domain.model.theater
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.theater.Theater
+import woowacourse.movie.domain.model.MOVIE_HARRY_POTTER_AND_THE_PHILOSOPHERS_STONE
+import woowacourse.movie.domain.model.SCHEDULE_HARRY_PHILOSOPHERS_STONE_2025_04_10_1300
+import woowacourse.movie.domain.model.SCHEDULE_HARRY_PHILOSOPHERS_STONE_2025_04_15_1630
 import java.time.LocalDate
 import java.time.LocalTime
 

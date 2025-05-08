@@ -1,8 +1,7 @@
-package woowacourse.movie.domain.model
+package woowacourse.movie.domain.model.movie
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.movie.Headcount
 
 class HeadcountTest {
     @Test

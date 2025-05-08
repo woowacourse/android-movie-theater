@@ -1,8 +1,7 @@
-package woowacourse.movie.domain.model
+package woowacourse.movie.domain.model.theater
 
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.theater.ScreeningTimeSchedule
 import java.time.LocalDate
 import java.time.LocalTime
 

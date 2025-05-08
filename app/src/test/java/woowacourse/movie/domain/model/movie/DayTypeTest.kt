@@ -1,8 +1,7 @@
-package woowacourse.movie.domain.model
+package woowacourse.movie.domain.model.movie
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.movie.DayType
 import java.time.LocalDate
 
 class DayTypeTest {
@@ -12,7 +11,7 @@ class DayTypeTest {
 
         val expected = DayType.WEEKDAY
 
-        assertEquals(actual, expected)
+        Assertions.assertEquals(actual, expected)
     }
 
     @Test
@@ -21,6 +20,6 @@ class DayTypeTest {
 
         val expected = DayType.WEEKEND
 
-        assertEquals(actual, expected)
+        Assertions.assertEquals(actual, expected)
     }
 }
