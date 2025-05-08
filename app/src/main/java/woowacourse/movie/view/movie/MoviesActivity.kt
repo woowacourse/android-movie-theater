@@ -14,9 +14,6 @@ import woowacourse.movie.view.SettingFragment
 
 class MoviesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMoviesBinding
-    private val moviesFragment: MoviesFragment by lazy { MoviesFragment() }
-    private val reservationListFragment: ReservationListFragment by lazy { ReservationListFragment() }
-    private val settingFragment: SettingFragment by lazy { SettingFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +41,7 @@ class MoviesActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add(R.id.activity_movies_fragment_container, moviesFragment, FRAGMENT_MOVIES)
+                add(R.id.activity_movies_fragment_container, MoviesFragment(), FRAGMENT_MOVIES)
             }
         }
     }
@@ -55,18 +52,31 @@ class MoviesActivity : AppCompatActivity() {
             val selectedFragment =
                 when (menuItem.itemId) {
                     R.id.fragment_movies -> {
-                        supportFragmentManager.findFragmentByTag(FRAGMENT_MOVIES) ?: moviesFragment
+                        supportFragmentManager.findFragmentByTag(FRAGMENT_MOVIES)
+                            ?: MoviesFragment().also { addFragment(it, FRAGMENT_MOVIES) }
                     }
                     R.id.fragment_list -> {
-                        supportFragmentManager.findFragmentByTag(FRAGMENT_RESERVATION_LIST) ?: reservationListFragment
+                        supportFragmentManager.findFragmentByTag(FRAGMENT_RESERVATION_LIST)
+                            ?: ReservationListFragment().also { addFragment(it, FRAGMENT_RESERVATION_LIST) }
                     }
                     R.id.fragment_setting -> {
-                        supportFragmentManager.findFragmentByTag(FRAGMENT_SETTING) ?: settingFragment
+                        supportFragmentManager.findFragmentByTag(FRAGMENT_SETTING)
+                            ?: SettingFragment().also { addFragment(it, FRAGMENT_SETTING) }
                     }
                     else -> throw IllegalArgumentException(ERROR_INVALID_FRAGMENT)
                 }
             replaceFragment(selectedFragment)
             true
+        }
+    }
+
+    private fun addFragment(
+        fragment: Fragment,
+        tag: String,
+    ) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            add(R.id.activity_movies_fragment_container, fragment, tag)
         }
     }
 
