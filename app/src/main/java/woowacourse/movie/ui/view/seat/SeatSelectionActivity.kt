@@ -287,7 +287,7 @@ class SeatSelectionActivity :
             cinemaName: String,
         ): Intent =
             run {
-                val ticket = Ticket(title, count, showtime)
+                val ticket = Ticket(title, count, showtime, cinemaName)
                 Intent(context, SeatSelectionActivity::class.java)
                     .putExtra(EXTRA_TICKET, ticket)
                     .putExtra(EXTRA_CINEMA_NAME, cinemaName)

@@ -9,7 +9,6 @@ class TicketPresenter(
     private val view: TicketContract.View,
     private val ticket: Ticket,
     private val seats: Set<Seat>,
-    private val cinemaName: String,
     private val cancelTimePolicy: CancelTimePolicy = DefaultCancelTimePolicy,
 ) : TicketContract.Presenter {
     override fun presentTitle() {
@@ -25,7 +24,7 @@ class TicketPresenter(
     }
 
     override fun presentCount() {
-        view.setCount(ticket.count, seats, cinemaName)
+        view.setCount(ticket.count, seats, ticket.cinemaName)
     }
 
     override fun presentPrice() {

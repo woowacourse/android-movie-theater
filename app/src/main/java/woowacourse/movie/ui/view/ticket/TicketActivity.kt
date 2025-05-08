@@ -48,11 +48,8 @@ class TicketActivity :
             intent.getSeatsExtra() ?: error(
                 woowacourse.movie.ui.view.util.ErrorMessage(CAUSE_SEATS).notProvided(),
             )
-        val cinemaName =
-            intent.getStringExtra(EXTRA_CINEMA_NAME)
-                ?: error(woowacourse.movie.ui.view.util.ErrorMessage(CAUSE_CINEMA).notProvided())
 
-        presenter = TicketPresenter(this, ticket, seats, cinemaName)
+        presenter = TicketPresenter(this, ticket, seats)
         initViews()
     }
 
@@ -163,7 +160,7 @@ class TicketActivity :
             cinemaName: String,
         ): Intent =
             run {
-                val ticket = Ticket(title, count, showtime)
+                val ticket = Ticket(title, count, showtime, cinemaName)
                 Intent(context, TicketActivity::class.java)
                     .putExtra(EXTRA_TICKET, ticket)
                     .putExtra(EXTRA_SEATS, seats as? Serializable)
