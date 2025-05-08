@@ -62,14 +62,8 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(R.layout.ac
     }
 
     private fun navigateToInitialScreen() {
-        val movie =
-            intent.getParcelableCompat<MovieUiModel>(
-                woowacourse.movie.presentation.home.reservation.ReservationActivity.Companion.BUNDLE_KEY_MOVIE,
-            )
-        val theater =
-            intent.getParcelableCompat<TheaterUiModel>(
-                woowacourse.movie.presentation.home.reservation.ReservationActivity.Companion.BUNDLE_KEY_THEATER,
-            )
+        val movie = intent.getParcelableCompat<MovieUiModel>(BUNDLE_KEY_MOVIE)
+        val theater = intent.getParcelableCompat<TheaterUiModel>(BUNDLE_KEY_THEATER)
         navigateToScreen(ReservationDetailFragment.newInstance(movie, theater))
     }
 
