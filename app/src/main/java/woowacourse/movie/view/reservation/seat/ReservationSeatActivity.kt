@@ -33,7 +33,7 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
     private lateinit var binding: ActivityReservationSeatBinding
     private lateinit var seatLayout: TableLayout
 
-    private val movieSelectableButton = binding.btnConfirm
+    private lateinit var movieSelectableButton: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +47,8 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        binding = ActivityReservationSeatBinding.inflate(layoutInflater)
+
+        movieSelectableButton = binding.btnConfirm
         seatLayout = binding.seatsLayout
 
         checkTicket()
