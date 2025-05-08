@@ -1,15 +1,14 @@
 package woowacourse.movie.presentation.view.reservationlist
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.data.ReservationDatabase
+import woowacourse.movie.data.ReservationProviderImpl
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.presentation.Extras
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
@@ -19,11 +18,10 @@ class ReservationListFragment :
     Fragment(),
     ReservationListContract.View {
     private lateinit var binding: FragmentReservationListBinding
-    private val reservationDao by lazy {
-        ReservationDatabase.getInstance(requireContext()).reservationDao()
-    }
     private val presenter: ReservationListContract.Presenter by lazy {
-        ReservationListPresenter(this, reservationDao)
+        val dao = ReservationDatabase.getInstance(requireContext()).reservationDao()
+        val provider = ReservationProviderImpl(dao)
+        ReservationListPresenter(this, provider)
     }
     private val reservationAdapter: ReservationAdapter by lazy {
         ReservationAdapter(
@@ -70,7 +68,6 @@ class ReservationListFragment :
 
     private fun setupReservationAdapter() {
         val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-        dividerItemDecoration.setDrawable(Color.GRAY.toDrawable())
         binding.rvReservationList.addItemDecoration(dividerItemDecoration)
         binding.rvReservationList.adapter = reservationAdapter
     }

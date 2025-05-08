@@ -1,7 +1,6 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
-import woowacourse.movie.data.ReservationDao
-import woowacourse.movie.data.mapper.ReservationMapper.toEntity
+import woowacourse.movie.data.ReservationProviderImpl
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
@@ -11,7 +10,7 @@ import kotlin.concurrent.thread
 
 class SeatSelectPresenter(
     val view: SeatSelectContract.View,
-    private val dao: ReservationDao,
+    private val provider: ReservationProviderImpl,
 ) : SeatSelectContract.Presenter {
     private lateinit var reservationInfo: ReservationInfo
     private lateinit var theaterName: String
@@ -57,13 +56,12 @@ class SeatSelectPresenter(
     }
 
     override fun reservationConfirmed() {
-        val reservationInfo = createReservationInfo()
+        val reservationInfoUiModel = createReservationInfo()
         thread {
-            val reservationEntity =
-                reservationInfo.toDomain().toEntity(reservationInfo.theaterName)
-            dao.saveReservation(reservationEntity)
+            reservationInfo = reservationInfoUiModel.toDomain()
+            provider.saveReservation(reservationInfo)
+            view.navigateToComplete(reservationInfoUiModel)
         }
-        view.navigateToComplete(reservationInfo)
     }
 
     override fun getSelectedSeatIds(): List<String> = selectedSeats.labels()

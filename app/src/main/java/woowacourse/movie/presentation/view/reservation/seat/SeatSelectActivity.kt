@@ -25,8 +25,10 @@ class SeatSelectActivity :
     AppCompatActivity(),
     SeatSelectContract.View {
     private lateinit var binding: ActivitySeatSelectBinding
-    private val reservationDao by lazy {
-        ReservationDatabase.getInstance(this).reservationDao()
+    private val presenter: SeatSelectContract.Presenter by lazy {
+        val dao = ReservationDatabase.getInstance(this).reservationDao()
+        val provider = ReservationProviderImpl(dao)
+        SeatSelectPresenter(this, provider)
     }
     private val presenter: SeatSelectPresenter by lazy { SeatSelectPresenter(this, reservationDao) }
     private val reservationDialog by lazy { ReservationDetailDialog() }
