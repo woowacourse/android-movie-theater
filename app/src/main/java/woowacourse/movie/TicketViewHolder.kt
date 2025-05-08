@@ -13,6 +13,11 @@ class TicketViewHolder(
     private var title: String = ""
     private var needDivider: Boolean = true
 
+    init {
+        binding.root.setOnClickListener {
+        }
+    }
+
     fun bind(
         ticket: Ticket,
         needDivider: Boolean,
