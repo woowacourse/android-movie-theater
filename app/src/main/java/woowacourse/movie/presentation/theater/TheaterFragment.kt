@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.R
 import woowacourse.movie.common.util.getSerializableCompat
 import woowacourse.movie.databinding.FragmentTheaterBinding
 import woowacourse.movie.domain.model.Movie
@@ -34,8 +32,7 @@ class TheaterFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_theater, container, false)
+        _binding = FragmentTheaterBinding.inflate(inflater)
         return binding.root
     }
 

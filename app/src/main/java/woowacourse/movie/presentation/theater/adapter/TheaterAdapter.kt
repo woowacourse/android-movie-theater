@@ -2,9 +2,7 @@ package woowacourse.movie.presentation.theater.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.domain.model.Screening
 
@@ -16,13 +14,7 @@ class TheaterAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): TheaterViewHolder {
-        val binding =
-            DataBindingUtil.inflate<ItemTheaterBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.item_theater,
-                parent,
-                false,
-            )
+        val binding = ItemTheaterBinding.inflate(LayoutInflater.from(parent.context))
         return TheaterViewHolder(binding, onClickTheater)
     }
 

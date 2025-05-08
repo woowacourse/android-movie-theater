@@ -2,9 +2,7 @@ package woowacourse.movie.presentation.movies.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemAdsBinding
 import woowacourse.movie.databinding.ItemMovieBinding
 
@@ -18,24 +16,12 @@ class MovieAdapter(
     ): RecyclerView.ViewHolder =
         when (MovieListItem.ViewType.entries[viewType]) {
             MovieListItem.ViewType.TYPE_MOVIE -> {
-                val binding =
-                    DataBindingUtil.inflate<ItemMovieBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_movie,
-                        parent,
-                        false,
-                    )
+                val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context))
                 MovieViewHolder(binding, clickListener)
             }
 
             MovieListItem.ViewType.TYPE_ADS -> {
-                val binding =
-                    DataBindingUtil.inflate<ItemAdsBinding>(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_ads,
-                        parent,
-                        false,
-                    )
+                val binding = ItemAdsBinding.inflate(LayoutInflater.from(parent.context))
                 AdsViewHolder(binding)
             }
         }
