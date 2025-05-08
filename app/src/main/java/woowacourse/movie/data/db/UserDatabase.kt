@@ -11,7 +11,7 @@ import woowacourse.movie.data.db.converter.SeatTypeConverters
 @Database(entities = [TicketEntity::class], version = 1)
 @TypeConverters(
     DateTimeConverter::class,
-    SeatTypeConverters::class
+    SeatTypeConverters::class,
 )
 abstract class UserDatabase : RoomDatabase() {
     abstract fun ticketDao(): TicketDao

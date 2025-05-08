@@ -28,7 +28,7 @@ data class TicketEntity(
             theaterName = theaterName,
             count = PeopleCount(ticketCount),
             price = ticketPrice,
-            seats = seats
+            seats = seats,
         )
     }
 }
@@ -40,7 +40,6 @@ fun Ticket.toEntity(): TicketEntity {
         theaterName = theaterName,
         ticketCount = count.value,
         ticketPrice = price,
-        seats = seats
+        seats = seats,
     )
 }
-

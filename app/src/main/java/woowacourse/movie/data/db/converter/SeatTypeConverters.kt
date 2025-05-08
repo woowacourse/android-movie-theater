@@ -10,7 +10,7 @@ class SeatTypeConverters {
 
     @TypeConverter
     fun fromSeats(seats: Set<Seat>): String {
-            return json.encodeToString(SetSerializer(Seat.serializer()), seats)
+        return json.encodeToString(SetSerializer(Seat.serializer()), seats)
     }
 
     @TypeConverter
