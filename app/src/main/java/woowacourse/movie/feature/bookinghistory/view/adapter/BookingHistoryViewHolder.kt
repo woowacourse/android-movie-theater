@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemBookingHistoryBinding
 import woowacourse.movie.feature.model.BookingInfoUiModel
 
-class BookingHistoryHolder(
+class BookingHistoryViewHolder(
     private val binding: ItemBookingHistoryBinding,
     private val handler: Handler,
 ) : RecyclerView.ViewHolder(binding.root) {

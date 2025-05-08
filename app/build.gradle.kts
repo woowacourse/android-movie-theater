@@ -73,4 +73,5 @@ dependencies {
     debugImplementation(libs.androidx.fragment.testing.manifest)
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
+    implementation(libs.gson)
 }

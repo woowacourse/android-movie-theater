@@ -7,7 +7,7 @@
     <data>
 
         <variable
-            name="adapter"
+            name="bookingHistoryAdapter"
             type="woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryAdapter" />
     </data>
 
@@ -18,7 +18,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:adapter="@{adapter}"
+            android:adapter="@{bookingHistoryAdapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

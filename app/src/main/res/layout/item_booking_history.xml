@@ -11,13 +11,14 @@
 
         <variable
             name="handler"
-            type="woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryHolder.Handler" />
+            type="woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryViewHolder.Handler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> handler.onBookingHistoryClick(bookingInfo)"
+        android:clickable="true"
+        android:onClick="@{() -> handler.onBookingHistoryClick(bookingInfo)}"
         android:padding="12dp">
 
         <TextView

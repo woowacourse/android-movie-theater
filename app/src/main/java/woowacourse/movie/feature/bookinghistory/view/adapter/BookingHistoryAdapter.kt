@@ -9,17 +9,17 @@ import woowacourse.movie.feature.model.BookingInfoUiModel
 class BookingHistoryAdapter(
     private val items: List<BookingInfoUiModel>,
     private val handler: Handler,
-) : RecyclerView.Adapter<BookingHistoryHolder>() {
+) : RecyclerView.Adapter<BookingHistoryViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): BookingHistoryHolder {
+    ): BookingHistoryViewHolder {
         val binding = ItemBookingHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return BookingHistoryHolder(binding, handler)
+        return BookingHistoryViewHolder(binding, handler)
     }
 
     override fun onBindViewHolder(
-        holder: BookingHistoryHolder,
+        holder: BookingHistoryViewHolder,
         position: Int,
     ) {
         val item: BookingInfoUiModel = items[position]
@@ -28,5 +28,5 @@ class BookingHistoryAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    interface Handler : BookingHistoryHolder.Handler
+    interface Handler : BookingHistoryViewHolder.Handler
 }
