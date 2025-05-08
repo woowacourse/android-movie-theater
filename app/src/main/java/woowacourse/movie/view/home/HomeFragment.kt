@@ -8,12 +8,9 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentHomeBinding
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.MovieListItem
-import woowacourse.movie.domain.Showings
-import woowacourse.movie.view.home.movies.OnBottomSheetDialogEventListener
 import woowacourse.movie.view.home.movies.OnMovieEventListener
 import woowacourse.movie.view.home.movies.adapter.MovieAdapter
 import woowacourse.movie.view.home.theater.TheaterBottomSheetDialogFragment
-import woowacourse.movie.view.reservation.detail.ReservationActivity
 
 class HomeFragment : Fragment(), HomeContract.View {
     private val presenter = HomePresenter(this)
@@ -62,20 +59,7 @@ class HomeFragment : Fragment(), HomeContract.View {
         val dialog =
             TheaterBottomSheetDialogFragment.newInstance(
                 movie,
-                object : OnBottomSheetDialogEventListener {
-                    override fun onClick(showings: Showings) {
-                        navigateToReservation(movie, showings)
-                    }
-                },
             )
         dialog.show(childFragmentManager, "TheaterBottomSheetDialog")
-    }
-
-    override fun navigateToReservation(
-        movie: Movie,
-        showings: Showings,
-    ) {
-        val intent = ReservationActivity.newIntent(requireContext(), movie, showings)
-        startActivity(intent)
     }
 }

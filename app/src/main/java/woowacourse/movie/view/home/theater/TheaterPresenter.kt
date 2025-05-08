@@ -8,8 +8,12 @@ class TheaterPresenter(
     private val view: TheaterContract.View,
     private val theaters: List<Theater> = theatersDummy,
 ) : TheaterContract.Presenter {
+    private lateinit var movie: Movie
+
     override fun fetchData(movie: Movie) {
+        this.movie = movie
         val showings = movie.let { Theater.findTheatersShowingMovie(it.title, theaters) }
-        view.showTheaterList(showings)
+
+        view.showTheaterList(movie, showings)
     }
 }

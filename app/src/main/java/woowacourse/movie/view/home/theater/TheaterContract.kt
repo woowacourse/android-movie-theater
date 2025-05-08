@@ -11,6 +11,14 @@ interface TheaterContract {
     interface View {
         fun handleInvalidTicket()
 
-        fun showTheaterList(showings: List<Showings>)
+        fun showTheaterList(
+            movie: Movie,
+            showings: List<Showings>,
+        )
+
+        fun navigateToReservation(
+            movie: Movie,
+            showings: Showings,
+        )
     }
 }

@@ -10,14 +10,12 @@ import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.util.getSerializableCompat
 import woowacourse.movie.view.dialog.DialogFactory
-import woowacourse.movie.view.home.movies.OnBottomSheetDialogEventListener
 import woowacourse.movie.view.home.movies.adapter.TheaterAdapter
+import woowacourse.movie.view.reservation.detail.ReservationActivity
 
 class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), TheaterContract.View {
     private var _binding: FragmentTheaterBottomSheetDialogBinding? = null
     private val binding get() = _binding!!
-
-    private var eventListener: OnBottomSheetDialogEventListener? = null
 
     private val presenter: TheaterContract.Presenter by lazy {
         TheaterPresenter(this)
@@ -60,14 +58,17 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), TheaterCon
         }
     }
 
-    override fun showTheaterList(showings: List<Showings>) {
+    override fun showTheaterList(
+        movie: Movie,
+        showings: List<Showings>,
+    ) {
         val recyclerView = binding.rvTheaterCategory
 
         val theaterAdapter =
             TheaterAdapter(
                 object : OnTheaterEventListener {
                     override fun onClickReservation(showings: Showings) {
-                        eventListener?.onClick(showings)
+                        navigateToReservation(movie, showings)
                         dismiss()
                     }
                 },
@@ -77,13 +78,22 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), TheaterCon
         theaterAdapter.submitList(showings)
     }
 
+    override fun navigateToReservation(
+        movie: Movie,
+        showings: Showings,
+    ) {
+        val intent =
+            ReservationActivity.newIntent(
+                context = requireContext(),
+                movie = movie,
+                showings = showings,
+            )
+        startActivity(intent)
+    }
+
     companion object {
-        fun newInstance(
-            movie: Movie,
-            eventListener: OnBottomSheetDialogEventListener,
-        ): TheaterBottomSheetDialogFragment {
+        fun newInstance(movie: Movie): TheaterBottomSheetDialogFragment {
             val fragment = TheaterBottomSheetDialogFragment()
-            fragment.eventListener = eventListener
             return fragment.apply {
                 arguments =
                     Bundle().apply {
