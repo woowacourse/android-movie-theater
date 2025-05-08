@@ -22,7 +22,7 @@ class CinemaSelectionBottomSheetDialogFragment :
     private var _binding: FragmentCinemaSelectionBottomSheetDialogBinding? = null
     private val binding get() = _binding ?: error(ErrorMessage("_binding").notProvided())
 
-    var cinemaAdapter: CinemaAdapter? = null
+    private var cinemaAdapter: CinemaAdapter? = null
     private var presenter: CinemaSelectionPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ class CinemaSelectionBottomSheetDialogFragment :
     ): View {
         _binding =
             FragmentCinemaSelectionBottomSheetDialogBinding.inflate(inflater, container, false)
-        binding.cinemaSelection = this
+        binding.adapter = cinemaAdapter
         return binding.root
     }
 
