@@ -2,6 +2,8 @@ package woowacourse.movie.presentation.history
 
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout.VERTICAL
+import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.R
 import woowacourse.movie.data.ReservationDaoListenerImpl
 import woowacourse.movie.data.ReservationDatabase
@@ -59,6 +61,8 @@ class ReservationHistoryFragment :
     }
 
     private fun setHistoryAdapter() {
+        val decoration = DividerItemDecoration(requireContext(), VERTICAL)
+        binding.rvReservationHistory.addItemDecoration(decoration)
         binding.rvReservationHistory.adapter = adapter
     }
 }
