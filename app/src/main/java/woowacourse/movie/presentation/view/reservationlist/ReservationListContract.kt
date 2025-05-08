@@ -10,7 +10,7 @@ interface ReservationListContract {
     }
 
     interface Presenter {
-        fun fetchMovies()
+        fun fetchReservations()
 
         fun reservationSelected(reservation: ReservationInfoUiModel)
     }

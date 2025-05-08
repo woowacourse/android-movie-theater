@@ -1,7 +1,5 @@
 package woowacourse.movie.presentation.view.reservationlist
 
-import android.os.Handler
-import android.os.Looper
 import woowacourse.movie.data.ReservationDao
 import woowacourse.movie.data.mapper.ReservationMapper.toDomain
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
@@ -12,7 +10,7 @@ class ReservationListPresenter(
     val view: ReservationListContract.View,
     private val reservationDao: ReservationDao,
 ) : ReservationListContract.Presenter {
-    override fun fetchMovies() {
+    override fun fetchReservations() {
         thread {
             val reservationEntities = reservationDao.getAllReservation()
 
@@ -22,9 +20,7 @@ class ReservationListPresenter(
                     domainModel.toPresentation(entity.theaterName)
                 }
 
-            Handler(Looper.getMainLooper()).post {
-                view.showReservations(reservationInfoUiModels)
-            }
+            view.showReservations(reservationInfoUiModels)
         }
     }
 
