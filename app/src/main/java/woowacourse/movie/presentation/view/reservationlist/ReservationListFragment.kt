@@ -5,26 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import woowacourse.movie.data.ReservationDatabase
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.presentation.Extras
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.view.reservation.complete.ReservationCompleteActivity
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-
-@BindingAdapter("reservationDateTime", "reservationTheaterName")
-fun setReservationInfo(
-    view: TextView,
-    dateTime: LocalDateTime,
-    theaterName: String,
-) {
-    val formatter = DateTimeFormatter.ofPattern("yyyy.M.d | HH:mm")
-    view.text = "${dateTime.format(formatter)} | $theaterName 극장"
-}
 
 class ReservationListFragment :
     Fragment(),
@@ -62,11 +48,13 @@ class ReservationListFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         setupReservationAdapter()
-        presenter.fetchMovies()
+        presenter.fetchReservations()
     }
 
     override fun showReservations(reservations: List<ReservationInfoUiModel>) {
-        reservationAdapter.submitList(reservations)
+        requireActivity().runOnUiThread {
+            reservationAdapter.submitList(reservations)
+        }
     }
 
     override fun navigateToComplete(reservation: ReservationInfoUiModel) {

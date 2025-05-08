@@ -19,7 +19,6 @@
     <string name="reservation_btn_select_complete">선택 완료</string>
     <string name="reservation_ticket_count_default">1</string>
 
-
     <string name="seat_select_screen">Screen</string>
     <string name="seat_select_error_count">최대 %d개의 좌석만 선택할 수 있어요</string>
     <string name="seat_select_ticket_price">%s원</string>
@@ -33,5 +32,7 @@
     <string name="reservation_complete_date_time">%s %s</string>
     <string name="reservation_complete_ticket_count">일반 %d명 | %s | %s 극장</string>
     <string name="reservation_complete_ticket_price">%s원 (현장 결제)</string>
+
+    <string name="reservation_list_info">%s | %s | %s 극장</string>
 
 </resources>
