@@ -23,153 +23,149 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EAEAEA"
+        android:background="@color/booking_seat_bg"
         tools:context=".ui.seat.BookingSeatActivity">
 
-        <LinearLayout
-            android:id="@+id/screen"
-            android:layout_width="360dp"
-            android:layout_height="48dp"
-            android:background="#494949"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_screen"
-                android:textColor="@color/white"
-                android:textSize="32sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <TableLayout
-            android:id="@+id/table_layout_seats"
-            android:layout_width="360dp"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="40dp"
-            android:background="@color/white"
-            android:stretchColumns="*"
-            app:layout_constraintEnd_toEndOf="@id/screen"
-            app:layout_constraintStart_toStartOf="@id/screen"
-            app:layout_constraintTop_toBottomOf="@id/screen">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-            </TableRow>
-
-            <TableRow android:layout_weight="1">
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-            </TableRow>
-
-            <TableRow android:layout_weight="1">
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-            </TableRow>
-
-            <TableRow android:layout_weight="1">
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-            </TableRow>
-
-            <TableRow android:layout_weight="1">
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-
-                <include layout="@layout/seat_item" />
-            </TableRow>
-        </TableLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/tv_screen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/booking_seat_screen_info_bg"
+            android:gravity="center"
+            android:text="@string/text_screen"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/layout_root_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="34dp"
+            app:layout_constraintBottom_toTopOf="@id/tv_movie_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_screen">
 
-            <LinearLayout
-                android:id="@+id/movie_info_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:paddingHorizontal="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_confirm"
-                app:layout_constraintHorizontal_weight="3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
 
-                <TextView
-                    android:id="@+id/tv_movie_title"
+                <TableLayout
+                    android:id="@+id/table_layout_seats"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{movieTitle}"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    tools:text="해리 포터와 마법사의 돌" />
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:stretchColumns="*"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/tv_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{@string/text_korean_won(stringFormatter.thousandFormat(totalPrice))}"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    tools:text="0원" />
-            </LinearLayout>
+                    <TableRow android:layout_weight="1">
 
-            <Button
-                android:id="@+id/btn_confirm"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="@string/text_confirm_btn"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.2" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+                    </TableRow>
+
+                    <TableRow android:layout_weight="1">
+
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+                    </TableRow>
+
+                    <TableRow android:layout_weight="1">
+
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+                    </TableRow>
+
+                    <TableRow android:layout_weight="1">
+
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+                    </TableRow>
+
+                    <TableRow android:layout_weight="1">
+
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+
+                        <include layout="@layout/seat_item" />
+                    </TableRow>
+                </TableLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/tv_movie_title"
+            android:layout_width="0dp"
+            android:layout_height="39dp"
+            android:background="@color/white"
+            android:gravity="bottom"
+            android:maxLines="1"
+            android:paddingStart="15dp"
+            android:paddingEnd="0dp"
+            android:text="@{movieTitle}"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tv_price"
+            app:layout_constraintEnd_toStartOf="@id/btn_confirm"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="해리 포터와 마법사의 돌" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="0dp"
+            android:layout_height="39dp"
+            android:background="@color/white"
+            android:paddingStart="15dp"
+            android:paddingEnd="0dp"
+            android:text="@{@string/text_korean_won(stringFormatter.thousandFormat(totalPrice))}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_confirm"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="0원" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:enabled="false"
+            android:text="@string/text_confirm_btn"
+            app:cornerRadius="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
