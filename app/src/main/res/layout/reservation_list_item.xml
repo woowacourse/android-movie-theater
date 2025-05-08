@@ -2,37 +2,42 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    
+
     <data>
-        
+
+        <variable
+            name="clickListener"
+            type="woowacourse.movie.reservation.TicketClickListener" />
+
         <variable
             name="ticket"
             type="woowacourse.movie.ui.model.TicketUiModel" />
     </data>
-    
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{()-> clickListener.onTicketClick(ticket)}"
         android:padding="12dp">
 
         <TextView
-            app:headCount="@{ticket.headCount}"
-            app:seats="@{ticket.seats}"
-            app:theater="@{ticket.theater}"
             android:id="@+id/reserve_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="13sp"
+            app:headCount="@{ticket.headCount}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:seats="@{ticket.seats}"
+            app:theater="@{ticket.theater}"
             tools:text="2024.3.2 | 17:00 | 선릉 극장" />
 
         <TextView
-            android:text="@{ticket.title}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:text="@{ticket.title}"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"

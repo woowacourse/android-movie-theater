@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
+import woowacourse.movie.booking.complete.BookingCompleteActivity
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.ui.model.TicketUiModel
 
@@ -36,7 +37,11 @@ class TicketListFragment : Fragment(), TicketListContract.View {
     }
 
     override fun setUpReservationList(reservations: List<TicketUiModel>) {
-        binding.rvReservation.adapter = TicketAdapter(reservations)
+        binding.rvReservation.adapter =
+            TicketAdapter(reservations) { ticket ->
+                val intent = BookingCompleteActivity.newIntent(requireContext(), ticket)
+                startActivity(intent)
+            }
         binding.rvReservation.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager(context).orientation))
     }
 }

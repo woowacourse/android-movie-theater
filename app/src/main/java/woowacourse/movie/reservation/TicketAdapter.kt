@@ -6,12 +6,13 @@ import woowacourse.movie.ui.model.TicketUiModel
 
 class TicketAdapter(
     private val reservations: List<TicketUiModel>,
+    private val onTicketClick: TicketClickListener,
 ) : RecyclerView.Adapter<TicketViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): TicketViewHolder {
-        return TicketViewHolder(parent)
+        return TicketViewHolder(parent, onTicketClick)
     }
 
     override fun getItemCount(): Int = reservations.size
