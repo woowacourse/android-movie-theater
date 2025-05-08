@@ -14,14 +14,16 @@ data class MovieSchedule(
 
     companion object {
         fun createDummy(movie: Movie): MovieSchedule {
-            val schedule = mutableListOf<LocalDateTime>()
-            val dates = movie.screeningPeriod.getAvailableDates(LocalDate.now())
-            dates.forEach { date ->
-                val count = Random.nextInt(15)
-                repeat(count) {
-                    if (Random.nextBoolean()) schedule.add(LocalDateTime.of(date, LocalTime.of(it + 9, 0)))
+            val schedule =
+                buildList {
+                    val dates = movie.screeningPeriod.getAvailableDates(LocalDate.now())
+                    dates.forEach { date ->
+                        val count = Random.nextInt(15)
+                        repeat(count) {
+                            if (Random.nextBoolean()) add(LocalDateTime.of(date, LocalTime.of(it + 9, 0)))
+                        }
+                    }
                 }
-            }
 
             return MovieSchedule(movie.id, schedule)
         }
