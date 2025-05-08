@@ -22,7 +22,6 @@ import java.time.LocalDateTime
 class TicketActivity :
     AppCompatActivity(),
     TicketContract.View {
-    private var ticket: Ticket? = null
     private var presenter: TicketContract.Presenter? = null
 
     private lateinit var cancelDescriptionView: TextView
@@ -42,7 +41,11 @@ class TicketActivity :
         }
 
         findViews()
-        initModel()
+        initPresenter()
+        initViews()
+    }
+
+    private fun initPresenter() {
         val ticket =
             intent?.getTicketExtra(EXTRA_TICKET) ?: error(
                 ErrorMessage(CAUSE_TICKET).notProvided(),
@@ -56,7 +59,6 @@ class TicketActivity :
                 ?: error(ErrorMessage(CAUSE_CINEMA).notProvided())
 
         presenter = TicketPresenter(this, ticket, seats, cinemaName)
-        initViews()
     }
 
     @Suppress("DEPRECATION")
@@ -77,12 +79,6 @@ class TicketActivity :
         descriptionView = findViewById<TextView>(R.id.tv_ticket_description)
         showtimeView = findViewById<TextView>(R.id.tv_ticket_showtime)
         titleView = findViewById<TextView>(R.id.tv_ticket_movie_title)
-    }
-
-    private fun initModel() {
-        ticket = intent.getTicketExtra(EXTRA_TICKET) ?: error(
-            ErrorMessage(CAUSE_TICKET).notProvided(),
-        )
     }
 
     @Suppress("DEPRECATION")
