@@ -7,12 +7,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.BeforeEach
 import woowacourse.movie.MovieFixture
 import woowacourse.movie.R
 import woowacourse.movie.checkIsDisplayed
 import woowacourse.movie.checkWithText
-import woowacourse.movie.moviebooked.MovieBookedActivity
 import woowacourse.movie.moviebooking.MovieBookingActivity
 
 class MovieBookingContractActivityTest {
@@ -38,13 +36,31 @@ class MovieBookingContractActivityTest {
     }
 
     @Test
+    fun 인텐트로_전달된_영화_제목이_일치한다() {
+        onView(withId(R.id.booking_movie_title))
+            .checkWithText("해리포터와 마법사의 돌")
+    }
+
+    @Test
     fun 예매할_영화_상영_기간이_보인다() {
         onView(withId(R.id.booking_movie_date)).checkIsDisplayed()
     }
 
     @Test
+    fun 인텐트로_전달된_영화_상영_기간_일치한다() {
+        onView(withId(R.id.booking_movie_date))
+            .checkWithText(MovieFixture.HARRY_POTTER_DATE)
+    }
+
+    @Test
     fun 예매할_영화_러닝_타임이_보인다() {
         onView(withId(R.id.booking_movie_running_time)).checkIsDisplayed()
+    }
+
+    @Test
+    fun 인텐트로_전달된_영화_러닝_타임이_일치한다() {
+        onView(withId(R.id.booking_movie_running_time))
+            .checkWithText(MovieFixture.HARRY_POTTER_RUNNING_TIME)
     }
 
     @Test

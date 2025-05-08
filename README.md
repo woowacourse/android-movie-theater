@@ -145,3 +145,5 @@
 - MVP 인터페이스 -> XXContract로 이름 변경
 
 - [x] refactor: bottomSheet 뒤로가기 시 사라지도록 변경
+
+- [x] test: UI 테스트 코드에 intent 값이 제대로 보이는지 추가

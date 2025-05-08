@@ -11,6 +11,7 @@ import org.junit.Test
 import woowacourse.movie.MovieFixture
 import woowacourse.movie.R
 import woowacourse.movie.checkIsDisplayed
+import woowacourse.movie.checkWithText
 import woowacourse.movie.moviebooked.MovieBookedActivity
 import woowacourse.movie.moviebookingseat.MovieBookingSeatActivity
 import woowacourse.movie.performClick
@@ -40,6 +41,11 @@ class MovieBookingContractSeatActivityTest {
     @Test
     fun 예매할_영화_제목이_보인다() {
         onView(withId(R.id.seat_movie_title)).checkIsDisplayed()
+    }
+
+    @Test
+    fun 인텐트로_전달된_영화_제목이_보인다() {
+        onView(withId(R.id.seat_movie_title)).checkWithText("해리포터와 마법사의 돌")
     }
 
     @Test
