@@ -26,14 +26,9 @@ class BookingSeatPresenterTest {
     }
 
     @Test
-    fun `가격을 업데이트하면 뷰에 반영된다`() {
-        presenter.refreshTotalPrice()
+    fun `영화 정보를 업데이트하면 뷰에 반영된다`() {
+        presenter.updateViews()
         verify { view.setTotalPrice(any()) }
-    }
-
-    @Test
-    fun `제목을 업데이트하면 뷰에 반영된다`() {
-        presenter.refreshMovieTitle()
         verify { view.setMovieTitle(any()) }
     }
 
