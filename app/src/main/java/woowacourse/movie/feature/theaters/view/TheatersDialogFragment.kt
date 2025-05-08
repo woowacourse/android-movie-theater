@@ -10,12 +10,17 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.DialogFragmentTheatersBinding
 import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity
 import woowacourse.movie.feature.model.ScreeningUiModel
+import woowacourse.movie.feature.theaters.contract.TheatersContract
+import woowacourse.movie.feature.theaters.presenter.TheatersPresenter
 import woowacourse.movie.feature.theaters.view.adapter.TheaterAdapter
 import woowacourse.movie.util.getParcelableArrayListCompat
 
-class TheatersDialogFragment : BottomSheetDialogFragment() {
+class TheatersDialogFragment :
+    BottomSheetDialogFragment(),
+    TheatersContract.View {
     private val theaterAdapter: TheaterAdapter by lazy { TheaterAdapter(screenings, setupClickListeners()) }
     private val screenings: List<ScreeningUiModel> by lazy { arguments?.getParcelableArrayListCompat(SCREENINGS_KEY) ?: emptyList() }
+    private val presenter: TheatersContract.Presenter by lazy { TheatersPresenter(this) }
     private lateinit var binding: DialogFragmentTheatersBinding
 
     override fun onCreateView(
@@ -39,11 +44,11 @@ class TheatersDialogFragment : BottomSheetDialogFragment() {
     private fun setupClickListeners(): TheaterAdapter.Handler =
         object : TheaterAdapter.Handler {
             override fun onBookingClick(screening: ScreeningUiModel) {
-                navigateToBookingDetail(screening)
+                presenter.selectTheater(screening)
             }
         }
 
-    private fun navigateToBookingDetail(screening: ScreeningUiModel) {
+    override fun navigateToBookingDetail(screening: ScreeningUiModel) {
         val intent = BookingDetailActivity.newIntent(requireContext(), screening)
         startActivity(intent)
         dismiss()
