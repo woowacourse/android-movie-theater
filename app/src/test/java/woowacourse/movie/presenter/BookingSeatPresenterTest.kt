@@ -5,6 +5,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.movie.Headcount
+import woowacourse.movie.domain.model.movie.TicketType
 import woowacourse.movie.domain.model.theater.Seat
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.ui.seat.contract.BookingSeatContract
@@ -60,5 +61,24 @@ class BookingSeatPresenterTest {
         presenter.selectSeat(Seat(0, 0))
         presenter.selectSeat(Seat(0, 1))
         verify { view.setConfirmButton(true) }
+    }
+
+    @Test
+    fun `좌석을 클릭할 때마다 가격이 누적되어 10000, 20000원 순으로 반영된다`() {
+        val priceSlots = mutableListOf<Int>()
+
+        val bGradeSeat = Seat(0, 0, TicketType.B_GRADE)
+        val sGradeSeat = Seat(3, 3, TicketType.S_GRADE)
+
+        presenter.selectSeat(bGradeSeat)
+        presenter.selectSeat(sGradeSeat)
+
+        verify(exactly = 2) {
+            view.setTotalPrice(capture(priceSlots))
+        }
+
+        assert(priceSlots == listOf(10000, 25000)) {
+            "가격 누적 순서가 예상과 다릅니다: $priceSlots"
+        }
     }
 }
