@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.bookinghistory
 
 import woowacourse.movie.domain.model.seat.Seat
 import java.time.LocalDateTime

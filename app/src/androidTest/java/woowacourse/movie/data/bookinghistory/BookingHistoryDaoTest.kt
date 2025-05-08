@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.bookinghistory
 
 import android.content.Context
 import android.database.sqlite.SQLiteConstraintException
