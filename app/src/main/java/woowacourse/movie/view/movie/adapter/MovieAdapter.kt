@@ -1,11 +1,8 @@
 package woowacourse.movie.view.movie.adapter
 
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.R
 import woowacourse.movie.model.Movie
 import woowacourse.movie.view.movie.MovieClickListener
 
@@ -28,29 +25,17 @@ class MovieAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-
-        return when (viewType) {
-            VIEW_TYPE_MOVIE -> {
-                val view = inflater.inflate(R.layout.item_movie, parent, false)
-                MovieViewHolder(view, clickListener)
-            }
-
-            VIEW_TYPE_AD -> {
-                val view = inflater.inflate(R.layout.item_advertisement, parent, false)
-                AdViewHolder(view)
-            }
-
+    ): RecyclerView.ViewHolder =
+        when (viewType) {
+            VIEW_TYPE_MOVIE -> MovieViewHolder.from(parent, clickListener)
+            VIEW_TYPE_AD -> AdViewHolder.from(parent)
             else -> throw IllegalArgumentException(ERROR_INVALID_VIEWTYPE)
         }
-    }
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
-        Log.d("madapter", "$currentList")
         when (holder) {
             is MovieViewHolder -> {
                 val moviePosition = getMoviePosition(position)
