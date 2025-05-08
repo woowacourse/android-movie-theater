@@ -7,29 +7,23 @@ import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.databinding.ItemCinemaBinding
 import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.Screening
-import woowacourse.movie.domain.reservation.ShowtimePolicy
 
 class CinemaAdapter(
     private val screening: Screening,
-    private val onClickItem: (cinemaName: String, showtimePolicy: ShowtimePolicy) -> Unit,
-) :
-    ListAdapter<Cinema, CinemaViewHolder>(
-            object : DiffUtil.ItemCallback<Cinema>() {
-                override fun areItemsTheSame(
-                    oldItem: Cinema,
-                    newItem: Cinema,
-                ): Boolean {
-                    return oldItem === newItem
-                }
+    private val onClickItem: (cinema: Cinema) -> Unit,
+) : ListAdapter<Cinema, CinemaViewHolder>(
+        object : DiffUtil.ItemCallback<Cinema>() {
+            override fun areItemsTheSame(
+                oldItem: Cinema,
+                newItem: Cinema,
+            ): Boolean = oldItem === newItem
 
-                override fun areContentsTheSame(
-                    oldItem: Cinema,
-                    newItem: Cinema,
-                ): Boolean {
-                    return oldItem == newItem
-                }
-            },
-        ) {
+            override fun areContentsTheSame(
+                oldItem: Cinema,
+                newItem: Cinema,
+            ): Boolean = oldItem == newItem
+        },
+    ) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,

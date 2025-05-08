@@ -10,7 +10,6 @@ import woowacourse.movie.contract.cinema.CinemaSelectionContract
 import woowacourse.movie.databinding.FragmentCinemaSelectionBottomSheetDialogBinding
 import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.Screening
-import woowacourse.movie.domain.reservation.ShowtimePolicy
 import woowacourse.movie.presenter.cinema.CinemaSelectionPresenter
 import woowacourse.movie.view.cinema.adapter.CinemaAdapter
 import woowacourse.movie.view.reservation.ReservationActivity
@@ -29,14 +28,12 @@ class CinemaSelectionBottomSheetDialogFragment :
         super.onCreate(savedInstanceState)
 
         val screening = arguments.screening ?: error(ErrorMessage("screening").notProvided())
-        CinemaSelectionPresenter(this, screening).also {
-            presenter = it
+        CinemaSelectionPresenter(this, screening).also { presenter ->
+            this.presenter = presenter
             cinemaAdapter =
                 CinemaAdapter(
                     screening = screening,
-                    onClickItem = { cinemaName: String, showtimePolicy: ShowtimePolicy ->
-                        it.onSelectCinema(cinemaName, showtimePolicy)
-                    },
+                    onClickItem = { cinema: Cinema -> presenter.onSelectCinema(cinema) },
                 )
         }
     }
@@ -71,11 +68,15 @@ class CinemaSelectionBottomSheetDialogFragment :
 
     override fun navigateToReservationScreen(
         screening: Screening,
-        cinemaName: String,
-        showtimePolicy: ShowtimePolicy,
+        cinema: Cinema,
     ) {
         val intent =
-            ReservationActivity.newIntent(requireContext(), screening, cinemaName, showtimePolicy)
+            ReservationActivity.newIntent(
+                requireContext(),
+                screening,
+                cinema.name,
+                cinema.showtimePolicy,
+            )
         startActivity(intent)
     }
 
