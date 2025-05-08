@@ -16,7 +16,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:onClick="@{() -> clickListener.onReservationClick(reservation)}"
-        android:background="@drawable/reservation_list_background"
+        android:background="?attr/selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp">
