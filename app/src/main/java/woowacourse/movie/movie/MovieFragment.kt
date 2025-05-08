@@ -34,15 +34,6 @@ class MovieFragment : Fragment(), Movies.View {
     }
 
     override fun showMovies(movies: List<Movie>) {
-        object : MovieClickListener {
-            override fun navigateToBook(movie: Movie) {
-                presenter.selectedMovie(movie)
-            }
-
-            override fun navigateToAd() {
-                presenter.selectedAd()
-            }
-        }
         binding.movies.adapter =
             MovieListAdapter(
                 movies,

@@ -137,3 +137,6 @@
 
 - [x] refactor: Fragment Binding nullable 타입으로 변경
 - onDestroyedView()에서 binding 참조 해제
+
+- [x] refactor: binding clickListener 한 번만 할당하도록 변경
+- 중복 익명 객체 제거
