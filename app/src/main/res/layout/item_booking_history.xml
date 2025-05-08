@@ -17,6 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/selector_booking_history"
         android:clickable="true"
         android:onClick="@{() -> handler.onBookingHistoryClick(bookingInfo)}"
         android:padding="12dp">
