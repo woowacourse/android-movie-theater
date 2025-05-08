@@ -50,6 +50,10 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
                 presenter.setReservations(reservation)
             }
 
+        setupRecyclerView(adapter)
+    }
+
+    private fun setupRecyclerView(adapter: ReservationListAdapter) {
         binding.recyclerViewReservationList.adapter = adapter
 
         val divider = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)

@@ -10,9 +10,9 @@ abstract class ReservationDatabase : RoomDatabase() {
     abstract fun reservationDao(): ReservationDao
 
     companion object {
+        @Volatile
         private var instance: ReservationDatabase? = null
 
-        @Synchronized
         fun getInstance(context: Context): ReservationDatabase? {
             if (instance == null) {
                 synchronized(ReservationDatabase::class) {
