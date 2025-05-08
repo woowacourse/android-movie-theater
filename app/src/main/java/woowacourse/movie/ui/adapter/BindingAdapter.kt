@@ -12,6 +12,7 @@ import woowacourse.movie.ui.util.TicketUiFormatter.formatDateTime
 import woowacourse.movie.ui.util.TicketUiFormatter.formatHeadCount
 import woowacourse.movie.ui.util.toUi
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @BindingAdapter("posterImage")
 fun ImageView.setPosterImage(title: String?) {
@@ -42,4 +43,18 @@ fun TextView.setFormattedAmount(amount: Int) {
 @BindingAdapter("seats")
 fun TextView.setSeats(seats: List<Seat>) {
     text = seats.toUi()
+}
+
+@BindingAdapter("formattedDate")
+fun TextView.setFormattedDate(dateTime: LocalDateTime?) {
+    dateTime?.let {
+        text = it.toLocalDate().format(DateTimeFormatter.ofPattern("yyyy.M.dd"))
+    }
+}
+
+@BindingAdapter("formattedTime")
+fun TextView.setFormattedTime(dateTime: LocalDateTime?) {
+    dateTime?.let {
+        text = it.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+    }
 }
