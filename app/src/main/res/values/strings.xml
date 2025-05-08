@@ -25,6 +25,10 @@
     <string name="reservation_complete_ticket_timestamp">%s %s</string>
     <string name="reservation_complete_ticket_price">%s원 (현장 결제)</string>
 
+    <!-- 예매 완료 페이지 -->
+    <string name="reservation_details_selected_date_time_theater">%s | %s | %s</string>
+
+
     <!-- 좌석 선택 페이지 -->
     <string name="seat_selection_screen">SCREEN</string>
     <string name="seat_selection_complete_button">확인</string>

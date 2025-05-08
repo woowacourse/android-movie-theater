@@ -6,11 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationDetailsBinding
+import woowacourse.movie.model.reservation.ReservationDatabase
 
 class ReservationDetailsFragment : Fragment() {
     private lateinit var binding: FragmentReservationDetailsBinding
+    private lateinit var reservationDetailAdapter: ReservationDetailAdapter
+    private lateinit var db: ReservationDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,8 +24,35 @@ class ReservationDetailsFragment : Fragment() {
     ): View {
         binding =
             DataBindingUtil.inflate(
-                inflater, R.layout.fragment_reservation_details, container, false,
+                inflater,
+                R.layout.fragment_reservation_details,
+                container,
+                false,
             )
         return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        db =
+            Room
+                .databaseBuilder(requireContext(), ReservationDatabase::class.java, "reservation")
+                .build()
+        val reservationDao = db.reservationDao()
+
+        reservationDetailAdapter = ReservationDetailAdapter()
+        binding.rvReservationDetails.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvReservationDetails.adapter = reservationDetailAdapter
+
+        Thread {
+            val reservations = reservationDao.findReservation()
+
+            requireActivity().runOnUiThread {
+                reservationDetailAdapter.submitList(reservations)
+            }
+        }.start()
     }
 }
