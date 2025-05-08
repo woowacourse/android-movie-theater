@@ -30,7 +30,7 @@ class ReservationSeatPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk()
-        presenter = ReservationSeatPresenter(view)
+        presenter = ReservationSeatPresenter(view, mockk())
     }
 
     @Test
