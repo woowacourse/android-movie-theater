@@ -14,7 +14,8 @@ import woowacourse.movie.databinding.FragmentMovieBinding
 import woowacourse.movie.domain.Movie
 
 class MovieFragment : Fragment(), Movies.View {
-    private lateinit var binding: FragmentMovieBinding
+    private var _binding: FragmentMovieBinding? = null
+    private val binding get() = _binding!!
     private lateinit var presenter: MoviesPresenter
 
     override fun onCreateView(
@@ -22,9 +23,14 @@ class MovieFragment : Fragment(), Movies.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie, container, false)
         setUpPresenter()
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun showMovies(movies: List<Movie>) {

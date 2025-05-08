@@ -134,3 +134,6 @@
 - [x] refactor: main2 네이밍 변경
 - MainActivity -> HomeActivity로 변경
 - activity_main2 -> activity_home으로 변경
+
+- [x] refactor: Fragment Binding nullable 타입으로 변경
+- onDestroyedView()에서 binding 참조 해제
