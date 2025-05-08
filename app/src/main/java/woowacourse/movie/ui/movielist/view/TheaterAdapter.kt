@@ -1,15 +1,13 @@
 package woowacourse.movie.ui.movielist.view
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.databinding.TheaterItemBinding
 import woowacourse.movie.domain.model.theater.Theater
 
 class TheaterAdapter(
-    private val onClickTheater: (Theater) -> Unit,
+    private val onClickTheater: TheaterClickListener,
 ) : ListAdapter<Theater, RecyclerView.ViewHolder>(
         object : DiffUtil.ItemCallback<Theater>() {
             override fun areItemsTheSame(
@@ -26,11 +24,7 @@ class TheaterAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val itemBinding = TheaterItemBinding.inflate(inflater, parent, false)
-        return TheaterViewHolder(itemBinding, onClickTheater)
-    }
+    ): RecyclerView.ViewHolder = TheaterViewHolder.from(parent, onClickTheater)
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,

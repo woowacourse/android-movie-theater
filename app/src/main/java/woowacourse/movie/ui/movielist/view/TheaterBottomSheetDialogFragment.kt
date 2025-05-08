@@ -52,9 +52,11 @@ class TheaterBottomSheetDialogFragment :
 
     override fun showTheaters(theaters: Theaters) {
         val adapter =
-            TheaterAdapter { theater ->
-                startBookingActivity(binding.root, theater)
-            }
+            TheaterAdapter(
+                TheaterClickListener { theater ->
+                    startBookingActivity(binding.root, theater)
+                },
+            )
         binding.theatersRecyclerView.adapter = adapter
         adapter.submitList(theaters.theaters)
     }
