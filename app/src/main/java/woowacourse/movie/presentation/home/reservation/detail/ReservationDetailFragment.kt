@@ -24,7 +24,8 @@ import java.time.LocalTime
 
 class ReservationDetailFragment :
     BaseFragment<FragmentReservationDetailBinding>(R.layout.fragment_reservation_detail),
-    ReservationDetailContract.View {
+    ReservationDetailContract.View,
+    OnCountClickListener {
     private val presenter: ReservationDetailPresenter by lazy { ReservationDetailPresenter(this) }
     private val dialog: CustomAlertDialog by lazy { CustomAlertDialog(requireContext()) }
 
@@ -65,8 +66,7 @@ class ReservationDetailFragment :
 
     override fun showScreen(movie: MovieUiModel) {
         binding.movie = movie
-
-        setupReservationCountControls()
+        binding.onCountClickListener = this
         setupFinishButton()
     }
 
@@ -104,9 +104,12 @@ class ReservationDetailFragment :
         if (binding.selectedTime == null) binding.selectedTime = selectedTime
     }
 
-    private fun setupReservationCountControls() {
-        binding.btnReservationCountPlus.setOnClickListener { presenter.updateReservationCount(1) }
-        binding.btnReservationCountMinus.setOnClickListener { presenter.updateReservationCount(-1) }
+    override fun onCountIncrease() {
+        presenter.updateReservationCount(1)
+    }
+
+    override fun onCountDecrease() {
+        presenter.updateReservationCount(-1)
     }
 
     private fun setupFinishButton() {

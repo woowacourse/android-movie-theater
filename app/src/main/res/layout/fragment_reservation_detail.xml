@@ -29,6 +29,10 @@
             name="selectedTime"
             type="java.time.LocalTime" />
 
+        <variable
+            name="onCountClickListener"
+            type="woowacourse.movie.presentation.home.reservation.detail.OnCountClickListener" />
+
     </data>
 
     <ScrollView
@@ -119,6 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:enabled="@{!reservationCount.isMin()}"
+                android:onClick="@{() -> onCountClickListener.onCountDecrease()}"
                 android:text="@string/reservation_count_minus"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -148,6 +153,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:enabled="@{!reservationCount.isMax()}"
+                android:onClick="@{() -> onCountClickListener.onCountIncrease()}"
                 android:text="@string/reservation_count_plus"
                 android:textSize="20sp"
                 android:textStyle="bold"
