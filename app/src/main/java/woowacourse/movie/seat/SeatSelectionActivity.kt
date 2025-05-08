@@ -41,14 +41,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View, S
             presenter.initializeData(ticket)
         }
 
-        savedInstanceState?.let { bundle ->
-            val seats = bundle.getString(KEY_SEATS)
-
-            if (!seats.isNullOrBlank()) {
-                presenter.restoreTicketData(seats)
-            }
-        }
-
         setupSeatClickListeners()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -160,6 +152,16 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View, S
         val ticketUiModel = presenter.getCurrentTicketUiModel()
         if (ticketUiModel.seats.isNotBlank()) {
             outState.putString(KEY_SEATS, ticketUiModel.seats)
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        val seats = savedInstanceState.getString(KEY_SEATS)
+
+        if (!seats.isNullOrBlank()) {
+            presenter.restoreTicketData(seats)
         }
     }
 

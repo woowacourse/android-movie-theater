@@ -50,16 +50,7 @@ class BookingDetailActivity :
             presenter.initializeData(movie, theater)
         }
 
-        if (savedInstanceState != null) {
-            val headCount = savedInstanceState.getInt(KEY_HEAD_COUNT)
-            val screeningDate = savedInstanceState.getString(KEY_SCREENING_DATE)
-            val screeningTime = savedInstanceState.getString(KEY_SCREENING_TIME)
-            presenter.restoreTicketData(headCount, screeningDate, screeningTime)
-        }
-
         presenter.presentTicketDetails()
-
-//        initReserveConfirm()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -79,12 +70,6 @@ class BookingDetailActivity :
     private fun requireTheaterOrFinish(): TheaterUiModel? {
         return IntentCompat.getParcelableExtra(intent, KEY_THEATER_DATA, TheaterUiModel::class.java)
     }
-//
-//    private fun initReserveConfirm() {
-//        binding.btnSelectionConfirm.setOnClickListener {
-//            presenter.confirmReservation()
-//        }
-//    }
 
     override fun showMovieInfo(movie: MovieUiModel) {
         binding.movie = movie
@@ -167,6 +152,15 @@ class BookingDetailActivity :
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return super.onSupportNavigateUp()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        val headCount = savedInstanceState.getInt(KEY_HEAD_COUNT)
+        val screeningDate = savedInstanceState.getString(KEY_SCREENING_DATE)
+        val screeningTime = savedInstanceState.getString(KEY_SCREENING_TIME)
+        presenter.restoreTicketData(headCount, screeningDate, screeningTime)
     }
 
     override fun onReserveTicket() {
