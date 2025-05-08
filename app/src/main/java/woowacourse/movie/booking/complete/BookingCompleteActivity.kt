@@ -11,15 +11,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import androidx.room.Room
 import woowacourse.movie.MainActivity
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieTicketDatabase
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.ui.model.TicketUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
-    private val presenter = BookingCompletePresenter(this)
-
     private lateinit var binding: ActivityBookingCompleteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,11 +28,20 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
         setUpUi()
 
+        val db =
+            Room.databaseBuilder(
+                applicationContext,
+                MovieTicketDatabase::class.java,
+                "movieTicket",
+            ).build()
+        val presenter = BookingCompletePresenter(this, db.movieTicketDao())
+
         val ticket = requireTicketOrFinish()
         if (ticket == null) {
             showToastErrorAndFinish(getString(R.string.booking_toast_message))
         } else {
             presenter.initializeData(ticket)
+            presenter.saveTicket(ticket)
         }
 
         onBackPressedDispatcher.addCallback(this, callback)

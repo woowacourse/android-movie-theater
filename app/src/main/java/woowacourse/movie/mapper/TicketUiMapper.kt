@@ -1,5 +1,6 @@
 package woowacourse.movie.mapper
 
+import woowacourse.movie.data.MovieTicket
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.model.seat.Col
@@ -55,5 +56,17 @@ fun TicketUiModel.toDomain(): Ticket {
         selectedDate = selectedDate,
         selectedTime = selectedTime,
         seats = Seats(parsedSeats),
+    )
+}
+
+fun TicketUiModel.toEntity(): MovieTicket {
+    return MovieTicket(
+        theater = this.theater,
+        title = this.title,
+        selectedDate = this.selectedDateText,
+        selectedTime = this.selectedTimeText,
+        seats = this.seats,
+        headCount = this.headCount,
+        price = this.totalPrice,
     )
 }

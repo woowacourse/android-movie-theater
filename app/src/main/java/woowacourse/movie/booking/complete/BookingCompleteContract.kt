@@ -11,5 +11,7 @@ interface BookingCompleteContract {
 
     interface Presenter {
         fun initializeData(ticket: TicketUiModel)
+
+        fun saveTicket(ticket: TicketUiModel)
     }
 }
