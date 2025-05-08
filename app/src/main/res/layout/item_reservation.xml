@@ -17,6 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="72dp"
+        android:background="?attr/selectableItemBackground"
         android:onClick="@{() -> clickListener.onReservationClick(reservation)}"
         android:padding="12dp">
 
