@@ -1,19 +1,15 @@
 package woowacourse.movie.ui.movielist.view
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.databinding.AdvertisementItemBinding
-import woowacourse.movie.databinding.MovieItemBinding
 import woowacourse.movie.domain.model.item.MovieListItem
 import woowacourse.movie.domain.model.item.MovieListItem.AdItem
 import woowacourse.movie.domain.model.item.MovieListItem.MovieItem
-import woowacourse.movie.domain.model.movie.Movie
 
 class MovieAdapter(
-    private val onClickBooking: (Movie) -> Unit,
+    private val onClickBooking: BookingButtonClickListener,
 ) : ListAdapter<MovieListItem, RecyclerView.ViewHolder>(
         object : DiffUtil.ItemCallback<MovieListItem>() {
             override fun areItemsTheSame(
@@ -42,13 +38,10 @@ class MovieAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
         if (viewType == VIEW_TYPE_MOVIE) {
-            val movieItemBinding = MovieItemBinding.inflate(inflater, parent, false)
-            return MovieViewHolder(movieItemBinding, onClickBooking)
+            return MovieViewHolder.from(parent, onClickBooking)
         }
-        val advertisementBinding = AdvertisementItemBinding.inflate(inflater, parent, false)
-        return AdvertisementViewHolder(advertisementBinding)
+        return AdvertisementViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(

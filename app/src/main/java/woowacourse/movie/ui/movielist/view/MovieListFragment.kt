@@ -9,8 +9,6 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.domain.model.item.MovieListItem
-import woowacourse.movie.domain.model.theater.Theater
-import woowacourse.movie.ui.booking.view.BookingActivity
 import woowacourse.movie.ui.movielist.contract.MovieListContract
 import woowacourse.movie.ui.movielist.presenter.MovieListPresenter
 
@@ -33,10 +31,11 @@ class MovieListFragment :
     override fun setMoveListItems(items: List<MovieListItem>) {
         val adapter =
             MovieAdapter(
-                onClickBooking = { movie ->
-                    val theaterFragment = TheaterBottomSheetDialogFragment.newInstance(movie)
-                    theaterFragment.show(childFragmentManager, "dialog")
-                },
+                onClickBooking =
+                    BookingButtonClickListener { movie ->
+                        val theaterFragment = TheaterBottomSheetDialogFragment.newInstance(movie)
+                        theaterFragment.show(childFragmentManager, "dialog")
+                    },
             )
 
         binding.moviesRecyclerView.adapter = adapter
