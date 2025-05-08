@@ -1,6 +1,6 @@
 package woowacourse.movie.mapper
 
-import woowacourse.movie.data.MovieTicket
+import woowacourse.movie.data.Reservation
 import woowacourse.movie.model.HeadCount
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.model.seat.Col
@@ -59,8 +59,8 @@ fun TicketUiModel.toDomain(): Ticket {
     )
 }
 
-fun TicketUiModel.toEntity(): MovieTicket {
-    return MovieTicket(
+fun TicketUiModel.toEntity(): Reservation {
+    return Reservation(
         theater = this.theater,
         title = this.title,
         selectedDate = this.selectedDateText,

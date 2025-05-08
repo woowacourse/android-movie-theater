@@ -13,7 +13,7 @@ class MoviePresenter(
 
     override fun initializeData() {
         val movies = getReservableMovies().map { it.toUiModel() }
-        view.setupMovieList(movies)
+        view.showMovieList(movies)
     }
 
     private fun getReservableMovies(): List<Movie> {

@@ -11,10 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
-import androidx.room.Room
 import woowacourse.movie.MainActivity
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieTicketDatabase
+import woowacourse.movie.data.ReservationDatabase
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.ui.model.TicketUiModel
@@ -28,20 +27,17 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
         setUpUi()
 
-        val db =
-            Room.databaseBuilder(
-                applicationContext,
-                MovieTicketDatabase::class.java,
-                "movieTicket",
-            ).build()
-        val presenter = BookingCompletePresenter(this, db.movieTicketDao())
+        val db = ReservationDatabase.getInstance(applicationContext)
+        val presenter = BookingCompletePresenter(this, db!!.reservationDao())
 
         val ticket = requireTicketOrFinish()
-        if (ticket == null) {
+        val type = intent.getStringExtra(KEY_BOOKING_TYPE)
+
+        if (ticket == null || type == null) {
             showToastErrorAndFinish(getString(R.string.booking_toast_message))
         } else {
             presenter.initializeData(ticket)
-            presenter.saveTicket(ticket)
+            presenter.saveReservation(ticket, type)
         }
 
         onBackPressedDispatcher.addCallback(this, callback)
@@ -97,13 +93,16 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
     companion object {
         private const val KEY_BOOKING_RESULT = "bookingResult"
+        private const val KEY_BOOKING_TYPE = "bookingType"
 
         fun createIntent(
             context: Context,
+            bookingType: BookingType,
             ticket: TicketUiModel,
         ): Intent {
             return Intent(context, BookingCompleteActivity::class.java).apply {
                 putExtra(KEY_BOOKING_RESULT, ticket)
+                putExtra(KEY_BOOKING_TYPE, bookingType.name)
             }
         }
     }
