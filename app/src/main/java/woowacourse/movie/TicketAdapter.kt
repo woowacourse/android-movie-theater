@@ -7,14 +7,16 @@ import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.databinding.ItemTicketBinding
 import woowacourse.movie.domain.ticket.Ticket
 
-class TicketAdapter : ListAdapter<Ticket, TicketViewHolder>(diffUtil) {
+class TicketAdapter(
+    private val onSelectTicket: (Ticket) -> Unit,
+) : ListAdapter<Ticket, TicketViewHolder>(diffUtil) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): TicketViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemTicketBinding.inflate(layoutInflater, parent, false)
-        return TicketViewHolder(binding)
+        return TicketViewHolder(binding, onSelectTicket)
     }
 
     override fun onBindViewHolder(

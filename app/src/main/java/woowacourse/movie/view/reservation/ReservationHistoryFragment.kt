@@ -10,6 +10,7 @@ import woowacourse.movie.TicketAdapter
 import woowacourse.movie.contract.reservation.ReservationHistoryContract
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.view.ticket.TicketActivity
 import java.time.LocalDateTime
 
 class ReservationHistoryFragment :
@@ -38,7 +39,7 @@ class ReservationHistoryFragment :
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentReservationHistoryBinding.inflate(layoutInflater, container, false)
-        adapter = TicketAdapter()
+        adapter = TicketAdapter(presenter::selectReservation)
         binding.adapter = adapter
         return binding.root
     }
@@ -60,5 +61,10 @@ class ReservationHistoryFragment :
 
     override fun updateReservationHistories() {
         adapter?.submitList(mockData)
+    }
+
+    override fun showTicket(ticket: Ticket) {
+        val intent = TicketActivity.newIntent(requireContext(), ticket)
+        startActivity(intent)
     }
 }

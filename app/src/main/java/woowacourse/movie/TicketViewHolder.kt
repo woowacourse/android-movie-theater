@@ -7,16 +7,12 @@ import java.time.LocalDateTime
 
 class TicketViewHolder(
     private val binding: ItemTicketBinding,
+    private val onSelectTicket: (Ticket) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     private var showtime: LocalDateTime? = null
     private var cinemaName: String = ""
     private var title: String = ""
     private var needDivider: Boolean = true
-
-    init {
-        binding.root.setOnClickListener {
-        }
-    }
 
     fun bind(
         ticket: Ticket,
@@ -24,6 +20,7 @@ class TicketViewHolder(
     ) {
         initData(ticket, needDivider)
         bindData()
+        initEventListeners(ticket)
     }
 
     private fun initData(
@@ -41,5 +38,11 @@ class TicketViewHolder(
         binding.cinemaName = cinemaName
         binding.title = title
         binding.needDivider = needDivider
+    }
+
+    private fun initEventListeners(ticket: Ticket) {
+        binding.root.setOnClickListener {
+            onSelectTicket(ticket)
+        }
     }
 }
