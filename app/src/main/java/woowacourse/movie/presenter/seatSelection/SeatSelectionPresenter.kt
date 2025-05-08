@@ -8,7 +8,7 @@ class SeatSelectionPresenter(
     private val view: SeatSelectionContracts.View,
 ) : SeatSelectionContracts.Presenter {
     private lateinit var movieToReserve: MovieToReserve
-    private val seats: MutableList<Seat> = mutableListOf()
+    private val seats: MutableSet<Seat> = mutableSetOf()
 
     override fun loadSeats(
         row: Int,
@@ -32,11 +32,7 @@ class SeatSelectionPresenter(
     }
 
     override fun updateSelectedSeat(seat: Seat) {
-        if (seats.contains(seat)) {
-            seats.remove(seat)
-        } else {
-            seats.add(seat)
-        }
+        if (!seats.add(seat)) seats.remove(seat)
 
         updateButtonEnabled()
         updateTotalPrice()
