@@ -6,12 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.room.Room
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.database.BookingDatabase
-import woowacourse.movie.data.database.BookingDatabase.Companion.DATABASE_NAME
-import woowacourse.movie.data.mapper.toData
-import woowacourse.movie.data.mapper.toDomain
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.BookingInfo
 import woowacourse.movie.domain.model.Movie
@@ -20,8 +16,10 @@ import woowacourse.movie.domain.model.MovieSeat
 import woowacourse.movie.domain.model.MovieSeats
 import woowacourse.movie.domain.model.MovieTime
 import woowacourse.movie.domain.model.TicketCount
+import woowacourse.movie.domain.repository.BookingRepository
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookinghistory.contract.BookingHistoryContract
+import woowacourse.movie.feature.bookinghistory.presenter.BookingHistoryPresenter
 import woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryAdapter
 import woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryAdapter.Handler
 import woowacourse.movie.feature.mapper.toUi
@@ -32,6 +30,10 @@ import java.time.LocalTime
 class BookingHistoryFragment :
     Fragment(),
     BookingHistoryContract.View {
+    private val bookingRepository: BookingRepository by lazy {
+        (requireActivity().application as MovieApplication).bookingRepository
+    }
+    private val presenter: BookingHistoryContract.Presenter by lazy { BookingHistoryPresenter(this, bookingRepository) }
     private lateinit var bookingHistoryAdapter: BookingHistoryAdapter
     private lateinit var binding: FragmentBookingHistoryBinding
 
@@ -53,15 +55,10 @@ class BookingHistoryFragment :
                 seats = MovieSeats(setOf(MovieSeat(1, 1), MovieSeat(1, 2))),
                 ticketCount = TicketCount(4),
             )
-        val database =
-            Room
-                .databaseBuilder(requireActivity().applicationContext, BookingDatabase::class.java, DATABASE_NAME)
-                .allowMainThreadQueries()
-                .build()
-        val dao = database.bookingDao()
 
-        dao.insertAll(bookingInfo.toData())
-        bookingHistoryAdapter = BookingHistoryAdapter(dao.getAll().map { it.toDomain().toUi() }, setupAdapterClickListener())
+        bookingRepository.insertAll(bookingInfo)
+        bookingHistoryAdapter = BookingHistoryAdapter(bookingRepository.getAll().map { it.toUi() }, setupAdapterClickListener())
+        presenter.getBookingHistory()
     }
 
     override fun onCreateView(
@@ -81,11 +78,19 @@ class BookingHistoryFragment :
         binding.bookingHistoryAdapter = bookingHistoryAdapter
     }
 
+    override fun showBookingHistory(bookingHistory: List<BookingInfoUiModel>) {
+        bookingHistoryAdapter = BookingHistoryAdapter(bookingRepository.getAll().map { it.toUi() }, setupAdapterClickListener())
+    }
+
+    override fun navigateToBookingComplete(bookingInfo: BookingInfoUiModel) {
+        val intent = BookingCompleteActivity.newIntent(requireContext(), bookingInfo)
+        startActivity(intent)
+    }
+
     private fun setupAdapterClickListener() =
         object : Handler {
             override fun onBookingHistoryClick(bookingInfo: BookingInfoUiModel) {
-                val intent = BookingCompleteActivity.newIntent(requireContext(), bookingInfo)
-                startActivity(intent)
+                presenter.selectBookingHistory(bookingInfo)
             }
         }
 }

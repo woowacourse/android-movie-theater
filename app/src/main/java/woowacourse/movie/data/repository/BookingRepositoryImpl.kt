@@ -1,0 +1,17 @@
+package woowacourse.movie.data.repository
+
+import woowacourse.movie.data.dao.BookingDao
+import woowacourse.movie.data.mapper.toData
+import woowacourse.movie.data.mapper.toDomain
+import woowacourse.movie.domain.model.BookingInfo
+import woowacourse.movie.domain.repository.BookingRepository
+
+class BookingRepositoryImpl(
+    private val dao: BookingDao,
+) : BookingRepository {
+    override fun getAll(): List<BookingInfo> = dao.getAll().map { it.toDomain() }
+
+    override fun insertAll(vararg bookingInfo: BookingInfo) {
+        dao.insertAll(*bookingInfo.map { it.toData() }.toTypedArray())
+    }
+}
