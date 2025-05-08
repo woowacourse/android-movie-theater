@@ -3,8 +3,9 @@ package woowacourse.movie.presentation.home.reservation.seat
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.fragment.app.commit
 import woowacourse.movie.R
+import woowacourse.movie.data.ReservationDaoListenerImpl
+import woowacourse.movie.data.ReservationDatabase
 import woowacourse.movie.databinding.FragmentReservationSeatBinding
 import woowacourse.movie.presentation.common.base.BaseFragment
 import woowacourse.movie.presentation.common.custom.CustomAlertDialog
@@ -14,7 +15,7 @@ import woowacourse.movie.presentation.common.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.common.model.ScreenUiModel
 import woowacourse.movie.presentation.common.model.SeatUiModel
 import woowacourse.movie.presentation.common.model.TicketUiModel
-import woowacourse.movie.presentation.home.reservation.result.ReservationResultFragment
+import woowacourse.movie.presentation.home.reservation.result.ReservationResultActivity
 
 class ReservationSeatFragment :
     BaseFragment<FragmentReservationSeatBinding>(R.layout.fragment_reservation_seat),
@@ -36,7 +37,10 @@ class ReservationSeatFragment :
     }
 
     private fun initPresenterAndViews() {
-        presenter = ReservationSeatPresenter(this)
+        val applicationContext = requireContext().applicationContext
+        val dao = ReservationDatabase.getInstance(applicationContext).reservationDao()
+        val daoListener = ReservationDaoListenerImpl(dao)
+        presenter = ReservationSeatPresenter(this, daoListener)
         views = ReservationSeatViews(requireContext(), binding)
     }
 
@@ -92,10 +96,9 @@ class ReservationSeatFragment :
     }
 
     override fun notifyPublishedTickets(ticket: TicketUiModel) {
-        parentFragmentManager.commit {
-            add(R.id.fragment_container_view, ReservationResultFragment.newInstance(ticket))
-            addToBackStack(null)
-        }
+        val intent = ReservationResultActivity.newIntent(requireContext(), ticket)
+        startActivity(intent)
+        requireActivity().finish()
     }
 
     override fun notifySeatUpdateFailed(message: String) {

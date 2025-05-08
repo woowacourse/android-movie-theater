@@ -1,19 +1,23 @@
 package woowacourse.movie.presentation.home.reservation.seat
 
+import woowacourse.movie.data.ReservationDaoListener
 import woowacourse.movie.domain.model.cinema.Seat
 import woowacourse.movie.domain.model.cinema.Seats
 import woowacourse.movie.domain.model.reservation.ReservationInfo
 import woowacourse.movie.domain.model.ticketing.DiceCinemaPricePolicy
 import woowacourse.movie.domain.model.ticketing.PricePolicy
+import woowacourse.movie.domain.model.ticketing.Ticket
 import woowacourse.movie.domain.model.ticketing.TicketMachine
 import woowacourse.movie.presentation.common.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.common.model.ScreenUiModel
 import woowacourse.movie.presentation.common.model.SeatUiModel
 import woowacourse.movie.presentation.common.model.toDomain
 import woowacourse.movie.presentation.common.model.toUiModel
+import kotlin.concurrent.thread
 
 class ReservationSeatPresenter(
     private val view: ReservationSeatContract.View,
+    private val daoListener: ReservationDaoListener,
     policy: PricePolicy = DiceCinemaPricePolicy(),
 ) : ReservationSeatContract.Presenter {
     private val machine = TicketMachine(policy)
@@ -54,6 +58,7 @@ class ReservationSeatPresenter(
         runCatching {
             machine.publishTickets(reservationInfo, theaterName)
         }.onSuccess {
+            saveReservationHistory(it)
             view.notifyPublishedTickets(it.toUiModel())
         }
     }
@@ -72,6 +77,12 @@ class ReservationSeatPresenter(
     private fun restoreSelectedSeats(restoredSeats: ScreenUiModel?) {
         restoredSeats?.seats?.forEach {
             reservationInfo.addSeat(it.toDomain())
+        }
+    }
+
+    private fun saveReservationHistory(ticket: Ticket) {
+        thread {
+            daoListener.insert(ticket)
         }
     }
 }

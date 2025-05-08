@@ -26,6 +26,8 @@
 
         <activity android:name=".presentation.home.reservation.ReservationActivity"/>
 
+        <activity android:name=".presentation.home.reservation.result.ReservationResultActivity"/>
+
         <activity android:name="androidx.fragment.app.testing.EmptyFragmentActivity" />
     </application>
 
