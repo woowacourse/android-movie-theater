@@ -13,16 +13,21 @@ abstract class ReservationDatabase : RoomDatabase() {
 
     companion object {
         private const val DATABASE_NAME = "reservation"
+
+        @Volatile
         private var instance: ReservationDatabase? = null
 
         fun getInstance(context: Context): ReservationDatabase =
             instance ?: synchronized(this) {
-                Room
-                    .databaseBuilder(
-                        context,
-                        ReservationDatabase::class.java,
-                        DATABASE_NAME,
-                    ).build()
+                instance ?: createDatabase(context).also { instance = it }
             }
+
+        private fun createDatabase(context: Context): ReservationDatabase =
+            Room
+                .databaseBuilder(
+                    context.applicationContext,
+                    ReservationDatabase::class.java,
+                    DATABASE_NAME,
+                ).build()
     }
 }

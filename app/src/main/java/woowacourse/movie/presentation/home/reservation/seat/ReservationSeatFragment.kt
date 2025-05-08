@@ -37,8 +37,7 @@ class ReservationSeatFragment :
     }
 
     private fun initPresenterAndViews() {
-        val applicationContext = requireContext().applicationContext
-        val dao = ReservationDatabase.getInstance(applicationContext).reservationDao()
+        val dao = ReservationDatabase.getInstance(requireContext()).reservationDao()
         val daoListener = ReservationDaoListenerImpl(dao)
         presenter = ReservationSeatPresenter(this, daoListener)
         views = ReservationSeatViews(requireContext(), binding)

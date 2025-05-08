@@ -54,8 +54,7 @@ class ReservationHistoryFragment :
     }
 
     private fun setPresenter() {
-        val applicationContext = requireActivity().applicationContext
-        val dao = ReservationDatabase.getInstance(applicationContext).reservationDao()
+        val dao = ReservationDatabase.getInstance(requireContext()).reservationDao()
         val daoListener = ReservationDaoListenerImpl(dao)
         presenter = ReservationHistoryPresenter(this, daoListener)
     }
