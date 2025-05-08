@@ -40,8 +40,8 @@ fun setFormatReserveDate(
     movieTicket: MovieTicket?,
 ) {
     movieTicket?.let {
-        val formatMovieDate: String = localDateToUI(movieTicket.movieDate)
-        val formatMovieTime: String = movieTicket.movieTime.value.toString()
+        val formatMovieDate: String = localDateToUI(movieTicket.selectedDate)
+        val formatMovieTime: String = movieTicket.selectedTime.value.toString()
 
         textView.text =
             textView.context.getString(

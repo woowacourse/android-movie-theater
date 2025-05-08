@@ -15,8 +15,8 @@ class MovieTicketTest {
         val ticket =
             MovieTicket(
                 title = "라라랜드",
-                movieDate = LocalDate.of(2025, 4, 22),
-                movieTime = MovieTime(LocalTime.of(10, 0)),
+                selectedDate = LocalDate.of(2025, 4, 22),
+                selectedTime = MovieTime(LocalTime.of(10, 0)),
                 seats = listOf(Seat(0, 0), Seat(1, 1), Seat(2, 2), Seat(4, 0)),
                 theater = Theater("JAY 극장"),
             )
