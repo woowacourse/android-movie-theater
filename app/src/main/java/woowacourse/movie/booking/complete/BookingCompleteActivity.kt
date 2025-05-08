@@ -20,6 +20,7 @@ import woowacourse.movie.ui.model.TicketUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
     private lateinit var binding: ActivityBookingCompleteBinding
+    private lateinit var type: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +32,9 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         val presenter = BookingCompletePresenter(this, db!!.reservationDao())
 
         val ticket = requireTicketOrFinish()
-        val type = intent.getStringExtra(KEY_BOOKING_TYPE)
+        type = intent.getStringExtra(KEY_BOOKING_TYPE).toString()
 
-        if (ticket == null || type == null) {
+        if (ticket == null) {
             showToastErrorAndFinish(getString(R.string.booking_toast_message))
         } else {
             presenter.initializeData(ticket)
@@ -72,9 +73,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(intent)
+                handleBackAction()
                 true
             }
 
@@ -85,11 +84,21 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     private val callback =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val intent = Intent(this@BookingCompleteActivity, MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(intent)
+                handleBackAction()
             }
         }
+
+    private fun handleBackAction() {
+        if (type == BookingType.HISTORY.name) {
+            finish()
+        } else {
+            val intent =
+                Intent(this, MainActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                }
+            startActivity(intent)
+        }
+    }
 
     companion object {
         private const val KEY_BOOKING_RESULT = "bookingResult"
