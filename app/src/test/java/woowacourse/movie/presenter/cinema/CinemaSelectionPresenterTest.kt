@@ -86,20 +86,18 @@ class CinemaSelectionPresenterTest {
         every {
             view.navigateToReservationScreen(
                 screening = fakeScreening,
-                cinemaName = "잠실 극장",
-                showtimePolicy = jamsilShowtimePolicy,
+                cinema = jamsilCinema,
             )
         } just Runs
 
         // when
-        presenter.onSelectCinema("잠실 극장", jamsilShowtimePolicy)
+        presenter.onSelectCinema(cinema = jamsilCinema)
 
         // then
         verify {
             view.navigateToReservationScreen(
                 screening = fakeScreening,
-                cinemaName = "잠실 극장",
-                showtimePolicy = jamsilShowtimePolicy,
+                cinema = jamsilCinema,
             )
         }
     }

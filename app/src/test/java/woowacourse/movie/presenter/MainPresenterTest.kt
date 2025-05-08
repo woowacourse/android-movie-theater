@@ -8,9 +8,10 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.contract.MainContract
-import woowacourse.movie.view.MainActivity.Companion.SCREEN_ID_HOME
-import woowacourse.movie.view.MainActivity.Companion.SCREEN_ID_RESERVATION_HISTORY
-import woowacourse.movie.view.MainActivity.Companion.SCREEN_ID_SETTING
+
+private const val SCREEN_ID_RESERVATION_HISTORY = 0
+private const val SCREEN_ID_HOME = 1
+private const val SCREEN_ID_SETTING = 2
 
 class MainPresenterTest {
     private lateinit var view: MainContract.View
