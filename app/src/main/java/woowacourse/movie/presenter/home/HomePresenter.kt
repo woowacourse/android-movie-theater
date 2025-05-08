@@ -10,7 +10,7 @@ class HomePresenter(
         view.showMovies(Movie.values)
     }
 
-    override fun onTheaterRequested(movieId: Long) {
+    override fun requestTheaters(movieId: Long) {
         val theaterMovieSchedules = TheaterMovieSchedules()
         val selectedMovieSchedules =
             TheaterMovieSchedules(
