@@ -29,7 +29,7 @@
             android:parentActivityName=".moviebooking.MovieBookingActivity" />
         <activity
             android:name=".moviebooked.MovieBookedActivity"
-            android:parentActivityName=".movie.MovieActivity" />
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>
