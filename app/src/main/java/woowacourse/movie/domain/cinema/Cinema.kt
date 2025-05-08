@@ -5,12 +5,12 @@ import woowacourse.movie.domain.reservation.ShowtimePolicy
 import java.time.LocalDate
 import java.time.LocalTime
 
-data class Cinema(
+class Cinema(
     val name: String,
-    private val _screenings: List<Screening>,
+    screenings: List<Screening>,
     val showtimePolicy: ShowtimePolicy,
 ) {
-    val screenings = _screenings.map { it.copy() }
+    val screenings = screenings.map { it.copy() }
 
     fun showtimeCount(screening: Screening) = showtimes(screening).size
 
@@ -20,5 +20,25 @@ data class Cinema(
     ): List<LocalTime> {
         if (date == null) return screening.showtimes(showtimePolicy)
         return screening.showtimes(date, showtimePolicy)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Cinema
+
+        if (name != other.name) return false
+        if (showtimePolicy != other.showtimePolicy) return false
+        if (screenings != other.screenings) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + showtimePolicy.hashCode()
+        result = 31 * result + screenings.hashCode()
+        return result
     }
 }
