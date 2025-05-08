@@ -185,23 +185,26 @@ class BookingActivity :
     }
 
     private fun setIncreaseButtonClickListener() {
-        binding.btnIncrease.setOnClickListener {
-            bookingPresenter.increaseHeadcount()
-            bookingPresenter.refreshHeadcountDisplay()
-        }
+        binding.increaseBtnClickListener =
+            HeadcountButtonClickListener { headcount ->
+                headcount.increase()
+                binding.headcount = headcount
+            }
     }
 
     private fun setDecreaseButtonClickListener() {
-        binding.btnDecrease.setOnClickListener {
-            bookingPresenter.decreaseHeadcount()
-            bookingPresenter.refreshHeadcountDisplay()
-        }
+        binding.decreaseBtnClickListener =
+            HeadcountButtonClickListener { headcount ->
+                headcount.decrease()
+                binding.headcount = headcount
+            }
     }
 
     private fun setBookingCompleteButtonClickListener() {
-        binding.btnBookingComplete.setOnClickListener {
-            bookingPresenter.completeBooking()
-        }
+        binding.bookingCompleteBtnClickListener =
+            BookingCompleteButtonClickListener {
+                bookingPresenter.completeBooking()
+            }
     }
 
     companion object {
