@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -24,7 +23,6 @@ import woowacourse.movie.domain.model.theater.BookedTicket
 import woowacourse.movie.domain.model.theater.Seat
 import woowacourse.movie.domain.model.theater.Seats
 import woowacourse.movie.domain.model.theater.Theater
-import woowacourse.movie.sample.DUMMY_THEATERS
 import woowacourse.movie.ui.complete.view.BookingCompleteActivity
 import woowacourse.movie.ui.seat.contract.BookingSeatContract
 import woowacourse.movie.ui.seat.presenter.BookingSeatPresenter
@@ -71,7 +69,7 @@ class BookingSeatActivity :
         bookingSeatPresenter.loadState(
             theater,
             headcount,
-            title
+            title,
         )
     }
 
@@ -86,7 +84,7 @@ class BookingSeatActivity :
 
     override fun toggleSeat(
         seatPosition: Seat,
-        isOccupied: Boolean
+        isOccupied: Boolean,
     ) {
         val seatView: TextView? = seatTextViews[seatPosition.toSeatTag()]
         when (isOccupied) {
@@ -106,7 +104,7 @@ class BookingSeatActivity :
                         setSeatColor(this, rowIndex)
                         setOnClickListener {
                             bookingSeatPresenter.selectSeat(
-                                seatFromTag(getTag(R.id.seat_tag).toString())
+                                seatFromTag(getTag(R.id.seat_tag).toString()),
                             )
                         }
                     }
@@ -149,12 +147,13 @@ class BookingSeatActivity :
         }
 
     private fun setConfirmButtonClickListener() {
-        confirmButton.setOnClickListener {
-            showDialog(
-                getString(R.string.text_booking_dialog_title),
-                getString(R.string.text_booking_dialog_description),
-            )
-        }
+        binding.confirmBtnClickListener =
+            ConfirmButtonClickListener {
+                showDialog(
+                    getString(R.string.text_booking_dialog_title),
+                    getString(R.string.text_booking_dialog_description),
+                )
+            }
     }
 
     private fun setSeatTag(
@@ -189,8 +188,7 @@ class BookingSeatActivity :
             .setMessage(description)
             .setPositiveButton(getString(R.string.text_booking_dialog_positive_button)) { _, _ ->
                 bookingSeatPresenter.completeBookingSeat()
-            }
-            .setNegativeButton(getString(R.string.text_booking_dialog_negative_button)) { dialog, _ ->
+            }.setNegativeButton(getString(R.string.text_booking_dialog_negative_button)) { dialog, _ ->
                 dialog.dismiss()
             }.setCancelable(false)
             .show()
