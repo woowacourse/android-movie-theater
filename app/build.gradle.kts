@@ -17,7 +17,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArguments["runnerBuilder"] = "de.mannodermaus.junit5.AndroidJUnit5Builder"
+        testInstrumentationRunnerArguments["runnerBuilder"] =
+            "de.mannodermaus.junit5.AndroidJUnit5Builder"
     }
 
     buildTypes {
@@ -55,6 +56,8 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
     testImplementation(libs.assertj.core)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.kotest.runner.junit5)
