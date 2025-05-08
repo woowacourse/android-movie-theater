@@ -139,8 +139,8 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     }
 
     companion object {
-        const val KEY_BOOKING = "BOOKING"
-        private const val KEY_SEATS = "SEATS"
+        const val KEY_BOOKING = "booking"
+        private const val KEY_SEATS = "seats"
 
         fun newIntent(
             context: Context,

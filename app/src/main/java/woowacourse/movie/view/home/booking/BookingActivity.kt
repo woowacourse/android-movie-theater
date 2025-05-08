@@ -57,13 +57,13 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putSerializable("booking", presenter.booking)
+        outState.putSerializable(KEY_BOOKING, presenter.booking)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         val booking: Booking =
-            savedInstanceState.getSerializableCompat("booking") ?: run {
+            savedInstanceState.getSerializableCompat(KEY_BOOKING) ?: run {
                 showToast(getString(R.string.text_error))
                 finish()
                 return
@@ -168,9 +168,10 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
     }
 
     companion object {
-        private const val MAX_SEAT = 20
+        const val KEY_SCREENING = "screening"
+        private const val KEY_BOOKING = "booking"
 
-        const val KEY_SCREENING = "MOVIE_SCREENING"
+        private const val MAX_SEAT = 20
 
         fun newIntent(
             context: Context,

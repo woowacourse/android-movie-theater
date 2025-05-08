@@ -65,7 +65,7 @@ class TheaterListFragment :
 
     companion object {
         private const val MOVIE_ID_NOT_INITIALIZED = -1
-        private const val KEY_MOVIE_ID = "MOVIE_ID"
+        private const val KEY_MOVIE_ID = "movie_id"
 
         fun newInstance(movieId: Int): TheaterListFragment {
             val arguments = Bundle().apply { putInt(KEY_MOVIE_ID, movieId) }

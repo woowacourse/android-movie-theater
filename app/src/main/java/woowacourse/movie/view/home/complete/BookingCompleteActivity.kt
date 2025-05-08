@@ -134,7 +134,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     }
 
     companion object {
-        const val KEY_TICKET = "BOOKING_TICKET"
+        const val KEY_TICKET = "ticket"
 
         private const val ROW_STARTING_VALUE = 'A'
         private const val COL_STARTING_VALUE = 1
