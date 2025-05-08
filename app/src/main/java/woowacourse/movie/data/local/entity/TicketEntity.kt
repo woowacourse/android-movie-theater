@@ -1,10 +1,10 @@
-package woowacourse.movie.data.entity
+package woowacourse.movie.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
 
-@Entity
+@Entity(tableName = "ticket")
 data class TicketEntity(
     @PrimaryKey val id: Long,
     val title: String,
