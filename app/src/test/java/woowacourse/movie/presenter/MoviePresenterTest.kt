@@ -22,7 +22,7 @@ class MoviePresenterTest {
     }
 
     @Test
-    fun `영화 목록을 불러온다`() {
+    fun `영화 목록을 화면에 보여준다`() {
         // given
         every { view.showMovies(any()) } just Runs
 
