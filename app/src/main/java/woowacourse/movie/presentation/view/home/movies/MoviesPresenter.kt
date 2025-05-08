@@ -2,20 +2,16 @@ package woowacourse.movie.presentation.view.home.movies
 
 import woowacourse.movie.domain.model.cinema.Theaters
 import woowacourse.movie.domain.model.movie.Movie
-import woowacourse.movie.presentation.fixture.createDummyMovies
-import woowacourse.movie.presentation.fixture.dummyTheaters
 import woowacourse.movie.presentation.model.TheatersUiModel
 import woowacourse.movie.presentation.model.toUiModel
 import java.time.LocalDateTime
 
 class MoviesPresenter(
     private val view: MoviesContract.View,
+    private val theaters: Theaters,
+    private val movies: List<Movie>,
 ) : MoviesContract.Presenter {
-    private var movies: List<Movie> = listOf()
-    private val theaters: Theaters = dummyTheaters
-
     override fun fetchData() {
-        movies = createDummyMovies(10_000).map { it }
         view.showScreen(movies.map { it.toUiModel() })
     }
 
