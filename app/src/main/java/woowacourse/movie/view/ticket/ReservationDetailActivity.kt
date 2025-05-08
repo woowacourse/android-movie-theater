@@ -10,18 +10,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
-import woowacourse.movie.contract.ticket.TicketContract
+import woowacourse.movie.contract.ticket.ReservationDetailContract
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
-import woowacourse.movie.domain.ticket.Ticket
-import woowacourse.movie.presenter.ticket.TicketPresenter
+import woowacourse.movie.domain.ticket.Reservation
+import woowacourse.movie.presenter.ticket.ReservationDetailPresenter
 import woowacourse.movie.view.util.ErrorMessage
 import java.time.LocalDateTime
 
-class TicketActivity :
+class ReservationDetailActivity :
     AppCompatActivity(),
-    TicketContract.View {
-    private var presenter: TicketContract.Presenter? = null
+    ReservationDetailContract.View {
+    private var presenter: ReservationDetailContract.Presenter? = null
 
     private lateinit var cancelDescriptionView: TextView
     private lateinit var priceView: TextView
@@ -32,7 +32,7 @@ class TicketActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_ticket)
+        setContentView(R.layout.activity_reservation)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.layout_ticket)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -50,7 +50,7 @@ class TicketActivity :
                 ErrorMessage(CAUSE_TICKET).notProvided(),
             )
 
-        presenter = TicketPresenter(this, ticket)
+        presenter = ReservationDetailPresenter(this, ticket)
     }
 
     private fun findViews() {
@@ -62,15 +62,15 @@ class TicketActivity :
     }
 
     @Suppress("DEPRECATION")
-    private fun Intent.getTicketExtra(key: String): Ticket? =
+    private fun Intent.getTicketExtra(key: String): Reservation? =
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ->
                 getSerializableExtra(
                     key,
-                    Ticket::class.java,
+                    Reservation::class.java,
                 )
 
-            else -> getSerializableExtra(key) as? Ticket
+            else -> getSerializableExtra(key) as? Reservation
         }
 
     private fun initViews() {
@@ -132,11 +132,11 @@ class TicketActivity :
 
         fun newIntent(
             context: Context,
-            ticket: Ticket,
+            reservation: Reservation,
         ): Intent =
             run {
-                Intent(context, TicketActivity::class.java)
-                    .putExtra(EXTRA_TICKET, ticket)
+                Intent(context, ReservationDetailActivity::class.java)
+                    .putExtra(EXTRA_TICKET, reservation)
             }
     }
 }

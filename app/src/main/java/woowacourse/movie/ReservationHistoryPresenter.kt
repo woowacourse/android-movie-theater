@@ -1,7 +1,7 @@
 package woowacourse.movie
 
 import woowacourse.movie.contract.reservation.ReservationHistoryContract
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.Reservation
 
 class ReservationHistoryPresenter(
     private val view: ReservationHistoryContract.View,
@@ -10,7 +10,7 @@ class ReservationHistoryPresenter(
         view.updateReservationHistories()
     }
 
-    override fun selectReservation(ticket: Ticket) {
-        view.showTicket(ticket)
+    override fun selectReservation(reservation: Reservation) {
+        view.showTicket(reservation)
     }
 }

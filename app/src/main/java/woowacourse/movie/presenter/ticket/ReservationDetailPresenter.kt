@@ -1,21 +1,21 @@
 package woowacourse.movie.presenter.ticket
 
-import woowacourse.movie.contract.ticket.TicketContract
+import woowacourse.movie.contract.ticket.ReservationDetailContract
 import woowacourse.movie.domain.ticket.CancelTimePolicy
 import woowacourse.movie.domain.ticket.DefaultCancelTimePolicy
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.Reservation
 
-class TicketPresenter(
-    private val view: TicketContract.View,
-    private val ticket: Ticket,
+class ReservationDetailPresenter(
+    private val view: ReservationDetailContract.View,
+    private val reservation: Reservation,
     private val cancelTimePolicy: CancelTimePolicy = DefaultCancelTimePolicy,
-) : TicketContract.Presenter {
+) : ReservationDetailContract.Presenter {
     override fun presentTitle() {
-        view.setMovieTitle(ticket.title)
+        view.setMovieTitle(reservation.title)
     }
 
     override fun presentShowtime() {
-        view.setShowtime(ticket.showtime)
+        view.setShowtime(reservation.showtime)
     }
 
     override fun presentCancelDescription() {
@@ -23,10 +23,10 @@ class TicketPresenter(
     }
 
     override fun presentCount() {
-        view.setCount(ticket.seats, ticket.cinemaName)
+        view.setCount(reservation.seats, reservation.cinemaName)
     }
 
     override fun presentPrice() {
-        view.setPrice(ticket.price)
+        view.setPrice(reservation.price)
     }
 }

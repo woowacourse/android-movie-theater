@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        tools:context=".view.ticket.TicketActivity">
+        tools:context=".view.ticket.ReservationDetailActivity">
 
         <TextView
             android:id="@+id/tv_ticket_cancel_description"

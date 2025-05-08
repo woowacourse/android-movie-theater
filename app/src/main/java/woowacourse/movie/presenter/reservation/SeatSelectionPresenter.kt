@@ -2,7 +2,7 @@ package woowacourse.movie.presenter.reservation
 
 import woowacourse.movie.contract.reservation.SeatSelectionContract
 import woowacourse.movie.domain.reservation.Seat
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.Reservation
 import java.time.LocalDateTime
 
 class SeatSelectionPresenter(
@@ -57,8 +57,8 @@ class SeatSelectionPresenter(
     }
 
     override fun confirmReservation() {
-        val ticket = Ticket(title, showtime, selectedSeats, cinemaName)
-        view.navigateToTicketScreen(ticket)
+        val reservation = Reservation(title, showtime, selectedSeats, cinemaName)
+        view.navigateToTicketScreen(reservation)
     }
 
     override fun getSelectedSeats(): Set<Seat> = selectedSeats.toSet()

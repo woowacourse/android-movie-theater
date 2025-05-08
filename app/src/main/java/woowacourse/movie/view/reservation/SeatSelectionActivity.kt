@@ -24,9 +24,9 @@ import woowacourse.movie.contract.reservation.SeatSelectionContract
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.reservation.SeatGrade
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.Reservation
 import woowacourse.movie.presenter.reservation.SeatSelectionPresenter
-import woowacourse.movie.view.ticket.TicketActivity
+import woowacourse.movie.view.ticket.ReservationDetailActivity
 import woowacourse.movie.view.util.ErrorMessage
 import java.io.Serializable
 import java.time.LocalDateTime
@@ -119,15 +119,15 @@ class SeatSelectionActivity :
     }
 
     @Suppress("DEPRECATION")
-    private fun Intent.getTicketExtra(key: String): Ticket? =
+    private fun Intent.getTicketExtra(key: String): Reservation? =
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ->
                 getSerializableExtra(
                     key,
-                    Ticket::class.java,
+                    Reservation::class.java,
                 )
 
-            else -> getSerializableExtra(key) as? Ticket
+            else -> getSerializableExtra(key) as? Reservation
         }
 
     @Suppress("DEPRECATION")
@@ -235,8 +235,8 @@ class SeatSelectionActivity :
         )
     }
 
-    override fun navigateToTicketScreen(ticket: Ticket) {
-        val intent = TicketActivity.newIntent(this, ticket)
+    override fun navigateToTicketScreen(reservation: Reservation) {
+        val intent = ReservationDetailActivity.newIntent(this, reservation)
         startActivity(intent)
         finish()
     }

@@ -3,7 +3,7 @@ package woowacourse.movie.contract.ticket
 import woowacourse.movie.domain.reservation.Seat
 import java.time.LocalDateTime
 
-interface TicketContract {
+interface ReservationDetailContract {
     interface Presenter {
         fun presentCancelDescription()
 

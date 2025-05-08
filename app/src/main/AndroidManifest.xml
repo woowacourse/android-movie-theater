@@ -28,7 +28,7 @@
             android:name=".view.reservation.ReservationActivity"
             android:exported="false" />
         <activity
-            android:name=".view.ticket.TicketActivity"
+            android:name=".view.ticket.ReservationDetailActivity"
             android:exported="false" />
     </application>
 

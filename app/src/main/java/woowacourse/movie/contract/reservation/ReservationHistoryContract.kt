@@ -1,17 +1,17 @@
 package woowacourse.movie.contract.reservation
 
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.Reservation
 
 interface ReservationHistoryContract {
     interface Presenter {
         fun fetchReservationHistories()
 
-        fun selectReservation(ticket: Ticket)
+        fun selectReservation(reservation: Reservation)
     }
 
     interface View {
         fun updateReservationHistories()
 
-        fun showTicket(ticket: Ticket)
+        fun showTicket(reservation: Reservation)
     }
 }

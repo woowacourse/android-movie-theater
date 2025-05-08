@@ -1,7 +1,7 @@
 package woowacourse.movie.contract.reservation
 
 import woowacourse.movie.domain.reservation.Seat
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.Reservation
 
 interface SeatSelectionContract {
     interface Presenter {
@@ -41,6 +41,6 @@ interface SeatSelectionContract {
 
         fun askFinalReservation()
 
-        fun navigateToTicketScreen(ticket: Ticket)
+        fun navigateToTicketScreen(reservation: Reservation)
     }
 }

@@ -2,12 +2,12 @@ package woowacourse.movie
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemTicketBinding
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.Reservation
 import java.time.LocalDateTime
 
-class TicketViewHolder(
+class ReservationViewHolder(
     private val binding: ItemTicketBinding,
-    private val onSelectTicket: (Ticket) -> Unit,
+    private val onSelectTicket: (Reservation) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     private var showtime: LocalDateTime? = null
     private var cinemaName: String = ""
@@ -15,21 +15,21 @@ class TicketViewHolder(
     private var needDivider: Boolean = true
 
     fun bind(
-        ticket: Ticket,
+        reservation: Reservation,
         needDivider: Boolean,
     ) {
-        initData(ticket, needDivider)
+        initData(reservation, needDivider)
         bindData()
-        initEventListeners(ticket)
+        initEventListeners(reservation)
     }
 
     private fun initData(
-        ticket: Ticket,
+        reservation: Reservation,
         _needDivider: Boolean,
     ) {
-        showtime = ticket.showtime
+        showtime = reservation.showtime
         cinemaName = "극장 이름"
-        title = ticket.title
+        title = reservation.title
         needDivider = _needDivider
     }
 
@@ -40,9 +40,9 @@ class TicketViewHolder(
         binding.needDivider = needDivider
     }
 
-    private fun initEventListeners(ticket: Ticket) {
+    private fun initEventListeners(reservation: Reservation) {
         binding.root.setOnClickListener {
-            onSelectTicket(ticket)
+            onSelectTicket(reservation)
         }
     }
 }

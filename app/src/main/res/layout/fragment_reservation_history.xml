@@ -6,7 +6,7 @@
 
         <variable
             name="adapter"
-            type="woowacourse.movie.TicketAdapter" />
+            type="woowacourse.movie.ReservationAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

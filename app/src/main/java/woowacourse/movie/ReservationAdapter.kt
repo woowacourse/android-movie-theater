@@ -5,22 +5,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.databinding.ItemTicketBinding
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.Reservation
 
-class TicketAdapter(
-    private val onSelectTicket: (Ticket) -> Unit,
-) : ListAdapter<Ticket, TicketViewHolder>(diffUtil) {
+class ReservationAdapter(
+    private val onSelectTicket: (Reservation) -> Unit,
+) : ListAdapter<Reservation, ReservationViewHolder>(diffUtil) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): TicketViewHolder {
+    ): ReservationViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemTicketBinding.inflate(layoutInflater, parent, false)
-        return TicketViewHolder(binding, onSelectTicket)
+        return ReservationViewHolder(binding, onSelectTicket)
     }
 
     override fun onBindViewHolder(
-        holder: TicketViewHolder,
+        holder: ReservationViewHolder,
         position: Int,
     ) {
         holder.bind(getItem(position), position != itemCount - 1)
@@ -28,15 +28,15 @@ class TicketAdapter(
 
     companion object {
         private val diffUtil =
-            object : DiffUtil.ItemCallback<Ticket>() {
+            object : DiffUtil.ItemCallback<Reservation>() {
                 override fun areItemsTheSame(
-                    oldItem: Ticket,
-                    newItem: Ticket,
+                    oldItem: Reservation,
+                    newItem: Reservation,
                 ): Boolean = oldItem == newItem
 
                 override fun areContentsTheSame(
-                    oldItem: Ticket,
-                    newItem: Ticket,
+                    oldItem: Reservation,
+                    newItem: Reservation,
                 ): Boolean = oldItem.title == newItem.title
             }
     }

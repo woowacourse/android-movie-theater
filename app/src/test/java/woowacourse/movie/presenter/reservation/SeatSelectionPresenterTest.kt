@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.contract.reservation.SeatSelectionContract
 import woowacourse.movie.domain.reservation.Seat
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.Reservation
 import java.time.LocalDateTime
 
 class SeatSelectionPresenterTest {
@@ -22,7 +22,7 @@ class SeatSelectionPresenterTest {
         presenter =
             SeatSelectionPresenter(
                 view,
-                Ticket(
+                Reservation(
                     title = "해리 포터와 마법사의 돌",
                     count = 2,
                     showtime = LocalDateTime.of(2025, 4, 15, 11, 0),
@@ -62,7 +62,7 @@ class SeatSelectionPresenterTest {
         presenter =
             SeatSelectionPresenter(
                 view,
-                Ticket(
+                Reservation(
                     title = "해리 포터와 마법사의 돌",
                     count = 2,
                     showtime = LocalDateTime.of(2025, 4, 15, 11, 0),
@@ -99,7 +99,7 @@ class SeatSelectionPresenterTest {
         presenter =
             SeatSelectionPresenter(
                 view,
-                Ticket(
+                Reservation(
                     title = "해리 포터와 마법사의 돌",
                     count = 2,
                     showtime = LocalDateTime.of(2025, 4, 15, 11, 0),
