@@ -40,7 +40,7 @@ class BookingResultActivity :
 
     companion object {
         fun newIntent(
-            context: Context,
+            context: Context?,
             ticket: Ticket,
         ): Intent =
             Intent(context, BookingResultActivity::class.java).apply {

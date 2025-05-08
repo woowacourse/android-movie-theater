@@ -14,7 +14,7 @@ class TheaterAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): TheaterViewHolder {
-        val binding = ItemTheaterBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = ItemTheaterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TheaterViewHolder(binding, onClickTheater)
     }
 

@@ -32,7 +32,7 @@ class TheaterFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentTheaterBinding.inflate(inflater)
+        _binding = FragmentTheaterBinding.inflate(inflater, container, false)
         return binding.root
     }
 

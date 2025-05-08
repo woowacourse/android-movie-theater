@@ -5,12 +5,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.presentation.bookinglist.BookingListFragment
 import woowacourse.movie.presentation.movies.MovieListFragment
 import woowacourse.movie.presentation.settings.SettingsFragment
+import woowacourse.movie.presentation.ticket.TicketListFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
-    private val bookingListFragment = BookingListFragment()
+    private val ticketListFragment = TicketListFragment()
     private val movieListFragment = MovieListFragment()
     private val settingsFragment = SettingsFragment()
 
@@ -27,7 +27,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_list -> {
-                    replaceFragment(bookingListFragment)
+                    replaceFragment(ticketListFragment)
                     true
                 }
 

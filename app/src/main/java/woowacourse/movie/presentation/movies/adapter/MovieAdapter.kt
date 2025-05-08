@@ -16,12 +16,14 @@ class MovieAdapter(
     ): RecyclerView.ViewHolder =
         when (MovieListItem.ViewType.entries[viewType]) {
             MovieListItem.ViewType.TYPE_MOVIE -> {
-                val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context))
+                val binding =
+                    ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 MovieViewHolder(binding, clickListener)
             }
 
             MovieListItem.ViewType.TYPE_ADS -> {
-                val binding = ItemAdsBinding.inflate(LayoutInflater.from(parent.context))
+                val binding =
+                    ItemAdsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 AdsViewHolder(binding)
             }
         }
