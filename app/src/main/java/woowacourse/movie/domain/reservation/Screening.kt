@@ -5,7 +5,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-data class Screening(
+class Screening(
     private val movie: Movie,
     private val start: LocalDate,
     private val end: LocalDate,
@@ -52,6 +52,13 @@ data class Screening(
         result = 31 * result + end.hashCode()
         return result
     }
+
+    fun copy(
+        movie: Movie = this.movie,
+        start: LocalDate = this.start,
+        end: LocalDate = this.end,
+        current: LocalDateTime = this.current,
+    ) = Screening(movie, start, end, current)
 
     private val dates: List<LocalDate> =
         run {
