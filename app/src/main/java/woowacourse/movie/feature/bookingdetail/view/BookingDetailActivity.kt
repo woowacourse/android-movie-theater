@@ -68,6 +68,7 @@ class BookingDetailActivity :
     override fun navigateToBookingSeat(bookingInfo: BookingInfoUiModel) {
         val intent = BookingSeatActivity.newIntent(this, bookingInfo)
         startActivity(intent)
+        finish()
     }
 
     override fun navigateToBack() {
