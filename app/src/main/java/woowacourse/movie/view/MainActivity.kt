@@ -5,7 +5,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
@@ -21,27 +20,42 @@ class MainActivity :
     AppCompatActivity(),
     MainContract.View {
     private val presenter: MainContract.Presenter = MainPresenter(this)
+    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val binding: ActivityMainBinding =
-            DataBindingUtil.setContentView(
-                this,
-                R.layout.activity_main,
-            )
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.layout_main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
+        bindData()
+        initViews(isFirstEntry(savedInstanceState))
+        initEventListeners()
+    }
+
+    private fun isFirstEntry(savedInstanceState: Bundle?): Boolean = savedInstanceState == null
+
+    private fun bindData() {
+        binding.main = this
+    }
+
+    private fun initViews(isFirstEntry: Boolean) {
         binding.bottomNavigationViewMain.selectedItemId = R.id.item_menu_main_home
 
-        if (savedInstanceState == null) {
+        if (isFirstEntry) {
             presenter.presentScreen(SCREEN_ID_HOME)
         }
-        binding.main = this
+    }
+
+    private fun initEventListeners() {
+        initItemSelectedListener()
+    }
+
+    private fun initItemSelectedListener() {
         binding.bottomNavigationViewMain.setOnItemSelectedListener { menuItem ->
             val screenId: Int =
                 when (menuItem.itemId) {
@@ -74,8 +88,8 @@ class MainActivity :
     }
 
     companion object {
-        const val SCREEN_ID_RESERVATION_HISTORY = 0
-        const val SCREEN_ID_HOME = 1
-        const val SCREEN_ID_SETTING = 2
+        private const val SCREEN_ID_RESERVATION_HISTORY = 0
+        private const val SCREEN_ID_HOME = 1
+        private const val SCREEN_ID_SETTING = 2
     }
 }
