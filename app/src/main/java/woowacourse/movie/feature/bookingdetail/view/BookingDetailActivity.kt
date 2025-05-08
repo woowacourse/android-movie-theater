@@ -38,7 +38,6 @@ class BookingDetailActivity :
         super.onCreate(savedInstanceState)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setupBookingDetailClickListeners()
         setupDateSpinnerItemClickListener()
         setupTimeSpinnerItemClickListener()
         presenter.prepareBookingInfo(
@@ -54,6 +53,7 @@ class BookingDetailActivity :
     override fun setupDateView(dates: List<MovieDateUiModel>) {
         dateAdapter = DateAdapter(this, dates)
         binding.spBookingDetailDate.adapter = dateAdapter
+        binding.presenter = presenter
     }
 
     override fun setupTimeView(times: List<String>) {
@@ -81,26 +81,8 @@ class BookingDetailActivity :
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val bookingInfo: BookingInfoUiModel =
-            savedInstanceState.getParcelableCompat(BOOKING_INFO_KEY) ?: BookingInfoUiModel()
+        val bookingInfo: BookingInfoUiModel = savedInstanceState.getParcelableCompat(BOOKING_INFO_KEY) ?: BookingInfoUiModel()
         presenter.loadBookingInfo(bookingInfo)
-    }
-
-    private fun setupBookingDetailClickListeners() {
-        binding.onClick =
-            object : BookingDetailClickListener {
-                override fun onDecreaseTicketCountClick() {
-                    presenter.decreaseTicketCount()
-                }
-
-                override fun onIncreaseTicketCountClick() {
-                    presenter.increaseTicketCount()
-                }
-
-                override fun onSelectCompleteClick() {
-                    presenter.confirmBookingInfo()
-                }
-            }
     }
 
     private fun setupDateSpinnerItemClickListener() {

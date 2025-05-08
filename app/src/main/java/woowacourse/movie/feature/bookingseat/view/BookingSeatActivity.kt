@@ -37,7 +37,7 @@ class BookingSeatActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.onSeatSelectCompleteClick = presenter::completeSeatSelection
+        binding.presenter = presenter
         presenter.prepareBookingInfo(bookingInfo = intent.getParcelableExtraCompat(BOOKING_INFO_KEY) ?: BookingInfoUiModel())
     }
 
