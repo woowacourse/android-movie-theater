@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.data.ReservationDatabase
 import woowacourse.movie.databinding.ActivitySeatSelectBinding
 import woowacourse.movie.presentation.Extras
 import woowacourse.movie.presentation.getParcelableExtraCompat
@@ -23,7 +24,10 @@ class SeatSelectActivity :
     AppCompatActivity(),
     SeatSelectContract.View {
     private lateinit var binding: ActivitySeatSelectBinding
-    private val presenter: SeatSelectPresenter by lazy { SeatSelectPresenter(this) }
+    private val reservationDao by lazy {
+        ReservationDatabase.getInstance(this).reservationDao()
+    }
+    private val presenter: SeatSelectPresenter by lazy { SeatSelectPresenter(this, reservationDao) }
     private val reservationDialog by lazy { ReservationDetailDialog() }
     private val seatViews: MutableMap<String, TextView> = mutableMapOf()
 
