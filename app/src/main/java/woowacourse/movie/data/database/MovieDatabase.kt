@@ -11,7 +11,7 @@ import woowacourse.movie.data.entity.TicketEntity
 @Database(entities = [TicketEntity::class], version = 2, exportSchema = false)
 @TypeConverters(MovieConverters::class)
 abstract class MovieDatabase : RoomDatabase() {
-    abstract fun ticketDao(): TicketDao
+    abstract val ticketDao: TicketDao
 
     companion object {
         private var movieDatabase: MovieDatabase? = null

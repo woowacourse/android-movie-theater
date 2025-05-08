@@ -21,7 +21,7 @@ class TicketListFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = TicketListPresenter(this)
+        presenter = TicketListPresenter(this, requireContext().applicationContext)
     }
 
     override fun onCreateView(
@@ -49,7 +49,12 @@ class TicketListFragment :
     override fun showTicketList(items: List<Ticket>) {
         val adapter = TicketAdapter(items, { presenter.selectTicket(it) })
         binding.recyclerviewTickets.adapter = adapter
-        binding.recyclerviewTickets.addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
+        binding.recyclerviewTickets.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                LinearLayout.VERTICAL,
+            ),
+        )
     }
 
     override fun navigateToTicketDetail(ticket: Ticket) {

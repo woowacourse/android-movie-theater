@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import woowacourse.movie.domain.model.HeadCount
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Theater
+import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seats
 import java.time.LocalDateTime
 
@@ -20,3 +21,12 @@ data class TicketEntity(
     @PrimaryKey(autoGenerate = true)
     var uid: Long = 0
 }
+
+fun TicketEntity.toDomainModel(): Ticket =
+    Ticket(
+        movie = this.movie,
+        theater = this.theater,
+        showtime = this.showtime,
+        headCount = this.headCount,
+        seats = this.seats,
+    )
