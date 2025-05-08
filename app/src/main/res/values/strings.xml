@@ -56,7 +56,12 @@
     <string name="invalid_tickets_dialog_message">예매 정보에 문제가 발생 했습니다.</string>
     <string name="invalid_tickets_dialog_positive">뒤로가기</string>
 
+    <!-- 예매 내역 화면 -->
+    <string name="reservation_history_info">%s | %s | %s</string>
+
     <!--  DateTime Format  -->
     <string name="movie_screening_period_format">yyyy.M.d</string>
     <string name="reservation_datetime_format">yyyy.M.d HH:mm</string>
+    <string name="reservation_date_format">yyyy.M.d</string>
+    <string name="reservation_time_format">HH:mm</string>
 </resources>
