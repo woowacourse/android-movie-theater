@@ -26,7 +26,7 @@ class SeatSelectionPresenter(
     override fun updateMovieToReserve(movieToReserve: MovieToReserve) {
         this.movieToReserve = movieToReserve
 
-        view.showMovieTitle(movieToReserve.title)
+        view.showMovieTitle(movieToReserve.movie.title)
         view.showPrice(0)
         view.showButtonEnabled(false)
     }
@@ -56,7 +56,7 @@ class SeatSelectionPresenter(
     override fun updateMovieTicket() {
         val movieTicket =
             MovieTicket(
-                title = movieToReserve.title,
+                movie = movieToReserve.movie,
                 movieDate = movieToReserve.movieDate.value,
                 movieTime = movieToReserve.movieTime,
                 seats = seats.toList(),

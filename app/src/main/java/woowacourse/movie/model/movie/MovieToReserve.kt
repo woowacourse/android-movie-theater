@@ -5,8 +5,7 @@ import woowacourse.movie.model.ticket.TicketCount
 import java.io.Serializable
 
 data class MovieToReserve(
-    val id: Long,
-    val title: String,
+    val movie: Movie,
     val movieDate: MovieDate,
     val movieTime: MovieTime,
     val ticketCount: TicketCount,

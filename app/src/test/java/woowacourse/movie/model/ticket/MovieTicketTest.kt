@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.model.movie.MovieTime
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.theater.Theater
+import woowacourse.movie.presenter.MOVIE
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -14,11 +15,11 @@ class MovieTicketTest {
         // given
         val ticket =
             MovieTicket(
-                title = "라라랜드",
+                movie = MOVIE,
                 movieDate = LocalDate.of(2025, 4, 22),
                 movieTime = MovieTime(LocalTime.of(10, 0)),
                 seats = listOf(Seat(0, 0), Seat(1, 1), Seat(2, 2), Seat(4, 0)),
-                theater = Theater("JAY 극장"),
+                theater = Theater(1, "JAY 극장"),
             )
 
         // when

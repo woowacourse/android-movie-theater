@@ -52,14 +52,14 @@ data class TheaterMovieSchedules(
         val values: Set<TheaterMovieSchedule> =
             Movie.values
                 .flatMap { movie ->
-                    theaters.map { theaterName ->
+                    theaters.mapIndexed { i, theaterName ->
                         val screeningTimes =
                             screeningTimesSamples[movie.id.toInt() % screeningTimesSamples.size].map {
                                 MovieTime(it)
                             }
 
                         TheaterMovieSchedule(
-                            theater = Theater(name = theaterName),
+                            theater = Theater(id = i.toLong(), name = theaterName),
                             movie = movie,
                             screeningInfo =
                                 ScreeningInfo(

@@ -27,15 +27,14 @@ val MOVIE: Movie =
 
 val MOVIE_TO_RESERVE: MovieToReserve =
     MovieToReserve(
-        1,
-        "라라랜드",
+        MOVIE,
         MovieDate(
             LocalDate.of(2025, 4, 1),
             LocalDate.of(2025, 5, 30),
         ),
         MovieTime(LocalTime.of(13, 15)),
         TicketCount(2),
-        theater = Theater("JAY 극장"),
+        theater = Theater(1, "JAY 극장"),
     )
 
 val SEAT_2_3 = Seat(2, 3)
@@ -43,16 +42,16 @@ val SEAT_2_2 = Seat(2, 2)
 
 val MOVIE_TICKET_B1_C3: MovieTicket =
     MovieTicket(
-        "라라랜드",
+        MOVIE,
         LocalDate.of(2025, 4, 1),
         MovieTime(LocalTime.of(16, 45)),
         listOf(Seat(1, 0), Seat(2, 2)),
-        theater = Theater("JAY 극장"),
+        theater = Theater(1, "JAY 극장"),
     )
 
 val THEATER_MOVIE_SCHEDULE_CGV =
     TheaterMovieSchedule(
-        theater = Theater(name = "CGV 강남"),
+        theater = Theater(1, "CGV 강남"),
         movie =
             Movie(
                 id = 1L,
@@ -75,7 +74,7 @@ val THEATER_MOVIE_SCHEDULE_CGV =
 
 val THEATER_MOVIE_SCHEDULE_LOTTE =
     TheaterMovieSchedule(
-        theater = Theater(name = "롯데시네마 강남"),
+        theater = Theater(2, name = "롯데시네마 강남"),
         movie =
             Movie(
                 id = 1L,

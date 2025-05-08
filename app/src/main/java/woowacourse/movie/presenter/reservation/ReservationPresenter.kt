@@ -56,12 +56,11 @@ class ReservationPresenter(
     override fun updateMovieToReserve() {
         val movieToReserve =
             MovieToReserve(
-                id = theaterMovieSchedule.movie.id,
-                title = theaterMovieSchedule.movie.title,
                 movieDate = movieDate,
                 movieTime = MovieTime(selectedMovieTime),
                 ticketCount = ticketCount,
                 theater = theaterMovieSchedule.theater,
+                movie = theaterMovieSchedule.movie,
             )
         view.showSeatSelectionView(movieToReserve)
     }
