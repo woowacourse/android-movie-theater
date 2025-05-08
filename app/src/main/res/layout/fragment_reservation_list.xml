@@ -7,7 +7,7 @@
 
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".presentation.view.reservationlist.ReservationListFragment">
@@ -20,5 +20,5 @@
             tools:itemCount="10"
             tools:listitem="@layout/item_reservation" />
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
