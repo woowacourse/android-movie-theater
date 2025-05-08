@@ -77,11 +77,13 @@ class ReservationDetailFragment :
     override fun notifyReservationConfirm(
         reservationInfo: ReservationInfoUiModel,
         screen: ScreenUiModel,
-        theaterName: String,
     ) {
-        val fragment = ReservationSeatFragment.newInstance(reservationInfo, screen)
         parentFragmentManager.commit {
-            add(R.id.fragment_container_view, fragment)
+            replace(
+                R.id.fragment_container_view,
+                ReservationSeatFragment::class.java,
+                ReservationSeatFragment.newBundle(reservationInfo, screen),
+            )
             addToBackStack(null)
         }
     }
@@ -178,12 +180,12 @@ class ReservationDetailFragment :
         private const val RESTORE_BUNDLE_KEY_RESERVATION_NUMBER = "reservation_number"
         private const val SPINNER_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm"
 
-        fun newInstance(
+        fun newBundle(
             movie: MovieUiModel,
             theater: TheaterUiModel,
-        ): ReservationDetailFragment =
-            ReservationDetailFragment().apply {
-                arguments = bundleOf(BUNDLE_KEY_MOVIE to movie, BUNDLE_KEY_THEATER to theater)
-            }
+        ) = bundleOf(
+            BUNDLE_KEY_MOVIE to movie,
+            BUNDLE_KEY_THEATER to theater,
+        )
     }
 }

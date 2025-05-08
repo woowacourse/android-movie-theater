@@ -109,15 +109,12 @@ class ReservationSeatFragment :
         private const val BUNDLE_KEY_SCREEN = "screen"
         private const val BUNDLE_RESTORE_KEY_SEATS = "seats"
 
-        fun newInstance(
+        fun newBundle(
             reservationInfo: ReservationInfoUiModel,
             screen: ScreenUiModel,
-        ) = ReservationSeatFragment().apply {
-            arguments =
-                bundleOf(
-                    BUNDLE_KEY_SCREEN to screen,
-                    BUNDLE_KEY_RESERVATION_INFO to reservationInfo,
-                )
-        }
+        ) = bundleOf(
+            BUNDLE_KEY_SCREEN to screen,
+            BUNDLE_KEY_RESERVATION_INFO to reservationInfo,
+        )
     }
 }

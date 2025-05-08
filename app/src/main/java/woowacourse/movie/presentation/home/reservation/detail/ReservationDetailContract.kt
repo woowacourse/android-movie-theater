@@ -49,7 +49,6 @@ interface ReservationDetailContract {
         fun notifyReservationConfirm(
             reservationInfo: ReservationInfoUiModel,
             screen: ScreenUiModel,
-            theaterName: String,
         )
     }
 }

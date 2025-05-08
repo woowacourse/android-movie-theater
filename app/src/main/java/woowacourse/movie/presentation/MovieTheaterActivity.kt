@@ -12,20 +12,7 @@ import woowacourse.movie.presentation.home.movies.MoviesFragment
 import woowacourse.movie.presentation.setting.SettingFragment
 
 class MovieTheaterActivity : BaseActivity<ActivityMovieTheaterBinding>(R.layout.activity_movie_theater) {
-    private var currentFragment: Fragment? = null
-
-    private val moviesFragment by lazy {
-        findOrCreateFragment(MoviesFragment::class.java.name, ::MoviesFragment)
-    }
-    private val historyFragment by lazy {
-        findOrCreateFragment(
-            ReservationHistoryFragment::class.java.name,
-            ::ReservationHistoryFragment,
-        )
-    }
-    private val settingFragment by lazy {
-        findOrCreateFragment(SettingFragment::class.java.name, ::SettingFragment)
-    }
+    private var currentTag: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,59 +20,48 @@ class MovieTheaterActivity : BaseActivity<ActivityMovieTheaterBinding>(R.layout.
 
         if (savedInstanceState == null) {
             binding.bottomNavigation.selectedItemId = R.id.menu_home
-            return
+        } else {
+            currentTag = savedInstanceState.getString(KEY_CURRENT_FRAGMENT_TAG)
         }
-
-        saveCurrentFragmentTag(savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        currentFragment?.tag?.let { outState.putString(KEY_CURRENT_FRAGMENT_TAG, it) }
+        currentTag?.let { outState.putString(KEY_CURRENT_FRAGMENT_TAG, it) }
     }
 
     private fun setBottomNavigationItemClickListener() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             if (isSameNavItem(item)) return@setOnItemSelectedListener false
 
-            when (item.itemId) {
-                R.id.menu_home -> showFragment(moviesFragment, MoviesFragment::class.java.name)
-                R.id.menu_history -> showFragment(historyFragment, ReservationHistoryFragment::class.java.name)
-                R.id.menu_setting -> showFragment(settingFragment, SettingFragment::class.java.name)
-            }
+            val fragmentClass =
+                when (item.itemId) {
+                    R.id.menu_home -> MoviesFragment::class.java
+                    R.id.menu_history -> ReservationHistoryFragment::class.java
+                    R.id.menu_setting -> SettingFragment::class.java
+                    else -> return@setOnItemSelectedListener false
+                }
 
-            true
+            showFragment(fragmentClass)
+            return@setOnItemSelectedListener true
         }
     }
 
-    private fun showFragment(
-        fragment: Fragment,
-        tag: String,
-    ) {
+    private fun showFragment(fragmentClass: Class<out Fragment>) {
+        val tag = fragmentClass.simpleName
+        val fragment = supportFragmentManager.findFragmentByTag(tag)
+        val currentFragment = currentTag?.let { supportFragmentManager.findFragmentByTag(it) }
+
         supportFragmentManager.commit {
             currentFragment?.let { hide(it) }
 
-            if (findFragmentByTag(tag) == null) {
-                add(R.id.fragment_container_view, fragment, tag)
-            } else {
-                show(fragment)
-            }
+            fragment?.let {
+                show(it)
+            } ?: add(R.id.fragment_container_view, fragmentClass, null, tag)
         }
 
-        currentFragment = fragment
+        currentTag = tag
     }
-
-    private fun saveCurrentFragmentTag(savedInstanceState: Bundle) {
-        val savedTag = savedInstanceState.getString(KEY_CURRENT_FRAGMENT_TAG)
-        currentFragment = savedTag?.let { findFragmentByTag(it) }
-    }
-
-    private fun findOrCreateFragment(
-        tag: String,
-        fragmentCreator: () -> Fragment,
-    ): Fragment = findFragmentByTag(tag) ?: fragmentCreator()
-
-    private fun findFragmentByTag(tag: String): Fragment? = supportFragmentManager.findFragmentByTag(tag)
 
     private fun isSameNavItem(item: MenuItem): Boolean = binding.bottomNavigation.selectedItemId == item.itemId
 
