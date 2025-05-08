@@ -4,6 +4,7 @@ import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.Period
 
 class Screening(
     private val movie: Movie,
@@ -60,14 +61,8 @@ class Screening(
         current: LocalDateTime = this.current,
     ) = Screening(movie, start, end, current)
 
-    private val dates: List<LocalDate> =
-        run {
-            var currentDate = start
-            val screeningDates = mutableListOf<LocalDate>()
-            while (!currentDate.isAfter(end)) {
-                screeningDates.add(currentDate)
-                currentDate = currentDate.plusDays(1)
-            }
-            screeningDates
-        }
+    private val dates: List<LocalDate>
+        get() = List(start.between(end).days) { daysToAdd: Int -> start.plusDays(daysToAdd.toLong()) }
+
+    private fun LocalDate.between(inclusiveEnd: LocalDate): Period = until(inclusiveEnd).plusDays(1)
 }
