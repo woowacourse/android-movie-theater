@@ -12,11 +12,23 @@ import woowacourse.movie.presentation.view.home.movies.MoviesFragment
 import woowacourse.movie.presentation.view.setting.SettingFragment
 
 class MovieTheaterActivity : BaseActivity<ActivityMovieTheaterBinding>(R.layout.activity_movie_theater) {
+    val homeFragment = MoviesFragment()
+    val historyFragment = ReservationHistoryFragment()
+    val settingFragment = SettingFragment()
+
+    var currentFragment: Fragment? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setBottomNavigationItemClickListener()
-
         if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                add(R.id.fragment_container_view, homeFragment)
+                add(R.id.fragment_container_view, historyFragment)
+                hide(historyFragment)
+                add(R.id.fragment_container_view, settingFragment)
+                hide(settingFragment)
+            }
             binding.bottomNavigation.selectedItemId = R.id.menu_home
         }
     }
@@ -24,13 +36,11 @@ class MovieTheaterActivity : BaseActivity<ActivityMovieTheaterBinding>(R.layout.
     private fun setBottomNavigationItemClickListener() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             if (isSameNavItem(item)) return@setOnItemSelectedListener false
-
             when (item.itemId) {
-                R.id.menu_home -> navigateToScreen(MoviesFragment())
-                R.id.menu_history -> navigateToScreen(ReservationHistoryFragment())
-                R.id.menu_setting -> navigateToScreen(SettingFragment())
+                R.id.menu_home -> navigateToScreen(homeFragment)
+                R.id.menu_history -> navigateToScreen(historyFragment)
+                R.id.menu_setting -> navigateToScreen(settingFragment)
             }
-
             true
         }
     }
@@ -40,7 +50,9 @@ class MovieTheaterActivity : BaseActivity<ActivityMovieTheaterBinding>(R.layout.
     private fun navigateToScreen(fragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.fragment_container_view, fragment)
+            show(fragment)
+            currentFragment?.let { hide(it) }
         }
+        currentFragment = fragment
     }
 }
