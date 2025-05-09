@@ -8,6 +8,6 @@ interface ReservationResultContract {
     }
 
     interface Presenter {
-        fun loadReservationInfo(ticket: Ticket?)
+        fun loadReservationInfo(ticket: Ticket)
     }
 }
