@@ -24,4 +24,6 @@
     <string name="confirm_text">확인</string>
     <string name="delimiter"> | </string>
     <string name="screening_time_message">%d개의 상영 시간</string>
+    <string name="setting_notifications_text">푸시 알림 수신</string>
+    <string name="setting_notifications_message">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 </resources>
