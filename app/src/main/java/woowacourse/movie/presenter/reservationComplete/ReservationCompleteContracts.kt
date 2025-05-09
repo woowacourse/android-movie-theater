@@ -1,19 +1,13 @@
 package woowacourse.movie.presenter.reservationComplete
 
-import android.content.Context
-import woowacourse.movie.model.ticket.MovieTicket
+import woowacourse.movie.data.entity.MovieTicketEntity
 
 interface ReservationCompleteContracts {
     interface View {
-        fun showMovieTicket(movieTicket: MovieTicket)
+        fun showMovieTicket(movieTicketEntity: MovieTicketEntity)
     }
 
     interface Presenter {
-        fun updateTicketData(movieTicket: MovieTicket)
-
-        fun updateTicketData2(
-            movieTicket: MovieTicket,
-            context: Context,
-        )
+        fun updateTicketData(reservationDetailId: Long)
     }
 }

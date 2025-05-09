@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:onClick="@{() -> onReservationDetailClick.invoke(movieTicketEntity.reservationInfoEntity.id)"
+        android:onClick="@{() -> onReservationDetailClick.invoke(movieTicketEntity.reservationInfoEntity.id)}"
         android:padding="12dp">
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="@{movieTicketEntity.movie.movieTitle}"
+            android:text="@{movieTicketEntity.movie.title}"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
