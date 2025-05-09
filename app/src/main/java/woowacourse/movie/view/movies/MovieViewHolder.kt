@@ -1,13 +1,15 @@
 package woowacourse.movie.view.movies
 
-import androidx.recyclerview.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.domain.model.Movie
 
 class MovieViewHolder(
-    val binding: ItemMovieBinding,
+    val parent: ViewGroup,
     private val eventListener: OnMovieEventListener,
-) : RecyclerView.ViewHolder(binding.root) {
+    private val binding: ItemMovieBinding = inflate(parent),
+) : MovieListViewHolder(binding.root) {
     init {
         binding.eventListener = eventListener
     }
@@ -15,5 +17,15 @@ class MovieViewHolder(
     fun bind(movie: Movie) {
         binding.movie = movie
         binding.executePendingBindings()
+    }
+
+    companion object {
+        fun inflate(parent: ViewGroup): ItemMovieBinding {
+            return ItemMovieBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false,
+            )
+        }
     }
 }
