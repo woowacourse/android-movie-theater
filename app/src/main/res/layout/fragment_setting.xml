@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"/>
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/seekbar_alarm"
+                android:id="@+id/switch_alarm"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
