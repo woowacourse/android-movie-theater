@@ -13,7 +13,9 @@ import woowacourse.movie.view.reservation.result.ReservationResultActivity
 class ReservationListFragment :
     BaseFragment<FragmentReservationListBinding>(R.layout.fragment_reservation_list),
     ReservationListContract.View {
-    private val presenter = Provider.reservationListPresenter(this)
+    private val presenter: ReservationListPresenter by lazy {
+        Provider.reservationListPresenter(this)
+    }
 
     override fun showReservationList(data: List<Ticket>) {
         binding.lvReservationList.adapter = ReservationListAdapter(data, ::navigateToReservationResult)
