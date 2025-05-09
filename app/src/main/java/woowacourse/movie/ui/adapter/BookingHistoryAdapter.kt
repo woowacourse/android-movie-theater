@@ -2,9 +2,11 @@ package woowacourse.movie.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemBookingHistoryBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 
@@ -16,7 +18,12 @@ class BookingHistoryAdapter(
         viewType: Int
     ): BookingHistoryViewHolder {
         return BookingHistoryViewHolder(
-            ItemBookingHistoryBinding.inflate(LayoutInflater.from(parent.context)),
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_booking_history,
+                parent,
+                false
+            ),
             onClick
         )
     }

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.R
+import woowacourse.movie.data.bookinghistory.BookingHistoryDatabase
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
@@ -17,7 +18,12 @@ import woowacourse.movie.ui.adapter.BookingHistoryAdapter
 class BookingHistoryFragment :
     Fragment(),
     BookingHistoryContract.View {
-    private val presenter: BookingHistoryPresenter by lazy { BookingHistoryPresenter(this) }
+    private val presenter: BookingHistoryPresenter by lazy {
+        BookingHistoryPresenter(
+            this,
+            BookingHistoryDatabase.getDatabase(requireContext().applicationContext)
+        )
+    }
     private var _binding: FragmentBookingHistoryBinding? = null
     private val binding get() = _binding!!
 
@@ -28,6 +34,7 @@ class BookingHistoryFragment :
     ): View {
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_booking_history, container, false)
+        presenter.loadBookingHistory()
         return binding.root
     }
 
@@ -42,13 +49,13 @@ class BookingHistoryFragment :
         }
         adapter.submitList(tickets)
         binding.rvBookingList.apply {
-            addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
             this.adapter = adapter
+            addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
         }
     }
 
     override fun navigateToBookingSummary(ticket: MovieTicket) {
-        val intent = BookingSummaryActivity.newIntent(binding.root.context, ticket)
+        val intent = BookingSummaryActivity.newIntent(requireContext(), ticket)
         startActivity(intent)
     }
 }
