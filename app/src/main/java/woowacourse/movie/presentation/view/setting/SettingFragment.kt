@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import woowacourse.movie.R
 import woowacourse.movie.data.SettingPreferenceManager
 import woowacourse.movie.databinding.FragmentSettingBinding
 
@@ -74,11 +75,11 @@ class SettingFragment :
     private fun showPermissionRationale() {
         AlertDialog
             .Builder(requireContext())
-            .setTitle("알림 권한 필요")
-            .setMessage("알림 기능을 사용하려면 권한이 필요합니다.")
-            .setPositiveButton("권한 요청") { _, _ ->
+            .setTitle(getString(R.string.setting_request_permission_dialog_title))
+            .setMessage(R.string.setting_request_permission_dialog_message)
+            .setPositiveButton(R.string.setting_request_permission_dialog_positive) { _, _ ->
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }.setNegativeButton("취소") { _, _ ->
+            }.setNegativeButton(R.string.setting_request_permission_dialog_negative) { _, _ ->
                 binding.switchSettingPushAlarm.isChecked = false
             }.show()
     }
