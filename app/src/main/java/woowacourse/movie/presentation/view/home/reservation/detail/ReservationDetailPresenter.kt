@@ -57,7 +57,8 @@ class ReservationDetailPresenter(
                 movie.title,
                 reservationDateTime,
                 reservationCount,
-            ).toUiModel(theater.name)
+                theater.name,
+            ).toUiModel()
 
         view.notifyReservationConfirm(reservationInfo, screen.toUiModel(), theater.name)
     }

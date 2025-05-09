@@ -7,6 +7,7 @@ class ReservationInfo(
     val title: String,
     val reservationDateTime: LocalDateTime,
     val reservationCount: ReservationCount,
+    val theaterName: String,
 ) {
     private val _seats: MutableList<Seat> = mutableListOf()
     val seats: List<Seat> get() = _seats.toList()

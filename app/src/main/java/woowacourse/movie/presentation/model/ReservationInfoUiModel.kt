@@ -15,7 +15,7 @@ class ReservationInfoUiModel(
     val theaterName: String,
 ) : Parcelable
 
-fun ReservationInfo.toUiModel(theaterName: String): ReservationInfoUiModel =
+fun ReservationInfo.toUiModel(): ReservationInfoUiModel =
     ReservationInfoUiModel(
         title,
         reservationDateTime,
@@ -30,6 +30,7 @@ fun ReservationInfoUiModel.toModel(): ReservationInfo {
             title,
             reservationDateTime,
             ReservationCount(reservationCount),
+            theaterName,
         )
 
     this.seats.forEach { info.updateSeats(it.toModel()) }
