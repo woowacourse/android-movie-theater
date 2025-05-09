@@ -9,6 +9,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertAll
+import org.junit.jupiter.api.Assertions.assertEquals
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.MovieSchedule
@@ -55,5 +57,23 @@ class BookedTicketDaoTest {
 
         // then
         assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `데이터베이스에_삽입한_데이터가_정상적으로_저장된다`() {
+        // given
+        val expected = bookedTicket.toBookedTicketEntity()
+
+        // when
+        val id = bookedTicketDao.insert(expected)
+
+        // then
+        val actual = bookedTicketDao.findBookedTicketEntityById(id)
+        assertAll(
+            { assertEquals(expected.theaterName, actual.theaterName) },
+            { assertEquals(expected.movieTitle, actual.movieTitle) },
+            { assertEquals(expected.screeningDateTime, actual.screeningDateTime) },
+            { assertEquals(expected.headcount, actual.headcount) },
+        )
     }
 }
