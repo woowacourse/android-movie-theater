@@ -1,52 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingVertical="12dp"
-    android:layout_marginTop="2dp">
+<layout>
 
-    <LinearLayout
-        android:id="@+id/layout_reservation_history_info"
-        android:layout_width="wrap_content"
+    <data>
+
+        <import type="woowacourse.movie.domain.Ticket" />
+
+        <variable
+            name="ticket"
+            type="Ticket" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="2dp"
+        android:paddingVertical="12dp">
 
-        <TextView
-            android:id="@+id/history_datetime_textview"
+        <LinearLayout
+            android:id="@+id/layout_reservation_history_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            tools:text="2024.3.2 | 13:00" />
+            android:layout_marginStart="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <TextView
+                android:id="@+id/history_datetime_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:formattedDateTime="@{ticket.dateTime}"
+                tools:text="2024.3.2 | 13:00" />
+
+
+            <TextView
+                android:id="@+id/history_theater_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@{ticket.theaterName}"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                tools:text="선릉 극장" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/history_theater_textview"
+            android:id="@+id/history_title_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginTop="6dp"
+            android:text="@{ticket.title}"
             android:textColor="@color/black"
-            android:textSize="12sp"
-            tools:text="선릉 극장" />
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/layout_reservation_history_info"
+            app:layout_constraintTop_toBottomOf="@id/layout_reservation_history_info"
+            tools:text="영화명" />
 
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/history_title_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        tools:text="영화명"
-        android:layout_marginTop="6dp"
-        app:layout_constraintStart_toStartOf="@id/layout_reservation_history_info"
-        app:layout_constraintTop_toBottomOf="@id/layout_reservation_history_info"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
