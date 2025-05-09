@@ -10,11 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.room.Room
-import woowacourse.movie.data.db.AppDatabase
-import woowacourse.movie.data.toEntity
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.view.home.HomeFragment
 import woowacourse.movie.view.reservationDetails.ReservationDetailsFragment
 import woowacourse.movie.view.setting.SettingFragment
@@ -32,18 +28,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val db =
-            Room
-                .databaseBuilder(applicationContext, AppDatabase::class.java, "movie")
-                .fallbackToDestructiveMigration()
-                .build()
-
-        val movieDao = db.reservationDao()
-
-        Thread {
-            val entities = Movie.values.map { it.toEntity() }
-            entities.forEach { movieDao.insertMovie(it) }
-        }.start()
         binding.mainBottomNavigationBar.setOnItemSelectedListener { item ->
             return@setOnItemSelectedListener when (item.itemId) {
                 R.id.bottom_navigation_reservation_details -> {
@@ -75,9 +59,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.fragments.forEach { hide(it) }
             if (fragment.isAdded) {
                 show(fragment)
-                return
+            } else {
+                add(binding.mainFragmentContainer.id, fragment, tag)
             }
-            add(binding.mainFragmentContainer.id, fragment, tag)
         }
     }
 
