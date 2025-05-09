@@ -8,8 +8,12 @@ class ReservationListPresenter(
     val repository: Repository<Ticket>,
 ) : ReservationListContract.Presenter {
     override fun loadData() {
-        repository.findAll()?.let {
-            view.showReservationList(it)
-        } ?: view.showReservationList(emptyList())
+        repository.findAll()
+            .onSuccess {
+                view.showReservationList(it)
+            }
+            .onFailure {
+                view.showReservationList(emptyList())
+            }
     }
 }

@@ -3,7 +3,8 @@ package woowacourse.movie
 import android.view.View
 import woowacourse.movie.data.MovieTheaterDatabase
 import woowacourse.movie.repository.TicketRepository
-import woowacourse.movie.repository.TicketRepositoryImpl
+import woowacourse.movie.view.reservation.seat.SeatSelectionContract
+import woowacourse.movie.view.reservation.seat.SeatSelectionPresenter
 import woowacourse.movie.view.reservelist.ReservationListContract
 import woowacourse.movie.view.reservelist.ReservationListPresenter
 
@@ -11,7 +12,7 @@ object Provider {
     fun ticketDao() = MovieTheaterDatabase.db.ticketDao()
 
     fun ticketRepository(): TicketRepository =
-        TicketRepositoryImpl(
+        TicketRepository(
             ticketDao(),
         )
 
@@ -20,4 +21,6 @@ object Provider {
             view,
             ticketRepository(),
         )
+
+    fun seatSelectionPresenter(view: SeatSelectionContract.View) = SeatSelectionPresenter(view, ticketRepository())
 }
