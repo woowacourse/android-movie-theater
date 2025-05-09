@@ -1,0 +1,45 @@
+package woowacourse.movie.presenter
+
+import io.mockk.mockk
+import io.mockk.verify
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.model.movie.Headcount
+import woowacourse.movie.domain.model.theater.BookedTicket
+import woowacourse.movie.domain.model.theater.Seat
+import woowacourse.movie.domain.model.theater.Seats
+import woowacourse.movie.ui.complete.contract.BookingCompleteContract
+import woowacourse.movie.ui.complete.presenter.BookingCompletePresenter
+import java.time.LocalDateTime
+
+class BookingCompletePresenterTest {
+    private lateinit var view: BookingCompleteContract.View
+    private lateinit var presenter: BookingCompletePresenter
+
+    @BeforeEach
+    fun setUp() {
+        view = mockk(relaxed = true)
+        presenter = BookingCompletePresenter(view)
+        presenter.loadBookedTicket(
+            BookedTicket(
+                "해리 포터",
+                Headcount(1),
+                LocalDateTime.of(2025, 1, 1, 12, 0),
+                Seats().apply { Seat(1, 1) },
+                "선릉 극장",
+            ),
+        )
+    }
+
+    @Test
+    fun `티켓의 가격이 뷰에 반영된다`() {
+        presenter.refreshTicketPrice()
+        verify { view.setBookedTicketPrice(any()) }
+    }
+
+    @Test
+    fun `티켓의 정보가 업데이트되면 뷰에 반영된다`() {
+        presenter.refreshBookedTicketDisplay()
+        verify { view.setBookedTicket(any()) }
+    }
+}
