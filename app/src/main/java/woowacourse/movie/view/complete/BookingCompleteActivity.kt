@@ -2,6 +2,8 @@ package woowacourse.movie.view.complete
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
+import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
@@ -12,7 +14,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.view.core.ext.requireSerializable
+import woowacourse.movie.view.MainActivity
 import woowacourse.movie.view.uiModel.toUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
@@ -24,10 +26,9 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
 
-        intent.requireSerializable<Ticket>(KEY_TICKET).apply {
-            presenter = BookingCompletePresenter(this@BookingCompleteActivity, this)
-        }
-
+        val ticketId = intent.getLongExtra(KEY_TICKET_ID, 0)
+        presenter = BookingCompletePresenter.initialize(this, applicationContext)
+        presenter.loadTicket(ticketId)
         initView()
     }
 
@@ -43,7 +44,12 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                finish()
+                val intent =
+                    Intent(this, MainActivity::class.java).apply {
+                        addFlags(FLAG_ACTIVITY_CLEAR_TOP)
+                        addFlags(FLAG_ACTIVITY_SINGLE_TOP)
+                    }
+                startActivity(intent)
                 true
             }
 
@@ -62,13 +68,13 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     }
 
     companion object {
-        const val KEY_TICKET = "BOOKING_TICKET"
+        const val KEY_TICKET_ID = "TICKET_ID"
 
         fun newIntent(
             context: Context,
-            ticket: Ticket,
+            ticketId: Long,
         ) = Intent(context, BookingCompleteActivity::class.java).apply {
-            putExtra(KEY_TICKET, ticket)
+            putExtra(KEY_TICKET_ID, ticketId)
         }
     }
 }

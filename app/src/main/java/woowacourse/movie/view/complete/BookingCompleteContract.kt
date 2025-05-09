@@ -8,6 +8,6 @@ interface BookingCompleteContract {
     }
 
     interface Presenter {
-        fun loadTicket()
+        fun loadTicket(ticketId: Long)
     }
 }
