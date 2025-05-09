@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import woowacourse.movie.data.dao.TicketDao
 import woowacourse.movie.data.entity.TicketEntity
 
-@Database(entities = [TicketEntity::class], version = 2, exportSchema = false)
+@Database(entities = [TicketEntity::class], version = 1)
 @TypeConverters(MovieConverters::class)
 abstract class MovieDatabase : RoomDatabase() {
     abstract val ticketDao: TicketDao

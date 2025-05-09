@@ -11,5 +11,5 @@ interface TicketDao {
     fun getAll(): List<TicketEntity>
 
     @Insert
-    fun insertAll(vararg tickets: TicketEntity)
+    fun insert(ticket: TicketEntity)
 }

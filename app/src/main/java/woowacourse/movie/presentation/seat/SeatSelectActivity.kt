@@ -30,7 +30,7 @@ class SeatSelectActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!fetchTicket()) return
-        presenter = SeatsPresenter(this, ticket)
+        presenter = SeatsPresenter(this, ticket, applicationContext)
         initView()
         presenter.loadSeatSelect()
     }
