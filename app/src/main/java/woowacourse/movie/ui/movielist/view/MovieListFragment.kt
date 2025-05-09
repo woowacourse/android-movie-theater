@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.database.AppDatabase
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.domain.model.item.MovieListItem
 import woowacourse.movie.ui.movielist.contract.MovieListContract
@@ -16,7 +17,9 @@ class MovieListFragment :
     Fragment(),
     MovieListContract.View {
     private lateinit var binding: FragmentMovieListBinding
-    private val movieListPresenter = MovieListPresenter(this)
+    private val movieListPresenter by lazy {
+        MovieListPresenter(this, AppDatabase.getInstance(requireContext()))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
