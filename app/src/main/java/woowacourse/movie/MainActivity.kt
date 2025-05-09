@@ -10,42 +10,32 @@ import woowacourse.movie.ui.DataBindingBaseActivity
 
 class MainActivity : DataBindingBaseActivity() {
     private val binding by binding<ActivityMainBinding>(R.layout.activity_main)
-    private val bookingHistoryFragment: BookingHistoryFragment by lazy { BookingHistoryFragment() }
-    private val moviesFragment: MoviesFragment by lazy { MoviesFragment() }
-    private val settingFragment: SettingFragment by lazy { SettingFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupScreen(binding.root)
         setBottomNavigationView()
+
+        if (savedInstanceState == null) {
+            binding.bottomNavigationView.selectedItemId = R.id.action_home
+        }
     }
 
     private fun setBottomNavigationView() {
         binding.bottomNavigationView.run {
             setOnItemSelectedListener { item ->
                 when (item.itemId) {
-                    R.id.action_list -> showFragment(
-                        bookingHistoryFragment,
-                        BookingHistoryFragment::class.java.name
-                    )
-
-                    R.id.action_home -> showFragment(
-                        moviesFragment,
-                        MoviesFragment::class.java.name
-                    )
-
-                    R.id.action_settings -> showFragment(
-                        settingFragment,
-                        SettingFragment::class.java.name
-                    )
+                    R.id.action_list -> showFragment(BookingHistoryFragment::class.java)
+                    R.id.action_home -> showFragment(MoviesFragment::class.java)
+                    R.id.action_settings -> showFragment(SettingFragment::class.java)
                 }
                 true
             }
         }
     }
 
-    private fun showFragment(fragment: Fragment, tag: String) {
-        val findFragment = supportFragmentManager.findFragmentByTag(tag)
+    private fun showFragment(clazz: Class<out Fragment>) {
+        val findFragment = supportFragmentManager.findFragmentByTag(clazz.name)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
         supportFragmentManager.fragments.forEach {
@@ -58,7 +48,7 @@ class MainActivity : DataBindingBaseActivity() {
                 .commit()
         } ?: run {
             fragmentTransaction
-                .add(binding.mainContainer.id, fragment, tag)
+                .add(R.id.main_container, clazz, null, clazz.name)
                 .commitAllowingStateLoss()
         }
     }
