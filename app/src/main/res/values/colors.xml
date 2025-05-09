@@ -14,4 +14,5 @@
     <color name="selected_seat">#FAFF00</color>
     <color name="booking_seat_bg">#EAEAEA</color>
     <color name="booking_seat_screen_info_bg">#494949</color>
+    <color name="history_text_divider">#D0D0D0</color>
 </resources>
