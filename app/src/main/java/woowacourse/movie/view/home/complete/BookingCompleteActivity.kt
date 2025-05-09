@@ -12,12 +12,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.room.Room
 import woowacourse.movie.R
+import woowacourse.movie.data.TicketDatabase
+import woowacourse.movie.data.toEntity
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.MainActivity
-import woowacourse.movie.data.TicketDatabase
-import woowacourse.movie.data.toEntity
 import woowacourse.movie.view.util.StringFormatter
 import woowacourse.movie.view.util.getSerializableCompat
 import woowacourse.movie.view.util.showToast
