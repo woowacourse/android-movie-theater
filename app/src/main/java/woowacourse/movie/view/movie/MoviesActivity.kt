@@ -40,10 +40,7 @@ class MoviesActivity : AppCompatActivity() {
 
     private fun initFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add(R.id.activity_movies_fragment_container, MoviesFragment(), FRAGMENT_MOVIES)
-            }
+            addFragment(MoviesFragment(), FRAGMENT_MOVIES)
         }
     }
 
