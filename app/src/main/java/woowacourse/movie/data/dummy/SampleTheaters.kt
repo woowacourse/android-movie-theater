@@ -1,8 +1,8 @@
-package woowacourse.movie.sample
+package woowacourse.movie.data.dummy
 
 import woowacourse.movie.R
+import woowacourse.movie.data.entity.MovieEntity
 import woowacourse.movie.domain.model.item.Advertisement
-import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.movie.ScreeningPeriod
 import woowacourse.movie.domain.model.theater.Schedule
 import woowacourse.movie.domain.model.theater.ScreeningTimeSchedule
@@ -21,7 +21,7 @@ val DUMMY_ADS =
 
 val DUMMY_MOVIES =
     listOf(
-        Movie(
+        woowacourse.movie.domain.model.movie.Movie(
             "해리 포터와 마법사의 돌",
             R.drawable.harry_potter_one,
             ScreeningPeriod(
@@ -30,7 +30,7 @@ val DUMMY_MOVIES =
             ),
             152,
         ),
-        Movie(
+        woowacourse.movie.domain.model.movie.Movie(
             "해리 포터와 비밀의 방",
             R.drawable.harry_potter_two,
             ScreeningPeriod(
@@ -39,7 +39,7 @@ val DUMMY_MOVIES =
             ),
             162,
         ),
-        Movie(
+        woowacourse.movie.domain.model.movie.Movie(
             "해리 포터와 아즈카반의 죄수",
             R.drawable.harry_potter_three,
             ScreeningPeriod(
@@ -48,7 +48,51 @@ val DUMMY_MOVIES =
             ),
             141,
         ),
-        Movie(
+        woowacourse.movie.domain.model.movie.Movie(
+            "해리 포터와 불의 잔",
+            R.drawable.harry_potter_four,
+            ScreeningPeriod(
+                LocalDate.of(2025, 6, 1),
+                LocalDate.of(2025, 6, 30),
+            ),
+            157,
+        ),
+    )
+
+val DUMMY_ENTITY_MOVIES =
+    arrayOf(
+        MovieEntity(
+            0,
+            "해리 포터와 마법사의 돌",
+            R.drawable.harry_potter_one,
+            ScreeningPeriod(
+                LocalDate.of(2025, 4, 1),
+                LocalDate.of(2025, 5, 30),
+            ),
+            152,
+        ),
+        MovieEntity(
+            1,
+            "해리 포터와 비밀의 방",
+            R.drawable.harry_potter_two,
+            ScreeningPeriod(
+                LocalDate.of(2025, 4, 1),
+                LocalDate.of(2025, 5, 28),
+            ),
+            162,
+        ),
+        MovieEntity(
+            2,
+            "해리 포터와 아즈카반의 죄수",
+            R.drawable.harry_potter_three,
+            ScreeningPeriod(
+                LocalDate.of(2025, 5, 1),
+                LocalDate.of(2025, 5, 31),
+            ),
+            141,
+        ),
+        MovieEntity(
+            3,
             "해리 포터와 불의 잔",
             R.drawable.harry_potter_four,
             ScreeningPeriod(

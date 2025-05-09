@@ -12,11 +12,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.data.dummy.DUMMY_MOVIES
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.movie.Headcount
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.theater.Theater
-import woowacourse.movie.sample.DUMMY_MOVIES
 import woowacourse.movie.ui.booking.contract.BookingContract
 import woowacourse.movie.ui.booking.presenter.BookingPresenter
 import woowacourse.movie.ui.seat.view.BookingSeatActivity

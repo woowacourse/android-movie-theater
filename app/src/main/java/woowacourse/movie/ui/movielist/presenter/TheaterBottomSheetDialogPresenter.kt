@@ -1,8 +1,8 @@
 package woowacourse.movie.ui.movielist.presenter
 
+import woowacourse.movie.data.dummy.DUMMY_THEATERS
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.theater.Theaters
-import woowacourse.movie.sample.DUMMY_THEATERS
 import woowacourse.movie.ui.movielist.contract.TheaterBottomSheetDialogContract
 
 class TheaterBottomSheetDialogPresenter(
