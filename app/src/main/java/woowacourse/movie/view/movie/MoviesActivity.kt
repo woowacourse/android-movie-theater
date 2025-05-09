@@ -1,6 +1,7 @@
 package woowacourse.movie.view.movie
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -65,7 +66,7 @@ class MoviesActivity : AppCompatActivity() {
                     }
                     else -> throw IllegalArgumentException(ERROR_INVALID_FRAGMENT)
                 }
-            replaceFragment(selectedFragment)
+            showFragmentWithHideElse(selectedFragment)
             true
         }
     }
@@ -76,14 +77,25 @@ class MoviesActivity : AppCompatActivity() {
     ) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
+            Log.d("MoviesActivity", "addFragment: $tag")
             add(R.id.activity_movies_fragment_container, fragment, tag)
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.activity_movies_fragment_container, fragment, getFragmentTag(fragment))
+    private fun showFragmentWithHideElse(fragment: Fragment) {
+        Log.d("MoviesActivity", "showFragmentWithHideElse Enter")
+        val isAlreadyVisible =
+            supportFragmentManager.fragments
+                .any { it == fragment && it.isVisible }
+        if (isAlreadyVisible) return
+
+        supportFragmentManager.beginTransaction().apply {
+            supportFragmentManager.fragments.forEach {
+                hide(it)
+            }
+            Log.d("MoviesActivity", "showFragment: ${getFragmentTag(fragment)}")
+            show(fragment)
+            commit()
         }
     }
 
