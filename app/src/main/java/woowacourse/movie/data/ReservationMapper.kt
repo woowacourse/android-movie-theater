@@ -39,7 +39,7 @@ fun Seat.toEntity(reservationId: Long): SeatEntity =
 fun Movie.toEntity(): MovieEntity =
     MovieEntity(
         id = id,
-        movieTitle = title,
+        title = title,
     )
 
 fun Theater.toEntity(): TheaterEntity =
