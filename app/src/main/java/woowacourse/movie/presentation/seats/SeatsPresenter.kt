@@ -1,11 +1,16 @@
 package woowacourse.movie.presentation.seats
 
+import android.app.Activity
+import woowacourse.movie.data.bookinghistory.BookingHistoryDatabase
+import woowacourse.movie.data.bookinghistory.BookingHistoryMapper
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.SelectedSeats
+import kotlin.concurrent.thread
 
 class SeatsPresenter(
     private val view: SeatsContract.View,
+    private val database: BookingHistoryDatabase,
 ) : SeatsContract.Presenter {
     private lateinit var movieTicket: MovieTicket
     lateinit var selectedSeats: SelectedSeats
@@ -40,7 +45,13 @@ class SeatsPresenter(
                 amount = selectedSeats.getTotalPrice(),
                 seats = selectedSeats.value,
             )
-        view.navigateToSummary(movieTicket)
+        thread {
+            val dao = database.bookingHistoryDao()
+            dao.insert(BookingHistoryMapper.mapToBookingHistory(movieTicket))
+        }
+        (view as Activity).runOnUiThread {
+            view.navigateToSummary(movieTicket)
+        }
     }
 
     override fun restoreSeats(selectedSeats: SelectedSeats?) {

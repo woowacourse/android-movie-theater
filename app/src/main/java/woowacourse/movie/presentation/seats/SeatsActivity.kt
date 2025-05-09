@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.data.bookinghistory.BookingHistoryDatabase
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
@@ -21,7 +22,12 @@ import woowacourse.movie.ui.util.getSerializableExtraCompat
 
 class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
     private val binding by binding<ActivitySeatsBinding>(R.layout.activity_seats)
-    private val presenter: SeatsPresenter by lazy { SeatsPresenter(this) }
+    private val presenter: SeatsPresenter by lazy {
+        SeatsPresenter(
+            this,
+            BookingHistoryDatabase.getDatabase(applicationContext)
+        )
+    }
     private var confirmDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
