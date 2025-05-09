@@ -12,6 +12,9 @@ class MovieTheaterApplication : Application() {
                 applicationContext,
                 MovieTheaterDatabase::class.java,
                 "movie_theater_db",
-            ).build()
+            )
+                // 수업 시간에 동시성, 병렬성을 배우지 않았기 때문에 일단 메인 스레드에서 쿼리를 허용하겠습니다
+                .allowMainThreadQueries()
+                .build()
     }
 }
