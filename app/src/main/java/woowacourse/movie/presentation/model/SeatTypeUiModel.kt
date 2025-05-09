@@ -11,6 +11,16 @@ enum class SeatTypeUiModel : Parcelable {
     B_CLASS,
 }
 
-fun SeatType.toUiModel(): SeatTypeUiModel = SeatTypeUiModel.valueOf(this.toString())
+fun SeatType.toUiModel(): SeatTypeUiModel =
+    when (this) {
+        SeatType.S_CLASS -> SeatTypeUiModel.S_CLASS
+        SeatType.A_CLASS -> SeatTypeUiModel.A_CLASS
+        SeatType.B_CLASS -> SeatTypeUiModel.B_CLASS
+    }
 
-fun SeatTypeUiModel.toModel(): SeatType = SeatType.valueOf(this.toString())
+fun SeatTypeUiModel.toModel(): SeatType =
+    when (this) {
+        SeatTypeUiModel.S_CLASS -> SeatType.S_CLASS
+        SeatTypeUiModel.A_CLASS -> SeatType.A_CLASS
+        SeatTypeUiModel.B_CLASS -> SeatType.B_CLASS
+    }
