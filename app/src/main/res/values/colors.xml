@@ -14,4 +14,5 @@
     <color name="seat_grade_s">#19D358</color>
     <color name="seat_grade_a">#1B48E9</color>
     <color name="seat_grade_b">#8E13EF</color>
+    <color name="default_line">#E0E0E0</color>
 </resources>
