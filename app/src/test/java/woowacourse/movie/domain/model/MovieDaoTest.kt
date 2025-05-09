@@ -3,18 +3,19 @@ package woowacourse.movie.domain.model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.model.database.DummyMovieDao
+import woowacourse.movie.model.database.MovieDao
+import woowacourse.movie.model.database.MovieDaoImpl
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 class MovieDaoTest {
-    private lateinit var movieDao: DummyMovieDao
-    private lateinit var dummyMovieDatabase: DummyMovieDatabase
+    private lateinit var movieDao: MovieDao
+    private lateinit var fixtureMovieDatabase: FixtureMovieDatabase
 
     @BeforeEach
     fun setUp() {
-        dummyMovieDatabase = DummyMovieDatabase()
-        movieDao = MovieDaoImpl(dummyMovieDatabase)
+        fixtureMovieDatabase = FixtureMovieDatabase()
+        movieDao = MovieDaoImpl(fixtureMovieDatabase)
     }
 
     @Test
@@ -38,7 +39,7 @@ class MovieDaoTest {
         val actualMovies = movieDao.getShowingMovies(now)
 
         // then
-        assertThat(actualMovies).contains(dummyMovieDatabase.movies["라라랜드"])
+        assertThat(actualMovies).contains(fixtureMovieDatabase.movies["라라랜드"])
     }
 
     @Test
@@ -59,7 +60,7 @@ class MovieDaoTest {
         val theaterName = "선릉"
         val expectedMovies =
             listOf(
-                dummyMovieDatabase.movies["라라랜드"]!!,
+                fixtureMovieDatabase.movies["라라랜드"]!!,
             )
 
         // when

@@ -9,7 +9,9 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.dummyTicket
+import woowacourse.movie.domain.model.fixtureTicket
+import woowacourse.movie.model.seat.index.Col
+import woowacourse.movie.model.seat.index.Row
 import woowacourse.movie.view.reservation.seat.SeatSelectContract
 import woowacourse.movie.view.reservation.seat.SeatSelectPresenter
 
@@ -31,7 +33,7 @@ class SeatSelectPresenterTest {
         every { view.showReservationInfo(capture(slot1), capture(slot2)) } just Runs
 
         // when
-        presenter.fetchData { dummyTicket }
+        presenter.fetchData { fixtureTicket }
 
         // then
         assertThat(slot1.captured).isEqualTo("라라랜드")
@@ -39,42 +41,42 @@ class SeatSelectPresenterTest {
     }
 
     @Test
-    fun `티켓 정보를 불러오지 못하면 에러 다이얼로그를 호출한다`() {
-        every { view.showErrorMessage() } just Runs
+    fun `티켓 정보를 불러오지 못하면 에러 메시지를 호출한다`() {
+        every { view.showErrorMessage(any()) } just Runs
 
         presenter.fetchData { null }
 
-        verify { view.showErrorMessage() }
+        verify { view.showErrorMessage(any()) }
     }
 
     @Test
     fun `선택되지 않은 좌석을 클릭하면 좌석 상태를 활성화한다`() {
         every { view.showReservationInfo(any(), any()) } just Runs
         every { view.showSeatCountError(any()) } just Runs
-        every { view.showSelectedSeat(any()) } just Runs
+        every { view.showSelectedSeat(any(), any()) } just Runs
         every { view.showTotalPrice(any()) } just Runs
         every { view.updateConfirmButtonEnabled(any()) } just Runs
 
-        presenter.fetchData { dummyTicket }
-        presenter.seatSelect("A1")
+        presenter.fetchData { fixtureTicket }
+        presenter.seatSelect(Row(0), Col(0))
 
-        verify { view.showSelectedSeat("A1") }
+        verify { view.showSelectedSeat(Row(0), Col(0)) }
         verify { view.updateConfirmButtonEnabled(false) }
     }
 
     @Test
     fun `이미 선택된 좌석 다시 클릭하면 좌석 상태를 비활성화한다`() {
         every { view.showReservationInfo(any(), any()) } just Runs
-        every { view.showSelectedSeat(any()) } just Runs
-        every { view.showDeselectedSeat(any()) } just Runs
+        every { view.showSelectedSeat(any(), any()) } just Runs
+        every { view.showDeselectedSeat(any(), any()) } just Runs
         every { view.showTotalPrice(any()) } just Runs
         every { view.updateConfirmButtonEnabled(any()) } just Runs
 
-        presenter.fetchData { dummyTicket }
-        presenter.seatSelect("A1")
-        presenter.seatSelect("A1")
+        presenter.fetchData { fixtureTicket }
+        presenter.seatSelect(Row(0), Col(0))
+        presenter.seatSelect(Row(0), Col(0))
 
-        verify { view.showDeselectedSeat("A1") }
+        verify { view.showDeselectedSeat(Row(0), Col(0)) }
     }
 
     @Test
@@ -82,15 +84,15 @@ class SeatSelectPresenterTest {
         val buttonSlot = slot<Boolean>()
 
         every { view.showReservationInfo(any(), any()) } just Runs
-        every { view.showSelectedSeat(any()) } just Runs
-        every { view.showDeselectedSeat(any()) } just Runs
+        every { view.showSelectedSeat(any(), any()) } just Runs
+        every { view.showDeselectedSeat(any(), any()) } just Runs
         every { view.showTotalPrice(any()) } just Runs
         every { view.updateConfirmButtonEnabled(capture(buttonSlot)) } just Runs
 
-        val ticket = dummyTicket.copy(count = 2)
+        val ticket = fixtureTicket.copy(count = 2)
         presenter.fetchData { ticket }
-        presenter.seatSelect("A1")
-        presenter.seatSelect("A2")
+        presenter.seatSelect(Row(0), Col(0))
+        presenter.seatSelect(Row(0), Col(1))
 
         verify { view.updateConfirmButtonEnabled(true) }
 
@@ -101,14 +103,14 @@ class SeatSelectPresenterTest {
     fun `티켓 개수를 초과하면 다이얼로그를 보여준다`() {
         every { view.showReservationInfo(any(), any()) } just Runs
         every { view.showSeatCountError(any()) } just Runs
-        every { view.showSelectedSeat(any()) } just Runs
+        every { view.showSelectedSeat(any(), any()) } just Runs
         every { view.showTotalPrice(any()) } just Runs
         every { view.updateConfirmButtonEnabled(any()) } just Runs
-        val ticket = dummyTicket.copy(count = 1)
+        val ticket = fixtureTicket.copy(count = 1)
 
         presenter.fetchData { ticket }
-        presenter.seatSelect("A1")
-        presenter.seatSelect("A2")
+        presenter.seatSelect(Row(0), Col(0))
+        presenter.seatSelect(Row(0), Col(1))
 
         verify { view.showSeatCountError(1) }
     }

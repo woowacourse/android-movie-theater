@@ -11,6 +11,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.dummyUIModel
+import woowacourse.movie.model.database.DummyMovieDao
 import woowacourse.movie.view.reservation.detail.ReservationDetailContract
 import woowacourse.movie.view.reservation.detail.ReservationDetailPresenter
 import java.time.LocalDate
@@ -22,7 +23,7 @@ class ReservationDetailPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk()
-        presenter = ReservationDetailPresenter(view)
+        presenter = ReservationDetailPresenter(view, DummyMovieDao)
     }
 
     @Test
@@ -52,12 +53,13 @@ class ReservationDetailPresenterTest {
     }
 
     @Test
-    fun `영화 정보를 불러오지 못하는 경우 다이얼로그를 보여준다`() {
-        every { view.showErrorMessage() } just Runs
+    fun `영화 정보를 불러오지 못하는 경우 에러 메시지를 보여준다`() {
+        every { view.showErrorMessage(any()) } just Runs
+        every { view.finishView() } just Runs
 
         presenter.fetchData { null }
 
-        verify { view.showErrorMessage() }
+        verify { view.showErrorMessage(any()) }
     }
 
     @Test
