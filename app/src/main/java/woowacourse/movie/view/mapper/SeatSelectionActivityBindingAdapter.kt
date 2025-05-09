@@ -13,7 +13,7 @@ fun setSeats(
     val text =
         view.context.getString(
             R.string.seat_split_line,
-            seats.joinToString(",") { it.toFormattedRow() + it.column.toString() },
+            seats.joinToString(",") { it.toFormattedRow() + (it.column + 1).toString() },
         )
     view.text = text
 }
