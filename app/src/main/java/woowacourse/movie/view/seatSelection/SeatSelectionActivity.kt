@@ -13,11 +13,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.data.db.AppDatabase
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.seat.SeatGrade
-import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.presenter.seatSelection.SeatSelectionContracts
 import woowacourse.movie.presenter.seatSelection.SeatSelectionPresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
@@ -30,7 +30,7 @@ import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.rowToUi
 class SeatSelectionActivity :
     AppCompatActivity(),
     SeatSelectionContracts.View {
-    private val presenter: SeatSelectionContracts.Presenter = SeatSelectionPresenter(this)
+    private lateinit var presenter: SeatSelectionContracts.Presenter
     private lateinit var binding: ActivitySeatSelectionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +41,8 @@ class SeatSelectionActivity :
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        presenter = SeatSelectionPresenter(this, AppDatabase.getDatabase(this))
         initView()
         setupClickListener()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -183,9 +185,11 @@ class SeatSelectionActivity :
             }
     }
 
-    override fun showReservationCompleteView(movieTicket: MovieTicket) {
-        startActivity(ReservationCompleteActivity.getIntent(this, movieTicket))
-        finish()
+    override fun showReservationCompleteView(reservationId: Long) {
+        runOnUiThread {
+            startActivity(ReservationCompleteActivity.getIntent(this, reservationId))
+            finish()
+        }
     }
 
     companion object {

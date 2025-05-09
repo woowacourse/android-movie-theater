@@ -1,6 +1,5 @@
 package woowacourse.movie.presenter.reservationDetail
 
-import android.content.Context
 import woowacourse.movie.data.entity.MovieTicketEntity
 
 interface ReservationDetailsContracts {
@@ -9,6 +8,6 @@ interface ReservationDetailsContracts {
     }
 
     interface Presenter {
-        fun updateReservationDetails(context: Context)
+        fun updateReservationDetails()
     }
 }

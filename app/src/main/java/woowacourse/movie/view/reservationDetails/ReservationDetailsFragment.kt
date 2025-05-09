@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.db.AppDatabase
 import woowacourse.movie.data.entity.MovieTicketEntity
 import woowacourse.movie.databinding.FragmentReservationDetailsBinding
 import woowacourse.movie.presenter.reservationDetail.ReservationDetailsContracts
@@ -15,9 +16,9 @@ class ReservationDetailsFragment :
     ReservationDetailsContracts.View {
     private var _binding: FragmentReservationDetailsBinding? = null
     private val binding get() = _binding!!
-    private val reservationDetailsPresenter by lazy { ReservationDetailsPresenter(this) }
+    private lateinit var reservationDetailsPresenter: ReservationDetailsPresenter
     private val reservationDetailAdapter =
-        ReservationDetailAdapter { ::navigateToReservationDetail }
+        ReservationDetailAdapter { navigateToReservationDetail(it) }
 
     override fun onViewCreated(
         view: View,
@@ -28,7 +29,9 @@ class ReservationDetailsFragment :
         _binding = FragmentReservationDetailsBinding.bind(view)
 
         binding.rvReservationDetails.adapter = reservationDetailAdapter
-        reservationDetailsPresenter.updateReservationDetails(requireContext())
+        reservationDetailsPresenter =
+            ReservationDetailsPresenter(this, AppDatabase.getDatabase(requireContext()))
+        reservationDetailsPresenter.updateReservationDetails()
     }
 
     private fun navigateToReservationDetail(reservationDetailId: Long) {
@@ -44,7 +47,7 @@ class ReservationDetailsFragment :
     override fun onResume() {
         super.onResume()
 
-        reservationDetailsPresenter.updateReservationDetails(requireContext())
+        reservationDetailsPresenter.updateReservationDetails()
     }
 
     override fun onDestroyView() {
