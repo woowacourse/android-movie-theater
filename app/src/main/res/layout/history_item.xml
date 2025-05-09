@@ -12,11 +12,17 @@
         <variable
             name="stringFormatter"
             type="woowacourse.movie.utils.StringFormatter" />
+
+        <variable
+            name="clickListener"
+            type="woowacourse.movie.ui.history.view.HistoryClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="70dp"
+        android:onClick="@{()->clickListener.onClick(bookedTicketEntity)}"
+        >
 
         <TextView
             android:id="@+id/tv_screening_date"
