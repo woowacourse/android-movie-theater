@@ -11,7 +11,7 @@ import woowacourse.movie.presentation.history.ReservationHistoryFragment
 
 class ReservationHistoryFragmentTest {
     @Test
-    fun `영화목록이_보여진다`() {
+    fun `영화_예매_목록이_보여진다`() {
         launchFragmentInContainer { ReservationHistoryFragment() }
 
         onView(withId(R.id.rv_reservation_history))
