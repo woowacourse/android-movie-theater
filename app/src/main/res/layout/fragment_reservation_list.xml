@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reservation_list_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.main.setting.SettingFragment">
+    tools:context=".view.main.reservationlist.ReservationListFragment">
 
-    <TextView
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reservation_list_list_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="예매내역 화면입니다." />
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:itemCount="40"
+        tools:listitem="@layout/item_reserved_movie" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
