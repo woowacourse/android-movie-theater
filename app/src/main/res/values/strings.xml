@@ -5,6 +5,8 @@
     <string name="text_running_time">러닝타임: %d분</string>
     <string name="text_theater_place">%s 극장</string>
     <string name="text_theater_movie_count">%d개의 상영 시간</string>
+    <string name="text_push_alarm_title">푸시 알림 수신</string>
+    <string name="text_push_alarm_message">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 
     <string name="btn_plus_text">+</string>
     <string name="btn_minus_text">-</string>
