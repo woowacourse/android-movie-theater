@@ -15,7 +15,7 @@ import woowacourse.movie.data.entity.TheaterEntity
         MovieEntity::class,
         TheaterEntity::class,
     ],
-    version = 8,
+    version = 9,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun reservationDao(): ReservationDao

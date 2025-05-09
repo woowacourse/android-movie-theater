@@ -31,7 +31,8 @@ interface ReservationDao {
     fun insertTheater(theater: TheaterEntity)
 
     @Transaction
-    fun insertMovieTicketEntity(ticket: MovieTicketEntity) {
+    fun insertMovieTicketEntity(ticket: MovieTicketEntity): Long {
+        insertMovie(ticket.movie)
         insertTheater(ticket.theater)
 
         val reservationId: Long = insertReservation(ticket.reservationInfoEntity)
@@ -41,8 +42,13 @@ interface ReservationDao {
                 it.copy(reservationId = reservationId)
             }
         insertSeats(updatedSeats)
+        return reservationId
     }
 
     @Delete
     fun delete(movieTickets: ReservationInfoEntity)
+
+    @Transaction
+    @Query("SELECT * FROM reservation WHERE id = :reservationId")
+    fun getMovieTicketByReservationId(reservationId: Long): MovieTicketEntity?
 }
