@@ -58,7 +58,6 @@ class SettingFragment :
 
         setSettingPresenter()
         setNotificationSwitchListener()
-        syncNotificationPermissionState()
     }
 
     override fun notifyNotificationEnabled(isEnabled: Boolean) {
