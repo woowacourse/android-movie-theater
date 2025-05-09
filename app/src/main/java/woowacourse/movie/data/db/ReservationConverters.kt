@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.db
 
 import androidx.room.TypeConverter
 import woowacourse.movie.domain.model.cinema.Seat

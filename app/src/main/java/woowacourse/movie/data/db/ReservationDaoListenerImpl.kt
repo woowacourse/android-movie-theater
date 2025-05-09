@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.db
 
 import woowacourse.movie.domain.ReservationDaoListener
 import woowacourse.movie.domain.model.ticketing.Ticket

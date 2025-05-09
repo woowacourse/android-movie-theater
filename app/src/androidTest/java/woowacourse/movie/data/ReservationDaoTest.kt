@@ -1,12 +1,12 @@
-package woowacourse.movie.domain
+package woowacourse.movie.data
 
 import androidx.room.Room
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.data.ReservationDao
-import woowacourse.movie.data.ReservationDatabase
-import woowacourse.movie.data.ReservationEntity
+import woowacourse.movie.data.db.ReservationDao
+import woowacourse.movie.data.db.ReservationDatabase
+import woowacourse.movie.data.db.ReservationEntity
 import woowacourse.movie.domain.model.cinema.Seat
 import woowacourse.movie.presentation.fixture.fakeContext
 import java.time.LocalDateTime
