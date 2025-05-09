@@ -7,6 +7,7 @@ import woowacourse.movie.R
 import woowacourse.movie.data.db.ReservationDaoListenerImpl
 import woowacourse.movie.data.db.ReservationDatabase
 import woowacourse.movie.databinding.FragmentReservationSeatBinding
+import woowacourse.movie.presentation.alarm.AlarmHelper
 import woowacourse.movie.presentation.common.base.BaseFragment
 import woowacourse.movie.presentation.common.custom.CustomAlertDialog
 import woowacourse.movie.presentation.common.custom.DialogInfo
@@ -95,6 +96,8 @@ class ReservationSeatFragment :
     }
 
     override fun notifyPublishedTickets(ticket: TicketUiModel) {
+        AlarmHelper.setAlarm(requireContext(), ticket)
+
         val intent = ReservationResultActivity.newIntent(requireContext(), ticket)
         startActivity(intent)
         requireActivity().finish()

@@ -69,6 +69,10 @@
     <string name="notification_permission_dialog_positive">설정으로 이동</string>"
     <string name="notification_permission_dialog_negative">취소</string>"
 
+    <!-- Reservation Remind Notification -->
+    <string name="notification_title">예매 알림</string>
+    <string name="notification_description">%s %d분 후에 상영</string>
+
     <!--  DateTime Format  -->
     <string name="movie_screening_period_format">yyyy.M.d</string>
     <string name="reservation_datetime_format">yyyy.M.d HH:mm</string>
