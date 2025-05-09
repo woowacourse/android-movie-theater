@@ -11,4 +11,7 @@ interface BookedTicketDao {
 
     @Query("SELECT * FROM booked_tickets WHERE id = :id")
     fun findBookedTicketEntityById(id: Long): BookedTicketEntity
+
+    @Query("SELECT * FROM booked_tickets")
+    fun findAll(): List<BookedTicketEntity>
 }

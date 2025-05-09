@@ -3,8 +3,6 @@ package woowacourse.movie.data
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import java.io.IOException
-import java.time.LocalDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
@@ -15,6 +13,8 @@ import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.toBookedTicketEntity
+import java.io.IOException
+import java.time.LocalDateTime
 
 class BookedTicketDaoTest {
     private lateinit var bookedTicketDao: BookedTicketDao
@@ -75,5 +75,30 @@ class BookedTicketDaoTest {
             { assertEquals(expected.screeningDateTime, actual.screeningDateTime) },
             { assertEquals(expected.headcount, actual.headcount) },
         )
+    }
+
+    @Test
+    fun `데이터베이스에_저장된_데이터_전부를_불러온다`() {
+        // given
+        val bookedTicketEntities: List<BookedTicketEntity> =
+            List(13) { bookedTicket.toBookedTicketEntity() }
+        val expectedSize = 13
+        bookedTicketEntities.forEach { bookedTicketEntity ->
+            bookedTicketDao.insert(bookedTicketEntity)
+        }
+
+        // when
+        val actual = bookedTicketDao.findAll()
+
+        // then
+        assertEquals(expectedSize, actual.size)
+        actual.forEachIndexed { index, actualEntity ->
+            val expectedId = (index + ONE_BASED_INDEX_ADJUST_NUMBER).toLong()
+            assertEquals(expectedId, actualEntity.id)
+        }
+    }
+
+    companion object {
+        private const val ONE_BASED_INDEX_ADJUST_NUMBER = 1
     }
 }
