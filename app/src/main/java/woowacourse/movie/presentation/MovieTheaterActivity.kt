@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieTheaterBinding
+import woowacourse.movie.presentation.alarm.AlarmHelper
 import woowacourse.movie.presentation.common.base.BaseActivity
 import woowacourse.movie.presentation.history.ReservationHistoryFragment
 import woowacourse.movie.presentation.home.movies.MoviesFragment
@@ -16,6 +17,7 @@ class MovieTheaterActivity : BaseActivity<ActivityMovieTheaterBinding>(R.layout.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AlarmHelper.createNotificationChannel(this)
         setBottomNavigationItemClickListener()
 
         if (savedInstanceState == null) {
