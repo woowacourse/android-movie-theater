@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movie
+package woowacourse.movie.view.main
 
 import android.os.Bundle
 import android.util.Log
@@ -10,8 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMoviesBinding
-import woowacourse.movie.view.ReservationListFragment
-import woowacourse.movie.view.SettingFragment
+import woowacourse.movie.view.main.home.MoviesFragment
+import woowacourse.movie.view.main.reservationlist.ReservationListFragment
+import woowacourse.movie.view.main.setting.SettingFragment
 
 class MoviesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMoviesBinding
@@ -53,14 +54,22 @@ class MoviesActivity : AppCompatActivity() {
                         supportFragmentManager.findFragmentByTag(FRAGMENT_MOVIES)
                             ?: MoviesFragment().also { addFragment(it, FRAGMENT_MOVIES) }
                     }
+
                     R.id.fragment_list -> {
                         supportFragmentManager.findFragmentByTag(FRAGMENT_RESERVATION_LIST)
-                            ?: ReservationListFragment().also { addFragment(it, FRAGMENT_RESERVATION_LIST) }
+                            ?: ReservationListFragment().also {
+                                addFragment(
+                                    it,
+                                    FRAGMENT_RESERVATION_LIST,
+                                )
+                            }
                     }
+
                     R.id.fragment_setting -> {
                         supportFragmentManager.findFragmentByTag(FRAGMENT_SETTING)
                             ?: SettingFragment().also { addFragment(it, FRAGMENT_SETTING) }
                     }
+
                     else -> throw IllegalArgumentException(ERROR_INVALID_FRAGMENT)
                 }
             showFragmentWithHideElse(selectedFragment)

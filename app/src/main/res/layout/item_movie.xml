@@ -11,7 +11,7 @@
 
         <variable
             name="moviesFragment"
-            type="woowacourse.movie.view.movie.MoviesFragment" />
+            type="woowacourse.movie.view.main.home.MoviesFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

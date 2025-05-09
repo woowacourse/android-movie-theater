@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movie
+package woowacourse.movie.view.main.home
 
 import woowacourse.movie.model.database.MovieDao
 

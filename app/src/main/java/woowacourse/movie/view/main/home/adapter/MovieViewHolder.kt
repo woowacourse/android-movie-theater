@@ -1,4 +1,4 @@
-package woowacourse.movie.view.movie.adapter
+package woowacourse.movie.view.main.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,6 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.view.ReservationUiFormatter
-import woowacourse.movie.view.movie.MovieClickListener
 
 class MovieViewHolder(
     private val binding: ItemMovieBinding,

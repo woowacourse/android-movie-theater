@@ -1,10 +1,9 @@
-package woowacourse.movie.view.movie.adapter
+package woowacourse.movie.view.main.home.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.model.movie.Movie
-import woowacourse.movie.view.movie.MovieClickListener
 
 class MovieAdapter(
     private val clickListener: MovieClickListener,
@@ -41,6 +40,7 @@ class MovieAdapter(
                 val moviePosition = getMoviePosition(position)
                 holder.bind(getItem(moviePosition))
             }
+
             is AdViewHolder -> holder.bind()
         }
     }

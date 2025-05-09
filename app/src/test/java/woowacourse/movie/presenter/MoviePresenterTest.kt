@@ -8,8 +8,8 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.model.database.DummyMovieDao
-import woowacourse.movie.view.movie.MovieContract
-import woowacourse.movie.view.movie.MoviePresenter
+import woowacourse.movie.view.main.home.MovieContract
+import woowacourse.movie.view.main.home.MoviePresenter
 
 class MoviePresenterTest {
     private lateinit var presenter: MovieContract.Presenter
