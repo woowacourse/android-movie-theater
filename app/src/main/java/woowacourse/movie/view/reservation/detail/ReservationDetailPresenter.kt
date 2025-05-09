@@ -79,7 +79,7 @@ class ReservationDetailPresenter(
 
     override fun minusTicketCount() {
         if (reservationUIModel.ticketCount == 1) {
-            view.showToast(R.string.reservation_info_minimum_ticket_count)
+            view.showInfoMessage(R.string.reservation_info_minimum_ticket_count)
             return
         }
         updateReservationState(

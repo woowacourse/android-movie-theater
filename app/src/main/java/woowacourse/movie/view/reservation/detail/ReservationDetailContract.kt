@@ -30,7 +30,7 @@ interface ReservationDetailContract {
 
         fun navigateToSeatSelect(ticket: MovieTicket)
 
-        fun showToast(stringResId: Int)
+        fun showInfoMessage(stringResId: Int)
 
         fun finishView()
     }

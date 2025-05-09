@@ -2,7 +2,6 @@ package woowacourse.movie.view.reservation.detail
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.StringRes
@@ -84,7 +83,7 @@ class ReservationDetailActivity :
                 if (presenter.isTimeSelected) {
                     navigateToSeatSelect(ticket)
                 } else {
-                    showToast(R.string.reservation_error_empty_selected_movie_time)
+                    showInfoMessage(R.string.reservation_error_empty_selected_movie_time)
                 }
             }
         }
@@ -101,11 +100,15 @@ class ReservationDetailActivity :
     override fun showErrorMessage(
         @StringRes messageResId: Int,
     ) {
-        showToast(messageResId)
+        showToast(getString(messageResId))
     }
 
-    override fun showToast(stringResId: Int) {
-        Toast.makeText(this, getString(stringResId), Toast.LENGTH_SHORT).show()
+    override fun showInfoMessage(stringResId: Int) {
+        showToast(getString(stringResId))
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun finishView() {
