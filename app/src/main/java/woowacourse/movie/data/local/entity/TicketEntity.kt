@@ -10,4 +10,5 @@ data class TicketEntity(
     val title: String,
     val count: Int,
     val showtime: LocalDateTime,
+    val cinemaName: String,
 )

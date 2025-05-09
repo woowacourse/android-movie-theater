@@ -5,18 +5,42 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.R
+import woowacourse.movie.data.local.adapter.TicketAdapter
+import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDatabase
+import woowacourse.movie.databinding.FragmentReservationHistoryBinding
+import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.ui.view.history.adapter.ReservationAdapter
 
-class ReservationHistoryFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
+    private var _binding: FragmentReservationHistoryBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var reservationAdapter: ReservationAdapter
+    private lateinit var presenter: ReservationHistoryContract.Presenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_reservation_history, container, false)
+    ): View {
+        _binding = FragmentReservationHistoryBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        val database = getMovieDatabase(requireContext())
+        presenter = ReservationHistoryPresenter(this, TicketAdapter(database.ticketDao()))
+        reservationAdapter = ReservationAdapter()
+        binding.recyclerViewReservations.adapter = reservationAdapter
+        presenter.presentScreen()
+    }
+
+    override fun updateScreen(tickets: List<Ticket>) {
+        requireActivity().runOnUiThread {
+            reservationAdapter.submitList(tickets)
+        }
     }
 }

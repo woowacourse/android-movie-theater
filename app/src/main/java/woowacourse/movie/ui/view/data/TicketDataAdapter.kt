@@ -4,4 +4,6 @@ import woowacourse.movie.domain.ticket.Ticket
 
 interface TicketDataAdapter {
     fun insert(ticket: Ticket)
+
+    fun getAll(): List<Ticket>
 }

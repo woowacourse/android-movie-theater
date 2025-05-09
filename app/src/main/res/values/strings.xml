@@ -34,4 +34,9 @@
     <string name="menu_main_reservation_history_title">예매 내역</string>
     <string name="menu_main_home_title">홈</string>
     <string name="menu_main_setting_title">설정</string>
+
+    <string name="screening_info">%1$s | %2$s | %3$s</string>
+
+    <string name="date_format">yyyy.MM.dd</string>
+    <string name="time_format">HH:mm</string>
 </resources>

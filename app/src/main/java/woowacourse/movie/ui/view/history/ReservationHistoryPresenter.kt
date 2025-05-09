@@ -1,12 +1,13 @@
 package woowacourse.movie.ui.view.history
 
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.ui.view.data.TicketDataAdapter
+import kotlin.concurrent.thread
 
 class ReservationHistoryPresenter(
     private val view: ReservationHistoryContract.View,
-    private val tickets: List<Ticket>,
+    private val ticketDataAdapter: TicketDataAdapter,
 ) : ReservationHistoryContract.Presenter {
     override fun presentScreen() {
-        view.updateScreen(tickets)
+        thread { view.updateScreen(ticketDataAdapter.getAll()) }
     }
 }

@@ -143,11 +143,7 @@ class ReservationActivity :
         }
 
     private fun initViews() {
-        (
-            presenter ?: error(
-                ErrorMessage("screening").notProvided(),
-            )
-        ).run {
+        presenter.run {
             presentPoster()
             presentTitle()
             presentPeriod()
