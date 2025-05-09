@@ -28,6 +28,13 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        setupListener()
+        if (savedInstanceState == null) {
+            replaceFragment<ReservationDetailsFragment>()
+        }
+    }
+
+    private fun setupListener() {
         binding.mainBottomNavigationBar.setOnItemSelectedListener { item ->
             return@setOnItemSelectedListener when (item.itemId) {
                 R.id.bottom_navigation_reservation_details -> {
