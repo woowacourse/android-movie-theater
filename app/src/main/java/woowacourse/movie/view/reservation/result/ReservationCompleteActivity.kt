@@ -58,7 +58,7 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         seats: Seats,
     ) {
         val formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN)
-        val dateTimeFormat = ticket.date.format(formatter)
+        val dateTimeFormat = ticket.dateTime.format(formatter)
 
         val movieTitleTextView = findViewById<TextView>(R.id.tv_movie_title)
         val movieCancelInfoTextView = findViewById<TextView>(R.id.tv_cancel_info)

@@ -16,22 +16,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/history_date_textview"
+            android:id="@+id/history_datetime_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="12sp"
-            tools:text="2024.3.2" />
+            tools:text="2024.3.2 | 13:00" />
 
-
-        <TextView
-            android:id="@+id/history_time_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            tools:text="13:00" />
 
         <TextView
             android:id="@+id/history_theater_textview"
@@ -45,6 +36,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/history_title_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"

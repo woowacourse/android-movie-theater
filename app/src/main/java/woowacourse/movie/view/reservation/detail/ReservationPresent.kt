@@ -73,7 +73,7 @@ class ReservationPresent(
         val ticket =
             Ticket(
                 title = movie.title,
-                date = selectedDateTime,
+                dateTime = selectedDateTime,
                 personnel = count,
                 theaterName = theaterName,
                 seats = seats,
