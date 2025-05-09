@@ -43,10 +43,7 @@ interface ReservationSeatContract {
             seats: Seats,
         )
 
-        fun navigateToReservationComplete(
-            ticket: Ticket,
-            seats: Seats,
-        )
+        fun navigateToReservationComplete(ticket: Ticket)
 
         fun selectableButton()
 

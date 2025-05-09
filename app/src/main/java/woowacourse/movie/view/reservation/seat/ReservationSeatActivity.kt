@@ -182,17 +182,15 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
                 R.string.cancel,
             ),
         ) {
-            navigateToReservationComplete(ticket, seats)
+            val finalTicket: Ticket = ticket.copy(seats = seats)
+            navigateToReservationComplete(finalTicket)
             finish()
         }
     }
 
-    override fun navigateToReservationComplete(
-        ticket: Ticket,
-        seats: Seats,
-    ) {
+    override fun navigateToReservationComplete(ticket: Ticket) {
         val intent =
-            ReservationCompleteActivity.newIntent(this@ReservationSeatActivity, ticket, seats)
+            ReservationCompleteActivity.newIntent(this@ReservationSeatActivity, ticket)
         startActivity(intent)
     }
 

@@ -31,7 +31,7 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         }
 
         val ticket = intent.getSerializableExtraCompat(KEY_TICKET, Ticket::class.java)
-        val seats = intent.getSerializableExtraCompat(KET_SEATS, Seats::class.java)
+        val seats = ticket?.seats
 
         checkTicket(ticket, seats)
     }
@@ -93,15 +93,12 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         private const val DATETIME_PATTERN = "yyyy.M.d. HH:mm"
         private const val PRICE_PATTERN = "#,###"
         private const val KEY_TICKET = "ticket"
-        private const val KET_SEATS = "seats"
 
         fun newIntent(
             context: Context,
             ticket: Ticket,
-            seats: Seats,
         ): Intent =
             Intent(context, ReservationCompleteActivity::class.java)
                 .putExtra(KEY_TICKET, ticket)
-                .putExtra(KET_SEATS, seats)
     }
 }
