@@ -22,4 +22,5 @@
     <string name="text_booking_history">예매 내역</string>
     <string name="text_home">홈</string>
     <string name="text_settings">설정</string>
+    <string name="booking_history_divider">|</string>
 </resources>
