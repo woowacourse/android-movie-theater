@@ -3,7 +3,6 @@ package woowacourse.movie.view.movies.cinema
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.movie.databinding.ItemCinemaBinding
 import woowacourse.movie.domain.model.Screening
 
@@ -32,17 +31,4 @@ class CinemaSelectionAdapter(
     }
 
     override fun getItemCount(): Int = items.size
-}
-
-class CinemaViewHolder(
-    val binding: ItemCinemaBinding,
-) : ViewHolder(binding.root) {
-    fun bind(
-        screening: Screening,
-        eventListener: OnCinemaSelectionListener,
-    ) {
-        binding.screening = screening
-        binding.eventListener = eventListener
-        binding.executePendingBindings()
-    }
 }
