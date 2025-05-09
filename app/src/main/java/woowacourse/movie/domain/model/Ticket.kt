@@ -6,6 +6,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 data class Ticket(
+    val id: Long,
     val title: String,
     val bookingDate: LocalDate,
     val bookingTime: LocalTime,
@@ -21,6 +22,7 @@ data class Ticket(
             price: Int,
         ): Ticket {
             return Ticket(
+                id = 0L,
                 title = booking.movieTitle,
                 bookingDate = booking.bookingDate,
                 bookingTime = booking.bookingTime,
