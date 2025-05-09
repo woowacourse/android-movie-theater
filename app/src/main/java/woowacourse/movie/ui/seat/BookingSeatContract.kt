@@ -1,5 +1,7 @@
 package woowacourse.movie.ui.seat
 
+import woowacourse.movie.data.BookedTicketDatabase
+import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seat
@@ -17,7 +19,7 @@ interface BookingSeatContract {
 
         fun updateConfirmButton()
 
-        fun loadBookedTicket()
+        fun loadBookedTicket(bookedTicketDatabase: BookedTicketDatabase)
     }
 
     interface View {
@@ -32,11 +34,6 @@ interface BookingSeatContract {
 
         fun showConfirmButton(isEnabled: Boolean)
 
-        fun moveToBookedTicket(
-            theaterName: String,
-            movieTitle: String,
-            schedule: MovieSchedule,
-            headcount: Headcount,
-        )
+        fun moveToBookedTicket(bookedTicket: BookedTicket)
     }
 }

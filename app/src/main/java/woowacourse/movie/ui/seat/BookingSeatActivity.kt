@@ -15,6 +15,7 @@ import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.data.BookedTicketDatabase
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
@@ -36,6 +37,7 @@ class BookingSeatActivity :
     private val nonOccupiedSeatBackGroundColor: Int by lazy {
         resources.getColor(R.color.white, null)
     }
+    private val bookingTicketDatabase by lazy { BookedTicketDatabase.getInstance(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,13 +83,7 @@ class BookingSeatActivity :
         binding.btnConfirm.isEnabled = isEnabled
     }
 
-    override fun moveToBookedTicket(
-        theaterName: String,
-        movieTitle: String,
-        schedule: MovieSchedule,
-        headcount: Headcount,
-    ) {
-        val bookedTicket = BookedTicket(theaterName, movieTitle, schedule, headcount)
+    override fun moveToBookedTicket(bookedTicket: BookedTicket) {
         startActivity(BookingCompleteActivity.newIntent(this@BookingSeatActivity, bookedTicket))
     }
 
@@ -165,7 +161,7 @@ class BookingSeatActivity :
             .setTitle(title)
             .setMessage(description)
             .setPositiveButton(getString(R.string.text_booking_dialog_positive_button)) { _, _ ->
-                bookingSeatPresenter.loadBookedTicket()
+                bookingSeatPresenter.loadBookedTicket(bookingTicketDatabase)
             }
             .setNegativeButton(getString(R.string.text_booking_dialog_negative_button)) { dialog, _ ->
                 dialog.dismiss()
