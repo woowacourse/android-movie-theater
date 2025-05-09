@@ -16,25 +16,7 @@ import woowacourse.movie.view.setting.SettingFragment
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-    private val homeFragment: Fragment by lazy {
-        findOrCreateFragment(
-            HomeFragment::class.java.simpleName,
-            HomeFragment(),
-        )
-    }
-    private val historyFragment: Fragment by lazy {
-        findOrCreateFragment(
-            HistoryFragment::class.java.simpleName,
-            HistoryFragment(),
-        )
-    }
-    private val settingFragment: Fragment by lazy {
-        findOrCreateFragment(
-            SettingFragment::class.java.simpleName,
-            SettingFragment(),
-        )
-    }
-    private var activeFragment: Fragment? = null
+    private var activeTag: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,32 +39,29 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(KEY_FRAGMENT_TAG, activeFragment?.tag)
+        outState.putString(KEY_FRAGMENT_TAG, activeTag)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        savedInstanceState.let {
-            activeFragment =
-                supportFragmentManager.findFragmentByTag(it.getString(KEY_FRAGMENT_TAG))
-        }
+        activeTag = savedInstanceState.getString(KEY_FRAGMENT_TAG)
     }
 
     private fun initBottomNavigation() {
         binding.bottomNavMenu.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_fragment_home -> {
-                    switchFragment(homeFragment, HomeFragment::class.java.simpleName)
+                    HomeFragment::class.java.let { switchFragment(it, it.simpleName) }
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_fragment_history -> {
-                    switchFragment(historyFragment, HistoryFragment::class.java.simpleName)
+                    HistoryFragment::class.java.let { switchFragment(it, it.simpleName) }
                     return@setOnItemSelectedListener true
                 }
 
                 R.id.menu_fragment_settings -> {
-                    switchFragment(settingFragment, SettingFragment::class.java.simpleName)
+                    SettingFragment::class.java.let { switchFragment(it, it.simpleName) }
                     return@setOnItemSelectedListener true
                 }
 
@@ -92,28 +71,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun switchFragment(
-        target: Fragment,
+        target: Class<out Fragment>,
         tag: String,
     ) {
-        if (activeFragment == target) return
+        if (activeTag == tag) return
+
+        val activeFragment = supportFragmentManager.findFragmentByTag(activeTag)
+        val targetFragment = supportFragmentManager.findFragmentByTag(tag)
 
         supportFragmentManager.commit {
             activeFragment?.let { hide(it) }
 
-            if (supportFragmentManager.findFragmentByTag(target.tag) == null) {
-                add(R.id.main_fragment_container, target, tag)
+            if (targetFragment == null) {
+                add(R.id.main_fragment_container, target, null, tag)
             } else {
-                show(target)
+                show(targetFragment)
             }
         }
-        activeFragment = target
-    }
-
-    private fun findOrCreateFragment(
-        tag: String,
-        fragment: Fragment,
-    ): Fragment {
-        return supportFragmentManager.findFragmentByTag(tag) ?: fragment
+        activeTag = tag
     }
 
     override fun onDestroy() {
