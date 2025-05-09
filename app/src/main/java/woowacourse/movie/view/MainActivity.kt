@@ -20,18 +20,22 @@ import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.view.core.ext.showPermissionSnackBar
 import woowacourse.movie.view.history.BookingHistoryFragment
 import woowacourse.movie.view.movies.MovieListFragment
+import woowacourse.movie.view.prefes.SharedPreferencesManager
 import woowacourse.movie.view.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var prefsManager: SharedPreferencesManager
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
         ) { isGranted ->
+            prefsManager.saveNotificationPermissionResult(isGranted)
             if (isGranted) {
                 // 권한 허용됨
+                return@registerForActivityResult
             } else {
                 // 권한 거부됨
                 val permission = Manifest.permission.POST_NOTIFICATIONS
@@ -50,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        prefsManager = SharedPreferencesManager(this)
         requestNotificationPermission()
         initView(savedInstanceState)
     }
@@ -78,6 +83,9 @@ class MainActivity : AppCompatActivity() {
 
             if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
                 // 이미 권한이 허용됨
+                if (!prefsManager.getNotificationPermissionResult()) {
+                    prefsManager.saveNotificationPermissionResult(true)
+                }
                 return
             }
 
