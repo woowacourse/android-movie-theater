@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import woowacourse.movie.Provider
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.model.ReservationInfo
@@ -24,7 +25,7 @@ import woowacourse.movie.view.reservation.result.ReservationResultActivity
 class SeatSelectionActivity :
     BaseActivity<ActivitySeatSelectionBinding>(R.layout.activity_seat_selection),
     SeatSelectionContract.View {
-    private val presenter: SeatSelectionPresenter by lazy { SeatSelectionPresenter(this) }
+    private val presenter: SeatSelectionPresenter by lazy { Provider.seatSelectionPresenter(this) }
     private lateinit var currentTicket: Ticket
     private lateinit var reservation: ReservationInfo
 

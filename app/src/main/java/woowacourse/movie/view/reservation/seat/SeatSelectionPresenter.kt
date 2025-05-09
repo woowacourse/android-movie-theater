@@ -1,15 +1,14 @@
 package woowacourse.movie.view.reservation.seat
 
-import woowacourse.movie.data.MovieTheaterDatabase
-import woowacourse.movie.data.entity.TicketEntity
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.SeatFactory
 import woowacourse.movie.domain.model.Ticket
-import kotlin.concurrent.thread
+import woowacourse.movie.repository.TicketRepository
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
+    private val repository: TicketRepository,
 ) : SeatSelectionContract.Presenter {
     private lateinit var reservationInfo: ReservationInfo
     private lateinit var ticket: Ticket
@@ -52,19 +51,7 @@ class SeatSelectionPresenter(
     }
 
     override fun completeReservation() {
-        thread {
-            val ticketDao = MovieTheaterDatabase.db.ticketDao()
-            ticketDao.save(
-                TicketEntity(
-                    title = ticket.title,
-                    showTime = ticket.showTime,
-                    reservationCount = ticket.reservationCount,
-                    cinemaName = ticket.cinema.name,
-                    seats = ticket.seats,
-                    totalPrice = ticket.totalPrice(),
-                ),
-            )
-        }
+        repository.save(ticket)
         view.navigateToResult(ticket)
     }
 }
