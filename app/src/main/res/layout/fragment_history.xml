@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/history_fragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.reservation.history.HistoryFragment">
+<layout>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+        <variable
+            name="history"
+            type="woowacourse.movie.view.reservation.history.HistoryFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/history_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="History Fragment" />
+        tools:context=".view.home.HomeFragment">
 
-</FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="10"
+            tools:listitem="@layout/reservation_history_item" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
