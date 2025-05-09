@@ -8,7 +8,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.base.BaseFragment
-import woowacourse.movie.view.reservation.result.ReservationResultActivity
+import woowacourse.movie.view.movies.reservation.result.ReservationResultActivity
 
 class ReservationListFragment :
     BaseFragment<FragmentReservationListBinding>(R.layout.fragment_reservation_list),

@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -21,7 +20,7 @@ import woowacourse.movie.matchers.isDisplayed
 import woowacourse.movie.matchers.matchText
 import woowacourse.movie.matchers.performClick
 import woowacourse.movie.matchers.withBackgroundColor
-import woowacourse.movie.view.reservation.seat.SeatSelectionActivity
+import woowacourse.movie.view.movies.reservation.seat.SeatSelectionActivity
 
 @RunWith(AndroidJUnit4::class)
 @Suppress("FunctionName")

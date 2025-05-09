@@ -14,6 +14,7 @@ import woowacourse.movie.R
 import woowacourse.movie.fixture.TestData
 import woowacourse.movie.matchers.matchText
 import woowacourse.movie.matchers.performClick
+import woowacourse.movie.view.movies.reservation.ReservationActivity
 
 @RunWith(AndroidJUnit4::class)
 @Suppress("FunctionName")

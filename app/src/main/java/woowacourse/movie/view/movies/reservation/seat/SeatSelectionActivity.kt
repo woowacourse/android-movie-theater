@@ -1,4 +1,4 @@
-package woowacourse.movie.view.reservation.seat
+package woowacourse.movie.view.movies.reservation.seat
 
 import android.app.AlertDialog
 import android.content.Context
@@ -20,7 +20,7 @@ import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.base.BaseActivity
 import woowacourse.movie.view.extension.getParcelableCompat
 import woowacourse.movie.view.extension.getParcelableCompatList
-import woowacourse.movie.view.reservation.result.ReservationResultActivity
+import woowacourse.movie.view.movies.reservation.result.ReservationResultActivity
 
 class SeatSelectionActivity :
     BaseActivity<ActivitySeatSelectionBinding>(R.layout.activity_seat_selection),

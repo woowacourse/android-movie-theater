@@ -1,4 +1,4 @@
-package woowacourse.movie.view.reservation
+package woowacourse.movie.view.movies.reservation
 
 import android.app.AlertDialog
 import android.content.Context
@@ -15,7 +15,7 @@ import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.view.base.BaseActivity
 import woowacourse.movie.view.extension.getParcelableCompatList
-import woowacourse.movie.view.reservation.seat.SeatSelectionActivity
+import woowacourse.movie.view.movies.reservation.seat.SeatSelectionActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

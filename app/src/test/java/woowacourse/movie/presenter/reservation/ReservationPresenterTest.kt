@@ -11,8 +11,8 @@ import woowacourse.movie.data.dummy.DummyScreening
 import woowacourse.movie.domain.model.Cinema
 import woowacourse.movie.domain.model.ReservationCount
 import woowacourse.movie.domain.model.ReservationInfo
-import woowacourse.movie.view.reservation.ReservationContract
-import woowacourse.movie.view.reservation.ReservationPresenter
+import woowacourse.movie.view.movies.reservation.ReservationContract
+import woowacourse.movie.view.movies.reservation.ReservationPresenter
 import java.time.LocalDateTime
 
 class ReservationPresenterTest {

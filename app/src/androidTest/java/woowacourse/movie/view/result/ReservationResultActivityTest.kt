@@ -14,7 +14,7 @@ import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.fixture.TestData
 import woowacourse.movie.matchers.isEllipsized
 import woowacourse.movie.matchers.matchText
-import woowacourse.movie.view.reservation.result.ReservationResultActivity
+import woowacourse.movie.view.movies.reservation.result.ReservationResultActivity
 
 @RunWith(AndroidJUnit4::class)
 @Suppress("FunctionName")
