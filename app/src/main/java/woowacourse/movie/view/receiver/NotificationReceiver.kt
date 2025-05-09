@@ -26,7 +26,7 @@ class NotificationReceiver : BroadcastReceiver() {
         text: String,
     ) {
         val channelId = "my_alarm_channel"
-        val notificationId = 1 // 알림 ID (여러 알림 구분용)
+        val notificationId = 1
         val name = title
         val descriptionText = text
         val importance = NotificationManager.IMPORTANCE_DEFAULT
@@ -41,6 +41,7 @@ class NotificationReceiver : BroadcastReceiver() {
 
         val builder =
             NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setContentTitle(title)
                 .setContentText(text)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

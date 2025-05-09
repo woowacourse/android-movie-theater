@@ -1,12 +1,12 @@
 package woowacourse.movie.view.setting
 
-import android.Manifest
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
@@ -17,6 +17,7 @@ import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.base.BaseFragment
 import woowacourse.movie.view.receiver.NotificationReceiver
+import java.time.LocalDateTime
 import java.time.ZoneId
 
 class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting), SettingContract.View {
@@ -60,12 +61,12 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
                             context,
                             0,
                             intent,
-                            PendingIntent.FLAG_UPDATE_CURRENT,
+                            PendingIntent.FLAG_IMMUTABLE,
                         )
 
-                    alarmManager.set(
+                    alarmManager.setExact(
                         AlarmManager.RTC,
-                        it.showTime.minusMinutes(30)
+                        LocalDateTime.now().plusSeconds(10)
                             .atZone(ZoneId.of("Asia/Seoul"))
                             .toInstant()
                             .toEpochMilli(),
@@ -87,7 +88,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
 
         binding.switchSettingPushAlarm.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                startActivity(Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
+                presenter.setNotification()
             }
         }
     }
