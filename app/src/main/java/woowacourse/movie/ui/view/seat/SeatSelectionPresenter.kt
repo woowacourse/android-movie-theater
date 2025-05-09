@@ -2,11 +2,13 @@ package woowacourse.movie.ui.view.seat
 
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.ui.view.data.TicketDataAdapter
+import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private val ticket: Ticket,
-    private val cinemaName: String,
+    private val ticketDataAdapter: TicketDataAdapter,
     selectedSeats: Set<Seat>?,
 ) : SeatSelectionContract.Presenter {
     private val seats: Set<Seat> = Seat.seats()
@@ -49,7 +51,12 @@ class SeatSelectionPresenter(
     }
 
     override fun confirmReservation() {
-        view.saveTicket(ticket, selectedSeats, cinemaName)
+        thread {
+            ticketDataAdapter.insert(ticket)
+        }
+        ticket.run {
+            view.saveTicket(title, count, showtime, selectedSeats, cinemaName)
+        }
     }
 
     private fun canSelectSeat(): Boolean = selectedSeats.size < ticket.count

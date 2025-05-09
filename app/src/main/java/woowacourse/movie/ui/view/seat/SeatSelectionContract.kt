@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.view.seat
 
 import woowacourse.movie.domain.reservation.Seat
-import woowacourse.movie.domain.ticket.Ticket
+import java.time.LocalDateTime
 
 interface SeatSelectionContract {
     interface Presenter {
@@ -42,7 +42,9 @@ interface SeatSelectionContract {
         fun askFinalReservation()
 
         fun saveTicket(
-            ticket: Ticket,
+            title: String,
+            count: Int,
+            showtime: LocalDateTime,
             seats: Set<Seat>,
             cinemaName: String,
         )
