@@ -1,8 +1,8 @@
 package woowacourse.movie.view.reservation.detail
 
 import androidx.annotation.StringRes
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.model.reservation.MovieTicket
+import woowacourse.movie.model.theater.TheaterUIModel
 import java.time.LocalDate
 
 interface ReservationDetailContract {

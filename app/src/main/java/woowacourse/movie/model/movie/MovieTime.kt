@@ -1,4 +1,4 @@
-package woowacourse.movie.model
+package woowacourse.movie.model.movie
 
 class MovieTime {
     var value: Int = 0

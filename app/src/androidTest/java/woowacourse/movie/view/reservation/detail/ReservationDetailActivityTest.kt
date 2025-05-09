@@ -13,8 +13,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.model.Movie
-import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.model.movie.Movie
+import woowacourse.movie.model.theater.TheaterUIModel
 import woowacourse.movie.view.Extras
 import java.time.LocalDate
 

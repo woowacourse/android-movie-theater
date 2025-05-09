@@ -3,7 +3,7 @@ package woowacourse.movie.view.theater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.model.theater.TheaterUIModel
 
 class TheaterAdapter(
     private val clickListener: TheaterClickListener,

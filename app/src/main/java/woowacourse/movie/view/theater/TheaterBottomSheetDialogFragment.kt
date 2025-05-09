@@ -9,9 +9,9 @@ import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
-import woowacourse.movie.model.DummyMovieDao
-import woowacourse.movie.model.Movie
-import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.model.database.DummyMovieDao
+import woowacourse.movie.model.movie.Movie
+import woowacourse.movie.model.theater.TheaterUIModel
 import woowacourse.movie.util.ExceptionMessages.FRAGMENT_BINDING_STATE_EXCEPTION
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.getParcelableCompat

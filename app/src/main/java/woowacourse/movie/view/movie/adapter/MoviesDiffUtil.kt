@@ -1,7 +1,7 @@
 package woowacourse.movie.view.movie.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import woowacourse.movie.model.Movie
+import woowacourse.movie.model.movie.Movie
 
 object MoviesDiffUtil : DiffUtil.ItemCallback<Movie>() {
     override fun areItemsTheSame(

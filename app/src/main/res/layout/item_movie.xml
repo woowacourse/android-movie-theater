@@ -7,7 +7,7 @@
 
         <variable
             name="movie"
-            type="woowacourse.movie.model.Movie" />
+            type="woowacourse.movie.model.movie.Movie" />
 
         <variable
             name="moviesFragment"

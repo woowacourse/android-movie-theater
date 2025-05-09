@@ -1,7 +1,7 @@
 package woowacourse.movie.view.reservation.complete
 
 import androidx.annotation.StringRes
-import woowacourse.movie.model.ReservationInfo
+import woowacourse.movie.model.reservation.ReservationInfo
 
 interface ReservationCompleteContract {
     interface View {

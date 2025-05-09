@@ -1,7 +1,8 @@
-package woowacourse.movie.model
+package woowacourse.movie.model.theater
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import woowacourse.movie.model.movie.Movie
 
 @Parcelize
 data class TheaterUIModel(

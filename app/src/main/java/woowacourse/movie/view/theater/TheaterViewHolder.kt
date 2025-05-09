@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterBinding
-import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.model.theater.TheaterUIModel
 
 class TheaterViewHolder(
     private val binding: ItemTheaterBinding,

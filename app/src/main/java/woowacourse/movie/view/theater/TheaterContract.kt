@@ -1,8 +1,8 @@
 package woowacourse.movie.view.theater
 
 import androidx.annotation.StringRes
-import woowacourse.movie.model.Movie
-import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.model.movie.Movie
+import woowacourse.movie.model.theater.TheaterUIModel
 
 interface TheaterContract {
     interface View {

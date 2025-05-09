@@ -1,10 +1,10 @@
 package woowacourse.movie.view.theater
 
 import woowacourse.movie.R
-import woowacourse.movie.model.Movie
-import woowacourse.movie.model.MovieDao
-import woowacourse.movie.model.Theater
-import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.model.database.MovieDao
+import woowacourse.movie.model.movie.Movie
+import woowacourse.movie.model.theater.Theater
+import woowacourse.movie.model.theater.TheaterUIModel
 
 class TheaterPresenter(
     val view: TheaterContract.View,

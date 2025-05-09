@@ -14,8 +14,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectBinding
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.ReservationInfo
+import woowacourse.movie.model.reservation.MovieTicket
+import woowacourse.movie.model.reservation.ReservationInfo
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.seat.index.Col
 import woowacourse.movie.model.seat.index.Row

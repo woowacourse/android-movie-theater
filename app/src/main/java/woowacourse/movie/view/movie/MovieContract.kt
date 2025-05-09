@@ -1,6 +1,6 @@
 package woowacourse.movie.view.movie
 
-import woowacourse.movie.model.Movie
+import woowacourse.movie.model.movie.Movie
 
 interface MovieContract {
     interface View {

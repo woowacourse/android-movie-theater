@@ -3,7 +3,7 @@ package woowacourse.movie.view.movie.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.model.Movie
+import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.view.movie.MovieClickListener
 
 class MovieAdapter(

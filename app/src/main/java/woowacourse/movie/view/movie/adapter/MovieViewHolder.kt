@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemMovieBinding
-import woowacourse.movie.model.Movie
+import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.view.ReservationUiFormatter
 import woowacourse.movie.view.movie.MovieClickListener
 

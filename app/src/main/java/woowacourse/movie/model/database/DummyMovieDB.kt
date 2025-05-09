@@ -1,6 +1,7 @@
-package woowacourse.movie.model
+package woowacourse.movie.model.database
 
 import woowacourse.movie.R
+import woowacourse.movie.model.movie.Movie
 import java.time.LocalDate
 
 object DummyMovieDB : MovieDatabaseSchema {

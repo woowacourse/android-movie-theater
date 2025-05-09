@@ -10,9 +10,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
-import woowacourse.movie.model.DummyMovieDao
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.model.database.DummyMovieDao
+import woowacourse.movie.model.reservation.MovieTicket
+import woowacourse.movie.model.theater.TheaterUIModel
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.getParcelableExtraCompat
 import woowacourse.movie.view.reservation.detail.viewhelper.DateTimeHelper

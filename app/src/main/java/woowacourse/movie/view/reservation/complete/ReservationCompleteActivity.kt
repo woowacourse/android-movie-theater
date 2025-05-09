@@ -9,7 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
-import woowacourse.movie.model.ReservationInfo
+import woowacourse.movie.model.reservation.ReservationInfo
 import woowacourse.movie.view.Extras
 import woowacourse.movie.view.ReservationUiFormatter
 import woowacourse.movie.view.getParcelableExtraCompat

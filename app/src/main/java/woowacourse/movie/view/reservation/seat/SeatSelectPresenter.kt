@@ -1,8 +1,8 @@
 package woowacourse.movie.view.reservation.seat
 
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.ReservationInfo
+import woowacourse.movie.model.reservation.MovieTicket
+import woowacourse.movie.model.reservation.ReservationInfo
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.seat.Seats
 import woowacourse.movie.model.seat.grade.RowBasedSeatGradePolicy

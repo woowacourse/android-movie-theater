@@ -10,7 +10,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.dummyReservationInfo
-import woowacourse.movie.model.ReservationInfo
+import woowacourse.movie.model.reservation.ReservationInfo
 import woowacourse.movie.view.reservation.complete.ReservationCompleteContract
 import woowacourse.movie.view.reservation.complete.ReservationCompletePresenter
 

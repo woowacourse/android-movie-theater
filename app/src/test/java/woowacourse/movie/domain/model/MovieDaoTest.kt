@@ -3,7 +3,7 @@ package woowacourse.movie.domain.model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.model.DummyMovieDao
+import woowacourse.movie.model.database.DummyMovieDao
 import java.time.LocalDate
 import java.time.LocalDateTime
 

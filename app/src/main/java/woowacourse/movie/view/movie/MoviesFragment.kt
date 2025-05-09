@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentMoviesBinding
-import woowacourse.movie.model.DummyMovieDao
-import woowacourse.movie.model.Movie
+import woowacourse.movie.model.database.DummyMovieDao
+import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.util.ExceptionMessages.FRAGMENT_BINDING_STATE_EXCEPTION
 import woowacourse.movie.view.movie.adapter.MovieAdapter
 import woowacourse.movie.view.theater.TheaterBottomSheetDialogFragment
