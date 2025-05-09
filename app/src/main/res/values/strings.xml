@@ -34,4 +34,7 @@
     <string name="bottom_navigation_reservation_details">예매 내역</string>
     <string name="bottom_navigation_home">홈</string>
     <string name="bottom_navigation_setting">설정</string>
+
+    <!-- 예매 내역 페이지 -->
+    <string name="reservation_detail_ticket_info">%s | %s | %s</string>
 </resources>
