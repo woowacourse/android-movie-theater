@@ -27,4 +27,6 @@
 
     <string name="seat_screen">SCREEN</string>
     <string name="seat_point">%s%d</string>
+
+    <string name="ticket_time_info">%s | %s | %s 극장</string>
 </resources>

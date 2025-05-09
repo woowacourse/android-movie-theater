@@ -27,10 +27,10 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="13sp"
-            app:headCount="@{ticket.headCount}"
+            app:selectedDate="@{ticket.selectedDateText}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:seats="@{ticket.seats}"
+            app:selectedTime="@{ticket.selectedTimeText}"
             app:theater="@{ticket.theater}"
             tools:text="2024.3.2 | 17:00 | 선릉 극장" />
 
