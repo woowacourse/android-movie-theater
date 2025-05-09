@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationResultBinding
+import woowacourse.movie.presentation.MovieTheaterActivity
 import woowacourse.movie.presentation.common.base.BaseActivity
 import woowacourse.movie.presentation.common.base.HomeButtonHandler
 import woowacourse.movie.presentation.common.extension.getParcelableCompat
@@ -37,6 +38,10 @@ class ReservationResultActivity :
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        if (isTaskRoot) {
+            startActivity(Intent(this, MovieTheaterActivity::class.java))
+        }
+
         finish()
         return super.onSupportNavigateUp()
     }
