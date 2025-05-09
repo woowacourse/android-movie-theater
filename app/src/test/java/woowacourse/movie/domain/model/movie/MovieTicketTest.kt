@@ -30,20 +30,4 @@ class MovieTicketTest {
             headCount shouldBe 3
         }
     }
-
-    @Test
-    fun `이전 시간의 영화를 예매할 수 없다`() {
-        // Given
-        val beforeTime = LocalDateTime.of(2025, 4, 1, 12, 0)
-
-        // Then
-        shouldThrow<IllegalArgumentException> {
-            MovieTicket(
-                "Test",
-                "선릉 극장",
-                beforeTime,
-                2,
-            )
-        }
-    }
 }

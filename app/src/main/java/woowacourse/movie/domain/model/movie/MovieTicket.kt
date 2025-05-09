@@ -12,12 +12,7 @@ data class MovieTicket(
     val amount: Int = DEFAULT_AMOUNT,
     val seats: List<Seat> = emptyList(),
 ) : Serializable {
-    init {
-        require(screeningDateTime.isAfter(LocalDateTime.now())) { DATETIME_ERROR }
-    }
-
     companion object {
         private const val DEFAULT_AMOUNT = 0
-        private const val DATETIME_ERROR = "[ERROR] 상영시간이 지난 영화입니다."
     }
 }
