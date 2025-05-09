@@ -78,4 +78,5 @@ dependencies {
     androidTestRuntimeOnly(libs.mannodermaus.junit5.runner)
 
     debugImplementation(libs.androidx.fragment.testing)
+    debugImplementation(libs.leakcanary.android)
 }

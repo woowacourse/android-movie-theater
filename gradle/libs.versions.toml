@@ -16,6 +16,7 @@ junit-jupiter = "5.12.0"
 kotest-runner-junit5 = "5.9.1"
 kotlin = "2.1.0"
 ktlint = "12.1.0"
+leakcanary-android = "2.14"
 mannodermaus-junit5 = "1.7.0"
 mockk = "1.14.0"
 recyclerview = "1.4.0"
@@ -37,6 +38,7 @@ assertj-core = { group = "org.assertj", name = "assertj-core", version.ref = "as
 google-material = { group = "com.google.android.material", name = "material", version.ref = "google-material" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit-jupiter" }
 kotest-runner-junit5 = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest-runner-junit5" }
+leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary-android" }
 mannodermaus-junit5-core = { group = "de.mannodermaus.junit5", name = "android-test-core", version.ref = "mannodermaus-junit5" }
 mannodermaus-junit5-runner = { group = "de.mannodermaus.junit5", name = "android-test-runner", version.ref = "mannodermaus-junit5" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
