@@ -1,5 +1,7 @@
 package woowacourse.movie.feature.bookingseat.view
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -24,6 +26,7 @@ import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.model.MovieSeatUiModel
 import woowacourse.movie.feature.model.SeatSelectionUiState
 import woowacourse.movie.feature.model.SeatTypeUiModel
+import woowacourse.movie.feature.receiver.NotificationReceiver
 import woowacourse.movie.util.getParcelableExtraCompat
 
 class BookingSeatActivity :
@@ -91,6 +94,32 @@ class BookingSeatActivity :
         val intent = BookingCompleteActivity.newIntent(this, bookingInfo)
         startActivity(intent)
         finish()
+    }
+
+    override fun scheduleNotification(
+        bookingInfo: BookingInfoUiModel,
+        notificationDelay: Long,
+    ) {
+        val intent =
+            Intent(this, NotificationReceiver::class.java).apply {
+                putExtra(NotificationReceiver.MOVIE_NAME_KEY, bookingInfo.movie.title)
+            }
+
+        val pendingIntent =
+            PendingIntent.getBroadcast(
+                this,
+                bookingInfo.id?.toInt() ?: -1,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
+
+        val alarmManager = this.getSystemService(ALARM_SERVICE) as AlarmManager
+
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            notificationDelay,
+            pendingIntent,
+        )
     }
 
     override fun navigateToBack() {

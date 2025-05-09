@@ -10,7 +10,7 @@ class BookingHistoryPresenter(
     private val bookingRepository: BookingRepository,
 ) : BookingHistoryContract.Presenter {
     override fun getBookingHistory() {
-        val bookingHistory: List<BookingInfoUiModel> = bookingRepository.getAll().map { it.toUi() }
+        val bookingHistory: List<BookingInfoUiModel> = bookingRepository.fetchBookingHistory().map { it.toUi() }
         view.showBookingHistory(bookingHistory)
     }
 

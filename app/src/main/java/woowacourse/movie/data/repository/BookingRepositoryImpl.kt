@@ -9,9 +9,9 @@ import woowacourse.movie.domain.repository.BookingRepository
 class BookingRepositoryImpl(
     private val dao: BookingDao,
 ) : BookingRepository {
-    override fun getAll(): List<BookingInfo> = dao.getAll().map { it.toDomain() }
+    override fun fetchBookingHistory(): List<BookingInfo> = dao.getAll().map { it.toDomain() }
 
-    override fun insertAll(vararg bookingInfo: BookingInfo) {
+    override fun saveBookingHistory(vararg bookingInfo: BookingInfo) {
         dao.insertAll(*bookingInfo.map { it.toData() }.toTypedArray())
     }
 }

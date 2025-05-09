@@ -46,8 +46,9 @@ class BookingSeatPresenter(
     }
 
     override fun confirmSeatSelection() {
-        bookingRepository.insertAll(bookingInfo)
+        bookingRepository.saveBookingHistory(bookingInfo)
         view.navigateToBookingComplete(bookingInfo.toUi())
+        view.scheduleNotification(bookingInfo.toUi(), bookingInfo.getNotificationDelay())
     }
 
     override fun cancelSeatSelection() {

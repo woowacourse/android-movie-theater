@@ -1,5 +1,8 @@
 package woowacourse.movie.domain.model
 
+import java.time.LocalDateTime
+import java.time.ZoneId
+
 data class BookingInfo(
     val id: Long? = null,
     val movie: Movie,
@@ -48,7 +51,21 @@ data class BookingInfo(
             SeatSelectionResult.ExceedCountFailure
         }
 
+    fun getNotificationDelay(): Long {
+        val dateTime = LocalDateTime.of(selectedDate.value, selectedTime.value)
+        val triggerDateTime = dateTime.minusMinutes(BOOKING_NOTIFICATION_TIME_MINUTES)
+
+        return triggerDateTime
+            .atZone(ZoneId.systemDefault())
+            .toInstant()
+            .toEpochMilli()
+    }
+
     private fun removeSeat(seat: MovieSeat) {
         seats.remove(seat)
+    }
+
+    companion object {
+        private const val BOOKING_NOTIFICATION_TIME_MINUTES = 30L
     }
 }
