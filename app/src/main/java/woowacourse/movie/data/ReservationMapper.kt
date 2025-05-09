@@ -22,6 +22,7 @@ fun MovieTicket.toEntity(): MovieTicketEntity =
                 movieTimeHour = movieTime.value.hour,
                 movieTimeMinute = movieTime.value.minute,
                 ticketCount = seats.size,
+                price = price,
             ),
         seats = seats.map { it.toEntity(0L) },
         movie = movie.toEntity(),

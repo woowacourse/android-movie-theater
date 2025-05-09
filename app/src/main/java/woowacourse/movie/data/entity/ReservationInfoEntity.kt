@@ -31,4 +31,5 @@ data class ReservationInfoEntity(
     val movieTimeMinute: Int,
     val ticketCount: Int,
     val theaterId: Long,
+    val price: Int,
 )
