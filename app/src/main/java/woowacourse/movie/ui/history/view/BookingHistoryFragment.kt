@@ -4,15 +4,60 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.BookedTicketDatabase
+import woowacourse.movie.data.BookedTicketEntity
+import woowacourse.movie.databinding.FragmentBookingHistoryBinding
+import woowacourse.movie.domain.model.BookedTicket
+import woowacourse.movie.ui.complete.BookingCompleteActivity
+import woowacourse.movie.ui.history.contract.BookingHistoryContract
+import woowacourse.movie.ui.history.presenter.BookingHistoryPresenter
 
-class BookingHistoryFragment : Fragment() {
+class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
+    private var _binding: FragmentBookingHistoryBinding? = null
+    private val binding get() = _binding!!
+    private val bookingHistoryPresenter: BookingHistoryContract.Presenter by lazy { BookingHistoryPresenter(this) }
+    private val bookedTicketDatabase by lazy { BookedTicketDatabase.getInstance(requireContext()) }
+    private val bookedHistoryAdapter by lazy { generateBookedHistoryAdapter() }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        return inflater.inflate(R.layout.fragment_booking_history, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_booking_history, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        bookingHistoryPresenter.loadBookingHistories(bookedTicketDatabase)
+        binding.layoutRecyclerHistory.adapter = bookedHistoryAdapter
+    }
+
+    override fun showHistories(bookingHistories: List<BookedTicketEntity>) {
+        requireActivity().runOnUiThread {
+            bookedHistoryAdapter.submitList(bookingHistories)
+        }
+    }
+
+    override fun moveToBookedTicket(bookedTicket: BookedTicket) {
+        startActivity(BookingCompleteActivity.newIntent(requireActivity(), bookedTicket))
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun generateBookedHistoryAdapter(): BookingHistoryAdapter {
+        return BookingHistoryAdapter { bookedTicketEntity ->
+            bookingHistoryPresenter.loadBookedTicket(bookedTicketEntity)
+        }
     }
 }
