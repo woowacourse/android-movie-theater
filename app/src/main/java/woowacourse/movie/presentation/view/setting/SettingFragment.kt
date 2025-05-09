@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import woowacourse.movie.data.SettingPreferenceManager
 import woowacourse.movie.databinding.FragmentSettingBinding
 
 class SettingFragment :
@@ -19,10 +20,8 @@ class SettingFragment :
     SettingContract.View {
     private lateinit var binding: FragmentSettingBinding
     private val presenter: SettingContract.Presenter by lazy {
-        SettingPresenter(
-            this,
-            requireContext(),
-        )
+        val preferenceManager = SettingPreferenceManager(requireContext())
+        SettingPresenter(this, preferenceManager)
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

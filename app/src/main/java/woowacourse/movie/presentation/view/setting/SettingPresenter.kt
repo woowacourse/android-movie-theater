@@ -1,24 +1,17 @@
 package woowacourse.movie.presentation.view.setting
 
-import android.content.Context
-import androidx.core.content.edit
+import woowacourse.movie.data.SettingPreferenceManager
 
 class SettingPresenter(
-    val view: SettingContract.View,
-    private val context: Context,
+    private val view: SettingContract.View,
+    private val preferenceManager: SettingPreferenceManager,
 ) : SettingContract.Presenter {
-    private val prefs by lazy {
-        context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-    }
-
     override fun fetchSettingInfo() {
-        val isEnabled = prefs.getBoolean("notification", false)
+        val isEnabled = preferenceManager.getPushAlarmEnabled()
         view.showPushAlarmSetting(isEnabled)
     }
 
     override fun savePushAlarmSetting(isEnabled: Boolean) {
-        prefs.edit {
-            putBoolean("notification", isEnabled)
-        }
+        preferenceManager.setPushAlarmEnabled(isEnabled)
     }
 }
