@@ -1,11 +1,10 @@
 package woowacourse.movie.view.reservelist
 
-import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.repository.Repository
+import woowacourse.movie.repository.TicketRepository
 
 class ReservationListPresenter(
     val view: ReservationListContract.View,
-    val repository: Repository<Ticket>,
+    val repository: TicketRepository,
 ) : ReservationListContract.Presenter {
     override fun loadData() {
         repository.findAll()
