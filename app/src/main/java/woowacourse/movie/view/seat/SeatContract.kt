@@ -1,6 +1,5 @@
 package woowacourse.movie.view.seat
 
-import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
 
 interface SeatContract {
@@ -13,7 +12,7 @@ interface SeatContract {
 
         fun setConfirmButtonEnabled(clickable: Boolean)
 
-        fun moveToBookingComplete(ticket: Ticket)
+        fun moveToBookingComplete(id: Long)
     }
 
     interface Presenter {

@@ -13,9 +13,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatBinding
 import woowacourse.movie.domain.model.Booking
-import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
-import woowacourse.movie.domain.model.seat.Seats
 import woowacourse.movie.view.complete.BookingCompleteActivity
 import woowacourse.movie.view.core.ext.getSerializableArrayList
 import woowacourse.movie.view.core.ext.requireSerializable
@@ -31,7 +29,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat)
 
         intent.requireSerializable<Booking>(KEY_BOOKING).apply {
-            presenter = SeatPresenter(this@SeatActivity, Seats(), this)
+            presenter = SeatPresenter.initialize(this@SeatActivity, this, applicationContext)
             val handler = SeatActionHandler(presenter)
 
             binding.handler = handler
@@ -82,8 +80,8 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         binding.btnBooking.isEnabled = clickable
     }
 
-    override fun moveToBookingComplete(ticket: Ticket) {
-        val intent = BookingCompleteActivity.newIntent(this, ticket)
+    override fun moveToBookingComplete(ticketId: Long) {
+        val intent = BookingCompleteActivity.newIntent(this, ticketId)
         startActivity(intent)
     }
 
