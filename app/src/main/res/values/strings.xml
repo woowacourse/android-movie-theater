@@ -63,10 +63,15 @@
     <string name="setting_notification_title">푸시 알림 수신</string>
     <string name="setting_notification_desc">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 
+    <!-- Notification Permission Dialog -->
+    <string name="notification_permission_dialog_title">알림 권한 필요</string>
+    <string name="notification_permission_dialog_message">알림 기능을 사용하려면 권한이 필요합니다.</string>
+    <string name="notification_permission_dialog_positive">설정으로 이동</string>"
+    <string name="notification_permission_dialog_negative">취소</string>"
+
     <!--  DateTime Format  -->
     <string name="movie_screening_period_format">yyyy.M.d</string>
     <string name="reservation_datetime_format">yyyy.M.d HH:mm</string>
     <string name="reservation_date_format">yyyy.M.d</string>
     <string name="reservation_time_format">HH:mm</string>
-
 </resources>

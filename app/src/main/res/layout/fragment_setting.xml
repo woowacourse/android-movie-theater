@@ -36,10 +36,10 @@
             app:layout_constraintTop_toBottomOf="@id/tv_setting_notification_title" />
 
         <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:checked="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
