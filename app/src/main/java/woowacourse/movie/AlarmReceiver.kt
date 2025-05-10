@@ -34,7 +34,8 @@ class AlarmReceiver : BroadcastReceiver() {
             val message = context.getString(R.string.notification_sub_info, ticket.title)
             val title = context.getString(R.string.notification_content_title)
 
-            val openIntent = BookingCompleteActivity.createIntent(context, BookingType.HISTORY, ticket)
+            val openIntent =
+                BookingCompleteActivity.createIntent(context, BookingType.HISTORY, ticket)
             val contentIntent =
                 PendingIntent.getActivity(
                     context,
@@ -45,11 +46,12 @@ class AlarmReceiver : BroadcastReceiver() {
 
             val builder =
                 NotificationCompat.Builder(context, ALARM_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.orang)
+                    .setSmallIcon(R.drawable.icon_dumpling)
                     .setContentTitle(title)
                     .setContentText(message)
                     .setContentIntent(contentIntent)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setAutoCancel(true)
 
             val manager =
                 ContextCompat.getSystemService(
