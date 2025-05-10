@@ -34,10 +34,7 @@ object AlarmHelper {
         context: Context,
         ticket: TicketUiModel,
     ) {
-        if (!canScheduleExactAlarms(context)) {
-            requestExactAlarmPermission(context)
-            return
-        }
+        if (!canScheduleExactAlarms(context)) return
 
         val alarmManager = context.getAlarmManager()
         val pendingIntent = createAlarmPendingIntent(context, ticket)
@@ -49,12 +46,12 @@ object AlarmHelper {
         )
     }
 
-    private fun canScheduleExactAlarms(context: Context): Boolean {
+    fun canScheduleExactAlarms(context: Context): Boolean {
         val alarmManager = context.getAlarmManager()
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.S || alarmManager.canScheduleExactAlarms()
     }
 
-    private fun requestExactAlarmPermission(context: Context) {
+    fun requestExactAlarmPermission(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -66,10 +63,7 @@ object AlarmHelper {
         context: Context,
         ticket: TicketUiModel,
     ): PendingIntent {
-        val intent =
-            Intent(context, AlarmReceiver::class.java).apply {
-                putExtra(KEY_TICKET, ticket)
-            }
+        val intent = Intent(context, AlarmReceiver::class.java).putExtra(KEY_TICKET, ticket)
 
         return PendingIntent.getBroadcast(
             context,

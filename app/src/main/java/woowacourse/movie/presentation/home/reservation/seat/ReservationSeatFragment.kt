@@ -23,47 +23,26 @@ class ReservationSeatFragment :
     ReservationSeatContract.View {
     private lateinit var presenter: ReservationSeatPresenter
     private lateinit var views: ReservationSeatViews
-    private lateinit var publishDialogInfo: DialogInfo
     private val dialog: CustomAlertDialog by lazy { CustomAlertDialog(requireContext()) }
+    private val publishDialogInfo: DialogInfo by lazy {
+        DialogInfo(
+            title = getString(R.string.reservation_dialog_title),
+            message = getString(R.string.reservation_dialog_message),
+            positiveButtonText = getString(R.string.reservation_dialog_positive),
+            negativeButtonText = getString(R.string.reservation_dialog_negative),
+            onClickPositiveButton = { presenter.publishTickets() },
+            onClickNegativeButton = { it.dismiss() },
+        )
+    }
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-
-        initPresenterAndViews()
-        setupDialogInfo()
-        setupInitialData(savedInstanceState)
-    }
-
-    private fun initPresenterAndViews() {
-        val dao = ReservationDatabase.getInstance(requireContext()).reservationDao()
-        val daoListener = ReservationDaoListenerImpl(dao)
-        presenter = ReservationSeatPresenter(this, daoListener)
-        views = ReservationSeatViews(requireContext(), binding)
-    }
-
-    private fun setupDialogInfo() {
-        publishDialogInfo =
-            DialogInfo(
-                title = getString(R.string.reservation_dialog_title),
-                message = getString(R.string.reservation_dialog_message),
-                positiveButtonText = getString(R.string.reservation_dialog_positive),
-                negativeButtonText = getString(R.string.reservation_dialog_negative),
-                onClickPositiveButton = { presenter.publishTickets() },
-                onClickNegativeButton = { it.dismiss() },
-            )
-    }
-
-    private fun setupInitialData(savedInstanceState: Bundle?) {
-        val screen = arguments.getParcelableCompat<ScreenUiModel>(BUNDLE_KEY_SCREEN)
-        val reservationInfo =
-            arguments.getParcelableCompat<ReservationInfoUiModel>(BUNDLE_KEY_RESERVATION_INFO)
-        val restoredSeats =
-            savedInstanceState?.getParcelableCompat<ScreenUiModel>(BUNDLE_RESTORE_KEY_SEATS)
-
-        presenter.fetchData(reservationInfo, screen, restoredSeats)
+        initPresenter()
+        initViews()
+        restoreOrInitData(savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -80,7 +59,7 @@ class ReservationSeatFragment :
         binding.reservationInfo = reservationInfo
         binding.btnConfirm.setOnClickListener { dialog.show(publishDialogInfo) }
         views.setData(screen, selectedSeats)
-        views.setSeatListeners { seat -> presenter.updateSeat(seat) }
+        views.setSeatListeners { presenter.updateSeat(it) }
     }
 
     override fun updateSeatState(selectedSeat: SeatUiModel) {
@@ -96,10 +75,54 @@ class ReservationSeatFragment :
     }
 
     override fun notifyPublishedTickets(ticket: TicketUiModel) {
-        AlarmHelper.setAlarm(requireContext(), ticket)
+        if (!AlarmHelper.canScheduleExactAlarms(requireContext())) {
+            showExactAlarmPermissionDialog(ticket)
+            return
+        }
 
-        val intent = ReservationResultActivity.newIntent(requireContext(), ticket)
-        startActivity(intent)
+        navigateToResultScreen(ticket)
+    }
+
+    private fun initPresenter() {
+        val dao = ReservationDatabase.getInstance(requireContext()).reservationDao()
+        val daoListener = ReservationDaoListenerImpl(dao)
+        presenter = ReservationSeatPresenter(this, daoListener)
+    }
+
+    private fun initViews() {
+        views = ReservationSeatViews(requireContext(), binding)
+    }
+
+    private fun restoreOrInitData(savedInstanceState: Bundle?) {
+        val screen = arguments.getParcelableCompat<ScreenUiModel>(BUNDLE_KEY_SCREEN)
+        val reservationInfo =
+            arguments.getParcelableCompat<ReservationInfoUiModel>(BUNDLE_KEY_RESERVATION_INFO)
+        val restoredSeats =
+            savedInstanceState?.getParcelableCompat<ScreenUiModel>(BUNDLE_RESTORE_KEY_SEATS)
+        presenter.fetchData(reservationInfo, screen, restoredSeats)
+    }
+
+    private fun showExactAlarmPermissionDialog(ticket: TicketUiModel) {
+        DialogInfo(
+            title = getString(R.string.exact_alarm_permission_required_title),
+            message = getString(R.string.exact_alarm_permission_required_message),
+            positiveButtonText = getString(R.string.exact_alarm_permission_required_positive),
+            negativeButtonText = getString(R.string.exact_alarm_permission_required_negative),
+            onClickPositiveButton = {
+                AlarmHelper.requestExactAlarmPermission(requireContext())
+                it.dismiss()
+            },
+            onClickNegativeButton = {
+                showToast(getString(R.string.exact_alarm_permission_not_granted_message))
+                navigateToResultScreen(ticket)
+                it.dismiss()
+            },
+        ).also { dialog.show(it) }
+    }
+
+    private fun navigateToResultScreen(ticket: TicketUiModel) {
+        AlarmHelper.setAlarm(requireContext(), ticket)
+        startActivity(ReservationResultActivity.newIntent(requireContext(), ticket))
         requireActivity().finish()
     }
 

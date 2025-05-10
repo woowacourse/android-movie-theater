@@ -154,8 +154,12 @@ class ReservationDetailFragment :
     }
 
     private fun saveReservationCount(outState: Bundle) {
-        binding.tvReservationCount.text.toString().toIntOrNull()?.let { count ->
-            outState.putInt(RESTORE_BUNDLE_KEY_RESERVATION_NUMBER, count)
+        runCatching {
+            binding.tvReservationCount.text
+                .toString()
+                .toInt()
+        }.onSuccess {
+            outState.putInt(RESTORE_BUNDLE_KEY_RESERVATION_NUMBER, it)
         }
     }
 
@@ -171,7 +175,9 @@ class ReservationDetailFragment :
     }
 
     private fun selectedSpinnerDateAndTime(): Pair<LocalDate?, LocalTime?> =
-        binding.spinnerReservationDate.selectedItem as? LocalDate to binding.spinnerReservationTime.selectedItem as? LocalTime
+        runCatching {
+            binding.spinnerReservationDate.selectedItem as? LocalDate to binding.spinnerReservationTime.selectedItem as? LocalTime
+        }.getOrElse { null to null }
 
     companion object {
         private const val BUNDLE_KEY_MOVIE = "movie"

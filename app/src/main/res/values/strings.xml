@@ -75,6 +75,12 @@
     <string name="notification_channel_name">예매 알림</string>
     <string name="notification_channel_description">예매 알림을 위한 채널"</string>
 
+    <string name="exact_alarm_permission_required_title">리마인드 알람 권한 필요</string>
+    <string name="exact_alarm_permission_required_message">정확한 알람 권한이 필요합니다.\n설정에서 권한을 허용해 주세요.\n</string>
+    <string name="exact_alarm_permission_required_positive">설정으로 이동</string>
+    <string name="exact_alarm_permission_required_negative">무시하기</string>
+    <string name="exact_alarm_permission_not_granted_message">"알림을 등록을 하지 않았습니다"</string>
+
     <!--  DateTime Format  -->
     <string name="movie_screening_period_format">yyyy.M.d</string>
     <string name="reservation_datetime_format">yyyy.M.d HH:mm</string>
