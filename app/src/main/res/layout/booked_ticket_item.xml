@@ -22,7 +22,9 @@
         android:id="@+id/layout_booked_ticket_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> bookedTicketClickListener.onClick(bookedTicket)}">
+        android:onClick="@{() -> bookedTicketClickListener.onClick(bookedTicket)}"
+        android:background="?attr/selectableItemBackground"
+        >
 
         <TextView
             android:id="@+id/tv_dateTime_theaterName"
