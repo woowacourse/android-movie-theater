@@ -3,6 +3,7 @@ package woowacourse.movie.moviebooked
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookedBinding
 import woowacourse.movie.domain.BookingStatus
-import woowacourse.movie.domain.Theater
 import woowacourse.movie.helper.BuildVersion
 
 class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
@@ -54,6 +54,14 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
                 "$rowChar$colNumber"
             }
         binding.bookingSeat.text = seatsText
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

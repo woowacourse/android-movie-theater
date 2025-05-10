@@ -5,14 +5,16 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.DisplayName
 import org.junit.runner.RunWith
 import woowacourse.movie.MovieFixture
 import woowacourse.movie.R
@@ -44,5 +46,13 @@ class MovieBookedActivityTest {
         onView(withId(R.id.member_count)).check(matches(isDisplayed()))
         onView(withId(R.id.booking_date_time)).check(matches(isDisplayed()))
         onView(withId(R.id.movie_title)).check(matches(isDisplayed()))
+    }
+
+    @DisplayName("앱바의 뒤로 가기 버튼을 누른다")
+    @Test
+    fun goToBack() {
+        onView(
+            withContentDescription("Navigate up")
+        ).perform(click())
     }
 }
