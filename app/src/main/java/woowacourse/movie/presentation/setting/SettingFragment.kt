@@ -66,7 +66,9 @@ class SettingFragment :
     }
 
     private fun setNotificationSwitchListener() {
-        binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
+        binding.switchNotification.setOnCheckedChangeListener { button, isChecked ->
+            if (!button.isPressed) return@setOnCheckedChangeListener
+
             if (isChecked) {
                 requestNotificationPermission()
                 return@setOnCheckedChangeListener
