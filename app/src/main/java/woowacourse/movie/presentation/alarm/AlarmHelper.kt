@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
+import woowacourse.movie.R
 import woowacourse.movie.presentation.common.model.TicketUiModel
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -15,17 +16,15 @@ import java.time.ZoneId
 object AlarmHelper {
     const val CHANNEL_ID = "reservation_alarm_channel"
     const val KEY_TICKET = "ticket"
-    private const val CHANNEL_NAME = "예매 알림"
-    private const val CHANNEL_DESCRIPTION = "예매 알림을 위한 채널"
 
     fun createNotificationChannel(context: Context) {
         val channel =
             NotificationChannel(
                 CHANNEL_ID,
-                CHANNEL_NAME,
+                context.getString(R.string.notification_channel_name),
                 NotificationManager.IMPORTANCE_HIGH,
             ).apply {
-                description = CHANNEL_DESCRIPTION
+                description = context.getString(R.string.notification_channel_description)
             }
         val manager = context.getNotificationManager()
         manager.createNotificationChannel(channel)

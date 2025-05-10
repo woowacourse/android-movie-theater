@@ -72,6 +72,8 @@
     <!-- Reservation Remind Notification -->
     <string name="notification_title">예매 알림</string>
     <string name="notification_description">%s %d분 후에 상영</string>
+    <string name="notification_channel_name">예매 알림</string>
+    <string name="notification_channel_description">예매 알림을 위한 채널"</string>
 
     <!--  DateTime Format  -->
     <string name="movie_screening_period_format">yyyy.M.d</string>
