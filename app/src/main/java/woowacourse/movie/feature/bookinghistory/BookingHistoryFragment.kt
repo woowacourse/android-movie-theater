@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
@@ -48,6 +50,10 @@ class BookingHistoryFragment :
     override fun showBookingHistory(bookingHistory: List<BookingInfoUiModel>) {
         bookingHistoryAdapter.submitList(bookingHistory)
         binding.bookingHistoryAdapter = bookingHistoryAdapter
+
+        val divider =
+            DividerItemDecoration(binding.rvBookingHistory.context, LinearLayoutManager.VERTICAL)
+        binding.rvBookingHistory.addItemDecoration(divider)
     }
 
     override fun navigateToBookingDetail(bookingHistory: BookingInfoUiModel) {
