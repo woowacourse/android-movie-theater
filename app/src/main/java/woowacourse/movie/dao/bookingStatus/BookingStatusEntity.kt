@@ -1,10 +1,9 @@
-package woowacourse.movie
+package woowacourse.movie.dao.bookingStatus
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import woowacourse.movie.domain.BookingStatus
-import java.time.LocalDateTime
 
 @Entity(tableName = "booking_status")
 data class BookingStatusEntity(

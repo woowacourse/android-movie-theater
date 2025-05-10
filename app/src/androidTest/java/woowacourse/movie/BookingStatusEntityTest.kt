@@ -7,6 +7,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.DisplayName
+import woowacourse.movie.dao.bookingStatus.BookingStatusDao
+import woowacourse.movie.dao.bookingStatus.BookingStatusDatabase
+import woowacourse.movie.dao.bookingStatus.BookingStatusEntity
 import java.time.LocalDateTime
 
 class BookingStatusEntityTest {

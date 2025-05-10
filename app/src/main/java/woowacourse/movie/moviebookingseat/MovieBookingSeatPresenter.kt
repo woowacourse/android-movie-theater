@@ -1,8 +1,8 @@
 package woowacourse.movie.moviebookingseat
 
 import android.content.Context
-import woowacourse.movie.BookingStatusDatabase
-import woowacourse.movie.BookingStatusEntity
+import woowacourse.movie.dao.bookingStatus.BookingStatusDatabase
+import woowacourse.movie.dao.bookingStatus.BookingStatusEntity
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.seat.Seat
 import kotlin.concurrent.thread
