@@ -1,5 +1,6 @@
 package woowacourse.movie.view.movies.reservation.result
 
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -46,5 +47,17 @@ class ReservationResultActivity :
                     ticket,
                 )
             }
+
+        fun pendingIntent(
+            context: Context,
+            ticket: Ticket,
+        ): PendingIntent {
+            return PendingIntent.getActivity(
+                context,
+                0,
+                newIntent(context, ticket),
+                PendingIntent.FLAG_IMMUTABLE,
+            )
+        }
     }
 }

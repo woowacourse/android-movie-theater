@@ -17,6 +17,7 @@ import woowacourse.movie.view.extension.alarmManager
 import woowacourse.movie.view.extension.getParcelableCompatList
 import woowacourse.movie.view.extension.notificationManager
 import woowacourse.movie.view.extension.toEpochMilli
+import woowacourse.movie.view.movies.reservation.result.ReservationResultActivity
 
 class NotificationReceiver : BroadcastReceiver() {
     override fun onReceive(
@@ -59,6 +60,9 @@ class NotificationReceiver : BroadcastReceiver() {
                 ),
             )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(
+                ReservationResultActivity.pendingIntent(context, ticket),
+            )
             .build()
     }
 
