@@ -63,7 +63,7 @@ class MyReceiver : BroadcastReceiver() {
 
         val notificationManager =
             ContextCompat.getSystemService(context, NotificationManager::class.java)
-        val notificationId = (System.currentTimeMillis() % Int.MAX_VALUE).toInt()
+        val notificationId = bookingInfo?.uid.hashCode()
         notificationManager?.notify(notificationId, builder.build())
     }
 
