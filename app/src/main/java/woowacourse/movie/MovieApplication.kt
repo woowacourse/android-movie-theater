@@ -6,7 +6,9 @@ import android.app.NotificationManager
 import androidx.room.Room
 import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.data.database.MovieDatabase.Companion.DATABASE_NAME
+import woowacourse.movie.data.datasource.SettingPreferenceDataSource
 import woowacourse.movie.data.repository.BookingRepositoryImpl
+import woowacourse.movie.data.repository.SettingRepositoryImpl
 
 class MovieApplication : Application() {
     val movieDatabase by lazy {
@@ -16,6 +18,7 @@ class MovieApplication : Application() {
             .build()
     }
     val bookingRepository by lazy { BookingRepositoryImpl(movieDatabase.bookingDao()) }
+    val settingRepository by lazy { SettingRepositoryImpl(SettingPreferenceDataSource(this)) }
 
     override fun onCreate() {
         super.onCreate()
