@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import woowacourse.movie.dao.bookingStatus.BookingStatusEntity
 
 @Dao
 interface BookingStatusDao {
@@ -12,7 +11,7 @@ interface BookingStatusDao {
     fun getAll(): List<BookingStatusEntity>
 
     @Insert
-    fun insert(bookingStatusEntity: BookingStatusEntity)
+    fun insert(bookingStatusEntity: BookingStatusEntity): Int
 
     @Delete
     fun delete(bookingStatusEntity: BookingStatusEntity)

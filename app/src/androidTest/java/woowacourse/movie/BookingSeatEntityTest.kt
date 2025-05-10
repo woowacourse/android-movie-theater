@@ -33,10 +33,10 @@ class BookingSeatEntityTest {
     fun insertBookingSeat() {
         // given
         val bookingSeatEntity =
-            BookingSeatEntity(1, 1, 1)
+            BookingSeatEntity(1, 1, 1, 1)
 
         // when
-        bookingSeatDao.insert(bookingSeatEntity)
+        bookingSeatDao.insert(listOf(bookingSeatEntity))
         val bookingSeats = bookingSeatDao.getAll()
 
         // then
@@ -48,8 +48,8 @@ class BookingSeatEntityTest {
     fun deleteBookingSeat() {
         // given
         val bookingSeatEntity =
-            BookingSeatEntity(1, 1, 1)
-        bookingSeatDao.insert(bookingSeatEntity)
+            BookingSeatEntity(1, 1, 1, 1)
+        bookingSeatDao.insert(listOf(bookingSeatEntity))
 
         // when
         bookingSeatDao.delete(bookingSeatEntity)

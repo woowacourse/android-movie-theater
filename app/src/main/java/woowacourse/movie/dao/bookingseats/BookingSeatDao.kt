@@ -11,7 +11,7 @@ interface BookingSeatDao {
     fun getAll(): List<BookingSeatEntity>
 
     @Insert
-    fun insert(bookingSeatEntity: BookingSeatEntity)
+    fun insert(bookingSeatEntity: List<BookingSeatEntity>)
 
     @Delete
     fun delete(bookingSeatEntity: BookingSeatEntity)
