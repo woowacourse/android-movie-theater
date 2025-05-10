@@ -2,13 +2,17 @@ package woowacourse.movie.presentation.view.setting
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
@@ -19,11 +23,15 @@ class SettingFragment :
     Fragment(),
     SettingContract.View {
     private lateinit var binding: FragmentSettingBinding
-
     private val presenter: SettingContract.Presenter by lazy {
         val preferenceManager = SettingPreferenceManager(requireContext())
         SettingPresenter(this, preferenceManager)
     }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted -> handlePermissionResult(isGranted) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +40,7 @@ class SettingFragment :
     ): View {
         binding = FragmentSettingBinding.inflate(inflater, container, false)
         presenter.fetchSettingInfo()
-        initSwitchListener()
+        initPushAlarmSwitch()
         return binding.root
     }
 
@@ -40,52 +48,54 @@ class SettingFragment :
         binding.switchSettingPushAlarm.isChecked = isEnabled
     }
 
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            updateSwitchState(isGranted)
-
-            if (!isGranted && shouldShowPermissionRationale()) {
-                showPermissionRationaleDialog()
-            }
-        }
-
-    private fun initSwitchListener() {
+    private fun initPushAlarmSwitch() {
         binding.switchSettingPushAlarm.setOnCheckedChangeListener { _, isChecked ->
-            presenter.savePushAlarmSetting(isChecked)
-
-            if (isChecked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && isChecked) {
                 requestNotificationPermission()
+            } else {
+                presenter.savePushAlarmSetting(isChecked)
             }
         }
     }
 
     private fun requestNotificationPermission() {
-        if (isNotificationPermissionGranted()) return
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
 
-        if (shouldShowPermissionRationale()) {
-            showPermissionRationaleDialog()
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        when {
+            isNotificationPermissionGranted() -> presenter.savePushAlarmSetting(true)
+            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) ->
+                showPermissionRationaleDialog()
+
+            else -> requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun isNotificationPermissionGranted(): Boolean =
-        Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.POST_NOTIFICATIONS,
-            ) == PackageManager.PERMISSION_GRANTED
+        ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.POST_NOTIFICATIONS,
+        ) == PackageManager.PERMISSION_GRANTED
 
-    private fun shouldShowPermissionRationale(): Boolean =
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)
+    private fun handlePermissionResult(isGranted: Boolean) {
+        if (isGranted) {
+            binding.switchSettingPushAlarm.isChecked = true
+            presenter.savePushAlarmSetting(true)
+        } else {
+            binding.switchSettingPushAlarm.isChecked = false
+            presenter.savePushAlarmSetting(false)
 
-    private fun updateSwitchState(isGranted: Boolean) {
-        binding.switchSettingPushAlarm.setOnCheckedChangeListener(null)
-        binding.switchSettingPushAlarm.isChecked = isGranted
-        initSwitchListener()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                    showPermissionRationaleDialog()
+                } else {
+                    showPermissionDeniedDialog()
+                }
+            }
+        }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun showPermissionRationaleDialog() {
         AlertDialog
             .Builder(requireContext())
@@ -94,7 +104,25 @@ class SettingFragment :
             .setPositiveButton(R.string.setting_request_permission_dialog_positive) { _, _ ->
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }.setNegativeButton(R.string.setting_request_permission_dialog_negative) { _, _ ->
-                updateSwitchState(false)
+                binding.switchSettingPushAlarm.isChecked = false
+                presenter.savePushAlarmSetting(false)
+            }.show()
+    }
+
+    private fun showPermissionDeniedDialog() {
+        AlertDialog
+            .Builder(requireContext())
+            .setTitle(R.string.setting_permission_denied_title)
+            .setMessage(R.string.setting_permission_denied_message)
+            .setPositiveButton(R.string.setting_permission_go_to_settings) { _, _ ->
+                val intent =
+                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.fromParts("package", requireContext().packageName, null)
+                    }
+                startActivity(intent)
+            }.setNegativeButton(android.R.string.cancel) { _, _ ->
+                binding.switchSettingPushAlarm.isChecked = false
+                presenter.savePushAlarmSetting(false)
             }.show()
     }
 }

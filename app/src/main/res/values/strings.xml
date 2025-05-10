@@ -39,6 +39,9 @@
     <string name="setting_push_alarm_title">푸시 알림 수신</string>
     <string name="setting_push_alarm_message">해제하면 푸시 알림을 수신할 수 없습니다.</string>
     <string name="setting_error_message">앱 설정 화면을 여는 데 실패했습니다. 수동으로 설정을 확인해주세요.</string>
+    <string name="setting_permission_denied_title">알림 권한이 필요합니다</string>
+    <string name="setting_permission_denied_message">앱 설정에서 알림 권한을 허용해주세요</string>
+    <string name="setting_permission_go_to_settings">설정으로 이동</string>
 
     <string name="setting_request_permission_dialog_title">알림 권한 필요</string>
     <string name="setting_request_permission_dialog_message">알림 기능을 사용하려면 권한이 필요합니다.</string>
