@@ -172,3 +172,5 @@
 
 ### 3단계 변경 사항
 - [x] refactor: BookingFragment 파일 구조 변경 및 ReservationFragment로 변경
+
+- [x] refactor: movie_booked.xml ConstraintLayout 정리
