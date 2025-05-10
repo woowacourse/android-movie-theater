@@ -1,10 +1,10 @@
 package woowacourse.movie.utils
 
 import android.icu.text.DecimalFormat
+import woowacourse.movie.domain.model.ScreeningPeriod
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import woowacourse.movie.domain.model.ScreeningPeriod
 
 object StringFormatter {
     private const val PERIOD_FORMAT = "%s ~ %s"
@@ -23,14 +23,11 @@ object StringFormatter {
     fun dateTimeFormat(localDateTime: LocalDateTime): String =
         localDateTime.format(DateTimeFormatter.ofPattern("$DATE_FORMAT $TIME_FORMAT"))
 
-    fun toDate(localDateTime: LocalDateTime): String =
-        localDateTime.format(DateTimeFormatter.ofPattern(DATE_FORMAT))
+    fun toDate(localDateTime: LocalDateTime): String = localDateTime.format(DateTimeFormatter.ofPattern(DATE_FORMAT))
 
-    fun toTime(localDateTime: LocalDateTime): String =
-        localDateTime.format(DateTimeFormatter.ofPattern(TIME_FORMAT))
+    fun toTime(localDateTime: LocalDateTime): String = localDateTime.format(DateTimeFormatter.ofPattern(TIME_FORMAT))
 
     private fun dotDateFormat(date: LocalDate): String {
         return date.format(DateTimeFormatter.ofPattern(DATE_FORMAT))
     }
-
 }

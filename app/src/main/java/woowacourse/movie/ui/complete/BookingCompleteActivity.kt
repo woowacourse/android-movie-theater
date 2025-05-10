@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
-import java.time.LocalDateTime
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.BookedTicket
@@ -21,6 +20,7 @@ import woowacourse.movie.ui.main.MovieBookingActivity
 import woowacourse.movie.utils.Destination
 import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.intentSerializable
+import java.time.LocalDateTime
 
 class BookingCompleteActivity :
     AppCompatActivity(),

@@ -1,11 +1,11 @@
 package woowacourse.movie.ui.history.presenter
 
-import kotlin.concurrent.thread
 import woowacourse.movie.data.BookedTicketDao
 import woowacourse.movie.data.BookedTicketDatabase
 import woowacourse.movie.data.BookedTicketEntity
 import woowacourse.movie.data.toBookedTicket
 import woowacourse.movie.ui.history.contract.BookingHistoryContract
+import kotlin.concurrent.thread
 
 class BookingHistoryPresenter(
     private val view: BookingHistoryContract.View,

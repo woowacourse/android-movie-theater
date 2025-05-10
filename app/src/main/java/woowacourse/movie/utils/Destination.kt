@@ -4,5 +4,6 @@ enum class Destination {
     HISTORY,
     COMPLETE,
     SEAT,
+    SETTINGS,
     HOME,
 }

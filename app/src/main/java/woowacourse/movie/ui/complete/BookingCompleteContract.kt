@@ -1,10 +1,10 @@
 package woowacourse.movie.ui.complete
 
-import java.time.LocalDateTime
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.utils.Destination
+import java.time.LocalDateTime
 
 interface BookingCompleteContract {
     interface Presenter {
