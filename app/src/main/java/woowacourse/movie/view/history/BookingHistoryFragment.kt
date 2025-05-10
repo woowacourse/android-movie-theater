@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketDatabase
@@ -31,20 +33,24 @@ class BookingHistoryFragment : Fragment(R.layout.fragment_booking_history), Book
         return binding.root
     }
 
+
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = BookingHistoryPresenter(this)
 
+        val decoration = DividerItemDecoration(binding.root.context, DividerItemDecoration.VERTICAL)
+        binding.rv.addItemDecoration(decoration)
+
+        presenter = BookingHistoryPresenter(this)
         val db =
             Room.databaseBuilder(
                 binding.root.context,
                 TicketDatabase::class.java,
                 TICKET_TABLE_NAME,
             ).build()
-
         thread {
             val tickets = db.ticketDao().getAll().map(TicketEntity::toDomain)
             presenter.loadTickets(tickets)
