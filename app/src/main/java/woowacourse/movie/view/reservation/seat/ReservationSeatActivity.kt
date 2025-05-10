@@ -14,6 +14,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.data.TicketInfoDatabase
+import woowacourse.movie.data.TicketRepository
 import woowacourse.movie.databinding.ActivityReservationSeatBinding
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Position
@@ -28,7 +30,11 @@ import java.text.DecimalFormat
 
 class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.View {
     private val presenter: ReservationSeatContract.Present by lazy {
-        ReservationSeatPresenter(this)
+
+        val dao = TicketInfoDatabase.getDatabase(applicationContext).ticketInfoDao()
+        val repository = TicketRepository(dao)
+
+        ReservationSeatPresenter(this, repository)
     }
     private lateinit var binding: ActivityReservationSeatBinding
     private lateinit var seatLayout: TableLayout
@@ -128,7 +134,8 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
 
     override fun showTicketMoney(moviePrice: Int) {
         val priceFormatter = DecimalFormat(PRICE_PATTERN)
-        binding.reservationMovieMoney.text = getString(R.string.movie_money, priceFormatter.format(moviePrice))
+        binding.reservationMovieMoney.text =
+            getString(R.string.movie_money, priceFormatter.format(moviePrice))
     }
 
     override fun setReservationButton(onClickConfirm: () -> Unit) {
