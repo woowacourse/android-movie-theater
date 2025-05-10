@@ -8,7 +8,10 @@ import woowacourse.movie.domain.ReservationRepository
 import woowacourse.movie.domain.model.ticketing.Ticket
 
 class ReservationRepositoryImpl(
-    private val dao: ReservationDao = ReservationDatabase.getInstance(GlobalApplication.instance).reservationDao(),
+    private val dao: ReservationDao =
+        ReservationDatabase
+            .getInstance(GlobalApplication.instance)
+            .reservationDao(),
 ) : ReservationRepository {
     override fun getAll(): List<Ticket> = dao.getAll().toDomain()
 
@@ -35,5 +38,8 @@ class ReservationRepositoryImpl(
             this.seats,
             this.count,
             this.price,
+            this.generateUniqueId(),
         )
+
+    private fun Ticket.generateUniqueId(): String = "${this.title}-${this.theaterName}-${this.reservationDateTime}-${this.seats.hashCode()}"
 }

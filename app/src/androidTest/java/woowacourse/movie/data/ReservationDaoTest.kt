@@ -21,7 +21,7 @@ class ReservationDaoTest {
             listOf(Seat(1, 1)),
             1,
             10000,
-            1,
+            "1",
         )
 
     @Before
@@ -33,7 +33,7 @@ class ReservationDaoTest {
                 .build()
 
         reservationDao = database.reservationDao()
-        reservationDao.insert(fakeReservation.copy(id = 2), fakeReservation.copy(id = 3))
+        reservationDao.insert(fakeReservation.copy(id = "2"), fakeReservation.copy(id = "3"))
     }
 
     @Test
@@ -53,8 +53,24 @@ class ReservationDaoTest {
 
         // then
         assertThat(result).containsExactly(
-            fakeReservation.copy(id = 2),
-            fakeReservation.copy(id = 3),
+            fakeReservation.copy(id = "2"),
+            fakeReservation.copy(id = "3"),
         )
+    }
+
+    @Test
+    fun `중복된_예매_내역은_추가되지_않는다`() {
+        // given
+        val dummyReservation = fakeReservation.copy(id = "10")
+
+        // when
+        reservationDao.insert(dummyReservation)
+        reservationDao.insert(dummyReservation)
+
+        val histories = reservationDao.getAll()
+        val result = histories.count { it == dummyReservation }
+
+        // then
+        assertThat(result).isEqualTo(1)
     }
 }

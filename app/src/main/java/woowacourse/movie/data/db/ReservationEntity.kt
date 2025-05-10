@@ -14,5 +14,5 @@ data class ReservationEntity(
     @ColumnInfo(name = "seats") val seats: List<Seat>,
     @ColumnInfo(name = "count") val reservationCount: Int,
     @ColumnInfo(name = "total_price") val totalPrice: Int,
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey val id: String,
 )
