@@ -43,6 +43,10 @@ class SettingFragment :
         return binding.root
     }
 
+    override fun showPushAlarmSetting(isEnabled: Boolean) {
+        binding.switchSettingPushAlarm.isChecked = isEnabled
+    }
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun setSwitchListener() {
         binding.switchSettingPushAlarm.setOnCheckedChangeListener { _, isChecked ->
@@ -107,9 +111,43 @@ class SettingFragment :
             }.show()
     }
 
-    override fun showPushAlarmSetting(isEnabled: Boolean) {
-        binding.switchSettingPushAlarm.isChecked = isEnabled
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun showNotificationSettingsDialog() {
+        AlertDialog
+            .Builder(requireContext())
+            .setTitle(getString(R.string.setting_request_permission_dialog_title))
+            .setMessage(getString(R.string.setting_request_reminder_permission_dialog_message))
+            .setPositiveButton(R.string.setting_request_permission_dialog_positive) { _, _ ->
+                openAppNotificationSettings()
+            }.setNegativeButton(R.string.setting_request_permission_dialog_negative, null)
+            .show()
     }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun openAppNotificationSettings() {
+        try {
+            val intent =
+                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = APPLICATION_ID.toUri()
+                }
+            openAppSettingsLauncher.launch(intent)
+        } catch (e: ActivityNotFoundException) {
+            showToast(getString(R.string.setting_error_message))
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private val openAppSettingsLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            updateNotificationPermissionState()
+        }
+
+    private fun updateNotificationPermissionState() {
+        val isGranted = isNotificationPermissionGranted()
+        presenter.savePushAlarmSetting(isGranted)
+    }
+
+    private fun showToast(message: String) = Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
 
     companion object {
         private const val APPLICATION_ID = "package:${BuildConfig.APPLICATION_ID}"
