@@ -1,5 +1,6 @@
 package woowacourse.movie.booking.complete
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -22,6 +24,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     private lateinit var binding: ActivityBookingCompleteBinding
     private lateinit var type: String
 
+    @RequiresPermission(Manifest.permission.SCHEDULE_EXACT_ALARM)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -39,6 +42,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         } else {
             presenter.initializeData(ticket)
             presenter.saveReservation(ticket, type)
+            presenter.setNotification(this, type, ticket)
         }
 
         onBackPressedDispatcher.addCallback(this, callback)

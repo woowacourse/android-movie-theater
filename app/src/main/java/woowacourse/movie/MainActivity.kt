@@ -1,6 +1,9 @@
 package woowacourse.movie
 
 import android.Manifest
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -12,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
@@ -42,6 +46,8 @@ class MainActivity : AppCompatActivity() {
 
         initBottomNav()
         requestNotificationPermission()
+        requestExactAlarmPermission()
+        createNotificationChannel()
     }
 
     private fun setUpUi() {
@@ -110,6 +116,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    private fun requestExactAlarmPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val alarmManager = getSystemService(AlarmManager::class.java)
+            if (!alarmManager.canScheduleExactAlarms()) {
+                AlertDialog.Builder(this)
+                    .setTitle(R.string.permission_exact_alarm_main_info)
+                    .setMessage(R.string.permission_exact_alarm_sub_info)
+                    .setPositiveButton(R.string.permission_exact_alarm_allow) { _, _ ->
+                        val intent =
+                            Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                                .setData("package:$packageName".toUri())
+                        startActivity(intent)
+                    }
+                    .setNegativeButton(R.string.dig_btn_negative_message) { dialog, _ -> dialog.dismiss() }
+                    .show()
+            }
+        }
+    }
+
     private fun moveToAppSetting() {
         val intent =
             Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -120,15 +145,33 @@ class MainActivity : AppCompatActivity() {
 
     private fun showAlarmPermissionDialog() {
         AlertDialog.Builder(this)
-            .setTitle("알림 권한 요청")
-            .setMessage("Movie에서 알림 권한이 필요합니다.\n알림을 보내도록 허용하시겠습니까?")
-            .setPositiveButton("허용") { _, _ ->
+            .setTitle(R.string.permission_alarm_request)
+            .setMessage(R.string.permission_alarm_request_sub_info)
+            .setPositiveButton(R.string.permission_exact_alarm_allow) { _, _ ->
                 moveToAppSetting()
             }
-            .setNegativeButton("허용 안함") { dialog, _ ->
+            .setNegativeButton(R.string.permission_exact_alarm_not_allow) { dialog, _ ->
                 dialog.dismiss()
             }
             .setCancelable(false)
             .show()
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val channel =
+                NotificationChannel(
+                    ALARM_CHANNEL_ID,
+                    ALARM_NAME,
+                    NotificationManager.IMPORTANCE_DEFAULT,
+                )
+            val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
+    }
+
+    companion object {
+        const val ALARM_CHANNEL_ID = "reservation_channel_id"
+        private const val ALARM_NAME = "Movie"
     }
 }

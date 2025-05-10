@@ -1,5 +1,6 @@
 package woowacourse.movie.booking.complete
 
+import android.content.Context
 import woowacourse.movie.ui.model.TicketUiModel
 
 interface BookingCompleteContract {
@@ -15,6 +16,12 @@ interface BookingCompleteContract {
         fun saveReservation(
             ticket: TicketUiModel,
             type: String,
+        )
+
+        fun setNotification(
+            context: Context,
+            bookingType: String,
+            ticket: TicketUiModel,
         )
     }
 }

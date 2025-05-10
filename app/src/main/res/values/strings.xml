@@ -25,4 +25,12 @@
     <string name="seat_selection_confirm_button">확인</string>
     <string name="setting_push_alarm_main_info">푸시 알림 수신</string>
     <string name="setting_push_alarm_sub_info">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="permission_exact_alarm_main_info">정확한 알람 권한 요청</string>
+    <string name="permission_exact_alarm_sub_info">정확한 시간에 영화 알림을 받으려면 권한이 필요합니다.\n설정으로 이동하시겠습니까?</string>
+    <string name="permission_exact_alarm_allow">허용</string>
+    <string name="permission_exact_alarm_not_allow">허용 안함</string>
+    <string name="permission_alarm_request">알림 권한 요청</string>
+    <string name="permission_alarm_request_sub_info">Movie에서 알림 권한이 필요합니다.\n알림을 보내도록 허용하시겠습니까?</string>
+    <string name="notification_sub_info">%s 30분 후에 상영 시작</string>
+    <string name="notification_content_title">예매 알림</string>
 </resources>
