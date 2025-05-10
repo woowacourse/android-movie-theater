@@ -40,7 +40,7 @@ class NotificationReceiver : BroadcastReceiver() {
         movieTitle: String,
     ): Notification =
         NotificationCompat
-            .Builder(context, MovieApplication.MOVIE_NOTIFICATION_CHANNEL_ID)
+            .Builder(context, MOVIE_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_dino_blue)
             .setContentTitle(context.getString(R.string.booking_history_notification_title))
             .setContentText(context.getString(R.string.booking_history_notification_description, movieTitle))
@@ -48,6 +48,7 @@ class NotificationReceiver : BroadcastReceiver() {
             .build()
 
     companion object {
+        const val MOVIE_NOTIFICATION_CHANNEL_ID = "MOVIE_NOTIFICATION_CHANNEL"
         private const val MOVIE_NAME_KEY = "MOVIE_NAME"
 
         fun newIntent(
