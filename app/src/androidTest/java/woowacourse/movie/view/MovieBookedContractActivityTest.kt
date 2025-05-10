@@ -55,13 +55,13 @@ class MovieBookedContractActivityTest {
 
     @Test
     fun 영화_날짜와_시간이_보여야_한다() {
-        onView(withId(R.id.booked_date_time))
+        onView(withId(R.id.booked_date))
             .checkIsDisplayed()
     }
 
     @Test
     fun 인텐트로_전달된_영화_날짜와_시간이_일치한다() {
-        onView(withId(R.id.booked_date_time))
+        onView(withId(R.id.booked_date))
             .checkWithText(MovieFixture.BOOKING_DATETIME)
     }
 

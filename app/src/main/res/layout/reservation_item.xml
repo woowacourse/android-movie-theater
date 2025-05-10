@@ -17,7 +17,8 @@
         android:layout_height="80dp"
         android:focusable="true"
         android:clickable="true"
-        android:background="?attr/selectableItemBackground" >
+        android:background="?attr/selectableItemBackground"
+        android:onClick="@{() -> reservationClickListener.clickReservation(reservationInfo)}">
 
         <TextView
             android:id="@+id/textview_reservation_date"

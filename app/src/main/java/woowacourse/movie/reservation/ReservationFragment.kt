@@ -26,6 +26,7 @@ class ReservationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showReservationInfo()
     }
 
     override fun onDestroyView() {
@@ -33,10 +34,11 @@ class ReservationFragment : Fragment() {
         _binding = null
     }
 
-    fun showReservationInfo(reservationInfos: List<ReservationInfo>) {
+    fun showReservationInfo() {
+        val reservationInfomation = listOf(ReservationInfo("제목", "2025.4.1", "13:00", 2, listOf("A1", "A2"), "선릉", 13000))
         binding.recyclerviewReservation.adapter =
             ReservationListAdapter(
-                reservationInfos,
+                reservationInfomation,
                 object : ReservationClickListener {
                     override fun clickReservation(reservationInfo: ReservationInfo) {
                         navigateToReservation(reservationInfo)
@@ -46,7 +48,7 @@ class ReservationFragment : Fragment() {
     }
 
     private fun navigateToReservation(reservationInfo: ReservationInfo) {
-        val intent = MovieBookedActivity.newIntent(binding.root.context, reservationInfo)
-        startActivity(intent)
+        val intent = MovieBookedActivity.newIntent(requireContext(), reservationInfo)
+        requireContext().startActivity(intent)
     }
 }

@@ -1,6 +1,7 @@
 package woowacourse.movie.moviebooked
 
 import woowacourse.movie.domain.BookingStatus
+import woowacourse.movie.domain.ReservationInfo
 import woowacourse.movie.domain.Theater
 
 interface MovieBookedContract {
@@ -11,6 +12,10 @@ interface MovieBookedContract {
             bookingStatus: BookingStatus,
             theater: Theater,
         )
+
+        fun fetchReservationInfo()
+
+        fun showReservationInfo(reservationInfo: ReservationInfo)
     }
 
     interface Presenter {
@@ -18,5 +23,7 @@ interface MovieBookedContract {
             bookingStatus: BookingStatus,
             theater: Theater,
         )
+
+        fun loadReservationInfo(reservationInfo: ReservationInfo)
     }
 }

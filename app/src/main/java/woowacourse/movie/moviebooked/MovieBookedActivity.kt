@@ -25,7 +25,8 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
         initBinding()
         applyWindowInserts()
         presenter = MovieBookedPresenter(this)
-        fetchBookingStatus()
+        fetchReservationInfo()
+//        fetchBookingStatus()
     }
 
     override fun fetchBookingStatus() {
@@ -43,15 +44,29 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
         bookingStatus: BookingStatus,
         theater: Theater,
     ) {
-        binding.bookingStatus = bookingStatus
-        binding.theater = theater
-        val seatsText =
-            bookingStatus.seat.seats.joinToString { seat ->
-                val rowChar = 'A' + seat.row.value
-                val colNumber = seat.column.value + 1
-                "$rowChar$colNumber"
-            }
-        binding.bookedBookingSeat.text = seatsText
+//        binding.bookingStatus = bookingStatus
+//        binding.theater = theater
+//        val seatsText =
+//            bookingStatus.seat.seats.joinToString { seat ->
+//                val rowChar = 'A' + seat.row.value
+//                val colNumber = seat.column.value + 1
+//                "$rowChar$colNumber"
+//            }
+//        binding.bookedBookingSeat.text = seatsText
+    }
+
+    override fun fetchReservationInfo() {
+        val reservationInfo =
+            BuildVersion().getParcelableClass(
+                intent,
+                KEY_RESERVATION_INFO,
+                ReservationInfo::class,
+            )
+        presenter.loadReservationInfo(reservationInfo)
+    }
+
+    override fun showReservationInfo(reservationInfo: ReservationInfo) {
+        binding.reservationInfo = reservationInfo
     }
 
     private fun initBinding() {
@@ -59,7 +74,7 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
     }
 
     private fun applyWindowInserts() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booked)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booked_root)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -87,7 +102,7 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
             context: Context,
             reservationInfo: ReservationInfo,
         ): Intent {
-            return Intent(context, ReservationInfo::class.java)
+            return Intent(context, MovieBookedActivity::class.java)
                 .apply {
                     putExtra(KEY_RESERVATION_INFO, reservationInfo)
                 }
