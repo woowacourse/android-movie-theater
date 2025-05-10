@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.databinding.ReservationHistoryItemBinding
 import woowacourse.movie.domain.Ticket
 
-class HistoryAdapter() : ListAdapter<Ticket, TicketViewHolder>(HistoryListItemDiffCallback) {
+class HistoryAdapter(
+    private val onItemClick: (Ticket) -> Unit,
+) : ListAdapter<Ticket, TicketViewHolder>(HistoryListItemDiffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -22,7 +24,7 @@ class HistoryAdapter() : ListAdapter<Ticket, TicketViewHolder>(HistoryListItemDi
         holder: TicketViewHolder,
         position: Int,
     ) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onItemClick)
     }
 
     companion object {

@@ -9,13 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.data.TicketInfoDatabase
 import woowacourse.movie.data.TicketRepository
 import woowacourse.movie.databinding.FragmentHistoryBinding
+import woowacourse.movie.domain.Ticket
+import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
 import kotlin.concurrent.thread
 
 class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
 
-    private val historyAdapter = HistoryAdapter()
+    private val historyAdapter =
+        HistoryAdapter { ticket ->
+            navigateToReservationComplete(ticket)
+        }
 
     private var recyclerView: RecyclerView? = null
 
@@ -55,5 +60,10 @@ class HistoryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun navigateToReservationComplete(ticket: Ticket) {
+        val intent = ReservationCompleteActivity.newIntent(requireContext(), ticket)
+        startActivity(intent)
     }
 }
