@@ -2,14 +2,13 @@ package woowacourse.movie.feature.bookinghistory.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.databinding.ItemBookingHistoryBinding
 import woowacourse.movie.feature.model.BookingInfoUiModel
 
 class BookingHistoryAdapter(
-    private val items: List<BookingInfoUiModel>,
     private val handler: Handler,
-) : RecyclerView.Adapter<BookingHistoryViewHolder>() {
+) : ListAdapter<BookingInfoUiModel, BookingHistoryViewHolder>(BookingHistoryDiffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -22,11 +21,8 @@ class BookingHistoryAdapter(
         holder: BookingHistoryViewHolder,
         position: Int,
     ) {
-        val item: BookingInfoUiModel = items[position]
-        holder.bind(item)
+        holder.bind(getItem(position))
     }
-
-    override fun getItemCount(): Int = items.size
 
     interface Handler : BookingHistoryViewHolder.Handler
 }

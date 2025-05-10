@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 
 class ContentsAdapter(
     private val handler: Handler,
-) : ListAdapter<ContentItem, ContentViewHolder<ContentItem, ViewDataBinding>>(DiffCallback) {
+) : ListAdapter<ContentItem, ContentViewHolder<ContentItem, ViewDataBinding>>(ContentDiffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,

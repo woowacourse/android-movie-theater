@@ -24,7 +24,7 @@ class BookingHistoryFragment :
         (requireActivity().application as MovieApplication).bookingRepository
     }
     private val presenter: BookingHistoryContract.Presenter by lazy { BookingHistoryPresenter(this, bookingRepository) }
-    private lateinit var bookingHistoryAdapter: BookingHistoryAdapter
+    private val bookingHistoryAdapter: BookingHistoryAdapter by lazy { BookingHistoryAdapter(setupAdapterClickListener()) }
     private lateinit var binding: FragmentBookingHistoryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +50,7 @@ class BookingHistoryFragment :
     }
 
     override fun showBookingHistory(bookingHistory: List<BookingInfoUiModel>) {
-        bookingHistoryAdapter = BookingHistoryAdapter(bookingHistory, setupAdapterClickListener())
+        bookingHistoryAdapter.submitList(bookingHistory)
     }
 
     override fun navigateToBookingComplete(bookingInfo: BookingInfoUiModel) {
