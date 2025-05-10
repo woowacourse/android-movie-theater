@@ -69,7 +69,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
         return NotificationCompat
             .Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_setting)
+            .setSmallIcon(R.drawable.ic_alarm)
             .setContentTitle(context.getString(R.string.notification_title, minutesBeforeAlarm))
             .setContentText(
                 context.getString(
