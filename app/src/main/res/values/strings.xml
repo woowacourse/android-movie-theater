@@ -40,5 +40,7 @@
     <string name="reservation_error_theater_model_load_failed">선택한 극장의 영화 정보를 가져오지 못했습니다.</string>
     <string name="reservation_info_save_failed">예약 정보 저장에 실패하였습니다</string>
 
-
+    <string name="setting_notification_desc">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="setting_notification_title">푸시 알림 수신</string>
+    
 </resources>
