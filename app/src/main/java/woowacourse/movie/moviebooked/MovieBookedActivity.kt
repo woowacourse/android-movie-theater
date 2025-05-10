@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookedBinding
 import woowacourse.movie.domain.BookingStatus
+import woowacourse.movie.domain.ReservationInfo
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.helper.BuildVersion
 
@@ -68,6 +69,7 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
     companion object {
         private const val KEY_BOOKING_STATUS = "bookingStatus"
         private const val KEY_THEATER = "theater"
+        private const val KEY_RESERVATION_INFO = "reservationInfo"
 
         fun movieBookedIntent(
             otherActivity: Context,
@@ -78,6 +80,16 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
                 .apply {
                     putExtra(KEY_BOOKING_STATUS, bookingStatus)
                     putExtra(KEY_THEATER, theater)
+                }
+        }
+
+        fun newIntent(
+            context: Context,
+            reservationInfo: ReservationInfo,
+        ): Intent {
+            return Intent(context, ReservationInfo::class.java)
+                .apply {
+                    putExtra(KEY_RESERVATION_INFO, reservationInfo)
                 }
         }
     }
