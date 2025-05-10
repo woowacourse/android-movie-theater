@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketDatabase
@@ -32,7 +31,7 @@ class BookingHistoryFragment : Fragment(R.layout.fragment_booking_history), Book
         _binding = FragmentBookingHistoryBinding.inflate(inflater)
         return binding.root
     }
-    
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
