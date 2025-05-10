@@ -6,11 +6,10 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class TicketInfo(
-    @PrimaryKey val tid: Int,
-    @ColumnInfo(name = "movieTitle") val movieTitle: String,
-    @ColumnInfo(name = "dateTime") val dateTime: String,
-    @ColumnInfo(name = "theaterName") val theaterName: String,
-    @ColumnInfo(name = "personnel") val personnel: Int,
-    @ColumnInfo(name = "price") val price: Int,
-    @ColumnInfo(name = "seats") val seats: String,
+    @PrimaryKey(autoGenerate = true) val tid: Int,
+    @ColumnInfo(name = "movieTitle") val movieTitle: String?,
+    @ColumnInfo(name = "dateTime") val dateTime: String?,
+    @ColumnInfo(name = "theaterName") val theaterName: String?,
+    @ColumnInfo(name = "personnel") val personnel: Int?,
+    @ColumnInfo(name = "seats") val seats: String?,
 )

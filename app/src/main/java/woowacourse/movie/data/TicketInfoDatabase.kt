@@ -10,8 +10,8 @@ abstract class TicketInfoDatabase : RoomDatabase() {
     abstract fun ticketInfoDao(): TicketInfoDao
 
     companion object {
-        @Suppress("ktlint:standard:property-naming")
         @Volatile
+        @Suppress("ktlint:standard:property-naming")
         private var INSTANCE: TicketInfoDatabase? = null
 
         fun getDatabase(context: Context): TicketInfoDatabase {
