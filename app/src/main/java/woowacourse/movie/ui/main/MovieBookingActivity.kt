@@ -1,4 +1,4 @@
-package woowacourse.movie.ui
+package woowacourse.movie.ui.main
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -7,6 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieBookingBinding
 import woowacourse.movie.ui.history.view.BookingHistoryFragment
@@ -15,9 +16,6 @@ import woowacourse.movie.ui.settings.view.SettingsFragment
 
 class MovieBookingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieBookingBinding
-    private val homeFragment by lazy { MovieListFragment() }
-    private val settingFragment by lazy { SettingsFragment() }
-    private val historyFragment by lazy { BookingHistoryFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +32,7 @@ class MovieBookingActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                replace(R.id.main_fragment_container_view, homeFragment)
+                replace<MovieListFragment>(R.id.main_fragment_container_view)
                 binding.navigation.selectedItemId = R.id.navigation_home
             }
         } else {
@@ -57,7 +55,7 @@ class MovieBookingActivity : AppCompatActivity() {
                 R.id.navigation_home -> {
                     supportFragmentManager.commit {
                         setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container_view, homeFragment)
+                        replace<MovieListFragment>(R.id.main_fragment_container_view)
                     }
                     true
                 }
@@ -65,7 +63,7 @@ class MovieBookingActivity : AppCompatActivity() {
                 R.id.navigation_history -> {
                     supportFragmentManager.commit {
                         setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container_view, historyFragment)
+                        replace<BookingHistoryFragment>(R.id.main_fragment_container_view)
                     }
                     true
                 }
@@ -73,7 +71,7 @@ class MovieBookingActivity : AppCompatActivity() {
                 R.id.navigation_settings -> {
                     supportFragmentManager.commit {
                         setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container_view, settingFragment)
+                        replace<SettingsFragment>(R.id.main_fragment_container_view)
                     }
                     true
                 }
