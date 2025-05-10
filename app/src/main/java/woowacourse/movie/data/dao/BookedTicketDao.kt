@@ -11,6 +11,6 @@ interface BookedTicketDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertBookedTicket(bookedTicketEntity: BookedTicketEntity)
 
-    @Query("SELECT * FROM booked_tickets")
+    @Query("SELECT * FROM booked_tickets ORDER BY dateTime")
     fun getAll(): List<BookedTicketEntity>
 }
