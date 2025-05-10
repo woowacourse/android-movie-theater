@@ -21,7 +21,7 @@ import woowacourse.movie.presentation.common.custom.DialogInfo
 class SettingFragment :
     BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting),
     SettingContract.View {
-    private val presenter: SettingContract.Presenter by lazy { SettingPresenter(this) }
+    private lateinit var presenter: SettingContract.Presenter
     private val dialog: CustomAlertDialog by lazy { CustomAlertDialog(requireContext()) }
 
     private val permissionRationaleDialogInfo by lazy {
@@ -53,11 +53,16 @@ class SettingFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        setPresenter()
         setNotificationSwitchListener()
     }
 
     override fun notifyNotificationEnabled(isEnabled: Boolean) {
         binding.switchNotification.isChecked = isEnabled
+    }
+
+    private fun setPresenter() {
+        presenter = SettingPresenter(this)
     }
 
     private fun setNotificationSwitchListener() {

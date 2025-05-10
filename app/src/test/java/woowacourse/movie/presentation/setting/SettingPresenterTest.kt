@@ -8,11 +8,11 @@ import io.mockk.verifyAll
 import io.mockk.verifySequence
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.NotificationPreferenceRepository
+import woowacourse.movie.domain.NotificationRepository
 
 class SettingPresenterTest {
     private lateinit var view: SettingContract.View
-    private lateinit var repository: NotificationPreferenceRepository
+    private lateinit var repository: NotificationRepository
     private lateinit var presenter: SettingPresenter
 
     @BeforeEach

@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
+import androidx.core.os.bundleOf
 import woowacourse.movie.R
 import woowacourse.movie.presentation.common.model.TicketUiModel
 import java.time.LocalDateTime
@@ -16,6 +17,7 @@ import java.time.ZoneId
 object AlarmHelper {
     const val CHANNEL_ID = "reservation_alarm_channel"
     const val KEY_TICKET = "ticket"
+    const val KEY_TIME_BEFORE_MINUTES = "time_before_minutes"
 
     fun createNotificationChannel(context: Context) {
         val channel =
@@ -33,15 +35,16 @@ object AlarmHelper {
     fun setAlarm(
         context: Context,
         ticket: TicketUiModel,
+        timeBeforeMinutes: Int = 30,
     ) {
         if (!canScheduleExactAlarms(context)) return
 
         val alarmManager = context.getAlarmManager()
-        val pendingIntent = createAlarmPendingIntent(context, ticket)
+        val pendingIntent = createAlarmPendingIntent(context, ticket, timeBeforeMinutes)
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            ticket.dateTime.toMillisBeforeMinutes(minutes = 30),
+            ticket.dateTime.toMillisBeforeMinutes(minutes = timeBeforeMinutes.toLong()),
             pendingIntent,
         )
     }
@@ -62,8 +65,15 @@ object AlarmHelper {
     private fun createAlarmPendingIntent(
         context: Context,
         ticket: TicketUiModel,
+        timeBeforeMinutes: Int,
     ): PendingIntent {
-        val intent = Intent(context, AlarmReceiver::class.java).putExtra(KEY_TICKET, ticket)
+        val intent =
+            Intent(context, AlarmReceiver::class.java).putExtras(
+                bundleOf(
+                    KEY_TICKET to ticket,
+                    KEY_TIME_BEFORE_MINUTES to timeBeforeMinutes,
+                ),
+            )
 
         return PendingIntent.getBroadcast(
             context,

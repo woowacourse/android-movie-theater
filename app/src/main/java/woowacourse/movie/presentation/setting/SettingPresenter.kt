@@ -1,11 +1,11 @@
 package woowacourse.movie.presentation.setting
 
 import woowacourse.movie.data.NotificationRepositoryImpl
-import woowacourse.movie.domain.NotificationPreferenceRepository
+import woowacourse.movie.domain.NotificationRepository
 
 class SettingPresenter(
     private val view: SettingContract.View,
-    private val notificationRepository: NotificationPreferenceRepository = NotificationRepositoryImpl(),
+    private val notificationRepository: NotificationRepository = NotificationRepositoryImpl(),
 ) : SettingContract.Presenter {
     init {
         view.notifyNotificationEnabled(notificationRepository.notificationEnabled())
