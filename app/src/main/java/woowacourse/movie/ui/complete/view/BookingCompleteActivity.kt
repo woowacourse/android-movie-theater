@@ -11,7 +11,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
-import woowacourse.movie.data.database.AppDatabase
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.movie.Headcount
 import woowacourse.movie.domain.model.theater.BookedTicket
@@ -29,7 +28,7 @@ class BookingCompleteActivity :
     BookingCompleteContract.View {
     private lateinit var binding: ActivityBookingCompleteBinding
     private val bookingCompletePresenter =
-        BookingCompletePresenter(this, AppDatabase.getInstance(this))
+        BookingCompletePresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +38,6 @@ class BookingCompleteActivity :
 
         applyWindowInsets()
         initializeFromIntent()
-        bookingCompletePresenter.insertBookedTicket()
         bookingCompletePresenter.updateViews()
         setOnBackPressedCallback()
     }

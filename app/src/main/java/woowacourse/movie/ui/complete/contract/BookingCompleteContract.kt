@@ -6,8 +6,6 @@ interface BookingCompleteContract {
     interface Presenter {
         fun loadBookedTicket(bookedTicket: BookedTicket)
 
-        fun insertBookedTicket()
-
         fun refreshBookedTicketDisplay()
 
         fun refreshTicketPrice()

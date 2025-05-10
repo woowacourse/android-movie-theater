@@ -16,12 +16,12 @@ import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.data.database.AppDatabase
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
 import woowacourse.movie.domain.model.movie.Headcount
 import woowacourse.movie.domain.model.movie.TicketType
 import woowacourse.movie.domain.model.theater.BookedTicket
 import woowacourse.movie.domain.model.theater.Seat
-import woowacourse.movie.domain.model.theater.Seats
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.ui.complete.view.BookingCompleteActivity
 import woowacourse.movie.ui.seat.contract.BookingSeatContract
@@ -34,7 +34,9 @@ class BookingSeatActivity :
     AppCompatActivity(),
     BookingSeatContract.View {
     private lateinit var binding: ActivityBookingSeatBinding
-    private val bookingSeatPresenter = BookingSeatPresenter(this)
+    private val bookingSeatPresenter by lazy {
+        BookingSeatPresenter(this, AppDatabase.getInstance(this))
+    }
 
     private val seatTextViews: MutableMap<String, TextView> = mutableMapOf()
     private val confirmButton: Button by lazy { binding.btnConfirm }
@@ -65,11 +67,15 @@ class BookingSeatActivity :
         val headcount =
             intent.intentSerializable(EXTRA_HEADCOUNT, Headcount::class.java) ?: Headcount()
         val title = intent.getStringExtra(EXTRA_MOVIE_TITLE) ?: ""
+        val bookedDateTime =
+            intent.intentSerializable(EXTRA_DATETIME, LocalDateTime::class.java)
+                ?: LocalDateTime.now()
 
         bookingSeatPresenter.loadState(
             theater,
             headcount,
             title,
+            bookedDateTime,
         )
     }
 
@@ -116,23 +122,7 @@ class BookingSeatActivity :
         confirmButton.isEnabled = isEnabled
     }
 
-    override fun startBookingCompleteActivity(
-        movieTitle: String,
-        headcount: Headcount,
-        seats: Seats,
-        theater: Theater,
-    ) {
-        val bookedDateTime =
-            intent.intentSerializable(EXTRA_DATETIME, LocalDateTime::class.java)
-                ?: LocalDateTime.now()
-        val bookedTicket =
-            BookedTicket(
-                movieTitle,
-                headcount,
-                bookedDateTime,
-                seats,
-                theater.name,
-            )
+    override fun startBookingCompleteActivity(bookedTicket: BookedTicket) {
         startActivity(BookingCompleteActivity.newIntent(this, bookedTicket))
     }
 
@@ -187,6 +177,7 @@ class BookingSeatActivity :
             .setTitle(title)
             .setMessage(description)
             .setPositiveButton(getString(R.string.text_booking_dialog_positive_button)) { _, _ ->
+                bookingSeatPresenter.insertBookedTicket()
                 bookingSeatPresenter.completeBookingSeat()
             }.setNegativeButton(getString(R.string.text_booking_dialog_negative_button)) { dialog, _ ->
                 dialog.dismiss()
