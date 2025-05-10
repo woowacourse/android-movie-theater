@@ -1,13 +1,16 @@
-package woowacourse.movie
+package woowacourse.movie.reservationfragment
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import woowacourse.movie.R
+import woowacourse.movie.reservationfragment.ReservationViewHolder
 import woowacourse.movie.domain.BookingStatus
 
 class ReservationListAdapter(
-    val reservations : List<BookingStatus>
+    val reservations : List<BookingStatus>,
+    val onClick: (BookingStatus) -> Unit
 ) : BaseAdapter() {
     override fun getCount(): Int = reservations.size
 
@@ -25,7 +28,7 @@ class ReservationListAdapter(
 
         if (convertView == null) {
             view = LayoutInflater.from(parent.context).inflate(R.layout.item_reservation,parent, false)
-            viewHolder = ReservationViewHolder(view, reservations)
+            viewHolder = ReservationViewHolder(view, reservations, onClick)
             view.tag = viewHolder
         } else {
             view = convertView
@@ -37,5 +40,3 @@ class ReservationListAdapter(
         return view
     }
 }
-
-

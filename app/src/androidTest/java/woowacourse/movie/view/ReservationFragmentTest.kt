@@ -12,11 +12,11 @@ import org.hamcrest.Matchers.anything
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.DisplayName
-import woowacourse.movie.BookingFragment
+import woowacourse.movie.reservationfragment.ReservationFragment
 import woowacourse.movie.R
 
-class BookingFragmentTest {
-    private lateinit var scenario: FragmentScenario<BookingFragment>
+class ReservationFragmentTest {
+    private lateinit var scenario: FragmentScenario<ReservationFragment>
     @Before
     fun setup() {
         scenario = launchFragmentInContainer()

@@ -1,14 +1,16 @@
-package woowacourse.movie
+package woowacourse.movie.reservationfragment
 
 import android.view.View
 import android.widget.TextView
+import woowacourse.movie.R
 import woowacourse.movie.domain.BookingStatus
-
 
 class ReservationViewHolder(
     val view: View,
     val reservations: List<BookingStatus>,
+    val onClick: (BookingStatus) -> Unit,
 ) {
+    private var position: Int = -1
     private val title: TextView = view.findViewById(R.id.tv_reservation_movie_title)
     private val reservationDate: TextView = view.findViewById(R.id.tv_reservation_date)
     private val reservationTime: TextView = view.findViewById(R.id.tv_reservation_time)
@@ -18,11 +20,12 @@ class ReservationViewHolder(
         val view: View = view.findViewById(R.id.item_reservation)
         view.setOnClickListener {
             view.setBackgroundColor(view.context.getColor(R.color.gray_200))
-            // 이동 함수 생성
+            onClick(reservations[position])
         }
     }
 
     fun bindReservation(position: Int) {
+        this.position = position
         val reservation = reservations[position]
         title.text = reservation.movie.title
         reservationDate.text = reservationDate.context.getString(

@@ -1,5 +1,6 @@
 package woowacourse.movie.moviebooked
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -58,10 +59,10 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
         private const val KEY_BOOKING_STATUS = "bookingStatus"
 
         fun movieBookedIntent(
-            otherActivity: AppCompatActivity,
+            context: Context,
             bookingStatus: BookingStatus,
         ): Intent {
-            return Intent(otherActivity, MovieBookedActivity::class.java)
+            return Intent(context, MovieBookedActivity::class.java)
                 .apply {
                     putExtra(KEY_BOOKING_STATUS, bookingStatus)
                 }
