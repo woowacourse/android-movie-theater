@@ -12,6 +12,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -56,5 +57,12 @@ class SettingFragmentTest {
 
         val updated = prefs.getBoolean("notification", true)
         assertThat(updated).isFalse()
+    }
+
+    @After
+    fun finish() {
+        context = ApplicationProvider.getApplicationContext()
+        prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        prefs.edit().putBoolean("notification", false).apply()
     }
 }

@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         initBottomNav()
         presenter.requestExactAlarmPermission()
         presenter.requestSettingAlarmPermission()
+        presenter.checkAllPermission()
         createNotificationChannel()
     }
 

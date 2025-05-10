@@ -8,11 +8,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.main.permission.MoviePermissionHandler
 import woowacourse.movie.main.sharedPreference.SharedPreferencesProvider
 
 class SettingFragment : Fragment(), SettingContract.View {
     private lateinit var presenter: SettingPresenter
     private lateinit var binding: FragmentSettingBinding
+    private lateinit var permissionHandler: MoviePermissionHandler
     private lateinit var preferencesProvider: SharedPreferencesProvider
 
     override fun onCreateView(
@@ -20,6 +22,7 @@ class SettingFragment : Fragment(), SettingContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        permissionHandler = MoviePermissionHandler(requireContext())
         preferencesProvider = SharedPreferencesProvider(requireContext())
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
         return binding.root
@@ -31,17 +34,29 @@ class SettingFragment : Fragment(), SettingContract.View {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = SettingPresenter(this, preferencesProvider)
+        presenter = SettingPresenter(this, permissionHandler, preferencesProvider)
 
+        initialSet()
         showAlarmState()
 
         binding.switchAlarm.setOnCheckedChangeListener { _, isChecked ->
-            presenter.setNotificationAlarm(isChecked)
+            if (isChecked && !permissionHandler.hasAllPermission()) {
+                presenter.setNotificationAlarm(false)
+                binding.switchAlarm.isChecked = false
+            } else {
+                presenter.setNotificationAlarm(isChecked)
+            }
         }
     }
 
     override fun showAlarmState() {
         val saved = preferencesProvider.isAlarmEnabled()
         binding.switchAlarm.isChecked = saved
+    }
+
+    private fun initialSet() {
+        if (!preferencesProvider.isNotificationSet() && permissionHandler.hasAllPermission()) {
+            presenter.setNotificationAlarm(true)
+        }
     }
 }

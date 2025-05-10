@@ -7,5 +7,7 @@ interface SettingContract {
 
     interface Presenter {
         fun setNotificationAlarm(isChecked: Boolean)
+
+        fun checkAllPermission()
     }
 }

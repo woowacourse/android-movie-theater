@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -80,6 +81,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
     private fun checkPermission(ticket: TicketUiModel) {
         val alarmState = preferencesProvider.isAlarmEnabled()
+        Log.d("alarmState", "$alarmState")
         if (alarmState) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || canScheduleExactAlarms()) {
                 presenter.setNotification(ticket, bookingType)

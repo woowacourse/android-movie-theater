@@ -9,10 +9,14 @@ class SharedPreferencesProvider(
     private val sharedPref = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
 
     override fun isAlarmEnabled(): Boolean {
-        return sharedPref.getBoolean("notification", true)
+        return sharedPref.getBoolean("notification", false)
     }
 
     override fun setAlarmEnabled(enabled: Boolean) {
         sharedPref.edit { putBoolean("notification", enabled) }
+    }
+
+    fun isNotificationSet(): Boolean {
+        return sharedPref.contains("notification")
     }
 }
