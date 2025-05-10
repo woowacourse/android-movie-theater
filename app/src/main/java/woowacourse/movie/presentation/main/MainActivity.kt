@@ -50,7 +50,7 @@ class MainActivity : DataBindingBaseActivity() {
         } ?: run {
             fragmentTransaction
                 .add(R.id.main_container, clazz, null, clazz.name)
-                .commitAllowingStateLoss()
+                .commit()
         }
     }
 }
