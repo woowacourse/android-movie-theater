@@ -9,16 +9,16 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.movie.data.MovieTicket
-import woowacourse.movie.data.MovieTicketDao
-import woowacourse.movie.data.MovieTicketDatabase
+import woowacourse.movie.data.Reservation
+import woowacourse.movie.data.ReservationDao
+import woowacourse.movie.data.ReservationDatabase
 import woowacourse.movie.fixture.HARRY_POTTER
 import woowacourse.movie.fixture.SEOLLEUNG
 import woowacourse.movie.seat.SeatSelectionActivity
 
-class MovieTicketDaoTest {
-    private lateinit var movieTicketDao: MovieTicketDao
-    private lateinit var movieTicketDatabase: MovieTicketDatabase
+class ReservationDaoTest {
+    private lateinit var reservationDao: ReservationDao
+    private lateinit var reservationDatabase: ReservationDatabase
 
     @get:Rule
     val activityRule = ActivityScenarioRule(SeatSelectionActivity::class.java)
@@ -26,19 +26,19 @@ class MovieTicketDaoTest {
     @Before
     fun setup() {
         val context: Context = ApplicationProvider.getApplicationContext<Context>()
-        movieTicketDatabase =
-            Room.inMemoryDatabaseBuilder(context, MovieTicketDatabase::class.java)
+        reservationDatabase =
+            Room.inMemoryDatabaseBuilder(context, ReservationDatabase::class.java)
                 .allowMainThreadQueries()
                 .build()
 
-        movieTicketDao = movieTicketDatabase.movieTicketDao()
+        reservationDao = reservationDatabase.reservationDao()
     }
 
     @Test
     fun `데이터베이스에_movieTicket_데이터를_넣을_수_있다`() {
         setup()
-        val movieTicket =
-            MovieTicket(
+        val reservation =
+            Reservation(
                 uid = 1,
                 theater = SEOLLEUNG,
                 title = HARRY_POTTER,
@@ -49,14 +49,14 @@ class MovieTicketDaoTest {
                 price = "20,000",
             )
 
-        movieTicketDao.insertTicket(movieTicket)
-        val expected = movieTicketDao.getTicketByUid(1)
+        reservationDao.insertReservation(reservation)
+        val expected = reservationDao.getTicketByUid(1)
 
-        assertThat(expected).isEqualTo(movieTicket)
+        assertThat(expected).isEqualTo(reservation)
     }
 
     @After
     fun tearDown() {
-        movieTicketDatabase.close()
+        reservationDatabase.close()
     }
 }
