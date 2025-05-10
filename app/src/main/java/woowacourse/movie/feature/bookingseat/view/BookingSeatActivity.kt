@@ -100,16 +100,11 @@ class BookingSeatActivity :
         bookingInfo: BookingInfoUiModel,
         notificationDelay: Long,
     ) {
-        val intent =
-            Intent(this, NotificationReceiver::class.java).apply {
-                putExtra(NotificationReceiver.MOVIE_NAME_KEY, bookingInfo.movie.title)
-            }
-
         val pendingIntent =
             PendingIntent.getBroadcast(
                 this,
                 bookingInfo.id?.toInt() ?: -1,
-                intent,
+                NotificationReceiver.newIntent(this, bookingInfo.movie.title),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
 

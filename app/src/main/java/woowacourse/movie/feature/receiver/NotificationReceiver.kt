@@ -52,6 +52,14 @@ class NotificationReceiver : BroadcastReceiver() {
             .build()
 
     companion object {
-        const val MOVIE_NAME_KEY = "MOVIE_NAME"
+        private const val MOVIE_NAME_KEY = "MOVIE_NAME"
+
+        fun newIntent(
+            context: Context,
+            movieTitle: String,
+        ): Intent =
+            Intent(context, NotificationReceiver::class.java).apply {
+                putExtra(MOVIE_NAME_KEY, movieTitle)
+            }
     }
 }
