@@ -9,7 +9,7 @@ import woowacourse.movie.ui.model.TicketUiModel
 
 class MovieAlarmScheduler(
     private val context: Context,
-    private val alarmTimeProvider: AlarmTimeProvider = TestAlarmTimeProvider(),
+    private val alarmTimeProvider: AlarmTimeProvider = DefaultAlarmTimeProvider(),
 ) : AlarmScheduler {
     @SuppressLint("ScheduleExactAlarm")
     override fun scheduleAlarm(
