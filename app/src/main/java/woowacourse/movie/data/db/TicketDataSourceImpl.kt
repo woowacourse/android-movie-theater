@@ -2,11 +2,12 @@ package woowacourse.movie.data.db
 
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.Ticket
+import woowacourse.movie.domain.model.datasource.TicketDataSource
 import woowacourse.movie.domain.model.seat.Seat
 import java.time.LocalDateTime
 
-class TicketDataSource(private val dao: TicketDao) {
-    fun addTicket(
+class TicketDataSourceImpl(private val dao: TicketDao) : TicketDataSource {
+    override fun addTicket(
         booking: Booking,
         seats: Set<Seat>,
         price: Int,
@@ -24,10 +25,10 @@ class TicketDataSource(private val dao: TicketDao) {
         return dao.insert(entity)
     }
 
-    fun readAllTicket(): List<Ticket> {
+    override fun readAllTicket(): List<Ticket> {
         val result = dao.readAll().map { it.toDomain() }
         return result
     }
 
-    fun getTicketById(ticketId: Long) = dao.readById(ticketId).toDomain()
+    override fun getTicketById(ticketId: Long) = dao.readById(ticketId).toDomain()
 }
