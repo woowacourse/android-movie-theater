@@ -79,6 +79,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
                 dialog.cancel()
             }
             .setPositiveButton(getString(R.string.okay)) { _, _ ->
+                presenter.saveBookingStatus(bookingStatus, this)
                 navigateToMovieBooked(bookingStatus, theater)
             }
             .show()

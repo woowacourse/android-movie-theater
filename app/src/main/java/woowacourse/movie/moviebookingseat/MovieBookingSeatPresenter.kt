@@ -1,7 +1,11 @@
 package woowacourse.movie.moviebookingseat
 
+import android.content.Context
+import woowacourse.movie.BookingStatusDatabase
+import woowacourse.movie.BookingStatusEntity
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.seat.Seat
+import kotlin.concurrent.thread
 
 class MovieBookingSeatPresenter(
     private val view: MovieBookingSeat.View,
@@ -35,5 +39,13 @@ class MovieBookingSeatPresenter(
 
     override fun confirmBooking() {
         view.showConfirmDialog(bookingStatus)
+    }
+
+    override fun saveBookingStatus(bookingStatus: BookingStatus, context: Context) {
+        thread {
+            val database = BookingStatusDatabase.database(context)
+            val bookingStatusEntity = BookingStatusEntity.of(bookingStatus)
+            database.insert(bookingStatusEntity)
+        }
     }
 }
