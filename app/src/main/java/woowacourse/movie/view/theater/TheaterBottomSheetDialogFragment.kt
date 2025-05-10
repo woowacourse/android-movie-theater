@@ -12,10 +12,10 @@ import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.model.database.DummyMovieDao
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.theater.TheaterUIModel
-import woowacourse.movie.util.ExceptionMessages.FRAGMENT_BINDING_STATE_EXCEPTION
-import woowacourse.movie.view.Extras
-import woowacourse.movie.view.getParcelableCompat
 import woowacourse.movie.view.reservation.detail.ReservationDetailActivity
+import woowacourse.movie.view.util.ExceptionMessages.FRAGMENT_BINDING_STATE_EXCEPTION
+import woowacourse.movie.view.util.Extras
+import woowacourse.movie.view.util.getParcelableCompat
 
 class TheaterBottomSheetDialogFragment :
     BottomSheetDialogFragment(),

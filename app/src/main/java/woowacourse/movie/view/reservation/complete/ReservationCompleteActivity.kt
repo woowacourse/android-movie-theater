@@ -10,9 +10,9 @@ import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
 import woowacourse.movie.model.reservation.ReservationInfo
-import woowacourse.movie.view.Extras
-import woowacourse.movie.view.ReservationUiFormatter
-import woowacourse.movie.view.getParcelableExtraCompat
+import woowacourse.movie.view.util.Extras
+import woowacourse.movie.view.util.ReservationUiFormatter
+import woowacourse.movie.view.util.getParcelableExtraCompat
 
 class ReservationCompleteActivity :
     AppCompatActivity(),

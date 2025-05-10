@@ -1,4 +1,4 @@
-package woowacourse.movie.view
+package woowacourse.movie.view.util
 
 import android.content.Intent
 import android.os.Bundle

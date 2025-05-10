@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemReservedMovieBinding
 import woowacourse.movie.model.reservation.ReservationInfo
-import woowacourse.movie.view.ReservationUiFormatter
+import woowacourse.movie.view.util.ReservationUiFormatter
 
 class ReservationListViewHolder(
     private val binding: ItemReservedMovieBinding,

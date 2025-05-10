@@ -19,11 +19,11 @@ import woowacourse.movie.model.reservation.ReservationInfo
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.seat.index.Col
 import woowacourse.movie.model.seat.index.Row
-import woowacourse.movie.view.Extras
-import woowacourse.movie.view.ReservationUiFormatter
-import woowacourse.movie.view.getParcelableExtraCompat
 import woowacourse.movie.view.reservation.complete.ReservationCompleteActivity
 import woowacourse.movie.view.reservation.detail.ReservationDetailDialog
+import woowacourse.movie.view.util.Extras
+import woowacourse.movie.view.util.ReservationUiFormatter
+import woowacourse.movie.view.util.getParcelableExtraCompat
 
 class SeatSelectActivity :
     AppCompatActivity(),
@@ -172,7 +172,11 @@ class SeatSelectActivity :
 
     private fun setupSavedData(savedInstanceState: Bundle?) {
         val savedSeats =
-            BundleCompat.getParcelableArrayList(savedInstanceState ?: Bundle(), Extras.SeatsData.SEATS_KEY, Seat::class.java)
+            BundleCompat.getParcelableArrayList(
+                savedInstanceState ?: Bundle(),
+                Extras.SeatsData.SEATS_KEY,
+                Seat::class.java,
+            )
                 ?: emptyList<Seat>()
         presenter.restoreSelectedSeats(savedSeats)
     }

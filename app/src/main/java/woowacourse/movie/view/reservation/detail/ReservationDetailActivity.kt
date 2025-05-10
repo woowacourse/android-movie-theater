@@ -13,11 +13,11 @@ import woowacourse.movie.databinding.ActivityReservationBinding
 import woowacourse.movie.model.database.DummyMovieDao
 import woowacourse.movie.model.reservation.MovieTicket
 import woowacourse.movie.model.theater.TheaterUIModel
-import woowacourse.movie.view.Extras
-import woowacourse.movie.view.getParcelableExtraCompat
 import woowacourse.movie.view.reservation.detail.viewhelper.DateTimeHelper
 import woowacourse.movie.view.reservation.detail.viewhelper.MovieInfoHelper
 import woowacourse.movie.view.reservation.seat.SeatSelectActivity
+import woowacourse.movie.view.util.Extras
+import woowacourse.movie.view.util.getParcelableExtraCompat
 import java.time.LocalDate
 
 class ReservationDetailActivity :

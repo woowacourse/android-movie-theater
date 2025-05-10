@@ -15,7 +15,7 @@ import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.theater.TheaterUIModel
-import woowacourse.movie.view.Extras
+import woowacourse.movie.view.util.Extras
 import java.time.LocalDate
 
 class ReservationDetailActivityTest {

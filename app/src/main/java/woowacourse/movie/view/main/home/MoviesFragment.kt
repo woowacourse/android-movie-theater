@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentMoviesBinding
 import woowacourse.movie.model.database.DummyMovieDao
 import woowacourse.movie.model.movie.Movie
-import woowacourse.movie.util.ExceptionMessages
 import woowacourse.movie.view.main.home.adapter.MovieAdapter
 import woowacourse.movie.view.theater.TheaterBottomSheetDialogFragment
+import woowacourse.movie.view.util.ExceptionMessages
 
 class MoviesFragment :
     Fragment(),

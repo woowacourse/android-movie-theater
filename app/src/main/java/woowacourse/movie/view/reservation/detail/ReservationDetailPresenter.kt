@@ -8,7 +8,7 @@ import woowacourse.movie.model.reservation.MovieTicket
 import woowacourse.movie.model.reservation.ReservationUIModel
 import woowacourse.movie.model.reservation.TicketCount
 import woowacourse.movie.model.theater.TheaterUIModel
-import woowacourse.movie.view.ReservationUiFormatter
+import woowacourse.movie.view.util.ReservationUiFormatter
 import java.time.LocalDate
 import java.time.LocalDateTime
 
