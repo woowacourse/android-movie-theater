@@ -18,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.MainActivity
 import woowacourse.movie.R
+import woowacourse.movie.SharedPreferencesProvider
 import woowacourse.movie.data.ReservationDatabase
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.mapper.IntentCompat
@@ -27,6 +28,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     private lateinit var binding: ActivityBookingCompleteBinding
     private lateinit var presenter: BookingCompleteContract.Presenter
     private lateinit var bookingType: String
+    private lateinit var preferencesProvider: SharedPreferencesProvider
 
     @RequiresPermission(Manifest.permission.SCHEDULE_EXACT_ALARM)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +38,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         setUpUi()
         setupPresenter()
 
+        preferencesProvider = SharedPreferencesProvider(this)
         val ticket = requireTicketOrFinish()
         bookingType = intent.getStringExtra(KEY_BOOKING_TYPE).toString()
 
@@ -75,8 +78,11 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     }
 
     private fun checkPermission(ticket: TicketUiModel) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || canScheduleExactAlarms()) {
-            presenter.setNotification(ticket, bookingType)
+        val alarmState = preferencesProvider.isAlarmEnabled()
+        if (alarmState) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || canScheduleExactAlarms()) {
+                presenter.setNotification(ticket, bookingType)
+            }
         }
     }
 

@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -29,7 +28,6 @@ import woowacourse.movie.setting.SettingFragment
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var presenter: MainContract.Presenter
     private lateinit var binding: ActivityMovieBinding
-    private lateinit var sharedPreference: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +36,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         setUpUi()
 
         val permissionHandler = MoviePermissionHandler(this)
-        presenter = MainPresenter(this, permissionHandler)
+        val preferencesProvider = SharedPreferencesProvider(this)
+        presenter = MainPresenter(this, permissionHandler, preferencesProvider)
 
-        sharedPreference = getSharedPreferences("settings", MODE_PRIVATE)
         if (savedInstanceState == null) {
             binding.bottomNavigation.selectedItemId = R.id.menu_home
             supportFragmentManager.commit {
