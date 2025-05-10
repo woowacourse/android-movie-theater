@@ -9,7 +9,7 @@ class BookingHistoryPresenter(
         view.showTickets(tickets)
     }
 
-    override fun onHistorySelected() {
-        TODO("Not yet implemented")
+    override fun selectHistory(ticket: Ticket) {
+        view.moveToBookingComplete(ticket)
     }
 }

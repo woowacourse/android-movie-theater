@@ -13,9 +13,10 @@ import woowacourse.movie.data.toDomain
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.history.adapter.HistoryAdapter
+import woowacourse.movie.view.home.complete.BookingCompleteActivity
 import kotlin.concurrent.thread
 
-class BookingHistoryFragment : Fragment(R.layout.fragment_booking_history), BookingHistoryContract.View {
+class BookingHistoryFragment : Fragment(R.layout.fragment_booking_history), BookingHistoryContract.View, BookingHistoryEventHandler {
     private var _binding: FragmentBookingHistoryBinding? = null
     private val binding get() = _binding!!
     private lateinit var presenter: BookingHistoryContract.Presenter
@@ -51,12 +52,17 @@ class BookingHistoryFragment : Fragment(R.layout.fragment_booking_history), Book
 
     override fun showTickets(tickets: List<Ticket>) {
         activity?.runOnUiThread {
-            binding.rv.adapter = HistoryAdapter(tickets)
+            binding.rv.adapter = HistoryAdapter(tickets, this)
         }
     }
 
-    override fun moveToBookingComplete() {
-        TODO("Not yet implemented")
+    override fun onBookingSelected(ticket: Ticket) {
+        presenter.selectHistory(ticket)
+    }
+
+    override fun moveToBookingComplete(ticket: Ticket) {
+        val intent = BookingCompleteActivity.newIntent(requireContext(), ticket)
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

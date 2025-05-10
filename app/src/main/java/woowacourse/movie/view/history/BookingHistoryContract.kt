@@ -6,12 +6,12 @@ interface BookingHistoryContract {
     interface View {
         fun showTickets(tickets: List<Ticket>)
 
-        fun moveToBookingComplete()
+        fun moveToBookingComplete(ticket: Ticket)
     }
 
     interface Presenter {
         fun loadTickets(tickets: List<Ticket>)
 
-        fun onHistorySelected()
+        fun selectHistory(ticket: Ticket)
     }
 }

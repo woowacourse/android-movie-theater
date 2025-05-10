@@ -5,10 +5,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.domain.model.ticket.Ticket
+import woowacourse.movie.view.history.BookingHistoryEventHandler
 import woowacourse.movie.view.history.viewholder.HistoryViewHolder
 
 class HistoryAdapter(
     private val itemsList: List<Ticket>,
+    private val handler: BookingHistoryEventHandler,
 ) : ListAdapter<Ticket, RecyclerView.ViewHolder>(
         object : DiffUtil.ItemCallback<Ticket>() {
             override fun areItemsTheSame(
@@ -32,7 +34,7 @@ class HistoryAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerView.ViewHolder {
-        return HistoryViewHolder(parent)
+        return HistoryViewHolder(parent, handler)
     }
 
     override fun onBindViewHolder(
