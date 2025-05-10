@@ -29,12 +29,10 @@ class BookingHistoryFragment : Fragment(R.layout.fragment_booking_history), Book
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentBookingHistoryBinding.inflate(LayoutInflater.from(context))
+        _binding = FragmentBookingHistoryBinding.inflate(inflater)
         return binding.root
     }
-
-
-
+    
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
