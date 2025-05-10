@@ -18,6 +18,7 @@ import woowacourse.movie.R.id.item_setting
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.feature.bookinghistory.view.BookingHistoryFragment
 import woowacourse.movie.feature.home.view.HomeFragment
+import woowacourse.movie.feature.main.MainActivity.MainTab.entries
 import woowacourse.movie.feature.setting.view.SettingFragment
 
 class MainActivity : AppCompatActivity() {
@@ -34,35 +35,33 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add(fcv_main, HomeFragment())
             }
         }
 
-        binding.bottomNavMain.selectedItemId = item_home
-        setupNavigationItemClickListener()
+        setupNavigationItemSelectListener()
         setupNotificationPermissionHandler()
+        binding.bottomNavMain.selectedItemId = item_home
     }
 
-    private fun setupNavigationItemClickListener() {
+    private fun setupNavigationItemSelectListener() {
         binding.bottomNavMain.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                item_booking_history -> replaceFragment(BookingHistoryFragment())
-
-                item_home -> replaceFragment(HomeFragment())
-
-                item_setting -> replaceFragment(SettingFragment())
-
-                else -> false
-            }
+            val tab = MainTab.from(item.itemId) ?: return@setOnItemSelectedListener false
+            switchFragment(tab)
             true
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(fcv_main, fragment)
-            .commit()
+    private fun switchFragment(tab: MainTab) {
+        val currentFragment = supportFragmentManager.fragments.firstOrNull { it.isVisible }
+        val targetFragment = supportFragmentManager.findFragmentByTag(tab.name)
+
+        supportFragmentManager.commit {
+            if (targetFragment == null) add(fcv_main, tab.fragment, null, tab.name)
+            if (targetFragment != currentFragment) {
+                currentFragment?.let { hide(it) }
+                targetFragment?.let { show(it) }
+            }
+        }
     }
 
     private fun setupNotificationPermissionHandler() {
@@ -73,6 +72,20 @@ class MainActivity : AppCompatActivity() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(this, arrayOf(POST_NOTIFICATIONS), REQUEST_CODE_NOTIFICATION_PERMISSION)
+        }
+    }
+
+    enum class MainTab(
+        val id: Int,
+        val fragment: Class<out Fragment>,
+    ) {
+        BOOKING_HISTORY(item_booking_history, BookingHistoryFragment::class.java),
+        HOME(item_home, HomeFragment::class.java),
+        SETTING(item_setting, SettingFragment::class.java),
+        ;
+
+        companion object {
+            fun from(id: Int): MainTab? = entries.find { it.id == id }
         }
     }
 
