@@ -1,0 +1,33 @@
+package woowacourse.movie.data
+
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import woowacourse.movie.data.converter.DateTimeConverter
+
+@TypeConverters(DateTimeConverter::class)
+@Database(entities = [TicketEntity::class], version = 1)
+abstract class TicketDatabase : RoomDatabase() {
+    abstract fun ticketDao(): TicketDao
+
+    companion object {
+        @Volatile
+        private var instance: TicketDatabase? = null
+
+        fun getDataBase(context: Context): TicketDatabase {
+            return instance ?: synchronized(this) {
+                val instance =
+                    Room.databaseBuilder(
+                        context.applicationContext,
+                        TicketDatabase::class.java,
+                        "ticket_database",
+                    ).build()
+                this.instance = instance
+
+                instance
+            }
+        }
+    }
+}
