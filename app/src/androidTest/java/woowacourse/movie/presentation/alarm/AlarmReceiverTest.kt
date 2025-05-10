@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.alram
+package woowacourse.movie.presentation.alarm
 
 import android.app.NotificationManager
 import android.content.Context
