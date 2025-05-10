@@ -3,6 +3,7 @@ package woowacourse.movie.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import woowacourse.movie.data.TicketEntity.Companion.TICKET_TABLE_NAME
 import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.seat.Col
 import woowacourse.movie.domain.model.seat.Row
@@ -11,7 +12,7 @@ import woowacourse.movie.domain.model.ticket.Ticket
 import java.time.LocalDate
 import java.time.LocalTime
 
-@Entity(tableName = "tickets")
+@Entity(tableName = TICKET_TABLE_NAME)
 data class TicketEntity(
     @ColumnInfo(name = "movie_title") val movieTitle: String,
     @ColumnInfo(name = "theater_name") val theaterName: String,
@@ -23,6 +24,10 @@ data class TicketEntity(
 ) {
     @PrimaryKey(autoGenerate = true)
     var pk: Int = 0
+
+    companion object {
+        const val TICKET_TABLE_NAME = "tickets"
+    }
 }
 
 fun Ticket.toEntity(): TicketEntity {

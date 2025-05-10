@@ -3,15 +3,16 @@ package woowacourse.movie.data
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import woowacourse.movie.data.TicketEntity.Companion.TICKET_TABLE_NAME
 
 @Dao
 interface TicketDao {
     @Insert
     fun insert(ticket: TicketEntity)
 
-    @Query("SELECT * FROM tickets")
+    @Query("SELECT * FROM $TICKET_TABLE_NAME")
     fun getAll(): List<TicketEntity>
 
-    @Query("DELETE FROM tickets")
+    @Query("DELETE FROM $TICKET_TABLE_NAME")
     fun deleteAll()
 }

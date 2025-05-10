@@ -34,6 +34,7 @@ class BookingCompleteActivityTest {
                     setOf(Seat(Col(1), Row(1)), Seat(Col(1), Row(2))),
                     26000,
                 ),
+                BookingCompleteActivity::class.java
             )
         ActivityScenario.launch<BookingCompleteActivity>(intent)
     }

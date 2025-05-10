@@ -9,6 +9,7 @@ import androidx.room.Room
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketDatabase
 import woowacourse.movie.data.TicketEntity
+import woowacourse.movie.data.TicketEntity.Companion.TICKET_TABLE_NAME
 import woowacourse.movie.data.toDomain
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.ticket.Ticket
@@ -41,7 +42,7 @@ class BookingHistoryFragment : Fragment(R.layout.fragment_booking_history), Book
             Room.databaseBuilder(
                 binding.root.context,
                 TicketDatabase::class.java,
-                "tickets",
+                TICKET_TABLE_NAME,
             ).build()
 
         thread {

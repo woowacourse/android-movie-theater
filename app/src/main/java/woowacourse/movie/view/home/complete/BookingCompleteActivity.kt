@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.room.Room
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketDatabase
+import woowacourse.movie.data.TicketEntity.Companion.TICKET_TABLE_NAME
 import woowacourse.movie.data.toEntity
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.seat.Seat
@@ -56,7 +57,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             Room.databaseBuilder(
                 applicationContext,
                 TicketDatabase::class.java,
-                "tickets",
+                TICKET_TABLE_NAME,
             ).build()
 
         thread {
