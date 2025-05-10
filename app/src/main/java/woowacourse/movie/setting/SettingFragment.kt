@@ -1,28 +1,26 @@
 package woowacourse.movie.setting
 
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.SharedPreferencesProvider
 import woowacourse.movie.databinding.FragmentSettingBinding
 
 class SettingFragment : Fragment(), SettingContract.View {
     private lateinit var presenter: SettingPresenter
     private lateinit var binding: FragmentSettingBinding
-    private lateinit var sharedPreference: SharedPreferences
+    private lateinit var preferencesProvider: SharedPreferencesProvider
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        sharedPreference = requireContext().getSharedPreferences("settings", MODE_PRIVATE)
+        preferencesProvider = SharedPreferencesProvider(requireContext())
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
         return binding.root
     }
@@ -33,22 +31,17 @@ class SettingFragment : Fragment(), SettingContract.View {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = SettingPresenter(this)
+        presenter = SettingPresenter(this, preferencesProvider)
 
-        showAlarm()
+        showAlarmState()
+
         binding.switchAlarm.setOnCheckedChangeListener { _, isChecked ->
-            updateAlarm(isChecked)
+            presenter.setNotificationAlarm(isChecked)
         }
     }
 
-    private fun updateAlarm(isChecked: Boolean) {
-        sharedPreference.edit(commit = true) {
-            putBoolean("notification", isChecked)
-        }
-    }
-
-    override fun showAlarm() {
-        val saved = sharedPreference.getBoolean("notification", false)
+    override fun showAlarmState() {
+        val saved = preferencesProvider.isAlarmEnabled()
         binding.switchAlarm.isChecked = saved
     }
 }
