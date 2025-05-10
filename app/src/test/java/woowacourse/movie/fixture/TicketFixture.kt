@@ -8,6 +8,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 const val SEOLLEUNG = "선릉"
+const val GANGNAM = "강남"
 
 val SEAT_A1 = Seat(0, 0)
 val SEAT_A2 = Seat(0, 1)
