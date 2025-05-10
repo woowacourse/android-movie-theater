@@ -11,8 +11,8 @@ interface BookingHistoryDetailsDao {
     fun getAll(): List<BookingHistoryDetails>
 
     @Insert
-    suspend fun insertAll(vararg users: BookingHistoryDetails)
+    suspend fun insertAll(vararg bookingHistoryDetails: BookingHistoryDetails)
 
     @Delete
-    fun delete(user: BookingHistoryDetails)
+    fun delete(bookingHistoryDetails: BookingHistoryDetails)
 }
