@@ -14,7 +14,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground" >
 
         <TextView
             android:id="@+id/textview_reservation_date"
