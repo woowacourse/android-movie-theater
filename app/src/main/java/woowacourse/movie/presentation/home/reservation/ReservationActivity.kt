@@ -28,7 +28,7 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(R.layout.ac
 
     override fun onSupportNavigateUp(): Boolean {
         handleBackPressed()
-        return super.onSupportNavigateUp()
+        return true
     }
 
     private fun handleBackPressed() {
