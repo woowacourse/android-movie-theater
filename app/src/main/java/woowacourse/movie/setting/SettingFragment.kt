@@ -1,8 +1,6 @@
 package woowacourse.movie.setting
 
 import android.Manifest
-import android.content.Context
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -12,21 +10,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.SettingPreference
 import woowacourse.movie.databinding.FragmentSettingBinding
 
 class SettingFragment : Fragment() {
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
-    private val preference: SharedPreferences by lazy {
-        requireContext().getSharedPreferences(
-            SHARED_NAME,
-            Context.MODE_PRIVATE,
-        )
-    }
+    private val settingPreference = SettingPreference(requireContext())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +36,7 @@ class SettingFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.switchAlarm.isChecked = isNotificationPermissionGranted()
+        binding.switchAlarm.isChecked = settingPreference.isAlarmPermitted()
 
         binding.switchAlarm.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -52,15 +45,8 @@ class SettingFragment : Fragment() {
                     return@setOnCheckedChangeListener
                 }
             }
-            preference.edit {
-                putBoolean(SHARED_SET_ALARM, isChecked)
-            }
+            settingPreference.setAlarmPermitted(isChecked)
         }
-    }
-
-    private fun isNotificationPermissionGranted(): Boolean {
-        val prefs = requireContext().getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE)
-        return prefs.getBoolean(SHARED_SET_ALARM, false)
     }
 
     private fun isPermitted(): Boolean {
@@ -83,18 +69,11 @@ class SettingFragment : Fragment() {
         ) { isGranted: Boolean ->
             if (isGranted) {
                 Toast.makeText(requireContext(), "알림 설정 완료", Toast.LENGTH_SHORT).show()
-                preference.edit {
-                    putBoolean(SHARED_SET_ALARM, true)
-                }
+                settingPreference.setAlarmPermitted(true)
                 binding.switchAlarm.isChecked = true
             } else {
                 Toast.makeText(requireContext(), "알림 거부됨", Toast.LENGTH_SHORT).show()
                 binding.switchAlarm.isChecked = false
             }
         }
-
-    companion object {
-        private const val SHARED_NAME = "settings"
-        private const val SHARED_SET_ALARM = "notification"
-    }
 }

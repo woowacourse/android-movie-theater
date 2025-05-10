@@ -16,12 +16,13 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.AlarmReceiver
 import woowacourse.movie.MainActivity
 import woowacourse.movie.R
+import woowacourse.movie.data.SettingPreference
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.ui.model.TicketUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
-    private val presenter = BookingCompletePresenter(this)
+    private val presenter = BookingCompletePresenter(this, SettingPreference(this))
     private lateinit var binding: ActivityBookingCompleteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
