@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.model.reservation.ReservationInfo
 import woowacourse.movie.view.main.reservationlist.adapter.ReservationListAdapter
@@ -49,7 +50,10 @@ class ReservationListFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        binding.reservationListListLayout.adapter = reservationListAdapter
+        binding.reservationListLayout.apply {
+            adapter = reservationListAdapter
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
         presenter = ReservationListPresenter(this, requireContext())
         presenter.onViewCreated()
     }
