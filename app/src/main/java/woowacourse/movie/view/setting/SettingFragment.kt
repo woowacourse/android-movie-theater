@@ -39,7 +39,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
     }
 
     override fun setPermissionSwitch() {
-        if (hasAllPermissions()) {
+        if (hasAllPermissions() && NotificationReceiver.isEnabled) {
             binding.switchSettingPushAlarm.isChecked = true
         } else {
             binding.switchSettingPushAlarm.isChecked = false

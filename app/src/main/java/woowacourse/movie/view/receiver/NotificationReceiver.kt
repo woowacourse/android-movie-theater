@@ -71,7 +71,8 @@ class NotificationReceiver : BroadcastReceiver() {
         private const val CHANNEL_ID = "reservation_random_random"
         private const val CHANNEL_NAME = "reservation"
         private const val TICKET_KEY = "ticket"
-        private var isEnabled = false
+        var isEnabled = false
+            private set
 
         private val channel =
             NotificationChannel(
