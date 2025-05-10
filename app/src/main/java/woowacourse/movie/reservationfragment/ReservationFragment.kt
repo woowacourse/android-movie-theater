@@ -6,24 +6,40 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import androidx.fragment.app.Fragment
-import woowacourse.movie.BookingStatusDao
-import woowacourse.movie.BookingStatusDatabase
-import woowacourse.movie.BookingStatusEntity
+import woowacourse.movie.dao.bookingStatus.BookingStatusDatabase
+import woowacourse.movie.dao.bookingStatus.BookingStatusEntity
 import woowacourse.movie.R
-import woowacourse.movie.reservationfragment.ReservationListAdapter
+import woowacourse.movie.dao.bookingseats.BookingSeatDatabase
+import woowacourse.movie.dao.bookingseats.BookingSeatEntity
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.moviebooked.MovieBookedActivity
+import kotlin.concurrent.thread
 
 class ReservationFragment : Fragment() {
-    private lateinit var bookingStatus: List<BookingStatus>
+    private var bookingStatus: MutableList<BookingStatus> = mutableListOf()
+    private lateinit var bookingStatusEntity: List<BookingStatusEntity>
+    private lateinit var bookingSeatsEntity: List<BookingSeatEntity>
+    private lateinit var reservationListAdapter: ReservationListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val bookingStatus = BookingStatus.Companion.value
-        val database = BookingStatusDatabase.database(requireContext())
-        bookingStatus.forEach { bookingStatus ->
-            val bookingStatusEntity = BookingStatusEntity.of(bookingStatus)
-            database.insertBookingStatusEntity(bookingStatusEntity)
+        bookingStatus.clear()
+        thread {
+            val bookingStatusDatabase = BookingStatusDatabase.database(requireContext())
+            val bookingSeatDatabase = BookingSeatDatabase.database(requireContext())
+            bookingStatusEntity = bookingStatusDatabase.getAll()
+            val newBookingStatusList = mutableListOf<BookingStatus>()
+            bookingStatusEntity.forEach { bookingStatusEntity ->
+                bookingSeatsEntity = bookingSeatDatabase.get(bookingStatusEntity.id)
+                val bookingStatus = BookingStatus.toDomain(bookingStatusEntity, bookingSeatsEntity)
+                newBookingStatusList.add(bookingStatus)
+            }
+
+            requireActivity().runOnUiThread {
+                bookingStatus.clear()
+                bookingStatus.addAll(newBookingStatusList)
+                reservationListAdapter.notifyDataSetChanged()
+            }
         }
     }
 
@@ -34,7 +50,7 @@ class ReservationFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_booking, container, false)
         val reservationList: ListView = view.findViewById(R.id.lv_reservation)
-        val reservationListAdapter = ReservationListAdapter(
+        reservationListAdapter = ReservationListAdapter(
             bookingStatus
         ) { bookingStatus -> navigateToBooked(bookingStatus) }
         reservationList.adapter = reservationListAdapter
