@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import woowacourse.movie.R
-import woowacourse.movie.data.db.ReservationDaoListenerImpl
 import woowacourse.movie.data.db.ReservationDatabase
+import woowacourse.movie.data.db.ReservationRepositoryImpl
 import woowacourse.movie.databinding.FragmentReservationSeatBinding
 import woowacourse.movie.presentation.alarm.AlarmHelper
 import woowacourse.movie.presentation.common.base.BaseFragment
@@ -85,8 +85,8 @@ class ReservationSeatFragment :
 
     private fun initPresenter() {
         val dao = ReservationDatabase.getInstance(requireContext()).reservationDao()
-        val daoListener = ReservationDaoListenerImpl(dao)
-        presenter = ReservationSeatPresenter(this, daoListener)
+        val reservationRepository = ReservationRepositoryImpl(dao)
+        presenter = ReservationSeatPresenter(this, reservationRepository)
     }
 
     private fun initViews() {

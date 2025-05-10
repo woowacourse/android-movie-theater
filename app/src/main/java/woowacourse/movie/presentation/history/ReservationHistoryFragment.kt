@@ -5,8 +5,8 @@ import android.view.View
 import android.widget.LinearLayout.VERTICAL
 import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.R
-import woowacourse.movie.data.db.ReservationDaoListenerImpl
 import woowacourse.movie.data.db.ReservationDatabase
+import woowacourse.movie.data.db.ReservationRepositoryImpl
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.presentation.common.base.BaseFragment
 import woowacourse.movie.presentation.common.model.TicketUiModel
@@ -55,7 +55,7 @@ class ReservationHistoryFragment :
 
     private fun setPresenter() {
         val dao = ReservationDatabase.getInstance(requireContext()).reservationDao()
-        val daoListener = ReservationDaoListenerImpl(dao)
+        val daoListener = ReservationRepositoryImpl(dao)
         presenter = ReservationHistoryPresenter(this, daoListener)
     }
 

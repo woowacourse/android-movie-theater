@@ -1,11 +1,11 @@
 package woowacourse.movie.data.db
 
-import woowacourse.movie.domain.ReservationDaoListener
+import woowacourse.movie.domain.ReservationRepository
 import woowacourse.movie.domain.model.ticketing.Ticket
 
-class ReservationDaoListenerImpl(
+class ReservationRepositoryImpl(
     private val dao: ReservationDao,
-) : ReservationDaoListener {
+) : ReservationRepository {
     override fun getAll(): List<Ticket> = dao.getAll().toDomain()
 
     override fun insert(vararg ticket: Ticket) {

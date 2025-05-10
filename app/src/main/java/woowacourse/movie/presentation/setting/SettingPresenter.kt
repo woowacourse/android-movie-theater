@@ -1,18 +1,18 @@
 package woowacourse.movie.presentation.setting
 
-import woowacourse.movie.domain.NotificationPreferenceListener
+import woowacourse.movie.domain.NotificationPreferenceRepository
 
 class SettingPresenter(
     private val view: SettingContract.View,
-    private val notificationPreferenceListener: NotificationPreferenceListener,
+    private val notificationPreferenceRepository: NotificationPreferenceRepository,
 ) : SettingContract.Presenter {
     init {
-        view.notifyNotificationEnabled(notificationPreferenceListener.notificationEnabled())
+        view.notifyNotificationEnabled(notificationPreferenceRepository.notificationEnabled())
     }
 
     override fun updateNotificationEnabled(isEnabled: Boolean) {
-        notificationPreferenceListener.updateNotificationEnabled(isEnabled)
-        val updatedEnabled = notificationPreferenceListener.notificationEnabled()
+        notificationPreferenceRepository.updateNotificationEnabled(isEnabled)
+        val updatedEnabled = notificationPreferenceRepository.notificationEnabled()
         view.notifyNotificationEnabled(updatedEnabled)
     }
 }

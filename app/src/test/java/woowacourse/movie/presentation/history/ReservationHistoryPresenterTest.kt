@@ -7,12 +7,12 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.ReservationDaoListener
+import woowacourse.movie.domain.ReservationRepository
 
 class ReservationHistoryPresenterTest {
     private lateinit var view: ReservationHistoryContract.View
     private lateinit var presenter: ReservationHistoryContract.Presenter
-    private lateinit var daoListener: ReservationDaoListener
+    private lateinit var daoListener: ReservationRepository
 
     @BeforeEach
     fun setUp() {

@@ -1,6 +1,6 @@
 package woowacourse.movie.domain
 
-interface NotificationPreferenceListener {
+interface NotificationPreferenceRepository {
     fun updateNotificationEnabled(isEnabled: Boolean)
 
     fun notificationEnabled(): Boolean
