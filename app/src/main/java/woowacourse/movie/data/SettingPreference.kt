@@ -4,16 +4,16 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 
-class SettingPreference(context: Context) {
+class SettingPreference(context: Context) : SettingRepository {
     private val preference: SharedPreferences =
         context.getSharedPreferences(
             SHARED_NAME,
             Context.MODE_PRIVATE,
         )
 
-    fun isAlarmPermitted(): Boolean = preference.getBoolean(SHARED_SET_ALARM, false)
+    override fun isAlarmPermitted(): Boolean = preference.getBoolean(SHARED_SET_ALARM, false)
 
-    fun setAlarmPermitted(isGranted: Boolean) {
+    override fun setAlarmPermitted(isGranted: Boolean) {
         preference.edit { putBoolean(SHARED_SET_ALARM, isGranted) }
     }
 

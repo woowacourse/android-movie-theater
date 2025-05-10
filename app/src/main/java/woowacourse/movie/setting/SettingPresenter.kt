@@ -5,11 +5,11 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
-import woowacourse.movie.data.SettingPreference
+import woowacourse.movie.data.SettingRepository
 
 class SettingPresenter(
     private val view: SettingContract.View,
-    private val settingPreference: SettingPreference,
+    private val settingPreference: SettingRepository,
 ) : SettingContract.Presenter {
     override fun setPermissionState(context: Context) {
         view.initAlarmState(isPermitted(context) && settingPreference.isAlarmPermitted())

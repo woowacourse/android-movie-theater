@@ -1,6 +1,6 @@
 package woowacourse.movie.booking.complete
 
-import woowacourse.movie.data.SettingPreference
+import woowacourse.movie.data.SettingRepository
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.ui.model.TicketUiModel
@@ -9,7 +9,7 @@ import java.time.ZoneId
 
 class BookingCompletePresenter(
     private val view: BookingCompleteContract.View,
-    private val settingPreference: SettingPreference,
+    private val settingPreference: SettingRepository,
 ) : BookingCompleteContract.Presenter {
     private lateinit var ticket: Ticket
 

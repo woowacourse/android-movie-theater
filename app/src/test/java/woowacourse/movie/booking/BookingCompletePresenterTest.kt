@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.booking.complete.BookingCompleteContract
 import woowacourse.movie.booking.complete.BookingCompletePresenter
+import woowacourse.movie.data.SettingRepository
 import woowacourse.movie.fixture.SEAT_A1
 import woowacourse.movie.fixture.SEAT_A2
 import woowacourse.movie.fixture.SEAT_C1
@@ -23,6 +24,16 @@ class BookingCompletePresenterTest {
     private lateinit var presenter: BookingCompletePresenter
     private lateinit var mockView: BookingCompleteContract.View
     private lateinit var mockTicketUiData: TicketUiModel
+    private val settingManager =
+        object : SettingRepository {
+            private var isAlarm = false
+
+            override fun isAlarmPermitted(): Boolean = isAlarm
+
+            override fun setAlarmPermitted(isGranted: Boolean) {
+                isAlarm = isGranted
+            }
+        }
 
     @BeforeEach
     fun setUp() {
@@ -33,7 +44,7 @@ class BookingCompletePresenterTest {
 
         mockTicketUiData = mockTicket.toUiModel()
 
-        presenter = BookingCompletePresenter(view = mockView)
+        presenter = BookingCompletePresenter(view = mockView, settingManager)
     }
 
     @Test
