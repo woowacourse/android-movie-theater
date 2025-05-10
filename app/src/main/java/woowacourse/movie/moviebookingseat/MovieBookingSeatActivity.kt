@@ -93,7 +93,6 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
             MovieBookedActivity.movieBookedIntent(
                 this@MovieBookingSeatActivity,
                 bookingStatus,
-                theater,
             )
         startActivity(intent)
         finish()

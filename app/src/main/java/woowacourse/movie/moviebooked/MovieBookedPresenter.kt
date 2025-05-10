@@ -8,8 +8,7 @@ class MovieBookedPresenter(
 ) : MovieBooked.Presenter {
     override fun loadBookedStatus(
         bookingStatus: BookingStatus,
-        theater: Theater,
     ) {
-        view.showBookedStatus(bookingStatus, theater)
+        view.showBookedStatus(bookingStatus)
     }
 }

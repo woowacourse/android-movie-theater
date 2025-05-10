@@ -37,16 +37,14 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
                 KEY_BOOKING_STATUS,
                 BookingStatus::class,
             )
-        val theater = BuildVersion().getParcelableClass(intent, KEY_THEATER, Theater::class)
-        presenter.loadBookedStatus(bookingStatus, theater)
+        presenter.loadBookedStatus(bookingStatus)
     }
 
     override fun showBookedStatus(
         bookingStatus: BookingStatus,
-        theater: Theater,
     ) {
         binding.bookingStatus = bookingStatus
-        binding.theater = theater
+        binding.theater = bookingStatus.theater
         val seatsText =
             bookingStatus.seat.seats.joinToString { seat ->
                 val rowChar = 'A' + seat.row.value
@@ -58,17 +56,14 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
 
     companion object {
         private const val KEY_BOOKING_STATUS = "bookingStatus"
-        private const val KEY_THEATER = "theater"
 
         fun movieBookedIntent(
             otherActivity: AppCompatActivity,
             bookingStatus: BookingStatus,
-            theater: Theater,
         ): Intent {
             return Intent(otherActivity, MovieBookedActivity::class.java)
                 .apply {
                     putExtra(KEY_BOOKING_STATUS, bookingStatus)
-                    putExtra(KEY_THEATER, theater)
                 }
         }
     }
