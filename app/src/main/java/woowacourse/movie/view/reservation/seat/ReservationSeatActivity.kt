@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.data.TicketRepositoryImpl
 import woowacourse.movie.databinding.ActivityReservationSeatBinding
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.domain.movieseat.Seats
@@ -24,6 +25,7 @@ import woowacourse.movie.view.reservation.Ticket
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
 
 class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.View {
+    private val ticketRepository = TicketRepositoryImpl()
     private val presenter: ReservationSeatContract.Present by lazy {
         ReservationSeatPresenter(this)
     }
@@ -173,6 +175,7 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
     ) {
         val intent =
             ReservationCompleteActivity.newIntent(this@ReservationSeatActivity, ticket, seats)
+        ticketRepository.insertAll(ticket)
         startActivity(intent)
     }
 
