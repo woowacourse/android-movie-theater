@@ -62,7 +62,7 @@ val DUMMY_MOVIES =
 val DUMMY_ENTITY_MOVIES =
     arrayOf(
         MovieEntity(
-            0,
+            1,
             "해리 포터와 마법사의 돌",
             R.drawable.harry_potter_one,
             ScreeningPeriod(
@@ -72,7 +72,7 @@ val DUMMY_ENTITY_MOVIES =
             152,
         ),
         MovieEntity(
-            1,
+            2,
             "해리 포터와 비밀의 방",
             R.drawable.harry_potter_two,
             ScreeningPeriod(
@@ -82,7 +82,7 @@ val DUMMY_ENTITY_MOVIES =
             162,
         ),
         MovieEntity(
-            2,
+            3,
             "해리 포터와 아즈카반의 죄수",
             R.drawable.harry_potter_three,
             ScreeningPeriod(
@@ -92,7 +92,7 @@ val DUMMY_ENTITY_MOVIES =
             141,
         ),
         MovieEntity(
-            3,
+            4,
             "해리 포터와 불의 잔",
             R.drawable.harry_potter_four,
             ScreeningPeriod(

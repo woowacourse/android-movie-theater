@@ -11,15 +11,15 @@ class SeatsConverter {
 
     @TypeConverter
     fun toSeats(data: String?): Seats? {
-        val seats: List<Seat>? = data?.split(',')?.map { seatFromTag(it) }
+        val seats: List<Seat>? = data?.split(',')?.map { seatFromTag(it.trim()) }
         return Seats().apply { seats?.forEach { add(it) } }
     }
 
     private fun Seat.toSeatTag(): String = "${ASCII_A + row}${col + 1}"
 
     private fun seatFromTag(tag: String): Seat {
-        val row = tag[0] - ASCII_A
-        val col = tag[1].digitToInt() - ONE_BASED
+        val row: Int = tag[0] - ASCII_A
+        val col: Int = tag[1].digitToInt() - ONE_BASED
         val ticketType = TicketType.ticketTypeByRow(row)
         return Seat(row, col, ticketType)
     }
