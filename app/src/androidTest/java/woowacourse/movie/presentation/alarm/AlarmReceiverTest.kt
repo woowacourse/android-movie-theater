@@ -5,11 +5,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.test.platform.app.InstrumentationRegistry
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.domain.NotificationRepository
-import woowacourse.movie.presentation.alarm.AlarmHelper
-import woowacourse.movie.presentation.alarm.AlarmReceiver
 import woowacourse.movie.presentation.common.model.TicketUiModel
 import java.time.LocalDateTime
 
@@ -68,5 +67,11 @@ class AlarmReceiverTest {
         val result = manager.activeNotifications.find { it.id == ticket.hashCode() }
 
         assertThat(result).isNotNull()
+    }
+
+    @After
+    fun tearDown() {
+        val manager = context.getSystemService(NotificationManager::class.java)
+        manager.cancelAll()
     }
 }
