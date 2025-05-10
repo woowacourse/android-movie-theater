@@ -2,6 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="notificationEnabled"
+            type="Boolean" />
+        <variable
+            name="handler"
+            type="woowacourse.movie.view.setting.SettingEventHandler" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -40,10 +49,12 @@
             </LinearLayout>
 
             <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/material_switch"
+                android:id="@+id/notification_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:checked="@{notificationEnabled}"
+                android:onCheckedChanged="@{() -> handler.onNotificationSettingChanged()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:thumbTint="@color/switch_thumb"
                 app:trackTint="@color/switch_track" />
