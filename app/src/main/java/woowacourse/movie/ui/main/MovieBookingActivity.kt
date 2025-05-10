@@ -13,6 +13,7 @@ import woowacourse.movie.databinding.ActivityMovieBookingBinding
 import woowacourse.movie.ui.history.view.BookingHistoryFragment
 import woowacourse.movie.ui.movielist.view.MovieListFragment
 import woowacourse.movie.ui.settings.view.SettingsFragment
+import woowacourse.movie.utils.Destination
 
 class MovieBookingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieBookingBinding
@@ -87,5 +88,17 @@ class MovieBookingActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    companion object {
+        private const val EXTRA_DESTINATION = "EXTRA_DESTINATION"
+
+        fun newIntent(
+            context: Context,
+            destination: Destination,
+        ): Intent =
+            Intent(context, MovieBookingActivity::class.java).apply {
+                putExtra(EXTRA_DESTINATION, destination)
+            }
     }
 }
