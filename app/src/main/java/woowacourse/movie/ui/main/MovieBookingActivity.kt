@@ -1,5 +1,7 @@
 package woowacourse.movie.ui.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -14,71 +16,96 @@ import woowacourse.movie.ui.history.view.BookingHistoryFragment
 import woowacourse.movie.ui.movielist.view.MovieListFragment
 import woowacourse.movie.ui.settings.view.SettingsFragment
 import woowacourse.movie.utils.Destination
+import woowacourse.movie.utils.intentSerializable
 
-class MovieBookingActivity : AppCompatActivity() {
+class MovieBookingActivity : AppCompatActivity(), MovieBookingContract.View {
     private lateinit var binding: ActivityMovieBookingBinding
+    private val presenter: MovieBookingContract.Presenter by lazy { MovieBookingPresenter(this) }
+    private val movieListFragment by lazy { MovieListFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        binding =
-            DataBindingUtil.setContentView(
-                this@MovieBookingActivity,
-                R.layout.activity_movie_booking,
-            )
-
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_booking)
         applyWindowInsets()
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace<MovieListFragment>(R.id.main_fragment_container_view)
-                binding.navigation.selectedItemId = R.id.navigation_home
-            }
-        } else {
-            val currentFragment =
-                supportFragmentManager.findFragmentById(R.id.main_fragment_container_view)
-            when (currentFragment) {
-                is MovieListFragment -> binding.navigation.selectedItemId = R.id.navigation_home
-                is SettingsFragment -> binding.navigation.selectedItemId = R.id.navigation_settings
-                is BookingHistoryFragment ->
-                    binding.navigation.selectedItemId =
-                        R.id.navigation_history
-            }
-        }
         setBottomNavigationView()
+
+        if (savedInstanceState == null) {
+            presenter.handleDestination(restoreDestination())
+        } else {
+            updateBottomNavigation()
+        }
+    }
+
+    override fun showHome() {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace<MovieListFragment>(R.id.main_fragment_container_view)
+        }
+    }
+
+    override fun showHistory() {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace<BookingHistoryFragment>(R.id.main_fragment_container_view)
+        }
+    }
+
+    override fun showSettings() {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace<SettingsFragment>(R.id.main_fragment_container_view)
+        }
+    }
+
+    override fun showBottomSheetForHome() {
+        binding.navigation.selectedItemId = R.id.navigation_home
+    }
+
+    override fun showBottomSheetForHistory() {
+        binding.navigation.selectedItemId = R.id.navigation_history
+    }
+
+    override fun showBottomSheetForSettings() {
+        binding.navigation.selectedItemId = R.id.navigation_settings
+    }
+
+    private fun restoreDestination(): Destination? {
+        return intent.intentSerializable(EXTRA_DESTINATION, Destination::class.java)
     }
 
     private fun setBottomNavigationView() {
         binding.navigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace<MovieListFragment>(R.id.main_fragment_container_view)
-                    }
+                    showHome()
                     true
                 }
 
                 R.id.navigation_history -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace<BookingHistoryFragment>(R.id.main_fragment_container_view)
-                    }
+                    showHistory()
                     true
                 }
 
                 R.id.navigation_settings -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace<SettingsFragment>(R.id.main_fragment_container_view)
-                    }
+                    showSettings()
                     true
                 }
 
                 else -> false
             }
+        }
+    }
+
+    private fun updateBottomNavigation() {
+        val activeFragment =
+            supportFragmentManager.findFragmentById(R.id.main_fragment_container_view)
+                ?: movieListFragment
+        when (activeFragment) {
+            is MovieListFragment -> binding.navigation.selectedItemId = R.id.navigation_home
+            is SettingsFragment -> binding.navigation.selectedItemId = R.id.navigation_settings
+            is BookingHistoryFragment -> binding.navigation.selectedItemId = R.id.navigation_history
         }
     }
 
