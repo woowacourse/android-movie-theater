@@ -21,6 +21,7 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding = DataBindingUtil.setContentView(this, R.layout.movie_booked)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booked)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
