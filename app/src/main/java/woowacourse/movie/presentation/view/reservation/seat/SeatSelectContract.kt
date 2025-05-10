@@ -26,6 +26,10 @@ interface SeatSelectContract {
             message: String,
         )
 
+        fun showExactAlarmSettingDialog()
+
+        fun navigateToReminderSettings()
+
         fun navigateToComplete(reservationInfoUiModel: ReservationInfoUiModel)
     }
 

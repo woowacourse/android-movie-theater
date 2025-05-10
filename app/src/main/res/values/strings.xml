@@ -42,7 +42,7 @@
 
     <string name="setting_request_permission_dialog_title">알림 권한 필요</string>
     <string name="setting_request_permission_dialog_message">알림 기능을 사용하려면 권한이 필요합니다.</string>
-    <string name="setting_request_reminder_permission_dialog_message">알림이 표시되지 않는다면 \'알람 및 리마인더\' 설정이 꺼져 있을 수 있어요.\n설정 화면으로 이동할까요?</string>
+    <string name="setting_request_reminder_permission_dialog_message">정확한 알람 등록을 위해 시스템 설정에서\n\'알람 및 리마인더\'를 허용해야 합니다.</string>
     <string name="setting_request_permission_dialog_positive">권한 요청</string>
     <string name="setting_request_permission_dialog_negative">취소</string>
 

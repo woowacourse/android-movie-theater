@@ -1,7 +1,10 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -98,6 +101,24 @@ class SeatSelectActivity :
             { dialog -> dialog.dismiss() },
             { _ -> presenter.reservationConfirmed() },
         )
+    }
+
+    override fun showExactAlarmSettingDialog() {
+        AlertDialog
+            .Builder(this)
+            .setTitle(getString(R.string.setting_request_permission_dialog_title))
+            .setMessage(getString(R.string.setting_request_reminder_permission_dialog_message))
+            .setPositiveButton(R.string.setting_request_permission_dialog_positive) { _, _ ->
+                navigateToReminderSettings()
+            }.setNegativeButton(R.string.setting_request_permission_dialog_negative, null)
+            .show()
+    }
+
+    override fun navigateToReminderSettings() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+            startActivity(intent)
+        }
     }
 
     override fun navigateToComplete(reservationInfoUiModel: ReservationInfoUiModel) {

@@ -16,16 +16,16 @@ class AlarmScheduler(
     private val context: Context,
 ) {
     fun scheduleAlarm(reservationInfo: ReservationInfoUiModel) {
-        val canSchedule =
-            Build.VERSION.SDK_INT < Build.VERSION_CODES.S ||
-                (context.getSystemService(AlarmManager::class.java).canScheduleExactAlarms())
-
-        if (canSchedule) {
+        if (canScheduleAlarm()) {
             scheduleExactAlarm(reservationInfo)
         } else {
             requestExactAlarmPermission()
         }
     }
+
+    fun canScheduleAlarm(): Boolean =
+        Build.VERSION.SDK_INT < Build.VERSION_CODES.S ||
+            (context.getSystemService(AlarmManager::class.java).canScheduleExactAlarms())
 
     private fun scheduleExactAlarm(reservationInfo: ReservationInfoUiModel) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -66,6 +66,6 @@ class AlarmScheduler(
             .toEpochMilli()
 
     companion object {
-        private const val MINUTES_BEFORE_ALARM = 18L
+        private const val MINUTES_BEFORE_ALARM = 30L
     }
 }
