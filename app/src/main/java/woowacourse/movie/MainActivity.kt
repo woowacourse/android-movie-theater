@@ -1,5 +1,7 @@
 package woowacourse.movie
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -76,5 +78,10 @@ class MainActivity : AppCompatActivity() {
         private const val TAG_MOVIE_FRAGMENT = "tag_movie"
         private const val TAG_SETTING_FRAGMENT = "tag_setting"
         private const val TAG_RESERVATION_LIST_FRAGMENT = "tag_reservation"
+
+        fun newIntent(context: Context): Intent =
+            Intent(context, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            }
     }
 }

@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import woowacourse.movie.booking.complete.BookingCompleteActivity
 import woowacourse.movie.mapper.IntentCompat
@@ -28,7 +27,7 @@ class AlarmReceiver : BroadcastReceiver() {
             android.app.NotificationChannel(
                 CHANNEL_ID,
                 CHANNEL_NAME,
-                android.app.NotificationManager.IMPORTANCE_DEFAULT,
+                android.app.NotificationManager.IMPORTANCE_HIGH,
             )
 
         notificationManager.createNotificationChannel(channel)
@@ -53,8 +52,6 @@ class AlarmReceiver : BroadcastReceiver() {
                 .build()
 
         notificationManager.notify(ticket.hashCode(), notification)
-
-        Toast.makeText(context, ticket.toString(), Toast.LENGTH_SHORT).show()
     }
 
     private fun isPermitted(context: Context): Boolean {
