@@ -15,7 +15,5 @@ interface ReservationListContract {
         fun loadReservationInfos()
 
         fun getReservationInfos(): List<ReservationInfo>
-
-        fun onReservationItemClicked(position: Int)
     }
 }

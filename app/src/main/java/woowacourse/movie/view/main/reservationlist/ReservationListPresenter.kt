@@ -41,8 +41,4 @@ class ReservationListPresenter(
     }
 
     override fun getReservationInfos(): List<ReservationInfo> = reservationInfos
-
-    override fun onReservationItemClicked(position: Int) {
-        TODO("예약 완료 액티비티로 이동")
-    }
 }
