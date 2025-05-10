@@ -1,13 +1,16 @@
 package woowacourse.movie.booking.complete
 
 import android.Manifest
+import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -41,7 +44,8 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         } else {
             presenter.initializeData(ticket)
             presenter.saveReservation(ticket, bookingType)
-            presenter.setNotification(ticket, bookingType)
+
+            checkPermission(ticket)
         }
 
         onBackPressedDispatcher.addCallback(this, callback)
@@ -68,6 +72,18 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             KEY_BOOKING_RESULT,
             TicketUiModel::class.java,
         )
+    }
+
+    private fun checkPermission(ticket: TicketUiModel) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || canScheduleExactAlarms()) {
+            presenter.setNotification(ticket, bookingType)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    private fun canScheduleExactAlarms(): Boolean {
+        val alarmManager = getSystemService(AlarmManager::class.java)
+        return alarmManager.canScheduleExactAlarms()
     }
 
     override fun showBookingCompleteResult(ticket: TicketUiModel) {
