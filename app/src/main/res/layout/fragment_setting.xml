@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:checked="@{notificationEnabled}"
-                android:onCheckedChanged="@{() -> handler.onNotificationSettingChanged()}"
+                android:onClick="@{() -> handler.onNotificationSettingChangeAttempted()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:thumbTint="@color/switch_thumb"
                 app:trackTint="@color/switch_track" />
