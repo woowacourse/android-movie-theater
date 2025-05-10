@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.seat.presenter
 
 import woowacourse.movie.data.database.AppDatabase
-import woowacourse.movie.data.entity.BookedTicketEntity
+import woowacourse.movie.data.mapper.BookedTicketMapper
 import woowacourse.movie.domain.model.movie.Headcount
 import woowacourse.movie.domain.model.theater.BookedTicket
 import woowacourse.movie.domain.model.theater.Seat
@@ -71,7 +71,9 @@ class BookingSeatPresenter(
         thread {
             val bookedTicket =
                 BookedTicket(movieTitle, headcount, bookedDateTime, seats, theater.name)
-            appDatabase.bookedTicketDao().insertBookedTicket(bookedTicket.toEntity())
+            appDatabase
+                .bookedTicketDao()
+                .insertBookedTicket(BookedTicketMapper.toEntity(bookedTicket))
         }
     }
 
@@ -80,13 +82,3 @@ class BookingSeatPresenter(
         bookingSeatView.startBookingCompleteActivity(bookedTicket)
     }
 }
-
-private fun BookedTicket.toEntity(uid: Int = 0): BookedTicketEntity =
-    BookedTicketEntity(
-        uid = uid,
-        movieName = movieName,
-        headcount = headcount,
-        dateTime = dateTime,
-        seats = seats,
-        theaterName = theaterName,
-    )
