@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.db
 
 import woowacourse.movie.domain.model.Cinema
 import woowacourse.movie.domain.model.Screening
