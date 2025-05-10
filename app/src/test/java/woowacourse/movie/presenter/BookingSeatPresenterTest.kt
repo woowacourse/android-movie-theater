@@ -28,7 +28,7 @@ class BookingSeatPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = BookingSeatPresenter(view)
+        presenter = BookingSeatPresenter(view, mockk())
         bookingInfoUiModel =
             BookingInfo(
                 movie =

@@ -51,14 +51,23 @@ data class BookingInfo(
             SeatSelectionResult.ExceedCountFailure
         }
 
-    fun getNotificationDelay(): Long {
-        val dateTime = LocalDateTime.of(selectedDate.value, selectedTime.value)
-        val triggerDateTime = dateTime.minusMinutes(BOOKING_NOTIFICATION_TIME_MINUTES)
+    fun getNotificationDelay(currentDateTime: LocalDateTime = LocalDateTime.now()): Long {
+        val selectedDateTime = LocalDateTime.of(selectedDate.value, selectedTime.value)
+        val notificationDateTime = selectedDateTime.minusMinutes(BOOKING_NOTIFICATION_TIME_MINUTES)
 
-        return triggerDateTime
-            .atZone(ZoneId.systemDefault())
-            .toInstant()
-            .toEpochMilli()
+        val nowMillis =
+            currentDateTime
+                .atZone(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli()
+
+        val notificationMillis =
+            notificationDateTime
+                .atZone(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli()
+
+        return notificationMillis - nowMillis
     }
 
     private fun removeSeat(seat: MovieSeat) {
