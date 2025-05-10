@@ -1,5 +1,7 @@
 package woowacourse.movie.feature.main
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -50,6 +52,15 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavMain.selectedItemId = item_home
         setupNavigationItemClickListener()
+
+        val channel =
+            NotificationChannel(
+                "booking_history_channel",
+                "예매 알림 채널",
+                NotificationManager.IMPORTANCE_DEFAULT,
+            )
+        val manager = getSystemService(NotificationManager::class.java)
+        manager?.createNotificationChannel(channel)
     }
 
     private fun setupNavigationItemClickListener() {

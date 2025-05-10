@@ -39,6 +39,10 @@
     <!--   BookingHistoryFragment-->
     <string name="date_time_theater">%s | %s | %s 극장</string>
 
+    <!--   SettingFragment-->
+    <string name="alarm_title">푸시 알림 수신</string>
+    <string name="alarm_guide">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+
     <!--    bottom_nav-->
     <string name="bottom_nav_booking_history">예매 내역</string>
     <string name="bottom_nav_home">홈</string>
