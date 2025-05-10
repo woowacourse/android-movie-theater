@@ -22,4 +22,6 @@
     <string name="text_booking_history">예매 내역</string>
     <string name="text_home">홈</string>
     <string name="text_settings">설정</string>
+    <string name="text_setting_post_notification">푸시 알림 수신</string>
+    <string name="tv_setting_post_notification_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 </resources>

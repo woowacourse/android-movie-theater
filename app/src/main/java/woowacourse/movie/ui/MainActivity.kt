@@ -1,8 +1,13 @@
 package woowacourse.movie.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
@@ -24,21 +29,38 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this@MainActivity, R.layout.activity_main)
+        thread {
+            AppDatabase.getInstance(this).movieDao().insertAll(*DUMMY_ENTITY_MOVIES)
+        }.join()
         applyWindowInsets()
 
-        thread {
-            // TODO 테스트용 매번 테이블 삭제 코드
-//            AppDatabase.getInstance(applicationContext).clearAllTables()
-            AppDatabase.getInstance(applicationContext).movieDao().insertAll(*DUMMY_ENTITY_MOVIES)
-        }
-
-        // 앱 초기 실행 시 홈화면으로 설정
         if (savedInstanceState == null) {
             replaceFragmentContainer(MovieListFragment::class.java)
         }
         binding.navigation.selectedItemId = R.id.navigation_home
         setBottomNavigationView()
+
+        requestNotificationPermission()
     }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+
+        val permission = Manifest.permission.POST_NOTIFICATIONS
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissionLauncher.launch(permission)
+        }
+    }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (!isGranted &&
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)
+            ) {
+                requestNotificationPermission()
+            }
+        }
 
     private fun setBottomNavigationView() {
         binding.navigation.setOnItemSelectedListener { item ->
