@@ -31,8 +31,6 @@ class ReservationHistoryFragment :
     override fun onResume() {
         super.onResume()
         fetchReservations()
-
-        requireActivity().actionBar
     }
 
     private fun fetchReservations() {
