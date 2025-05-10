@@ -103,15 +103,16 @@ class SeatSelectActivity :
         )
     }
 
-    override fun showExactAlarmSettingDialog() {
+    override fun showExactAlarmSettingDialog(reservationInfo: ReservationInfoUiModel) {
         AlertDialog
             .Builder(this)
             .setTitle(getString(R.string.setting_request_permission_dialog_title))
             .setMessage(getString(R.string.setting_request_reminder_permission_dialog_message))
             .setPositiveButton(R.string.setting_request_permission_dialog_positive) { _, _ ->
                 navigateToReminderSettings()
-            }.setNegativeButton(R.string.setting_request_permission_dialog_negative, null)
-            .show()
+            }.setNegativeButton(R.string.setting_request_permission_dialog_negative) { _, _ ->
+                navigateToComplete(reservationInfo)
+            }.show()
     }
 
     override fun navigateToReminderSettings() {

@@ -58,12 +58,13 @@ class SeatSelectPresenter(
     }
 
     override fun reservationConfirmed() {
+        val reservationInfoUiModel = createReservationInfo()
+
         if (!alarmScheduler.canScheduleAlarm()) {
-            view.showExactAlarmSettingDialog()
+            view.showExactAlarmSettingDialog(reservationInfoUiModel)
             return
         }
 
-        val reservationInfoUiModel = createReservationInfo()
         alarmScheduler.scheduleAlarm(reservationInfoUiModel)
 
         thread {
