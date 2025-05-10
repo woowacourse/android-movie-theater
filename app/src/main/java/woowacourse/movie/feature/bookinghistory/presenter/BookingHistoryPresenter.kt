@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.bookinghistory
+package woowacourse.movie.feature.bookinghistory.presenter
 
 import android.content.Context
 import kotlinx.coroutines.CoroutineScope
@@ -7,6 +7,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import woowacourse.movie.data.BookingHistoryDetailsDatabase
 import woowacourse.movie.data.toUiModel
+import woowacourse.movie.feature.bookinghistory.contract.BookingHistoryContract
 import woowacourse.movie.feature.model.BookingInfoUiModel
 
 class BookingHistoryPresenter(
@@ -15,7 +16,7 @@ class BookingHistoryPresenter(
 ) : BookingHistoryContract.Presenter {
     override fun prepareBookingHistory() {
         CoroutineScope(Dispatchers.IO).launch {
-            val db = BookingHistoryDetailsDatabase.getDatabase(context)
+            val db = BookingHistoryDetailsDatabase.Companion.getDatabase(context)
             val list = db.bookingHistoryDetailsDao().getAll()
 
             withContext(Dispatchers.Main) {

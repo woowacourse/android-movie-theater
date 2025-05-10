@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.bookinghistory
+package woowacourse.movie.feature.bookinghistory.view.adapter
 
 import android.view.View
 import android.widget.TextView

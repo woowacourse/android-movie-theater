@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.bookinghistory
+package woowacourse.movie.feature.bookinghistory.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
+import woowacourse.movie.feature.bookinghistory.contract.BookingHistoryContract
+import woowacourse.movie.feature.bookinghistory.presenter.BookingHistoryPresenter
+import woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryAdapter
 import woowacourse.movie.feature.model.BookingInfoUiModel
 
 class BookingHistoryFragment :

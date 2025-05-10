@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.bookinghistory
+package woowacourse.movie.feature.bookinghistory.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

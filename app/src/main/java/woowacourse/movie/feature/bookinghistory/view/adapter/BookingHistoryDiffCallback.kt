@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.bookinghistory
+package woowacourse.movie.feature.bookinghistory.view.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import woowacourse.movie.feature.model.BookingInfoUiModel

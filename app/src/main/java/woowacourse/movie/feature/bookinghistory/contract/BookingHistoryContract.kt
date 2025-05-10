@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.bookinghistory
+package woowacourse.movie.feature.bookinghistory.contract
 
 import woowacourse.movie.feature.model.BookingInfoUiModel
 

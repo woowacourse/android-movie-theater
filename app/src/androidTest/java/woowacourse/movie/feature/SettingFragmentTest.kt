@@ -12,7 +12,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.feature.setting.SettingFragment
+import woowacourse.movie.feature.setting.view.SettingFragment
 
 @Suppress("ktlint:standard:function-naming")
 class SettingFragmentTest {

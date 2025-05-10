@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.setting
+package woowacourse.movie.feature.setting.contract
 
 interface SettingContract {
     interface View {

@@ -8,7 +8,7 @@
 
         <variable
             name="bookingHistoryAdapter"
-            type="woowacourse.movie.feature.bookinghistory.BookingHistoryAdapter" />
+            type="woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

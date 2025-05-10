@@ -217,6 +217,7 @@ class BookingSeatActivity :
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             alarmTime.toEpochSecond() * 1000,
+//            System.currentTimeMillis() * 1000,
             pendingIntent,
         )
     }

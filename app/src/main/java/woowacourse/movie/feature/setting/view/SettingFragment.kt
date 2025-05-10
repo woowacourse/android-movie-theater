@@ -1,4 +1,4 @@
-package woowacourse.movie.feature.setting
+package woowacourse.movie.feature.setting.view
 
 import android.Manifest
 import android.content.Context
@@ -15,6 +15,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.feature.setting.contract.SettingContract
+import woowacourse.movie.feature.setting.presenter.SettingPresenter
 
 class SettingFragment :
     Fragment(),
