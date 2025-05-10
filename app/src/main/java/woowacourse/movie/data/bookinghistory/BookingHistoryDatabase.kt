@@ -9,7 +9,6 @@ import androidx.room.TypeConverters
 @Database(entities = [BookingHistory::class], version = 1)
 @TypeConverters(BookingHistoryConverters::class)
 abstract class BookingHistoryDatabase : RoomDatabase() {
-
     abstract fun bookingHistoryDao(): BookingHistoryDao
 
     companion object {
@@ -21,7 +20,7 @@ abstract class BookingHistoryDatabase : RoomDatabase() {
                 Room.databaseBuilder(
                     context,
                     BookingHistoryDatabase::class.java,
-                    "booking_histories"
+                    "booking_histories",
                 ).build().also { INSTANCE = it }
             }
         }

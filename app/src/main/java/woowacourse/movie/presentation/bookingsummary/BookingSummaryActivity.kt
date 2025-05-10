@@ -46,9 +46,10 @@ class BookingSummaryActivity :
 
     private fun setOnBackPressed() {
         onBackPressedDispatcher.addCallback(this) {
-            val intent = Intent(this@BookingSummaryActivity, MainActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            }
+            val intent =
+                Intent(this@BookingSummaryActivity, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                }
             startActivity(intent)
             finish()
         }
@@ -57,7 +58,10 @@ class BookingSummaryActivity :
     companion object {
         private const val BOOKING_SUMMARY_KEY = "BookingSummary"
 
-        fun newIntent(context: Context, ticket: MovieTicket): Intent {
+        fun newIntent(
+            context: Context,
+            ticket: MovieTicket,
+        ): Intent {
             return Intent(context, BookingSummaryActivity::class.java).apply {
                 putExtra(BOOKING_SUMMARY_KEY, ticket)
             }

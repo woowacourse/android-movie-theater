@@ -32,11 +32,12 @@ class TheaterPresenterTest {
     @Test
     fun `극장을 선택하면 화면을 이동한다`() {
         // Given
-        val screeningInfo = ScreeningInfo(
-            "선릉 극장",
-            movie,
-            listOf(LocalTime.of(12, 0))
-        )
+        val screeningInfo =
+            ScreeningInfo(
+                "선릉 극장",
+                movie,
+                listOf(LocalTime.of(12, 0)),
+            )
 
         // When
         presenter.selectTheater(screeningInfo)

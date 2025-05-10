@@ -11,26 +11,26 @@ import woowacourse.movie.databinding.ItemBookingHistoryBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 
 class BookingHistoryAdapter(
-    private val onClick: (MovieTicket) -> Unit
+    private val onClick: (MovieTicket) -> Unit,
 ) : ListAdapter<MovieTicket, BookingHistoryAdapter.BookingHistoryViewHolder>(diffCallBack) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): BookingHistoryViewHolder {
         return BookingHistoryViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.item_booking_history,
                 parent,
-                false
+                false,
             ),
-            onClick
+            onClick,
         )
     }
 
     override fun onBindViewHolder(
         holder: BookingHistoryViewHolder,
-        position: Int
+        position: Int,
     ) {
         holder.bind(getItem(position))
     }
@@ -46,17 +46,17 @@ class BookingHistoryAdapter(
     }
 
     companion object {
-        private val diffCallBack = object : ItemCallback<MovieTicket>() {
-            override fun areContentsTheSame(
-                oldItem: MovieTicket,
-                newItem: MovieTicket
-            ): Boolean = oldItem == newItem
+        private val diffCallBack =
+            object : ItemCallback<MovieTicket>() {
+                override fun areContentsTheSame(
+                    oldItem: MovieTicket,
+                    newItem: MovieTicket,
+                ): Boolean = oldItem == newItem
 
-            override fun areItemsTheSame(
-                oldItem: MovieTicket,
-                newItem: MovieTicket
-            ): Boolean =
-                oldItem.movieTitle == newItem.movieTitle && oldItem.screeningDateTime == newItem.screeningDateTime
-        }
+                override fun areItemsTheSame(
+                    oldItem: MovieTicket,
+                    newItem: MovieTicket,
+                ): Boolean = oldItem.movieTitle == newItem.movieTitle && oldItem.screeningDateTime == newItem.screeningDateTime
+            }
     }
 }

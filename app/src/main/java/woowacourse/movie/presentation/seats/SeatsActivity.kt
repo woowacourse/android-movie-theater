@@ -25,7 +25,7 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
     private val presenter: SeatsPresenter by lazy {
         SeatsPresenter(
             this,
-            BookingHistoryDatabase.getDatabase(applicationContext)
+            BookingHistoryDatabase.getDatabase(applicationContext),
         )
     }
     private var confirmDialog: AlertDialog? = null
@@ -77,7 +77,10 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
             TicketUiFormatter.formatAmount(getString(R.string.amount_message), amount)
     }
 
-    override fun updateSelectedSeat(seat: Seat, isSelected: Boolean) {
+    override fun updateSelectedSeat(
+        seat: Seat,
+        isSelected: Boolean,
+    ) {
         val view = binding.tablelayoutSeats.findViewWithTag<TextView>(seat.seatPosition)
         view.setBackgroundResource(if (isSelected) R.color.selected_seat else R.color.white)
     }
@@ -127,7 +130,10 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
         private const val SEATS_KEY = "Seats"
         private const val SELECTED_SEATS_KEY = "SelectedSeats"
 
-        fun newIntent(context: Context, ticket: MovieTicket): Intent {
+        fun newIntent(
+            context: Context,
+            ticket: MovieTicket,
+        ): Intent {
             return Intent(context, SeatsActivity::class.java).apply {
                 putExtra(SEATS_KEY, ticket)
             }

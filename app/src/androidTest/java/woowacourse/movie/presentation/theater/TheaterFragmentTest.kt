@@ -19,9 +19,10 @@ import woowacourse.movie.data.MovieData
 class TheaterFragmentTest {
     private val movie = MovieData.movie1
 
-    private val args = Bundle().apply {
-        putSerializable("Theater", movie)
-    }
+    private val args =
+        Bundle().apply {
+            putSerializable("Theater", movie)
+        }
 
     @Test
     fun 극장_목록이_출력된다() {

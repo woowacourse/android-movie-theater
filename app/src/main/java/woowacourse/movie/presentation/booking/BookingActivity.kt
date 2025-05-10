@@ -156,7 +156,10 @@ class BookingActivity :
         private const val INTEGER_FORMAT = "%d"
         private const val BOOKING_KEY = "Booking"
 
-        fun newIntent(context: Context, screeningInfo: ScreeningInfo): Intent {
+        fun newIntent(
+            context: Context,
+            screeningInfo: ScreeningInfo,
+        ): Intent {
             return Intent(context, BookingActivity::class.java).apply {
                 putExtra(BOOKING_KEY, screeningInfo)
             }

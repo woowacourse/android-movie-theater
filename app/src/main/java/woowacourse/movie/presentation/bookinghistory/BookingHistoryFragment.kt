@@ -21,7 +21,7 @@ class BookingHistoryFragment :
     private val presenter: BookingHistoryPresenter by lazy {
         BookingHistoryPresenter(
             this,
-            BookingHistoryDatabase.getDatabase(requireContext().applicationContext)
+            BookingHistoryDatabase.getDatabase(requireContext().applicationContext),
         )
     }
     private var _binding: FragmentBookingHistoryBinding? = null
@@ -30,7 +30,7 @@ class BookingHistoryFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_booking_history, container, false)
@@ -44,9 +44,10 @@ class BookingHistoryFragment :
     }
 
     override fun showBookingHistory(tickets: List<MovieTicket>) {
-        val adapter = BookingHistoryAdapter {
-            presenter.selectBookingHistory(it)
-        }
+        val adapter =
+            BookingHistoryAdapter {
+                presenter.selectBookingHistory(it)
+            }
         adapter.submitList(tickets)
         binding.rvBookingList.apply {
             this.adapter = adapter

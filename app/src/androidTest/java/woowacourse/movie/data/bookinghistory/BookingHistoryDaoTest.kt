@@ -18,9 +18,10 @@ class BookingHistoryDaoTest {
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        database = Room.inMemoryDatabaseBuilder(context, BookingHistoryDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
+        database =
+            Room.inMemoryDatabaseBuilder(context, BookingHistoryDatabase::class.java)
+                .allowMainThreadQueries()
+                .build()
 
         dao = database.bookingHistoryDao()
     }

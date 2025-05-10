@@ -10,8 +10,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 open class DataBindingBaseActivity : AppCompatActivity() {
-    protected inline fun <reified T : ViewDataBinding> binding(@LayoutRes resId: Int): Lazy<T> =
-        lazy { DataBindingUtil.setContentView(this, resId) }
+    protected inline fun <reified T : ViewDataBinding> binding(
+        @LayoutRes resId: Int,
+    ): Lazy<T> = lazy { DataBindingUtil.setContentView(this, resId) }
 
     protected fun setupScreen(view: View) {
         enableEdgeToEdge()

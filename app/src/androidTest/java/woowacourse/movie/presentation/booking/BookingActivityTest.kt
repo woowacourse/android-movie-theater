@@ -40,11 +40,12 @@ class BookingActivityTest {
                 100,
             )
 
-        val screeningInfo = ScreeningInfo(
-            "선릉 극장",
-            movie,
-            listOf(15, 17, 19).map { LocalTime.of(it, 0) }
-        )
+        val screeningInfo =
+            ScreeningInfo(
+                "선릉 극장",
+                movie,
+                listOf(15, 17, 19).map { LocalTime.of(it, 0) },
+            )
 
         val intent = BookingActivity.newIntent(ApplicationProvider.getApplicationContext(), screeningInfo)
         activityScenario = ActivityScenario.launch(intent)
