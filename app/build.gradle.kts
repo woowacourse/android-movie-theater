@@ -49,7 +49,9 @@ android {
 }
 
 dependencies {
+    kapt (libs.androidx.room.compiler)
     debugImplementation(libs.androidx.fragment.testing.manifest)
+    implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.activity.ktx)
