@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
+import woowacourse.movie.domain.model.theater.BookedTicket
 
 class BookingHistoryFragment : Fragment() {
     private var _binding: FragmentBookingHistoryBinding? = null
@@ -23,5 +24,12 @@ class BookingHistoryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setBookedTicketItems(items: List<BookedTicket>) {
+        val adapter = BookedTicketAdapter()
+
+        binding.bookingHistoryRecyclerView.adapter = adapter
+        adapter.submitList(items)
     }
 }

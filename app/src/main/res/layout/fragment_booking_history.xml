@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="10"
-            tools:listitem="@layout/booking_history_item" />
+            tools:listitem="@layout/booked_ticket_item" />
 
     </FrameLayout>
 </layout>
