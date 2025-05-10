@@ -11,10 +11,10 @@ interface BookingStatusDao {
     fun getAll(): List<BookingStatusEntity>
 
     @Insert
-    fun insertBookingStatusEntity(bookingStatusEntity: BookingStatusEntity)
+    fun insert(bookingStatusEntity: BookingStatusEntity)
 
     @Delete
-    fun deleteBookingStatusEntity(bookingStatusEntity: BookingStatusEntity)
+    fun delete(bookingStatusEntity: BookingStatusEntity)
 }
 
 

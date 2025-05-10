@@ -30,7 +30,7 @@ class BookingStatusEntityTest {
             BookingStatusEntity(1, "해리포터와 불의 잔", "2025-5-2", "선릉")
 
         // when
-        bookingStatusDao.insertBookingStatusEntity(bookingStatusEntity)
+        bookingStatusDao.insert(bookingStatusEntity)
         val bookingStatuses = bookingStatusDao.getAll()
 
         // then
@@ -42,10 +42,10 @@ class BookingStatusEntityTest {
     fun `deleteBookingStatus`() {
         // given
         val bookingStatusEntity = BookingStatusEntity(1, "해리포터와 불의 잔", "2025-5-2", "선릉")
-        bookingStatusDao.insertBookingStatusEntity(bookingStatusEntity)
+        bookingStatusDao.insert(bookingStatusEntity)
 
         // when
-        bookingStatusDao.deleteBookingStatusEntity(bookingStatusEntity)
+        bookingStatusDao.delete(bookingStatusEntity)
         val bookingStatuses = bookingStatusDao.getAll()
 
         // then
