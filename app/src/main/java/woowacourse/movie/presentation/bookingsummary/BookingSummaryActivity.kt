@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.addCallback
+import woowacourse.movie.MainActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingsummaryBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
@@ -20,6 +22,7 @@ class BookingSummaryActivity :
         super.onCreate(savedInstanceState)
         if (!fetchTicketFromIntent()) return
         setupScreen(binding.root)
+        setOnBackPressed()
     }
 
     override fun showTicket(ticket: MovieTicket) {
@@ -39,6 +42,16 @@ class BookingSummaryActivity :
         }
         presenter.initializeBookingSummary(data)
         return true
+    }
+
+    private fun setOnBackPressed() {
+        onBackPressedDispatcher.addCallback(this) {
+            val intent = Intent(this@BookingSummaryActivity, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            startActivity(intent)
+            finish()
+        }
     }
 
     companion object {
