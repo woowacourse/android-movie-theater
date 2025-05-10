@@ -1,7 +1,13 @@
 package woowacourse.movie.presentation.settings
 
 interface SettingsContract {
-    interface View
+    interface View {
+        fun updateNotificationSetting(isChecked: Boolean)
+    }
 
-    interface Presenter
+    interface Presenter {
+        fun loadSettings()
+
+        fun saveNotificationSetting(isEnabled: Boolean)
+    }
 }

@@ -21,9 +21,22 @@ class SettingsFragment :
     private val binding: FragmentSettingsBinding get() = _binding!!
     private lateinit var presenter: SettingsPresenter
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                Toast.makeText(requireContext(), "권한을 허용했습니다.", Toast.LENGTH_SHORT).show()
+                presenter.saveNotificationSetting(true)
+            } else {
+                Toast.makeText(requireContext(), "권한을 거부했습니다.", Toast.LENGTH_SHORT).show()
+                binding.isNotificationChecked = false
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = SettingsPresenter(this)
+        presenter = SettingsPresenter(this, requireContext().applicationContext)
     }
 
     override fun onCreateView(
@@ -40,56 +53,57 @@ class SettingsFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        binding.switchNotifications.setOnCheckedChangeListener { button, isChecked ->
+        presenter.loadSettings()
+
+        initNotificationSwitch()
+    }
+
+    override fun updateNotificationSetting(isChecked: Boolean) {
+        binding.isNotificationChecked = isChecked
+    }
+
+    private fun initNotificationSwitch() {
+        binding.switchNotifications.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                requestNotificationPermission()
+                if (!isNotificationPermissionGranted()) {
+                    requestNotificationPermission()
+                } else {
+                    presenter.saveNotificationSetting(true)
+                }
+            } else {
+                presenter.saveNotificationSetting(false)
             }
         }
+    }
+
+    private fun isNotificationPermissionGranted(): Boolean =
+        ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.POST_NOTIFICATIONS,
+        ) == PackageManager.PERMISSION_GRANTED
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+        if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+            binding.isNotificationChecked = false
+            showPermissionExplanationDialog()
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
+    private fun showPermissionExplanationDialog() {
+        AlertDialog
+            .Builder(requireContext())
+            .setTitle("알림 권한 필요")
+            .setMessage("예매 알림을 받으려면 알림 권한이 필요합니다.\n권한을 허용해주세요.")
+            .setPositiveButton("확인", null)
+            .setCancelable(false)
+            .show()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-    private fun requestNotificationPermission() {
-        if (!isPostNotificationPermissionGranted()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    binding.switchNotifications.isChecked = false
-                    showPermissionCheckDialog()
-                } else {
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
-            }
-        }
-    }
-
-    private fun isPostNotificationPermissionGranted(): Boolean =
-        ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.POST_NOTIFICATIONS,
-        ) == PackageManager.PERMISSION_GRANTED
-
-    private fun showPermissionCheckDialog() {
-        AlertDialog
-            .Builder(requireContext())
-            .setTitle("알림 권한 필요")
-            .setMessage("예매 알림을 받으려면 알림 권한이 필요합니다.\n권한을 허용해주세요.")
-            .setPositiveButton("확인") { _, _ -> }
-            .setCancelable(false)
-            .show()
-    }
-
-    private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission(),
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                Toast.makeText(requireContext(), "권한을 허용했습니다.", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "권한을 거부했습니다.", Toast.LENGTH_SHORT).show()
-                binding.switchNotifications.isChecked = false
-            }
-        }
 }
