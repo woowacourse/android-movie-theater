@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityHomeBinding
 import woowacourse.movie.movie.MovieFragment
+import woowacourse.movie.reservation.ReservationFragment
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -46,7 +47,7 @@ class HomeActivity : AppCompatActivity() {
     private fun setFrag(itemId: Int) {
         val fragment =
             when (itemId) {
-                R.id.navigation_booking -> BookingFragment()
+                R.id.navigation_booking -> ReservationFragment()
                 R.id.navigation_home -> MovieFragment()
                 R.id.navigation_settings -> SettingFragment()
                 else -> throw IllegalStateException()
