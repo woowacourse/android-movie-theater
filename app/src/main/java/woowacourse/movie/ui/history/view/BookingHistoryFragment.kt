@@ -49,7 +49,7 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
     }
 
     override fun showHistories(bookingHistories: List<BookedTicketEntity>) {
-        requireActivity().runOnUiThread {
+        activity?.runOnUiThread {
             bookedHistoryAdapter.submitList(bookingHistories)
         }
     }
