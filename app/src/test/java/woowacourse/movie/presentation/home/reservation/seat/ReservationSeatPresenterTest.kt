@@ -21,10 +21,10 @@ class ReservationSeatPresenterTest {
     private val fakeReservationInfo =
         ReservationInfoUiModel(
             "해리포터",
+            "선릉 극장",
             LocalDateTime.of(2025, 4, 1, 11, 0),
             2,
             listOf(),
-            "선릉 극장",
         )
 
     @BeforeEach

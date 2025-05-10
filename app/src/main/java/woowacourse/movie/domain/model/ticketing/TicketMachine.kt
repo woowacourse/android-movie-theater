@@ -6,13 +6,10 @@ import woowacourse.movie.domain.model.reservation.ReservationInfo
 class TicketMachine(
     private val policy: PricePolicy,
 ) {
-    fun publishTickets(
-        info: ReservationInfo,
-        theaterName: String,
-    ): Ticket =
+    fun publishTickets(info: ReservationInfo): Ticket =
         Ticket(
             info.title,
-            theaterName,
+            info.theaterName,
             info.reservationDateTime,
             info.seats,
             calculateTotalPrice(info.seats),

@@ -33,10 +33,10 @@ class ReservationSeatFragmentTest {
     private val fakeReservationInfo =
         ReservationInfoUiModel(
             "해리 포터와 마법사의 돌",
+            "선릉 극장",
             LocalDateTime.of(2025, 4, 1, 11, 0),
             3,
             listOf(),
-            "선릉 극장",
         )
 
     @Before

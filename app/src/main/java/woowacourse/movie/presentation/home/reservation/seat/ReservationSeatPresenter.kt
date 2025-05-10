@@ -22,7 +22,6 @@ class ReservationSeatPresenter(
 ) : ReservationSeatContract.Presenter {
     private val machine = TicketMachine(policy)
     private lateinit var reservationInfo: ReservationInfo
-    private lateinit var theaterName: String
 
     override fun fetchData(
         reservationInfo: ReservationInfoUiModel,
@@ -30,7 +29,6 @@ class ReservationSeatPresenter(
         restoredSeats: ScreenUiModel?,
     ) {
         this.reservationInfo = reservationInfo.toDomain()
-        this.theaterName = reservationInfo.theaterName
         restoreSelectedSeats(restoredSeats)
 
         view.showScreen(
@@ -56,7 +54,7 @@ class ReservationSeatPresenter(
 
     override fun publishTickets() {
         runCatching {
-            machine.publishTickets(reservationInfo, theaterName)
+            machine.publishTickets(reservationInfo)
         }.onSuccess {
             saveReservationHistory(it)
             view.notifyPublishedTickets(it.toUiModel())
