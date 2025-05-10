@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import java.time.LocalDateTime
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.BookedTicket
@@ -17,9 +18,9 @@ import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.ui.main.MovieBookingActivity
+import woowacourse.movie.utils.Destination
 import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.intentSerializable
-import java.time.LocalDateTime
 
 class BookingCompleteActivity :
     AppCompatActivity(),
@@ -39,7 +40,7 @@ class BookingCompleteActivity :
         applyWindowInsets()
         setOnBackPressedCallback()
 
-        bookingCompletePresenter.loadBookedTicket(restoreBookedTicket())
+        bookingCompletePresenter.loadBookedTicket(restoreBookedTicket(), restoreDestination())
     }
 
     override fun showMovieTitle(movieTitle: String) {
@@ -74,7 +75,7 @@ class BookingCompleteActivity :
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
             android.R.id.home -> {
-                moveToHome()
+                bookingCompletePresenter.navigateTo()
                 true
             }
 
@@ -91,20 +92,22 @@ class BookingCompleteActivity :
 
     private fun restoreBookedTicket(): BookedTicket = intent.intentSerializable(EXTRA_BOOKED_TICKET, BookedTicket::class.java)!!
 
+    private fun restoreDestination(): Destination = intent.intentSerializable(EXTRA_DESTINATION, Destination::class.java)!!
+
     private fun setOnBackPressedCallback() {
         onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    moveToHome()
+                    bookingCompletePresenter.navigateTo()
                 }
             },
         )
     }
 
-    private fun moveToHome() {
+    override fun moveTo(destination: Destination) {
         val intent =
-            Intent(this, MovieBookingActivity::class.java).apply {
+            MovieBookingActivity.newIntent(this, destination).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             }
         startActivity(intent)
@@ -114,15 +117,18 @@ class BookingCompleteActivity :
     private fun Seat.toText(): String = Char(row + ASCII_A.code) + (col + 1).toString()
 
     companion object {
+        private const val EXTRA_BOOKED_TICKET = "EXTRA_BOOKED_TICKET"
+        private const val EXTRA_DESTINATION = "EXTRA_DESTINATION"
+        private const val ASCII_A = 'A'
+
         fun newIntent(
             context: Context,
             bookedTicket: BookedTicket,
+            destination: Destination,
         ): Intent =
             Intent(context, BookingCompleteActivity::class.java).apply {
                 putExtra(EXTRA_BOOKED_TICKET, bookedTicket)
+                putExtra(EXTRA_DESTINATION, destination)
             }
-
-        private const val EXTRA_BOOKED_TICKET = "bookedTicket"
-        private const val ASCII_A = 'A'
     }
 }
