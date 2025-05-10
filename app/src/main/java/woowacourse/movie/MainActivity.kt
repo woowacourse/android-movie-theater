@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private val homeFragment by lazy { HomeFragment().newInstance() }
     private val settingFragment by lazy { SettingFragment().newInstance() }
     private val reservationDetailsFragment by lazy { ReservationDetailsFragment().newInstance() }
+    private var activeFragment = homeFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,26 +31,38 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        supportFragmentManager.commit {
+            add(R.id.main_fragment_container, homeFragment)
+            add(R.id.main_fragment_container, settingFragment)
+                .hide(settingFragment)
+            add(R.id.main_fragment_container, reservationDetailsFragment)
+                .hide(reservationDetailsFragment)
+        }
 
+        binding.mainBottomNavigationBar.selectedItemId = R.id.bottom_navigation_home
         binding.mainBottomNavigationBar.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.bottom_navigation_reservation_details ->
-                    replaceFragment(reservationDetailsFragment)
+                    switchFragment(reservationDetailsFragment)
 
                 R.id.bottom_navigation_home ->
-                    replaceFragment(homeFragment)
+                    switchFragment(homeFragment)
 
                 R.id.bottom_navigation_setting ->
-                    replaceFragment(settingFragment)
+                    switchFragment(settingFragment)
             }
             return@setOnItemSelectedListener true
         }
     }
 
-    private fun replaceFragment(selectedFragment: Fragment) {
+    private fun switchFragment(selectedFragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(binding.mainFragmentContainer.id, selectedFragment)
+            if (selectedFragment != activeFragment) {
+                hide(activeFragment)
+                show(selectedFragment)
+                activeFragment = selectedFragment
+            }
         }
     }
 
