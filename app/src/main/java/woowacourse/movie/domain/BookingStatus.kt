@@ -2,9 +2,9 @@ package woowacourse.movie.domain
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.movie.R
+import woowacourse.movie.dao.bookingStatus.BookingStatusEntity
+import woowacourse.movie.dao.bookingseats.BookingSeatEntity
 import woowacourse.movie.domain.seat.BookingSeats
-import woowacourse.movie.domain.seat.Seat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -65,32 +65,30 @@ data class BookingStatus(
             theater: Theater,
         ): BookingStatus = from(movie, count, bookedDate, bookedTime, theater)
 
-        val value = listOf(
-            BookingStatus(
-                Movie(
-                    Title("해리포터와 마법사의 돌"),
-                    R.drawable.movie_poster,
-                    ScreeningPeriod.ofDot("2025.04.01", "2025.04.25"),
-                    152,
-                ),
-                true,
-                BookingSeats(2, mutableListOf(Seat.of(0, 0))),
-                LocalDateTime.of(2025, 6, 5, 9, 0),
-                Theater("선릉", Movies.seolleungMovies, mapOf(Title("해리포터와 마법사의 돌") to listOf(LocalTime.of(9, 0))))
-            ),
-            BookingStatus(
-                Movie(
-                    Title("해리포터와 마법사의 돌"),
-                    R.drawable.movie_poster,
-                    ScreeningPeriod.ofDot("2025.04.01", "2025.04.25"),
-                    152,
-                ),
-                true,
-                BookingSeats(2, mutableListOf(Seat.of(0, 0))),
-                LocalDateTime.of(2025, 6, 5, 9, 0),
-                Theater("선릉", Movies.seolleungMovies, mapOf(Title("해리포터와 마법사의 돌") to listOf(LocalTime.of(9, 0))))
+
+        fun toDomain(
+            bookingStatusEntity: BookingStatusEntity,
+            bookingSeatEntity: List<BookingSeatEntity>,
+        ): BookingStatus {
+            val movie: Movie =
+                (Movies.value.find(Title(bookingStatusEntity.movieTitle))
+                        as? MovieResult.Success)
+                    ?.movie
+                    ?: throw IllegalArgumentException()
+            val theater: Theater =
+                (Theaters.theaters.find(bookingStatusEntity.theater)
+                        as? TheaterResult.Success)
+                    ?.theater
+                    ?: throw IllegalArgumentException()
+            val reservationDateTime = LocalDateTime.parse(bookingStatusEntity.reservationDateTime)
+            val seats = BookingSeats.toDomain(bookingSeatEntity)
+            return BookingStatus(
+                movie = movie,
+                seat = seats,
+                bookedTime = reservationDateTime,
+                theater = theater,
             )
-        )
+        }
     }
 }
 

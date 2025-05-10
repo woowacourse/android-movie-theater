@@ -7,7 +7,7 @@ import woowacourse.movie.domain.BookingStatus
 
 @Entity(tableName = "booking_status")
 data class BookingStatusEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "movie_title") val movieTitle: String,
     @ColumnInfo(name = "reservation_date_time") val reservationDateTime: String,
     @ColumnInfo(name = "theater") val theater: String,

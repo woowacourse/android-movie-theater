@@ -10,6 +10,9 @@ interface BookingSeatDao {
     @Query("SELECT * FROM booking_seat")
     fun getAll(): List<BookingSeatEntity>
 
+    @Query("SELECT * FROM booking_seat WHERE booking_status_id = :bookingStatusId")
+    fun get(bookingStatusId: Long): List<BookingSeatEntity>
+
     @Insert
     fun insert(bookingSeatEntity: List<BookingSeatEntity>)
 

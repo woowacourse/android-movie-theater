@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import woowacourse.movie.dao.bookingStatus.BookingStatusEntity
 
-@Database(entities = [BookingStatusEntity::class], version = 1)
+@Database(entities = [BookingStatusEntity::class], version = 2)
 abstract class BookingStatusDatabase : RoomDatabase() {
     abstract fun BookingStatusDao(): BookingStatusDao
 

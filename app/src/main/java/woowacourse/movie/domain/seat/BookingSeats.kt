@@ -2,6 +2,7 @@ package woowacourse.movie.domain.seat
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import woowacourse.movie.dao.bookingseats.BookingSeatEntity
 import woowacourse.movie.domain.BookingStatus
 
 @Parcelize
@@ -32,6 +33,15 @@ data class BookingSeats(
 
     companion object {
         private const val MINIMUM_NUMBER_OF_PEOPLE = 1
+
+        fun toDomain(bookingSeatEntity: List<BookingSeatEntity>): BookingSeats {
+            return BookingSeats(
+                value = bookingSeatEntity.size,
+                _seats = bookingSeatEntity.map { bookingSeatEntity ->
+                    Seat.of(bookingSeatEntity.row, bookingSeatEntity.col)
+                }.toMutableList()
+            )
+        }
     }
 }
 

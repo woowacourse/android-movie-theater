@@ -7,13 +7,13 @@ import woowacourse.movie.domain.BookingStatus
 
 @Entity(tableName = "booking_seat")
 data class BookingSeatEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "row") val row: Int,
     @ColumnInfo(name = "col") val col: Int,
-    @ColumnInfo(name = "booking_status_id") val bookingStatusId: Int,
+    @ColumnInfo(name = "booking_status_id") val bookingStatusId: Long,
 ) {
     companion object {
-        fun of(bookingStatus: BookingStatus, bookingStatusId: Int): List<BookingSeatEntity> {
+        fun of(bookingStatus: BookingStatus, bookingStatusId: Long): List<BookingSeatEntity> {
             return bookingStatus.seat.seats.map { seat ->
                 BookingSeatEntity(
                     row = seat.row.value,
