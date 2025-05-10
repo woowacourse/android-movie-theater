@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
+import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.model.BookingInfoUiModel
 
 class BookingHistoryFragment :
@@ -20,10 +21,10 @@ class BookingHistoryFragment :
             this,
         )
     }
-    private val bookingHistoryAdapter: BookingHistoryAdapter by lazy { BookingHistoryAdapter() }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val bookingHistoryAdapter: BookingHistoryAdapter by lazy {
+        BookingHistoryAdapter { bookingHistory ->
+            presenter.selectBookingHistory(bookingHistory)
+        }
     }
 
     override fun onCreateView(
@@ -50,6 +51,7 @@ class BookingHistoryFragment :
     }
 
     override fun navigateToBookingDetail(bookingHistory: BookingInfoUiModel) {
-        TODO("Not yet implemented")
+        val intent = BookingCompleteActivity.newIntent(requireContext(), bookingHistory)
+        startActivity(intent)
     }
 }

@@ -5,9 +5,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import woowacourse.movie.data.BookingHistoryDetails
 import woowacourse.movie.data.BookingHistoryDetailsDatabase
 import woowacourse.movie.data.toUiModel
+import woowacourse.movie.feature.model.BookingInfoUiModel
 
 class BookingHistoryPresenter(
     private val context: Context,
@@ -24,7 +24,7 @@ class BookingHistoryPresenter(
         }
     }
 
-    override fun selectBookingHistory(bookingHistory: BookingHistoryDetails) {
-        view.navigateToBookingDetail(bookingHistory.toUiModel())
+    override fun selectBookingHistory(bookingHistory: BookingInfoUiModel) {
+        view.navigateToBookingDetail(bookingHistory)
     }
 }

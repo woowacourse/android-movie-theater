@@ -1,6 +1,5 @@
 package woowacourse.movie.feature.bookinghistory
 
-import woowacourse.movie.data.BookingHistoryDetails
 import woowacourse.movie.feature.model.BookingInfoUiModel
 
 interface BookingHistoryContract {
@@ -13,6 +12,6 @@ interface BookingHistoryContract {
     interface Presenter {
         fun prepareBookingHistory()
 
-        fun selectBookingHistory(bookingHistory: BookingHistoryDetails)
+        fun selectBookingHistory(bookingHistory: BookingInfoUiModel)
     }
 }

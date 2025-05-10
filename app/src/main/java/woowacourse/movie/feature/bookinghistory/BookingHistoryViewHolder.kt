@@ -12,7 +12,10 @@ class BookingHistoryViewHolder(
     private val bookingDetails: TextView = view.findViewById(R.id.tv_date_time_theater_name)
     private val title: TextView = view.findViewById(R.id.tv_movie_title)
 
-    fun bind(bookingHistoryDetails: BookingInfoUiModel) {
+    fun bind(
+        onBookingHistoryClick: (BookingInfoUiModel) -> Unit,
+        bookingHistoryDetails: BookingInfoUiModel,
+    ) {
         bookingDetails.text =
             view.context.getString(
                 R.string.date_time_theater,
@@ -22,5 +25,8 @@ class BookingHistoryViewHolder(
             )
 
         title.text = bookingHistoryDetails.movie.title
+        view.setOnClickListener {
+            onBookingHistoryClick(bookingHistoryDetails)
+        }
     }
 }

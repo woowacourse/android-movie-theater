@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.R
 import woowacourse.movie.feature.model.BookingInfoUiModel
 
-class BookingHistoryAdapter :
-    ListAdapter<BookingInfoUiModel, BookingHistoryViewHolder>(
+class BookingHistoryAdapter(
+    private val onBookingHistoryClick: (BookingInfoUiModel) -> Unit,
+) : ListAdapter<BookingInfoUiModel, BookingHistoryViewHolder>(
         BookingHistoryDiffCallback,
     ) {
     override fun onCreateViewHolder(
@@ -29,6 +30,6 @@ class BookingHistoryAdapter :
         position: Int,
     ) {
         val item: BookingInfoUiModel = getItem(position)
-        holder.bind(item)
+        holder.bind(onBookingHistoryClick, item)
     }
 }
