@@ -22,7 +22,9 @@ import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.ui.model.TicketUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
-    private val presenter = BookingCompletePresenter(this, SettingPreference(this))
+    private val presenter: BookingCompletePresenter by lazy {
+        BookingCompletePresenter(this, SettingPreference(this))
+    }
     private lateinit var binding: ActivityBookingCompleteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
