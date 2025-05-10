@@ -5,8 +5,6 @@ import android.view.View
 import android.widget.LinearLayout.VERTICAL
 import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationRepositoryImpl
-import woowacourse.movie.data.db.ReservationDatabase
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.presentation.common.base.BaseFragment
 import woowacourse.movie.presentation.common.model.TicketUiModel
@@ -18,7 +16,7 @@ class ReservationHistoryFragment :
     BaseFragment<FragmentReservationHistoryBinding>(R.layout.fragment_reservation_history),
     ReservationHistoryContract.View,
     ReservationHistoryEventListener {
-    private lateinit var presenter: ReservationHistoryPresenter
+    private val presenter: ReservationHistoryPresenter by lazy { ReservationHistoryPresenter(this) }
     private val adapter by lazy { ReservationsAdapter(this) }
 
     override fun onViewCreated(
@@ -26,7 +24,6 @@ class ReservationHistoryFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setPresenter()
         setHistoryAdapter()
         fetchReservations()
     }
@@ -51,12 +48,6 @@ class ReservationHistoryFragment :
     override fun onHistoryClick(ticket: TicketUiModel) {
         val intent = ReservationResultActivity.newIntent(requireContext(), ticket)
         startActivity(intent)
-    }
-
-    private fun setPresenter() {
-        val dao = ReservationDatabase.getInstance(requireContext()).reservationDao()
-        val daoListener = ReservationRepositoryImpl(dao)
-        presenter = ReservationHistoryPresenter(this, daoListener)
     }
 
     private fun setHistoryAdapter() {

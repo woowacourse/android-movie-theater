@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import woowacourse.movie.R
-import woowacourse.movie.data.ReservationRepositoryImpl
-import woowacourse.movie.data.db.ReservationDatabase
 import woowacourse.movie.databinding.FragmentReservationSeatBinding
 import woowacourse.movie.presentation.alarm.AlarmHelper
 import woowacourse.movie.presentation.common.base.BaseFragment
@@ -21,7 +19,7 @@ import woowacourse.movie.presentation.home.reservation.result.ReservationResultA
 class ReservationSeatFragment :
     BaseFragment<FragmentReservationSeatBinding>(R.layout.fragment_reservation_seat),
     ReservationSeatContract.View {
-    private lateinit var presenter: ReservationSeatPresenter
+    private val presenter: ReservationSeatPresenter by lazy { ReservationSeatPresenter(this) }
     private lateinit var views: ReservationSeatViews
     private val dialog: CustomAlertDialog by lazy { CustomAlertDialog(requireContext()) }
     private val publishDialogInfo: DialogInfo by lazy {
@@ -40,7 +38,6 @@ class ReservationSeatFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        initPresenter()
         initViews()
         restoreOrInitData(savedInstanceState)
     }
@@ -81,12 +78,6 @@ class ReservationSeatFragment :
         }
 
         navigateToResultScreen(ticket)
-    }
-
-    private fun initPresenter() {
-        val dao = ReservationDatabase.getInstance(requireContext()).reservationDao()
-        val reservationRepository = ReservationRepositoryImpl(dao)
-        presenter = ReservationSeatPresenter(this, reservationRepository)
     }
 
     private fun initViews() {

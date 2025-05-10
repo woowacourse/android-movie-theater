@@ -13,8 +13,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import woowacourse.movie.BuildConfig
 import woowacourse.movie.R
-import woowacourse.movie.data.NotificationPreferenceRepositoryImpl
-import woowacourse.movie.data.preference.NotificationPreferenceManager
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.presentation.common.base.BaseFragment
 import woowacourse.movie.presentation.common.custom.CustomAlertDialog
@@ -23,7 +21,7 @@ import woowacourse.movie.presentation.common.custom.DialogInfo
 class SettingFragment :
     BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting),
     SettingContract.View {
-    private lateinit var presenter: SettingContract.Presenter
+    private val presenter: SettingContract.Presenter by lazy { SettingPresenter(this) }
     private val dialog: CustomAlertDialog by lazy { CustomAlertDialog(requireContext()) }
 
     private val permissionRationaleDialogInfo by lazy {
@@ -55,19 +53,11 @@ class SettingFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-
-        setSettingPresenter()
         setNotificationSwitchListener()
     }
 
     override fun notifyNotificationEnabled(isEnabled: Boolean) {
         binding.switchNotification.isChecked = isEnabled
-    }
-
-    private fun setSettingPresenter() {
-        val notificationPreferenceManager = NotificationPreferenceManager.getInstance(requireContext())
-        val prefsListener = NotificationPreferenceRepositoryImpl(notificationPreferenceManager)
-        presenter = SettingPresenter(this, prefsListener)
     }
 
     private fun setNotificationSwitchListener() {
