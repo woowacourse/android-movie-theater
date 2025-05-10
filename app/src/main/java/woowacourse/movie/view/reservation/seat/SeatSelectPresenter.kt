@@ -1,6 +1,8 @@
 package woowacourse.movie.view.reservation.seat
 
+import android.content.Context
 import woowacourse.movie.R
+import woowacourse.movie.database.AppDatabase
 import woowacourse.movie.model.reservation.MovieTicket
 import woowacourse.movie.model.reservation.ReservationInfo
 import woowacourse.movie.model.seat.Seat
@@ -69,6 +71,15 @@ class SeatSelectPresenter(
         message: String,
     ) {
         view.showReservationDialog(title, message)
+    }
+
+    override fun saveReservationInfoToDB(reservationInfo: ReservationInfo) {
+        val context = (view as? Context) ?: return
+        Thread {
+            val database = AppDatabase.getDatabase(context)
+            val dao = database.reservationInfoDao()
+            dao.insertReservation(reservationInfo)
+        }.start()
     }
 
     fun getSelectedSeats(): List<Seat> = selectedSeats.value

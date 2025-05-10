@@ -119,6 +119,7 @@ class SeatSelectActivity :
             { dialog -> dialog.dismiss() },
             { _ ->
                 presenter.createReservationInfo { reservationInfo ->
+                    presenter.saveReservationInfoToDB(reservationInfo)
                     navigateToComplete(reservationInfo)
                 }
             },

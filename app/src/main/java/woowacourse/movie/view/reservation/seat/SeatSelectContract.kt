@@ -57,5 +57,7 @@ interface SeatSelectContract {
             title: String,
             message: String,
         )
+
+        fun saveReservationInfoToDB(reservationInfo: ReservationInfo)
     }
 }
