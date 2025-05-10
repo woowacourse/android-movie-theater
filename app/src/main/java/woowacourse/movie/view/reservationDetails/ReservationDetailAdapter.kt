@@ -9,8 +9,9 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemReservationDetailBinding
 import woowacourse.movie.model.ticket.MovieTicket
 
-class ReservationDetailAdapter :
-    ListAdapter<MovieTicket, ReservationDetailViewHolder>(
+class ReservationDetailAdapter(
+    private val reservationDetailClickListener: ReservationDetailClickListener,
+) : ListAdapter<MovieTicket, ReservationDetailViewHolder>(
         object : DiffUtil.ItemCallback<MovieTicket>() {
             override fun areItemsTheSame(
                 oldItem: MovieTicket,
@@ -36,6 +37,11 @@ class ReservationDetailAdapter :
                 false,
             )
         val holder = ReservationDetailViewHolder(reservationBinding)
+        holder.button.setOnClickListener {
+            val position = holder.adapterPosition
+            val item = getItem(position)
+            reservationDetailClickListener.onReservationClick(item.ticketId)
+        }
         return holder
     }
 
@@ -44,6 +50,6 @@ class ReservationDetailAdapter :
         position: Int,
     ) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, reservationDetailClickListener)
     }
 }

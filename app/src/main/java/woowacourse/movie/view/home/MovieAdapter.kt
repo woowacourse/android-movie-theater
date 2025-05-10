@@ -51,7 +51,7 @@ class MovieAdapter(
                     val position = holder.adapterPosition
                     val adjustedPosition = position - position / AD_POSITION_MULTIPLE
                     val item = getItem(adjustedPosition)
-                    movieClickListener.onReservationClick(item.id)
+                    movieClickListener.onMovieClick(item.id)
                 }
                 holder
             }

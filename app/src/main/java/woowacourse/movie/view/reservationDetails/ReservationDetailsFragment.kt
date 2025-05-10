@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationDetailsBinding
 import woowacourse.movie.model.reservation.ReservationDatabase
+import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity.Companion.getIntent
 
 class ReservationDetailsFragment : Fragment() {
     private lateinit var binding: FragmentReservationDetailsBinding
@@ -38,12 +39,26 @@ class ReservationDetailsFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        reservationDetailAdapter = ReservationDetailAdapter()
+        reservationDetailAdapter =
+            ReservationDetailAdapter(
+                reservationDetailClickListener =
+                    object : ReservationDetailClickListener {
+                        override fun onReservationClick(ticketId: Long) {
+                            Thread {
+                                val movieTicket =
+                                    dao.findReservation(ticketId) ?: return@Thread
+                                requireActivity().runOnUiThread {
+                                    startActivity(getIntent(requireContext(), movieTicket))
+                                }
+                            }.start()
+                        }
+                    },
+            )
         binding.rvReservationDetails.layoutManager = LinearLayoutManager(requireContext())
         binding.rvReservationDetails.adapter = reservationDetailAdapter
 
         Thread {
-            val reservations = dao.findReservation()
+            val reservations = dao.findReservations()
 
             requireActivity().runOnUiThread {
                 reservationDetailAdapter.submitList(reservations)

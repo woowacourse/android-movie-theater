@@ -11,8 +11,15 @@ interface ReservationDao {
     fun saveReservation(movieTicket: MovieTicket)
 
     @Query("SELECT * from movieTicket")
-    fun findReservation(): List<MovieTicket>
+    fun findReservations(): List<MovieTicket>
 
     @Query("DELETE  from movieTicket")
     fun clear()
+
+    fun findReservation(ticketId: Long): MovieTicket? {
+        val reservations = findReservations()
+        return reservations.find {
+            it.ticketId == ticketId
+        }
+    }
 }
