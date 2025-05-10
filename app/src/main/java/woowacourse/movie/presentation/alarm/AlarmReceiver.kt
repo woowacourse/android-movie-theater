@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
-import woowacourse.movie.data.preference.PreferenceManager
+import woowacourse.movie.data.preference.NotificationPreferenceManager
 import woowacourse.movie.presentation.common.extension.getParcelableCompat
 import woowacourse.movie.presentation.common.model.TicketUiModel
 import woowacourse.movie.presentation.home.reservation.result.ReservationResultActivity
@@ -17,7 +17,7 @@ class AlarmReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        if (!PreferenceManager.getInstance(context).isNotificationEnabled) return
+        if (!NotificationPreferenceManager.getInstance(context).isNotificationEnabled) return
 
         val ticket = intent.getParcelableCompat<TicketUiModel>(AlarmHelper.KEY_TICKET)
         showNotification(context, ticket)

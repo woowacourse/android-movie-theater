@@ -13,8 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import woowacourse.movie.BuildConfig
 import woowacourse.movie.R
-import woowacourse.movie.data.preference.NotificationPreferenceRepositoryImpl
-import woowacourse.movie.data.preference.PreferenceManager
+import woowacourse.movie.data.NotificationPreferenceRepositoryImpl
+import woowacourse.movie.data.preference.NotificationPreferenceManager
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.presentation.common.base.BaseFragment
 import woowacourse.movie.presentation.common.custom.CustomAlertDialog
@@ -65,8 +65,8 @@ class SettingFragment :
     }
 
     private fun setSettingPresenter() {
-        val preferenceManager = PreferenceManager.getInstance(requireContext())
-        val prefsListener = NotificationPreferenceRepositoryImpl(preferenceManager)
+        val notificationPreferenceManager = NotificationPreferenceManager.getInstance(requireContext())
+        val prefsListener = NotificationPreferenceRepositoryImpl(notificationPreferenceManager)
         presenter = SettingPresenter(this, prefsListener)
     }
 

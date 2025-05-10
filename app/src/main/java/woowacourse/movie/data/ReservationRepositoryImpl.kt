@@ -1,5 +1,7 @@
-package woowacourse.movie.data.db
+package woowacourse.movie.data
 
+import woowacourse.movie.data.db.ReservationDao
+import woowacourse.movie.data.db.ReservationEntity
 import woowacourse.movie.domain.ReservationRepository
 import woowacourse.movie.domain.model.ticketing.Ticket
 

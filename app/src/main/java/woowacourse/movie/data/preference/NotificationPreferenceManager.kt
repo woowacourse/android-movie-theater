@@ -4,12 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 
-class PreferenceManager private constructor(
-    context: Context,
+class NotificationPreferenceManager(
+    private val prefs: SharedPreferences,
 ) {
-    private val prefs: SharedPreferences =
-        context.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-
     var isNotificationEnabled: Boolean
         get() = prefs.getBoolean(KEY_NOTIFICATION_ENABLED, false)
         set(value) =
@@ -19,11 +16,12 @@ class PreferenceManager private constructor(
         private const val PREF_NAME = "NotificationPrefs"
         private const val KEY_NOTIFICATION_ENABLED = "notification_enabled"
 
-        private var instance: PreferenceManager? = null
+        private var instance: NotificationPreferenceManager? = null
 
-        fun getInstance(context: Context): PreferenceManager {
+        fun getInstance(context: Context): NotificationPreferenceManager {
             if (instance == null) {
-                instance = PreferenceManager(context)
+                val prefs = context.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+                instance = NotificationPreferenceManager(prefs)
             }
             return instance!!
         }
