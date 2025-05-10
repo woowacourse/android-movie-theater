@@ -19,7 +19,6 @@ class ReservationListFragment :
 
     override fun showReservationList(data: List<Ticket>) {
         binding.lvReservationList.adapter = ReservationListAdapter(data, ::navigateToReservationResult)
-        binding.lvReservationList
         binding.lvReservationList.layoutManager = LinearLayoutManager(requireContext())
     }
 
