@@ -104,7 +104,7 @@ class BookingSeatActivity :
             PendingIntent.getBroadcast(
                 this,
                 bookingInfo.id?.toInt() ?: -1,
-                NotificationReceiver.newIntent(this, bookingInfo.movie.title),
+                NotificationReceiver.newIntent(this, bookingInfo),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
 
@@ -112,7 +112,7 @@ class BookingSeatActivity :
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            notificationDelay,
+            System.currentTimeMillis() + notificationDelay,
             pendingIntent,
         )
     }
