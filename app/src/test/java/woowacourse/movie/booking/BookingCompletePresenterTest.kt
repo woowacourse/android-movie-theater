@@ -17,8 +17,11 @@ import woowacourse.movie.fixture.SEAT_A2
 import woowacourse.movie.fixture.SEAT_C1
 import woowacourse.movie.fixture.SEOLLEUNG
 import woowacourse.movie.fixture.createTicket
+import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.ui.model.TicketUiModel
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class BookingCompletePresenterTest {
     private lateinit var presenter: BookingCompletePresenter
@@ -26,7 +29,7 @@ class BookingCompletePresenterTest {
     private lateinit var mockTicketUiData: TicketUiModel
     private val settingManager =
         object : SettingRepository {
-            private var isAlarm = false
+            private var isAlarm = true
 
             override fun isAlarmPermitted(): Boolean = isAlarm
 
@@ -67,5 +70,32 @@ class BookingCompletePresenterTest {
             assertThat(seats).isEqualTo(setOf(SEAT_A1.toUiModel(), SEAT_A2.toUiModel(), SEAT_C1.toUiModel()))
             assertThat(totalPrice).isEqualTo("35,000")
         }
+    }
+
+    @Test
+    fun `알림_권한이_허용된_경우_알람이_설정된다`() {
+        // given
+        val ticketSlot = slot<TicketUiModel>()
+        val timeSlot = slot<Long>()
+
+        every { mockView.makeAlarm(capture(ticketSlot), capture(timeSlot)) } just Runs
+
+        // when
+        presenter.initializeData(mockTicketUiData)
+
+        val expected =
+            LocalDateTime.of(mockTicketUiData.toDomain().selectedDate, mockTicketUiData.toDomain().selectedTime)
+                .minusMinutes(30)
+                .atZone(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli()
+
+        // then
+        verify {
+            mockView.makeAlarm(any(), any())
+        }
+
+        assertThat(ticketSlot.captured).isEqualTo(mockTicketUiData)
+        assertThat(timeSlot.captured).isEqualTo(expected)
     }
 }
