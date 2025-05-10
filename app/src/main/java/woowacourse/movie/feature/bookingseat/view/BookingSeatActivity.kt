@@ -12,8 +12,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import woowacourse.movie.R
+import woowacourse.movie.data.BookingHistoryDetailsDatabase
+import woowacourse.movie.data.toEntity
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookingseat.contract.BookingSeatContract
@@ -96,9 +100,18 @@ class BookingSeatActivity :
     }
 
     override fun navigateToBookingComplete(bookingInfo: BookingInfoUiModel) {
-        val intent = BookingCompleteActivity.newIntent(this, bookingInfo)
-        startActivity(intent)
-        finish()
+        lifecycleScope.launch {
+            val entity = bookingInfo.toEntity()
+
+            BookingHistoryDetailsDatabase
+                .getDatabase(applicationContext)
+                .bookingHistoryDetailsDao()
+                .insertAll(entity)
+
+            val intent = BookingCompleteActivity.newIntent(this@BookingSeatActivity, bookingInfo)
+            startActivity(intent)
+            finish()
+        }
     }
 
     override fun navigateToBack() {
