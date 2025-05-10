@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.data.database.AppDatabase
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.theater.BookedTicket
+import woowacourse.movie.ui.complete.view.BookingCompleteActivity
 import woowacourse.movie.ui.history.contract.BookingHistoryContract
 import woowacourse.movie.ui.history.presenter.BookingHistoryPresenter
 
@@ -36,7 +37,14 @@ class BookingHistoryFragment :
     }
 
     override fun setBookedTicketItems(items: List<BookedTicket>) {
-        val adapter = BookedTicketAdapter()
+        val adapter =
+            BookedTicketAdapter(
+                onClickBookedTicket =
+                    BookedTicketClickListener { bookedTicket ->
+                        val intent = BookingCompleteActivity.newIntent(requireContext(), bookedTicket)
+                        startActivity(intent)
+                    },
+            )
 
         binding.bookingHistoryRecyclerView.adapter = adapter
         adapter.submitList(items)

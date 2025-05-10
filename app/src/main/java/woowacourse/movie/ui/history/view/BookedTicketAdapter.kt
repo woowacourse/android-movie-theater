@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.domain.model.theater.BookedTicket
 
-class BookedTicketAdapter :
-    ListAdapter<BookedTicket, RecyclerView.ViewHolder>(
+class BookedTicketAdapter(
+    val onClickBookedTicket: BookedTicketClickListener,
+) : ListAdapter<BookedTicket, RecyclerView.ViewHolder>(
         object : DiffUtil.ItemCallback<BookedTicket>() {
             override fun areItemsTheSame(
                 oldItem: BookedTicket,
@@ -23,7 +24,7 @@ class BookedTicketAdapter :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): RecyclerView.ViewHolder = BookedTicketViewHolder.from(parent)
+    ): RecyclerView.ViewHolder = BookedTicketViewHolder.from(parent, onClickBookedTicket)
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,

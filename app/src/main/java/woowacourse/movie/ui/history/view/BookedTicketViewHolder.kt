@@ -16,9 +16,13 @@ class BookedTicketViewHolder(
     }
 
     companion object {
-        fun from(parent: ViewGroup): BookedTicketViewHolder {
+        fun from(
+            parent: ViewGroup,
+            onClickBookedTicket: BookedTicketClickListener,
+        ): BookedTicketViewHolder {
             val binding =
                 BookedTicketItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            binding.bookedTicketClickListener = onClickBookedTicket
             return BookedTicketViewHolder(binding)
         }
     }
