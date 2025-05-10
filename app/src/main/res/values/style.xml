@@ -149,5 +149,19 @@
         <item name="android:textSize">@dimen/font_size_normal</item> <!-- 16sp -->
         <item name="android:textStyle">bold</item>
     </style>
+
+    <!-- 설정 화면 메인 글자 스타일 -->
+    <style name="SettingTitleTextStyle" parent="BaseTextStyle">
+        <item name="android:gravity">start</item>
+        <item name="android:textSize">@dimen/font_size_normal</item> <!-- 16sp -->
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- 설정 화면 서브 글자 스타일 -->
+    <style name="SettingSubTextStyle" parent="BaseTextStyle">
+        <item name="android:gravity">start</item>
+        <item name="android:textSize">@dimen/font_size_small</item> <!-- 16sp -->
+        <item name="android:textColor">@color/gray_700</item>
+    </style>
 </resources>
 
