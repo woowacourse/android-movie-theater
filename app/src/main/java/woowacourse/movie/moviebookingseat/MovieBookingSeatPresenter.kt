@@ -1,15 +1,20 @@
 package woowacourse.movie.moviebookingseat
 
 import woowacourse.movie.domain.BookingStatus
+import woowacourse.movie.domain.ReservationInfo
+import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.seat.Seat
+import woowacourse.movie.helper.LocalDateHelper.toDotFormat
 
 class MovieBookingSeatPresenter(
     private val view: MovieBookingSeat.View,
 ) : MovieBookingSeat.Presenter {
     private lateinit var bookingStatus: BookingStatus
+    private lateinit var theater: Theater
 
-    override fun loadBookingStatus(bookingStatus: BookingStatus) {
+    override fun loadBookingStatus(bookingStatus: BookingStatus, theater: Theater) {
         this.bookingStatus = bookingStatus
+        this.theater = theater
         view.showBookingStatusInfo()
     }
 
@@ -34,6 +39,24 @@ class MovieBookingSeatPresenter(
     }
 
     override fun confirmBooking() {
-        view.showConfirmDialog(bookingStatus)
+        val reservationInfo =
+            ReservationInfo(
+                bookingStatus.movie.title,
+                bookingStatus.bookedTime.toLocalDate().toDotFormat(),
+                bookingStatus.bookedTime.toLocalTime().toDotFormat(),
+                bookingStatus.memberCount,
+                formattedSeat(bookingStatus.seat.seats),
+                theater.name,
+                bookingStatus.calculateTicketPrices(),
+                )
+        view.showConfirmDialog(reservationInfo)
+    }
+
+    private fun formattedSeat(seats: List<Seat>): String {
+        return seats.joinToString { seat ->
+                val rowChar = 'A' + seat.row.value
+                val colNumber = seat.column.value + 1
+                "$rowChar$colNumber"
+            }
     }
 }

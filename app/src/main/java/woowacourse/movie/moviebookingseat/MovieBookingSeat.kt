@@ -1,6 +1,7 @@
 package woowacourse.movie.moviebookingseat
 
 import woowacourse.movie.domain.BookingStatus
+import woowacourse.movie.domain.ReservationInfo
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.seat.Seat
 
@@ -17,18 +18,15 @@ interface MovieBookingSeat {
 
         fun showTotalPrice(price: Int)
 
-        fun showConfirmDialog(bookingStatus: BookingStatus)
+        fun showConfirmDialog(reservationInfo: ReservationInfo)
 
-        fun navigateToMovieBooked(
-            bookingStatus: BookingStatus,
-            theater: Theater,
-        )
+        fun navigateToMovieBooked(reservationInfo: ReservationInfo)
 
         fun showError(messageRes: Int)
     }
 
     interface Presenter {
-        fun loadBookingStatus(bookingStatus: BookingStatus)
+        fun loadBookingStatus(bookingStatus: BookingStatus, theater: Theater)
 
         fun selectSeat(seat: Seat)
 

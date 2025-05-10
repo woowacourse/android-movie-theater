@@ -10,9 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookedBinding
-import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.ReservationInfo
-import woowacourse.movie.domain.Theater
 import woowacourse.movie.helper.BuildVersion
 
 class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
@@ -26,33 +24,6 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
         applyWindowInserts()
         presenter = MovieBookedPresenter(this)
         fetchReservationInfo()
-//        fetchBookingStatus()
-    }
-
-    override fun fetchBookingStatus() {
-        val bookingStatus =
-            BuildVersion().getParcelableClass(
-                intent,
-                KEY_BOOKING_STATUS,
-                BookingStatus::class,
-            )
-        val theater = BuildVersion().getParcelableClass(intent, KEY_THEATER, Theater::class)
-        presenter.loadBookedStatus(bookingStatus, theater)
-    }
-
-    override fun showBookedStatus(
-        bookingStatus: BookingStatus,
-        theater: Theater,
-    ) {
-//        binding.bookingStatus = bookingStatus
-//        binding.theater = theater
-//        val seatsText =
-//            bookingStatus.seat.seats.joinToString { seat ->
-//                val rowChar = 'A' + seat.row.value
-//                val colNumber = seat.column.value + 1
-//                "$rowChar$colNumber"
-//            }
-//        binding.bookedBookingSeat.text = seatsText
     }
 
     override fun fetchReservationInfo() {
@@ -82,21 +53,7 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
     }
 
     companion object {
-        private const val KEY_BOOKING_STATUS = "bookingStatus"
-        private const val KEY_THEATER = "theater"
         private const val KEY_RESERVATION_INFO = "reservationInfo"
-
-        fun movieBookedIntent(
-            otherActivity: Context,
-            bookingStatus: BookingStatus,
-            theater: Theater,
-        ): Intent {
-            return Intent(otherActivity, MovieBookedActivity::class.java)
-                .apply {
-                    putExtra(KEY_BOOKING_STATUS, bookingStatus)
-                    putExtra(KEY_THEATER, theater)
-                }
-        }
 
         fun newIntent(
             context: Context,

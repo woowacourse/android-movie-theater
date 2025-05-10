@@ -174,3 +174,5 @@
 - [x] refactor: BookingFragment 파일 구조 변경 및 ReservationFragment로 변경
 
 - [x] refactor: movie_booked.xml ConstraintLayout 정리
+
+- [x] refactor: Booked에서 BookingStatus, Theater을 ReservationInfo로 변경

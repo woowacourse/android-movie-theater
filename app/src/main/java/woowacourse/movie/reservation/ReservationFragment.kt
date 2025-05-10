@@ -35,7 +35,7 @@ class ReservationFragment : Fragment() {
     }
 
     fun showReservationInfo() {
-        val reservationInfomation = listOf(ReservationInfo("제목", "2025.4.1", "13:00", 2, listOf("A1", "A2"), "선릉", 13000))
+        val reservationInfomation = listOf(ReservationInfo("제목", "2025.4.1", "13:00", 2, "A1, A2", "선릉", 13000))
         binding.recyclerviewReservation.adapter =
             ReservationListAdapter(
                 reservationInfomation,

@@ -15,6 +15,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookingSeatBinding
 import woowacourse.movie.domain.BookingStatus
+import woowacourse.movie.domain.ReservationInfo
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.seat.Seat
 import woowacourse.movie.helper.BuildVersion
@@ -43,7 +44,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
 
     override fun updateButton() {
         binding.seatConfirmButton.setBackgroundResource(R.color.purple_500)
-        binding.seatConfirmButton.setOnSingleClickListener { showConfirmDialog(bookingStatus) }
+        binding.seatConfirmButton.setOnSingleClickListener { presenter.confirmBooking() }
     }
 
     override fun updateSeat(
@@ -63,7 +64,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
             )
     }
 
-    override fun showConfirmDialog(bookingStatus: BookingStatus) {
+    override fun showConfirmDialog(reservationInfo: ReservationInfo) {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.check_movie_booking))
             .setMessage(getString(R.string.confirm_reservation_message))
@@ -71,21 +72,17 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
                 dialog.cancel()
             }
             .setPositiveButton(getString(R.string.okay)) { _, _ ->
-                navigateToMovieBooked(bookingStatus, theater)
+                navigateToMovieBooked(reservationInfo)
             }
             .show()
             .setCancelable(false)
     }
 
-    override fun navigateToMovieBooked(
-        bookingStatus: BookingStatus,
-        theater: Theater,
-    ) {
+    override fun navigateToMovieBooked(reservationInfo: ReservationInfo) {
         val intent =
-            MovieBookedActivity.movieBookedIntent(
+            MovieBookedActivity.newIntent(
                 this@MovieBookingSeatActivity,
-                bookingStatus,
-                theater,
+                reservationInfo,
             )
         startActivity(intent)
         finish()
@@ -119,7 +116,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
 
     private fun setUpPresenter() {
         presenter = MovieBookingSeatPresenter(this@MovieBookingSeatActivity)
-        presenter.loadBookingStatus(bookingStatus)
+        presenter.loadBookingStatus(bookingStatus, theater)
     }
 
     private fun initSeatTable() {
