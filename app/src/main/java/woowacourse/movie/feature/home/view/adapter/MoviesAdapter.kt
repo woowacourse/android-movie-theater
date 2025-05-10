@@ -9,7 +9,7 @@ import woowacourse.movie.feature.model.MovieUiModel
 
 class MoviesAdapter(
     private val onBookingClick: (MovieUiModel) -> Unit,
-) : ListAdapter<Item, RecyclerView.ViewHolder>(DiffCallback) {
+) : ListAdapter<Item, RecyclerView.ViewHolder>(MovieDiffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
