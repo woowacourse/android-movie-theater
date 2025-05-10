@@ -31,4 +31,7 @@
     <string name="seat_point">%s%d</string>
 
     <string name="ticket_time_info">%s | %s | %s 극장</string>
+
+    <string name="notification_title">예매 알림</string>
+    <string name="notification_content_text">%s 30분 후에 상영</string>
 </resources>

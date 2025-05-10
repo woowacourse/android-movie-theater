@@ -30,7 +30,9 @@ class AlarmReceiver : BroadcastReceiver() {
                 android.app.NotificationManager.IMPORTANCE_HIGH,
             )
 
-        notificationManager.createNotificationChannel(channel)
+        if (notificationManager.getNotificationChannel(CHANNEL_ID) == null) {
+            notificationManager.createNotificationChannel(channel)
+        }
 
         val bookIntent = BookingCompleteActivity.newIntent(context, ticket)
         val pendingIntent: PendingIntent =
@@ -44,8 +46,8 @@ class AlarmReceiver : BroadcastReceiver() {
         val notification =
             androidx.core.app.NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("예매 알림")
-                .setContentText("${ticket.title} 30분 후에 상영")
+                .setContentTitle(context.getString(R.string.notification_title))
+                .setContentText(context.getString(R.string.notification_content_text, ticket.title))
                 .setPriority(androidx.core.app.NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
