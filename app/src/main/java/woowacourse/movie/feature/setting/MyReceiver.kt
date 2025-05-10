@@ -20,6 +20,9 @@ class MyReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent?,
     ) {
+        val alarmSetting = context.getSharedPreferences("alarmSetting", Context.MODE_PRIVATE)
+        if (!alarmSetting.getBoolean("notification_enabled", true)) return
+
         bookingInfo = intent?.getParcelableExtra<BookingInfoUiModel>("BOOKING_INFO")
         val title = bookingInfo?.movie?.title
 
