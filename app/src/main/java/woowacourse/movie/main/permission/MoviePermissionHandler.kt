@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.main.permission
 
 import android.Manifest
 import android.app.AlarmManager

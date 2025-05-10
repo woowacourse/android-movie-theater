@@ -1,5 +1,6 @@
 package woowacourse.movie.booking.complete
 
+import woowacourse.movie.booking.complete.alarm.AlarmScheduler
 import woowacourse.movie.data.ReservationDao
 import woowacourse.movie.mapper.toEntity
 import woowacourse.movie.ui.model.TicketUiModel

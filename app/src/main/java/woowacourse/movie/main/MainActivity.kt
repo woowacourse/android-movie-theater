@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.main
 
 import android.Manifest
 import android.app.NotificationChannel
@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -19,8 +20,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieBinding
-import woowacourse.movie.main.MainContract
+import woowacourse.movie.main.permission.MoviePermissionHandler
+import woowacourse.movie.main.sharedPreference.SharedPreferencesProvider
 import woowacourse.movie.movie.MovieFragment
 import woowacourse.movie.reservation.ReservationListFragment
 import woowacourse.movie.setting.SettingFragment
@@ -144,7 +147,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun moveToAppSetting() {
         val intent =
-            Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                 data = Uri.fromParts("package", packageName, null)
             }
         startActivity(intent)
@@ -157,7 +160,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             .setMessage(R.string.permission_exact_alarm_sub_info)
             .setPositiveButton(R.string.permission_exact_alarm_allow) { _, _ ->
                 val intent =
-                    Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                    Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
                         .setData("package:$packageName".toUri())
                 startActivity(intent)
             }

@@ -1,4 +1,4 @@
-package woowacourse.movie.booking.complete
+package woowacourse.movie.booking.complete.alarm
 
 import woowacourse.movie.ui.model.TicketUiModel
 import woowacourse.movie.util.Formatter.formatStringDate

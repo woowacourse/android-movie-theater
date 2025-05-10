@@ -1,6 +1,7 @@
-package woowacourse.movie
+package woowacourse.movie.main
 
-import woowacourse.movie.main.MainContract
+import woowacourse.movie.main.permission.MoviePermissionHandler
+import woowacourse.movie.main.sharedPreference.PreferencesProvider
 
 class MainPresenter(
     private val view: MainContract.View,

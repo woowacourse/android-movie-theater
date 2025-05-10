@@ -1,10 +1,10 @@
-package woowacourse.movie.booking.complete
+package woowacourse.movie.booking.complete.alarm
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
-import woowacourse.movie.AlarmReceiver
+import woowacourse.movie.booking.complete.BookingType
 import woowacourse.movie.ui.model.TicketUiModel
 
 class MovieAlarmScheduler(

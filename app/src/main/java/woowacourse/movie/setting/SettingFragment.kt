@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.SharedPreferencesProvider
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.main.sharedPreference.SharedPreferencesProvider
 
 class SettingFragment : Fragment(), SettingContract.View {
     private lateinit var presenter: SettingPresenter

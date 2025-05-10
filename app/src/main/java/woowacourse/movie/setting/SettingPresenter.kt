@@ -1,6 +1,6 @@
 package woowacourse.movie.setting
 
-import woowacourse.movie.PreferencesProvider
+import woowacourse.movie.main.sharedPreference.PreferencesProvider
 
 class SettingPresenter(
     private val view: SettingContract.View,

@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.booking.complete.alarm
 
 import android.Manifest
 import android.app.NotificationManager
@@ -10,9 +10,10 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import woowacourse.movie.MainActivity.Companion.ALARM_CHANNEL_ID
+import woowacourse.movie.R
 import woowacourse.movie.booking.complete.BookingCompleteActivity
 import woowacourse.movie.booking.complete.BookingType
+import woowacourse.movie.main.MainActivity
 import woowacourse.movie.ui.model.TicketUiModel
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -35,7 +36,7 @@ class AlarmReceiver : BroadcastReceiver() {
             val title = context.getString(R.string.notification_content_title)
 
             val openIntent =
-                BookingCompleteActivity.createIntent(context, BookingType.HISTORY, ticket)
+                BookingCompleteActivity.Companion.createIntent(context, BookingType.HISTORY, ticket)
             val contentIntent =
                 PendingIntent.getActivity(
                     context,
@@ -45,7 +46,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 )
 
             val builder =
-                NotificationCompat.Builder(context, ALARM_CHANNEL_ID)
+                NotificationCompat.Builder(context, MainActivity.Companion.ALARM_CHANNEL_ID)
                     .setSmallIcon(R.drawable.icon_dumpling)
                     .setContentTitle(title)
                     .setContentText(message)

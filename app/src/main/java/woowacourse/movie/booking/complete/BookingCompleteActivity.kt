@@ -16,11 +16,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
-import woowacourse.movie.MainActivity
 import woowacourse.movie.R
-import woowacourse.movie.SharedPreferencesProvider
+import woowacourse.movie.booking.complete.alarm.MovieAlarmScheduler
 import woowacourse.movie.data.ReservationDatabase
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
+import woowacourse.movie.main.MainActivity
+import woowacourse.movie.main.sharedPreference.SharedPreferencesProvider
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.ui.model.TicketUiModel
 

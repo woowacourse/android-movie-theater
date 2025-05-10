@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.main.permission
 
 interface PermissionHandler {
     fun hasSettingAlarmPermission(): Boolean

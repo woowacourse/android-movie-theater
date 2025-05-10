@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.main.sharedPreference
 
 interface PreferencesProvider {
     fun isAlarmEnabled(): Boolean
