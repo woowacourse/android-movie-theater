@@ -5,12 +5,11 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import woowacourse.movie.data.entity.BookedTicketEntity
-import woowacourse.movie.domain.model.theater.BookedTicket
 
 @Dao
 interface BookedTicketDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertBookedTicket(bookedTicket: BookedTicket)
+    fun insertBookedTicket(bookedTicketEntity: BookedTicketEntity)
 
     @Query("SELECT * FROM booked_tickets")
     fun getAll(): List<BookedTicketEntity>
