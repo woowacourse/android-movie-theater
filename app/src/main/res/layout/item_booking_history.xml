@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="woowacourse.movie.ui.adapter.ClickListener" />
+            type="woowacourse.movie.presentation.adapter.ClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

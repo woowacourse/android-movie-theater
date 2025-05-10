@@ -13,8 +13,8 @@ import woowacourse.movie.domain.model.ScreeningInfo
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.presentation.seats.SeatsActivity
-import woowacourse.movie.ui.DataBindingBaseActivity
-import woowacourse.movie.ui.util.getSerializableExtraCompat
+import woowacourse.movie.presentation.DataBindingBaseActivity
+import woowacourse.movie.presentation.util.getSerializableExtraCompat
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Locale

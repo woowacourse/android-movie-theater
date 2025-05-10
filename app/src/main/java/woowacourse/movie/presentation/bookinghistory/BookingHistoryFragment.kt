@@ -13,7 +13,7 @@ import woowacourse.movie.data.bookinghistory.BookingHistoryDatabase
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
-import woowacourse.movie.ui.adapter.BookingHistoryAdapter
+import woowacourse.movie.presentation.adapter.BookingHistoryAdapter
 
 class BookingHistoryFragment :
     Fragment(),

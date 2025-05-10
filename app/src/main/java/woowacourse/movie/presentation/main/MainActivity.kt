@@ -1,12 +1,13 @@
-package woowacourse.movie
+package woowacourse.movie.presentation.main
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.bookinghistory.BookingHistoryFragment
 import woowacourse.movie.presentation.movies.MoviesFragment
 import woowacourse.movie.presentation.setting.SettingFragment
-import woowacourse.movie.ui.DataBindingBaseActivity
+import woowacourse.movie.presentation.DataBindingBaseActivity
 
 class MainActivity : DataBindingBaseActivity() {
     private val binding by binding<ActivityMainBinding>(R.layout.activity_main)

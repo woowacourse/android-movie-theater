@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.util
+package woowacourse.movie.presentation.util
 
 import woowacourse.movie.domain.model.seat.Seat
 import java.time.LocalDateTime

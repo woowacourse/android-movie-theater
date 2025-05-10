@@ -11,7 +11,7 @@ import woowacourse.movie.data.MovieData
 import woowacourse.movie.databinding.FragmentMoviesBinding
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.presentation.theater.TheaterFragment
-import woowacourse.movie.ui.adapter.MovieAdapter
+import woowacourse.movie.presentation.adapter.MovieAdapter
 
 class MoviesFragment :
     Fragment(),

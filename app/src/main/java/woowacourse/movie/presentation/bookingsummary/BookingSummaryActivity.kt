@@ -5,12 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.addCallback
-import woowacourse.movie.MainActivity
+import woowacourse.movie.presentation.main.MainActivity
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingsummaryBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
-import woowacourse.movie.ui.DataBindingBaseActivity
-import woowacourse.movie.ui.util.getSerializableExtraCompat
+import woowacourse.movie.presentation.DataBindingBaseActivity
+import woowacourse.movie.presentation.util.getSerializableExtraCompat
 
 class BookingSummaryActivity :
     DataBindingBaseActivity(),

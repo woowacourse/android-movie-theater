@@ -15,10 +15,10 @@ import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.SelectedSeats
 import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
-import woowacourse.movie.ui.DataBindingBaseActivity
-import woowacourse.movie.ui.util.TicketUiFormatter
-import woowacourse.movie.ui.util.getSerializableCompat
-import woowacourse.movie.ui.util.getSerializableExtraCompat
+import woowacourse.movie.presentation.DataBindingBaseActivity
+import woowacourse.movie.presentation.util.TicketUiFormatter
+import woowacourse.movie.presentation.util.getSerializableCompat
+import woowacourse.movie.presentation.util.getSerializableExtraCompat
 
 class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
     private val binding by binding<ActivitySeatsBinding>(R.layout.activity_seats)
