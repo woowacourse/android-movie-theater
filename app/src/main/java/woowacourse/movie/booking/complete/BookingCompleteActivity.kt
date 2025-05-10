@@ -22,7 +22,8 @@ import woowacourse.movie.ui.model.TicketUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
     private lateinit var binding: ActivityBookingCompleteBinding
-    private lateinit var type: String
+    private lateinit var presenter: BookingCompleteContract.Presenter
+    private lateinit var bookingType: String
 
     @RequiresPermission(Manifest.permission.SCHEDULE_EXACT_ALARM)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,19 +31,17 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
         setUpUi()
-
-        val db = ReservationDatabase.getInstance(applicationContext)
-        val presenter = BookingCompletePresenter(this, db!!.reservationDao())
+        setupPresenter()
 
         val ticket = requireTicketOrFinish()
-        type = intent.getStringExtra(KEY_BOOKING_TYPE).toString()
+        bookingType = intent.getStringExtra(KEY_BOOKING_TYPE).toString()
 
         if (ticket == null) {
             showToastErrorAndFinish(getString(R.string.booking_toast_message))
         } else {
             presenter.initializeData(ticket)
-            presenter.saveReservation(ticket, type)
-            presenter.setNotification(this, type, ticket)
+            presenter.saveReservation(ticket, bookingType)
+            presenter.setNotification(ticket, bookingType)
         }
 
         onBackPressedDispatcher.addCallback(this, callback)
@@ -55,6 +54,12 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    private fun setupPresenter() {
+        val db = ReservationDatabase.getInstance(applicationContext)
+        val alarmScheduler = MovieAlarmScheduler(this)
+        presenter = BookingCompletePresenter(this, db!!.reservationDao(), alarmScheduler)
     }
 
     private fun requireTicketOrFinish(): TicketUiModel? {
@@ -93,7 +98,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         }
 
     private fun handleBackAction() {
-        if (type == BookingType.HISTORY.name) {
+        if (bookingType == BookingType.HISTORY.name) {
             finish()
         } else {
             val intent =
