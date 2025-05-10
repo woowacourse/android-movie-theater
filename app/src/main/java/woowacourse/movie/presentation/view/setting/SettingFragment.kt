@@ -44,6 +44,11 @@ class SettingFragment :
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        syncNotificationPermissionState()
+    }
+
     override fun showPushAlarmSetting(isEnabled: Boolean) {
         binding.switchSettingPushAlarm.isChecked = isEnabled
     }
@@ -124,5 +129,19 @@ class SettingFragment :
                 binding.switchSettingPushAlarm.isChecked = false
                 presenter.savePushAlarmSetting(false)
             }.show()
+    }
+
+    private fun syncNotificationPermissionState() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val isGranted = isNotificationPermissionGranted()
+            val current = binding.switchSettingPushAlarm.isChecked
+
+            if (current != isGranted) {
+                binding.switchSettingPushAlarm.setOnCheckedChangeListener(null)
+                binding.switchSettingPushAlarm.isChecked = isGranted
+                presenter.savePushAlarmSetting(isGranted)
+                initPushAlarmSwitch()
+            }
+        }
     }
 }
