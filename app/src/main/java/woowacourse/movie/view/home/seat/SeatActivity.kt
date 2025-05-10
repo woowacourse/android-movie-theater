@@ -91,7 +91,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     }
 
     override fun moveToBookingComplete(ticket: Ticket) {
-        val intent = BookingCompleteActivity.newIntent(this, ticket)
+        val intent = BookingCompleteActivity.newIntent(this, ticket, this::class.java)
         startActivity(intent)
     }
 

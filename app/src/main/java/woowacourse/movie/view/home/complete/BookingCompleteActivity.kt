@@ -18,6 +18,7 @@ import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.MainActivity
+import woowacourse.movie.view.home.seat.SeatActivity
 import woowacourse.movie.view.util.StringFormatter
 import woowacourse.movie.view.util.getSerializableCompat
 import woowacourse.movie.view.util.showToast
@@ -40,15 +41,17 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
                 finish()
                 return
             }
-        saveTicket(ticket)
+        val caller: Class<*>? = intent.extras?.getSerializableCompat(KEY_CALLER)
+        if (caller == SeatActivity::class.java) addToHistory(ticket)
 
         presenter = BookingCompletePresenter(this, ticket)
         presenter.loadTicket()
+
         initView()
         setBackAction()
     }
 
-    private fun saveTicket(ticket: Ticket) {
+    private fun addToHistory(ticket: Ticket) {
         val db =
             Room.databaseBuilder(
                 applicationContext,
@@ -154,15 +157,18 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
     companion object {
         const val KEY_TICKET = "ticket"
+        private const val KEY_CALLER = "caller"
 
         private const val ROW_STARTING_VALUE = 'A'
         private const val COL_STARTING_VALUE = 1
 
-        fun newIntent(
+        fun <T> newIntent(
             context: Context,
             ticket: Ticket,
+            caller: Class<T>,
         ) = Intent(context, BookingCompleteActivity::class.java).apply {
             putExtra(KEY_TICKET, ticket)
+            putExtra(KEY_CALLER, caller)
         }
     }
 }

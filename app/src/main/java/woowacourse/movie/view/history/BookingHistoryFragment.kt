@@ -61,7 +61,7 @@ class BookingHistoryFragment : Fragment(R.layout.fragment_booking_history), Book
     }
 
     override fun moveToBookingComplete(ticket: Ticket) {
-        val intent = BookingCompleteActivity.newIntent(requireContext(), ticket)
+        val intent = BookingCompleteActivity.newIntent(requireContext(), ticket, this::class.java)
         startActivity(intent)
     }
 
