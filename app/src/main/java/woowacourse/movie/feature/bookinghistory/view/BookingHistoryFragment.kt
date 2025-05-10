@@ -20,9 +20,7 @@ import woowacourse.movie.feature.model.BookingInfoUiModel
 class BookingHistoryFragment :
     Fragment(),
     BookingHistoryContract.View {
-    private val bookingRepository: BookingRepository by lazy {
-        (requireActivity().application as MovieApplication).bookingRepository
-    }
+    private val bookingRepository: BookingRepository by lazy { (requireActivity().application as MovieApplication).bookingRepository }
     private val presenter: BookingHistoryContract.Presenter by lazy { BookingHistoryPresenter(this, bookingRepository) }
     private val bookingHistoryAdapter: BookingHistoryAdapter by lazy { BookingHistoryAdapter(setupAdapterClickListener()) }
     private lateinit var binding: FragmentBookingHistoryBinding
@@ -47,6 +45,10 @@ class BookingHistoryFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding.bookingHistoryAdapter = bookingHistoryAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     override fun showBookingHistory(bookingHistory: List<BookingInfoUiModel>) {
