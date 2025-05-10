@@ -39,4 +39,7 @@
     <string name="setting_notification_title">푸시 알림 수신</string>
     <string name="setting_notification_desc">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 
+    <string name="notification_reservation">예매 알림</string>
+    <string name="notification_desc">%s 30분 뒤에 상영</string>
+
 </resources>

@@ -1,32 +1,27 @@
 package woowacourse.movie.view.setting
 
-import woowacourse.movie.data.MovieTheaterDatabase
-import woowacourse.movie.data.entity.TicketEntity
-import woowacourse.movie.domain.model.Cinema
 import woowacourse.movie.domain.model.Ticket
-import kotlin.concurrent.thread
+import woowacourse.movie.repository.Repository
 
-class SettingPresenter(val view: SettingContract.View) : SettingContract.Presenter {
+class SettingPresenter(
+    val view: SettingContract.View,
+    val repository: Repository<Ticket>,
+) : SettingContract.Presenter {
     override fun setNotification() {
-        val ticketDao = MovieTheaterDatabase.db.ticketDao()
-        var data: List<TicketEntity>? = null
-        thread {
-            data = ticketDao.findAll()
-        }.join()
-        val tickets =
-            data?.map {
-                Ticket(
-                    it.title!!,
-                    it.showTime!!,
-                    it.seats!!,
-                    it.reservationCount!!,
-                    Cinema(1, it.cinemaName!!),
-                )
-            } ?: listOf()
-        view.setNotification(tickets)
+        repository.findAll()
+            .onSuccess {
+                view.setNotification(it)
+            }
+            .onFailure {
+                view.showError(ERR_FAILED_TO_LOAD_TICKETS)
+            }
     }
 
     override fun setPermissionSwitch() {
         view.setPermissionSwitch()
+    }
+
+    companion object {
+        private const val ERR_FAILED_TO_LOAD_TICKETS = "티켓을 불러오는데 실패했습니다."
     }
 }

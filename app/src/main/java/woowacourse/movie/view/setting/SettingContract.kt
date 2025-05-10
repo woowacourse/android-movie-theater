@@ -7,6 +7,8 @@ interface SettingContract {
         fun setNotification(tickets: List<Ticket>)
 
         fun setPermissionSwitch()
+
+        fun showError(message: String)
     }
 
     interface Presenter {

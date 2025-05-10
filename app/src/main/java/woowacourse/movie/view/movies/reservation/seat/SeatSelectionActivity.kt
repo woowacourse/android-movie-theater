@@ -21,6 +21,7 @@ import woowacourse.movie.view.base.BaseActivity
 import woowacourse.movie.view.extension.getParcelableCompat
 import woowacourse.movie.view.extension.getParcelableCompatList
 import woowacourse.movie.view.movies.reservation.result.ReservationResultActivity
+import woowacourse.movie.view.receiver.NotificationReceiver
 
 class SeatSelectionActivity :
     BaseActivity<ActivitySeatSelectionBinding>(R.layout.activity_seat_selection),
@@ -128,6 +129,7 @@ class SeatSelectionActivity :
     }
 
     override fun navigateToResult(ticket: Ticket) {
+        NotificationReceiver.setNotification(this, ticket)
         startActivity(ReservationResultActivity.newIntent(this, ticket))
     }
 

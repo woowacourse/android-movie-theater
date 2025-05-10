@@ -6,6 +6,8 @@ import woowacourse.movie.view.movies.reservation.seat.SeatSelectionContract
 import woowacourse.movie.view.movies.reservation.seat.SeatSelectionPresenter
 import woowacourse.movie.view.reservelist.ReservationListContract
 import woowacourse.movie.view.reservelist.ReservationListPresenter
+import woowacourse.movie.view.setting.SettingContract
+import woowacourse.movie.view.setting.SettingPresenter
 
 object Provider {
     fun ticketDao() = MovieTheaterDatabase.db.ticketDao()
@@ -22,4 +24,6 @@ object Provider {
         )
 
     fun seatSelectionPresenter(view: SeatSelectionContract.View) = SeatSelectionPresenter(view, ticketRepository())
+
+    fun settingPresenter(view: SettingContract.View) = SettingPresenter(view, ticketRepository())
 }
