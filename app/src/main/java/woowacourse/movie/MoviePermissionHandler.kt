@@ -29,4 +29,8 @@ class MoviePermissionHandler(
             true
         }
     }
+
+    override fun hasAllPermission(): Boolean {
+        return hasExactAlarmPermission() && hasSettingAlarmPermission()
+    }
 }

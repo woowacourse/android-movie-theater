@@ -15,5 +15,7 @@ interface MainContract {
         fun requestExactAlarmPermission()
 
         fun requestSettingAlarmPermission()
+
+        fun checkAllPermission()
     }
 }
