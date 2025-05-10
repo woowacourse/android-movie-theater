@@ -16,6 +16,7 @@ import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.ui.complete.BookingCompleteActivity
 import woowacourse.movie.ui.history.contract.BookingHistoryContract
 import woowacourse.movie.ui.history.presenter.BookingHistoryPresenter
+import woowacourse.movie.utils.Destination
 
 class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
     private var _binding: FragmentBookingHistoryBinding? = null
@@ -54,7 +55,7 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
     }
 
     override fun moveToBookedTicket(bookedTicket: BookedTicket) {
-        startActivity(BookingCompleteActivity.newIntent(requireActivity(), bookedTicket))
+        startActivity(BookingCompleteActivity.newIntent(requireActivity(), bookedTicket, Destination.HISTORY))
     }
 
     override fun onDestroyView() {
