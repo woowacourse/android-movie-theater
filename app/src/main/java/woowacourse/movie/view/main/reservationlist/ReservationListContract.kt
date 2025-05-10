@@ -1,9 +1,21 @@
 package woowacourse.movie.view.main.reservationlist
 
+import woowacourse.movie.model.reservation.ReservationInfo
+
 interface ReservationListContract {
     interface View {
-        fun showReservationInfos()
+        fun showReservationInfos(reservationInfos: List<ReservationInfo>)
     }
 
-    interface Presenter
+    interface Presenter {
+        fun onViewCreated()
+
+        fun onDestroyView()
+
+        fun loadReservationInfos()
+
+        fun getReservationInfos(): List<ReservationInfo>
+
+        fun onReservationItemClicked(position: Int)
+    }
 }

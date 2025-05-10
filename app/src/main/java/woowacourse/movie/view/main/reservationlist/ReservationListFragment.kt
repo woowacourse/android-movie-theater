@@ -1,12 +1,14 @@
 package woowacourse.movie.view.main.reservationlist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentReservationListBinding
+import woowacourse.movie.model.reservation.ReservationInfo
 import woowacourse.movie.view.main.reservationlist.adapter.ReservationListAdapter
 import woowacourse.movie.view.util.ExceptionMessages
 
@@ -19,6 +21,8 @@ class ReservationListFragment :
         get() =
             _binding
                 ?: throw IllegalStateException(ExceptionMessages.FRAGMENT_BINDING_STATE_EXCEPTION)
+    private lateinit var presenter: ReservationListContract.Presenter
+
     private val reservationListAdapter: ReservationListAdapter by lazy {
         ReservationListAdapter { reservationInfo ->
             Toast
@@ -45,10 +49,12 @@ class ReservationListFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding.reservationListListLayout.adapter = reservationListAdapter
-        showReservationInfos()
+        presenter = ReservationListPresenter(this, requireContext())
+        presenter.onViewCreated()
     }
 
-    override fun showReservationInfos() {
-        reservationListAdapter.submitList(ReservationListAdapter.dummyReservationInfos)
+    override fun showReservationInfos(reservationInfos: List<ReservationInfo>) {
+        Log.d("ReservationListFragment", "showReservationInfos: $reservationInfos")
+        reservationListAdapter.submitList(reservationInfos)
     }
 }
