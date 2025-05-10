@@ -5,6 +5,7 @@
     <uses-permission
         android:name="android.permission.POST_NOTIFICATIONS"
         android:minSdkVersion="33" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -36,6 +37,15 @@
             android:name=".presentation.view.reservation.complete.ReservationCompleteActivity"
             android:exported="false"
             android:parentActivityName=".presentation.view.MoviesActivity" />
+
+        <receiver
+            android:name=".presentation.alarm.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="woowacourse.movie.ALARM" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

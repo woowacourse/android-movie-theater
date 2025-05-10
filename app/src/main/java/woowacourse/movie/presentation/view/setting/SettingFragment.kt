@@ -2,16 +2,22 @@ package woowacourse.movie.presentation.view.setting
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import woowacourse.movie.BuildConfig
 import woowacourse.movie.R
 import woowacourse.movie.data.SettingPreferenceManager
 import woowacourse.movie.databinding.FragmentSettingBinding
@@ -37,6 +43,7 @@ class SettingFragment :
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun setSwitchListener() {
         binding.switchSettingPushAlarm.setOnCheckedChangeListener { _, isChecked ->
             presenter.savePushAlarmSetting(isChecked)
@@ -46,29 +53,45 @@ class SettingFragment :
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
         ) { isGranted: Boolean ->
-            binding.switchSettingPushAlarm.setOnCheckedChangeListener(null)
-            binding.switchSettingPushAlarm.isChecked = isGranted
-            setSwitchListener()
-        }
-
-    private fun requestNotificationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.POST_NOTIFICATIONS,
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    showPermissionRationale()
-                } else {
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
+            updateSwitchState(isGranted)
+            if (isGranted) {
+                showNotificationSettingsDialog()
             }
         }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun requestNotificationPermission() {
+        if (!isNotificationPermissionGranted()) {
+            if (shouldShowPermissionRationale()) {
+                showPermissionRationale()
+            } else {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+
+    private fun isNotificationPermissionGranted(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return true
+
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.POST_NOTIFICATIONS,
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun shouldShowPermissionRationale(): Boolean = shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun updateSwitchState(isGranted: Boolean) {
+        binding.switchSettingPushAlarm.setOnCheckedChangeListener(null)
+        binding.switchSettingPushAlarm.isChecked = isGranted
+        setSwitchListener()
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -86,5 +109,9 @@ class SettingFragment :
 
     override fun showPushAlarmSetting(isEnabled: Boolean) {
         binding.switchSettingPushAlarm.isChecked = isEnabled
+    }
+
+    companion object {
+        private const val APPLICATION_ID = "package:${BuildConfig.APPLICATION_ID}"
     }
 }

@@ -23,6 +23,7 @@
     <string name="seat_select_error_count">최대 %d개의 좌석만 선택할 수 있어요</string>
     <string name="seat_select_ticket_price">%s원</string>
     <string name="seat_select_confirm">확인</string>
+
     <string name="reservation_dialog_title">예매 확인</string>
     <string name="reservation_dialog_message">정말 예매하시겠습니까?</string>
     <string name="reservation_dialog_cancel">취소</string>
@@ -37,9 +38,14 @@
 
     <string name="setting_push_alarm_title">푸시 알림 수신</string>
     <string name="setting_push_alarm_message">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="setting_error_message">앱 설정 화면을 여는 데 실패했습니다. 수동으로 설정을 확인해주세요.</string>
+
     <string name="setting_request_permission_dialog_title">알림 권한 필요</string>
     <string name="setting_request_permission_dialog_message">알림 기능을 사용하려면 권한이 필요합니다.</string>
     <string name="setting_request_permission_dialog_positive">권한 요청</string>
     <string name="setting_request_permission_dialog_negative">취소</string>
+
+    <string name="notification_title">🎬 영화 시작 %d분 전!</string>
+    <string name="notification_text">"%s 상영까지 %d분 남았습니다."</string>
 
 </resources>
