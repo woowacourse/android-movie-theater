@@ -20,10 +20,10 @@ class BookingCompletePresenter(
 
     override fun saveReservation(
         ticket: TicketUiModel,
-        type: String,
+        bokkingType: String,
     ) {
         thread {
-            if (type == BookingType.RESERVATION.name) {
+            if (bokkingType == BookingType.RESERVATION.name) {
                 reservationDao.insertReservation(ticket.toEntity())
             }
         }
