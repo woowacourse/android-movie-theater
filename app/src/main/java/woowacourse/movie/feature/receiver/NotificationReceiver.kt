@@ -42,17 +42,14 @@ class NotificationReceiver : BroadcastReceiver() {
     private fun createNotification(
         context: Context,
         movieTitle: String,
-    ): Notification {
-        val notification =
-            NotificationCompat
-                .Builder(context, MovieApplication.MOVIE_NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_dino_blue)
-                .setContentTitle(context.getString(R.string.booking_history_notification_title))
-                .setContentText(context.getString(R.string.booking_history_notification_description, movieTitle))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .build()
-        return notification
-    }
+    ): Notification =
+        NotificationCompat
+            .Builder(context, MovieApplication.MOVIE_NOTIFICATION_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_dino_blue)
+            .setContentTitle(context.getString(R.string.booking_history_notification_title))
+            .setContentText(context.getString(R.string.booking_history_notification_description, movieTitle))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
 
     companion object {
         const val MOVIE_NAME_KEY = "MOVIE_NAME"
