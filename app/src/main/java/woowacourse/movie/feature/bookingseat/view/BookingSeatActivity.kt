@@ -203,7 +203,7 @@ class BookingSeatActivity :
 
         val intent =
             Intent(applicationContext, MyReceiver::class.java).apply {
-                putExtra("bookingInfoUiModel", binding.bookingInfo)
+                putExtra("BOOKING_INFO", binding.bookingInfo)
             }
 
         val pendingIntent =

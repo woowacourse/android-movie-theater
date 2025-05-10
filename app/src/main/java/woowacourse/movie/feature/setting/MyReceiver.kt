@@ -14,11 +14,13 @@ import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.model.BookingInfoUiModel
 
 class MyReceiver : BroadcastReceiver() {
+    private var bookingInfo: BookingInfoUiModel? = null
+
     override fun onReceive(
         context: Context,
         intent: Intent?,
     ) {
-        val bookingInfo = intent?.getParcelableExtra<BookingInfoUiModel>("bookingInfoUiModel")
+        bookingInfo = intent?.getParcelableExtra<BookingInfoUiModel>("BOOKING_INFO")
         val title = bookingInfo?.movie?.title
 
         showNotification(context, title)
@@ -37,7 +39,10 @@ class MyReceiver : BroadcastReceiver() {
             return
         }
 
-        val notificationIntent = Intent(context, BookingCompleteActivity::class.java)
+        val notificationIntent =
+            Intent(context, BookingCompleteActivity::class.java).apply {
+                putExtra("BOOKING_INFO", bookingInfo)
+            }
         val pendingIntent =
             PendingIntent.getActivity(
                 context,
