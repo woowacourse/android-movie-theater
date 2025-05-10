@@ -6,12 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.data.TicketInfoDatabase
+import woowacourse.movie.data.TicketRepository
 import woowacourse.movie.databinding.FragmentHistoryBinding
-import woowacourse.movie.domain.Ticket
-import woowacourse.movie.domain.movieseat.Position
-import woowacourse.movie.domain.movieseat.Seat
-import woowacourse.movie.domain.movieseat.Seats
-import java.time.LocalDateTime
+import kotlin.concurrent.thread
 
 class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
@@ -20,6 +18,11 @@ class HistoryFragment : Fragment() {
     private val historyAdapter = HistoryAdapter()
 
     private var recyclerView: RecyclerView? = null
+
+    private val repository: TicketRepository by lazy {
+        val dao = TicketInfoDatabase.getDatabase(requireContext()).ticketInfoDao()
+        TicketRepository(dao)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,25 +44,12 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.adapter = historyAdapter
 
-        val dummyTickets =
-            listOf(
-                Ticket(
-                    "Movie A",
-                    LocalDateTime.now(),
-                    2,
-                    "잠실 극장",
-                    Seats(setOf(Seat(Position(1, 1)), Seat(Position(2, 1)))),
-                ),
-                Ticket(
-                    "Movie B",
-                    LocalDateTime.now(),
-                    1,
-                    "선릉 극장",
-                    Seats(setOf(Seat(Position(3, 1)))),
-                ),
-            )
-
-        historyAdapter.submitList(dummyTickets)
+        thread {
+            val tickets = repository.loadTickets()
+            requireActivity().runOnUiThread {
+                (binding.recyclerView.adapter as HistoryAdapter).submitList(tickets)
+            }
+        }
     }
 
     override fun onDestroyView() {
