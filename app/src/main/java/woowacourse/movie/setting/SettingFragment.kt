@@ -1,6 +1,7 @@
 package woowacourse.movie.setting
 
 import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
@@ -45,7 +47,13 @@ class SettingFragment : Fragment(), SettingContract.View {
     override fun initAlarmState(isGrant: Boolean) {
         setAlarmState(isGrant)
         binding.switchAlarm.setOnCheckedChangeListener { _, isChecked ->
-            presenter.checkPermission(isChecked, requireContext())
+            if (isChecked) {
+                if (!isPermitted()) {
+                    requestNotificationPermission()
+                    return@setOnCheckedChangeListener
+                }
+            }
+            presenter.updatePermission(isChecked)
         }
     }
 
@@ -53,7 +61,7 @@ class SettingFragment : Fragment(), SettingContract.View {
         binding.switchAlarm.isChecked = isGrant
     }
 
-    override fun requestNotificationPermission() {
+    private fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
@@ -72,4 +80,12 @@ class SettingFragment : Fragment(), SettingContract.View {
                 setAlarmState(false)
             }
         }
+
+    private fun isPermitted(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return true
+
+        return ContextCompat.checkSelfPermission(
+            requireContext(), Manifest.permission.POST_NOTIFICATIONS,
+        ) == PackageManager.PERMISSION_GRANTED
+    }
 }
