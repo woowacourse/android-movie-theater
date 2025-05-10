@@ -183,6 +183,7 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
             ),
         ) {
             val finalTicket: Ticket = ticket.copy(seats = seats)
+            presenter.saveTicketInfo(finalTicket)
             navigateToReservationComplete(finalTicket)
             finish()
         }

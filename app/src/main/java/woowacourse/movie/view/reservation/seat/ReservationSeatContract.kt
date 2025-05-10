@@ -15,6 +15,8 @@ interface ReservationSeatContract {
         fun deselectSeat(position: Position)
 
         fun restoreSeat(seats: Seats)
+
+        fun saveTicketInfo(ticket: Ticket)
     }
 
     interface View {

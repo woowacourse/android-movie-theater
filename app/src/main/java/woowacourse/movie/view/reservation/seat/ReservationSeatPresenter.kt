@@ -1,9 +1,14 @@
 package woowacourse.movie.view.reservation.seat
 
+import android.content.Context
+import android.util.Log
+import woowacourse.movie.data.TicketInfoDatabase
+import woowacourse.movie.data.toEntity
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.domain.movieseat.Seat
 import woowacourse.movie.domain.movieseat.Seats
+import kotlin.concurrent.thread
 
 class ReservationSeatPresenter(
     val view: ReservationSeatContract.View,
@@ -61,6 +66,16 @@ class ReservationSeatPresenter(
             view.selectableButton()
         } else {
             view.deSelectableButton()
+        }
+    }
+
+    override fun saveTicketInfo(ticket: Ticket) {
+        thread {
+            val db = TicketInfoDatabase.getDatabase(view as Context)
+            db.ticketInfoDao().insert(ticket.toEntity())
+
+            val tickets = db.ticketInfoDao().getAll()
+            Log.d("ticket", tickets.toString())
         }
     }
 
