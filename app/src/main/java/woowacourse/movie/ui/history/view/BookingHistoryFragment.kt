@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.data.BookedTicketDatabase
 import woowacourse.movie.data.BookedTicketEntity
@@ -18,7 +20,7 @@ import woowacourse.movie.ui.history.presenter.BookingHistoryPresenter
 class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
     private var _binding: FragmentBookingHistoryBinding? = null
     private val binding get() = _binding!!
-    private val bookingHistoryPresenter: BookingHistoryContract.Presenter by lazy { BookingHistoryPresenter(this) }
+    private val presenter: BookingHistoryContract.Presenter by lazy { BookingHistoryPresenter(this) }
     private val bookedTicketDatabase by lazy { BookedTicketDatabase.getInstance(requireContext()) }
     private val bookedHistoryAdapter by lazy { generateBookedHistoryAdapter() }
 
@@ -36,8 +38,13 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        bookingHistoryPresenter.loadBookingHistories(bookedTicketDatabase)
-        binding.layoutRecyclerHistory.adapter = bookedHistoryAdapter
+        presenter.loadBookingHistories(bookedTicketDatabase)
+        binding.layoutRecyclerHistory.apply {
+            adapter = bookedHistoryAdapter
+            addItemDecoration(
+                DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL),
+            )
+        }
     }
 
     override fun showHistories(bookingHistories: List<BookedTicketEntity>) {
@@ -57,7 +64,7 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
 
     private fun generateBookedHistoryAdapter(): BookingHistoryAdapter {
         return BookingHistoryAdapter { bookedTicketEntity ->
-            bookingHistoryPresenter.loadBookedTicket(bookedTicketEntity)
+            presenter.loadBookedTicket(bookedTicketEntity)
         }
     }
 }
