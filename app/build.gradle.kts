@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.google.material)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.room.runtime)
     testImplementation(libs.assertj.core)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.kotest.runner.junit5)
@@ -70,4 +71,5 @@ dependencies {
     androidTestImplementation(libs.androidx.fragment.testing)
     androidTestRuntimeOnly(libs.mannodermaus.junit5.runner)
     debugImplementation(libs.androidx.fragment.testing.manifest)
+    kapt(libs.androidx.room.compiler)
 }
