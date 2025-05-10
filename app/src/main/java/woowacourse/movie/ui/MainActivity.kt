@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.data.database.AppDatabase
@@ -22,13 +23,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        binding =
-            DataBindingUtil.setContentView(
-                this@MainActivity,
-                R.layout.activity_main,
-            )
-
+        binding = DataBindingUtil.setContentView(this@MainActivity, R.layout.activity_main)
         applyWindowInsets()
 
         thread {
@@ -39,46 +34,29 @@ class MainActivity : AppCompatActivity() {
 
         // 앱 초기 실행 시 홈화면으로 설정
         if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace(R.id.main_fragment_container_view, MovieListFragment())
-            }
+            replaceFragmentContainer(MovieListFragment::class.java)
         }
         binding.navigation.selectedItemId = R.id.navigation_home
-
         setBottomNavigationView()
     }
 
     private fun setBottomNavigationView() {
         binding.navigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_home -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container_view, MovieListFragment())
-                    }
-                    true
-                }
-
-                R.id.navigation_history -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container_view, BookingHistoryFragment())
-                    }
-                    true
-                }
-
-                R.id.navigation_settings -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container_view, SettingsFragment())
-                    }
-                    true
-                }
-
+                R.id.navigation_home -> replaceFragmentContainer(MovieListFragment::class.java)
+                R.id.navigation_history -> replaceFragmentContainer(BookingHistoryFragment::class.java)
+                R.id.navigation_settings -> replaceFragmentContainer(SettingsFragment::class.java)
                 else -> false
             }
         }
+    }
+
+    private fun replaceFragmentContainer(fragment: Class<out Fragment>): Boolean {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.main_fragment_container_view, fragment, null)
+        }
+        return true
     }
 
     private fun applyWindowInsets() {
