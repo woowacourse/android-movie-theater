@@ -12,7 +12,7 @@ import woowacourse.movie.domain.model.dummyReservationInfo
 import woowacourse.movie.presentation.view.reservationlist.ReservationListContract
 import woowacourse.movie.presentation.view.reservationlist.ReservationListPresenter
 
-class ReservationListPresenter {
+class ReservationListPresenterTest {
     private lateinit var presenter: ReservationListContract.Presenter
     private lateinit var view: ReservationListContract.View
     private lateinit var provider: ReservationProvider
