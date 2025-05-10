@@ -1,4 +1,4 @@
-package woowacourse.movie.view.main
+package woowacourse.movie.view.main.home
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -13,6 +13,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
+import woowacourse.movie.view.main.MoviesActivity
 
 class MoviesActivityTest {
     @get:Rule
@@ -27,7 +28,7 @@ class MoviesActivityTest {
     fun `예매_목록_프래그먼트를_선택하면_예매_목록_화면이_보여야_한다`() {
         onView(withId(R.id.fragment_list)).perform(click())
 
-        onView(withText("예매내역 화면입니다."))
+        onView(withId(R.id.reservation_list_root_layout))
             .check(matches(isDisplayed()))
     }
 
