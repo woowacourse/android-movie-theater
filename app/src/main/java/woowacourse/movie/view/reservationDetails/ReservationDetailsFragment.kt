@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Room
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationDetailsBinding
 import woowacourse.movie.model.reservation.ReservationDatabase
@@ -15,7 +14,8 @@ import woowacourse.movie.model.reservation.ReservationDatabase
 class ReservationDetailsFragment : Fragment() {
     private lateinit var binding: FragmentReservationDetailsBinding
     private lateinit var reservationDetailAdapter: ReservationDetailAdapter
-    private lateinit var db: ReservationDatabase
+    private val db by lazy { ReservationDatabase.getDatabase(requireContext()) }
+    private val dao by lazy { db.reservationDao() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,18 +37,13 @@ class ReservationDetailsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        db =
-            Room
-                .databaseBuilder(requireContext(), ReservationDatabase::class.java, "reservation")
-                .build()
-        val reservationDao = db.reservationDao()
 
         reservationDetailAdapter = ReservationDetailAdapter()
         binding.rvReservationDetails.layoutManager = LinearLayoutManager(requireContext())
         binding.rvReservationDetails.adapter = reservationDetailAdapter
 
         Thread {
-            val reservations = reservationDao.findReservation()
+            val reservations = dao.findReservation()
 
             requireActivity().runOnUiThread {
                 reservationDetailAdapter.submitList(reservations)

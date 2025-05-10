@@ -1,13 +1,13 @@
 package woowacourse.movie.presenter.seatSelection
 
 import woowacourse.movie.model.movie.MovieToReserve
-import woowacourse.movie.model.reservation.ReservationDatabase
+import woowacourse.movie.model.reservation.ReservationDao
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.ticket.MovieTicket
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContracts.View,
-    private val db: ReservationDatabase,
+    private val dao: ReservationDao,
 ) : SeatSelectionContracts.Presenter {
     private lateinit var movieToReserve: MovieToReserve
     private val seats: MutableSet<Seat> = mutableSetOf()
@@ -61,7 +61,7 @@ class SeatSelectionPresenter(
                 theater = movieToReserve.theater,
             )
         Thread {
-            db.reservationDao().saveReservation(movieTicket)
+            dao.saveReservation(movieTicket)
             android.os.Handler(android.os.Looper.getMainLooper()).post {
                 view.showReservationCompleteView(movieTicket)
             }
