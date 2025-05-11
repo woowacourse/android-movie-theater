@@ -14,7 +14,6 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.booking.Booking
 import woowacourse.movie.fixture.fakeContext
-import woowacourse.movie.view.home.seat.SeatActivity
 import woowacourse.movie.view.home.seat.SeatActivity.Companion.newIntent
 import java.time.LocalDate
 import java.time.LocalTime

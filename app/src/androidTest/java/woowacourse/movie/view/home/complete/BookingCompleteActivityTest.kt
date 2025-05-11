@@ -13,7 +13,6 @@ import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.fixture.fakeContext
-import woowacourse.movie.view.home.complete.BookingCompleteActivity
 import java.time.LocalDate
 import java.time.LocalTime
 
