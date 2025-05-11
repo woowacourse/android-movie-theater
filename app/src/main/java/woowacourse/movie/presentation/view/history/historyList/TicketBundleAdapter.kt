@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.history
+package woowacourse.movie.presentation.view.history.historyList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,14 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemHistoryBinding
 import woowacourse.movie.presentation.model.TicketBundleUiModel
 
-class TicketBundleAdapter : ListAdapter<TicketBundleUiModel, TicketBundleAdapter.TicketViewHolder>(DIFF_CALLBACK) {
+class TicketBundleAdapter(
+    private val onClick: (TicketBundleUiModel) -> Unit,
+) : ListAdapter<TicketBundleUiModel, TicketBundleAdapter.TicketViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): TicketViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemHistoryBinding.inflate(inflater, parent, false)
-        return TicketViewHolder(binding)
+        return TicketViewHolder(binding, onClick)
     }
 
     override fun onBindViewHolder(
@@ -27,10 +29,15 @@ class TicketBundleAdapter : ListAdapter<TicketBundleUiModel, TicketBundleAdapter
 
     class TicketViewHolder(
         private val binding: ItemHistoryBinding,
+        private val onClick: (TicketBundleUiModel) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: TicketBundleUiModel) {
             binding.ticketBundle = item
             binding.executePendingBindings()
+
+            binding.root.setOnClickListener {
+                onClick(item)
+            }
         }
     }
 
@@ -40,12 +47,12 @@ class TicketBundleAdapter : ListAdapter<TicketBundleUiModel, TicketBundleAdapter
                 override fun areItemsTheSame(
                     oldItem: TicketBundleUiModel,
                     newItem: TicketBundleUiModel,
-                ): Boolean = oldItem.dateTime == newItem.dateTime
+                ) = oldItem.dateTime == newItem.dateTime
 
                 override fun areContentsTheSame(
                     oldItem: TicketBundleUiModel,
                     newItem: TicketBundleUiModel,
-                ): Boolean = oldItem == newItem
+                ) = oldItem == newItem
             }
     }
 }

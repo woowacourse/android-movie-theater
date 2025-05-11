@@ -12,7 +12,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.presentation.view.MovieTheaterActivity
-import woowacourse.movie.presentation.view.history.ReservationHistoryFragment
+import woowacourse.movie.presentation.view.history.historyList.ReservationHistoryFragment
 import woowacourse.movie.presentation.view.home.movies.MoviesFragment
 import woowacourse.movie.presentation.view.setting.SettingFragment
 

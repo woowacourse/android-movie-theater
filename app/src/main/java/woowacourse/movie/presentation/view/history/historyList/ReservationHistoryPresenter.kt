@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.history
+package woowacourse.movie.presentation.view.history.historyList
 
 class ReservationHistoryPresenter(
     private val view: ReservationHistoryContract.View,

@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.history
+package woowacourse.movie.presentation.view.history.historyList
 
 import woowacourse.movie.data.dao.ReservationDao
 import woowacourse.movie.data.entity.toTicket

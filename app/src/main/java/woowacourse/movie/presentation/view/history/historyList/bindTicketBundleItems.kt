@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.view.history
+package woowacourse.movie.presentation.view.history.historyList
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
