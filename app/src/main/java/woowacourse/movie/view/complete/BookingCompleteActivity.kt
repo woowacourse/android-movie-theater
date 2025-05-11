@@ -95,12 +95,13 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
         val intent = AlarmReceiver.newIntent(this, ticket.title, ticket.id)
 
-        val pendingIntent = PendingIntent.getBroadcast(
-            this,
-            ticket.id.toInt(),
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-        )
+        val pendingIntent =
+            PendingIntent.getBroadcast(
+                this,
+                ticket.id.toInt(),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
@@ -112,13 +113,13 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     @RequiresApi(Build.VERSION_CODES.S)
     private fun showExactAlarmPermissionGuideDialog() {
         AlertDialog.Builder(this)
-            .setTitle(getString(R.string.dialog_exact_alarm_title))
-            .setMessage(getString(R.string.dialog_exact_alarm_message))
-            .setPositiveButton(getString(R.string.dialog_exact_alarm_positive)) { _, _ ->
+            .setTitle(getString(R.string.permission_exact_alarm_title))
+            .setMessage(getString(R.string.permission_exact_alarm_message))
+            .setPositiveButton(getString(R.string.permission_exact_alarm_allow)) { _, _ ->
                 val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
                 startActivity(intent)
             }
-            .setNegativeButton(getString(R.string.dialog_exact_alarm_negative), null)
+            .setNegativeButton(getString(R.string.permission_exact_alarm_deny), null)
             .show()
     }
 
