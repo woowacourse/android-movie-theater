@@ -6,12 +6,13 @@ import woowacourse.movie.domain.model.BookedTicket
 interface SettingsContract {
     interface Presenter {
         fun loadDatabase(database: BookedTicketDatabase)
+
         fun handleMovieNotificationByToggle(isChecked: Boolean)
     }
 
     interface View {
-        fun notifyMovieReminderRegistered(availableNotificationTickets : List<BookedTicket>)
+        fun notifyMovieReminderRegistered(availableNotificationTickets: List<BookedTicket>)
+
         fun notifyMovieReminderCleared()
     }
-
 }

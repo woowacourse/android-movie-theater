@@ -6,7 +6,7 @@ import woowacourse.movie.data.toBookedTicket
 import woowacourse.movie.domain.model.BookedTicket
 
 class SettingsPresenter(
-    private val view: SettingsContract.View
+    private val view: SettingsContract.View,
 ) : SettingsContract.Presenter {
     private lateinit var db: BookedTicketDatabase
 
@@ -30,5 +30,4 @@ class SettingsPresenter(
             view.notifyMovieReminderCleared()
         }
     }
-
 }
