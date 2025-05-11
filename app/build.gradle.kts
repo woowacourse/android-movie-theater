@@ -76,6 +76,9 @@ dependencies {
     androidTestImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.kotest.runner.junit5)
     androidTestImplementation(libs.mannodermaus.junit5.core)
+    androidTestImplementation(libs.androidx.espresso.intents)
+
     androidTestRuntimeOnly(libs.mannodermaus.junit5.runner)
+
     testImplementation(kotlin("test"))
 }
