@@ -5,6 +5,14 @@
 
     <data>
 
+        <variable
+            name="applicationSettings"
+            type="woowacourse.movie.data.ApplicationSettings" />
+
+        <variable
+            name="onNotificationClickListener"
+            type="android.view.View.OnClickListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,10 +57,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:checked="@{applicationSettings.notificationEnabled}"
             android:minHeight="48dp"
             app:layout_constraintBottom_toBottomOf="@id/settingNotificationDescriptionTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/settingNotificationTitleTextView"
+            app:onClickListener="@{onNotificationClickListener}"
             app:thumbTint="@color/thumb_tint"
             app:trackTint="@color/track_tint" />
 
