@@ -43,12 +43,12 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         binding = ActivityBookingCompleteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val ticket: Ticket =
-            intent.extras?.getSerializableCompat(KEY_TICKET) ?: run {
-                showToast(getString(R.string.text_error))
-                finish()
-                return
-            }
+        val ticket: Ticket? = intent.extras?.getSerializableCompat(KEY_TICKET)
+        if (ticket == null) {
+            showToast(getString(R.string.text_error))
+            finish()
+            return
+        }
 
         presenter = BookingCompletePresenter(this, ticket, SettingStorageManagerImpl(this))
         presenter.loadTicket()

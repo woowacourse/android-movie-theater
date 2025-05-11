@@ -31,12 +31,12 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         binding = ActivitySeatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val booking: Booking =
-            intent.extras?.getSerializableCompat(KEY_BOOKING) ?: run {
-                showToast(getString(R.string.text_error))
-                finish()
-                return
-            }
+        val booking: Booking? = intent.extras?.getSerializableCompat(KEY_BOOKING)
+        if (booking == null) {
+            showToast(getString(R.string.text_error))
+            finish()
+            return
+        }
 
         presenter = SeatPresenter(this, Seats(), booking)
         presenter.loadBookingInfo()
@@ -117,12 +117,13 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val seats: Seats =
-            savedInstanceState.getSerializableCompat(KEY_SEATS) ?: run {
-                showToast(getString(R.string.text_error))
-                finish()
-                return
-            }
+        val seats: Seats? = savedInstanceState.getSerializableCompat(KEY_SEATS)
+        if (seats == null) {
+            showToast(getString(R.string.text_error))
+            finish()
+            return
+        }
+
         seats.item.forEach { seat ->
             presenter.changeSeat(seat)
         }

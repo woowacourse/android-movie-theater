@@ -35,12 +35,12 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
         binding.handler = this
         setContentView(binding.root)
 
-        val screeningInfo: ScreeningInfo =
-            intent.extras?.getSerializableCompat(KEY_SCREENING) ?: run {
-                showToast(getString(R.string.text_error))
-                finish()
-                return
-            }
+        val screeningInfo: ScreeningInfo? = intent.extras?.getSerializableCompat(KEY_SCREENING)
+        if (screeningInfo == null) {
+            showToast(getString(R.string.text_error))
+            finish()
+            return
+        }
 
         presenter = BookingPresenter(this, screeningInfo)
         presenter.initBooking(LocalDateTime.now())
@@ -63,12 +63,12 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val booking: Booking =
-            savedInstanceState.getSerializableCompat(KEY_BOOKING) ?: run {
-                showToast(getString(R.string.text_error))
-                finish()
-                return
-            }
+        val booking: Booking? = savedInstanceState.getSerializableCompat(KEY_BOOKING)
+        if (booking == null) {
+            showToast(getString(R.string.text_error))
+            finish()
+            return
+        }
         presenter.loadBooking(booking)
     }
 

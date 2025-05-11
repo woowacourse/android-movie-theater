@@ -22,14 +22,18 @@ class NotificationReceiver : BroadcastReceiver() {
         intent: Intent?,
     ) {
         if (context == null || intent == null) return
-        val ticket: Ticket =
-            intent.extras?.getSerializableCompat(KEY_TICKET) ?: run {
-                context.showToast(context.getString(R.string.text_error))
-                return
-            }
+        val ticket: Ticket? = intent.extras?.getSerializableCompat(KEY_TICKET)
+        if (ticket == null) {
+            context.showToast(context.getString(R.string.text_error))
+            return
+        }
 
         val startIntent =
-            BookingCompleteActivity.newIntent(context, ticket, MainActivity::class.java)
+            BookingCompleteActivity.newIntent(
+                context,
+                ticket,
+                MainActivity::class.java,
+            )
         val pendingIntent =
             PendingIntent.getActivity(
                 context,
