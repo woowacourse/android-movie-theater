@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tv_history_info"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="6dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_history_title"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2025.5.11 | 21:00 | 선릉 극장" />
+
+        <TextView
+            android:id="@+id/tv_history_title"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_history_info"
+            tools:text="해리 포터와 마법사의 돌" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
