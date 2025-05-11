@@ -20,7 +20,6 @@ class AlarmFactory(
     fun scheduleNotification(movieTicket: MovieTicket) {
         if (!canScheduleNotification()) return
         val triggerTimeMillis = getTriggerTimeMillis(movieTicket)
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val pendingIntent = createPendingIntent(movieTicket)
@@ -69,7 +68,7 @@ class AlarmFactory(
     private fun createPendingIntent(movieTicket: MovieTicket): PendingIntent {
         val intent =
             Intent(context, AlarmReceiver::class.java).apply {
-                action = MOVIE_NOTIFICATION_CHANNEL_ID
+                action = MOVIE_ALARM_ACTION
                 putExtra(TICKET_DATA_KEY, movieTicket)
             }
         return PendingIntent.getBroadcast(
@@ -82,6 +81,6 @@ class AlarmFactory(
 
     companion object {
         private const val SEOUL_ZONE_ID = "Asia/Seoul"
-        const val MOVIE_NOTIFICATION_CHANNEL_ID = "movie_alarm"
+        const val MOVIE_ALARM_ACTION = "movie_alarm"
     }
 }

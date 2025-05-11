@@ -10,7 +10,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.model.ticket.MovieTicket
-import woowacourse.movie.view.alarm.AlarmFactory.Companion.MOVIE_NOTIFICATION_CHANNEL_ID
+import woowacourse.movie.view.alarm.AlarmFactory.Companion.MOVIE_ALARM_ACTION
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity
 import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity.Companion.TICKET_DATA_KEY
@@ -21,7 +21,7 @@ class AlarmReceiver : BroadcastReceiver() {
         intent: Intent?,
     ) {
         if (context == null || intent == null) return
-        if (intent.action == MOVIE_NOTIFICATION_CHANNEL_ID) {
+        if (intent.action == MOVIE_ALARM_ACTION) {
             val movieTicket =
                 intent.getSerializableExtraData<MovieTicket>(TICKET_DATA_KEY) ?: return
             val pendingIntent =
@@ -49,7 +49,7 @@ class AlarmReceiver : BroadcastReceiver() {
     ) {
         val notification =
             NotificationCompat
-                .Builder(context, MOVIE_NOTIFICATION_CHANNEL_ID)
+                .Builder(context, MOVIE_ALARM_ACTION)
                 .setSmallIcon(R.drawable.ic_android_green_24dp)
                 .setContentTitle(context.getString(R.string.notification_title))
                 .setContentText(context.getString(R.string.notification_content_text, movieTitle))
@@ -61,7 +61,7 @@ class AlarmReceiver : BroadcastReceiver() {
     private fun createNotificationChannel(notificationManager: NotificationManager) {
         val channel =
             NotificationChannel(
-                MOVIE_NOTIFICATION_CHANNEL_ID,
+                MOVIE_ALARM_ACTION,
                 MOVIE_NOTIFICATION_CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_DEFAULT,
             )

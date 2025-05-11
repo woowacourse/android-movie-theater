@@ -20,7 +20,7 @@ class ReservationCompletePresenter(
     }
 
     override fun requestAlarm(movieTicket: MovieTicket) {
-        if (!prefs.getBoolean(movieTicket.ticketId.toString(), false)) {
+        if (prefs.getBoolean(movieTicket.ticketId.toString(), false)) {
             with(prefs.edit()) {
                 putBoolean(movieTicket.ticketId.toString(), true)
                 apply()
