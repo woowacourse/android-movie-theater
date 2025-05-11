@@ -35,5 +35,5 @@
     <string name="menu_main_setting_title">설정</string>
 
     <!--item_reservation-->
-    <string name="item_reservation_ticket">%1$d.%2$d.%3$d | %4$d:%5$d | %6$s</string>
+    <string name="item_reservation_ticket">%1$d.%2$d.%3$d | %4$d:%5$02d | %6$s</string>
 </resources>
