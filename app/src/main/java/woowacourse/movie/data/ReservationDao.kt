@@ -7,7 +7,7 @@ import androidx.room.Query
 
 @Dao
 interface ReservationDao {
-    @Query("SELECT * FROM reservations")
+    @Query("SELECT * FROM reservations ORDER BY date ASC, time ASC")
     fun getAll(): List<Reservation>
 
     @Query("SELECT * FROM reservations WHERE uid = :id")
