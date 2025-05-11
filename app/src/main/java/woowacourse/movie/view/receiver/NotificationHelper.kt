@@ -14,7 +14,7 @@ class NotificationHelper(private val context: Context) {
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     init {
-        notificationChannel()
+        registrationNotificationChannel()
     }
 
     fun notification(
@@ -41,7 +41,7 @@ class NotificationHelper(private val context: Context) {
         manager.notify(id, notification)
     }
 
-    private fun notificationChannel() {
+    private fun registrationNotificationChannel() {
         val channel =
             NotificationChannel(
                 CHANNEL_ID,
