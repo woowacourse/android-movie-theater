@@ -30,6 +30,7 @@ class SeatSelectActivity :
     private val presenter = MovieApplication.provideSeatSelectPresenter(this)
     private val reservationDialog by lazy { ReservationDetailDialog() }
     private val seatViews: MutableMap<String, TextView> = mutableMapOf()
+    private val selectedSeatIds: MutableSet<String> = mutableSetOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,10 +84,12 @@ class SeatSelectActivity :
 
     override fun showSelectedSeat(seatId: String) {
         seatViews[seatId]?.setBackgroundResource(R.color.yellow)
+        selectedSeatIds.add(seatId)
     }
 
     override fun showDeselectedSeat(seatId: String) {
         seatViews[seatId]?.setBackgroundResource(R.color.white)
+        selectedSeatIds.remove(seatId)
     }
 
     override fun showTotalPrice(totalPrice: Int) {
@@ -183,16 +186,13 @@ class SeatSelectActivity :
 
     private fun setupSavedData(savedInstanceState: Bundle?) {
         val savedSeats =
-            savedInstanceState?.getStringArrayList(Extras.SeatsData.SEATS_KEY)
-                ?: emptyList<String>()
+            savedInstanceState?.getStringArrayList(Extras.SeatsData.SEATS_KEY) ?: emptyList()
         presenter.restoreSelectedSeats(savedSeats)
+        savedSeats.forEach { seatViews[it]?.setBackgroundResource(R.color.yellow) }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putStringArrayList(
-            Extras.SeatsData.SEATS_KEY,
-            ArrayList(presenter.getSelectedSeatIds()),
-        )
+        outState.putStringArrayList(Extras.SeatsData.SEATS_KEY, ArrayList(selectedSeatIds))
         super.onSaveInstanceState(outState)
     }
 

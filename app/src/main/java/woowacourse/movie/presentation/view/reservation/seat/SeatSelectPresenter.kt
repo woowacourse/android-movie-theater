@@ -1,7 +1,6 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
 import woowacourse.movie.domain.model.ReservationInfo
-import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.toDomain
@@ -14,7 +13,6 @@ class SeatSelectPresenter(
 ) : SeatSelectContract.Presenter {
     private lateinit var reservationInfo: ReservationInfo
     private lateinit var theaterName: String
-    private var selectedSeats = Seats.create()
 
     override fun fetchData(reservationInfo: ReservationInfoUiModel?) {
         if (reservationInfo == null) {
@@ -32,20 +30,24 @@ class SeatSelectPresenter(
     }
 
     override fun seatSelect(seatId: String) {
-        if (selectedSeats.size == reservationInfo.count.value && !selectedSeats.contains(seatId)) {
+        if (reservationInfo.seats.size == reservationInfo.count.value &&
+            !reservationInfo.seats.contains(
+                seatId,
+            )
+        ) {
             view.showSeatCountError(reservationInfo.count.value)
             return
         }
 
-        val isSelected = selectedSeats.click(seatId)
+        val isSelected = reservationInfo.seats.click(seatId)
         if (isSelected) {
             view.showSelectedSeat(seatId)
         } else {
             view.showDeselectedSeat(seatId)
         }
 
-        view.showTotalPrice(selectedSeats.totalPrice)
-        view.updateConfirmButtonEnabled(selectedSeats.size == reservationInfo.count.value)
+        view.showTotalPrice(reservationInfo.seats.totalPrice)
+        view.updateConfirmButtonEnabled(reservationInfo.seats.size == reservationInfo.count.value)
     }
 
     override fun confirmRequested(
@@ -66,19 +68,17 @@ class SeatSelectPresenter(
         }
     }
 
-    override fun getSelectedSeatIds(): List<String> = selectedSeats.labels()
-
     override fun restoreSelectedSeats(seatIds: List<String>) {
         for (seatId in seatIds) {
-            selectedSeats.add(seatId)
+            reservationInfo.seats.add(seatId)
             view.showSelectedSeat(seatId)
         }
-        view.showTotalPrice(selectedSeats.totalPrice)
-        view.updateConfirmButtonEnabled(selectedSeats.size == reservationInfo.count.value)
+        view.showTotalPrice(reservationInfo.seats.totalPrice)
+        view.updateConfirmButtonEnabled(reservationInfo.seats.size == reservationInfo.count.value)
     }
 
     override fun restoreButtonState() {
-        val isEnabled = selectedSeats.size == reservationInfo.count.value
+        val isEnabled = reservationInfo.seats.size == reservationInfo.count.value
         view.updateConfirmButtonEnabled(isEnabled)
     }
 
@@ -87,7 +87,7 @@ class SeatSelectPresenter(
             title = reservationInfo.title,
             dateTime = reservationInfo.dateTime,
             count = reservationInfo.count.value,
-            seats = selectedSeats.toPresentation(),
+            seats = reservationInfo.seats.toPresentation(),
             theaterName = theaterName,
         )
 

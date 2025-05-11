@@ -45,8 +45,6 @@ interface SeatSelectContract {
 
         fun saveReservation(reservationInfo: ReservationInfoUiModel)
 
-        fun getSelectedSeatIds(): List<String>
-
         fun reservationConfirmed()
 
         fun restoreSelectedSeats(seatIds: List<String>)
