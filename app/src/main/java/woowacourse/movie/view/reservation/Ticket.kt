@@ -21,4 +21,11 @@ data class Ticket(
         val timeText = purchasePolicy.time.format(formatter)
         return timeText
     }
+
+    fun formattedReservationInfo(): String {
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy.MM.d | HH:mm")
+        val timeText = date.format(dateFormatter)
+
+        return "$timeText | ${this.theaterName}"
+    }
 }
