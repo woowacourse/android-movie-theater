@@ -44,7 +44,8 @@ class AlarmReceiver : BroadcastReceiver() {
 
         val ticket = intent.getSerializableExtraCompat("TICKET", Ticket::class.java)
 
-        val receivedIntent = Intent(context, ReservationCompleteActivity::class.java)
+        val receivedIntent = ticket?.let { ReservationCompleteActivity.newIntent(context, it) } ?: return
+
         val pendingIntent: PendingIntent =
             PendingIntent.getActivity(
                 context,
