@@ -11,6 +11,8 @@ import woowacourse.movie.domain.repository.SettingRepository
 import woowacourse.movie.presentation.alarm.AlarmScheduler
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectContract
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectPresenter
+import woowacourse.movie.presentation.view.reservationlist.ReservationListContract
+import woowacourse.movie.presentation.view.reservationlist.ReservationListPresenter
 import woowacourse.movie.presentation.view.setting.SettingContract
 import woowacourse.movie.presentation.view.setting.SettingPresenter
 
@@ -31,17 +33,23 @@ class MovieApplication : Application() {
                 alarmScheduler = provideAlarmScheduler(),
             )
 
+        fun provideReservationListPresenter(view: ReservationListContract.View): ReservationListContract.Presenter =
+            ReservationListPresenter(
+                view = view,
+                provider = provideReservationRepository(),
+            )
+
         fun provideSettingPresenter(view: SettingContract.View): SettingContract.Presenter =
             SettingPresenter(
                 view = view,
                 settingRepository = provideSettingRepository(),
             )
 
+        fun provideSettingRepository(): SettingRepository = SettingRepositoryImpl(provideSettingPreferenceManager())
+
         private fun provideReservationDao(): ReservationDao = ReservationDatabase.getInstance(instance).reservationDao()
 
         private fun provideReservationRepository(): ReservationRepository = ReservationRepositoryImpl(provideReservationDao())
-
-        private fun provideSettingRepository(): SettingRepository = SettingRepositoryImpl(provideSettingPreferenceManager())
 
         private fun provideSettingPreferenceManager(): SettingPreferenceManager = SettingPreferenceManager()
 

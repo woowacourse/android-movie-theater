@@ -7,8 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import woowacourse.movie.data.db.ReservationDatabase
-import woowacourse.movie.data.repository.ReservationRepositoryImpl
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.presentation.Extras
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
@@ -18,11 +17,7 @@ class ReservationListFragment :
     Fragment(),
     ReservationListContract.View {
     private lateinit var binding: FragmentReservationListBinding
-    private val presenter: ReservationListContract.Presenter by lazy {
-        val dao = ReservationDatabase.getInstance(requireContext()).reservationDao()
-        val provider = ReservationRepositoryImpl(dao)
-        ReservationListPresenter(this, provider)
-    }
+    private val presenter = MovieApplication.provideReservationListPresenter(this)
     private val reservationAdapter: ReservationAdapter by lazy {
         ReservationAdapter(
             object :

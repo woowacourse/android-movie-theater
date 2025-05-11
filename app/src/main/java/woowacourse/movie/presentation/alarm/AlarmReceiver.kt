@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
 import woowacourse.movie.domain.repository.SettingRepository
 import woowacourse.movie.presentation.Extras
@@ -17,7 +18,7 @@ import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.view.reservation.complete.ReservationCompleteActivity
 
 class AlarmReceiver(
-    private val settingRepository: SettingRepository,
+    private val settingRepository: SettingRepository = MovieApplication.provideSettingRepository(),
 ) : BroadcastReceiver() {
     override fun onReceive(
         context: Context,
