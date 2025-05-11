@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieListBinding
@@ -22,7 +21,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list, container, false)
+        _binding = FragmentMovieListBinding.inflate(inflater)
         return binding.root
     }
 

@@ -20,10 +20,14 @@ class SettingFragmentTest {
     @Test
     fun 알림_설정_제목이_표시된다() {
         onView(withId(R.id.action_setting)).perform(click())
-        onView(withId(R.id.tv_notification_setting_title)).check(matches(allOf(
-            withText("푸시 알림 수신"),
-            isDisplayed(),
-        )))
+        onView(withId(R.id.tv_notification_setting_title)).check(
+            matches(
+                allOf(
+                    withText("푸시 알림 수신"),
+                    isDisplayed(),
+                ),
+            ),
+        )
     }
 
     @Test
@@ -34,8 +38,8 @@ class SettingFragmentTest {
                 allOf(
                     withText("해제하면 푸시 알림을 수신할 수 없습니다."),
                     isDisplayed(),
-                )
-            )
+                ),
+            ),
         )
     }
 
