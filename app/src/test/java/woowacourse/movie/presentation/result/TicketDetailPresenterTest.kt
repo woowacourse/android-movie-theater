@@ -6,17 +6,19 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.fixture.TICKET
+import woowacourse.movie.presentation.ticket.detail.TicketDetailContract
+import woowacourse.movie.presentation.ticket.detail.TicketDetailPresenter
 
-class BookingResultPresenterTest {
-    private lateinit var view: BookingResultContract.View
-    private lateinit var presenter: BookingResultContract.Presenter
+class TicketDetailPresenterTest {
+    private lateinit var view: TicketDetailContract.View
+    private lateinit var presenter: TicketDetailContract.Presenter
     private lateinit var ticket: Ticket
 
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
         ticket = TICKET
-        presenter = BookingResultPresenter(view, ticket)
+        presenter = TicketDetailPresenter(view, ticket)
     }
 
     @Test

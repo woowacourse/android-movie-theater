@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.ticket
+package woowacourse.movie.presentation.ticket.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.databinding.FragmentTicketListBinding
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.presentation.result.BookingResultActivity
-import woowacourse.movie.presentation.ticket.adapter.TicketAdapter
+import woowacourse.movie.presentation.ticket.detail.TicketDetailActivity
+import woowacourse.movie.presentation.ticket.list.adapter.TicketAdapter
 
 class TicketListFragment :
     Fragment(),
@@ -58,7 +58,7 @@ class TicketListFragment :
     }
 
     override fun navigateToTicketDetail(ticket: Ticket) {
-        val intent = BookingResultActivity.newIntent(context, ticket)
+        val intent = TicketDetailActivity.newIntent(context, ticket)
         startActivity(intent)
     }
 }

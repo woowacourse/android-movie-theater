@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.ticket.adapter
+package woowacourse.movie.presentation.ticket.list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

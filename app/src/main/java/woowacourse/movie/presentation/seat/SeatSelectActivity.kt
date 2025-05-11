@@ -16,10 +16,10 @@ import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.presentation.BaseActivity
-import woowacourse.movie.presentation.result.BookingResultActivity
 import woowacourse.movie.presentation.seat.model.SeatUiModel
 import woowacourse.movie.presentation.seat.model.toDomain
 import woowacourse.movie.presentation.seat.model.toUiModel
+import woowacourse.movie.presentation.ticket.detail.TicketDetailActivity
 
 class SeatSelectActivity :
     BaseActivity<ActivitySeatsBinding>(R.layout.activity_seats),
@@ -68,7 +68,7 @@ class SeatSelectActivity :
     }
 
     override fun navigateToSummary(ticket: Ticket) {
-        val intent = BookingResultActivity.newIntent(this, ticket)
+        val intent = TicketDetailActivity.newIntent(this, ticket)
         startActivity(intent)
     }
 

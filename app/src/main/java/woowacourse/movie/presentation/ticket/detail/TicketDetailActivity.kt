@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.result
+package woowacourse.movie.presentation.ticket.detail
 
 import android.content.Context
 import android.content.Intent
@@ -6,20 +6,20 @@ import android.os.Bundle
 import android.widget.Toast
 import woowacourse.movie.R
 import woowacourse.movie.common.util.getSerializableExtraCompat
-import woowacourse.movie.databinding.ActivityBookingResultBinding
+import woowacourse.movie.databinding.ActivityTicketDetailBinding
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.presentation.BaseActivity
 
-class BookingResultActivity :
-    BaseActivity<ActivityBookingResultBinding>(R.layout.activity_booking_result),
-    BookingResultContract.View {
-    private lateinit var presenter: BookingResultContract.Presenter
+class TicketDetailActivity :
+    BaseActivity<ActivityTicketDetailBinding>(R.layout.activity_ticket_detail),
+    TicketDetailContract.View {
+    private lateinit var presenter: TicketDetailContract.Presenter
     private lateinit var ticket: Ticket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!fetchTicketFromIntent()) return
-        presenter = BookingResultPresenter(this, ticket)
+        presenter = TicketDetailPresenter(this, ticket)
         presenter.loadBookingResult()
     }
 
@@ -43,7 +43,7 @@ class BookingResultActivity :
             context: Context?,
             ticket: Ticket,
         ): Intent =
-            Intent(context, BookingResultActivity::class.java).apply {
+            Intent(context, TicketDetailActivity::class.java).apply {
                 putExtra(EXTRA_TICKET, ticket)
             }
 

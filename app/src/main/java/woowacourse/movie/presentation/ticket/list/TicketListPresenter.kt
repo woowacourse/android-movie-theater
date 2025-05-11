@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.ticket
+package woowacourse.movie.presentation.ticket.list
 
 import android.content.Context
 import woowacourse.movie.data.database.MovieDatabase

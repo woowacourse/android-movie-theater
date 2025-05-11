@@ -56,6 +56,7 @@ class TheaterFragment :
     override fun navigateToBooking(screening: Screening) {
         val intent = BookingActivity.newIntent(context, screening)
         startActivity(intent)
+        dismiss()
     }
 
     companion object {

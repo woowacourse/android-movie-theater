@@ -7,7 +7,7 @@ import android.content.Context
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.presentation.result.BookingResultActivity
+import woowacourse.movie.presentation.ticket.detail.TicketDetailActivity
 
 class TicketNotification(
     private val context: Context,
@@ -20,7 +20,7 @@ class TicketNotification(
     }
 
     fun sendNotification(ticket: Ticket) {
-        val intent = BookingResultActivity.newIntent(context, ticket)
+        val intent = TicketDetailActivity.newIntent(context, ticket)
         val pendingIntent =
             PendingIntent.getActivity(
                 context,
