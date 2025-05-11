@@ -6,6 +6,7 @@ import woowacourse.movie.data.repository.DefaultTicketRepository
 import woowacourse.movie.data.repository.TicketRepository
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
+import woowacourse.movie.presentation.notification.ticket.TicketAlarm
 
 class SeatsPresenter(
     private val view: SeatSelectContract.View,
@@ -13,6 +14,7 @@ class SeatsPresenter(
     applicationContext: Context,
     private val ticketRepository: TicketRepository =
         DefaultTicketRepository(MovieDatabase.getDatabase(applicationContext)),
+    private val ticketAlarm: TicketAlarm = TicketAlarm(applicationContext),
 ) : SeatSelectContract.Presenter {
     private var _ticket: Ticket = ticket.copy()
     val ticket: Ticket get() = _ticket
@@ -40,6 +42,7 @@ class SeatsPresenter(
 
     override fun finishBooking() {
         ticketRepository.save(_ticket)
+        ticketAlarm.setTicketAlarm(_ticket)
         view.navigateToSummary(_ticket)
     }
 

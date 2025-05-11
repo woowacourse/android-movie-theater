@@ -23,7 +23,8 @@
             android:exported="false" />
         <activity
             android:name=".presentation.result.BookingResultActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".presentation.MainActivity" />
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true">
@@ -33,6 +34,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".presentation.receiver.MovieBroadcastReceiver" />
 
     </application>
 

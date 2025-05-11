@@ -1,4 +1,4 @@
-package woowacourse.movie.common.notification
+package woowacourse.movie.presentation.notification.ticket
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -21,19 +21,25 @@ class TicketNotification(
 
     fun sendNotification(ticket: Ticket) {
         val intent = BookingResultActivity.newIntent(context, ticket)
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent =
+            PendingIntent.getActivity(
+                context,
+                0,
+                intent,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+            )
 
         val builder =
             NotificationCompat
                 .Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.harry_potter_01)
+                .setSmallIcon(R.drawable.ic_notifications)
                 .setContentTitle("예매 알림")
                 .setContentText("${ticket.movie.title} 30분 후에 상영")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
         val notification = builder.build()
-        notificationManager.notify(0, notification)
+        notificationManager.notify(ticket.hashCode(), notification)
     }
 
     private fun createNotificationChannel() {
@@ -47,7 +53,7 @@ class TicketNotification(
     }
 
     companion object {
-        private const val CHANNEL_ID = "notification_channel_id"
-        private const val CHANNEL_NAME = "notification_channel_name"
+        private const val CHANNEL_ID = "channel_notification"
+        private const val CHANNEL_NAME = "영화 상영 알림"
     }
 }
