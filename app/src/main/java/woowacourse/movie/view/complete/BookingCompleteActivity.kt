@@ -24,7 +24,6 @@ import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.main.MainActivity
 import woowacourse.movie.view.receiver.AlarmReceiver
 import woowacourse.movie.view.uiModel.toUiModel
-import java.time.ZoneId
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
     private lateinit var binding: ActivityBookingCompleteBinding
@@ -88,12 +87,6 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             }
         }
 
-        val alarmMillis =
-            ticket.alarmTime()
-                .atZone(ZoneId.systemDefault())
-                .toInstant()
-                .toEpochMilli()
-
         val intent = AlarmReceiver.newIntent(this, ticket.title, ticket.id)
 
         val pendingIntent =
@@ -103,6 +96,8 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
+
+        val alarmMillis = ticket.alarmTime()
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
