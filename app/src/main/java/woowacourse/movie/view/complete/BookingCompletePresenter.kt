@@ -1,16 +1,17 @@
 package woowacourse.movie.view.complete
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import woowacourse.movie.data.db.TicketDataSourceImpl
 import woowacourse.movie.data.db.UserDatabase
 import woowacourse.movie.domain.model.datasource.TicketDataSource
+import woowacourse.movie.view.core.util.DefaultMainThreadExecutor
+import woowacourse.movie.view.core.util.MainThreadExecutor
 import kotlin.concurrent.thread
 
 class BookingCompletePresenter(
     private val view: BookingCompleteContract.View,
     private val dataSource: TicketDataSource,
+    private val mainThreadExecutor: MainThreadExecutor,
 ) : BookingCompleteContract.Presenter {
     override fun loadTicket(
         ticketId: Long,
@@ -18,7 +19,7 @@ class BookingCompletePresenter(
     ) {
         thread {
             val ticket = dataSource.getTicketById(ticketId)
-            Handler(Looper.getMainLooper()).post {
+            mainThreadExecutor.execute {
                 view.showTicket(ticket)
                 if (requestAlarm) view.generateAlarm(ticket)
             }
@@ -32,7 +33,8 @@ class BookingCompletePresenter(
         ): BookingCompleteContract.Presenter {
             val dao = UserDatabase.getDatabase(context).ticketDao()
             val dataSource = TicketDataSourceImpl(dao)
-            return BookingCompletePresenter(view, dataSource)
+            val executor = DefaultMainThreadExecutor()
+            return BookingCompletePresenter(view, dataSource, executor)
         }
     }
 }
