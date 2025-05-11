@@ -73,12 +73,15 @@ class BookingSeatActivity :
         val bookedDateTime =
             intent.intentSerializable(EXTRA_DATETIME, LocalDateTime::class.java)
                 ?: LocalDateTime.now()
+        val notificationSetting: Boolean =
+            getSharedPreferences("settings", MODE_PRIVATE).getBoolean("notification", false)
 
         bookingSeatPresenter.loadState(
             theater,
             headcount,
             title,
             bookedDateTime,
+            notificationSetting,
         )
     }
 

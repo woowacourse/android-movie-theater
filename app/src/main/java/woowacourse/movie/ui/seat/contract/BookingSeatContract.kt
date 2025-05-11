@@ -13,6 +13,7 @@ interface BookingSeatContract {
             headcount: Headcount,
             title: String,
             bookedDateTime: LocalDateTime,
+            notificationSetting: Boolean,
         )
 
         fun refreshTotalPrice()

@@ -19,6 +19,7 @@ class BookingSeatPresenter(
     private lateinit var movieTitle: String
     private lateinit var theater: Theater
     private lateinit var bookedDateTime: LocalDateTime
+    private var notificationSetting: Boolean = false
     private val seats: Seats = Seats()
 
     fun updateViews() {
@@ -32,11 +33,13 @@ class BookingSeatPresenter(
         headcount: Headcount,
         title: String,
         bookedDateTime: LocalDateTime,
+        notificationSetting: Boolean,
     ) {
         this.theater = theater
         this.headcount = headcount
         this.movieTitle = title
         this.bookedDateTime = bookedDateTime
+        this.notificationSetting = notificationSetting
     }
 
     override fun refreshTotalPrice() {
@@ -83,6 +86,7 @@ class BookingSeatPresenter(
     }
 
     override fun postNotification() {
+        if (notificationSetting == false) return
         val bookedTicket = BookedTicket(movieTitle, headcount, bookedDateTime, seats, theater.name)
         bookingSeatView.setAlarmManager(bookedTicket)
     }
