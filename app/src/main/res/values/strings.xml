@@ -17,15 +17,46 @@
     <string name="text_over_limit_people_count">선택하신 예매 인원은 %d명입니다.</string>
     <string name="text_divider">|</string>
     <string name="text_schedule_size">%d개의 상영 시간</string>
-    <string name="text_notification_request_title">알림 권한 요청</string>
-    <string name="text_notification_request_content">영화 예매 알림 및 이벤트 정보를 받기 위해 알림 권한이 필요합니다.</string>
-    <string name="text_allow">허용</string>
-    <string name="text_cancel">취소</string>
+    <string name="text_notification_allow">푸시 알림 수신</string>
+    <string name="text_guide_notification">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 
+    <!-- 권한 요청 -->
+    <string name="permission_notification_title">알림 권한 요청</string>
+    <string name="permission_notification_message">영화 예매 알림 및 이벤트 정보를 받기 위해 알림 권한이 필요합니다.</string>
+    <string name="permission_notification_allow">허용</string>
+    <string name="permission_notification_deny">거부</string>
+
+    <string name="permission_notification_guide_title">알림 권한이 꺼져 있어요</string>
+    <string name="permission_cannot_change_permission">권한을 변경할 수 없어요</string>
+    <string name="permission_notification_guide_message">
+        예매 알림 등을 받기 위해 알림 권한이 필요합니다.\n앱에서는 권한을 직접 변경할 수 없으니, 설정 화면에서 변경해 주세요.
+    </string>
+
+    <string name="permission_notification_move_to_setting">설정으로 이동</string>
+    <string name="permission_notification_cancel_setting">취소</string>
+    <string name="permission_notification_denied_message">권한이 거부 되었습니다. 설정(앱 정보)에서 권한을 확인해 주세요.</string>
+
+    <!-- 알림 권한 설정 다이얼로그 -->
+    <string name="permission_notification_settings_title">알림 권한 필요</string>
+    <string name="permission_notification_settings_message">알림을 받으시려면 설정에서 권한을 허용해주세요.</string>
+    <string name="permission_notification_settings_move_to_setting">설정으로 이동</string>
+    <string name="permission_notification_settings_cancel">취소</string>
+
+    <string name="permission_exact_alarm_title">정확한 알림 권한 필요</string>
+    <string name="permission_exact_alarm_message">
+        예매하신 영화 시간에 정확히 알림을 받기 위해 정확한 알람 권한이 필요합니다.
+
+        설정 화면으로 이동해 권한을 허용해 주세요.
+    </string>
+    <string name="permission_exact_alarm_allow">설정으로 이동</string>
+    <string name="permission_exact_alarm_deny">나중에</string>
+
+    <!-- 비텀 네비게이션 타이틀 -->
     <string name="list_icon_title">예매 내역</string>
     <string name="home_icon_title">홈</string>
     <string name="setting_icon_title">설정</string>
 
+    <!-- 문자열 포맷팅 -->
     <string name="formatter_running_time_minute_unit">%d분</string>
     <string name="formatter_text_seat_formatter">%c%d</string>
     <string name="formatter_date_period">%s ~ %s</string>
@@ -34,10 +65,7 @@
     <string name="formatter_general_people_count">일반 %d명</string>
     <string name="formatter_on_site_payment">%s원 (현장 결제)</string>
 
-    <string name="error_missing_movie_info">영화 정보를 불러올 수 없습니다. 다시 시도해주세요.</string>
-    <string name="error_missing_movie_seat">좌석 정보를 불러올 수 없습니다. 다시 시도해주세요.</string>
-    <string name="error_missing_booking_info">예매 정보를 불러올 수 없습니다. 다시 시도해주세요.</string>
-
+    <!-- 푸시 알림 -->
     <string name="notification_booking_tile">예매 알림</string>
     <string name="notification_movie_guide">%s 30분 후에 상영</string>
 </resources>
