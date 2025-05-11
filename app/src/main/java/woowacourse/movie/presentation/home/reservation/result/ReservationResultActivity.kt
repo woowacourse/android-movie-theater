@@ -7,14 +7,12 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationResultBinding
 import woowacourse.movie.presentation.MovieTheaterActivity
 import woowacourse.movie.presentation.common.base.BaseActivity
-import woowacourse.movie.presentation.common.base.HomeButtonHandler
 import woowacourse.movie.presentation.common.extension.getParcelableCompat
 import woowacourse.movie.presentation.common.model.TicketUiModel
 
 class ReservationResultActivity :
     BaseActivity<FragmentReservationResultBinding>(R.layout.fragment_reservation_result),
-    ReservationResultContract.View,
-    HomeButtonHandler {
+    ReservationResultContract.View {
     private val presenter: ReservationResultPresenter by lazy { ReservationResultPresenter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
