@@ -34,11 +34,11 @@ class SettingFragment :
         return binding.root
     }
 
-    companion object {
-        const val SETTING_DATA_KEY = "setting"
-    }
-
     override fun updateAlarmSwitchView(isPushEnabled: Boolean) {
         binding.alarmSwitch.isChecked = isPushEnabled
+    }
+
+    companion object {
+        const val SETTING_DATA_KEY = "setting"
     }
 }

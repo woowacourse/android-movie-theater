@@ -8,8 +8,8 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
-import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity.Companion.MOVIE_NOTIFICATION_CHANNEL_ID
-import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity.Companion.MOVIE_TITLE_DATA_KEY
+import woowacourse.movie.view.reservationComplete.AlarmFactory.Companion.MOVIE_NOTIFICATION_CHANNEL_ID
+import woowacourse.movie.view.reservationComplete.AlarmFactory.Companion.MOVIE_TITLE_DATA_KEY
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(
