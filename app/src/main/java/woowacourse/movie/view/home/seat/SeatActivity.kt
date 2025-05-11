@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatBinding
 import woowacourse.movie.domain.model.booking.Booking
@@ -29,7 +28,9 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat)
+        binding = ActivitySeatBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         val booking: Booking =
             intent.extras?.getSerializableCompat(KEY_BOOKING) ?: run {
                 showToast(getString(R.string.text_error))

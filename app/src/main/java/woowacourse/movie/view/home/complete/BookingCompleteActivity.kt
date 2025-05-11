@@ -13,7 +13,6 @@ import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.DataBindingUtil
 import androidx.room.Room
 import woowacourse.movie.R
 import woowacourse.movie.data.setting.SettingStorageManagerImpl
@@ -41,7 +40,8 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
+        binding = ActivityBookingCompleteBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val ticket: Ticket =
             intent.extras?.getSerializableCompat(KEY_TICKET) ?: run {

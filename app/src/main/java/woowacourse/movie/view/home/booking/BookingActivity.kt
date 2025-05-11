@@ -10,7 +10,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.booking.Booking
@@ -32,8 +31,9 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_booking)
+        binding = ActivityBookingBinding.inflate(layoutInflater)
         binding.handler = this
+        setContentView(binding.root)
 
         val screeningInfo: ScreeningInfo =
             intent.extras?.getSerializableCompat(KEY_SCREENING) ?: run {
@@ -41,6 +41,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
                 finish()
                 return
             }
+
         presenter = BookingPresenter(this, screeningInfo)
         presenter.initBooking(LocalDateTime.now())
         initView()
