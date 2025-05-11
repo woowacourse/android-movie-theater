@@ -11,6 +11,7 @@ import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.ui.complete.BookingCompleteContract
 import woowacourse.movie.ui.complete.BookingCompletePresenter
+import woowacourse.movie.utils.Destination
 import java.time.LocalDateTime
 
 class BookingCompletePresenterTest {
@@ -26,9 +27,14 @@ class BookingCompletePresenterTest {
                 BookedTicket(
                     theaterName = "선릉 극장",
                     movieTitle = "해리 포터",
-                    movieSchedule = MovieSchedule(LocalDateTime.of(2025, 1, 1, 12, 0), Seats().apply { reserve(Seat(1, 1)) }),
+                    movieSchedule =
+                        MovieSchedule(
+                            LocalDateTime.of(2025, 1, 1, 12, 0),
+                            Seats().apply { reserve(Seat(1, 1)) },
+                        ),
                     headcount = Headcount(1),
                 ),
+            Destination.COMPLETE,
         )
     }
 
