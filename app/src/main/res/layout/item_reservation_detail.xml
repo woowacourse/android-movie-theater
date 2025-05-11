@@ -8,14 +8,22 @@
         <variable
             name="movieTicket"
             type="woowacourse.movie.model.ticket.MovieTicket" />
+
+        <variable
+            name="reservationDetailClickListener"
+            type="woowacourse.movie.view.reservationDetails.ReservationDetailClickListener" />
     </data>
 
     <LinearLayout
+        android:id="@+id/layout_reservation_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="12dp"
-        android:background="@drawable/item_border">
+        android:background="?attr/selectableItemBackground"
+        android:onClick="@{()->reservationDetailClickListener.onReservationClick(movieTicket.ticketId)}"
+        android:clickable="true"
+        android:focusable="true">
 
         <TextView
             android:id="@+id/tv_selected_date_time_theater"
