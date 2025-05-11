@@ -42,11 +42,11 @@ val MOVIE_TO_RESERVE: MovieToReserve =
 
 val MOVIE_TICKET_B1_C3: MovieTicket =
     MovieTicket(
-        "라라랜드",
-        LocalDate.of(2025, 4, 1),
-        MovieTime(LocalTime.of(10, 0)),
-        listOf(Seat(1, 0), Seat(2, 2)),
-        Theater("JAY 극장"),
+        title = "라라랜드",
+        selectedDate = LocalDate.of(2025, 4, 1),
+        selectedTime = MovieTime(LocalTime.of(10, 0)),
+        seats = listOf(Seat(1, 0), Seat(2, 2)),
+        theater = Theater("JAY 극장"),
     )
 
 val THEATER_MOVIE_SCHEDULE: TheaterMovieSchedule =

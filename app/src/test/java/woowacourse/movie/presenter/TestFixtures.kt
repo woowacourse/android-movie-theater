@@ -42,10 +42,10 @@ val SEAT_2_2 = Seat(2, 2)
 
 val MOVIE_TICKET_B1_C3: MovieTicket =
     MovieTicket(
-        "라라랜드",
-        LocalDate.of(2025, 4, 1),
-        MovieTime(LocalTime.of(16, 45)),
-        listOf(Seat(1, 0), Seat(2, 2)),
+        title = "라라랜드",
+        selectedDate = LocalDate.of(2025, 4, 1),
+        selectedTime = MovieTime(LocalTime.of(16, 45)),
+        seats = listOf(Seat(1, 0), Seat(2, 2)),
         theater = Theater("JAY 극장"),
     )
 
