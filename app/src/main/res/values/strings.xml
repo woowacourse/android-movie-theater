@@ -43,7 +43,10 @@
     <string name="not_found_data_error_message">"데이터가 없습니다."</string>
     <string name="go_back">뒤로가기</string>
 
-    <!-- 설정 페이지 -->
+    <!-- 알람 설정 페이지 -->
     <string name="push_alarm_title">푸시 알림 수신</string>
     <string name="push_alarm_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="notification_title">Movie</string>
+    <string name="notification_content_text">%s 30분 후에 상영</string>
+
 </resources>
