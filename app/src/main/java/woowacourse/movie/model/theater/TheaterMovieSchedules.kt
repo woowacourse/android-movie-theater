@@ -82,6 +82,7 @@ data class TheaterMovieSchedules(
                                 screeningTimes = screeningTimes,
                             ),
                     )
-                }.toSet()
+                }.distinctBy { Pair(it.movie.id, it.theater.name) }
+                .toSet()
     }
 }
