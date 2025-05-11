@@ -76,6 +76,8 @@ class SettingFragment : Fragment() {
         super.onResume()
         if (!canNotificationControl()) {
             saveNotificationState(false)
+        } else {
+            saveNotificationState(true)
         }
     }
 
