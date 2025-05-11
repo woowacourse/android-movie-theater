@@ -1,12 +1,12 @@
 package woowacourse.movie
 
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.databinding.ItemTicketBinding
+import woowacourse.movie.databinding.ItemReservationBinding
 import woowacourse.movie.domain.ticket.Reservation
 import java.time.LocalDateTime
 
 class ReservationViewHolder(
-    private val binding: ItemTicketBinding,
+    private val binding: ItemReservationBinding,
     private val onSelectTicket: (Reservation) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     private var showtime: LocalDateTime? = null

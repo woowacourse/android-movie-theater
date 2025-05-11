@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import woowacourse.movie.databinding.ItemTicketBinding
+import woowacourse.movie.databinding.ItemReservationBinding
 import woowacourse.movie.domain.ticket.Reservation
 
 class ReservationAdapter(
@@ -15,7 +15,7 @@ class ReservationAdapter(
         viewType: Int,
     ): ReservationViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ItemTicketBinding.inflate(layoutInflater, parent, false)
+        val binding = ItemReservationBinding.inflate(layoutInflater, parent, false)
         return ReservationViewHolder(binding, onSelectTicket)
     }
 
