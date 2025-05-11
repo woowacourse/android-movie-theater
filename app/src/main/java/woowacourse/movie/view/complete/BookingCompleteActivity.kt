@@ -14,6 +14,7 @@ import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
@@ -116,7 +117,12 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             .setTitle(getString(R.string.permission_exact_alarm_title))
             .setMessage(getString(R.string.permission_exact_alarm_message))
             .setPositiveButton(getString(R.string.permission_exact_alarm_allow)) { _, _ ->
-                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                val intent =
+                    Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                        data = "package:${this@BookingCompleteActivity.packageName}".toUri()
+                    }.apply {
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
                 startActivity(intent)
             }
             .setNegativeButton(getString(R.string.permission_exact_alarm_deny), null)
