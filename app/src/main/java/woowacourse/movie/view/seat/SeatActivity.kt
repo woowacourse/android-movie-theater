@@ -81,7 +81,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     }
 
     override fun moveToBookingComplete(ticketId: Long) {
-        val intent = BookingCompleteActivity.newIntent(this, ticketId)
+        val intent = BookingCompleteActivity.newIntent(this, ticketId, KEY_FROM_SEAT)
         startActivity(intent)
     }
 
@@ -123,8 +123,9 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     }
 
     companion object {
-        private const val KEY_SEAT = "SEAT"
+        const val KEY_FROM_SEAT = "KEY_FROM_SEAT"
         const val KEY_BOOKING = "BOOKING"
+        private const val KEY_SEAT = "SEAT"
 
         fun newIntent(
             context: Context,
