@@ -9,6 +9,10 @@ import woowacourse.movie.feature.model.MovieUiModel
 class HomePresenter(
     private val view: HomeContract.View,
 ) : HomeContract.Presenter {
+    init {
+        prepareMovies()
+    }
+
     override fun prepareMovies() {
         view.showMovies(movies.map { it.toUi() })
     }

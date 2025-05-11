@@ -28,7 +28,7 @@ class HomeFragment :
             )
         }
     }
-    private val presenter: HomeContract.Presenter by lazy { HomePresenter(this).apply { prepareMovies() } }
+    private val presenter: HomeContract.Presenter by lazy { HomePresenter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

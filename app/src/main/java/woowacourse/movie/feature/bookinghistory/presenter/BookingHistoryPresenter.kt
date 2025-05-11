@@ -14,6 +14,10 @@ class BookingHistoryPresenter(
     private val context: Context,
     private val view: BookingHistoryContract.View,
 ) : BookingHistoryContract.Presenter {
+    init {
+        prepareBookingHistory()
+    }
+
     override fun prepareBookingHistory() {
         CoroutineScope(Dispatchers.IO).launch {
             val db = BookingHistoryDetailsDatabase.Companion.getDatabase(context)
