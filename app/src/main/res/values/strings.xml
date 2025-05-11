@@ -49,4 +49,8 @@
     <string name="setting_permission_dialog_positive">설정하러 가기</string>
     <string name="setting_permission_dialog_negative">취소</string>
 
+    <string name="alarm_movie_notification_title">영화 알림</string>
+    <string name="alarm_notification_title">예매 알림</string>
+    <string name="alarm_notification_message">"%1s %2d분 후에 상영"</string>
+
 </resources>

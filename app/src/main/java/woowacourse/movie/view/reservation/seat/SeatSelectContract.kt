@@ -40,6 +40,11 @@ interface SeatSelectContract {
 
         fun finishView()
 
+        fun setMovieAlarm(
+            notificationTimeMillis: Long,
+            reservationInfo: ReservationInfo,
+        )
+
         fun navigateToComplete(reservationInfo: ReservationInfo)
     }
 
@@ -51,13 +56,8 @@ interface SeatSelectContract {
             col: Col,
         )
 
-        fun createReservationInfo(onCreated: (ReservationInfo) -> Unit)
+        fun confirmReservation()
 
-        fun confirmClicked(
-            title: String,
-            message: String,
-        )
-
-        fun saveReservationInfoToDB(reservationInfo: ReservationInfo)
+        fun addMovieAlarm(reservationInfo: ReservationInfo)
     }
 }

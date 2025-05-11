@@ -29,4 +29,9 @@ object Extras {
         const val SETTINGS_KEY = "settings"
         const val NOTIFICATION_KEY = "notification_data"
     }
+
+    object AlarmData {
+        const val MOVIE_ALARM_CHANNEL_ID = "movie_alerts"
+        const val RESERVATION_INFO_KEY = "reservation_info"
+    }
 }

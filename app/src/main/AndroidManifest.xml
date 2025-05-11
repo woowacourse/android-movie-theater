@@ -34,6 +34,10 @@
             android:name=".view.reservation.complete.ReservationCompleteActivity"
             android:exported="false"
             android:parentActivityName=".view.main.MoviesActivity" />
+
+        <receiver
+            android:name=".view.main.setting.AlarmReceiver"
+            android:exported="false" />
     </application>
 
 </manifest>
