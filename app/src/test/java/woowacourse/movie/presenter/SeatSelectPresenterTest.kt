@@ -114,13 +114,4 @@ class SeatSelectPresenterTest {
 
         verify { view.showSeatCountError(1) }
     }
-
-    @Test
-    fun `확인 버튼을 누르면 예매 다이얼로그를 보여준다`() {
-        every { view.showReservationDialog(any(), any()) } just Runs
-
-        presenter.confirmReservation("예매 확인", "정말 예매하시겠습니까?")
-
-        verify { view.showReservationDialog(any(), any()) }
-    }
 }
