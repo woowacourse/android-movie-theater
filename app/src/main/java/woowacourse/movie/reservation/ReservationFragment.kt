@@ -1,15 +1,20 @@
 package woowacourse.movie.reservation
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieApplication
 import woowacourse.movie.data.Reservation
 import woowacourse.movie.databinding.FragmentReservationBinding
 import woowacourse.movie.moviebooked.MovieBookedActivity
+import kotlin.concurrent.thread
 
 class ReservationFragment : Fragment() {
     private var _binding: FragmentReservationBinding? = null
@@ -26,7 +31,13 @@ class ReservationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showReservation()
+        thread {
+            val db = (context?.applicationContext as MovieApplication).database
+            val reservations = db.reservationDao().getAll()
+            Handler(Looper.getMainLooper()).post {
+                showReservation(reservations)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -34,11 +45,10 @@ class ReservationFragment : Fragment() {
         _binding = null
     }
 
-    private fun showReservation() {
-        val reservation = listOf(Reservation(100,"제목", "2025.4.1", "13:00", 2, "A1, A2", "선릉", 13000))
+    private fun showReservation(reservations: List<Reservation>) {
         binding.recyclerviewReservation.adapter =
             ReservationListAdapter(
-                reservation,
+                reservations,
                 object : ReservationClickListener {
                     override fun clickReservation(reservation: Reservation) {
                         navigateToReservation(reservation.uid)
