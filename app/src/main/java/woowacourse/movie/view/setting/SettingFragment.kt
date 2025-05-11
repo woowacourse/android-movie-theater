@@ -61,6 +61,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
                     binding.switchSettingPushAlarm.isChecked = false
                     return@setOnCheckedChangeListener
                 }
+                binding.switchSettingPushAlarm.isChecked = true
                 presenter.setNotification()
             } else {
                 NotificationReceiver.cancelNotification()
