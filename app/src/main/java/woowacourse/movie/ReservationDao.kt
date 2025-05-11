@@ -10,5 +10,5 @@ interface ReservationDao {
     fun addReservation(reservation: ReservationEntity)
 
     @Query("SELECT * from reservation")
-    fun findReservations(): List<ReservationEntity>
+    fun reservations(): List<ReservationEntity>
 }
