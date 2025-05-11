@@ -1,7 +1,6 @@
 package woowacourse.movie
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +22,8 @@ class SettingFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
         val switch: SwitchCompat = view.findViewById(R.id.notification_switch)
+
+        switch.isChecked = isNotification
 
         switch.setOnClickListener{
             SharedPreferences.saveData(requireContext(), switch.isChecked)

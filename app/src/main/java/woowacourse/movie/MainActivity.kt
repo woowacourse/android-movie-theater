@@ -8,6 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityMain2Binding
+import androidx.activity.result.contract.ActivityResultContracts
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
@@ -28,6 +29,14 @@ class MainActivity : AppCompatActivity() {
             ItemId.from(item.itemId)?.let { setFrag(it) } ?: setFrag(ItemId.HOME)
             true
         }
+
+        val launcher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            SharedPreferences.saveData(applicationContext, isGranted)
+        }
+
+        Notification.askNotificationPermission(applicationContext, launcher)
     }
 
     private fun setFrag(itemId: ItemId) {
@@ -36,4 +45,7 @@ class MainActivity : AppCompatActivity() {
             replace(R.id.main_frame, fragment.fragment)
         }
     }
+
+
 }
+
