@@ -3,6 +3,7 @@ package woowacourse.movie.presentation.setting
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -10,8 +11,6 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
-import woowacourse.movie.BuildConfig
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.presentation.common.base.BaseFragment
@@ -109,11 +108,11 @@ class SettingFragment :
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun launchResultLauncher() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        intent.data = INTENT_DATA_PACKAGE_NAME.toUri()
+        intent.data = Uri.fromParts(SETTINGS_INTENT_DATA_SCHEME, requireContext().packageName, null)
         openAppSettingsLauncher.launch(intent)
     }
 
     companion object {
-        private const val INTENT_DATA_PACKAGE_NAME = "package:${BuildConfig.APPLICATION_ID}"
+        private const val SETTINGS_INTENT_DATA_SCHEME = "package"
     }
 }
