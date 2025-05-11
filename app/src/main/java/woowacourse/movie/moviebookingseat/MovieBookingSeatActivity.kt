@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.ReservationAlarm
 import woowacourse.movie.databinding.MovieBookingSeatBinding
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Theater
@@ -80,6 +81,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
             }
             .setPositiveButton(getString(R.string.okay)) { _, _ ->
                 presenter.saveBookingStatus(bookingStatus, this)
+                ReservationAlarm(applicationContext).schedule(bookingStatus)
                 navigateToMovieBooked(bookingStatus, theater)
             }
             .show()

@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
             ItemId.from(item.itemId)?.let { setFrag(it) } ?: setFrag(ItemId.HOME)
             true
         }
+        NotificationHelper.createReservationChannel(this)
 
         val launcher = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             SharedPreferences.saveData(applicationContext, isGranted)
         }
 
-        Notification.askNotificationPermission(applicationContext, launcher)
+        Notification.askNotificationPermission(this, launcher)
     }
 
     private fun setFrag(itemId: ItemId) {
