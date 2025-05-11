@@ -51,6 +51,9 @@ class BookingCompleteActivity :
                 getString(R.string.preference_is_first_notification_request),
                 true,
             )
+    private val isEnablePostNotification: Boolean
+        get() = sharedPrefs.getBoolean(getString(R.string.preference_post_notification), true)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -205,8 +208,7 @@ class BookingCompleteActivity :
                 Manifest.permission.POST_NOTIFICATIONS,
             ) == PackageManager.PERMISSION_GRANTED
         } else {
-            // sharedPreferences에 있는 푸시알림 on/off값 주기
-            true
+            isEnablePostNotification
         }
     }
 
