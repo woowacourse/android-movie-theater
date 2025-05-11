@@ -10,7 +10,7 @@ interface ReservationHistoryContract {
     }
 
     interface View {
-        fun updateReservationHistories()
+        fun updateReservationHistories(reservations: List<Reservation>)
 
         fun showTicket(reservation: Reservation)
     }
