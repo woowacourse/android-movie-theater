@@ -146,7 +146,8 @@ class BookingSeatActivity :
 
         alarmMgr.set(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + 10000,
+            SystemClock.elapsedRealtime() + 3000,
+            // 테스트를 위해 3초로 설정
             alarmIntent,
         )
     }
