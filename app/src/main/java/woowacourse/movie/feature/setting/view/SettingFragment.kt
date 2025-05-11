@@ -36,7 +36,7 @@ class SettingFragment :
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
         alarmSetting = requireActivity().getSharedPreferences("alarmSetting", Context.MODE_PRIVATE)
 
-        presenter = SettingPresenter(this, alarmSetting)
+        presenter = SettingPresenter(requireContext(), this, alarmSetting)
 
         binding.notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
             presenter.toggleNotificationSwitch(isChecked)
