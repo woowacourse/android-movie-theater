@@ -44,4 +44,9 @@ class TicketListFragment : Fragment(), TicketListContract.View {
             }
         binding.rvReservation.addItemDecoration(DividerItemDecoration(context, VERTICAL))
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

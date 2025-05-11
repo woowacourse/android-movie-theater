@@ -103,4 +103,9 @@ class SettingFragment : Fragment(), SettingContract.View {
             requireContext(), Manifest.permission.POST_NOTIFICATIONS,
         ) == PackageManager.PERMISSION_GRANTED
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
