@@ -81,4 +81,9 @@ class BookingSeatPresenter(
         val bookedTicket = BookedTicket(movieTitle, headcount, bookedDateTime, seats, theater.name)
         bookingSeatView.startBookingCompleteActivity(bookedTicket)
     }
+
+    override fun postNotification() {
+        val bookedTicket = BookedTicket(movieTitle, headcount, bookedDateTime, seats, theater.name)
+        bookingSeatView.setAlarmManager(bookedTicket)
+    }
 }

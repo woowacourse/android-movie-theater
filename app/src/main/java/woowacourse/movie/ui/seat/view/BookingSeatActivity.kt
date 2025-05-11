@@ -1,9 +1,12 @@
 package woowacourse.movie.ui.seat.view
 
+import android.app.AlarmManager
 import android.app.AlertDialog
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TableRow
@@ -136,6 +139,18 @@ class BookingSeatActivity :
             else -> super.onOptionsItemSelected(item)
         }
 
+    override fun setAlarmManager(bookedTicket: BookedTicket) {
+        val alarmMgr = getSystemService(ALARM_SERVICE) as AlarmManager
+        val intent = AlarmReceiver.newIntent(this, bookedTicket)
+        val alarmIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        alarmMgr.set(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            SystemClock.elapsedRealtime() + 10000,
+            alarmIntent,
+        )
+    }
+
     private fun setConfirmButtonClickListener() {
         binding.confirmBtnClickListener =
             ConfirmButtonClickListener {
@@ -179,6 +194,7 @@ class BookingSeatActivity :
             .setPositiveButton(getString(R.string.text_booking_dialog_positive_button)) { _, _ ->
                 bookingSeatPresenter.insertBookedTicket()
                 bookingSeatPresenter.completeBookingSeat()
+                bookingSeatPresenter.postNotification()
             }.setNegativeButton(getString(R.string.text_booking_dialog_negative_button)) { dialog, _ ->
                 dialog.dismiss()
             }.setCancelable(false)

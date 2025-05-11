@@ -18,6 +18,6 @@ class BookingHistoryPresenter(
                 appDatabase.bookedTicketDao().getAll().map { BookedTicketMapper.toModel(it) }
             this.bookedTickets = bookedTickets
             bookingHistoryView.setBookedTicketItems(bookedTickets)
-        }
+        }.join()
     }
 }

@@ -26,6 +26,8 @@ interface BookingSeatContract {
         fun insertBookedTicket()
 
         fun completeBookingSeat()
+
+        fun postNotification()
     }
 
     interface View {
@@ -41,5 +43,7 @@ interface BookingSeatContract {
         fun setConfirmButton(isEnabled: Boolean)
 
         fun startBookingCompleteActivity(bookedTicket: BookedTicket)
+
+        fun setAlarmManager(bookedTicket: BookedTicket)
     }
 }
