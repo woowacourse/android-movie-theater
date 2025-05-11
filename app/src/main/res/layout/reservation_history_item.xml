@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="12dp"
         android:paddingVertical="16dp"
-        android:onClick="@{onItemClick}">
+        android:onClick="@{onItemClick}"
+        android:background="?attr/selectableItemBackground">
 
         <TextView
             android:id="@+id/tv_theater_time"
