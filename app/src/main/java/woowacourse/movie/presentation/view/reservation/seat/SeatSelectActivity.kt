@@ -2,9 +2,7 @@ package woowacourse.movie.presentation.view.reservation.seat
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -18,6 +16,7 @@ import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectBinding
 import woowacourse.movie.presentation.Extras
+import woowacourse.movie.presentation.alarm.AlarmScheduler
 import woowacourse.movie.presentation.getParcelableExtraCompat
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.view.reservation.complete.ReservationCompleteActivity
@@ -27,6 +26,7 @@ class SeatSelectActivity :
     AppCompatActivity(),
     SeatSelectContract.View {
     private lateinit var binding: ActivitySeatSelectBinding
+    private val alarmScheduler = AlarmScheduler(this)
     private val presenter = MovieApplication.provideSeatSelectPresenter(this)
     private val reservationDialog by lazy { ReservationDetailDialog() }
     private val seatViews: MutableMap<String, TextView> = mutableMapOf()
@@ -50,6 +50,20 @@ class SeatSelectActivity :
         setupConfirmButton()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val fromAlarmSettings =
+            intent?.getBooleanExtra(Extras.ReservationInfoData.ALARM_SETTING_KEY, false) ?: false
+        val reservationInfo =
+            intent?.getParcelableExtraCompat<ReservationInfoUiModel>(Extras.ReservationInfoData.RESERVATION_KEY)
+
+        if (fromAlarmSettings && reservationInfo != null) {
+            presenter.saveReservation(reservationInfo)
+            navigateToComplete(reservationInfo)
+        }
     }
 
     override fun showErrorDialog() {
@@ -102,23 +116,31 @@ class SeatSelectActivity :
             .setTitle(getString(R.string.setting_request_permission_dialog_title))
             .setMessage(getString(R.string.setting_request_reminder_permission_dialog_message))
             .setPositiveButton(R.string.setting_request_permission_dialog_positive) { _, _ ->
-                navigateToReminderSettings()
+                intent.putExtra(Extras.ReservationInfoData.RESERVATION_KEY, reservationInfo)
+                intent.putExtra(Extras.ReservationInfoData.ALARM_SETTING_KEY, true)
+                alarmScheduler.requestExactAlarmPermission(this)
             }.setNegativeButton(R.string.setting_request_permission_dialog_negative) { _, _ ->
+                presenter.saveReservation(reservationInfo)
+                showToast(getString(R.string.reservation_dialog_no_alarm_complete))
                 navigateToComplete(reservationInfo)
             }.show()
     }
 
-    override fun navigateToReminderSettings() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-            startActivity(intent)
+    override fun navigateCompleteWithAlarmCheck(reservationInfoUiModel: ReservationInfoUiModel) {
+        if (!alarmScheduler.canScheduleAlarm()) {
+            showExactAlarmSettingDialog(reservationInfoUiModel)
+            return
         }
+
+        navigateToComplete(reservationInfoUiModel)
     }
 
-    override fun navigateToComplete(reservationInfoUiModel: ReservationInfoUiModel) {
+    override fun navigateToComplete(reservationInfo: ReservationInfoUiModel) {
+        alarmScheduler.scheduleAlarm(reservationInfo)
+
         val intent =
             Intent(this, ReservationCompleteActivity::class.java).apply {
-                putExtra(Extras.ReservationInfoData.RESERVATION_KEY, reservationInfoUiModel)
+                putExtra(Extras.ReservationInfoData.RESERVATION_KEY, reservationInfo)
             }
         startActivity(intent)
         finish()

@@ -15,11 +15,9 @@ class AlarmScheduler(
     private val context: Context,
 ) {
     fun scheduleAlarm(reservationInfo: ReservationInfoUiModel) {
-        if (canScheduleAlarm()) {
-            scheduleExactAlarm(reservationInfo)
-        } else {
-            requestExactAlarmPermission()
-        }
+        if (!canScheduleAlarm()) return
+
+        scheduleExactAlarm(reservationInfo)
     }
 
     fun canScheduleAlarm(): Boolean =
@@ -51,10 +49,12 @@ class AlarmScheduler(
         )
     }
 
-    @RequiresApi(Build.VERSION_CODES.S)
-    private fun requestExactAlarmPermission() {
-        val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-        context.startActivity(intent)
+    fun requestExactAlarmPermission(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(intent)
+        }
     }
 
     private fun LocalDateTime.toEpochMillisBefore(minutes: Long): Long =

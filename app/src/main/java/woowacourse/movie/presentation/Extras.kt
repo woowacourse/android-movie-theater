@@ -19,6 +19,7 @@ object Extras {
 
     object ReservationInfoData {
         const val RESERVATION_KEY = "reservation_data"
+        const val ALARM_SETTING_KEY = "alarm_setting"
     }
 
     object AlarmData {

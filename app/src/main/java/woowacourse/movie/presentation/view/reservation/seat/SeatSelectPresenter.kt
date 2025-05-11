@@ -3,7 +3,6 @@ package woowacourse.movie.presentation.view.reservation.seat
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.repository.ReservationRepository
-import woowacourse.movie.presentation.alarm.AlarmScheduler
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.toDomain
 import woowacourse.movie.presentation.model.toPresentation
@@ -11,7 +10,6 @@ import kotlin.concurrent.thread
 
 class SeatSelectPresenter(
     val view: SeatSelectContract.View,
-    private val alarmScheduler: AlarmScheduler,
     private val reservationRepository: ReservationRepository,
 ) : SeatSelectContract.Presenter {
     private lateinit var reservationInfo: ReservationInfo
@@ -59,18 +57,12 @@ class SeatSelectPresenter(
 
     override fun reservationConfirmed() {
         val reservationInfoUiModel = createReservationInfo()
+        view.navigateToComplete(reservationInfoUiModel)
+    }
 
-        if (!alarmScheduler.canScheduleAlarm()) {
-            view.showExactAlarmSettingDialog(reservationInfoUiModel)
-            return
-        }
-
-        alarmScheduler.scheduleAlarm(reservationInfoUiModel)
-
+    override fun saveReservation(reservationInfo: ReservationInfoUiModel) {
         thread {
-            reservationInfo = reservationInfoUiModel.toDomain()
-            provider.saveReservation(reservationInfo)
-            view.navigateToComplete(reservationInfoUiModel)
+            reservationRepository.saveReservation(reservationInfo.toDomain())
         }
     }
 

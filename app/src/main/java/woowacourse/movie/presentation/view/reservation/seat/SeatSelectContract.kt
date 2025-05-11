@@ -28,9 +28,9 @@ interface SeatSelectContract {
 
         fun showExactAlarmSettingDialog(reservationInfo: ReservationInfoUiModel)
 
-        fun navigateToReminderSettings()
+        fun navigateCompleteWithAlarmCheck(reservationInfoUiModel: ReservationInfoUiModel)
 
-        fun navigateToComplete(reservationInfoUiModel: ReservationInfoUiModel)
+        fun navigateToComplete(reservationInfo: ReservationInfoUiModel)
     }
 
     interface Presenter {
@@ -42,6 +42,8 @@ interface SeatSelectContract {
             title: String,
             message: String,
         )
+
+        fun saveReservation(reservationInfo: ReservationInfoUiModel)
 
         fun getSelectedSeatIds(): List<String>
 
