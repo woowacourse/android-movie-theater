@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
@@ -62,32 +61,26 @@ class SettingFragment :
 
     private fun initPushAlarmSwitch() {
         binding.switchSettingPushAlarm.setOnCheckedChangeListener { _, isChecked ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && isChecked) {
-                requestNotificationPermission()
-            } else {
-                presenter.savePushAlarmSetting(isChecked)
+            when {
+                !isChecked -> presenter.savePushAlarmSetting(false)
+                isNotificationPermissionGranted() -> presenter.savePushAlarmSetting(true)
+                else -> requestNotificationPermission()
             }
         }
     }
-
-    private fun requestNotificationPermission() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
-
-        when {
-            isNotificationPermissionGranted() -> presenter.savePushAlarmSetting(true)
-            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) ->
-                showPermissionRationaleDialog()
 
             else -> requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun isNotificationPermissionGranted(): Boolean =
-        ContextCompat.checkSelfPermission(
+    private fun isNotificationPermissionGranted(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return true
+
+        return ContextCompat.checkSelfPermission(
             requireContext(),
             Manifest.permission.POST_NOTIFICATIONS,
         ) == PackageManager.PERMISSION_GRANTED
+    }
 
     private fun handlePermissionResult(isGranted: Boolean) {
         if (isGranted) {

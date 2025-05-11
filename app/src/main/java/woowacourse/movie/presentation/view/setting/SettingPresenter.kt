@@ -13,5 +13,6 @@ class SettingPresenter(
 
     override fun savePushAlarmSetting(isEnabled: Boolean) {
         preferenceManager.setPushAlarmEnabled(isEnabled)
+        view.showPushAlarmSetting(isEnabled)
     }
 }
