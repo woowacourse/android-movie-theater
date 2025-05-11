@@ -19,12 +19,12 @@ class MovieListFragmentTest {
 
     @Test
     fun 영화_목록이_표시된다() {
-        onView(withId(R.id.rv)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_movie_list)).check(matches(isDisplayed()))
     }
 
     @Test
     fun 영화_포스터가_표시된다() {
-        onView(withId(R.id.rv)).check(
+        onView(withId(R.id.rv_movie_list)).check(
             matches(
                 hasDescendant(
                     allOf(
@@ -38,7 +38,7 @@ class MovieListFragmentTest {
 
     @Test
     fun 영화_제목이_표시된다() {
-        onView(withId(R.id.rv)).check(
+        onView(withId(R.id.rv_movie_list)).check(
             matches(
                 hasDescendant(
                     allOf(
@@ -53,7 +53,7 @@ class MovieListFragmentTest {
 
     @Test
     fun 영화_러닝_타임이_표시된다() {
-        onView(withId(R.id.rv)).check(
+        onView(withId(R.id.rv_movie_list)).check(
             matches(
                 hasDescendant(
                     allOf(

@@ -39,7 +39,7 @@ class BookingHistoryFragment : Fragment(R.layout.fragment_booking_history), Book
         super.onViewCreated(view, savedInstanceState)
 
         val decoration = DividerItemDecoration(binding.root.context, DividerItemDecoration.VERTICAL)
-        binding.rv.addItemDecoration(decoration)
+        binding.rvBookingHistory.addItemDecoration(decoration)
 
         presenter = BookingHistoryPresenter(this)
         val db =
@@ -56,7 +56,7 @@ class BookingHistoryFragment : Fragment(R.layout.fragment_booking_history), Book
 
     override fun showTickets(tickets: List<Ticket>) {
         activity?.runOnUiThread {
-            binding.rv.adapter = HistoryAdapter(tickets, this)
+            binding.rvBookingHistory.adapter = HistoryAdapter(tickets, this)
         }
     }
 

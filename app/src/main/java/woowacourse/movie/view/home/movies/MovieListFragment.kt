@@ -36,7 +36,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieListContr
     }
 
     override fun showMovieList(movieList: List<FeedUiModel>) {
-        binding.rv.adapter = MovieAdapter(movieList, this)
+        binding.rvMovieList.adapter = MovieAdapter(movieList, this)
     }
 
     override fun moveToTheaterSelection(movieId: Int) {

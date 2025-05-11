@@ -46,7 +46,7 @@ class TheaterListFragment :
     }
 
     override fun showTheaters(theaters: Theaters) {
-        binding.rv.adapter = TheaterAdapter(movieId, theaters, this)
+        binding.rvTheaterList.adapter = TheaterAdapter(movieId, theaters, this)
     }
 
     override fun moveToBooking(screeningInfo: ScreeningInfo) {
