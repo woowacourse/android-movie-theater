@@ -8,16 +8,16 @@ class SettingPreferenceManager(
 ) {
     private val prefs = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
-    fun getPushAlarmEnabled(): Boolean = prefs.getBoolean(KEY_PUSH_ALARM, false)
+    fun getNotificationEnabled(): Boolean = prefs.getBoolean(NOTIFICATION_KEY, false)
 
-    fun setPushAlarmEnabled(enabled: Boolean) {
+    fun setNotificationEnabled(enabled: Boolean) {
         prefs.edit {
-            putBoolean(KEY_PUSH_ALARM, enabled)
+            putBoolean(NOTIFICATION_KEY, enabled)
         }
     }
 
     companion object {
-        private const val PREFERENCES_NAME = "settings"
-        private const val KEY_PUSH_ALARM = "notification"
+        private const val PREFERENCES_NAME = "notification_pref"
+        private const val NOTIFICATION_KEY = "notification"
     }
 }
