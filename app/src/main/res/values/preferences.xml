@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_key">THEATER_PREFERENCE_KEY</string>
+    <string name="preference_is_first_notification_request">IS_FIRST_NOTIFICATION_REQUEST</string>
+    <string name="preference_post_notification">POST_NOTIFICATION</string>
+</resources>

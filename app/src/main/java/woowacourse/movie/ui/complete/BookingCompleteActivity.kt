@@ -1,15 +1,27 @@
 package woowacourse.movie.ui.complete
 
+import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import java.time.LocalDateTime
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.BookedTicket
@@ -20,13 +32,21 @@ import woowacourse.movie.ui.main.MovieBookingActivity
 import woowacourse.movie.utils.Destination
 import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.intentSerializable
-import java.time.LocalDateTime
 
 class BookingCompleteActivity :
     AppCompatActivity(),
     BookingCompleteContract.View {
     private val bookingCompletePresenter = BookingCompletePresenter(this)
     private lateinit var binding: ActivityBookingCompleteBinding
+    private val sharedPrefs: SharedPreferences by lazy {
+        this.getSharedPreferences(getString(R.string.preference_key), MODE_PRIVATE)
+    }
+    private val isFirstNotificationRequest: Boolean
+        get() =
+            sharedPrefs.getBoolean(
+                getString(R.string.preference_is_first_notification_request),
+                true,
+            )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +92,15 @@ class BookingCompleteActivity :
         binding.stringFormatter = StringFormatter
     }
 
+    override fun moveTo(destination: Destination) {
+        val intent =
+            MovieBookingActivity.newIntent(this, destination).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            }
+        startActivity(intent)
+        finish()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
             android.R.id.home -> {
@@ -81,6 +110,101 @@ class BookingCompleteActivity :
 
             else -> super.onOptionsItemSelected(item)
         }
+
+    override fun handlePermission() {
+        requestPostNotificationPermission()
+
+        if (hasPostNotification()) {
+            // 알림 등록
+        }
+    }
+
+    private fun requestPostNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val isGranted =
+                ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS,
+                ) == PackageManager.PERMISSION_GRANTED
+
+            if (!isGranted) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                    showRecommendPushNotification()
+                } else { // 최초 요청 || 다시 묻지 않음
+                    if (isFirstNotificationRequest) {
+                        showNotificationDialog(Manifest.permission.POST_NOTIFICATIONS)
+                        sharedPrefs.edit {
+                            putBoolean(
+                                getString(R.string.preference_is_first_notification_request),
+                                false,
+                            )
+                        }
+                    } else {
+                        showRecommendSettingDialog()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showRecommendPushNotification() {
+        Toast.makeText(
+            this,
+            getString(R.string.recommend_push_notification),
+            Toast.LENGTH_LONG,
+        ).show()
+    }
+
+    private fun showNotificationDialog(permissionName: String) {
+        AlertDialog
+            .Builder(this)
+            .setTitle(getString(R.string.dialog_notification_title))
+            .setMessage(getString(R.string.dialog_notification_message))
+            .setPositiveButton(getString(R.string.dialog_notification_positive_btn)) { _, _ ->
+                requestPermissionLauncher.launch(permissionName)
+            }
+            .setNegativeButton(getString(R.string.dialog_notification_negative_btn)) { dialog, _ ->
+                dialog.dismiss()
+                showRecommendPushNotification()
+            }.setCancelable(false)
+            .show()
+    }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) {}
+
+    private fun showRecommendSettingDialog() {
+        AlertDialog
+            .Builder(this)
+            .setTitle(getString(R.string.dialog_notification_title_for_recommend))
+            .setMessage(getString(R.string.dialog_notification_message_for_recommend))
+            .setPositiveButton(getString(R.string.dialog_notification_positive_btn_for_recommend)) { _, _ ->
+                val intent =
+                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.fromParts("package", packageName, null)
+                    }
+                startActivity(intent)
+            }
+            .setNegativeButton(getString(R.string.dialog_notification_negative_btn_for_recommend)) { dialog, _ ->
+                dialog.dismiss()
+                showRecommendPushNotification()
+            }.setCancelable(false)
+            .show()
+    }
+
+    private fun hasPostNotification(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            // sharedPreferences에 있는 푸시알림 on/off값 주기
+            true
+        }
+    }
 
     private fun applyWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -103,15 +227,6 @@ class BookingCompleteActivity :
                 }
             },
         )
-    }
-
-    override fun moveTo(destination: Destination) {
-        val intent =
-            MovieBookingActivity.newIntent(this, destination).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            }
-        startActivity(intent)
-        finish()
     }
 
     private fun Seat.toText(): String = Char(row + ASCII_A.code) + (col + 1).toString()
