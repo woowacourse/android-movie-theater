@@ -29,4 +29,6 @@
     <string name="booking_decrease">-</string>
     <string name="booking_increase">+</string>
     <string name="booking_confirm">선택 완료</string>
+    <string name="push_title">푸시 알림 수신</string>
+    <string name="push_detail">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 </resources>
