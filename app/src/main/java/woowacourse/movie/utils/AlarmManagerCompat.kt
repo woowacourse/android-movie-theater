@@ -20,14 +20,22 @@ object AlarmManagerCompat {
             if (alarmManager.canScheduleExactAlarms()) {
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
             } else {
-                val intent =
-                    Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
-                        data = "package:${context.packageName}".toUri()
-                    }
-                context.startActivity(intent)
+                requestScheduleExactPermission(context)
             }
         } else {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
         }
+    }
+
+    fun requestScheduleExactPermission(context: Context) {
+        val intent =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                    data = "package:${context.packageName}".toUri()
+                }
+            } else {
+                TODO("VERSION.SDK_INT < S")
+            }
+        context.startActivity(intent)
     }
 }

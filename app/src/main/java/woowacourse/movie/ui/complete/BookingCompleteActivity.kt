@@ -54,7 +54,6 @@ class BookingCompleteActivity :
     private val isEnablePostNotification: Boolean
         get() = sharedPrefs.getBoolean(getString(R.string.preference_post_notification), true)
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -180,7 +179,11 @@ class BookingCompleteActivity :
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
-        ) {}
+        ) { isChecked ->
+            if (isChecked) {
+                AlarmManagerCompat.requestScheduleExactPermission(this)
+            }
+        }
 
     private fun showRecommendSettingDialog() {
         AlertDialog
