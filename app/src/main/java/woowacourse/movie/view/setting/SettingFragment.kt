@@ -1,27 +1,19 @@
 package woowacourse.movie.view.setting
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
-import woowacourse.movie.data.TicketInfoDatabase
-import woowacourse.movie.data.TicketRepository
 import woowacourse.movie.databinding.FragmentSettingBinding
-import woowacourse.movie.view.setting.alarm.AlarmReceiver
 
 class SettingFragment : Fragment() {
     private var _binding: FragmentSettingBinding? = null
@@ -33,21 +25,14 @@ class SettingFragment : Fragment() {
         requireActivity().getSharedPreferences("setting", Context.MODE_PRIVATE)
     }
 
-    private val scheduleExactAlarmPermissionLauncher =
+    private val requestPermissionLauncher =
         registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult(),
-        ) {
-            if (canScheduleExactAlarm()) {
-                setAlarm()
-            } else {
-                alarmBtn.isChecked = false
-            }
-        }
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted: Boolean ->
+            alarmBtn.isChecked = isGranted
 
-    private val repository: TicketRepository by lazy {
-        val dao = TicketInfoDatabase.getDatabase(requireContext()).ticketInfoDao()
-        TicketRepository(dao)
-    }
+            sharedPref.edit { putBoolean("isAlarmOn", isGranted) }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,54 +53,18 @@ class SettingFragment : Fragment() {
         _binding = null
     }
 
-    private fun checkAndRequestExactAlarmPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (!canScheduleExactAlarm()) {
-                val intent =
-                    Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
-                        data = Uri.parse("package:${requireContext().packageName}")
-                    }
-                scheduleExactAlarmPermissionLauncher.launch(intent)
-            } else {
-                setAlarm()
-            }
-        } else {
-            setAlarm()
-        }
-    }
-
-    private fun canScheduleExactAlarm(): Boolean {
-        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            alarmManager.canScheduleExactAlarms()
-        } else {
-            true
-        }
-    }
-
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                checkAndRequestExactAlarmPermission()
-            } else {
-                alarmBtn.isChecked = false
-                cancelAlarm()
-            }
-        }
-
     private fun setAlarmBtn(isAlarmOn: Boolean) {
         alarmBtn = binding.settingAlarmSwitchBtn
         alarmBtn.isChecked = isAlarmOn
 
         alarmBtn.setOnCheckedChangeListener { _, isChecked ->
-            sharedPref.edit().putBoolean("isAlarmOn", isChecked).apply()
-
             if (isChecked) {
                 requestNotificationPermission()
-            } else {
-                cancelAlarm()
+                return@setOnCheckedChangeListener
             }
+
+            alarmBtn.isChecked = false
+            sharedPref.edit { putBoolean("isAlarmOn", false) }
         }
     }
 
@@ -126,38 +75,13 @@ class SettingFragment : Fragment() {
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                    // 권한 요청 거부한 경우
                 } else {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             } else {
-                checkAndRequestExactAlarmPermission()
+                // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
             }
-        } else {
-            checkAndRequestExactAlarmPermission()
         }
-    }
-
-    @SuppressLint("ScheduleExactAlarm")
-    private fun setAlarm() {
-        val intent = Intent(requireContext(), AlarmReceiver::class.java)
-        val pendingIntent =
-            PendingIntent.getBroadcast(requireContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        val testTime = System.currentTimeMillis() + 5_000
-
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            testTime,
-            pendingIntent,
-        )
-    }
-
-    private fun cancelAlarm() {
-        val intent = Intent(requireContext(), AlarmReceiver::class.java)
-        val pendingIntent =
-            PendingIntent.getBroadcast(requireContext(), 1000, intent, PendingIntent.FLAG_IMMUTABLE)
-        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.cancel(pendingIntent)
     }
 }

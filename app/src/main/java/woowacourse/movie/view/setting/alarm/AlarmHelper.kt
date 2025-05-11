@@ -50,14 +50,4 @@ object AlarmHelper {
         val zoneId = ZoneId.systemDefault()
         return localDateTime.atZone(zoneId).toInstant().toEpochMilli()
     }
-
-    // 알림 취소
-
-    private fun cancelAlarm(context: Context) {
-        val intent = Intent(context, AlarmReceiver::class.java)
-        val pendingIntent =
-            PendingIntent.getBroadcast(context, 1000, intent, PendingIntent.FLAG_IMMUTABLE)
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.cancel(pendingIntent)
-    }
 }
