@@ -5,7 +5,7 @@ import woowacourse.movie.domain.ticket.Reservation
 import woowacourse.movie.toEntity
 
 interface ReservationData {
-    fun addReservation(reservation: Reservation)
+    fun add(reservation: Reservation)
 
     fun reservations(): List<Reservation>
 }
@@ -13,7 +13,7 @@ interface ReservationData {
 class LocalReservationData(
     private val reservationDao: ReservationDao,
 ) : ReservationData {
-    override fun addReservation(reservation: Reservation) {
+    override fun add(reservation: Reservation) {
         reservationDao.addReservation(reservation.toEntity())
     }
 

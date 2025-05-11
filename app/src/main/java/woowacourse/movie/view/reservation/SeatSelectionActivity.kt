@@ -20,7 +20,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.setPadding
 import woowacourse.movie.R
+import woowacourse.movie.ReservationDatabase
 import woowacourse.movie.contract.reservation.SeatSelectionContract
+import woowacourse.movie.data.reservation.LocalReservationData
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.reservation.SeatGrade
@@ -93,6 +95,8 @@ class SeatSelectionActivity :
         val cinemaName =
             intent.getStringExtra(EXTRA_CINEMA_NAME)
                 ?: error(ErrorMessage(CAUSE_CINEMA_NAME).notProvided())
+        val dao = ReservationDatabase.create(applicationContext).reservationDao()
+        val reservationData = LocalReservationData(dao)
         presenter =
             SeatSelectionPresenter(
                 this,
@@ -100,6 +104,8 @@ class SeatSelectionActivity :
                 count,
                 showtime,
                 cinemaName,
+                reservationData,
+                ::runOnUiThread,
                 selectedSeats,
             )
     }
@@ -244,10 +250,7 @@ class SeatSelectionActivity :
     companion object {
         private const val KEY_SEATS = "KEY_SEATS"
 
-        private const val CAUSE_TICKET = "ticket"
         private const val CAUSE_CINEMA_NAME = "cinemaName"
-        private const val CAUSE_SEAT_VIEW = "seatView"
-        private const val IN_SEAT_LAYOUT = "seatLayout"
 
         private const val EXTRA_TITLE = "woowacourse.movie.TITLE"
         private const val EXTRA_COUNT = "woowacourse.movie.COUNT"
