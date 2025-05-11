@@ -1,6 +1,16 @@
 package woowacourse.movie
 
 import android.app.Application
+import woowacourse.movie.data.ReservationProviderImpl
+import woowacourse.movie.data.SettingPreferenceManager
+import woowacourse.movie.data.SettingRepositoryImpl
+import woowacourse.movie.data.db.ReservationDao
+import woowacourse.movie.data.db.ReservationDatabase
+import woowacourse.movie.domain.ReservationProvider
+import woowacourse.movie.domain.SettingRepository
+import woowacourse.movie.presentation.alarm.AlarmScheduler
+import woowacourse.movie.presentation.view.reservation.seat.SeatSelectContract
+import woowacourse.movie.presentation.view.reservation.seat.SeatSelectPresenter
 
 class MovieApplication : Application() {
     override fun onCreate() {
@@ -9,8 +19,20 @@ class MovieApplication : Application() {
     }
 
     companion object {
-        private lateinit var instance: MovieApplication
+        lateinit var instance: MovieApplication
+            private set
 
-        fun getInstance(): MovieApplication = instance
+        fun provideSeatSelectPresenter(view: SeatSelectContract.View): SeatSelectContract.Presenter =
+            SeatSelectPresenter(
+                view = view,
+                provider = provideReservationProvider(),
+                alarmScheduler = provideAlarmScheduler(),
+            )
+
+        private fun provideReservationDao(): ReservationDao = ReservationDatabase.getInstance(instance).reservationDao()
+
+        private fun provideReservationProvider(): ReservationProvider = ReservationProviderImpl(provideReservationDao())
+
+        private fun provideAlarmScheduler(): AlarmScheduler = AlarmScheduler(instance)
     }
 }
