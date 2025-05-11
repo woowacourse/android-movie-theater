@@ -1,12 +1,8 @@
 package woowacourse.movie.view.reservation.seat
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -24,16 +20,14 @@ import woowacourse.movie.model.reservation.ReservationInfo
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.seat.index.Col
 import woowacourse.movie.model.seat.index.Row
-import woowacourse.movie.view.main.setting.AlarmReceiver
 import woowacourse.movie.view.reservation.complete.ReservationCompleteActivity
 import woowacourse.movie.view.reservation.detail.ReservationDetailDialog
+import woowacourse.movie.view.util.AlarmManagerHelper
 import woowacourse.movie.view.util.Extras
-import woowacourse.movie.view.util.Extras.AlarmData.RESERVATION_INFO_KEY
 import woowacourse.movie.view.util.Extras.SettingData.NOTIFICATION_KEY
 import woowacourse.movie.view.util.Extras.SettingData.SETTINGS_KEY
 import woowacourse.movie.view.util.ReservationUiFormatter
 import woowacourse.movie.view.util.getParcelableExtraCompat
-import java.util.Date
 
 class SeatSelectActivity :
     AppCompatActivity(),
@@ -147,53 +141,16 @@ class SeatSelectActivity :
     }
 
     @SuppressLint("ScheduleExactAlarm")
-    override fun setMovieAlarm(
-        notificationTimeMillis: Long,
-        reservationInfo: ReservationInfo,
-    ) {
+    override fun setMovieAlarm(reservationInfo: ReservationInfo) {
         if (!isNotificationEnabled()) return
 
-        val alarmManager = this.getSystemService(ALARM_SERVICE) as AlarmManager
-        val pendingIntent = createPendingIntent(reservationInfo)
-        setExactAlarm(alarmManager, notificationTimeMillis, pendingIntent)
+        val alarmManagerHelper = AlarmManagerHelper(this)
+        alarmManagerHelper.scheduleSingleMovieAlarms(reservationInfo)
     }
 
     private fun isNotificationEnabled(): Boolean {
         val sharedPreferences = this.getSharedPreferences(SETTINGS_KEY, MODE_PRIVATE)
         return sharedPreferences.getBoolean(NOTIFICATION_KEY, false)
-    }
-
-    private fun createPendingIntent(reservationInfo: ReservationInfo): PendingIntent {
-        val intent =
-            Intent(this, AlarmReceiver::class.java).apply {
-                putExtra(RESERVATION_INFO_KEY, reservationInfo)
-            }
-
-        return PendingIntent.getBroadcast(
-            this,
-            reservationInfo.id.hashCode(),
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-        )
-    }
-
-    @SuppressLint("ScheduleExactAlarm")
-    private fun setExactAlarm(
-        alarmManager: AlarmManager,
-        notificationTimeMillis: Long,
-        pendingIntent: PendingIntent,
-    ) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            Log.d("AlarmTest", "알람 설정됨: ${Date()}, 예정 시간: $notificationTimeMillis")
-            val alarmClock = AlarmManager.AlarmClockInfo(notificationTimeMillis, null)
-            alarmManager.setAlarmClock(alarmClock, pendingIntent)
-        } else {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                notificationTimeMillis,
-                pendingIntent,
-            )
-        }
     }
 
     private fun setupSeatView(tableLayout: TableLayout) {

@@ -11,10 +11,6 @@ import woowacourse.movie.model.seat.grade.RowBasedSeatGradePolicy
 import woowacourse.movie.model.seat.grade.SeatGradePolicy
 import woowacourse.movie.model.seat.index.Col
 import woowacourse.movie.model.seat.index.Row
-import woowacourse.movie.view.main.setting.AlarmReceiver.Companion.ALARM_SHOWUP_MINUTE
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.util.Locale
 
 class SeatSelectPresenter(
     val view: SeatSelectContract.View,
@@ -60,7 +56,6 @@ class SeatSelectPresenter(
     override fun confirmReservation() {
         val reservationInfo = createReservationInfo()
         saveReservationInfoToDB(reservationInfo)
-        addMovieAlarm(reservationInfo)
         view.navigateToComplete(reservationInfo)
     }
 
@@ -82,25 +77,9 @@ class SeatSelectPresenter(
         Thread {
             val database = AppDatabase.getDatabase(context)
             val dao = database.reservationInfoDao()
-            dao.insertReservation(reservationInfo)
+            val id = dao.insertReservation(reservationInfo)
+            view.setMovieAlarm(dao.getReservationById(id.toInt()))
         }.start()
-    }
-
-    override fun addMovieAlarm(reservationInfo: ReservationInfo) {
-        val startTimeMillis = getMovieStartTimeMillis(reservationInfo.date, reservationInfo.time)
-        val notificationTimeMillis = startTimeMillis - (ALARM_SHOWUP_MINUTE * 60 * 1000)
-        if (System.currentTimeMillis() > notificationTimeMillis) return
-
-        view.setMovieAlarm(notificationTimeMillis, reservationInfo)
-    }
-
-    private fun getMovieStartTimeMillis(
-        dateStr: LocalDate,
-        timeStr: String,
-    ): Long {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
-        val date = dateFormat.parse("$dateStr $timeStr")
-        return date?.time ?: System.currentTimeMillis()
     }
 
     fun getSelectedSeats(): List<Seat> = selectedSeats.value

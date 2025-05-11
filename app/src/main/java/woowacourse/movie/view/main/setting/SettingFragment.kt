@@ -20,20 +20,18 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.view.util.AlarmManagerHelper
 import woowacourse.movie.view.util.ExceptionMessages
 import woowacourse.movie.view.util.Extras.SettingData.NOTIFICATION_KEY
 import woowacourse.movie.view.util.Extras.SettingData.SETTINGS_KEY
 
-class SettingFragment :
-    Fragment(),
-    SettingContract.View {
+class SettingFragment : Fragment() {
     @Suppress("ktlint:standard:backing-property-naming")
     private var _binding: FragmentSettingBinding? = null
     private val binding: FragmentSettingBinding
         get() =
             _binding
                 ?: throw IllegalStateException(ExceptionMessages.FRAGMENT_BINDING_STATE_EXCEPTION)
-    private lateinit var presenter: SettingContract.Presenter
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
@@ -151,7 +149,20 @@ class SettingFragment :
             }.show()
     }
 
+    private fun handleAlarmRegistration(isEnabled: Boolean) {
+        val alarmHelper = AlarmManagerHelper(requireContext())
+
+        if (isEnabled) {
+            if (canNotificationControl()) {
+                alarmHelper.scheduleAllMovieAlarms()
+            }
+        } else {
+            alarmHelper.cancelAllAlarms()
+        }
+    }
+
     private fun saveNotificationState(isEnabled: Boolean) {
+        handleAlarmRegistration(isEnabled)
         binding.settingNotificationSwitch.isChecked = isEnabled
         val sharedPreference = requireContext().getSharedPreferences(SETTINGS_KEY, MODE_PRIVATE)
         sharedPreference.edit {

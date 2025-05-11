@@ -59,7 +59,7 @@ class AlarmReceiver : BroadcastReceiver() {
         val pendingIntent =
             PendingIntent.getActivity(
                 context,
-                reservationInfo.id.hashCode(),
+                reservationInfo.hashCode(),
                 detailIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
