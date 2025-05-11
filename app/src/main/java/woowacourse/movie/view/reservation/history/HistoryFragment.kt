@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketRepositoryImpl
 import woowacourse.movie.databinding.FragmentHistoryBinding
@@ -34,6 +36,16 @@ class HistoryFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         showMoviesScreen()
+        showDivider()
+    }
+
+    private fun showDivider() {
+        val dividerItemDecoration =
+            DividerItemDecoration(
+                binding.rvReservationHistory.context,
+                LinearLayoutManager.VERTICAL,
+            )
+        binding.rvReservationHistory.addItemDecoration(dividerItemDecoration)
     }
 
     private fun showMoviesScreen() {
