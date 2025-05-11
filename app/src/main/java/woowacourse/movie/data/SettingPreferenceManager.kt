@@ -7,9 +7,7 @@ import woowacourse.movie.MovieApplication
 
 class SettingPreferenceManager(
     private val prefs: SharedPreferences =
-        MovieApplication
-            .getInstance()
-            .getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE),
+        MovieApplication.instance.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE),
 ) {
     fun getNotificationEnabled(): Boolean = prefs.getBoolean(NOTIFICATION_KEY, false)
 

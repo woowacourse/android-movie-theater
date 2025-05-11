@@ -1,10 +1,10 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.repository
 
-import woowacourse.movie.data.ReservationMapper.toDomain
-import woowacourse.movie.data.ReservationMapper.toEntity
 import woowacourse.movie.data.db.ReservationDao
-import woowacourse.movie.domain.ReservationRepository
+import woowacourse.movie.data.db.ReservationMapper.toDomain
+import woowacourse.movie.data.db.ReservationMapper.toEntity
 import woowacourse.movie.domain.model.ReservationInfo
+import woowacourse.movie.domain.repository.ReservationRepository
 
 class ReservationRepositoryImpl(
     private val dao: ReservationDao,

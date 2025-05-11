@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import woowacourse.movie.data.ReservationRepositoryImpl
 import woowacourse.movie.data.db.ReservationDatabase
+import woowacourse.movie.data.repository.ReservationRepositoryImpl
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.presentation.Extras
 import woowacourse.movie.presentation.model.ReservationInfoUiModel

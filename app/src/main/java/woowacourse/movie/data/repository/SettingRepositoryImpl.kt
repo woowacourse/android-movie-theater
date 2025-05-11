@@ -1,6 +1,7 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.repository
 
-import woowacourse.movie.domain.SettingRepository
+import woowacourse.movie.data.SettingPreferenceManager
+import woowacourse.movie.domain.repository.SettingRepository
 
 class SettingRepositoryImpl(
     private val preferenceManager: SettingPreferenceManager,

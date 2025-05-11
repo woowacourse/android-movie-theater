@@ -1,6 +1,5 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.db
 
-import woowacourse.movie.data.db.ReservationEntity
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.TicketCount
 

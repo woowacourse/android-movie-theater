@@ -10,7 +10,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
-import woowacourse.movie.domain.SettingRepository
+import woowacourse.movie.domain.repository.SettingRepository
 import woowacourse.movie.presentation.Extras
 import woowacourse.movie.presentation.getParcelableExtraCompat
 import woowacourse.movie.presentation.model.ReservationInfoUiModel

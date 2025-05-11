@@ -1,13 +1,13 @@
 package woowacourse.movie
 
 import android.app.Application
-import woowacourse.movie.data.ReservationRepositoryImpl
 import woowacourse.movie.data.SettingPreferenceManager
-import woowacourse.movie.data.SettingRepositoryImpl
 import woowacourse.movie.data.db.ReservationDao
 import woowacourse.movie.data.db.ReservationDatabase
-import woowacourse.movie.domain.ReservationRepository
-import woowacourse.movie.domain.SettingRepository
+import woowacourse.movie.data.repository.ReservationRepositoryImpl
+import woowacourse.movie.data.repository.SettingRepositoryImpl
+import woowacourse.movie.domain.repository.ReservationRepository
+import woowacourse.movie.domain.repository.SettingRepository
 import woowacourse.movie.presentation.alarm.AlarmScheduler
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectContract
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectPresenter

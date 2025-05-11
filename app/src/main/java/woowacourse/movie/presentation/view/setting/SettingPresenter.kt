@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.view.setting
 
-import woowacourse.movie.domain.SettingRepository
+import woowacourse.movie.domain.repository.SettingRepository
 
 class SettingPresenter(
     private val view: SettingContract.View,

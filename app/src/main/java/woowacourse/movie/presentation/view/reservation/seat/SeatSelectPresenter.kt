@@ -1,8 +1,8 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
-import woowacourse.movie.domain.ReservationRepository
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seats
+import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.presentation.alarm.AlarmScheduler
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.toDomain
