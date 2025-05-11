@@ -5,7 +5,9 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresPermission
@@ -31,6 +33,7 @@ class ReservationCompleteActivity :
         ReservationCompletePresenter(this)
     private lateinit var binding: ActivityReservationCompleteBinding
 
+    @RequiresPermission(Manifest.permission.SCHEDULE_EXACT_ALARM)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -50,6 +53,10 @@ class ReservationCompleteActivity :
         presenter.updateTicketData(intentMovieTicketData)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupBackPressedDispatcher()
+        scheduleNotification(
+            this,
+            intentMovieTicketData,
+        )
     }
 
     private fun setupBackPressedDispatcher() {
@@ -104,13 +111,19 @@ class ReservationCompleteActivity :
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
-
-        val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-        alarmManager.setExact(
-            AlarmManager.RTC_WAKEUP,
-            triggerTimeMillis,
-            pendingIntent,
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            if (!alarmManager.canScheduleExactAlarms()) {
+                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                startActivity(intent)
+            } else {
+                alarmManager.setExact(
+                    AlarmManager.RTC_WAKEUP,
+                    triggerTimeMillis,
+                    pendingIntent,
+                )
+            }
+        }
     }
 
     companion object {
