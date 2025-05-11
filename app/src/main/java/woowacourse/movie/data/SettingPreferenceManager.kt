@@ -6,10 +6,11 @@ import androidx.core.content.edit
 import woowacourse.movie.MovieApplication
 
 class SettingPreferenceManager(
-    context: Context,
+    private val prefs: SharedPreferences =
+        MovieApplication
+            .getInstance()
+            .getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE),
 ) {
-    private val prefs = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
-
     fun getNotificationEnabled(): Boolean = prefs.getBoolean(NOTIFICATION_KEY, false)
 
     fun setNotificationEnabled(enabled: Boolean) {
