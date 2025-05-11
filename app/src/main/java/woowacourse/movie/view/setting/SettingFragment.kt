@@ -1,6 +1,7 @@
 package woowacourse.movie.view.setting
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -75,7 +76,7 @@ class SettingFragment : Fragment() {
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    // 권한 요청 거부한 경우
+                    showPermissionDialog()
                 } else {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
@@ -83,5 +84,12 @@ class SettingFragment : Fragment() {
                 // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
             }
         }
+    }
+
+    private fun showPermissionDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+
+        builder.setTitle("알림 권한 요청")
+        builder.setMessage("설정 > 알림 권한을 허용해주세요.")
     }
 }
