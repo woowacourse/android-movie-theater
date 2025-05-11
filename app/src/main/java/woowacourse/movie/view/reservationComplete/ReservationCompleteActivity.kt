@@ -26,8 +26,7 @@ import woowacourse.movie.view.extension.getSerializableExtraData
 class ReservationCompleteActivity :
     androidx.appcompat.app.AppCompatActivity(),
     ReservationCompleteContracts.View {
-    private val presenter: ReservationCompleteContracts.Presenter =
-        ReservationCompletePresenter(this)
+    private lateinit var presenter: ReservationCompleteContracts.Presenter
     private lateinit var binding: ActivityReservationCompleteBinding
 
     @RequiresPermission(Manifest.permission.SCHEDULE_EXACT_ALARM)
@@ -35,6 +34,9 @@ class ReservationCompleteActivity :
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_reservation_complete)
+        val prefs = this.getSharedPreferences(ALARM_DATA_KEY, Context.MODE_PRIVATE)
+        presenter = ReservationCompletePresenter(this, prefs)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.reservation_complete)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -49,12 +51,7 @@ class ReservationCompleteActivity :
         presenter.updateTicketData(intentMovieTicketData)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupBackPressedDispatcher()
-        createAlarm(intentMovieTicketData)
-    }
-
-    private fun createAlarm(intentMovieTicketData: MovieTicket) {
-        val alarmFactory = AlarmFactory(this) { presenter.requestAlarmPermissionScreen() }
-        alarmFactory.scheduleNotification(intentMovieTicketData)
+        presenter.requestAlarm(intentMovieTicketData)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -77,6 +74,11 @@ class ReservationCompleteActivity :
         startActivity(intent)
     }
 
+    override fun showAlarmBeforeMovieStart(movieTicket: MovieTicket) {
+        val alarmFactory = AlarmFactory(this) { presenter.requestAlarmPermissionScreen() }
+        alarmFactory.scheduleNotification(movieTicket)
+    }
+
     private fun setupBackPressedDispatcher() {
         onBackPressedDispatcher.addCallback(
             this,
@@ -91,6 +93,7 @@ class ReservationCompleteActivity :
 
     companion object {
         const val TICKET_DATA_KEY = "movieTicket"
+        private const val ALARM_DATA_KEY = "alarmPrefs"
 
         fun getIntent(
             context: Context,
