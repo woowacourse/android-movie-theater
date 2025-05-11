@@ -59,7 +59,7 @@ class SeatSelectPresenter(
 
     override fun reservationConfirmed() {
         val reservationInfoUiModel = createReservationInfo()
-        view.navigateToComplete(reservationInfoUiModel)
+        view.navigateCompleteWithAlarmCheck(reservationInfoUiModel)
     }
 
     override fun saveReservation(reservationInfo: ReservationInfoUiModel) {

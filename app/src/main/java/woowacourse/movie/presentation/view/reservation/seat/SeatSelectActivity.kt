@@ -135,6 +135,7 @@ class SeatSelectActivity :
             return
         }
 
+        presenter.saveReservation(reservationInfoUiModel)
         navigateToComplete(reservationInfoUiModel)
     }
 
