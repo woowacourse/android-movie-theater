@@ -18,7 +18,7 @@ import woowacourse.movie.data.db.TicketDao
 import woowacourse.movie.data.db.UserDatabase
 import woowacourse.movie.fixture.fakeContext
 import woowacourse.movie.fixture.ticketEntity1
-import woowacourse.movie.view.MainActivity
+import woowacourse.movie.view.main.MainActivity
 
 @RunWith(AndroidJUnit4::class)
 class BookingHistoryFragmentTest {

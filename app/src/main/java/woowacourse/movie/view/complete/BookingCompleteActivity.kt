@@ -21,7 +21,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.view.MainActivity
+import woowacourse.movie.view.main.MainActivity
 import woowacourse.movie.view.receiver.AlarmReceiver
 import woowacourse.movie.view.uiModel.toUiModel
 import java.time.ZoneId
