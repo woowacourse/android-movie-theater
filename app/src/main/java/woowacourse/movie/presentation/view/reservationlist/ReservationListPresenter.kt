@@ -7,11 +7,11 @@ import kotlin.concurrent.thread
 
 class ReservationListPresenter(
     val view: ReservationListContract.View,
-    private val provider: ReservationRepository,
+    private val reservationRepository: ReservationRepository,
 ) : ReservationListContract.Presenter {
     override fun fetchReservations() {
         thread {
-            val reservations = provider.getAllReservations()
+            val reservations = reservationRepository.getAllReservations()
             view.showReservations(reservations.map { it.toPresentation() })
         }
     }

@@ -29,14 +29,13 @@ class MovieApplication : Application() {
         fun provideSeatSelectPresenter(view: SeatSelectContract.View): SeatSelectContract.Presenter =
             SeatSelectPresenter(
                 view = view,
-                provider = provideReservationRepository(),
-                alarmScheduler = provideAlarmScheduler(),
+                reservationRepository = provideReservationRepository(),
             )
 
         fun provideReservationListPresenter(view: ReservationListContract.View): ReservationListContract.Presenter =
             ReservationListPresenter(
                 view = view,
-                provider = provideReservationRepository(),
+                reservationRepository = provideReservationRepository(),
             )
 
         fun provideSettingPresenter(view: SettingContract.View): SettingContract.Presenter =

@@ -11,8 +11,8 @@ import kotlin.concurrent.thread
 
 class SeatSelectPresenter(
     val view: SeatSelectContract.View,
-    private val provider: ReservationRepository,
     private val alarmScheduler: AlarmScheduler,
+    private val reservationRepository: ReservationRepository,
 ) : SeatSelectContract.Presenter {
     private lateinit var reservationInfo: ReservationInfo
     private lateinit var theaterName: String

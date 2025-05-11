@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
-import androidx.annotation.RequiresApi
 import woowacourse.movie.presentation.Extras
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import java.time.LocalDateTime
