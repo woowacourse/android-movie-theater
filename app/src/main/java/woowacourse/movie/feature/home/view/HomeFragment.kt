@@ -48,7 +48,8 @@ class HomeFragment :
     }
 
     override fun showMovies(movies: List<MovieUiModel>) {
-        moviesAdapter.submitList(Item.from(movies))
+        val currentItems = moviesAdapter.currentList
+        moviesAdapter.submitList(currentItems + Item.from(movies))
         binding.moviesAdapter = moviesAdapter
     }
 
