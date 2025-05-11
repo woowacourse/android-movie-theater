@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
-import woowacourse.movie.data.TheaterStore
+import woowacourse.movie.data.dummy.TheaterStore
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetBinding
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.domain.model.theater.Theaters

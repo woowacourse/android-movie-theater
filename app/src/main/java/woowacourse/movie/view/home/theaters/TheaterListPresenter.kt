@@ -1,6 +1,6 @@
 package woowacourse.movie.view.home.theaters
 
-import woowacourse.movie.data.TheaterStore
+import woowacourse.movie.data.dummy.TheaterStore
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.view.home.model.ScreeningInfo
 

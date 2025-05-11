@@ -1,9 +1,9 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.ticket
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import woowacourse.movie.data.TicketEntity.Companion.TICKET_TABLE_NAME
+import woowacourse.movie.data.ticket.TicketEntity.Companion.TICKET_TABLE_NAME
 import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.seat.Col
 import woowacourse.movie.domain.model.seat.Row

@@ -1,4 +1,4 @@
-package woowacourse.movie.view.setting
+package woowacourse.movie.data.setting
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE

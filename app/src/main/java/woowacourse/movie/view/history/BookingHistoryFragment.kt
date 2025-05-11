@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.room.Room
 import woowacourse.movie.R
-import woowacourse.movie.data.TicketDatabase
-import woowacourse.movie.data.TicketEntity
-import woowacourse.movie.data.TicketEntity.Companion.TICKET_TABLE_NAME
-import woowacourse.movie.data.toDomain
+import woowacourse.movie.data.ticket.TicketDatabase
+import woowacourse.movie.data.ticket.TicketEntity
+import woowacourse.movie.data.ticket.TicketEntity.Companion.TICKET_TABLE_NAME
+import woowacourse.movie.data.ticket.toDomain
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.history.adapter.HistoryAdapter

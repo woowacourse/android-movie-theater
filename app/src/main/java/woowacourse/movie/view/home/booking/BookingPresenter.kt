@@ -1,6 +1,6 @@
 package woowacourse.movie.view.home.booking
 
-import woowacourse.movie.data.MovieStore
+import woowacourse.movie.data.dummy.MovieStore
 import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.booking.Booking
 import woowacourse.movie.domain.model.booking.Schedule

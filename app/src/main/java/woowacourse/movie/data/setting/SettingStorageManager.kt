@@ -1,4 +1,4 @@
-package woowacourse.movie.view.setting
+package woowacourse.movie.data.setting
 
 interface SettingStorageManager {
     fun loadNotificationSetting(): Boolean

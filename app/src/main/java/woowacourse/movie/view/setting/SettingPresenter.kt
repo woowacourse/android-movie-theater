@@ -1,5 +1,7 @@
 package woowacourse.movie.view.setting
 
+import woowacourse.movie.data.setting.SettingStorageManager
+
 class SettingPresenter(
     private val view: SettingContract.View,
     private val manager: SettingStorageManager,
