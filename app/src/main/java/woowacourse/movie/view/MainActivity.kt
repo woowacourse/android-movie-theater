@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         initBottomNavigation()
 
         if (savedInstanceState == null) {
+            switchFragment(HomeFragment::class.java)
             binding.bottomNavMenu.selectedItemId = R.id.menu_fragment_home
         }
     }
@@ -56,8 +57,8 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
 
-            supportFragmentManager.findFragmentByTag(currentFragmentTag)?.let {
-                hide(it)
+            supportFragmentManager.fragments.forEach { fragment ->
+                hide(fragment)
             }
 
             val targetFragment = supportFragmentManager.findFragmentByTag(classType.simpleName)
