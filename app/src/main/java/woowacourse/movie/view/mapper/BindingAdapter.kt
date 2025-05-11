@@ -14,7 +14,8 @@ fun setDateFormatter(
     startDate: LocalDate,
     endDate: LocalDate,
 ) {
-    val formatter = DateTimeFormatter.ofPattern(view.context.getString(R.string.movie_screening_period_format))
+    val formatter =
+        DateTimeFormatter.ofPattern(view.context.getString(R.string.movie_screening_period_format))
     view.text =
         view.context.getString(
             R.string.movie_date,
@@ -40,7 +41,7 @@ fun seatBindingAdapter(
     view: TextView,
     seat: List<Seat>,
 ) {
-    val text =
+    view.text =
         view.context.getString(
             R.string.seat_split_line,
             seat.joinToString(", ") { "${'A' + it.row}${it.column + 1}" },

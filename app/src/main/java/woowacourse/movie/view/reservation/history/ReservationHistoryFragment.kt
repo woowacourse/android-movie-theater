@@ -7,46 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
+import woowacourse.movie.db.ReservationInfoDatabase
+import woowacourse.movie.db.ReservationInfoEntity
 import woowacourse.movie.domain.model.Cinema
 import woowacourse.movie.domain.model.ReservationCount
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.view.reservation.result.ReservationResultActivity
-import java.time.LocalDateTime
+import kotlin.concurrent.thread
 
 class ReservationHistoryFragment : Fragment() {
-    val fakeReservations: List<ReservationInfo> =
-        listOf(
-            ReservationInfo(
-                title = "미친영화",
-                reservationDateTime = LocalDateTime.of(2025, 5, 12, 12, 0, 0),
-                reservationCount = ReservationCount(2),
-                seats = listOf(Seat(row = 1, column = 1), Seat(row = 1, column = 1)),
-                cinema = Cinema(1, "선릉 극장"),
-            ),
-            ReservationInfo(
-                title = "미친영화",
-                reservationDateTime = LocalDateTime.of(2025, 5, 12, 12, 0, 0),
-                reservationCount = ReservationCount(2),
-                seats = listOf(Seat(row = 1, column = 1), Seat(row = 1, column = 1)),
-                cinema = Cinema(1, "선릉 극장"),
-            ),
-            ReservationInfo(
-                title = "미친영화",
-                reservationDateTime = LocalDateTime.of(2025, 5, 12, 12, 0, 0),
-                reservationCount = ReservationCount(2),
-                seats = listOf(Seat(row = 1, column = 1), Seat(row = 1, column = 1)),
-                cinema = Cinema(1, "선릉 극장"),
-            ),
-            ReservationInfo(
-                title = "미친영화",
-                reservationDateTime = LocalDateTime.of(2025, 5, 12, 12, 0, 0),
-                reservationCount = ReservationCount(2),
-                seats = listOf(Seat(row = 1, column = 1), Seat(row = 1, column = 1)),
-                cinema = Cinema(1, "선릉 극장"),
-            ),
-        )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -62,22 +32,34 @@ class ReservationHistoryFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val list = view.findViewById<RecyclerView>(R.id.rv_history_reservationInfo)
-        list.adapter =
-            ReservationHistoryAdapter(
-                items = fakeReservations,
-                onClickHistory = { reservationInfo: ReservationInfo ->
-                    startActivity(
-                        ReservationResultActivity.newIntent(
-                            requireContext(),
-                            reservationInfo = reservationInfo,
-                        ),
+        thread {
+            val database = ReservationInfoDatabase.getInstance(requireContext())
+            val dao = database.reservationInfoDao()
+            val reservationHistories: List<ReservationInfoEntity> = dao.getAll()
+            view.post {
+                val list = view.findViewById<RecyclerView>(R.id.rv_history_reservationInfo)
+                list.adapter =
+                    ReservationHistoryAdapter(
+                        items =
+                            reservationHistories.map {
+                                ReservationInfo(
+                                    it.title,
+                                    it.reservationDateTime,
+                                    ReservationCount(it.reservationCount),
+                                    listOf(Seat(1, 2), Seat(1, 2)),
+                                    Cinema(0, "선릉 극장"),
+                                )
+                            },
+                        onClickHistory = { reservationInfo: ReservationInfo ->
+                            startActivity(
+                                ReservationResultActivity.newIntent(
+                                    requireContext(),
+                                    reservationInfo = reservationInfo,
+                                ),
+                            )
+                        },
                     )
-                },
-            )
-    }
-
-    override fun onResume() {
-        super.onResume()
+            }
+        }
     }
 }
