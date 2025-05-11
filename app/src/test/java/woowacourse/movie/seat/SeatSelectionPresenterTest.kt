@@ -1,5 +1,6 @@
 package woowacourse.movie.seat
 
+import android.content.Context
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -9,24 +10,39 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.SettingRepository
 import woowacourse.movie.fixture.SEAT_A1
 import woowacourse.movie.fixture.SEOLLEUNG
 import woowacourse.movie.fixture.createTicket
+import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.ui.model.SeatUiModel
 import woowacourse.movie.ui.model.TicketUiModel
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class SeatSelectionPresenterTest {
     private lateinit var presenter: SeatSelectionPresenter
     private lateinit var mockView: SeatSelectionContract.View
     private lateinit var mockTicketUiData: TicketUiModel
+    private lateinit var mockContext: Context
+    private val settingManager =
+        object : SettingRepository {
+            private var isAlarm = true
+
+            override fun isAlarmPermitted(): Boolean = isAlarm
+
+            override fun setAlarmPermitted(isGranted: Boolean) {
+                isAlarm = isGranted
+            }
+        }
 
     @BeforeEach
     fun setUp() {
         mockView = mockk(relaxed = true)
         mockTicketUiData = createTicket(SEOLLEUNG, listOf(), 2).toUiModel()
 
-        presenter = SeatSelectionPresenter(mockView)
+        presenter = SeatSelectionPresenter(mockView, settingManager)
         presenter.initializeData(mockTicketUiData)
     }
 
@@ -73,5 +89,33 @@ class SeatSelectionPresenterTest {
         verify { mockView.showBookingAlertDialog(any()) }
 
         assertThat(ticket.captured).isEqualTo(mockTicketUiData)
+    }
+
+    @Test
+    fun `알림_권한이_허용된_경우_알람이_설정된다`() {
+        // given
+        mockContext = mockk(relaxed = true)
+        val ticketSlot = slot<TicketUiModel>()
+        val timeSlot = slot<Long>()
+
+        every { mockView.makeAlarm(capture(ticketSlot), capture(timeSlot)) } just Runs
+
+        // when
+        presenter.storeSeats(mockContext)
+
+        val expected =
+            LocalDateTime.of(mockTicketUiData.toDomain().selectedDate, mockTicketUiData.toDomain().selectedTime)
+                .minusMinutes(30)
+                .atZone(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli()
+
+        // then
+        verify {
+            mockView.makeAlarm(any(), any())
+        }
+
+        assertThat(ticketSlot.captured).isEqualTo(mockTicketUiData)
+        assertThat(timeSlot.captured).isEqualTo(expected)
     }
 }

@@ -87,7 +87,7 @@ class MainActivityTest {
                         hasDescendant(
                             allOf(
                                 withId(R.id.tv_movie_screening_date),
-                                withText("상영일: 2025.5.10 ~ 2025.5.15"),
+                                withText("상영일: 2026.5.10 ~ 2026.5.15"),
                             ),
                         ),
                     ),
