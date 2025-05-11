@@ -1,5 +1,6 @@
 package woowacourse.movie.presenter.reservationComplete
 
+import android.content.SharedPreferences
 import io.kotest.core.spec.style.AnnotationSpec.After
 import io.mockk.Runs
 import io.mockk.clearAllMocks
@@ -14,11 +15,13 @@ import woowacourse.movie.presenter.MOVIE_TICKET_B1_C3
 class ReservationCompletePresenterTest {
     private lateinit var presenter: ReservationCompletePresenter
     private lateinit var view: ReservationCompleteContracts.View
+    private lateinit var prefs: SharedPreferences
 
     @BeforeEach
     fun setup() {
         view = mockk()
-        presenter = ReservationCompletePresenter(view)
+        prefs = mockk()
+        presenter = ReservationCompletePresenter(view, prefs)
     }
 
     @Test
@@ -31,6 +34,20 @@ class ReservationCompletePresenterTest {
 
         // then:
         verify { view.showMovieTicket(MOVIE_TICKET_B1_C3) }
+    }
+
+    @Test
+    fun `알람을 전송하지 않았다면 알람을 전송한다`() {
+        // given
+        every { prefs.getBoolean(any(), false) } returns false
+        every { prefs.edit() } returns mockk<SharedPreferences.Editor>(relaxed = true)
+        every { view.showAlarmBeforeMovieStart(any()) } just Runs
+
+        // when
+        presenter.requestAlarm(MOVIE_TICKET_B1_C3)
+
+        // then
+        verify { view.showAlarmBeforeMovieStart(any()) }
     }
 
     @After

@@ -9,6 +9,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.model.reservation.ReservationDao
 import woowacourse.movie.presenter.MOVIE_TO_RESERVE
 import woowacourse.movie.presenter.SEAT_2_2
 import woowacourse.movie.presenter.SEAT_2_3
@@ -16,11 +17,13 @@ import woowacourse.movie.presenter.SEAT_2_3
 class SeatSelectionPresenterTest {
     private lateinit var presenter: SeatSelectionPresenter
     private lateinit var view: SeatSelectionContracts.View
+    private lateinit var dao: ReservationDao
 
     @BeforeEach
     fun setup() {
         view = mockk()
-        presenter = SeatSelectionPresenter(view)
+        dao = mockk<ReservationDao>()
+        presenter = SeatSelectionPresenter(view, dao) { it.run() }
     }
 
     @Test
@@ -118,20 +121,23 @@ class SeatSelectionPresenterTest {
     }
 
     @Test
-    fun `예매 완료 요청이 오면 예매 완료 뷰가 보인다`() {
+    fun `예매 완료 요청이 오면 예매 완료 뷰가 보이며 해당 데이터가 저장된다`() {
         // given:
         every { view.showMovieTitle(any()) } just Runs
         every { view.showPrice(any()) } just Runs
         every { view.showButtonEnabled(false) } just Runs
+        every { dao.saveReservation(any()) } just Runs
         every { view.showReservationCompleteView(any()) } just Runs
-
         presenter.updateMovieToReserve(MOVIE_TO_RESERVE)
 
         // when:
         presenter.requestReservationComplete()
 
         // then:
-        verify { view.showReservationCompleteView(any()) }
+        verify {
+            dao.saveReservation(any())
+            view.showReservationCompleteView(any())
+        }
     }
 
     @After
