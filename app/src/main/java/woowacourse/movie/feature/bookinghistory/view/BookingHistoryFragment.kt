@@ -47,7 +47,7 @@ class BookingHistoryFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter
+        presenter.prepareBookingHistory()
     }
 
     override fun showBookingHistory(bookingHistory: List<BookingInfoUiModel>) {
