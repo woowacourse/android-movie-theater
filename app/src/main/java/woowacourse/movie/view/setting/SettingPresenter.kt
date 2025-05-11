@@ -10,7 +10,11 @@ class SettingPresenter(
     override fun setNotification() {
         repository.findAll()
             .onSuccess {
-                view.setNotification(it)
+                val showTimes = it.map { ticket -> ticket.showTime.minusMinutes(30) }
+                view.setNotification(
+                    it,
+                    showTimes,
+                )
             }
             .onFailure {
                 view.showError(ERR_FAILED_TO_LOAD_TICKETS)

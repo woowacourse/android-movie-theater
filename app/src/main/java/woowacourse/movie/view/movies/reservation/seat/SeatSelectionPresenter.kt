@@ -52,6 +52,6 @@ class SeatSelectionPresenter(
 
     override fun completeReservation() {
         repository.save(ticket)
-        view.navigateToResult(ticket)
+        view.navigateToResult(ticket, ticket.showTime.minusMinutes(30))
     }
 }

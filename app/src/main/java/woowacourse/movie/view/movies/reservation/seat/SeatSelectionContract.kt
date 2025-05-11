@@ -3,6 +3,7 @@ package woowacourse.movie.view.movies.reservation.seat
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Ticket
+import java.time.LocalDateTime
 
 interface SeatSelectionContract {
     interface View {
@@ -17,7 +18,10 @@ interface SeatSelectionContract {
 
         fun showReservationDialog()
 
-        fun navigateToResult(ticket: Ticket)
+        fun navigateToResult(
+            ticket: Ticket,
+            showTime: LocalDateTime,
+        )
     }
 
     interface Presenter {

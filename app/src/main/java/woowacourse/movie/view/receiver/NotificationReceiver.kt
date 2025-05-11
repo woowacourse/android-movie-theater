@@ -18,6 +18,7 @@ import woowacourse.movie.view.extension.getParcelableCompatList
 import woowacourse.movie.view.extension.notificationManager
 import woowacourse.movie.view.extension.toEpochMilli
 import woowacourse.movie.view.movies.reservation.result.ReservationResultActivity
+import java.time.LocalDateTime
 
 class NotificationReceiver : BroadcastReceiver() {
     override fun onReceive(
@@ -39,7 +40,7 @@ class NotificationReceiver : BroadcastReceiver() {
 
         NotificationManagerCompat.from(context).apply {
             if (areNotificationsEnabled()) {
-                notify(NOTIFICATION_ID, notification(ticket, context))
+                notify(ticket.hashCode(), notification(ticket, context))
             }
         }
     }
@@ -67,7 +68,6 @@ class NotificationReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        private const val NOTIFICATION_ID = 1
         private const val CHANNEL_ID = "reservation_random_random"
         private const val CHANNEL_NAME = "reservation"
         private const val TICKET_KEY = "ticket"
@@ -109,13 +109,14 @@ class NotificationReceiver : BroadcastReceiver() {
         fun setNotification(
             context: Context,
             ticket: Ticket,
+            showTime: LocalDateTime,
         ) {
             isEnabled = true
             val alarmManager = context.alarmManager()
             if (AlarmManagerCompat.canScheduleExactAlarms(alarmManager)) {
                 alarmManager.setExact(
                     AlarmManager.RTC,
-                    ticket.showTime.toEpochMilli(),
+                    showTime.toEpochMilli(),
                     pendingIntent(context, ticket),
                 )
             }

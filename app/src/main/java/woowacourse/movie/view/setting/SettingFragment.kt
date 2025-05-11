@@ -10,6 +10,7 @@ import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.base.BaseFragment
 import woowacourse.movie.view.receiver.NotificationReceiver
+import java.time.LocalDateTime
 
 class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting), SettingContract.View {
     private val presenter: SettingContract.Presenter by lazy {
@@ -32,9 +33,16 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         presenter.setPermissionSwitch()
     }
 
-    override fun setNotification(tickets: List<Ticket>) {
-        tickets.forEach {
-            NotificationReceiver.setNotification(requireContext(), it)
+    override fun setNotification(
+        tickets: List<Ticket>,
+        showTimes: List<LocalDateTime>,
+    ) {
+        tickets.forEachIndexed { idx, ticket ->
+            NotificationReceiver.setNotification(
+                requireContext(),
+                ticket,
+                showTimes[idx],
+            )
         }
     }
 

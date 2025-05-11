@@ -22,6 +22,7 @@ import woowacourse.movie.view.extension.getParcelableCompat
 import woowacourse.movie.view.extension.getParcelableCompatList
 import woowacourse.movie.view.movies.reservation.result.ReservationResultActivity
 import woowacourse.movie.view.receiver.NotificationReceiver
+import java.time.LocalDateTime
 
 class SeatSelectionActivity :
     BaseActivity<ActivitySeatSelectionBinding>(R.layout.activity_seat_selection),
@@ -128,8 +129,11 @@ class SeatSelectionActivity :
         showReservationDialog.show()
     }
 
-    override fun navigateToResult(ticket: Ticket) {
-        NotificationReceiver.setNotification(this, ticket)
+    override fun navigateToResult(
+        ticket: Ticket,
+        showTime: LocalDateTime,
+    ) {
+        NotificationReceiver.setNotification(this, ticket, showTime)
         startActivity(ReservationResultActivity.newIntent(this, ticket))
     }
 

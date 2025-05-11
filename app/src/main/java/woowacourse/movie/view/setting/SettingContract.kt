@@ -1,10 +1,14 @@
 package woowacourse.movie.view.setting
 
 import woowacourse.movie.domain.model.Ticket
+import java.time.LocalDateTime
 
 interface SettingContract {
     interface View {
-        fun setNotification(tickets: List<Ticket>)
+        fun setNotification(
+            tickets: List<Ticket>,
+            showTimes: List<LocalDateTime>,
+        )
 
         fun setPermissionSwitch()
 
