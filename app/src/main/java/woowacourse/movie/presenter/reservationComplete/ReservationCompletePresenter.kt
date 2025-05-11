@@ -12,4 +12,8 @@ class ReservationCompletePresenter(
     override fun requestErrorDialogMessage() {
         view.showErrorDialogMessage()
     }
+
+    override fun requestAlarmPermissionScreen() {
+        view.showAlarmPermissionScreen()
+    }
 }

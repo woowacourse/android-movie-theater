@@ -7,11 +7,15 @@ interface ReservationCompleteContracts {
         fun showMovieTicket(movieTicket: MovieTicket)
 
         fun showErrorDialogMessage()
+
+        fun showAlarmPermissionScreen()
     }
 
     interface Presenter {
         fun updateTicketData(movieTicket: MovieTicket)
 
         fun requestErrorDialogMessage()
+
+        fun requestAlarmPermissionScreen()
     }
 }
