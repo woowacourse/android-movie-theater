@@ -41,7 +41,6 @@ class ReservationActivity :
         }
 
         setupClickListener()
-        setupTimeAdapter()
         updateMovieToPresenter()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -80,16 +79,16 @@ class ReservationActivity :
         binding.spinnerReservationDate.apply {
             adapter = dateAdapter
             onItemSelectedListener =
-                ScreeningSelectListener(dates) { presenter.updateMovieDate(it) }
+                ScreeningSelectListener(dates) { presenter.updateMovieDateToTime(it) }
         }
     }
 
-    private fun setupTimeAdapter() {
+    override fun setupTimeAdapter(times: List<LocalTime>) {
         timeSpinnerAdapter = TimeSpinnerAdapter(this, mutableListOf())
         binding.spinnerReservationTime.apply {
             adapter = timeSpinnerAdapter
             onItemSelectedListener =
-                ScreeningSelectListener(mutableListOf<LocalTime>()) { presenter.updateMovieTime(it) }
+                ScreeningSelectListener(times) { presenter.updateMovieTime(it) }
         }
     }
 

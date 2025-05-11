@@ -44,10 +44,59 @@ data class TheaterMovieSchedules(
 
         private val screeningTimesSamples =
             listOf(
-                listOf(LocalTime.of(10, 0), LocalTime.of(13, 0)),
-                listOf(LocalTime.of(14, 30), LocalTime.of(18, 0)),
-                listOf(LocalTime.of(11, 45), LocalTime.of(15, 15), LocalTime.of(19, 0)),
-                listOf(LocalTime.of(9, 30), LocalTime.of(12, 15), LocalTime.of(16, 45)),
+                listOf(
+                    LocalTime.of(9, 0),
+                    LocalTime.of(12, 0),
+                    LocalTime.of(15, 0),
+                    LocalTime.of(18, 0),
+                    LocalTime.of(21, 0),
+                ),
+                listOf(
+                    LocalTime.of(9, 30),
+                    LocalTime.of(12, 30),
+                    LocalTime.of(15, 30),
+                    LocalTime.of(18, 30),
+                ),
+                listOf(
+                    LocalTime.of(10, 0),
+                    LocalTime.of(13, 0),
+                    LocalTime.of(16, 0),
+                    LocalTime.of(19, 0),
+                    LocalTime.of(22, 0),
+                ),
+                listOf(
+                    LocalTime.of(9, 15),
+                    LocalTime.of(11, 45),
+                    LocalTime.of(14, 15),
+                    LocalTime.of(16, 45),
+                    LocalTime.of(19, 15),
+                ),
+                listOf(
+                    LocalTime.of(10, 30),
+                    LocalTime.of(13, 30),
+                    LocalTime.of(16, 30),
+                    LocalTime.of(19, 30),
+                ),
+                listOf(
+                    LocalTime.of(9, 45),
+                    LocalTime.of(12, 45),
+                    LocalTime.of(15, 45),
+                    LocalTime.of(18, 45),
+                    LocalTime.of(21, 45),
+                ),
+                listOf(
+                    LocalTime.of(11, 0),
+                    LocalTime.of(14, 0),
+                    LocalTime.of(17, 0),
+                    LocalTime.of(20, 0),
+                ),
+                listOf(
+                    LocalTime.of(10, 15),
+                    LocalTime.of(13, 15),
+                    LocalTime.of(16, 15),
+                    LocalTime.of(19, 15),
+                    LocalTime.of(21, 45),
+                ),
             )
 
         val values: Set<TheaterMovieSchedule> =
