@@ -6,6 +6,8 @@ import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.view.base.BaseActivity
+import woowacourse.movie.view.movies.MovieListFragment
+import woowacourse.movie.view.reservation.history.ReservationHistoryFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {

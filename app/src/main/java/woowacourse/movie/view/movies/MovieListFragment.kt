@@ -1,4 +1,4 @@
-package woowacourse.movie.view
+package woowacourse.movie.view.movies
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,11 +9,6 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.view.movies.MovieListAdapter
-import woowacourse.movie.view.movies.MovieListItem
-import woowacourse.movie.view.movies.MoviesContract
-import woowacourse.movie.view.movies.MoviesPresenter
-import woowacourse.movie.view.movies.OnMovieEventListener
 import woowacourse.movie.view.movies.cinema.CinemaSelectionFragment
 
 class MovieListFragment :
