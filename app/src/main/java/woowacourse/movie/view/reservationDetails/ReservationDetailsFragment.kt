@@ -10,13 +10,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationDetailsBinding
 import woowacourse.movie.model.reservation.ReservationDatabase
+import woowacourse.movie.model.ticket.MovieTicket
+import woowacourse.movie.presenter.reservationDetails.ReservationDetailContracts
+import woowacourse.movie.presenter.reservationDetails.ReservationDetailPresenter
 import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity.Companion.getIntent
 
-class ReservationDetailsFragment : Fragment() {
+class ReservationDetailsFragment :
+    Fragment(),
+    ReservationDetailContracts.View {
     private lateinit var binding: FragmentReservationDetailsBinding
     private lateinit var reservationDetailAdapter: ReservationDetailAdapter
     private val db by lazy { ReservationDatabase.getDatabase(requireContext()) }
     private val dao by lazy { db.reservationDao() }
+    private lateinit var presenter: ReservationDetailPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,31 +44,35 @@ class ReservationDetailsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-
+        presenter = ReservationDetailPresenter(this, dao)
         reservationDetailAdapter =
-            ReservationDetailAdapter(
-                reservationDetailClickListener =
-                    object : ReservationDetailClickListener {
-                        override fun onReservationClick(ticketId: Long) {
-                            Thread {
-                                val movieTicket =
-                                    dao.findReservation(ticketId) ?: return@Thread
-                                requireActivity().runOnUiThread {
-                                    startActivity(getIntent(requireContext(), movieTicket))
-                                }
-                            }.start()
-                        }
-                    },
-            )
+            ReservationDetailAdapter(reservationDetailClickListener())
         binding.rvReservationDetails.layoutManager = LinearLayoutManager(requireContext())
         binding.rvReservationDetails.adapter = reservationDetailAdapter
-
-        Thread {
-            val reservations = dao.findReservations()
-
-            requireActivity().runOnUiThread {
-                reservationDetailAdapter.submitList(reservations)
-            }
-        }.start()
+        presenter.loadReservations()
     }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.loadReservations()
+    }
+
+    override fun showReservations(reservations: List<MovieTicket>) {
+        requireActivity().runOnUiThread {
+            reservationDetailAdapter.submitList(reservations)
+        }
+    }
+
+    override fun showReservationCompleteView(movieTicket: MovieTicket) {
+        requireActivity().runOnUiThread {
+            startActivity(getIntent(requireContext(), movieTicket))
+        }
+    }
+
+    private fun reservationDetailClickListener() =
+        object : ReservationDetailClickListener {
+            override fun onReservationClick(ticketId: Long) {
+                presenter.requestReservationComplete(ticketId)
+            }
+        }
 }

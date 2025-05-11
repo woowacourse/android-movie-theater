@@ -1,7 +1,17 @@
 package woowacourse.movie.presenter.reservationDetails
 
-interface ReservationDetailContracts {
-    interface View
+import woowacourse.movie.model.ticket.MovieTicket
 
-    interface Presenter
+interface ReservationDetailContracts {
+    interface View {
+        fun showReservations(reservations: List<MovieTicket>)
+
+        fun showReservationCompleteView(movieTicket: MovieTicket)
+    }
+
+    interface Presenter {
+        fun loadReservations()
+
+        fun requestReservationComplete(ticketId: Long)
+    }
 }
