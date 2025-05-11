@@ -37,11 +37,7 @@ class ReservationDetailAdapter(
                 false,
             )
         val holder = ReservationDetailViewHolder(reservationBinding)
-        holder.button.setOnClickListener {
-            val position = holder.adapterPosition
-            val item = getItem(position)
-            reservationDetailClickListener.onReservationClick(item.ticketId)
-        }
+        onReservationDetailButtonClicked(holder)
         return holder
     }
 
@@ -51,5 +47,13 @@ class ReservationDetailAdapter(
     ) {
         val item = getItem(position)
         holder.bind(item, reservationDetailClickListener)
+    }
+
+    private fun onReservationDetailButtonClicked(holder: ReservationDetailViewHolder) {
+        holder.button.setOnClickListener {
+            val position = holder.adapterPosition
+            val item = getItem(position)
+            reservationDetailClickListener.onReservationClick(item.ticketId)
+        }
     }
 }
