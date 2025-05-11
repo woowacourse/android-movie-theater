@@ -1,10 +1,15 @@
 package woowacourse.movie.moviebookingseat
 
+import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import woowacourse.movie.data.MovieApplication
+import woowacourse.movie.data.Reservation
 import woowacourse.movie.domain.BookingStatus
-import woowacourse.movie.domain.ReservationInfo
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.seat.Seat
 import woowacourse.movie.helper.LocalDateHelper.toDotFormat
+import kotlin.concurrent.thread
 
 class MovieBookingSeatPresenter(
     private val view: MovieBookingSeat.View,
@@ -38,18 +43,27 @@ class MovieBookingSeatPresenter(
         if (bookingStatus.seat.isSelectedAll()) view.updateButton()
     }
 
-    override fun confirmBooking() {
-        val reservationInfo =
-            ReservationInfo(
-                bookingStatus.movie.title,
-                bookingStatus.bookedTime.toLocalDate().toDotFormat(),
-                bookingStatus.bookedTime.toLocalTime().toDotFormat(),
-                bookingStatus.memberCount,
-                formattedSeat(bookingStatus.seat.seats),
-                theater.name,
-                bookingStatus.calculateTicketPrices(),
+    override fun confirmBooking(context: Context) {
+        var generatedId: Long = 0
+        val reservation =
+            Reservation(
+                title = bookingStatus.movie.title,
+                date = bookingStatus.bookedTime.toLocalDate().toDotFormat(),
+                time = bookingStatus.bookedTime.toLocalTime().toDotFormat(),
+                personnel = bookingStatus.memberCount,
+                seats = formattedSeat(bookingStatus.seat.seats),
+                theater = theater.name,
+                price = bookingStatus.calculateTicketPrices(),
                 )
-        view.showConfirmDialog(reservationInfo)
+
+        thread {
+            val db = (context as MovieApplication).database
+            generatedId = db.reservationDao().insert(reservation)
+            reservation.uid = generatedId
+            Handler(Looper.getMainLooper()).post {
+                view.showConfirmDialog(generatedId)
+            }
+        }
     }
 
     private fun formattedSeat(seats: List<Seat>): String {

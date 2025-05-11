@@ -176,3 +176,5 @@
 - [x] refactor: movie_booked.xml ConstraintLayout 정리
 
 - [x] refactor: Booked에서 BookingStatus, Theater을 ReservationInfo로 변경
+
+- [x] refactor: 좌석 예매 화면에서 데이터베이스에 저장하고 완료 화면에서 uid로 데이터베이스로부터 값을 호출하도록 변경

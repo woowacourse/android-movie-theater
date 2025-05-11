@@ -1,7 +1,7 @@
 package woowacourse.movie.moviebookingseat
 
+import android.content.Context
 import woowacourse.movie.domain.BookingStatus
-import woowacourse.movie.domain.ReservationInfo
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.seat.Seat
 
@@ -18,9 +18,9 @@ interface MovieBookingSeat {
 
         fun showTotalPrice(price: Int)
 
-        fun showConfirmDialog(reservationInfo: ReservationInfo)
+        fun showConfirmDialog(id: Long)
 
-        fun navigateToMovieBooked(reservationInfo: ReservationInfo)
+        fun navigateToMovieBooked(id: Long)
 
         fun showError(messageRes: Int)
     }
@@ -32,6 +32,6 @@ interface MovieBookingSeat {
 
         fun calculatePrice()
 
-        fun confirmBooking()
+        fun confirmBooking(context: Context)
     }
 }

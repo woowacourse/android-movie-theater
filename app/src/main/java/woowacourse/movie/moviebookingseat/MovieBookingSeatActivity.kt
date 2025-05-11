@@ -15,7 +15,6 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookingSeatBinding
 import woowacourse.movie.domain.BookingStatus
-import woowacourse.movie.domain.ReservationInfo
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.seat.Seat
 import woowacourse.movie.helper.BuildVersion
@@ -44,7 +43,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
 
     override fun updateButton() {
         binding.seatConfirmButton.setBackgroundResource(R.color.purple_500)
-        binding.seatConfirmButton.setOnSingleClickListener { presenter.confirmBooking() }
+        binding.seatConfirmButton.setOnSingleClickListener { presenter.confirmBooking(applicationContext) }
     }
 
     override fun updateSeat(
@@ -64,7 +63,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
             )
     }
 
-    override fun showConfirmDialog(reservationInfo: ReservationInfo) {
+    override fun showConfirmDialog(id: Long) {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.check_movie_booking))
             .setMessage(getString(R.string.confirm_reservation_message))
@@ -72,17 +71,17 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
                 dialog.cancel()
             }
             .setPositiveButton(getString(R.string.okay)) { _, _ ->
-                navigateToMovieBooked(reservationInfo)
+                navigateToMovieBooked(id)
             }
             .show()
             .setCancelable(false)
     }
 
-    override fun navigateToMovieBooked(reservationInfo: ReservationInfo) {
+    override fun navigateToMovieBooked(id: Long) {
         val intent =
             MovieBookedActivity.newIntent(
                 this@MovieBookingSeatActivity,
-                reservationInfo,
+                id,
             )
         startActivity(intent)
         finish()

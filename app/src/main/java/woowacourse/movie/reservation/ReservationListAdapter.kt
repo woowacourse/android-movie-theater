@@ -3,11 +3,11 @@ package woowacourse.movie.reservation
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.data.Reservation
 import woowacourse.movie.databinding.ReservationItemBinding
-import woowacourse.movie.domain.ReservationInfo
 
 class ReservationListAdapter(
-    private val items: List<ReservationInfo>,
+    private val items: List<Reservation>,
     private val reservationClickListener: ReservationClickListener
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

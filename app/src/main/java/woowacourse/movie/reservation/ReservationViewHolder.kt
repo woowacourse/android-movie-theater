@@ -1,8 +1,8 @@
 package woowacourse.movie.reservation
 
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.movie.data.Reservation
 import woowacourse.movie.databinding.ReservationItemBinding
-import woowacourse.movie.domain.ReservationInfo
 
 class ReservationViewHolder(
     private val binding: ReservationItemBinding,
@@ -13,7 +13,7 @@ class ReservationViewHolder(
         binding.reservationClickListener = reservationClickListener
     }
 
-    fun bind(reservationInfo: ReservationInfo) {
-        binding.reservationInfo = reservationInfo
+    fun bind(reservation: Reservation) {
+        binding.reservation = reservation
     }
 }

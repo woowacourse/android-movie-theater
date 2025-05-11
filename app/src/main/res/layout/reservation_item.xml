@@ -5,8 +5,8 @@
 
     <data>
             <variable
-                name="reservationInfo"
-                type="woowacourse.movie.domain.ReservationInfo" />
+                name="reservation"
+                type="woowacourse.movie.data.Reservation" />
             <variable
                 name="reservationClickListener"
                 type="woowacourse.movie.reservation.ReservationClickListener" />
@@ -18,7 +18,7 @@
         android:focusable="true"
         android:clickable="true"
         android:background="?attr/selectableItemBackground"
-        android:onClick="@{() -> reservationClickListener.clickReservation(reservationInfo)}">
+        android:onClick="@{() -> reservationClickListener.clickReservation(reservation)}">
 
         <TextView
             android:id="@+id/textview_reservation_date"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
-            android:text="@{reservationInfo.date}"
+            android:text="@{reservation.date}"
             android:textSize="12sp"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_marginTop="12dp"
-            android:text="@{reservationInfo.time}"
+            android:text="@{reservation.time}"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/reservation_separator"
             app:layout_constraintTop_toTopOf="parent"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_marginTop="12dp"
-            android:text="@{reservationInfo.theater}"
+            android:text="@{reservation.theater}"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/reservation_separator2"
             app:layout_constraintTop_toTopOf="parent"
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="6dp"
-            android:text="@{reservationInfo.title}"
+            android:text="@{reservation.title}"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_reservation_date"

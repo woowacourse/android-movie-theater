@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.Reservation
 import woowacourse.movie.databinding.FragmentReservationBinding
-import woowacourse.movie.domain.ReservationInfo
 import woowacourse.movie.moviebooked.MovieBookedActivity
 
 class ReservationFragment : Fragment() {
@@ -26,7 +26,7 @@ class ReservationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showReservationInfo()
+        showReservation()
     }
 
     override fun onDestroyView() {
@@ -34,21 +34,21 @@ class ReservationFragment : Fragment() {
         _binding = null
     }
 
-    fun showReservationInfo() {
-        val reservationInfomation = listOf(ReservationInfo("제목", "2025.4.1", "13:00", 2, "A1, A2", "선릉", 13000))
+    private fun showReservation() {
+        val reservation = listOf(Reservation(100,"제목", "2025.4.1", "13:00", 2, "A1, A2", "선릉", 13000))
         binding.recyclerviewReservation.adapter =
             ReservationListAdapter(
-                reservationInfomation,
+                reservation,
                 object : ReservationClickListener {
-                    override fun clickReservation(reservationInfo: ReservationInfo) {
-                        navigateToReservation(reservationInfo)
+                    override fun clickReservation(reservation: Reservation) {
+                        navigateToReservation(reservation.uid)
                     }
                 }
             )
     }
 
-    private fun navigateToReservation(reservationInfo: ReservationInfo) {
-        val intent = MovieBookedActivity.newIntent(requireContext(), reservationInfo)
+    private fun navigateToReservation(id: Long) {
+        val intent = MovieBookedActivity.newIntent(requireContext(), id)
         requireContext().startActivity(intent)
     }
 }

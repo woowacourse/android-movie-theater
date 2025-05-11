@@ -1,7 +1,7 @@
 package woowacourse.movie.reservation
 
-import woowacourse.movie.domain.ReservationInfo
+import woowacourse.movie.data.Reservation
 
 interface ReservationClickListener {
-    fun clickReservation(reservationInfo: ReservationInfo)
+    fun clickReservation(reservation: Reservation)
 }

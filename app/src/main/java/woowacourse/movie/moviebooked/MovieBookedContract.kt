@@ -1,15 +1,15 @@
 package woowacourse.movie.moviebooked
 
-import woowacourse.movie.domain.ReservationInfo
+import woowacourse.movie.data.Reservation
 
 interface MovieBookedContract {
     interface View {
         fun fetchReservationInfo()
 
-        fun showReservationInfo(reservationInfo: ReservationInfo)
+        fun showReservation(reservation: Reservation)
     }
 
     interface Presenter {
-        fun loadReservationInfo(reservationInfo: ReservationInfo)
+        fun loadReservationInfo(id: Long)
     }
 }

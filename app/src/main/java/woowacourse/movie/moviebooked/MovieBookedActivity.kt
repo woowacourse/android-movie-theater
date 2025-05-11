@@ -9,9 +9,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.data.Reservation
 import woowacourse.movie.databinding.MovieBookedBinding
-import woowacourse.movie.domain.ReservationInfo
-import woowacourse.movie.helper.BuildVersion
 
 class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
     private lateinit var binding: MovieBookedBinding
@@ -22,22 +21,17 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
         enableEdgeToEdge()
         initBinding()
         applyWindowInserts()
-        presenter = MovieBookedPresenter(this)
+        presenter = MovieBookedPresenter(this, applicationContext)
         fetchReservationInfo()
     }
 
     override fun fetchReservationInfo() {
-        val reservationInfo =
-            BuildVersion().getParcelableClass(
-                intent,
-                KEY_RESERVATION_INFO,
-                ReservationInfo::class,
-            )
-        presenter.loadReservationInfo(reservationInfo)
+        val id = intent.getLongExtra(KEY_RESERVATION, 0)
+        presenter.loadReservationInfo(id)
     }
 
-    override fun showReservationInfo(reservationInfo: ReservationInfo) {
-        binding.reservationInfo = reservationInfo
+    override fun showReservation(reservation: Reservation) {
+        binding.reservation = reservation
     }
 
     private fun initBinding() {
@@ -53,15 +47,15 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
     }
 
     companion object {
-        private const val KEY_RESERVATION_INFO = "reservationInfo"
+        private const val KEY_RESERVATION = "reservation"
 
         fun newIntent(
             context: Context,
-            reservationInfo: ReservationInfo,
+            id: Long,
         ): Intent {
             return Intent(context, MovieBookedActivity::class.java)
                 .apply {
-                    putExtra(KEY_RESERVATION_INFO, reservationInfo)
+                    putExtra(KEY_RESERVATION, id)
                 }
         }
     }
