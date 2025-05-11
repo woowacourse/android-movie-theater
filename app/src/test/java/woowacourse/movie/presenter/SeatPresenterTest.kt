@@ -32,7 +32,10 @@ class SeatPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = SeatPresenter(mockView, mockSeats, booking, FakeTicketDataSource())
+        presenter =
+            SeatPresenter(
+                mockView, mockSeats, booking, FakeTicketDataSource(),
+            ) { it }
     }
 
     @Test

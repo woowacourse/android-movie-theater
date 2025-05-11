@@ -1,6 +1,6 @@
 package woowacourse.movie.data
 
-import woowacourse.movie.domain.fixture.ticketFixture
+import woowacourse.movie.domain.fixture.ticketFixtures
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.datasource.TicketDataSource
@@ -10,18 +10,20 @@ class FakeTicketDataSource : TicketDataSource {
     private val tickets = mutableMapOf<Long, Ticket>()
 
     init {
-        addTicket(
-            booking =
-                Booking(
-                    movieTitle = ticketFixture.title,
-                    bookingDate = ticketFixture.bookingDate,
-                    bookingTime = ticketFixture.bookingTime,
-                    theaterName = ticketFixture.theaterName,
-                    count = ticketFixture.count,
-                ),
-            seats = ticketFixture.seats,
-            price = ticketFixture.price,
-        )
+        ticketFixtures.forEach {
+            addTicket(
+                booking =
+                    Booking(
+                        movieTitle = it.title,
+                        bookingDate = it.bookingDate,
+                        bookingTime = it.bookingTime,
+                        theaterName = it.theaterName,
+                        count = it.count,
+                    ),
+                seats = it.seats,
+                price = it.price,
+            )
+        }
     }
 
     override fun addTicket(
@@ -30,8 +32,18 @@ class FakeTicketDataSource : TicketDataSource {
         price: Int,
     ): Long {
         val id = (tickets.keys.maxOrNull() ?: 0L) + 1L
-        tickets[id] = ticketFixture
-
+        val ticket =
+            Ticket(
+                id = id,
+                title = booking.movieTitle,
+                bookingDate = booking.bookingDate,
+                bookingTime = booking.bookingTime,
+                theaterName = booking.theaterName,
+                count = booking.count,
+                price = price,
+                seats = seats,
+            )
+        tickets[id] = ticket
         return id
     }
 

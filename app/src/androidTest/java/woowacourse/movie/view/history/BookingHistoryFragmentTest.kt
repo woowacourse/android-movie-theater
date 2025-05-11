@@ -31,14 +31,15 @@ class BookingHistoryFragmentTest {
     @get:Rule
     val permissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(
-            android.Manifest.permission.POST_NOTIFICATIONS
+            android.Manifest.permission.POST_NOTIFICATIONS,
         )
 
     @Before
     fun setup() {
-        db = Room.inMemoryDatabaseBuilder(fakeContext, UserDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
+        db =
+            Room.inMemoryDatabaseBuilder(fakeContext, UserDatabase::class.java)
+                .allowMainThreadQueries()
+                .build()
 
         ticketDao = db.ticketDao()
 
