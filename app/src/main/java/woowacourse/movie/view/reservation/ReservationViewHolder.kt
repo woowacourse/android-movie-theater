@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.view.reservation
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemReservationBinding

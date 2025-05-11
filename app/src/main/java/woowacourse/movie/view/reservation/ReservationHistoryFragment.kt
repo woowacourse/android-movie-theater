@@ -6,12 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.ReservationAdapter
-import woowacourse.movie.ReservationHistoryPresenter
 import woowacourse.movie.contract.reservation.ReservationHistoryContract
 import woowacourse.movie.data.reservation.ReservationData
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.domain.ticket.Reservation
+import woowacourse.movie.presenter.reservation.ReservationHistoryPresenter
 import woowacourse.movie.view.ReservationDataProvider
 import woowacourse.movie.view.ticket.ReservationDetailActivity
 

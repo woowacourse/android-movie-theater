@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.presenter.reservation
 
 import woowacourse.movie.contract.reservation.ReservationHistoryContract
 import woowacourse.movie.data.reservation.ReservationData
