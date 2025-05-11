@@ -33,4 +33,6 @@
     <string name="text_notification_permission_required">해당 기능을 이용하기 위해 푸시 알림 권한이 필요합니다.</string>
     <string name="text_permission_dialog_positive_button">확인</string>
     <string name="text_permission_dialog_negative_button">취소</string>
+    <string name="text_booking_notificaiton_title">예매 알림</string>
+    <string name="text_booking_notification_body">%1$s 30분 후에 상영</string>
 </resources>

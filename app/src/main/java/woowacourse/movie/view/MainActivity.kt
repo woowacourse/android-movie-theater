@@ -1,5 +1,8 @@
 package woowacourse.movie.view
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         initView(savedInstanceState)
+        initNotificationChannel()
     }
 
     private fun initView(savedInstanceState: Bundle?) {
@@ -68,5 +72,21 @@ class MainActivity : AppCompatActivity() {
             setReorderingAllowed(true)
             replace(R.id.fragment_container_view, fragment)
         }
+    }
+
+    private fun initNotificationChannel() {
+        val channel =
+            NotificationChannel(
+                CHANNEL_ID,
+                CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_DEFAULT,
+            )
+        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.createNotificationChannel(channel)
+    }
+
+    companion object {
+        const val CHANNEL_ID = "booking_notification_channel"
+        private const val CHANNEL_NAME = "Notification Channel"
     }
 }
