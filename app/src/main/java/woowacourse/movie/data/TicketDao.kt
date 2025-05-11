@@ -15,4 +15,7 @@ interface TicketDao {
 
     @Delete
     fun delete(ticket: TicketEntity)
+
+    @Query("DELETE FROM tickets")
+    fun deleteAll()
 }
