@@ -1,9 +1,9 @@
 package woowacourse.movie.data
 
+import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.fixture.ticketFixtures
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.domain.model.datasource.TicketDataSource
 import woowacourse.movie.domain.model.seat.Seat
 
 class FakeTicketDataSource : TicketDataSource {

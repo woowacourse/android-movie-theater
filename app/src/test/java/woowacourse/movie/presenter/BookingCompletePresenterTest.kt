@@ -5,8 +5,8 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.FakeTicketDataSource
+import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.fixture.ticketFixture1
-import woowacourse.movie.domain.model.datasource.TicketDataSource
 import woowacourse.movie.view.complete.BookingCompleteContract
 import woowacourse.movie.view.complete.BookingCompletePresenter
 import woowacourse.movie.view.core.util.MainThreadExecutor

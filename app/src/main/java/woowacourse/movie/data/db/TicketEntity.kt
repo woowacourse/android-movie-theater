@@ -32,14 +32,3 @@ data class TicketEntity(
         )
     }
 }
-
-fun Ticket.toEntity(): TicketEntity {
-    return TicketEntity(
-        movieTitle = title,
-        bookingDateTime = LocalDateTime.of(bookingDate, bookingTime),
-        theaterName = theaterName,
-        ticketCount = count.value,
-        ticketPrice = price,
-        seats = seats,
-    )
-}

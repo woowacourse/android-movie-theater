@@ -1,10 +1,10 @@
 package woowacourse.movie.view.seat
 
 import android.content.Context
-import woowacourse.movie.data.db.TicketDataSourceImpl
+import woowacourse.movie.data.datasource.TicketDataSourceImpl
 import woowacourse.movie.data.db.UserDatabase
+import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.model.Booking
-import woowacourse.movie.domain.model.datasource.TicketDataSource
 import woowacourse.movie.domain.model.seat.Column
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat

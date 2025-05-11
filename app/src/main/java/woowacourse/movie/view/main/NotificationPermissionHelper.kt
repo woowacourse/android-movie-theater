@@ -7,12 +7,11 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.view.View
-import woowacourse.movie.R
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
-import woowacourse.movie.data.SharedPreferencesStore
+import woowacourse.movie.R
 import woowacourse.movie.view.core.ext.checkNotificationPermission
 
 /**
@@ -24,8 +23,8 @@ import woowacourse.movie.view.core.ext.checkNotificationPermission
 class NotificationPermissionHelper(
     private val activity: Activity,
     private val view: View,
+    private val presenter: MainContract.Presenter,
     caller: ActivityResultCaller,
-    private val prefsManager: SharedPreferencesStore,
 ) {
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
 
@@ -35,7 +34,7 @@ class NotificationPermissionHelper(
                 caller.registerForActivityResult(
                     ActivityResultContracts.RequestPermission(),
                 ) { isGranted ->
-                    prefsManager.saveNotificationPermissionResult(isGranted)
+                    presenter.updatePermission(isGranted)
                     if (!isGranted && !activity.shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                         showPermissionSnackBar()
                     }
@@ -55,14 +54,13 @@ class NotificationPermissionHelper(
 
         when {
             activity.checkNotificationPermission() -> {
-                if (!prefsManager.notificationPermissionStatus()) {
-                    prefsManager.saveNotificationPermissionResult(true)
-                }
+                presenter.updatePermission(true)
             }
 
             activity.shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
                 permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
+
             else -> {
                 permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
@@ -70,7 +68,11 @@ class NotificationPermissionHelper(
     }
 
     fun showPermissionSnackBar() {
-        Snackbar.make(view, R.string.permission_notification_settings_message, Snackbar.LENGTH_SHORT)
+        Snackbar.make(
+            view,
+            R.string.permission_notification_settings_message,
+            Snackbar.LENGTH_SHORT,
+        )
             .setAction(R.string.text_complete) {
                 val intent =
                     Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {

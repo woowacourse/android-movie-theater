@@ -1,9 +1,9 @@
 package woowacourse.movie.view.history
 
 import android.content.Context
-import woowacourse.movie.data.db.TicketDataSourceImpl
+import woowacourse.movie.data.datasource.TicketDataSourceImpl
 import woowacourse.movie.data.db.UserDatabase
-import woowacourse.movie.domain.model.datasource.TicketDataSource
+import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.view.core.util.DefaultMainThreadExecutor
 import woowacourse.movie.view.core.util.MainThreadExecutor
 import kotlin.concurrent.thread

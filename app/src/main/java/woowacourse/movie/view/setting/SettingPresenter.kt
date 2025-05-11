@@ -2,20 +2,22 @@ package woowacourse.movie.view.setting
 
 import android.content.Context
 import woowacourse.movie.data.SharedPreferencesStore
+import woowacourse.movie.data.datasource.PermissionDataSourceImpl
+import woowacourse.movie.domain.datasource.PermissionDataSource
 
 class SettingPresenter(
     private val view: SettingContract.View,
-    private val prefs: SharedPreferencesStore,
+    private val permissionDataSource: PermissionDataSource,
 ) : SettingContract.Presenter {
     override fun synchronizePermission(isGranted: Boolean) {
-        val currentPermission = prefs.notificationPermissionStatus()
+        val currentPermission = permissionDataSource.isGranted()
         if (currentPermission != isGranted) {
-            prefs.saveNotificationPermissionResult(isGranted)
+            permissionDataSource.savePermission(isGranted)
         }
     }
 
     override fun setPreferences(isGranted: Boolean) {
-        prefs.saveNotificationPermissionResult(isGranted)
+        permissionDataSource.savePermission(isGranted)
         view.showNotificationPermission(isGranted)
     }
 
@@ -25,7 +27,8 @@ class SettingPresenter(
             context: Context,
         ): SettingContract.Presenter {
             val prefsManager = SharedPreferencesStore(context)
-            return SettingPresenter(view, prefsManager)
+            val permissionDataSource = PermissionDataSourceImpl(prefsManager)
+            return SettingPresenter(view, permissionDataSource)
         }
     }
 }

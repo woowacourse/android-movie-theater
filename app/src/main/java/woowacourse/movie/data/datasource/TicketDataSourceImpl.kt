@@ -1,8 +1,10 @@
-package woowacourse.movie.data.db
+package woowacourse.movie.data.datasource
 
+import woowacourse.movie.data.db.TicketDao
+import woowacourse.movie.data.db.TicketEntity
+import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.domain.model.datasource.TicketDataSource
 import woowacourse.movie.domain.model.seat.Seat
 import java.time.LocalDateTime
 
