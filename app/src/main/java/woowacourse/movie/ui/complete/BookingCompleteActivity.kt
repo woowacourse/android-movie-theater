@@ -2,6 +2,7 @@ package woowacourse.movie.ui.complete
 
 import android.Manifest
 import android.app.AlertDialog
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -22,13 +23,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import java.time.LocalDateTime
+import java.time.ZoneId
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
+import woowacourse.movie.notification.MovieReminderReceiver
 import woowacourse.movie.ui.main.MovieBookingActivity
+import woowacourse.movie.utils.AlarmManagerCompat
 import woowacourse.movie.utils.Destination
 import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.intentSerializable
@@ -111,11 +115,11 @@ class BookingCompleteActivity :
             else -> super.onOptionsItemSelected(item)
         }
 
-    override fun handlePermission() {
+    override fun handlePermission(bookedTicket: BookedTicket) {
         requestPostNotificationPermission()
 
         if (hasPostNotification()) {
-            // 알림 등록
+            scheduleNotification(bookedTicket)
         }
     }
 
@@ -204,6 +208,24 @@ class BookingCompleteActivity :
             // sharedPreferences에 있는 푸시알림 on/off값 주기
             true
         }
+    }
+
+    private fun scheduleNotification(bookedTicket: BookedTicket) {
+        val triggerTime = bookedTicket.movieSchedule.screeningDateTime.minusMinutes(30L)
+        val triggerAtMillis =
+            triggerTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+        val requestCode = bookedTicket.hashCode()
+        val intent = MovieReminderReceiver.newIntent(this, bookedTicket)
+        val pendingIntent =
+            PendingIntent.getBroadcast(
+                this,
+                requestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
+
+        AlarmManagerCompat.setExact(this, triggerAtMillis, pendingIntent)
     }
 
     private fun applyWindowInsets() {

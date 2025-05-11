@@ -29,7 +29,7 @@ interface BookingCompleteContract {
 
         fun showTotalPrice(totalPrice: Int)
 
-        fun handlePermission()
+        fun handlePermission(bookedTicket: BookedTicket)
 
         fun moveTo(destination: Destination)
     }
