@@ -24,4 +24,9 @@ object Extras {
     object ReservationInfoData {
         const val RESERVATION_KEY = "reservation_data"
     }
+
+    object SettingData {
+        const val SETTINGS_KEY = "settings"
+        const val NOTIFICATION_KEY = "notification_data"
+    }
 }
