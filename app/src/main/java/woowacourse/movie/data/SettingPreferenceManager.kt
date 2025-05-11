@@ -1,7 +1,9 @@
 package woowacourse.movie.data
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.core.content.edit
+import woowacourse.movie.MovieApplication
 
 class SettingPreferenceManager(
     context: Context,

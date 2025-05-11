@@ -1,18 +1,19 @@
 package woowacourse.movie.presentation.view.setting
 
-import woowacourse.movie.data.SettingPreferenceManager
+import woowacourse.movie.data.SettingRepositoryImpl
+import woowacourse.movie.domain.SettingRepository
 
 class SettingPresenter(
     private val view: SettingContract.View,
-    private val preferenceManager: SettingPreferenceManager,
+    private val settingRepository: SettingRepository = SettingRepositoryImpl(),
 ) : SettingContract.Presenter {
     override fun fetchSettingInfo() {
-        val isEnabled = preferenceManager.getPushAlarmEnabled()
+        val isEnabled = settingRepository.getNotificationEnabled()
         view.showPushAlarmSetting(isEnabled)
     }
 
     override fun savePushAlarmSetting(isEnabled: Boolean) {
-        preferenceManager.setPushAlarmEnabled(isEnabled)
+        settingRepository.setNotificationEnabled(isEnabled)
         view.showPushAlarmSetting(isEnabled)
     }
 }
