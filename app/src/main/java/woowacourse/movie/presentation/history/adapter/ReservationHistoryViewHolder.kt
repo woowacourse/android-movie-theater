@@ -12,13 +12,13 @@ class ReservationHistoryViewHolder(
     view: ViewGroup,
     eventListener: ReservationHistoryEventListener,
 ) : BaseViewHolder<TicketUiModel, ItemReservationHistoryBinding>(
-        DataBindingUtil.inflate(
-            LayoutInflater.from(view.context),
-            R.layout.item_reservation_history,
-            view,
-            false,
-        ),
-    ) {
+    DataBindingUtil.inflate(
+        LayoutInflater.from(view.context),
+        R.layout.item_reservation_history,
+        view,
+        false,
+    )
+) {
     init {
         binding.eventListener = eventListener
     }
