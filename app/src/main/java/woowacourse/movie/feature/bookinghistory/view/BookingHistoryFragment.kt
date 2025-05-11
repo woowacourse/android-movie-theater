@@ -57,7 +57,16 @@ class BookingHistoryFragment :
     }
 
     override fun navigateToBookingDetail(bookingHistory: BookingInfoUiModel) {
-        val intent = BookingCompleteActivity.newIntent(requireContext(), bookingHistory)
+        val intent =
+            BookingCompleteActivity.newIntent(
+                requireContext(),
+                bookingHistory,
+                NAVIGATE_TO_BOOKING_HISTORY,
+            )
         startActivity(intent)
+    }
+
+    companion object {
+        private const val NAVIGATE_TO_BOOKING_HISTORY = "BOOKING_HISTORY"
     }
 }

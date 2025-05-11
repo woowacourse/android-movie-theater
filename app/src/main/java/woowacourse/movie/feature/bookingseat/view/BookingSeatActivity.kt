@@ -117,7 +117,12 @@ class BookingSeatActivity :
 
             scheduleAlarm(bookingInfo.date, bookingInfo.movieTime)
 
-            val intent = BookingCompleteActivity.newIntent(this@BookingSeatActivity, bookingInfo)
+            val intent =
+                BookingCompleteActivity.newIntent(
+                    this@BookingSeatActivity,
+                    bookingInfo,
+                    NAVIGATE_TO_MAIN,
+                )
             startActivity(intent)
             finish()
         }
@@ -216,14 +221,15 @@ class BookingSeatActivity :
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            alarmTime.toEpochSecond() * 1000,
-//            System.currentTimeMillis() * 1000,
+//            alarmTime.toEpochSecond() * 1000,
+            System.currentTimeMillis() * 1000,
             pendingIntent,
         )
     }
 
     companion object {
         private const val BOOKING_INFO_KEY = "BOOKING_INFO"
+        private const val NAVIGATE_TO_MAIN = "MAIN"
         private const val SEAT_POSITION_OFFSET = 1
 
         fun newIntent(

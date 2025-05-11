@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.feature.bookingcomplete.contract.BookingCompleteContract
 import woowacourse.movie.feature.bookingcomplete.presenter.BookingCompletePresenter
+import woowacourse.movie.feature.main.MainActivity
 import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.util.getExtra
 
@@ -17,12 +19,29 @@ class BookingCompleteActivity :
     AppCompatActivity(),
     BookingCompleteContract.View {
     private val presenter: BookingCompleteContract.Presenter by lazy { BookingCompletePresenter(this) }
-    private val binding: ActivityBookingCompleteBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_booking_complete) }
+    private val binding: ActivityBookingCompleteBinding by lazy {
+        DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_booking_complete,
+        )
+    }
+    private lateinit var bookingType: String
+
+    private val callback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                navigateToBack()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        presenter.prepareBookingInfo(bookingInfo = intent.getExtra(BOOKING_INFO_KEY) ?: BookingInfoUiModel())
+        bookingType = intent.getStringExtra(BOOKING_TYPE_KEY) ?: ""
+        presenter.prepareBookingInfo(
+            bookingInfo = intent.getExtra(BOOKING_INFO_KEY) ?: BookingInfoUiModel(),
+        )
+        onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -35,18 +54,28 @@ class BookingCompleteActivity :
     }
 
     override fun navigateToBack() {
-        finish()
+        if (bookingType == NAVIGATE_TO_MAIN) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        } else {
+            finish()
+        }
     }
 
     companion object {
         private const val BOOKING_INFO_KEY = "BOOKING_INFO"
+        private const val BOOKING_TYPE_KEY = "BOOKING_TYPE"
+        private const val NAVIGATE_TO_MAIN = "MAIN"
 
         fun newIntent(
             context: Context,
             bookingInfo: BookingInfoUiModel,
+            bookingType: String,
         ): Intent =
             Intent(context, BookingCompleteActivity::class.java).apply {
                 putExtra(BOOKING_INFO_KEY, bookingInfo)
+                putExtra(BOOKING_TYPE_KEY, bookingType)
             }
     }
 }
