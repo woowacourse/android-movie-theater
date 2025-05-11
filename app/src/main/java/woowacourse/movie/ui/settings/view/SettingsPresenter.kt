@@ -1,9 +1,9 @@
 package woowacourse.movie.ui.settings.view
 
-import java.time.LocalDateTime
 import woowacourse.movie.data.BookedTicketDatabase
 import woowacourse.movie.data.toBookedTicket
 import woowacourse.movie.domain.model.BookedTicket
+import java.time.LocalDateTime
 
 class SettingsPresenter(
     private val view: SettingsContract.View,
