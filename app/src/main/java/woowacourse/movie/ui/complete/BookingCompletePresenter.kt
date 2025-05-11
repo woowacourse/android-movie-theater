@@ -24,6 +24,8 @@ class BookingCompletePresenter(
             bookedTicket.theaterName,
         )
         bookingCompleteView.showTotalPrice(bookedTicket.totalPrice())
+
+        if (isAfterBooking()) bookingCompleteView.handlePermission()
     }
 
     override fun navigateTo() {
@@ -33,4 +35,6 @@ class BookingCompletePresenter(
             else -> bookingCompleteView.moveTo(Destination.HOME)
         }
     }
+
+    private fun isAfterBooking() = destination == Destination.COMPLETE
 }
