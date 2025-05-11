@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.room.Room
 import woowacourse.movie.R
+import woowacourse.movie.data.setting.SettingStorageManagerImpl
 import woowacourse.movie.data.ticket.TicketDatabase
 import woowacourse.movie.data.ticket.TicketEntity.Companion.TICKET_TABLE_NAME
 import woowacourse.movie.data.ticket.toEntity
@@ -29,9 +30,7 @@ import woowacourse.movie.view.util.StringFormatter
 import woowacourse.movie.view.util.getSerializableCompat
 import woowacourse.movie.view.util.showToast
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.ZoneId
 import kotlin.concurrent.thread
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
@@ -50,20 +49,24 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
                 finish()
                 return
             }
+
+        presenter = BookingCompletePresenter(this, ticket, SettingStorageManagerImpl(this))
+        presenter.loadTicket()
+
         val caller: Class<*>? = intent.extras?.getSerializableCompat(KEY_CALLER)
         if (caller == SeatActivity::class.java) {
             addToHistory(ticket)
-            setNotification(ticket)
+            presenter.loadNotificationInfo(ticket)
         }
-
-        presenter = BookingCompletePresenter(this, ticket)
-        presenter.loadTicket()
 
         initView()
         setBackAction()
     }
 
-    private fun setNotification(ticket: Ticket) {
+    override fun setNotification(
+        ticket: Ticket,
+        time: Long,
+    ) {
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = NotificationReceiver.newIntent(this, ticket)
 
@@ -75,17 +78,9 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
 
-        val screeningDateTime = LocalDateTime.of(ticket.screeningDate, ticket.screeningTime)
-        val notificationTime =
-            screeningDateTime
-                .minusMinutes(30)
-                .atZone(ZoneId.systemDefault())
-                .toInstant()
-                .toEpochMilli()
-
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            notificationTime,
+            time,
             pendingIntent,
         )
     }
