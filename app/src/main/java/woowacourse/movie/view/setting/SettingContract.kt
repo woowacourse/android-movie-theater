@@ -10,7 +10,7 @@ interface SettingContract {
             showTimes: List<LocalDateTime>,
         )
 
-        fun setPermissionSwitch()
+        fun setPermissionSwitch(isEnabled: Boolean)
 
         fun showError(message: String)
     }
@@ -19,5 +19,7 @@ interface SettingContract {
         fun setNotification()
 
         fun setPermissionSwitch()
+
+        fun savePushAlarmSetting(isEnabled: Boolean)
     }
 }

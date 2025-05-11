@@ -1,6 +1,8 @@
 package woowacourse.movie
 
+import android.content.Context
 import woowacourse.movie.data.MovieTheaterDatabase
+import woowacourse.movie.repository.SettingRepository
 import woowacourse.movie.repository.TicketRepository
 import woowacourse.movie.view.movies.reservation.seat.SeatSelectionContract
 import woowacourse.movie.view.movies.reservation.seat.SeatSelectionPresenter
@@ -17,6 +19,11 @@ object Provider {
             ticketDao(),
         )
 
+    fun settingRepository(context: Context): SettingRepository =
+        SettingRepository(
+            context.getSharedPreferences("setting", Context.MODE_PRIVATE),
+        )
+
     fun reservationListPresenter(view: ReservationListContract.View) =
         ReservationListPresenter(
             view,
@@ -25,5 +32,12 @@ object Provider {
 
     fun seatSelectionPresenter(view: SeatSelectionContract.View) = SeatSelectionPresenter(view, ticketRepository())
 
-    fun settingPresenter(view: SettingContract.View) = SettingPresenter(view, ticketRepository())
+    fun settingPresenter(
+        view: SettingContract.View,
+        context: Context,
+    ) = SettingPresenter(
+        view,
+        ticketRepository(),
+        settingRepository(context),
+    )
 }

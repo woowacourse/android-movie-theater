@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 
 class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting), SettingContract.View {
     private val presenter: SettingContract.Presenter by lazy {
-        Provider.settingPresenter(this)
+        Provider.settingPresenter(this, requireContext())
     }
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -46,20 +46,20 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         }
     }
 
-    override fun setPermissionSwitch() {
-        if (hasAllPermissions() && NotificationReceiver.isEnabled) {
-            binding.switchSettingPushAlarm.isChecked = true
-        } else {
-            binding.switchSettingPushAlarm.isChecked = false
-        }
-
+    override fun setPermissionSwitch(isEnabled: Boolean) {
+        binding.hasAllPermission = hasAllPermissions() && isEnabled
         binding.switchSettingPushAlarm.setOnCheckedChangeListener { _, isChecked ->
+            presenter.savePushAlarmSetting(isChecked)
             if (isChecked) {
                 if (!hasNotificationPermission()) {
                     requestPermissionLauncher.launch(POST_NOTIFICATIONS)
                 }
                 if (!hasExactAlarmPermission()) {
                     requestExactAlarmPermission()
+                }
+                if (!hasAllPermissions()) {
+                    binding.switchSettingPushAlarm.isChecked = false
+                    return@setOnCheckedChangeListener
                 }
                 presenter.setNotification()
             } else {
