@@ -52,7 +52,7 @@ class NotificationReceiver : BroadcastReceiver() {
                     ),
                 )
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.baseline_airplay_24)
+                .setSmallIcon(R.drawable.ic_planet)
                 .build()
 
         val notificationManager =
