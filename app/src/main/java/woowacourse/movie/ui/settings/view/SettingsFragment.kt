@@ -17,16 +17,20 @@ import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.data.BookedTicketDatabase
 import woowacourse.movie.databinding.FragmentSettingsBinding
+import woowacourse.movie.domain.model.BookedTicket
 
-class SettingsFragment : Fragment() {
+class SettingsFragment : Fragment(), SettingsContract.View {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
+    private val presenter: SettingsContract.Presenter by lazy { SettingsPresenter(this) }
     private val sharedPrefs: SharedPreferences by lazy {
         requireContext().getSharedPreferences(getString(R.string.preference_key), MODE_PRIVATE)
     }
     private val isEnablePostNotification: Boolean
         get() = sharedPrefs.getBoolean(getString(R.string.preference_post_notification), true)
+    private val bookedTicketDatabase by lazy { BookedTicketDatabase.getInstance(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +39,7 @@ class SettingsFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_settings, container, false)
+        presenter.loadDatabase(bookedTicketDatabase)
         syncNotificationPermissionWithPrefsAndUI()
         return binding.root
     }
@@ -54,7 +59,7 @@ class SettingsFragment : Fragment() {
         syncNotificationPermissionWithPrefsAndUI()
     }
 
-    private fun syncNotificationPermissionWithPrefsAndUI()  {
+    private fun syncNotificationPermissionWithPrefsAndUI() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val isGranted =
                 ContextCompat.checkSelfPermission(
@@ -64,9 +69,13 @@ class SettingsFragment : Fragment() {
             sharedPrefs.edit {
                 putBoolean(getString(R.string.preference_post_notification), isGranted)
             }
-        }
 
-        binding.isEnablePostNotification = isEnablePostNotification
+            if (isEnablePostNotification != isGranted){
+                presenter.handleMovieNotificationByToggle(isGranted)
+            }
+
+            binding.isEnablePostNotification = isEnablePostNotification
+        }
     }
 
     private fun updateNotificationSetting(isEnabled: Boolean) {
@@ -83,5 +92,15 @@ class SettingsFragment : Fragment() {
             putBoolean(getString(R.string.preference_post_notification), isEnabled)
         }
         binding.isEnablePostNotification = isEnabled
+        presenter.handleMovieNotificationByToggle(isEnabled)
     }
+
+    override fun notifyMovieReminderRegistered(availableNotificationTickets: List<BookedTicket>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun notifyMovieReminderCleared() {
+        TODO("Not yet implemented")
+    }
+
 }
