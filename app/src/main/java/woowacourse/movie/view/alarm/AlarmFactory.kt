@@ -1,4 +1,4 @@
-package woowacourse.movie.view.reservationComplete
+package woowacourse.movie.view.alarm
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -8,7 +8,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.presenter.setting.SettingPresenter.Companion.PUSH_ENABLED_DATA_KEY
-import woowacourse.movie.view.setting.AlarmReceiver
 import woowacourse.movie.view.setting.SettingFragment.Companion.SETTING_DATA_KEY
 import java.time.LocalDateTime
 import java.time.ZoneId

@@ -35,7 +35,7 @@
             android:exported="false" />
 
         <receiver
-            android:name=".view.setting.AlarmReceiver"
+            android:name=".view.alarm.AlarmReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

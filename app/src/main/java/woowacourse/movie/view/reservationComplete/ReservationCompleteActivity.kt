@@ -19,6 +19,7 @@ import woowacourse.movie.databinding.ActivityReservationCompleteBinding
 import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.presenter.reservationComplete.ReservationCompleteContracts
 import woowacourse.movie.presenter.reservationComplete.ReservationCompletePresenter
+import woowacourse.movie.view.alarm.AlarmFactory
 import woowacourse.movie.view.extension.dialogMessage
 import woowacourse.movie.view.extension.getSerializableExtraData
 

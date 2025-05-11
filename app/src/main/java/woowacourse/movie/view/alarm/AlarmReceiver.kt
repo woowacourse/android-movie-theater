@@ -1,4 +1,4 @@
-package woowacourse.movie.view.setting
+package woowacourse.movie.view.alarm
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -8,8 +8,8 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
-import woowacourse.movie.view.reservationComplete.AlarmFactory.Companion.MOVIE_NOTIFICATION_CHANNEL_ID
-import woowacourse.movie.view.reservationComplete.AlarmFactory.Companion.MOVIE_TITLE_DATA_KEY
+import woowacourse.movie.view.alarm.AlarmFactory.Companion.MOVIE_NOTIFICATION_CHANNEL_ID
+import woowacourse.movie.view.alarm.AlarmFactory.Companion.MOVIE_TITLE_DATA_KEY
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(
