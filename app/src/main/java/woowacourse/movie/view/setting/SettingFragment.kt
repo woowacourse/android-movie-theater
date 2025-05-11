@@ -30,8 +30,8 @@ class SettingFragment : Fragment() {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
         ) { isGranted: Boolean ->
-            alarmBtn.isChecked = isGranted
 
+            alarmBtn.isChecked = isGranted
             sharedPref.edit { putBoolean("isAlarmOn", isGranted) }
         }
 
@@ -91,5 +91,7 @@ class SettingFragment : Fragment() {
 
         builder.setTitle("알림 권한 요청")
         builder.setMessage("설정 > 알림 권한을 허용해주세요.")
+        builder.setNegativeButton(android.R.string.cancel, null)
+        builder.show()
     }
 }
