@@ -9,16 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
-import woowacourse.movie.data.TicketRepositoryImpl
 import woowacourse.movie.databinding.FragmentHistoryBinding
 import woowacourse.movie.view.reservation.Ticket
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
-import kotlin.concurrent.thread
 
-class HistoryFragment : Fragment() {
+class HistoryFragment : Fragment(), HistoryContract.View {
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
-    private val ticketRepositoryImpl = TicketRepositoryImpl()
+    private val presenter by lazy { HistoryPresenter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,9 +32,8 @@ class HistoryFragment : Fragment() {
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        super.onViewCreated(view, savedInstanceState)
-        showMoviesScreen()
         showDivider()
+        presenter.loadTickets()
     }
 
     private fun showDivider() {
@@ -48,20 +45,17 @@ class HistoryFragment : Fragment() {
         binding.rvReservationHistory.addItemDecoration(dividerItemDecoration)
     }
 
-    private fun showMoviesScreen() {
-        thread {
-            val tickets = ticketRepositoryImpl.getAll()
-            binding.tickets = tickets
-            binding.onItemClick =
-                object : OnReservationEventListener {
-                    override fun onClickReservation(index: Int) {
-                        handleReservationComplete(tickets[index])
-                    }
+    override fun showMoviesScreen(tickets: List<Ticket>) {
+        binding.tickets = tickets
+        binding.onItemClick =
+            object : OnReservationEventListener {
+                override fun onClickReservation(index: Int) {
+                    presenter.onTicketSelected(index)
                 }
-        }
+            }
     }
 
-    private fun handleReservationComplete(ticket: Ticket) {
+    override fun handleReservationComplete(ticket: Ticket) {
         val intent =
             ReservationCompleteActivity.newIntent(this.requireContext(), ticket)
         startActivity(intent)
