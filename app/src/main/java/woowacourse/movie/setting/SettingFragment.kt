@@ -1,14 +1,18 @@
 package woowacourse.movie.setting
 
 import android.Manifest
+import android.app.AlarmManager
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity.ALARM_SERVICE
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -72,14 +76,25 @@ class SettingFragment : Fragment(), SettingContract.View {
             ActivityResultContracts.RequestPermission(),
         ) { isGranted: Boolean ->
             if (isGranted) {
-                Toast.makeText(requireContext(), "알림 설정 완료", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.text_permission_request, "Alarms"), Toast.LENGTH_SHORT).show()
+                requestExactAlarmPermission()
                 presenter.updatePermission(true)
                 setAlarmState(true)
             } else {
-                Toast.makeText(requireContext(), "알림 거부됨", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.text_permission_request, "Notifications"), Toast.LENGTH_SHORT).show()
                 setAlarmState(false)
             }
         }
+
+    private fun requestExactAlarmPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val alarmManager = requireContext().getSystemService(ALARM_SERVICE) as AlarmManager
+            if (!alarmManager.canScheduleExactAlarms()) {
+                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                startActivity(intent)
+            }
+        }
+    }
 
     private fun isPermitted(): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return true

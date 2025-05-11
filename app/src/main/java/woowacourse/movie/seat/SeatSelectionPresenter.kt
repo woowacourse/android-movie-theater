@@ -1,7 +1,7 @@
 package woowacourse.movie.seat
 
 import android.content.Context
-import woowacourse.movie.data.SettingPreference
+import woowacourse.movie.data.SettingRepository
 import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toEntity
@@ -17,7 +17,7 @@ import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
-    private val settingPreference: SettingPreference,
+    private val settingPreference: SettingRepository,
 ) : SeatSelectionContract.Presenter {
     private lateinit var ticket: Ticket
 
@@ -57,14 +57,21 @@ class SeatSelectionPresenter(
         view.showBookingAlertDialog(ticketUiModel)
     }
 
-    override fun storeSeats(context: Context) {
+    override fun completeSeatsSelection(context: Context) {
+        storeSeats(context)
+        setAlarm()
+    }
+
+    private fun storeSeats(context: Context) {
         val db = MovieDatabase.getDatabase(context)
         thread {
             db.TicketDao().saveTicket(
                 ticket.toEntity(),
             )
         }
+    }
 
+    private fun setAlarm() {
         if (settingPreference.isAlarmPermitted()) {
             view.makeAlarm(ticket.toUiModel(), calculateMovieAlarmTime())
         }

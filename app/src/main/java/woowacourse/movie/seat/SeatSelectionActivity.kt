@@ -7,9 +7,9 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.widget.TableRow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -113,7 +113,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             .setTitle(getString(R.string.dig_title))
             .setMessage(getString(R.string.dig_message))
             .setPositiveButton(getString(R.string.dig_btn_positive_message)) { _, _ ->
-                presenter.storeSeats(applicationContext)
+                presenter.completeSeatsSelection(applicationContext)
+
                 startBookingCompleteActivity(ticket)
             }
             .setNegativeButton(getString(R.string.dig_btn_negative_message)) { dialog, _ ->
@@ -131,14 +132,14 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (!alarmManager.canScheduleExactAlarms()) {
-                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                startActivity(intent)
+                Toast.makeText(this, getString(R.string.text_alarm_permission_description), Toast.LENGTH_SHORT).show()
                 return
             }
         }
 
         val intent = AlarmReceiver.newIntent(this, ticket)
-        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent =
+            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,

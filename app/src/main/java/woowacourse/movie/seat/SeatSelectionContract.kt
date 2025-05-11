@@ -33,7 +33,7 @@ interface SeatSelectionContract {
 
         fun completeBooking()
 
-        fun storeSeats(context: Context)
+        fun completeSeatsSelection(context: Context)
 
         fun restoreSeats(selectedSeats: List<SeatUiModel>)
     }

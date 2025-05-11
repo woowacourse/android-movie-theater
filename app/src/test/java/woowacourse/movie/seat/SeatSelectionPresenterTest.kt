@@ -101,7 +101,7 @@ class SeatSelectionPresenterTest {
         every { mockView.makeAlarm(capture(ticketSlot), capture(timeSlot)) } just Runs
 
         // when
-        presenter.storeSeats(mockContext)
+        presenter.completeSeatsSelection(mockContext)
 
         val expected =
             LocalDateTime.of(mockTicketUiData.toDomain().selectedDate, mockTicketUiData.toDomain().selectedTime)
