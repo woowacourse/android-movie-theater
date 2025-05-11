@@ -1,5 +1,8 @@
 package woowacourse.movie.view.seatSelection
 
+import android.app.AlarmManager
+import android.app.AlarmManager.AlarmClockInfo
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -20,12 +23,19 @@ import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.seat.SeatGrade
 import woowacourse.movie.presenter.seatSelection.SeatSelectionContracts
 import woowacourse.movie.presenter.seatSelection.SeatSelectionPresenter
+import woowacourse.movie.view.alarm.MovieBroadcastReceiver
+import woowacourse.movie.view.alarm.MovieBroadcastReceiver.Companion.MOVIE_TITLE_KEY
+import woowacourse.movie.view.alarm.MovieBroadcastReceiver.Companion.RESERVATION_ID_KEY
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.extension.showShortToast
 import woowacourse.movie.view.mapper.Formatter.priceToUi
 import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.columnToUi
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.rowToUi
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
 
 class SeatSelectionActivity :
     AppCompatActivity(),
@@ -191,6 +201,34 @@ class SeatSelectionActivity :
             finish()
         }
     }
+
+    override fun postAlarm(
+        reservationId: Long,
+        movieTitle: String,
+        movieDate: LocalDate,
+        movieTime: LocalTime,
+    ) {
+        val movieReminderTime =
+            LocalDateTime.of(movieDate, movieTime).minusMinutes(30L).toMilliSeconds()
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val intent =
+            Intent(this, MovieBroadcastReceiver::class.java).apply {
+                action = "android.intent.action.ALARM_ACTION"
+                putExtra(RESERVATION_ID_KEY, reservationId)
+                putExtra(MOVIE_TITLE_KEY, movieTitle)
+            }
+        val pendingIntent =
+            PendingIntent.getBroadcast(
+                this,
+                reservationId.toInt(),
+                intent,
+                PendingIntent.FLAG_IMMUTABLE,
+            )
+        val alarmInfo = AlarmClockInfo(movieReminderTime, pendingIntent)
+        alarmManager.setAlarmClock(alarmInfo, pendingIntent)
+    }
+
+    private fun LocalDateTime.toMilliSeconds(): Long = atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
     companion object {
         private const val MOVIE_TO_RESERVE_DATA_KEY = "movieReserve"

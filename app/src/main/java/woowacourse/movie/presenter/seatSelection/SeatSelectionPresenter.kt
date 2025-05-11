@@ -69,6 +69,12 @@ class SeatSelectionPresenter(
         thread {
             val reservationId: Long =
                 database.reservationDao().insertMovieTicketEntity(movieTicket.toEntity())
+            view.postAlarm(
+                reservationId,
+                movieTicket.movie.title,
+                movieTicket.movieDate,
+                movieTicket.movieTime.value,
+            )
             view.showReservationCompleteView(reservationId)
         }
     }
