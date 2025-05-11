@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import java.time.LocalDateTime
 
-class ReservationInfoTest {
+class ReservationInfoEntityTest {
     private val reservationInfo =
         ReservationInfo(
             title = "해리 포터와 마법사의 돌",
