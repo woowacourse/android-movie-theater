@@ -2,14 +2,18 @@ package woowacourse.movie.view.alarm
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
+import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.view.alarm.AlarmFactory.Companion.MOVIE_NOTIFICATION_CHANNEL_ID
-import woowacourse.movie.view.alarm.AlarmFactory.Companion.MOVIE_TITLE_DATA_KEY
+import woowacourse.movie.view.extension.getSerializableExtraData
+import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity
+import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity.Companion.TICKET_DATA_KEY
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(
@@ -18,14 +22,21 @@ class AlarmReceiver : BroadcastReceiver() {
     ) {
         if (context == null || intent == null) return
         if (intent.action == MOVIE_NOTIFICATION_CHANNEL_ID) {
-            val movieTitle =
-                intent.getStringExtra(MOVIE_TITLE_DATA_KEY) ?: throw IllegalArgumentException()
+            val movieTicket =
+                intent.getSerializableExtraData<MovieTicket>(TICKET_DATA_KEY) ?: return
+            val pendingIntent =
+                PendingIntent.getActivity(
+                    context,
+                    0,
+                    ReservationCompleteActivity.getIntent(context, movieTicket),
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                )
             val notificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 createNotificationChannel(notificationManager)
-                createNotification(context, movieTitle, notificationManager)
+                createNotification(context, movieTicket.title, notificationManager, pendingIntent)
             }
         }
     }
@@ -34,6 +45,7 @@ class AlarmReceiver : BroadcastReceiver() {
         context: Context,
         movieTitle: String,
         notificationManager: NotificationManager,
+        pendingIntent: PendingIntent,
     ) {
         val notification =
             NotificationCompat
@@ -41,6 +53,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 .setSmallIcon(R.drawable.ic_android_green_24dp)
                 .setContentTitle(context.getString(R.string.notification_title))
                 .setContentText(context.getString(R.string.notification_content_text, movieTitle))
+                .setContentIntent(pendingIntent)
                 .build()
         notificationManager.notify(movieTitle.hashCode(), notification)
     }

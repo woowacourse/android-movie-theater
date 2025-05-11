@@ -8,6 +8,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.presenter.setting.SettingPresenter.Companion.PUSH_ENABLED_DATA_KEY
+import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity.Companion.TICKET_DATA_KEY
 import woowacourse.movie.view.setting.SettingFragment.Companion.SETTING_DATA_KEY
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -37,7 +38,7 @@ class AlarmFactory(
         if (alarmManager.canScheduleExactAlarms()) {
             setAlarmTimeMillis(alarmManager, triggerTimeMillis, pendingIntent)
         } else {
-            requestAlarmPermissionScreen
+            requestAlarmPermissionScreen()
         }
     }
 
@@ -69,7 +70,7 @@ class AlarmFactory(
         val intent =
             Intent(context, AlarmReceiver::class.java).apply {
                 action = MOVIE_NOTIFICATION_CHANNEL_ID
-                putExtra(MOVIE_TITLE_DATA_KEY, movieTicket.title)
+                putExtra(TICKET_DATA_KEY, movieTicket)
             }
         return PendingIntent.getBroadcast(
             context,
@@ -81,7 +82,6 @@ class AlarmFactory(
 
     companion object {
         private const val SEOUL_ZONE_ID = "Asia/Seoul"
-        const val MOVIE_TITLE_DATA_KEY = "movie_title"
         const val MOVIE_NOTIFICATION_CHANNEL_ID = "movie_alarm"
     }
 }
