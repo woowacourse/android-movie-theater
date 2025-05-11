@@ -60,3 +60,42 @@ val THEATER_MOVIE_SCHEDULE: TheaterMovieSchedule =
     )
 
 val fakeContext: Context = ApplicationProvider.getApplicationContext()
+
+val DB_TEST_MOVIE_TICKET_1 =
+    MovieTicket(
+        ticketId = 1L,
+        title = "라라랜드",
+        selectedDate = LocalDate.of(2025, 4, 1),
+        selectedTime = MovieTime(LocalTime.of(10, 0)),
+        seats = listOf(Seat(1, 0), Seat(2, 2)),
+        theater = Theater("JAY 극장"),
+    )
+val DB_TEST_MOVIE_TICKET_2 =
+    MovieTicket(
+        ticketId = 2L,
+        title = "라라랜드",
+        selectedDate = LocalDate.of(2025, 4, 1),
+        selectedTime = MovieTime(LocalTime.of(10, 0)),
+        seats = listOf(Seat(1, 0), Seat(2, 2)),
+        theater = Theater("JAY 극장"),
+    )
+
+val DB_TEST_MOVIE_TICKETS =
+    listOf(
+        MovieTicket(
+            ticketId = 1L,
+            title = "라라랜드",
+            selectedDate = LocalDate.of(2025, 4, 1),
+            selectedTime = MovieTime(LocalTime.of(10, 0)),
+            seats = listOf(Seat(1, 0), Seat(2, 2)),
+            theater = Theater("JAY 극장"),
+        ),
+        MovieTicket(
+            ticketId = 2L,
+            title = "라라랜드",
+            selectedDate = LocalDate.of(2025, 4, 1),
+            selectedTime = MovieTime(LocalTime.of(10, 0)),
+            seats = listOf(Seat(1, 0), Seat(2, 2)),
+            theater = Theater("JAY 극장"),
+        ),
+    )
