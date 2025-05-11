@@ -69,6 +69,7 @@ dependencies {
     androidTestImplementation(libs.kotest.runner.junit5)
     androidTestImplementation(libs.mannodermaus.junit5.core)
     androidTestImplementation(libs.androidx.fragment.testing)
+    androidTestImplementation(libs.androidx.rules)
     androidTestRuntimeOnly(libs.mannodermaus.junit5.runner)
     debugImplementation(libs.androidx.fragment.testing.manifest)
     kapt(libs.androidx.room.compiler)
