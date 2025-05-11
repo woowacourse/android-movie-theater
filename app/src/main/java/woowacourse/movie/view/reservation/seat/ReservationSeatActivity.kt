@@ -23,6 +23,7 @@ import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.dialog.DialogInfo
 import woowacourse.movie.view.reservation.Ticket
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
+import kotlin.concurrent.thread
 
 class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.View {
     private val ticketRepository = TicketRepositoryImpl()
@@ -173,10 +174,13 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
         ticket: Ticket,
         seats: Seats,
     ) {
-        val intent =
-            ReservationCompleteActivity.newIntent(this@ReservationSeatActivity, ticket, seats)
-        ticketRepository.insertAll(ticket)
-        startActivity(intent)
+        thread {
+            ticketRepository.insertAll(ticket)
+
+            val intent =
+                ReservationCompleteActivity.newIntent(this@ReservationSeatActivity, ticket, seats)
+            startActivity(intent)
+        }
     }
 
     private fun findTextViewByPosition(position: Position): TextView {
