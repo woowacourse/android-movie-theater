@@ -10,6 +10,7 @@ import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.ReservationDatabase
 import woowacourse.movie.contract.MainContract
+import woowacourse.movie.data.ApplicationSettings
 import woowacourse.movie.data.reservation.LocalReservationData
 import woowacourse.movie.data.reservation.ReservationData
 import woowacourse.movie.databinding.ActivityMainBinding
@@ -22,7 +23,8 @@ import woowacourse.movie.view.util.ErrorMessage
 class MainActivity :
     AppCompatActivity(),
     MainContract.View,
-    ReservationDataProvider {
+    ReservationDataProvider,
+    ApplicationSettingProvider {
     private val presenter: MainContract.Presenter = MainPresenter(this)
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val reservationData: ReservationData by lazy {
@@ -97,6 +99,8 @@ class MainActivity :
 
     override fun provideReservationData(): ReservationData = reservationData
 
+    override fun provideApplicationSetting(): ApplicationSettings = ApplicationSettings(applicationContext)
+
     companion object {
         private const val SCREEN_ID_RESERVATION_HISTORY = 0
         private const val SCREEN_ID_HOME = 1
@@ -106,4 +110,8 @@ class MainActivity :
 
 interface ReservationDataProvider {
     fun provideReservationData(): ReservationData
+}
+
+interface ApplicationSettingProvider {
+    fun provideApplicationSetting(): ApplicationSettings
 }
