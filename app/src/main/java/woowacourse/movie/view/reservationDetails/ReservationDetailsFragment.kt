@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationDetailsBinding
-import woowacourse.movie.model.reservation.ReservationDatabase
 import woowacourse.movie.model.ticket.MovieTicket
+import woowacourse.movie.presenter.reservationDetails.ReservationDatabase
 import woowacourse.movie.presenter.reservationDetails.ReservationDetailContracts
 import woowacourse.movie.presenter.reservationDetails.ReservationDetailPresenter
 import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity.Companion.getIntent

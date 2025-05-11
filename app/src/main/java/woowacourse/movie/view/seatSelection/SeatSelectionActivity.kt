@@ -15,10 +15,10 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.model.movie.MovieToReserve
-import woowacourse.movie.model.reservation.ReservationDatabase
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.seat.SeatGrade
 import woowacourse.movie.model.ticket.MovieTicket
+import woowacourse.movie.presenter.reservationDetails.ReservationDatabase
 import woowacourse.movie.presenter.seatSelection.SeatSelectionContracts
 import woowacourse.movie.presenter.seatSelection.SeatSelectionPresenter
 import woowacourse.movie.view.extension.dialogMessage

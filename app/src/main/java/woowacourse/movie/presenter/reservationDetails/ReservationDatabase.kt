@@ -1,4 +1,4 @@
-package woowacourse.movie.model.reservation
+package woowacourse.movie.presenter.reservationDetails
 
 import android.content.Context
 import androidx.room.Database

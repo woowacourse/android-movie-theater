@@ -1,7 +1,5 @@
 package woowacourse.movie.presenter.reservationDetails
 
-import woowacourse.movie.model.reservation.ReservationDao
-
 class ReservationDetailPresenter(
     private val view: ReservationDetailContracts.View,
     private val dao: ReservationDao,
