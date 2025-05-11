@@ -1,4 +1,4 @@
-package woowacourse.movie.view.complete
+package woowacourse.movie.view.home.complete
 
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario

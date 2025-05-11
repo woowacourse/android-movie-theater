@@ -1,4 +1,4 @@
-package woowacourse.movie.view.seat
+package woowacourse.movie.view.home.seat
 
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario

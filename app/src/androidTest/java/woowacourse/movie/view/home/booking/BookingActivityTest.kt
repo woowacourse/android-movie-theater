@@ -1,4 +1,4 @@
-package woowacourse.movie.view.booking
+package woowacourse.movie.view.home.booking
 
 import android.content.pm.ActivityInfo
 import androidx.test.core.app.ActivityScenario
