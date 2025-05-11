@@ -2,12 +2,16 @@ package woowacourse.movie.view.setting.alarm
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
+import woowacourse.movie.domain.Ticket
+import woowacourse.movie.util.getSerializableExtraCompat
+import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(
@@ -27,24 +31,44 @@ class AlarmReceiver : BroadcastReceiver() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel =
                 NotificationChannel(
-                    "alarm_channel",
-                    "예매 알림",
+                    CHANNEL_ID,
+                    context.getString(R.string.reservation_notification_channel_name),
                     NotificationManager.IMPORTANCE_HIGH,
                 ).apply {
-                    description = "예매 알림 채널입니다."
+                    description =
+                        context.getString(R.string.reservation_notification_channel_description)
                 }
 
             notificationManager.createNotificationChannel(channel)
         }
 
-        val movieTitle = intent.getStringExtra("MOVIE_TITLE")
+        val ticket = intent.getSerializableExtraCompat("TICKET", Ticket::class.java)
+
+        val receivedIntent = Intent(context, ReservationCompleteActivity::class.java)
+        val pendingIntent: PendingIntent =
+            PendingIntent.getActivity(
+                context,
+                ticket.hashCode(),
+                receivedIntent,
+                PendingIntent.FLAG_IMMUTABLE,
+            )
 
         val builder =
-            NotificationCompat.Builder(context, "alarm_channel")
+            NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.alarm_icon)
-                .setContentTitle("예매 알림")
-                .setContentText("$movieTitle 30분 후에 상영")
+                .setContentTitle(context.getString(R.string.reservation_notification_title))
+                .setContentText(
+                    context.getString(
+                        R.string.notification_reservation_text,
+                        ticket?.title,
+                    ),
+                )
+                .setContentIntent(pendingIntent)
 
         notificationManager.notify(1, builder.build())
+    }
+
+    companion object {
+        private const val CHANNEL_ID = "alarm_channel"
     }
 }

@@ -193,7 +193,7 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
             val finalTicket: Ticket = ticket.copy(seats = seats)
 
             presenter.saveTicketInfo(finalTicket)
-            AlarmHelper.setAlarm(applicationContext, finalTicket.title, finalTicket.dateTime)
+            AlarmHelper.setAlarm(applicationContext, finalTicket)
             navigateToReservationComplete(finalTicket)
             finish()
         }

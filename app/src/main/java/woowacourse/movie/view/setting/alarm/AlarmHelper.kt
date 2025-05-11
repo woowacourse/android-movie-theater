@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import woowacourse.movie.domain.Ticket
 import java.time.LocalDateTime
 import java.time.ZoneId
 
@@ -23,8 +24,7 @@ object AlarmHelper {
     // 알림 설정 (등록)
     fun setAlarm(
         context: Context,
-        title: String,
-        dateTime: LocalDateTime,
+        ticket: Ticket,
     ) {
         if (!canScheduleExactAlarm(context)) return
 
@@ -32,12 +32,12 @@ object AlarmHelper {
 
         val intent =
             Intent(context, AlarmReceiver::class.java).apply {
-                putExtra("MOVIE_TITLE", title)
+                putExtra("TICKET", ticket)
             }
         val pendingIntent =
             PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
-        val alarmTime = convertToMillis(dateTime.minusMinutes(30))
+        val alarmTime = convertToMillis(ticket.dateTime.minusMinutes(30))
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
