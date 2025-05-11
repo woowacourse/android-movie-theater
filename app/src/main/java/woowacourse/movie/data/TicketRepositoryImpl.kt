@@ -22,6 +22,7 @@ class TicketRepositoryImpl(
                 entity.date,
                 entity.personnel,
                 entity.theaterName,
+                entity.seats,
             )
         }
 
@@ -31,5 +32,6 @@ class TicketRepositoryImpl(
             date = this.date,
             personnel = this.personnel,
             theaterName = this.theaterName,
+            seats = this.seats,
         )
 }

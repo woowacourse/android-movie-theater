@@ -1,6 +1,7 @@
 package woowacourse.movie.view.reservation
 
 import woowacourse.movie.domain.PurchasePolicy
+import woowacourse.movie.domain.movieseat.Seats
 import java.io.Serializable
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -10,6 +11,7 @@ data class Ticket(
     val date: LocalDateTime,
     val personnel: Int,
     val theaterName: String,
+    val seats: Seats = Seats(mutableSetOf()),
 ) : Serializable {
     fun formattedDate(
         purchasePolicy: PurchasePolicy,

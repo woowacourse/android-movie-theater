@@ -7,6 +7,8 @@ class Seats(private val seats: MutableSet<Seat>) : Serializable {
 
     fun addSeat(seat: Seat) = seats.add(seat)
 
+    fun addSeat(seats: Seats) = this.seats.addAll(seats.all)
+
     fun removeSeat(seat: Seat) = seats.remove(seat)
 
     fun selectedLimit(limit: Int): Boolean = seats.size >= limit

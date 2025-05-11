@@ -11,7 +11,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
-import woowacourse.movie.domain.movieseat.Seats
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.reservation.Ticket
 import java.time.LocalDateTime
@@ -42,24 +41,14 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
                 intent.getSerializableExtra(KEY_TICKET) as? Ticket
             }
 
-        val seats =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getSerializableExtra(KET_SEATS, Seats::class.java)
-            } else {
-                intent.getSerializableExtra(KET_SEATS) as? Seats
-            }
-
-        checkTicket(ticket, seats)
+        checkTicket(ticket)
     }
 
-    private fun checkTicket(
-        ticket: Ticket?,
-        seats: Seats?,
-    ) {
-        if (ticket == null || seats == null) {
+    private fun checkTicket(ticket: Ticket?) {
+        if (ticket == null) {
             handleInvalidTicket()
         } else {
-            presenter.fetchData(ticket, seats)
+            presenter.fetchData(ticket)
         }
     }
 
@@ -83,16 +72,13 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
 
     companion object {
         private const val KEY_TICKET = "ticket"
-        private const val KET_SEATS = "seats"
 
         fun newIntent(
             context: Context,
             ticket: Ticket,
-            seats: Seats,
         ): Intent =
             Intent(context, ReservationCompleteActivity::class.java)
                 .putExtra(KEY_TICKET, ticket)
-                .putExtra(KET_SEATS, seats)
     }
 
     override fun onDestroy() {

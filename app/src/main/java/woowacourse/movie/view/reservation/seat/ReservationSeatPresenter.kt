@@ -55,8 +55,10 @@ class ReservationSeatPresenter(
         view.setButton(seats.canSelect(ticket.personnel))
     }
 
-    override fun handle() {
-        view.handleReservationComplete(ticket, seats)
+    override fun createTicket() {
+        this.ticket.seats.addSeat(seats)
+
+        view.handleReservationComplete(ticket)
     }
 
     companion object {

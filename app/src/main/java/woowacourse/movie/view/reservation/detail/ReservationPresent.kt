@@ -72,10 +72,10 @@ class ReservationPresent(
     ) {
         val ticket =
             Ticket(
-                movie.title,
-                selectedDateTime,
-                count,
-                theaterName,
+                title = movie.title,
+                date = selectedDateTime,
+                personnel = count,
+                theaterName = theaterName,
             )
         view.navigateToReservationComplete(ticket)
     }

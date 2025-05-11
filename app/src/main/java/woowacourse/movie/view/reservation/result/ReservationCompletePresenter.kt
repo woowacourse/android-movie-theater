@@ -7,13 +7,11 @@ import woowacourse.movie.view.reservation.Ticket
 class ReservationCompletePresenter(
     val view: ReservationCompleteContract.View,
 ) : ReservationCompleteContract.Presenter {
-    override fun fetchData(
-        ticket: Ticket,
-        seats: Seats,
-    ) {
+    override fun fetchData(ticket: Ticket) {
         view.showTicketInfo(ticket)
-        view.showSeatsInfo(seats.toSeatString())
-        view.showTicketMoney(seats.reservationPrice())
+        view.showSeatsInfo(ticket.seats.toSeatString())
+        view.showTicketMoney(ticket.seats.reservationPrice())
+        println("seat : ${ticket.seats.all.joinToString("|")}")
     }
 
     private fun Seats.toSeatString(): String {

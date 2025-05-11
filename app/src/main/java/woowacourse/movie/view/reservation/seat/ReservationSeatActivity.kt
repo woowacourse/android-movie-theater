@@ -18,7 +18,6 @@ import woowacourse.movie.R
 import woowacourse.movie.data.TicketRepositoryImpl
 import woowacourse.movie.databinding.ActivityReservationSeatBinding
 import woowacourse.movie.domain.movieseat.Position
-import woowacourse.movie.domain.movieseat.Seats
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.dialog.DialogInfo
 import woowacourse.movie.view.reservation.Ticket
@@ -54,6 +53,14 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    private fun checkTicket(ticket: Ticket?) {
+        if (ticket == null) {
+            handleInvalidTicket()
+        } else {
+            presenter.fetchData(ticket)
+        }
+    }
+
     private fun initialize() {
         setSeatTag()
         setSeatInit()
@@ -76,14 +83,6 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
             android.R.id.home -> onBackPressedDispatcher.onBackPressed()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun checkTicket(ticket: Ticket?) {
-        if (ticket == null) {
-            handleInvalidTicket()
-        } else {
-            presenter.fetchData(ticket)
-        }
     }
 
     private fun getAllSeatTextViews(): Sequence<TextView> {
@@ -165,20 +164,17 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
                 R.string.cancel,
             ),
         ) {
-            presenter.handle()
+            presenter.createTicket()
             finish()
         }
     }
 
-    override fun handleReservationComplete(
-        ticket: Ticket,
-        seats: Seats,
-    ) {
+    override fun handleReservationComplete(ticket: Ticket) {
         thread {
             ticketRepository.insertAll(ticket)
 
             val intent =
-                ReservationCompleteActivity.newIntent(this@ReservationSeatActivity, ticket, seats)
+                ReservationCompleteActivity.newIntent(this@ReservationSeatActivity, ticket)
             startActivity(intent)
         }
     }

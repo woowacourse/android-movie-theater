@@ -9,9 +9,6 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.data.TicketRepositoryImpl
 import woowacourse.movie.databinding.FragmentHistoryBinding
-import woowacourse.movie.domain.movieseat.Position
-import woowacourse.movie.domain.movieseat.Seat
-import woowacourse.movie.domain.movieseat.Seats
 import woowacourse.movie.view.reservation.Ticket
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
 import kotlin.concurrent.thread
@@ -46,18 +43,15 @@ class HistoryFragment : Fragment() {
             binding.onItemClick =
                 object : OnReservationEventListener {
                     override fun onClickReservation(index: Int) {
-                        handleReservationComplete(tickets[index], Seats(mutableSetOf(Seat(Position(1, 1)))))
+                        handleReservationComplete(tickets[index])
                     }
                 }
         }
     }
 
-    private fun handleReservationComplete(
-        ticket: Ticket,
-        seats: Seats,
-    ) {
+    private fun handleReservationComplete(ticket: Ticket) {
         val intent =
-            ReservationCompleteActivity.newIntent(this.requireContext(), ticket, seats)
+            ReservationCompleteActivity.newIntent(this.requireContext(), ticket)
         startActivity(intent)
     }
 
