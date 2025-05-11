@@ -14,4 +14,8 @@
     <color name="seat_grade_s">#19D358</color>
     <color name="seat_grade_a">#1B48E9</color>
     <color name="seat_grade_b">#8E13EF</color>
+    <color name="thumb_tint_checked_true">#FF6200EE</color>
+    <color name="thumb_tint_checked_false">#FFECECEC</color>
+    <color name="track_tint_checked_true">#FFD9C2FB</color>
+    <color name="track_tint_checked_false">#FFB2B2B2</color>
 </resources>
