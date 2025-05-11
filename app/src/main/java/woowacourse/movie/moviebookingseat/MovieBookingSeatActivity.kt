@@ -1,5 +1,8 @@
 package woowacourse.movie.moviebookingseat
 
+import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +15,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
+import woowacourse.movie.NotificationReceiver
 import woowacourse.movie.R
+import woowacourse.movie.data.MovieApplication
 import woowacourse.movie.databinding.MovieBookingSeatBinding
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Theater
@@ -20,6 +25,10 @@ import woowacourse.movie.domain.seat.Seat
 import woowacourse.movie.helper.BuildVersion
 import woowacourse.movie.helper.CustomClickListenerHelper.setOnSingleClickListener
 import woowacourse.movie.moviebooked.MovieBookedActivity
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import kotlin.concurrent.thread
 
 class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     private lateinit var binding: MovieBookingSeatBinding
@@ -71,6 +80,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
                 dialog.cancel()
             }
             .setPositiveButton(getString(R.string.okay)) { _, _ ->
+                setUpNotification(id)
                 navigateToMovieBooked(id)
             }
             .show()
@@ -93,6 +103,40 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
             .setPositiveButton(R.string.error_dialog_okay, null)
             .show()
             .setCancelable(false)
+    }
+
+    override fun setUpNotification(id: Long) {
+        val sharedPref = getSharedPreferences("settings", Context.MODE_PRIVATE)
+        if (!sharedPref.getBoolean("notification", true)) return
+
+        thread {
+            val db = (applicationContext as MovieApplication).database
+            val reservation = db.reservationDao().getById(id) ?: return@thread
+
+            val intent = Intent(this, NotificationReceiver::class.java).apply {
+                putExtra("reservationId", id)
+                putExtra("title", reservation.title)
+            }
+
+            val pendingIntent = PendingIntent.getBroadcast(
+                this,
+                id.toInt(),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+
+            val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")
+            val dateTime = LocalDateTime.parse("${reservation.date} ${reservation.time}", formatter)
+            val notifyTime = dateTime.minusMinutes(30).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+            val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                notifyTime,
+                pendingIntent,
+            )
+        }
     }
 
     private fun initBinding() {

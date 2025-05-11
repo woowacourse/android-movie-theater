@@ -1,6 +1,8 @@
 package woowacourse.movie
 
 import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -36,8 +38,8 @@ class HomeActivity : AppCompatActivity() {
         initBinding()
         applyWindowInserts()
         setUpBottomNavigation()
-        setUpNotificationsPermission()
-
+        setUpNotificationsPermissions()
+        createNotificationChannel()
     }
 
     private fun setUpBottomNavigation() {
@@ -75,14 +77,30 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUpNotificationsPermission() {
-        val permission = "android.permission.POST_NOTIFICATIONS"
+    private fun setUpNotificationsPermissions() {
+        checkPostNotificationPermission()
+        checkScheduleExactAlarmPermission()
+    }
+
+    private fun checkPostNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val permission = android.Manifest.permission.POST_NOTIFICATIONS
             if (ContextCompat.checkSelfPermission(
-                    this, permission
+                    this,
+                    permission
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 requestPermissionLauncher.launch(permission)
+            }
+        }
+    }
+
+    private fun checkScheduleExactAlarmPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            if (!alarmManager.canScheduleExactAlarms()) {
+                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                startActivity(intent)
             }
         }
     }
@@ -99,5 +117,18 @@ class HomeActivity : AppCompatActivity() {
             }
             .setNegativeButton("취소", null)
             .show()
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "예약 알림"
+            val descriptionText = "영화 예약 30분 전 알림 채널"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("channel_id", name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 }

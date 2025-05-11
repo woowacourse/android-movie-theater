@@ -23,6 +23,8 @@ interface MovieBookingSeat {
         fun navigateToMovieBooked(id: Long)
 
         fun showError(messageRes: Int)
+
+        fun setUpNotification(id: Long)
     }
 
     interface Presenter {
