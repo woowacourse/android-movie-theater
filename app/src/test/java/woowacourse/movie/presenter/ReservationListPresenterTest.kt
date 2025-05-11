@@ -7,7 +7,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.ReservationProvider
+import woowacourse.movie.domain.ReservationRepository
 import woowacourse.movie.domain.model.dummyReservationInfo
 import woowacourse.movie.presentation.view.reservationlist.ReservationListContract
 import woowacourse.movie.presentation.view.reservationlist.ReservationListPresenter
@@ -15,7 +15,7 @@ import woowacourse.movie.presentation.view.reservationlist.ReservationListPresen
 class ReservationListPresenterTest {
     private lateinit var presenter: ReservationListContract.Presenter
     private lateinit var view: ReservationListContract.View
-    private lateinit var provider: ReservationProvider
+    private lateinit var provider: ReservationRepository
 
     @BeforeEach
     fun setUp() {

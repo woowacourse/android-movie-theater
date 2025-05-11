@@ -1,13 +1,13 @@
 package woowacourse.movie.presentation.view.reservationlist
 
-import woowacourse.movie.domain.ReservationProvider
+import woowacourse.movie.domain.ReservationRepository
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.toPresentation
 import kotlin.concurrent.thread
 
 class ReservationListPresenter(
     val view: ReservationListContract.View,
-    private val provider: ReservationProvider,
+    private val provider: ReservationRepository,
 ) : ReservationListContract.Presenter {
     override fun fetchReservations() {
         thread {

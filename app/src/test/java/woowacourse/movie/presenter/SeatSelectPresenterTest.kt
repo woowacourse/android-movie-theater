@@ -9,7 +9,7 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.ReservationProvider
+import woowacourse.movie.domain.ReservationRepository
 import woowacourse.movie.domain.model.dummyReservationInfo
 import woowacourse.movie.presentation.alarm.AlarmScheduler
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectContract
@@ -18,7 +18,7 @@ import woowacourse.movie.presentation.view.reservation.seat.SeatSelectPresenter
 class SeatSelectPresenterTest {
     private lateinit var presenter: SeatSelectContract.Presenter
     private lateinit var view: SeatSelectContract.View
-    private lateinit var provider: ReservationProvider
+    private lateinit var provider: ReservationRepository
     private lateinit var scheduler: AlarmScheduler
 
     @BeforeEach
