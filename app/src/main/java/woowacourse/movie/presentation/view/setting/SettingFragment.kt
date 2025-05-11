@@ -69,7 +69,14 @@ class SettingFragment :
         }
     }
 
-            else -> requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                showPermissionDeniedDialog()
+                return
+            }
+
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
 
@@ -83,35 +90,8 @@ class SettingFragment :
     }
 
     private fun handlePermissionResult(isGranted: Boolean) {
-        if (isGranted) {
-            binding.switchSettingPushAlarm.isChecked = true
-            presenter.savePushAlarmSetting(true)
-        } else {
-            binding.switchSettingPushAlarm.isChecked = false
-            presenter.savePushAlarmSetting(false)
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    showPermissionRationaleDialog()
-                } else {
-                    showPermissionDeniedDialog()
-                }
-            }
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun showPermissionRationaleDialog() {
-        AlertDialog
-            .Builder(requireContext())
-            .setTitle(getString(R.string.setting_request_permission_dialog_title))
-            .setMessage(R.string.setting_request_permission_dialog_message)
-            .setPositiveButton(R.string.setting_request_permission_dialog_positive) { _, _ ->
-                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }.setNegativeButton(R.string.setting_request_permission_dialog_negative) { _, _ ->
-                binding.switchSettingPushAlarm.isChecked = false
-                presenter.savePushAlarmSetting(false)
-            }.show()
+        presenter.savePushAlarmSetting(isGranted)
+        if (!isGranted) showPermissionDeniedDialog()
     }
 
     private fun showPermissionDeniedDialog() {
