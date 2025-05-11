@@ -26,6 +26,7 @@ import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.dialog.DialogInfo
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
 import woowacourse.movie.view.reservation.seat.ReservationSeatPresenter.Companion.KEY_SEATS
+import woowacourse.movie.view.setting.alarm.AlarmHelper
 import java.text.DecimalFormat
 
 class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.View {
@@ -190,7 +191,9 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
             ),
         ) {
             val finalTicket: Ticket = ticket.copy(seats = seats)
+
             presenter.saveTicketInfo(finalTicket)
+            AlarmHelper.setAlarm(applicationContext, finalTicket.title, finalTicket.dateTime)
             navigateToReservationComplete(finalTicket)
             finish()
         }

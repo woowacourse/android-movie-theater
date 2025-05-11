@@ -37,11 +37,13 @@ class AlarmReceiver : BroadcastReceiver() {
             notificationManager.createNotificationChannel(channel)
         }
 
+        val movieTitle = intent.getStringExtra("MOVIE_TITLE")
+
         val builder =
             NotificationCompat.Builder(context, "alarm_channel")
                 .setSmallIcon(R.drawable.alarm_icon)
                 .setContentTitle("예매 알림")
-                .setContentText("영화제목 30분 후에 상영")
+                .setContentText("$movieTitle 30분 후에 상영")
 
         notificationManager.notify(1, builder.build())
     }
