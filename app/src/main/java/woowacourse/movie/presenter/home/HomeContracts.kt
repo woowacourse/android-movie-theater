@@ -18,5 +18,7 @@ interface HomeContracts {
         fun updateTheater(movieId: Long)
 
         fun updateAdvertisement(url: String)
+
+        fun updateNotificationPermission(isGranted: Boolean)
     }
 }
