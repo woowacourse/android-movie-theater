@@ -1,9 +1,13 @@
 package woowacourse.movie.seat
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -13,15 +17,19 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
+import woowacourse.movie.AlarmReceiver
 import woowacourse.movie.R
 import woowacourse.movie.booking.complete.BookingCompleteActivity
+import woowacourse.movie.data.SettingPreference
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.ui.model.SeatUiModel
 import woowacourse.movie.ui.model.TicketUiModel
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
-    private val presenter = SeatSelectionPresenter(this)
+    private val presenter: SeatSelectionPresenter by lazy {
+        SeatSelectionPresenter(this, SettingPreference(this))
+    }
     private val seatViews: MutableMap<SeatUiModel, TextView> = mutableMapOf()
     private lateinit var binding: ActivitySeatSelectionBinding
 
@@ -113,6 +121,30 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             }
             .setCancelable(false)
             .show()
+    }
+
+    override fun makeAlarm(
+        ticket: TicketUiModel,
+        time: Long,
+    ) {
+        val alarmManager = this.getSystemService(ALARM_SERVICE) as AlarmManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!alarmManager.canScheduleExactAlarms()) {
+                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                startActivity(intent)
+                return
+            }
+        }
+
+        val intent = AlarmReceiver.newIntent(this, ticket)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            time,
+            pendingIntent,
+        )
     }
 
     private fun startBookingCompleteActivity(ticket: TicketUiModel) {

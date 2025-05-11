@@ -1,6 +1,7 @@
 package woowacourse.movie.seat
 
 import android.content.Context
+import woowacourse.movie.data.SettingPreference
 import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toEntity
@@ -10,10 +11,13 @@ import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.ui.model.SeatUiModel
 import woowacourse.movie.ui.model.TicketUiModel
+import java.time.LocalDateTime
+import java.time.ZoneId
 import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
+    private val settingPreference: SettingPreference,
 ) : SeatSelectionContract.Presenter {
     private lateinit var ticket: Ticket
 
@@ -60,6 +64,19 @@ class SeatSelectionPresenter(
                 ticket.toEntity(),
             )
         }
+
+        if (settingPreference.isAlarmPermitted()) {
+            view.makeAlarm(ticket.toUiModel(), calculateMovieAlarmTime())
+        }
+    }
+
+    private fun calculateMovieAlarmTime(): Long {
+        val dateTime = LocalDateTime.of(ticket.selectedDate, ticket.selectedTime)
+        return dateTime
+            .minusMinutes(30)
+            .atZone(ZoneId.systemDefault())
+            .toInstant()
+            .toEpochMilli()
     }
 
     override fun restoreSeats(selectedSeats: List<SeatUiModel>) {
