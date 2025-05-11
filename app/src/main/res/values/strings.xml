@@ -34,13 +34,9 @@
 
     <string name="permission_notification_move_to_setting">설정으로 이동</string>
     <string name="permission_notification_cancel_setting">취소</string>
-    <string name="permission_notification_denied_message">권한이 거부 되었습니다. 설정(앱 정보)에서 권한을 확인해 주세요.</string>
 
-    <!-- 알림 권한 설정 다이얼로그 -->
-    <string name="permission_notification_settings_title">알림 권한 필요</string>
-    <string name="permission_notification_settings_message">알림을 받으시려면 설정에서 권한을 허용해주세요.</string>
-    <string name="permission_notification_settings_move_to_setting">설정으로 이동</string>
-    <string name="permission_notification_settings_cancel">취소</string>
+    <!-- 알림 권한 설정 스낵바 -->
+    <string name="permission_notification_settings_message">"권한이 거부 되었습니다. 설정(앱 정보)에서 권한을 확인해 주세요."</string>
 
     <string name="permission_exact_alarm_title">정확한 알림 권한 필요</string>
     <string name="permission_exact_alarm_message">
