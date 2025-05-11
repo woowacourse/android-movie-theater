@@ -1,21 +1,21 @@
 package woowacourse.movie.data
 
 import woowacourse.movie.MyApp
+import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.TicketRepository
-import woowacourse.movie.view.reservation.Ticket
 
 class TicketRepositoryImpl(
     private val dao: TicketDao = TicketDatabase.getDataBase(MyApp.applicationContext).ticketDao(),
 ) : TicketRepository {
     override fun getAll(): List<Ticket> {
-        return dao.getAll().toUiModel()
+        return dao.getAll().toDomain()
     }
 
     override fun insertAll(vararg ticket: Ticket) {
         dao.insertAll(*ticket.map { it.toEntity() }.toTypedArray())
     }
 
-    private fun List<TicketEntity>.toUiModel() =
+    private fun List<TicketEntity>.toDomain() =
         this.map { entity ->
             Ticket(
                 entity.title,

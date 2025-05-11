@@ -12,7 +12,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
 import woowacourse.movie.view.dialog.DialogFactory
-import woowacourse.movie.view.reservation.Ticket
+import woowacourse.movie.view.reservation.TicketUi
+import woowacourse.movie.view.reservation.toDomain
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -36,19 +37,19 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         }
         val ticket =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getSerializableExtra(KEY_TICKET, Ticket::class.java)
+                intent.getSerializableExtra(KEY_TICKET, TicketUi::class.java)
             } else {
-                intent.getSerializableExtra(KEY_TICKET) as? Ticket
+                intent.getSerializableExtra(KEY_TICKET) as? TicketUi
             }
 
         checkTicket(ticket)
     }
 
-    private fun checkTicket(ticket: Ticket?) {
-        if (ticket == null) {
+    private fun checkTicket(ticketUi: TicketUi?) {
+        if (ticketUi == null) {
             handleInvalidTicket()
         } else {
-            presenter.fetchData(ticket)
+            presenter.fetchData(ticketUi.toDomain())
         }
     }
 
@@ -58,8 +59,8 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         }
     }
 
-    override fun showTicketInfo(ticket: Ticket) {
-        binding.ticket = ticket
+    override fun showTicketInfo(ticketUi: TicketUi) {
+        binding.ticket = ticketUi
     }
 
     override fun showSeatsInfo(seats: String) {
@@ -70,20 +71,20 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         binding.price = moviePrice
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     companion object {
         private const val KEY_TICKET = "ticket"
 
         fun newIntent(
             context: Context,
-            ticket: Ticket,
+            ticketUi: TicketUi,
         ): Intent =
             Intent(context, ReservationCompleteActivity::class.java)
-                .putExtra(KEY_TICKET, ticket)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+                .putExtra(KEY_TICKET, ticketUi)
     }
 }
 

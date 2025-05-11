@@ -6,7 +6,7 @@
     <data>
         <variable
             name="tickets"
-            type="java.util.List&lt;woowacourse.movie.view.reservation.Ticket>" />
+            type="java.util.List&lt;woowacourse.movie.view.reservation.TicketUi>" />
 
         <variable
             name="onItemClick"

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentHistoryBinding
-import woowacourse.movie.view.reservation.Ticket
+import woowacourse.movie.view.reservation.TicketUi
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
 
 class HistoryFragment : Fragment(), HistoryContract.View {
@@ -45,8 +45,8 @@ class HistoryFragment : Fragment(), HistoryContract.View {
         binding.rvReservationHistory.addItemDecoration(dividerItemDecoration)
     }
 
-    override fun showMoviesScreen(tickets: List<Ticket>) {
-        binding.tickets = tickets
+    override fun showMoviesScreen(ticketUis: List<TicketUi>) {
+        binding.tickets = ticketUis
         binding.onItemClick =
             object : OnReservationEventListener {
                 override fun onClickReservation(index: Int) {
@@ -55,9 +55,9 @@ class HistoryFragment : Fragment(), HistoryContract.View {
             }
     }
 
-    override fun handleReservationComplete(ticket: Ticket) {
+    override fun handleReservationComplete(ticketUi: TicketUi) {
         val intent =
-            ReservationCompleteActivity.newIntent(this.requireContext(), ticket)
+            ReservationCompleteActivity.newIntent(this.requireContext(), ticketUi)
         startActivity(intent)
     }
 

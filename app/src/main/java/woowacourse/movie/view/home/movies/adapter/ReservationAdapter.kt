@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.databinding.ReservationHistoryItemBinding
-import woowacourse.movie.view.reservation.Ticket
+import woowacourse.movie.view.reservation.TicketUi
 import woowacourse.movie.view.reservation.history.OnReservationEventListener
 
 class ReservationAdapter(
     private val eventListener: OnReservationEventListener,
-) : ListAdapter<Ticket, ReservationViewHolder>(ReservationItemDiffCallback) {
+) : ListAdapter<TicketUi, ReservationViewHolder>(ReservationItemDiffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -30,17 +30,17 @@ class ReservationAdapter(
 
     companion object {
         private val ReservationItemDiffCallback =
-            object : DiffUtil.ItemCallback<Ticket>() {
+            object : DiffUtil.ItemCallback<TicketUi>() {
                 override fun areItemsTheSame(
-                    oldItem: Ticket,
-                    newItem: Ticket,
+                    oldItem: TicketUi,
+                    newItem: TicketUi,
                 ): Boolean {
                     return oldItem.title == newItem.title
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: Ticket,
-                    newItem: Ticket,
+                    oldItem: TicketUi,
+                    newItem: TicketUi,
                 ): Boolean {
                     return oldItem == newItem
                 }

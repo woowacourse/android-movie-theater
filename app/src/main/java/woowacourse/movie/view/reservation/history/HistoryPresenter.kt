@@ -1,8 +1,9 @@
 package woowacourse.movie.view.reservation.history
 
 import woowacourse.movie.data.TicketRepositoryImpl
+import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.TicketRepository
-import woowacourse.movie.view.reservation.Ticket
+import woowacourse.movie.view.reservation.toUi
 import kotlin.concurrent.thread
 
 class HistoryPresenter(
@@ -14,13 +15,14 @@ class HistoryPresenter(
     override fun loadTickets() {
         thread {
             tickets = ticketRepository.getAll()
-            view.showMoviesScreen(tickets)
+            val ticketUis = tickets.map { it.toUi() }
+            view.showMoviesScreen(ticketUis)
         }
     }
 
     override fun onTicketSelected(index: Int) {
         if (index in tickets.indices) {
-            view.handleReservationComplete(tickets[index])
+            view.handleReservationComplete(tickets[index].toUi())
         }
     }
 }

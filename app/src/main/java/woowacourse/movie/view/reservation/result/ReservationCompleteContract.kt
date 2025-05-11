@@ -1,6 +1,7 @@
 package woowacourse.movie.view.reservation.result
 
-import woowacourse.movie.view.reservation.Ticket
+import woowacourse.movie.domain.Ticket
+import woowacourse.movie.view.reservation.TicketUi
 
 class ReservationCompleteContract {
     interface Presenter {
@@ -10,7 +11,7 @@ class ReservationCompleteContract {
     interface View {
         fun handleInvalidTicket()
 
-        fun showTicketInfo(ticket: Ticket)
+        fun showTicketInfo(ticketUi: TicketUi)
 
         fun showSeatsInfo(seats: String)
 

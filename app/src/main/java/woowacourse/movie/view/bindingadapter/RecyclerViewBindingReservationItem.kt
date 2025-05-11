@@ -3,13 +3,13 @@ package woowacourse.movie.view.bindingadapter
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.view.home.movies.adapter.ReservationAdapter
-import woowacourse.movie.view.reservation.Ticket
+import woowacourse.movie.view.reservation.TicketUi
 import woowacourse.movie.view.reservation.history.OnReservationEventListener
 
 @BindingAdapter(value = ["items", "itemClickListener"])
 fun setRecyclerViewItem(
     recyclerView: RecyclerView,
-    items: List<Ticket>?,
+    items: List<TicketUi>?,
     itemClickListener: OnReservationEventListener?,
 ) {
     if (itemClickListener == null) return

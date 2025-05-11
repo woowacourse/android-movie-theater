@@ -20,9 +20,9 @@ import woowacourse.movie.databinding.ActivityReservationSeatBinding
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.dialog.DialogInfo
-import woowacourse.movie.view.reservation.Ticket
+import woowacourse.movie.view.reservation.TicketUi
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
-import kotlin.concurrent.thread
+import woowacourse.movie.view.reservation.toDomain
 
 class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.View {
     private val ticketRepository = TicketRepositoryImpl()
@@ -42,22 +42,22 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val ticket =
+        val ticketUi =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getSerializableExtra(KEY_TICKET, Ticket::class.java)
+                intent.getSerializableExtra(KEY_TICKET, TicketUi::class.java)
             } else {
-                intent.getSerializableExtra(KEY_TICKET) as? Ticket
+                intent.getSerializableExtra(KEY_TICKET) as? TicketUi
             }
-        checkTicket(ticket)
+        checkTicket(ticketUi)
         initialize()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun checkTicket(ticket: Ticket?) {
-        if (ticket == null) {
+    private fun checkTicket(ticketUi: TicketUi?) {
+        if (ticketUi == null) {
             handleInvalidTicket()
         } else {
-            presenter.fetchData(ticket)
+            presenter.fetchData(ticketUi.toDomain())
         }
     }
 
@@ -169,14 +169,10 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
         }
     }
 
-    override fun handleReservationComplete(ticket: Ticket) {
-        thread {
-            ticketRepository.insertAll(ticket)
-
-            val intent =
-                ReservationCompleteActivity.newIntent(this@ReservationSeatActivity, ticket)
-            startActivity(intent)
-        }
+    override fun handleReservationComplete(ticketUi: TicketUi) {
+        val intent =
+            ReservationCompleteActivity.newIntent(this@ReservationSeatActivity, ticketUi)
+        startActivity(intent)
     }
 
     private fun findTextViewByPosition(position: Position): TextView {
@@ -217,11 +213,11 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
 
         fun newIntent(
             context: Context,
-            ticket: Ticket?,
+            ticketUi: TicketUi?,
         ): Intent =
             Intent(context, ReservationSeatActivity::class.java).putExtra(
                 KEY_TICKET,
-                ticket,
+                ticketUi,
             )
     }
 }
