@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Parcelize
-class TicketBundleUiModel(
+data class TicketBundleUiModel(
     val title: String,
     val size: Int,
     val dateTime: LocalDateTime,
@@ -25,12 +25,12 @@ class TicketBundleUiModel(
     }
 }
 
-fun TicketBundle.toUiModel(theaterName: String): TicketBundleUiModel =
+fun TicketBundle.toUiModel(): TicketBundleUiModel =
     TicketBundleUiModel(
         title,
         size,
         dateTime,
         totalPrice,
         labels.map { it.toUiModel() },
-        theaterName,
+        theater,
     )

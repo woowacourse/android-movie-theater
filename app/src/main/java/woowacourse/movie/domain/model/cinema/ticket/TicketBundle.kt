@@ -3,11 +3,11 @@ package woowacourse.movie.domain.model.cinema.ticket
 import woowacourse.movie.domain.model.cinema.screen.Seat
 import java.time.LocalDateTime
 
-class TicketBundle private constructor(
+class TicketBundle(
     val title: String,
     val dateTime: LocalDateTime,
     val theater: String,
-    tickets: List<Ticket>,
+    val tickets: List<Ticket>,
 ) {
     val size: Int = tickets.size
     val totalPrice: Int = tickets.sumOf { it.price }

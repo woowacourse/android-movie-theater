@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationSeatBinding
+import woowacourse.movie.domain.model.cinema.ticket.TicketBundle
 import woowacourse.movie.presentation.base.BaseFragment
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
@@ -101,6 +105,15 @@ class ReservationSeatFragment :
 
     override fun notifySeatUpdateFailed(message: String) {
         showToast(message.ifEmpty { getString(R.string.default_error_message) })
+    }
+
+    override fun savePublishedTickets(ticketBundle: TicketBundle) {
+        val dao = ReservationDatabase.getInstance(requireContext()).reservationDao()
+        val repository = ReservationRepository(dao)
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            repository.saveReservation(ticketBundle)
+        }
     }
 
     companion object {

@@ -54,7 +54,8 @@ class ReservationSeatPresenter(
             }.getOrNull()
 
         ticketBundle?.let {
-            view.notifyPublishedTickets(it.toUiModel(theaterName))
+            view.savePublishedTickets(it)
+            view.notifyPublishedTickets(it.toUiModel())
         }
     }
 

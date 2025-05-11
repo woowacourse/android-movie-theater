@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.view.home.reservation.seat
 
+import woowacourse.movie.domain.model.cinema.ticket.TicketBundle
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.ScreenUiModel
 import woowacourse.movie.presentation.model.SeatUiModel
@@ -34,5 +35,7 @@ interface ReservationSeatContract {
         fun notifyPublishedTickets(ticketBundle: TicketBundleUiModel)
 
         fun notifySeatUpdateFailed(message: String)
+
+        fun savePublishedTickets(ticketBundle: TicketBundle)
     }
 }
