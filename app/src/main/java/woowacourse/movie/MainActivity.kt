@@ -45,11 +45,11 @@ class MainActivity : AppCompatActivity() {
     private fun initBottomNav() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_home -> replaceFragment(TAG_MOVIE_FRAGMENT, MovieFragment())
+                R.id.menu_home -> replaceFragment(TAG_MOVIE_FRAGMENT, MovieFragment::class.java)
 
-                R.id.menu_setting -> replaceFragment(TAG_SETTING_FRAGMENT, SettingFragment())
+                R.id.menu_setting -> replaceFragment(TAG_SETTING_FRAGMENT, SettingFragment::class.java)
 
-                R.id.menu_reserve_list -> replaceFragment(TAG_RESERVATION_LIST_FRAGMENT, TicketListFragment())
+                R.id.menu_reserve_list -> replaceFragment(TAG_RESERVATION_LIST_FRAGMENT, TicketListFragment::class.java)
             }
             true
         }
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun replaceFragment(
         tag: String,
-        fragment: Fragment,
+        fragment: Class<out Fragment>,
     ) {
         val existingFragment = supportFragmentManager.findFragmentByTag(tag)
 
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             if (existingFragment != null) {
                 show(existingFragment)
             } else {
-                add(R.id.fragment_view, fragment, tag)
+                add(R.id.fragment_view, fragment, null, tag)
             }
         }
     }
