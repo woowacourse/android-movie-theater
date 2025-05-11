@@ -70,7 +70,7 @@ class ReservationHistoryFragment :
     }
 
     override fun updateReservationHistories(reservations: List<Reservation>) {
-        adapter?.submitList(reservations)
+        adapter?.submitList(reservations.sortedBy(Reservation::showtime))
     }
 
     override fun showTicket(reservation: Reservation) {
