@@ -31,7 +31,7 @@ class SeatSelectionPresenterTest {
         // given
         val ticket: Ticket = mockk()
         every { repository.save(ticket) } returns Result.success(Unit)
-        every { view.navigateToResult(ticket) } just Runs
+        every { view.navigateToResult(ticket, ticket.showTime.minusMinutes(30)) } just Runs
         every { view.showSeats(SeatFactory.default().seats, ticket.seats) } just Runs
         every { view.updateTicketInfo(ticket) } just Runs
         presenter.loadSeats(TestData.reservationInfo, ticket)
