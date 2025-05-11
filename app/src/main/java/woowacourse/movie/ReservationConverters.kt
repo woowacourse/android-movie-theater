@@ -2,6 +2,7 @@ package woowacourse.movie
 
 import androidx.room.TypeConverter
 import woowacourse.movie.domain.reservation.Seat
+import java.time.LocalDateTime
 
 class ReservationConverters {
     @TypeConverter
@@ -16,8 +17,14 @@ class ReservationConverters {
     @TypeConverter
     fun Set<Seat>.convertToString(): String =
         joinToString(SEPARATOR_SEATS) { seat ->
-            "${seat.row}${seat.column}"
+            "${seat.row.value}${seat.column.value}"
         }
+
+    @TypeConverter
+    fun LocalDateTime.convertToString(): String = this.toString()
+
+    @TypeConverter
+    fun String.convertToLocalDateTime(): LocalDateTime = LocalDateTime.parse(this)
 
     companion object {
         const val SEPARATOR_SEATS = ", "
