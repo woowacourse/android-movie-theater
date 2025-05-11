@@ -5,19 +5,20 @@ import woowacourse.movie.model.reservation.ReservationDao
 class ReservationDetailPresenter(
     private val view: ReservationDetailContracts.View,
     private val dao: ReservationDao,
+    private val runAsync: (Runnable) -> Unit = { runnable -> Thread(runnable).start() },
 ) : ReservationDetailContracts.Presenter {
     override fun loadReservations() {
-        Thread {
+        runAsync.invoke {
             val reservations = dao.findReservations()
             view.showReservations(reservations)
-        }.start()
+        }
     }
 
     override fun requestReservationComplete(ticketId: Long) {
-        Thread {
+        runAsync.invoke {
             val movieTicket =
-                dao.findReservation(ticketId) ?: return@Thread
+                dao.findReservation(ticketId) ?: return@invoke
             view.showReservationCompleteView(movieTicket)
-        }.start()
+        }
     }
 }

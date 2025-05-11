@@ -8,6 +8,7 @@ import woowacourse.movie.model.ticket.MovieTicket
 class SeatSelectionPresenter(
     private val view: SeatSelectionContracts.View,
     private val dao: ReservationDao,
+    private val runAsync: (Runnable) -> Unit = { runnable -> Thread(runnable).start() },
 ) : SeatSelectionContracts.Presenter {
     private lateinit var movieToReserve: MovieToReserve
     private val seats: MutableSet<Seat> = mutableSetOf()
@@ -60,12 +61,10 @@ class SeatSelectionPresenter(
                 seats = seats.toList(),
                 theater = movieToReserve.theater,
             )
-        Thread {
+        runAsync.invoke {
             dao.saveReservation(movieTicket)
-            android.os.Handler(android.os.Looper.getMainLooper()).post {
-                view.showReservationCompleteView(movieTicket)
-            }
-        }.start()
+        }
+        view.showReservationCompleteView(movieTicket)
     }
 
     override fun requestErrorDialogMessage() {
