@@ -184,7 +184,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
     private fun moveToHome() {
         val intent = Intent(this@BookingCompleteActivity, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         finish()
     }
