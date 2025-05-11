@@ -27,4 +27,5 @@
     <string name="channel_movie_notification">CHANNEL_MOVIE_NOTIFICATION</string>
     <string name="channel_description">Chanel for movie notification</string>
     <string name="text_notification_title">예매 알림</string>
+    <string name="text_message_need_permission">설정에서 알림 권한을 요청해야 합니다.</string>
 </resources>
