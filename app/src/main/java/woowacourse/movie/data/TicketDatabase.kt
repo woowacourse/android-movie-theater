@@ -6,8 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import woowacourse.movie.data.converter.DateTimeConverter
+import woowacourse.movie.data.converter.SeatsConverter
 
-@TypeConverters(DateTimeConverter::class)
+@TypeConverters(DateTimeConverter::class, SeatsConverter::class)
 @Database(entities = [TicketEntity::class], version = 1)
 abstract class TicketDatabase : RoomDatabase() {
     abstract fun ticketDao(): TicketDao
