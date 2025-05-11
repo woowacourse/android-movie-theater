@@ -11,18 +11,15 @@ class SettingsPresenter(
         MovieSharedPreferences.getSettingsSharedPrefs(applicationContext),
 ) : SettingsContract.Presenter {
     override fun loadSettings() {
-        val isNotificationEnabled = settingsSharedPrefs.getBoolean(KEY_NOTIFICATION, false)
+        val isNotificationEnabled =
+            settingsSharedPrefs.getBoolean(MovieSharedPreferences.KEY_NOTIFICATION, false)
         view.updateNotificationSetting(isNotificationEnabled)
     }
 
     override fun saveNotificationSetting(isEnabled: Boolean) {
         with(settingsSharedPrefs.edit()) {
-            putBoolean(KEY_NOTIFICATION, isEnabled)
+            putBoolean(MovieSharedPreferences.KEY_NOTIFICATION, isEnabled)
             apply()
         }
-    }
-
-    companion object {
-        private const val KEY_NOTIFICATION = "notification"
     }
 }

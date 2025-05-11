@@ -2,13 +2,10 @@ package woowacourse.movie.presentation.settings
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -20,19 +17,6 @@ class SettingsFragment :
     private var _binding: FragmentSettingsBinding? = null
     private val binding: FragmentSettingsBinding get() = _binding!!
     private lateinit var presenter: SettingsPresenter
-
-    private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission(),
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                Toast.makeText(requireContext(), "권한을 허용했습니다.", Toast.LENGTH_SHORT).show()
-                presenter.saveNotificationSetting(true)
-            } else {
-                Toast.makeText(requireContext(), "권한을 거부했습니다.", Toast.LENGTH_SHORT).show()
-                binding.isNotificationChecked = false
-            }
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,9 +37,8 @@ class SettingsFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.loadSettings()
-
         initNotificationSwitch()
+        presenter.loadSettings()
     }
 
     override fun updateNotificationSetting(isChecked: Boolean) {
@@ -66,7 +49,8 @@ class SettingsFragment :
         binding.switchNotifications.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 if (!isNotificationPermissionGranted()) {
-                    requestNotificationPermission()
+                    showPermissionExplanationDialog()
+                    binding.isNotificationChecked = false
                 } else {
                     presenter.saveNotificationSetting(true)
                 }
@@ -81,16 +65,6 @@ class SettingsFragment :
             requireContext(),
             Manifest.permission.POST_NOTIFICATIONS,
         ) == PackageManager.PERMISSION_GRANTED
-
-    private fun requestNotificationPermission() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
-        if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-            binding.isNotificationChecked = false
-            showPermissionExplanationDialog()
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        }
-    }
 
     private fun showPermissionExplanationDialog() {
         AlertDialog
