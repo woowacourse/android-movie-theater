@@ -1,11 +1,10 @@
 package woowacourse.movie.presentation.view.setting
 
-import woowacourse.movie.data.SettingRepositoryImpl
 import woowacourse.movie.domain.SettingRepository
 
 class SettingPresenter(
     private val view: SettingContract.View,
-    private val settingRepository: SettingRepository = SettingRepositoryImpl(),
+    private val settingRepository: SettingRepository,
 ) : SettingContract.Presenter {
     override fun fetchSettingInfo() {
         val isEnabled = settingRepository.getNotificationEnabled()

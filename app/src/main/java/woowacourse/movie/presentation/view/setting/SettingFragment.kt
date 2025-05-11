@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
 
@@ -21,7 +22,7 @@ class SettingFragment :
     Fragment(),
     SettingContract.View {
     private lateinit var binding: FragmentSettingBinding
-    private val presenter: SettingContract.Presenter by lazy { SettingPresenter(this) }
+    private val presenter = MovieApplication.provideSettingPresenter(this)
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),

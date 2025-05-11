@@ -3,7 +3,7 @@ package woowacourse.movie.data
 import woowacourse.movie.domain.SettingRepository
 
 class SettingRepositoryImpl(
-    private val preferenceManager: SettingPreferenceManager = SettingPreferenceManager(),
+    private val preferenceManager: SettingPreferenceManager,
 ) : SettingRepository {
     override fun getNotificationEnabled() = preferenceManager.getNotificationEnabled()
 

@@ -10,18 +10,20 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
-import woowacourse.movie.data.SettingPreferenceManager
+import woowacourse.movie.domain.SettingRepository
 import woowacourse.movie.presentation.Extras
 import woowacourse.movie.presentation.getParcelableExtraCompat
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.view.reservation.complete.ReservationCompleteActivity
 
-class AlarmReceiver : BroadcastReceiver() {
+class AlarmReceiver(
+    private val settingRepository: SettingRepository,
+) : BroadcastReceiver() {
     override fun onReceive(
         context: Context,
         intent: Intent,
     ) {
-        if (!SettingPreferenceManager(context).getPushAlarmEnabled()) return
+        if (settingRepository.getNotificationEnabled()) return
         if (intent.action != Extras.AlarmData.ACTION_ALARM) return
 
         val reservationInfo =
