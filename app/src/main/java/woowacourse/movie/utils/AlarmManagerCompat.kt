@@ -22,7 +22,7 @@ object AlarmManagerCompat {
             } else {
                 val intent =
                     Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
-                        data = "package:$${context.packageName}".toUri()
+                        data = "package:${context.packageName}".toUri()
                     }
                 context.startActivity(intent)
             }

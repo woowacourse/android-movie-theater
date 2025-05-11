@@ -17,13 +17,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import java.time.ZoneId
 import woowacourse.movie.R
 import woowacourse.movie.data.BookedTicketDatabase
 import woowacourse.movie.databinding.FragmentSettingsBinding
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.notification.MovieReminderReceiver
 import woowacourse.movie.utils.AlarmManagerCompat
-import java.time.ZoneId
 
 class SettingsFragment : Fragment(), SettingsContract.View {
     private var _binding: FragmentSettingsBinding? = null
@@ -83,12 +83,13 @@ class SettingsFragment : Fragment(), SettingsContract.View {
                     requireContext(),
                     Manifest.permission.POST_NOTIFICATIONS,
                 ) == PackageManager.PERMISSION_GRANTED
-            sharedPrefs.edit {
-                putBoolean(getString(R.string.preference_post_notification), isGranted)
-            }
 
             if (isEnablePostNotification != isGranted) {
                 presenter.handleMovieNotificationByToggle(isGranted)
+            }
+
+            sharedPrefs.edit {
+                putBoolean(getString(R.string.preference_post_notification), isGranted)
             }
 
             binding.isEnablePostNotification = isEnablePostNotification
