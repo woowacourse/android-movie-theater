@@ -9,6 +9,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.storage.ReservationStorage
 import woowacourse.movie.presenter.MOVIE_TO_RESERVE
 import woowacourse.movie.presenter.SEAT_2_2
 import woowacourse.movie.presenter.SEAT_2_3
@@ -16,11 +17,13 @@ import woowacourse.movie.presenter.SEAT_2_3
 class SeatSelectionPresenterTest {
     private lateinit var presenter: SeatSelectionPresenter
     private lateinit var view: SeatSelectionContracts.View
+    private lateinit var reservationStorage: ReservationStorage
 
     @BeforeEach
     fun setup() {
         view = mockk()
-        presenter = SeatSelectionPresenter(view)
+        reservationStorage = mockk()
+        presenter = SeatSelectionPresenter(view, reservationStorage)
     }
 
     @Test

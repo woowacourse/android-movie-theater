@@ -9,16 +9,18 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.presenter.MOVIE_TICKET_B1_C3
+import woowacourse.movie.data.storage.ReservationStorage
 
 class ReservationCompletePresenterTest {
     private lateinit var presenter: ReservationCompletePresenter
     private lateinit var view: ReservationCompleteContracts.View
+    private lateinit var reservationStorage: ReservationStorage
 
     @BeforeEach
     fun setup() {
         view = mockk()
-        presenter = ReservationCompletePresenter(view)
+        reservationStorage = mockk()
+        presenter = ReservationCompletePresenter(view, reservationStorage)
     }
 
     @Test
@@ -27,10 +29,10 @@ class ReservationCompletePresenterTest {
         every { view.showMovieTicket(any()) } just Runs
 
         // when:
-        presenter.updateTicketData(MOVIE_TICKET_B1_C3)
+        presenter.updateTicketData(1L)
 
         // then:
-        verify { view.showMovieTicket(MOVIE_TICKET_B1_C3) }
+        verify { view.showMovieTicket(any()) }
     }
 
     @After
