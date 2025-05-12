@@ -33,6 +33,11 @@
         <activity
             android:name=".view.ticket.ReservationDetailActivity"
             android:exported="false" />
+
+        <receiver
+            android:name=".view.reservation.ReservationAlarmReceiver"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

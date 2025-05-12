@@ -102,31 +102,27 @@ class ReservationDetailActivity :
             }
         }
 
-    private fun setAlarmManager(reservation: Reservation) {
-        val pendingIntent = pendingIntent(reservation)
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            checkSettingAlarmPermission(alarmManager)
-        }
-
-        if (alarmManager.canScheduleExactAlarms()) {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                reservation.showtime
-                    .minusMinutes(46)
-                    .atZone(ZoneId.systemDefault())
-                    .toEpochSecond() * 1_000,
-                pendingIntent,
-            )
-        }
-    }
-
     private fun checkSettingAlarmPermission(alarmManager: AlarmManager) {
         if (!alarmManager.canScheduleExactAlarms()) {
             showAlarmPermissionInfoDialog(onDismiss = {
                 startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
             })
+        }
+    }
+
+    private fun setAlarmManager(reservation: Reservation) {
+        val pendingIntent = pendingIntent(reservation)
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+
+        if (alarmManager.canScheduleExactAlarms()) {
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                reservation.showtime
+                    .minusMinutes(30)
+                    .atZone(ZoneId.systemDefault())
+                    .toEpochSecond() * 1_000,
+                pendingIntent,
+            )
         }
     }
 
