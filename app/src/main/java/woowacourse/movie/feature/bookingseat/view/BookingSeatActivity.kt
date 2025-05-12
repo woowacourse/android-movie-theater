@@ -17,6 +17,7 @@ import woowacourse.movie.R
 import woowacourse.movie.data.BookingHistoryDetailsDatabase
 import woowacourse.movie.data.toEntity
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
+import woowacourse.movie.domain.model.BookingType
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookingseat.AlarmScheduler
 import woowacourse.movie.feature.bookingseat.contract.BookingSeatContract
@@ -114,7 +115,7 @@ class BookingSeatActivity :
                 BookingCompleteActivity.newIntent(
                     this@BookingSeatActivity,
                     bookingInfo,
-                    NAVIGATE_TO_MAIN,
+                    BookingType.MAIN,
                 )
             startActivity(intent)
             finish()
@@ -185,7 +186,6 @@ class BookingSeatActivity :
 
     companion object {
         private const val BOOKING_INFO_KEY = "BOOKING_INFO"
-        private const val NAVIGATE_TO_MAIN = "MAIN"
         private const val SEAT_POSITION_OFFSET = 1
 
         fun newIntent(

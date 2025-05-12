@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
+import woowacourse.movie.domain.model.BookingType
 import woowacourse.movie.feature.bookingcomplete.contract.BookingCompleteContract
 import woowacourse.movie.feature.bookingcomplete.presenter.BookingCompletePresenter
 import woowacourse.movie.feature.main.MainActivity
@@ -26,7 +27,6 @@ class BookingCompleteActivity :
         )
     }
     private lateinit var bookingType: String
-
     private val callback =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -37,7 +37,7 @@ class BookingCompleteActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        bookingType = intent.getStringExtra(BOOKING_TYPE_KEY) ?: ""
+        bookingType = intent.getStringExtra(BOOKING_TYPE_KEY) ?: BookingType.NONE.name
         presenter.prepareBookingInfo(
             bookingInfo = intent.getExtra(BOOKING_INFO_KEY) ?: BookingInfoUiModel(),
         )
@@ -54,7 +54,7 @@ class BookingCompleteActivity :
     }
 
     override fun navigateToBack() {
-        if (bookingType == NAVIGATE_TO_MAIN) {
+        if (bookingType == BookingType.MAIN.name) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
@@ -66,16 +66,15 @@ class BookingCompleteActivity :
     companion object {
         private const val BOOKING_INFO_KEY = "BOOKING_INFO"
         private const val BOOKING_TYPE_KEY = "BOOKING_TYPE"
-        private const val NAVIGATE_TO_MAIN = "MAIN"
 
         fun newIntent(
             context: Context,
             bookingInfo: BookingInfoUiModel,
-            bookingType: String,
+            bookingType: BookingType,
         ): Intent =
             Intent(context, BookingCompleteActivity::class.java).apply {
                 putExtra(BOOKING_INFO_KEY, bookingInfo)
-                putExtra(BOOKING_TYPE_KEY, bookingType)
+                putExtra(BOOKING_TYPE_KEY, bookingType.name)
             }
     }
 }
