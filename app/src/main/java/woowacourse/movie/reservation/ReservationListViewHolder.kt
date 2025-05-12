@@ -13,6 +13,7 @@ class ReservationListViewHolder(
     fun bind(reservation: TicketUiModel) {
         binding.reservation = reservation
         binding.clickListener = onReservationClick
+        binding.executePendingBindings()
     }
 
     companion object {
