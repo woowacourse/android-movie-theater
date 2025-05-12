@@ -208,3 +208,5 @@
 
 - [x] fix: 스피너 테스트 코드 수정
 - 스피너 테스트 확장 함수 추가
+
+- [x] refactor: TheaterViewHolder inner class에서 class로 변경
