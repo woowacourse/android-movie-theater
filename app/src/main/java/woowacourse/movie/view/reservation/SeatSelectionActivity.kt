@@ -46,6 +46,7 @@ class SeatSelectionActivity :
     private lateinit var completeView: Button
 
     private var seatViewMap: Map<Seat, TextView> = emptyMap()
+    private var selectedSeats: Set<Seat> = emptySet()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +58,8 @@ class SeatSelectionActivity :
             insets
         }
 
-        val selectedSeats: Set<Seat>? = savedInstanceState.getSelectedSeats()
-        initPresenter(selectedSeats)
+        savedInstanceState.getSelectedSeats()?.let { selectedSeats = it }
+        initPresenter()
         findViews()
         presentModels()
         setEventListeners()
@@ -81,12 +82,10 @@ class SeatSelectionActivity :
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        presenter?.getSelectedSeats()?.let { selectedSeats: Set<Seat> ->
-            outState.putSerializable(KEY_SEATS, selectedSeats as Serializable)
-        }
+        outState.putSerializable(KEY_SEATS, selectedSeats as Serializable)
     }
 
-    private fun initPresenter(selectedSeats: Set<Seat>?) {
+    private fun initPresenter() {
         val intent = intent ?: error("")
 
         val title: String = intent.getStringExtra(EXTRA_TITLE) ?: ""

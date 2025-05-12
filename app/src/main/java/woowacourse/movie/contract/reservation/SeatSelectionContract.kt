@@ -18,8 +18,6 @@ interface SeatSelectionContract {
         fun tryReservation()
 
         fun confirmReservation()
-
-        fun getSelectedSeats(): Set<Seat>
     }
 
     interface View {

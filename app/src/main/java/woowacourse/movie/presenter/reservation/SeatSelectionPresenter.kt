@@ -69,6 +69,4 @@ class SeatSelectionPresenter(
             }
         }
     }
-
-    override fun getSelectedSeats(): Set<Seat> = selectedSeats.toSet()
 }
