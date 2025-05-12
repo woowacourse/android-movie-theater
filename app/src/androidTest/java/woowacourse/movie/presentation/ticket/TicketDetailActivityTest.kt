@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.result
+package woowacourse.movie.presentation.ticket
 
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario

@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.movie
+package woowacourse.movie.presentation.ticket
 
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -11,27 +11,26 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.jupiter.api.Test
 import woowacourse.movie.R
-import woowacourse.movie.fixture.HARRY_POTTER
-import woowacourse.movie.presentation.movie.adapter.MovieListItem
+import woowacourse.movie.fixture.BOOKED_TICKET
+import woowacourse.movie.presentation.ticket.list.TicketListFragment
 
 @Suppress("ktlint:standard:function-naming")
-class MovieListFragmentTest {
-    private lateinit var fragmentScenario: FragmentScenario<MovieListFragment>
+class TicketListFragmentTest {
+    private lateinit var fragmentScenario: FragmentScenario<TicketListFragment>
 
     @Test
-    fun 영화_목록이_출력된다() {
+    fun 티켓_목록이_출력된다() {
         // given
         fragmentScenario = launchFragmentInContainer()
         fragmentScenario.onFragment { fragment ->
-            fragment.showMovieList(listOf(MovieListItem.MovieItem(HARRY_POTTER)))
+            fragment.showTicketList(listOf(BOOKED_TICKET))
         }
 
         // when
-        onView(withId(R.id.recyclerview_movies))
+        onView(withId(R.id.recyclerview_tickets))
             .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))
 
         // then
-        onView(withText("해리 포터와 마법사의 돌"))
-            .check(matches(isDisplayed()))
+        onView(withText(BOOKED_TICKET.movie.title)).check(matches(isDisplayed()))
     }
 }
