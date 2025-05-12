@@ -2,7 +2,6 @@ package woowacourse.movie.view.history
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -12,8 +11,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.ext.isDisplayed
+import woowacourse.movie.ext.RecyclerViewMatchers
+import woowacourse.movie.ext.isTextMatches
 import woowacourse.movie.fixture.ticketFixtures
+import woowacourse.movie.view.history.adapter.model.toItem
 import woowacourse.movie.view.main.MainActivity
 
 @RunWith(AndroidJUnit4::class)
@@ -41,7 +42,49 @@ class BookingHistoryFragmentTest {
     }
 
     @Test
-    fun `바텀_네비게이션의_예매_내역_탭을_누르면_예매_내역이_표시된다`() {
-        onView(withId(R.id.rv)).isDisplayed()
+    fun `예매_내역_목록에_전달된_티켓들이_모두_표시된다`() {
+        ticketFixtures.forEachIndexed { index, ticket ->
+            val ticketItem = ticket.toItem()
+
+            // 영화 제목
+            onView(
+                RecyclerViewMatchers.atPositionOnView(
+                    index,
+                    R.id.tv_movie_name,
+                ),
+            ).isTextMatches(ticketItem.movieName)
+
+            // 예매 날짜
+            onView(
+                RecyclerViewMatchers.atPositionOnView(
+                    index,
+                    R.id.tv_date,
+                ),
+            ).isTextMatches(ticketItem.bookingDate)
+
+            // 예매 날짜
+            onView(
+                RecyclerViewMatchers.atPositionOnView(
+                    index,
+                    R.id.tv_date,
+                ),
+            ).isTextMatches(ticketItem.bookingDate)
+
+            // 예매 시간
+            onView(
+                RecyclerViewMatchers.atPositionOnView(
+                    index,
+                    R.id.tv_time,
+                ),
+            ).isTextMatches(ticketItem.bookingTime)
+
+            // 극장 이름
+            onView(
+                RecyclerViewMatchers.atPositionOnView(
+                    index,
+                    R.id.tv_theater_name,
+                ),
+            ).isTextMatches(ticketItem.theaterName)
+        }
     }
 }
