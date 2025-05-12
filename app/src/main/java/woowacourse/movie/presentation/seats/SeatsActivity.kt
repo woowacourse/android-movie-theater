@@ -16,6 +16,7 @@ import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.SelectedSeats
 import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
 import woowacourse.movie.presentation.DataBindingBaseActivity
+import woowacourse.movie.presentation.notification.NotificationScheduler
 import woowacourse.movie.presentation.util.TicketUiFormatter
 import woowacourse.movie.presentation.util.getSerializableCompat
 import woowacourse.movie.presentation.util.getSerializableExtraCompat
@@ -25,7 +26,8 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
     private val presenter: SeatsPresenter by lazy {
         SeatsPresenter(
             this,
-            BookingHistoryDatabase.getDatabase(applicationContext),
+            BookingHistoryDatabase.getDatabase(),
+            NotificationScheduler()
         )
     }
     private var confirmDialog: AlertDialog? = null

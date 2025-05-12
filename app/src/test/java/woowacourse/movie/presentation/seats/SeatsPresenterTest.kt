@@ -4,8 +4,10 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.bookinghistory.BookingHistoryDatabase
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
+import woowacourse.movie.presentation.notification.NotificationScheduler
 import java.time.LocalDateTime
 
 class SeatsPresenterTest {
@@ -22,7 +24,8 @@ class SeatsPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = SeatsPresenter(view)
+        presenter =
+            SeatsPresenter(view, BookingHistoryDatabase.getDatabase(), NotificationScheduler())
         presenter.initializeSeats(movieTicket)
     }
 
@@ -87,10 +90,10 @@ class SeatsPresenterTest {
             view.navigateToSummary(
                 match {
                     it.movieTitle == movieTicket.movieTitle &&
-                        it.screeningDateTime == movieTicket.screeningDateTime &&
-                        it.headCount == movieTicket.headCount &&
-                        it.seats == listOf(seat) &&
-                        it.amount == 10000
+                            it.screeningDateTime == movieTicket.screeningDateTime &&
+                            it.headCount == movieTicket.headCount &&
+                            it.seats == listOf(seat) &&
+                            it.amount == 10000
                 },
             )
         }
