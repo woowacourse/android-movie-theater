@@ -64,12 +64,12 @@ class ReservationDetailActivity :
     }
 
     private fun requestNotificationPermission() {
-        showNotificationPermissionInfoDialog(onDismiss = {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.POST_NOTIFICATIONS,
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            showNotificationPermissionInfoDialog(onDismiss = {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                         // 권한 요청 거부한 경우
@@ -79,8 +79,8 @@ class ReservationDetailActivity :
                 } else {
                     // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
                 }
-            }
-        })
+            })
+        }
     }
 
     private val requestPermissionLauncher =
@@ -89,23 +89,26 @@ class ReservationDetailActivity :
         }
 
     private fun setAlarmManager(reservation: Reservation) {
-        val intent = ReservationAlarmReceiver.newIntent(this, reservation)
-
-        val pendingIntent =
-            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-
+        val pendingIntent = pendingIntent(reservation)
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val canScheduleExactAlarms = alarmManager.canScheduleExactAlarms()
-            if (!canScheduleExactAlarms) return
+            if (!alarmManager.canScheduleExactAlarms()) return
         }
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            reservation.showtime.atZone(ZoneId.systemDefault()).toEpochSecond() * 1_000,
+            reservation.showtime
+                .minusMinutes(30)
+                .atZone(ZoneId.systemDefault())
+                .toEpochSecond() * 1_000,
             pendingIntent,
         )
+    }
+
+    private fun pendingIntent(reservation: Reservation): PendingIntent {
+        val intent = ReservationAlarmReceiver.newIntent(this, reservation)
+        return PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
     }
 
     private fun initPresenter(reservation: Reservation) {
