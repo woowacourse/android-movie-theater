@@ -7,13 +7,13 @@ class SettingPresenter(
     private val manager: SettingStorageManager,
 ) : SettingContract.Presenter {
     override fun loadSettings() {
-        val notificationEnabled: Boolean = manager.loadNotificationSetting() && view.isNotificationPermitted()
+        val notificationEnabled: Boolean = manager.isNotificationEnabled() && view.isNotificationPermitted()
         manager.updateNotificationSetting(notificationEnabled)
         view.showNotificationSetting(notificationEnabled)
     }
 
     override fun toggleNotificationSetting() {
-        val enabled: Boolean = !manager.loadNotificationSetting()
+        val enabled: Boolean = !manager.isNotificationEnabled()
         view.attemptNotificationSettingChange(enabled)
     }
 

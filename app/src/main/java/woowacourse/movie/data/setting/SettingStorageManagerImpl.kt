@@ -7,7 +7,7 @@ import androidx.core.content.edit
 class SettingStorageManagerImpl(context: Context) : SettingStorageManager {
     private val sharedPreferences = context.getSharedPreferences(KEY_SETTINGS, MODE_PRIVATE)
 
-    override fun loadNotificationSetting(): Boolean {
+    override fun isNotificationEnabled(): Boolean {
         return sharedPreferences.getBoolean(KEY_NOTIFICATION, false)
     }
 

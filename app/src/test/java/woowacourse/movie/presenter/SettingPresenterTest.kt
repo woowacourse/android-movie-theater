@@ -24,7 +24,7 @@ class SettingPresenterTest {
     @Test
     fun `알림 기능이 꺼져있을 시 알림 기능 꺼짐 상태를 표시한다`() {
         // given
-        every { manager.loadNotificationSetting() } returns false
+        every { manager.isNotificationEnabled() } returns false
 
         // when
         presenter.loadSettings()
@@ -36,7 +36,7 @@ class SettingPresenterTest {
     @Test
     fun `알림 기능과 알림 권한이 켜져있을 시 알림 기능 켜짐 상태를 표시한다`() {
         // given
-        every { manager.loadNotificationSetting() } returns true
+        every { manager.isNotificationEnabled() } returns true
         every { view.isNotificationPermitted() } returns true
 
         // when
@@ -49,7 +49,7 @@ class SettingPresenterTest {
     @Test
     fun `알림 기능이 꺼진 상태에서 설정 변경을 시도할 시 알림 기능을 켠다`() {
         // given
-        every { manager.loadNotificationSetting() } returns false
+        every { manager.isNotificationEnabled() } returns false
 
         // when
         presenter.toggleNotificationSetting()
@@ -61,7 +61,7 @@ class SettingPresenterTest {
     @Test
     fun `알림 기능이 켜진 상태에서 설정 변경을 시도할 시 알림 기능을 끈다`() {
         // given
-        every { manager.loadNotificationSetting() } returns true
+        every { manager.isNotificationEnabled() } returns true
 
         // when
         presenter.toggleNotificationSetting()

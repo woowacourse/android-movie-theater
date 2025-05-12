@@ -50,7 +50,7 @@ class BookingCompletePresenterTest {
     @Test
     fun `알림 설정이 꺼져있으면 알림을 맞추지 않는다`() {
         // given
-        every { manager.loadNotificationSetting() } returns false
+        every { manager.isNotificationEnabled() } returns false
 
         // when
         presenter.loadNotificationInfo(ticket)
@@ -62,7 +62,7 @@ class BookingCompletePresenterTest {
     @Test
     fun `알림 설정이 켜져있으면 알림을 맞춘다`() {
         // given
-        every { manager.loadNotificationSetting() } returns true
+        every { manager.isNotificationEnabled() } returns true
 
         // when
         presenter.loadNotificationInfo(ticket)

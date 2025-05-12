@@ -15,7 +15,7 @@ class BookingCompletePresenter(
     }
 
     override fun loadNotificationInfo(ticket: Ticket) {
-        val enabled: Boolean = manager.loadNotificationSetting()
+        val enabled: Boolean = manager.isNotificationEnabled()
         if (!enabled) return
 
         val screeningDateTime = LocalDateTime.of(ticket.screeningDate, ticket.screeningTime)

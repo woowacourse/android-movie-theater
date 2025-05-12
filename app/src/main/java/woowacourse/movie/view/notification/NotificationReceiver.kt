@@ -30,8 +30,13 @@ class NotificationReceiver : BroadcastReceiver() {
         }
 
         val manager = SettingStorageManagerImpl(context)
-        if (!manager.loadNotificationSetting()) return
+        if (manager.isNotificationEnabled()) sendMovieNotification(context, ticket)
+    }
 
+    private fun sendMovieNotification(
+        context: Context,
+        ticket: Ticket,
+    ) {
         val pendingIntent =
             PendingIntent.getActivity(
                 context,
