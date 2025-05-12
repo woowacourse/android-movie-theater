@@ -4,11 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 
-class ApplicationSettings(
-    applicationContext: Context,
-) {
-    private val settings: SharedPreferences =
-        applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
+object ApplicationSettings {
+    private lateinit var settings: SharedPreferences
+
+    fun init(applicationContext: Context) {
+        settings = applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
+    }
 
     var notificationEnabled: Boolean
         get() {
@@ -20,7 +21,6 @@ class ApplicationSettings(
             }
         }
 
-    companion object {
-        private const val KEY_NOTIFICATION_ENABLED = "KEY_NOTIFICATION_ENABLED"
-    }
+    private const val KEY_NOTIFICATION_ENABLED = "KEY_NOTIFICATION_ENABLED"
+    private const val FILE_NAME = "settings"
 }

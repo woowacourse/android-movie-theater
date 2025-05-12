@@ -10,6 +10,7 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import woowacourse.movie.data.ApplicationSettings
 import woowacourse.movie.domain.ticket.Reservation
 import woowacourse.movie.view.ticket.ReservationDetailActivity
 
@@ -18,20 +19,8 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        val reservation: Reservation = intent.getTicketExtra(EXTRA_RESERVATION) ?: return
-        val intent = ReservationDetailActivity.newIntent(context, reservation)
-        val pendingIntent =
-            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        val builder: NotificationCompat.Builder =
-            notificationBuilder(context, reservation, pendingIntent)
+        if (!ApplicationSettings.notificationEnabled) return
 
-        notify(context, builder)
-    }
-
-    private fun notify(
-        context: Context,
-        builder: NotificationCompat.Builder,
-    ) {
         if (ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.POST_NOTIFICATIONS,
@@ -40,8 +29,24 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
             return
         }
 
+        val reservation: Reservation = intent.getTicketExtra(EXTRA_RESERVATION) ?: return
+        val pendingIntent = pendingIntent(context, reservation)
+        val builder: NotificationCompat.Builder =
+            notificationBuilder(context, reservation, pendingIntent)
+
         NotificationManagerCompat.from(context).notify(0, builder.build())
     }
+
+    private fun pendingIntent(
+        context: Context,
+        reservation: Reservation,
+    ): PendingIntent? =
+        PendingIntent.getActivity(
+            context,
+            0,
+            ReservationDetailActivity.newIntent(context, reservation),
+            PendingIntent.FLAG_IMMUTABLE,
+        )
 
     private fun notificationBuilder(
         context: Context,
@@ -50,7 +55,7 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
     ): NotificationCompat.Builder =
         NotificationCompat
             .Builder(context, "CHANNEL_ID")
-            .setSmallIcon(R.drawable.home_icon)
+            .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle("예매 알림")
             .setContentText("${reservation.title} 30분 후에 상영")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

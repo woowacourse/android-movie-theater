@@ -10,23 +10,20 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import woowacourse.movie.data.ApplicationSettings
 import woowacourse.movie.databinding.FragmentSettingBinding
-import woowacourse.movie.view.ApplicationSettingProvider
 
 class SettingFragment : Fragment() {
     private var _binding: FragmentSettingBinding? = null
     private val binding: FragmentSettingBinding get() = requireNotNull(_binding) { "_binding is null" }
 
-    private lateinit var applicationSettings: ApplicationSettings
     private lateinit var onNotificationClickListener: OnClickListener
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        applicationSettings = (activity as ApplicationSettingProvider).provideApplicationSetting()
         onNotificationClickListener =
             OnClickListener { view ->
                 view as SwitchCompat
-                applicationSettings.notificationEnabled = view.isChecked
+                ApplicationSettings.notificationEnabled = view.isChecked
             }
     }
 
@@ -40,7 +37,7 @@ class SettingFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSettingBinding.inflate(inflater, container, false)
-        binding.applicationSettings = applicationSettings
+        binding.applicationSettings = ApplicationSettings
         binding.onNotificationClickListener = onNotificationClickListener
         return binding.root
     }

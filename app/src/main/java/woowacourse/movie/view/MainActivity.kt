@@ -28,15 +28,13 @@ import woowacourse.movie.view.util.ErrorMessage
 class MainActivity :
     AppCompatActivity(),
     MainContract.View,
-    ReservationDataProvider,
-    ApplicationSettingProvider {
+    ReservationDataProvider {
     private val presenter: MainContract.Presenter = MainPresenter(this)
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val reservationData: ReservationData by lazy {
         val dao = ReservationDatabase.create(applicationContext).reservationDao()
         LocalReservationData(dao)
     }
-    private val applicationSettings by lazy { ApplicationSettings(applicationContext) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +46,7 @@ class MainActivity :
             insets
         }
 
+        ApplicationSettings.init(applicationContext)
         requestNotificationPermission()
         bindData()
         initViews(isFirstEntry(savedInstanceState))
@@ -74,7 +73,7 @@ class MainActivity :
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            applicationSettings.notificationEnabled = isGranted
+            ApplicationSettings.notificationEnabled = isGranted
         }
 
     private fun isFirstEntry(savedInstanceState: Bundle?): Boolean = savedInstanceState == null
@@ -129,8 +128,6 @@ class MainActivity :
 
     override fun provideReservationData(): ReservationData = reservationData
 
-    override fun provideApplicationSetting(): ApplicationSettings = applicationSettings
-
     companion object {
         private const val SCREEN_ID_RESERVATION_HISTORY = 0
         private const val SCREEN_ID_HOME = 1
@@ -140,8 +137,4 @@ class MainActivity :
 
 interface ReservationDataProvider {
     fun provideReservationData(): ReservationData
-}
-
-interface ApplicationSettingProvider {
-    fun provideApplicationSetting(): ApplicationSettings
 }
