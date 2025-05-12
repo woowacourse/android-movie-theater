@@ -4,6 +4,7 @@ import android.Manifest.permission.POST_NOTIFICATIONS
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -76,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     enum class MainTab(
-        val id: Int,
+        @LayoutRes val id: Int,
         val fragment: Class<out Fragment>,
     ) {
         BOOKING_HISTORY(item_booking_history, BookingHistoryFragment::class.java),
