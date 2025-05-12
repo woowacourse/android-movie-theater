@@ -10,14 +10,14 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.SeatFactory
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.fixture.TestData
-import woowacourse.movie.repository.Repository
+import woowacourse.movie.repository.TicketRepository
 import woowacourse.movie.view.movies.reservation.seat.SeatSelectionContract
 import woowacourse.movie.view.movies.reservation.seat.SeatSelectionPresenter
 
 class SeatSelectionPresenterTest {
     private lateinit var presenter: SeatSelectionPresenter
     private lateinit var view: SeatSelectionContract.View
-    private lateinit var repository: Repository<Ticket>
+    private lateinit var repository: TicketRepository
 
     @BeforeEach
     fun setUp() {

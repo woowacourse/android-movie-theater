@@ -4,11 +4,11 @@ import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.SeatFactory
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.repository.Repository
+import woowacourse.movie.repository.TicketRepository
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
-    private val repository: Repository<Ticket>,
+    private val repository: TicketRepository,
 ) : SeatSelectionContract.Presenter {
     private lateinit var reservationInfo: ReservationInfo
     private lateinit var ticket: Ticket

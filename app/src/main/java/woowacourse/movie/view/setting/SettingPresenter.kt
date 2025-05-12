@@ -1,13 +1,13 @@
 package woowacourse.movie.view.setting
 
 import woowacourse.movie.domain.model.SettingData
-import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.repository.Repository
+import woowacourse.movie.repository.SettingRepository
+import woowacourse.movie.repository.TicketRepository
 
 class SettingPresenter(
     val view: SettingContract.View,
-    val repository: Repository<Ticket>,
-    val settingRepository: Repository<SettingData>,
+    val repository: TicketRepository,
+    val settingRepository: SettingRepository,
 ) : SettingContract.Presenter {
     override fun setNotification() {
         repository.findAll()

@@ -8,14 +8,14 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.repository.Repository
+import woowacourse.movie.repository.TicketRepository
 import woowacourse.movie.view.reservelist.ReservationListContract
 import woowacourse.movie.view.reservelist.ReservationListPresenter
 
 class ReservationListPresenterTest {
     private lateinit var presenter: ReservationListPresenter
     private lateinit var view: ReservationListContract.View
-    private lateinit var repository: Repository<Ticket>
+    private lateinit var repository: TicketRepository
 
     @BeforeEach
     fun setUp() {

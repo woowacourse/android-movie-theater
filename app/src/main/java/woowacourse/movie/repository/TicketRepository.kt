@@ -10,8 +10,8 @@ import woowacourse.movie.domain.model.Ticket
 
 class TicketRepository(
     val ticketDao: TicketDao,
-) : Repository<Ticket> {
-    override fun findAll(): Result<List<Ticket>> {
+) {
+    fun findAll(): Result<List<Ticket>> {
         return runCatching {
             ticketDao.findAll().map {
                 it.toTicket()
@@ -19,7 +19,7 @@ class TicketRepository(
         }
     }
 
-    override fun save(ticket: Ticket): Result<Unit> {
+    fun save(ticket: Ticket): Result<Unit> {
         return runCatching {
             ticketDao.save(
                 ticket.toEntity(),
