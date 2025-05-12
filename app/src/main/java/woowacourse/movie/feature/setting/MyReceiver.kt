@@ -11,13 +11,11 @@ class MyReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent?,
     ) {
-        if (intent?.action == Intent.ACTION_SCREEN_ON) {
-            val alarmSetting = context.getSharedPreferences("alarmSetting", Context.MODE_PRIVATE)
-            if (!alarmSetting.getBoolean("NOTIFICATION_ENABLED", true)) return
+        val alarmSetting = context.getSharedPreferences("alarmSetting", Context.MODE_PRIVATE)
+        if (!alarmSetting.getBoolean("NOTIFICATION_ENABLED", true)) return
 
-            val bookingInfo: BookingInfoUiModel? = intent.getParcelableExtra("BOOKING_INFO")
+        val bookingInfo: BookingInfoUiModel? = intent?.getParcelableExtra("BOOKING_INFO")
 
-            if (bookingInfo != null) showNotification(context, bookingInfo)
-        }
+        if (bookingInfo != null) showNotification(context, bookingInfo)
     }
 }
