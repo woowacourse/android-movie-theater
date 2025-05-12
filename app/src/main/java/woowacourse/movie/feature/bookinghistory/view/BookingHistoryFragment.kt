@@ -25,11 +25,6 @@ class BookingHistoryFragment :
     private val bookingHistoryAdapter: BookingHistoryAdapter by lazy { BookingHistoryAdapter(setupAdapterClickListener()) }
     private lateinit var binding: FragmentBookingHistoryBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter.getBookingHistory()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,6 +44,7 @@ class BookingHistoryFragment :
 
     override fun onResume() {
         super.onResume()
+        presenter.getBookingHistory()
     }
 
     override fun showBookingHistory(bookingHistory: List<BookingInfoUiModel>) {
