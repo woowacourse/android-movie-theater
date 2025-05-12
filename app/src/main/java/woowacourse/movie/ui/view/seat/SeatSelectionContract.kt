@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.view.seat
 
+import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
 import java.time.LocalDateTime
@@ -50,6 +51,7 @@ interface SeatSelectionContract {
             showtime: LocalDateTime,
             seats: Set<Seat>,
             cinemaName: String,
+            purchaseType: PurchaseType,
         )
     }
 }

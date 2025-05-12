@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
+import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
@@ -156,11 +157,12 @@ class TicketActivity :
             title: String,
             count: Int,
             showtime: LocalDateTime,
-            seats: Set<Seat>,
             cinemaName: String,
+            seats: Set<Seat>,
+            purchaseType: PurchaseType,
         ): Intent =
             run {
-                val ticket = Ticket(null, title, count, showtime, cinemaName)
+                val ticket = Ticket(null, title, count, showtime, cinemaName, seats, purchaseType)
                 Intent(context, TicketActivity::class.java)
                     .putExtra(EXTRA_TICKET, ticket)
                     .putExtra(EXTRA_SEATS, seats as? Serializable)

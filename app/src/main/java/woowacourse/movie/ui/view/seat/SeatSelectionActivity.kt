@@ -22,6 +22,7 @@ import androidx.core.view.setPadding
 import woowacourse.movie.R
 import woowacourse.movie.data.local.adapter.TicketAdapter
 import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDatabase
+import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.reservation.SeatGrade
@@ -238,6 +239,7 @@ class SeatSelectionActivity :
         showtime: LocalDateTime,
         seats: Set<Seat>,
         cinemaName: String,
+        purchaseType: PurchaseType,
     ) {
         navigateToTicketScreen(
             title,
@@ -245,6 +247,7 @@ class SeatSelectionActivity :
             showtime,
             seats,
             cinemaName,
+            purchaseType,
         )
     }
 
@@ -254,6 +257,7 @@ class SeatSelectionActivity :
         showtime: LocalDateTime,
         seats: Set<Seat>,
         cinemaName: String,
+        purchaseType: PurchaseType,
     ) {
         val intent =
             TicketActivity.newIntent(
@@ -261,8 +265,9 @@ class SeatSelectionActivity :
                 title,
                 count,
                 showtime,
-                seats,
                 cinemaName,
+                seats,
+                purchaseType,
             )
         startActivity(intent)
         finish()
@@ -285,9 +290,11 @@ class SeatSelectionActivity :
             count: Int,
             showtime: LocalDateTime,
             cinemaName: String,
+            purchaseType: PurchaseType,
         ): Intent =
             run {
-                val ticket = Ticket(null, title, count, showtime, cinemaName)
+                val ticket =
+                    Ticket(null, title, count, showtime, cinemaName, emptySet(), purchaseType)
                 Intent(context, SeatSelectionActivity::class.java)
                     .putExtra(EXTRA_TICKET, ticket)
                     .putExtra(EXTRA_CINEMA_NAME, cinemaName)

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
+import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
 import woowacourse.movie.ui.view.reservation.Poster.posterId
@@ -297,6 +298,7 @@ class ReservationActivity :
                     timeSpinner.selectedItem as LocalTime,
                 ),
                 cinemaName,
+                PurchaseType.DEFAULT,
             )
         startActivity(intent)
     }

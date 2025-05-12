@@ -8,17 +8,20 @@ import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
-    private val ticket: Ticket,
+    private var ticket: Ticket,
     private val ticketDataAdapter: TicketDataAdapter,
     selectedSeats: Set<Seat>?,
 ) : SeatSelectionContract.Presenter {
     private val seats: Set<Seat> = Seat.seats()
-    private var selectedSeats = selectedSeats?.toSet() ?: emptySet()
-    private val completable get() = ticket.count == selectedSeats.size
-    private val price: Int get() = selectedSeats.sumOf(Seat::price)
+    private val completable get() = ticket.count == ticket.seats.size
+    private val price: Int get() = ticket.seats.sumOf(Seat::price)
+
+    init {
+        ticket = ticket.updateSeats(selectedSeats ?: emptySet())
+    }
 
     override fun presentSeats() {
-        view.setSeats(seats, selectedSeats)
+        view.setSeats(seats, ticket.seats)
     }
 
     override fun presentTitle() {
@@ -34,15 +37,15 @@ class SeatSelectionPresenter(
     }
 
     override fun onSeatSelect(seat: Seat) {
-        if (seat in selectedSeats) {
-            selectedSeats -= seat
+        if (seat in ticket.seats) {
+            ticket = ticket.removeSeat(seat)
         } else {
             if (canSelectSeat()) {
-                selectedSeats += seat
+                ticket = ticket.addSeat(seat)
             }
         }
 
-        view.setSeatIsSelected(seat, seat in selectedSeats)
+        view.setSeatIsSelected(seat, seat in ticket.seats)
         view.setPrice(price)
         view.setConfirmEnabled(completable)
     }
@@ -62,11 +65,11 @@ class SeatSelectionPresenter(
         thread.join()
         insertTicket.get().run {
             view.setTicketAlarm(this)
-            view.saveTicket(title, count, showtime, seats, cinemaName)
+            view.saveTicket(title, count, showtime, seats, cinemaName, purchaseType)
         }
     }
 
-    private fun canSelectSeat(): Boolean = selectedSeats.size < ticket.count
+    private fun canSelectSeat(): Boolean = ticket.seats.size < ticket.count
 
-    override fun getSelectedSeats(): Set<Seat> = selectedSeats.toSet()
+    override fun getSelectedSeats(): Set<Seat> = ticket.seats.toSet()
 }

@@ -18,6 +18,8 @@ class TicketAdapter(private val dao: TicketDao) : TicketDataAdapter {
             count = count,
             showtime = showtime,
             cinemaName = cinemaName,
+            seats = seats,
+            purchaseType = purchaseType,
         )
 
     private fun TicketEntity.toTicket() =
@@ -27,5 +29,7 @@ class TicketAdapter(private val dao: TicketDao) : TicketDataAdapter {
             count = count,
             showtime = showtime,
             cinemaName = cinemaName,
+            seats = seats,
+            purchaseType = purchaseType,
         )
 }
