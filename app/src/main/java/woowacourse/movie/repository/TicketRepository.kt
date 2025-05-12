@@ -1,12 +1,10 @@
 package woowacourse.movie.repository
 
 import woowacourse.movie.data.dao.TicketDao
-import woowacourse.movie.data.dummy.DummyCinema
 import woowacourse.movie.data.entity.SeatEntity
-import woowacourse.movie.data.entity.TicketEntity
-import woowacourse.movie.data.entity.WholeTicketEntity
-import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Ticket
+import woowacourse.movie.repository.mapper.toEntity
+import woowacourse.movie.repository.mapper.toTicket
 
 class TicketRepository(
     val ticketDao: TicketDao,
@@ -31,30 +29,5 @@ class TicketRepository(
                 },
             )
         }
-    }
-
-    private fun WholeTicketEntity.toTicket(): Ticket {
-        return Ticket(
-            ticket.title,
-            ticket.showTime,
-            seats.map {
-                Seat(
-                    it.row,
-                    it.column,
-                )
-            },
-            ticket.reservationCount,
-            DummyCinema.dummyCinemas.find { it.name == ticket.cinemaName }!!,
-        )
-    }
-
-    private fun Ticket.toEntity(): TicketEntity {
-        return TicketEntity(
-            title = title,
-            showTime = showTime,
-            reservationCount = reservationCount,
-            cinemaName = cinema.name,
-            price = totalPrice(),
-        )
     }
 }
