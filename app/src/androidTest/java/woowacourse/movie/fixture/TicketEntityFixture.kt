@@ -11,7 +11,7 @@ val ticketEntity1 =
         bookingDateTime = LocalDateTime.of(2025, 6, 30, 12, 0, 0),
         theaterName = "강남 극장",
         movieTitle = "개구리 중사 케로로",
-        ticketCount = 3,
+        ticketCount = 2,
         ticketPrice = 39000,
         seats =
             setOf(
@@ -31,7 +31,7 @@ val ticketEntity2 =
         bookingDateTime = LocalDateTime.of(2025, 6, 30, 12, 0, 0),
         theaterName = "선릉 극장",
         movieTitle = "따끈 따끈 베이커리",
-        ticketCount = 2,
+        ticketCount = 1,
         ticketPrice = 26000,
         seats = setOf(Seat(Column(1), Row(2))),
     )
