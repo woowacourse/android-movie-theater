@@ -3,7 +3,7 @@ package woowacourse.movie.ui.view.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import woowacourse.movie.data.local.adapter.TicketAdapter
+import woowacourse.movie.data.local.adapter.TicketData
 import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDatabase
 import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.ui.view.alarm.Alarm
@@ -27,7 +27,7 @@ class BootReceiver : BroadcastReceiver() {
         thread {
             val alarm = Alarm(context)
             val database = getMovieDatabase(context)
-            val ticketDataAdapter: TicketDataAdapter = TicketAdapter(database.ticketDao())
+            val ticketDataAdapter: TicketDataAdapter = TicketData(database.ticketDao())
             val tickets = ticketDataAdapter.getAll()
             tickets.forEach { ticket: Ticket ->
                 alarm.scheduleTicketAlarm(ticket)

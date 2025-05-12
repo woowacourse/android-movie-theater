@@ -20,7 +20,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.setPadding
 import woowacourse.movie.R
-import woowacourse.movie.data.local.adapter.TicketAdapter
+import woowacourse.movie.data.local.adapter.TicketData
 import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDatabase
 import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Row
@@ -98,7 +98,7 @@ class SeatSelectionActivity :
             SeatSelectionPresenter(
                 this,
                 ticket,
-                TicketAdapter(database.ticketDao()),
+                TicketData(database.ticketDao()),
                 selectedSeats,
             )
     }
