@@ -9,7 +9,7 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.dummyReservationInfo
+import woowacourse.movie.domain.model.dummyReservationInfoUiModel
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.view.reservation.complete.ReservationCompleteContract
 import woowacourse.movie.presentation.view.reservation.complete.ReservationCompletePresenter
@@ -35,7 +35,7 @@ class ReservationCompletePresenterTest {
         every { view.showReservationInfo(capture(reservationInfoUiModelSlot)) } just Runs
 
         // when
-        presenter.fetchData(dummyReservationInfo)
+        presenter.fetchData(dummyReservationInfoUiModel)
 
         // then
         verify { view.showReservationInfo(any()) }
