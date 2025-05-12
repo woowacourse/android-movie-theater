@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "reservation")
+@Entity(tableName = "reservationEntity")
 data class Reservation(
     @PrimaryKey(autoGenerate = true) val uid: Long = 0,
     @ColumnInfo(name = "theater") val theater: String,

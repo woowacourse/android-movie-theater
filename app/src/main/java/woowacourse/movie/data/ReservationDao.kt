@@ -13,9 +13,9 @@ interface ReservationDao {
     @Delete
     fun deleteReservation(reservation: Reservation)
 
-    @Query("SELECT * FROM reservation WHERE uid = :uid")
+    @Query("SELECT * FROM reservationEntity WHERE uid = :uid")
     fun getTicketByUid(uid: Int): Reservation
 
-    @Query("SELECT * FROM reservation")
+    @Query("SELECT * FROM reservationEntity")
     fun getAll(): List<Reservation>
 }
