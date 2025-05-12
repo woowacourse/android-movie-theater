@@ -3,25 +3,19 @@ package woowacourse.movie
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.data.Reservation
 import woowacourse.movie.data.ReservationDao
 import woowacourse.movie.data.ReservationDatabase
 import woowacourse.movie.fixture.HARRY_POTTER
 import woowacourse.movie.fixture.SEOLLEUNG
-import woowacourse.movie.seat.SeatSelectionActivity
 
 class ReservationDaoTest {
     private lateinit var reservationDao: ReservationDao
     private lateinit var reservationDatabase: ReservationDatabase
-
-    @get:Rule
-    val activityRule = ActivityScenarioRule(SeatSelectionActivity::class.java)
 
     @Before
     fun setup() {
