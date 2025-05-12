@@ -106,7 +106,7 @@
 - [ ] Movie 뷰와 도메인의 분리
 - [ ] xml에서 DataBinding을 옹호하는 입장 되어보기
 - [ ] Fragment의 생명주기
-- [ ] ItemId가 Fragment의 ID를 의미하는 지 알 수 없음 -> ItmeId 클래스명 수정
+- [X] ItemId가 Fragment의 ID를 의미하는 지 알 수 없음 -> ItmeId 클래스명 수정
 - [ ] BookingStatus 생성자를 사용하지 않고 invoke 연산자를 오버로딩한 이유는 무엇인가요?
 - [ ] 
 - 고민할 내용

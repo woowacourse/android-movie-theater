@@ -1,21 +1,21 @@
 package woowacourse.movie
 
-enum class ItemId(
-    val itemId: Int
+enum class TabFragmentId(
+    val value: Int
 ) {
     BOOKING(R.id.navigation_booking),
     HOME(R.id.navigation_home),
     SETTING(R.id.navigation_settings);
 
     companion object {
-        fun from(itemId: ItemId): CustomFragment =
-            when (itemId) {
+        fun from(tabFragmentId: TabFragmentId): CustomFragment =
+            when (tabFragmentId) {
                 BOOKING -> CustomFragment.BOOKING
                 HOME -> CustomFragment.HOME
                 SETTING -> CustomFragment.SETTING
             }
 
-        fun from(itemId: Int): ItemId? =
-            entries.find { it.itemId == itemId }
+        fun from(value: Int): TabFragmentId? =
+            entries.find { it.value == value }
     }
 }

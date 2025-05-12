@@ -23,10 +23,10 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         binding.bottomNavigation.selectedItemId = R.id.navigation_home
-        setFrag(ItemId.HOME)
+        setFrag(TabFragmentId.HOME)
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
-            ItemId.from(item.itemId)?.let { setFrag(it) } ?: setFrag(ItemId.HOME)
+            TabFragmentId.from(item.itemId)?.let { setFrag(it) } ?: setFrag(TabFragmentId.HOME)
             true
         }
         NotificationHelper.createReservationChannel(this)
@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity() {
         Notification.askNotificationPermission(this, launcher)
     }
 
-    private fun setFrag(itemId: ItemId) {
-        val fragment = ItemId.from(itemId)
+    private fun setFrag(tabFragmentId: TabFragmentId) {
+        val fragment = TabFragmentId.from(tabFragmentId)
         supportFragmentManager.commit {
             replace(R.id.main_frame, fragment.fragment)
         }
