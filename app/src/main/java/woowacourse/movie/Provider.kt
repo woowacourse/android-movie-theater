@@ -1,6 +1,7 @@
 package woowacourse.movie
 
 import android.content.Context
+import androidx.fragment.app.Fragment
 import woowacourse.movie.data.MovieTheaterDatabase
 import woowacourse.movie.repository.SettingRepository
 import woowacourse.movie.repository.TicketRepository
@@ -12,11 +13,11 @@ import woowacourse.movie.view.setting.SettingContract
 import woowacourse.movie.view.setting.SettingPresenter
 
 object Provider {
-    fun ticketDao() = MovieTheaterDatabase.db.ticketDao()
+    fun ticketDao(context: Context) = MovieTheaterDatabase.db(context).ticketDao()
 
-    fun ticketRepository(): TicketRepository =
+    fun ticketRepository(context: Context): TicketRepository =
         TicketRepository(
-            ticketDao(),
+            ticketDao(context),
         )
 
     fun settingRepository(context: Context): SettingRepository =
@@ -24,20 +25,19 @@ object Provider {
             context.getSharedPreferences("setting", Context.MODE_PRIVATE),
         )
 
-    fun reservationListPresenter(view: ReservationListContract.View) =
+    fun <T> reservationListPresenter(view: T) where T : ReservationListContract.View, T : Fragment =
         ReservationListPresenter(
             view,
-            ticketRepository(),
+            ticketRepository(view.requireContext().applicationContext),
         )
 
-    fun seatSelectionPresenter(view: SeatSelectionContract.View) = SeatSelectionPresenter(view, ticketRepository())
+    fun <T> seatSelectionPresenter(view: T) where T : SeatSelectionContract.View, T : Context =
+        SeatSelectionPresenter(view, ticketRepository(view.applicationContext))
 
-    fun settingPresenter(
-        view: SettingContract.View,
-        context: Context,
-    ) = SettingPresenter(
-        view,
-        ticketRepository(),
-        settingRepository(context),
-    )
+    fun <T> settingPresenter(view: T) where T : SettingContract.View, T : Fragment =
+        SettingPresenter(
+            view,
+            ticketRepository(view.requireContext().applicationContext),
+            settingRepository(view.requireContext().applicationContext),
+        )
 }

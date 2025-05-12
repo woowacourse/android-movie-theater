@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 
 class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting), SettingContract.View {
     private val presenter: SettingContract.Presenter by lazy {
-        Provider.settingPresenter(this, requireContext())
+        Provider.settingPresenter(this)
     }
     private val requestPermissionLauncher =
         registerForActivityResult(

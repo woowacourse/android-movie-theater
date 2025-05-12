@@ -27,7 +27,9 @@ import java.time.LocalDateTime
 class SeatSelectionActivity :
     BaseActivity<ActivitySeatSelectionBinding>(R.layout.activity_seat_selection),
     SeatSelectionContract.View {
-    private val presenter: SeatSelectionPresenter by lazy { Provider.seatSelectionPresenter(this) }
+    private val presenter: SeatSelectionPresenter by lazy {
+        Provider.seatSelectionPresenter(this)
+    }
     private lateinit var currentTicket: Ticket
     private lateinit var reservation: ReservationInfo
 
