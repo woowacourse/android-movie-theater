@@ -4,9 +4,15 @@ import woowacourse.movie.databinding.ItemReservationBinding
 import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.ui.view.screening.adapter.BaseViewHolder
 
-class ReservationViewHolder(private val binding: ItemReservationBinding) :
+class ReservationViewHolder(
+    private val binding: ItemReservationBinding,
+    private val onClick: (ticket: Ticket) -> Unit,
+) :
     BaseViewHolder<Ticket>(itemView = binding.root) {
     override fun bind(item: Ticket) {
         binding.ticket = item
+        binding.root.setOnClickListener {
+            onClick(item)
+        }
     }
 }

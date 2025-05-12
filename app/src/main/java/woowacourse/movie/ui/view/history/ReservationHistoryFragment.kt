@@ -10,6 +10,7 @@ import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDat
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.ui.view.history.adapter.ReservationAdapter
+import woowacourse.movie.ui.view.ticket.TicketActivity
 
 class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     private var _binding: FragmentReservationHistoryBinding? = null
@@ -33,7 +34,22 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
         super.onViewCreated(view, savedInstanceState)
         val database = getMovieDatabase(requireContext())
         presenter = ReservationHistoryPresenter(this, TicketAdapter(database.ticketDao()))
-        reservationAdapter = ReservationAdapter()
+        reservationAdapter =
+            ReservationAdapter { ticket: Ticket ->
+                ticket.run {
+                    val intent =
+                        TicketActivity.newIntent(
+                            requireContext(),
+                            title,
+                            count,
+                            showtime,
+                            cinemaName,
+                            seats,
+                            purchaseType,
+                        )
+                    startActivity(intent)
+                }
+            }
         binding.recyclerViewReservations.adapter = reservationAdapter
         presenter.presentScreen()
     }

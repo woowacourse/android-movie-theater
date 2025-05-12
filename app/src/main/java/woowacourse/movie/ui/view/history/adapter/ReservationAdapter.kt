@@ -8,7 +8,7 @@ import woowacourse.movie.databinding.ItemReservationBinding
 import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.ui.view.screening.adapter.BaseViewHolder
 
-class ReservationAdapter :
+class ReservationAdapter(private val onClick: (ticket: Ticket) -> Unit) :
     ListAdapter<Ticket, BaseViewHolder<Ticket>>(
         object : DiffUtil.ItemCallback<Ticket>() {
             override fun areItemsTheSame(
@@ -36,7 +36,7 @@ class ReservationAdapter :
                 parent,
                 false,
             )
-        return ReservationViewHolder(binding)
+        return ReservationViewHolder(binding, onClick)
     }
 
     override fun onBindViewHolder(
