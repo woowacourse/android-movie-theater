@@ -15,7 +15,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.data.TicketRepositoryImpl
 import woowacourse.movie.databinding.ActivityReservationSeatBinding
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.view.dialog.DialogFactory
@@ -23,9 +22,9 @@ import woowacourse.movie.view.dialog.DialogInfo
 import woowacourse.movie.view.reservation.TicketUi
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
 import woowacourse.movie.view.reservation.toDomain
+import woowacourse.movie.view.setting.alarm.AlarmHelper
 
 class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.View {
-    private val ticketRepository = TicketRepositoryImpl()
     private val presenter: ReservationSeatContract.Present by lazy {
         ReservationSeatPresenter(this)
     }
@@ -172,6 +171,7 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
     override fun handleReservationComplete(ticketUi: TicketUi) {
         val intent =
             ReservationCompleteActivity.newIntent(this@ReservationSeatActivity, ticketUi)
+        AlarmHelper.setAlarm(this, ticketUi)
         startActivity(intent)
     }
 
