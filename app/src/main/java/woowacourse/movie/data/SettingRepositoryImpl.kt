@@ -7,8 +7,8 @@ class SettingRepositoryImpl(
     private val preferenceManager: NotificationPreferenceManager = NotificationPreferenceManager(),
 ) : SettingRepository {
     override fun updateNotificationEnabled(isEnabled: Boolean) {
-        preferenceManager.isNotificationEnabled = isEnabled
+        preferenceManager.updateNotificationEnabled(isEnabled)
     }
 
-    override fun isNotificationEnabled(): Boolean = preferenceManager.isNotificationEnabled
+    override fun isNotificationEnabled(): Boolean = preferenceManager.isNotificationEnabled()
 }
