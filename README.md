@@ -199,3 +199,5 @@
 - [x] refactor: Booked에서 BookingStatus, Theater을 ReservationInfo로 변경
 
 - [x] refactor: 좌석 예매 화면에서 데이터베이스에 저장하고 완료 화면에서 uid로 데이터베이스로부터 값을 호출하도록 변경
+
+- [x] chore: TestExtensions 파일명 오타 수정
