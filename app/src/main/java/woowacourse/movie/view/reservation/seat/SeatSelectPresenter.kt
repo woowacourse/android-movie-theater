@@ -1,19 +1,28 @@
 package woowacourse.movie.view.reservation.seat
 
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.ReservationInfo
-import woowacourse.movie.model.Seats
+import android.content.Context
+import woowacourse.movie.R
+import woowacourse.movie.database.AppDatabase
+import woowacourse.movie.model.reservation.MovieTicket
+import woowacourse.movie.model.reservation.ReservationInfo
+import woowacourse.movie.model.seat.Seat
+import woowacourse.movie.model.seat.Seats
+import woowacourse.movie.model.seat.grade.RowBasedSeatGradePolicy
+import woowacourse.movie.model.seat.grade.SeatGradePolicy
+import woowacourse.movie.model.seat.index.Col
+import woowacourse.movie.model.seat.index.Row
 
 class SeatSelectPresenter(
     val view: SeatSelectContract.View,
 ) : SeatSelectContract.Presenter {
     private lateinit var movieTicket: MovieTicket
     private var selectedSeats = Seats.create()
+    private var seatGradePolicy: SeatGradePolicy = RowBasedSeatGradePolicy()
 
     override fun fetchData(getMovieTicket: () -> MovieTicket?) {
         val result = getMovieTicket()
         if (result == null) {
-            view.showErrorDialog()
+            view.showErrorMessage(R.string.seat_select_error_movie_ticket_load_failed)
             return
         }
 
@@ -24,51 +33,63 @@ class SeatSelectPresenter(
         )
     }
 
-    override fun seatSelect(seatId: String) {
-        if (selectedSeats.size == movieTicket.count && !selectedSeats.contains(seatId)) {
+    override fun seatSelect(
+        row: Row,
+        col: Col,
+    ) {
+        if (selectedSeats.size == movieTicket.count && !selectedSeats.contains(row, col)) {
             view.showSeatCountError(movieTicket.count)
             return
         }
 
-        val isSelected = selectedSeats.click(seatId)
+        val isSelected = selectedSeats.click(row, col)
         if (isSelected) {
-            view.showSelectedSeat(seatId)
+            view.showSelectedSeat(row, col)
         } else {
-            view.showDeselectedSeat(seatId)
+            view.showDeselectedSeat(row, col)
         }
 
-        view.showTotalPrice(selectedSeats.totalPrice)
+        view.showTotalPrice(selectedSeats.getTotalPrice(seatGradePolicy))
         view.updateConfirmButtonEnabled(selectedSeats.size == movieTicket.count)
     }
 
-    override fun createReservationInfo(onCreated: (ReservationInfo) -> Unit) {
+    override fun confirmReservation() {
+        val reservationInfo = createReservationInfo()
+        saveReservationInfoToDB(reservationInfo)
+        view.navigateToComplete(reservationInfo)
+    }
+
+    private fun createReservationInfo(): ReservationInfo {
         val reservationInfo =
             ReservationInfo(
                 title = movieTicket.title,
                 date = movieTicket.date,
                 time = movieTicket.time,
                 seats = selectedSeats,
-                price = selectedSeats.totalPrice,
+                price = selectedSeats.getTotalPrice(seatGradePolicy),
                 theaterName = movieTicket.theaterName,
             )
-        onCreated(reservationInfo)
+        return reservationInfo
     }
 
-    override fun confirmClicked(
-        title: String,
-        message: String,
-    ) {
-        view.showReservationDialog(title, message)
+    private fun saveReservationInfoToDB(reservationInfo: ReservationInfo) {
+        val context = (view as? Context) ?: return
+        Thread {
+            val database = AppDatabase.getDatabase(context)
+            val dao = database.reservationInfoDao()
+            val id = dao.insertReservation(reservationInfo)
+            view.setMovieAlarm(dao.getReservationById(id.toInt()))
+        }.start()
     }
 
-    fun getSelectedSeatIds(): List<String> = selectedSeats.labels()
+    fun getSelectedSeats(): List<Seat> = selectedSeats.value
 
-    fun restoreSelectedSeats(seatIds: List<String>) {
-        for (seatId in seatIds) {
-            selectedSeats.add(seatId)
-            view.showSelectedSeat(seatId)
+    fun restoreSelectedSeats(saveSeats: List<Seat>) {
+        for (saveSeat in saveSeats) {
+            selectedSeats.add(saveSeat.row, saveSeat.col)
+            view.showSelectedSeat(saveSeat.row, saveSeat.col)
         }
-        view.showTotalPrice(selectedSeats.totalPrice)
+        view.showTotalPrice(selectedSeats.getTotalPrice(seatGradePolicy))
         view.updateConfirmButtonEnabled(selectedSeats.size == movieTicket.count)
     }
 

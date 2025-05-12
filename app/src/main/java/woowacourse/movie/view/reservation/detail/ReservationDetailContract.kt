@@ -1,7 +1,8 @@
 package woowacourse.movie.view.reservation.detail
 
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.TheaterUIModel
+import androidx.annotation.StringRes
+import woowacourse.movie.model.reservation.MovieTicket
+import woowacourse.movie.model.theater.TheaterUIModel
 import java.time.LocalDate
 
 interface ReservationDetailContract {
@@ -14,7 +15,9 @@ interface ReservationDetailContract {
             runningTime: Int,
         )
 
-        fun showErrorDialog()
+        fun showErrorMessage(
+            @StringRes messageResId: Int,
+        )
 
         fun showTicketCount(count: Int)
 
@@ -27,7 +30,9 @@ interface ReservationDetailContract {
 
         fun navigateToSeatSelect(ticket: MovieTicket)
 
-        fun showToast(stringResId: Int)
+        fun showInfoMessage(stringResId: Int)
+
+        fun finishView()
     }
 
     interface Presenter {

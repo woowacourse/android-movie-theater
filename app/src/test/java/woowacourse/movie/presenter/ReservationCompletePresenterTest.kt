@@ -9,8 +9,8 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.model.dummyReservationInfo
-import woowacourse.movie.model.ReservationInfo
+import woowacourse.movie.domain.model.fixtureReservationInfo
+import woowacourse.movie.model.reservation.ReservationInfo
 import woowacourse.movie.view.reservation.complete.ReservationCompleteContract
 import woowacourse.movie.view.reservation.complete.ReservationCompletePresenter
 
@@ -27,15 +27,20 @@ class ReservationCompletePresenterTest {
     @Test
     fun `데이터를 가져오면 예매 정보를 화면에 표시한다`() {
         val reservationInfoSlot = slot<ReservationInfo>()
-
+        val seatLabelsSlot = slot<List<String>>()
         // given
-        every { view.showReservationInfo(capture(reservationInfoSlot)) } just Runs
+        every {
+            view.showReservationInfo(
+                capture(reservationInfoSlot),
+                capture(seatLabelsSlot),
+            )
+        } just Runs
 
         // when
-        presenter.fetchData { dummyReservationInfo }
+        presenter.fetchData { fixtureReservationInfo }
 
         // then
-        verify { view.showReservationInfo(any()) }
+        verify { view.showReservationInfo(any(), any()) }
 
         assertThat(reservationInfoSlot.captured.title).isEqualTo("라라랜드")
         assertThat(reservationInfoSlot.captured.time).isEqualTo("14:00")

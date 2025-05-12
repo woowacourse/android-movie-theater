@@ -1,11 +1,16 @@
 package woowacourse.movie.view.reservation.seat
 
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.ReservationInfo
+import androidx.annotation.StringRes
+import woowacourse.movie.model.reservation.MovieTicket
+import woowacourse.movie.model.reservation.ReservationInfo
+import woowacourse.movie.model.seat.index.Col
+import woowacourse.movie.model.seat.index.Row
 
 interface SeatSelectContract {
     interface View {
-        fun showErrorDialog()
+        fun showErrorMessage(
+            @StringRes messageResId: Int,
+        )
 
         fun showReservationInfo(
             title: String,
@@ -14,9 +19,15 @@ interface SeatSelectContract {
 
         fun showSeatCountError(count: Int)
 
-        fun showSelectedSeat(seatId: String)
+        fun showSelectedSeat(
+            row: Row,
+            col: Col,
+        )
 
-        fun showDeselectedSeat(seatId: String)
+        fun showDeselectedSeat(
+            row: Row,
+            col: Col,
+        )
 
         fun showTotalPrice(totalPrice: Int)
 
@@ -27,19 +38,21 @@ interface SeatSelectContract {
             message: String,
         )
 
+        fun finishView()
+
+        fun setMovieAlarm(reservationInfo: ReservationInfo)
+
         fun navigateToComplete(reservationInfo: ReservationInfo)
     }
 
     interface Presenter {
         fun fetchData(getMovieTicket: () -> MovieTicket?)
 
-        fun seatSelect(seatId: String)
-
-        fun createReservationInfo(onCreated: (ReservationInfo) -> Unit)
-
-        fun confirmClicked(
-            title: String,
-            message: String,
+        fun seatSelect(
+            row: Row,
+            col: Col,
         )
+
+        fun confirmReservation()
     }
 }

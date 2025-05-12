@@ -11,9 +11,9 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.model.ReservationInfo
-import woowacourse.movie.model.Seats
-import woowacourse.movie.view.Extras
+import woowacourse.movie.model.reservation.ReservationInfo
+import woowacourse.movie.model.seat.Seats
+import woowacourse.movie.view.util.Extras
 import java.time.LocalDate
 
 class ReservationCompleteActivityTest {

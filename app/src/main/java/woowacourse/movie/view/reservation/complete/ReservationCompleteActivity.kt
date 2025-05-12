@@ -1,16 +1,18 @@
 package woowacourse.movie.view.reservation.complete
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
-import woowacourse.movie.model.ReservationInfo
-import woowacourse.movie.view.Extras
-import woowacourse.movie.view.ReservationUiFormatter
-import woowacourse.movie.view.getParcelableExtraCompat
+import woowacourse.movie.model.reservation.ReservationInfo
+import woowacourse.movie.view.util.Extras
+import woowacourse.movie.view.util.ReservationUiFormatter
+import woowacourse.movie.view.util.getParcelableExtraCompat
 
 class ReservationCompleteActivity :
     AppCompatActivity(),
@@ -35,10 +37,16 @@ class ReservationCompleteActivity :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun showErrorDialog() {
+    override fun showErrorMessage(
+        @StringRes messageResId: Int,
+    ) {
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showReservationInfo(reservationInfo: ReservationInfo) {
+    override fun showReservationInfo(
+        reservationInfo: ReservationInfo,
+        seatLabels: List<String>,
+    ) {
         binding.tvReservationCompleteTitle.text = reservationInfo.title
         binding.tvReservationCompleteTimestamp.text =
             resources.getString(
@@ -50,8 +58,7 @@ class ReservationCompleteActivity :
             resources.getString(
                 R.string.reservation_complete_ticket_count,
                 reservationInfo.seats.size,
-                reservationInfo.seats
-                    .labels()
+                seatLabels
                     .sorted()
                     .joinToString(),
                 reservationInfo.theaterName,
@@ -61,5 +68,9 @@ class ReservationCompleteActivity :
                 R.string.reservation_complete_ticket_price,
                 ReservationUiFormatter.priceToUI(reservationInfo.price),
             )
+    }
+
+    override fun finishView() {
+        finish()
     }
 }

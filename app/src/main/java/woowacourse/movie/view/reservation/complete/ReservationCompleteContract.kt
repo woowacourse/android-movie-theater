@@ -1,12 +1,20 @@
 package woowacourse.movie.view.reservation.complete
 
-import woowacourse.movie.model.ReservationInfo
+import androidx.annotation.StringRes
+import woowacourse.movie.model.reservation.ReservationInfo
 
 interface ReservationCompleteContract {
     interface View {
-        fun showErrorDialog()
+        fun showErrorMessage(
+            @StringRes messageResId: Int,
+        )
 
-        fun showReservationInfo(reservationInfo: ReservationInfo)
+        fun showReservationInfo(
+            reservationInfo: ReservationInfo,
+            seatLabels: List<String>,
+        )
+
+        fun finishView()
     }
 
     interface Presenter {

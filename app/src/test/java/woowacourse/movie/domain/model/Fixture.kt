@@ -1,15 +1,15 @@
 package woowacourse.movie.domain.model
 
 import woowacourse.movie.R
-import woowacourse.movie.model.Movie
-import woowacourse.movie.model.MovieDatabaseSchema
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.ReservationInfo
-import woowacourse.movie.model.Seats
-import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.model.database.MovieDatabaseSchema
+import woowacourse.movie.model.movie.Movie
+import woowacourse.movie.model.reservation.MovieTicket
+import woowacourse.movie.model.reservation.ReservationInfo
+import woowacourse.movie.model.seat.Seats
+import woowacourse.movie.model.theater.TheaterUIModel
 import java.time.LocalDate
 
-val dummyMovie =
+val fixtureMovie =
     Movie(
         "라라랜드",
         R.drawable.lalaland,
@@ -18,7 +18,7 @@ val dummyMovie =
         120,
     )
 
-val dummyTicket =
+val fixtureTicket =
     MovieTicket(
         "라라랜드",
         LocalDate.of(2025, 4, 1),
@@ -27,7 +27,7 @@ val dummyTicket =
         "선릉",
     )
 
-val dummyReservationInfo =
+val fixtureReservationInfo =
     ReservationInfo(
         "라라랜드",
         LocalDate.of(2025, 4, 1),
@@ -38,11 +38,9 @@ val dummyReservationInfo =
     )
 
 val dummyUIModel =
-    TheaterUIModel("선릉", dummyMovie, 1)
+    TheaterUIModel("선릉", fixtureMovie, 1)
 
-val dummyMovieDatabase = DummyMovieDatabase()
-
-class DummyMovieDatabase : MovieDatabaseSchema {
+class FixtureMovieDatabase : MovieDatabaseSchema {
     override val screenings: Map<String, Map<String, List<Int>>> =
         mapOf(
             "선릉" to
@@ -54,6 +52,6 @@ class DummyMovieDatabase : MovieDatabaseSchema {
     override val movies: Map<String, Movie> =
         mapOf(
             "라라랜드" to
-                dummyMovie,
+                fixtureMovie,
         )
 }

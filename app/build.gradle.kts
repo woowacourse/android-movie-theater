@@ -34,6 +34,7 @@ android {
 
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
 
     compileOptions {
@@ -60,6 +61,7 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.espresso.contrib)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.room.runtime)
 
     testImplementation(libs.assertj.core)
     testImplementation(libs.junit.jupiter)
@@ -77,4 +79,7 @@ dependencies {
     androidTestRuntimeOnly(libs.mannodermaus.junit5.runner)
 
     debugImplementation(libs.androidx.fragment.testing)
+    debugImplementation(libs.leakcanary.android)
+
+    kapt(libs.androidx.room.compiler)
 }

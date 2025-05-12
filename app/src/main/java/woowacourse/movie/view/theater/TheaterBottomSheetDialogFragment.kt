@@ -9,17 +9,22 @@ import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
-import woowacourse.movie.model.Movie
-import woowacourse.movie.model.TheaterUIModel
-import woowacourse.movie.view.Extras
-import woowacourse.movie.view.compatParcelable
+import woowacourse.movie.model.database.DummyMovieDao
+import woowacourse.movie.model.movie.Movie
+import woowacourse.movie.model.theater.TheaterUIModel
 import woowacourse.movie.view.reservation.detail.ReservationDetailActivity
+import woowacourse.movie.view.util.ExceptionMessages.FRAGMENT_BINDING_STATE_EXCEPTION
+import woowacourse.movie.view.util.Extras
+import woowacourse.movie.view.util.getParcelableCompat
 
 class TheaterBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
     TheaterContract.View {
-    private lateinit var binding: FragmentTheaterBottomSheetDialogBinding
-    private val presenter: TheaterPresenter by lazy { TheaterPresenter(this) }
+    @Suppress("ktlint:standard:backing-property-naming")
+    private var _binding: FragmentTheaterBottomSheetDialogBinding? = null
+    private val binding: FragmentTheaterBottomSheetDialogBinding
+        get() = _binding ?: throw IllegalStateException(FRAGMENT_BINDING_STATE_EXCEPTION)
+    private val presenter: TheaterPresenter by lazy { TheaterPresenter(this, DummyMovieDao) }
     private val theaterAdapter: TheaterAdapter by lazy {
         TheaterAdapter(
             object : TheaterClickListener {
@@ -35,7 +40,7 @@ class TheaterBottomSheetDialogFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentTheaterBottomSheetDialogBinding.inflate(layoutInflater)
+        _binding = FragmentTheaterBottomSheetDialogBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -45,10 +50,9 @@ class TheaterBottomSheetDialogFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         setupTheaterAdapter()
-        presenter.fetchTheaters(
-            requireArguments().compatParcelable(Extras.MovieData.MOVIE_KEY)
-                ?: error(ERROR_ARGUMENT),
-        )
+        presenter.fetchTheaters {
+            requireArguments().getParcelableCompat(Extras.MovieData.MOVIE_KEY)
+        }
     }
 
     override fun showTheaters(theaters: List<TheaterUIModel>) {
@@ -62,6 +66,14 @@ class TheaterBottomSheetDialogFragment :
             }
         startActivity(intent)
         dismiss()
+    }
+
+    override fun dismissView() {
+        dismiss()
+    }
+
+    override fun showErrorMessage(messageResId: Int) {
+        Toast.makeText(requireContext(), messageResId, Toast.LENGTH_SHORT).show()
     }
 
     private fun setupTheaterAdapter() {
@@ -89,7 +101,5 @@ class TheaterBottomSheetDialogFragment :
                         putParcelable(Extras.MovieData.MOVIE_KEY, movie)
                     }
             }
-
-        private const val ERROR_ARGUMENT = "arguments가 없습니다."
     }
 }

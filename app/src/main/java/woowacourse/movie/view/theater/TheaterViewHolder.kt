@@ -1,33 +1,40 @@
 package woowacourse.movie.view.theater
 
-import android.view.View
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.R
-import woowacourse.movie.model.TheaterUIModel
+import woowacourse.movie.databinding.ItemTheaterBinding
+import woowacourse.movie.model.theater.TheaterUIModel
 
 class TheaterViewHolder(
-    view: View,
+    private val binding: ItemTheaterBinding,
     private val clickListener: TheaterClickListener,
-) : RecyclerView.ViewHolder(view) {
-    private val layoutTheater: ConstraintLayout = view.findViewById(R.id.cl_theater)
-    private val theaterNameTextView: TextView = view.findViewById(R.id.tv_theater_name)
-    private val timeslotTextView: TextView = view.findViewById(R.id.tv_time_slot)
-
+) : RecyclerView.ViewHolder(binding.root) {
     fun bind(theaterUIModel: TheaterUIModel) {
-        theaterNameTextView.text =
+        binding.tvTheaterName.text =
             itemView.context.getString(
                 R.string.bottom_sheet_dialog_theater_name,
                 theaterUIModel.name,
             )
-        timeslotTextView.text =
+        binding.tvTimeSlot.text =
             itemView.context.getString(
                 R.string.bottom_sheet_dialog_time_slot,
                 theaterUIModel.timeSlotCount,
             )
-        layoutTheater.setOnClickListener {
+        binding.clTheater.setOnClickListener {
             clickListener.onTheaterClick(theaterUIModel)
+        }
+    }
+
+    companion object {
+        fun from(
+            parent: ViewGroup,
+            clickListener: TheaterClickListener,
+        ): TheaterViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val binding = ItemTheaterBinding.inflate(layoutInflater, parent, false)
+            return TheaterViewHolder(binding, clickListener)
         }
     }
 }

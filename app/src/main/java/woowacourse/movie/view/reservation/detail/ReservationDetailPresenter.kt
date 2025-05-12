@@ -1,29 +1,30 @@
 package woowacourse.movie.view.reservation.detail
 
 import woowacourse.movie.R
-import woowacourse.movie.model.MovieDao
-import woowacourse.movie.model.MovieDate
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.MovieTime
-import woowacourse.movie.model.ReservationUIModel
-import woowacourse.movie.model.TheaterUIModel
-import woowacourse.movie.model.TicketCount
-import woowacourse.movie.view.ReservationUiFormatter
+import woowacourse.movie.model.database.MovieDao
+import woowacourse.movie.model.movie.MovieDate
+import woowacourse.movie.model.movie.MovieTime
+import woowacourse.movie.model.reservation.MovieTicket
+import woowacourse.movie.model.reservation.ReservationUIModel
+import woowacourse.movie.model.reservation.TicketCount
+import woowacourse.movie.model.theater.TheaterUIModel
+import woowacourse.movie.view.util.ReservationUiFormatter
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 class ReservationDetailPresenter(
     val view: ReservationDetailContract.View,
+    private val movieDao: MovieDao,
 ) : ReservationDetailContract.Presenter {
     lateinit var reservationUIModel: ReservationUIModel
     private var currentTimeTable: List<Int> = emptyList()
-    private val movieDao by lazy { MovieDao() }
     var isTimeSelected = false
 
     override fun fetchData(getMovie: () -> TheaterUIModel?) {
         val theaterUIModel = getMovie()
         if (theaterUIModel == null) {
-            view.showErrorDialog()
+            view.showErrorMessage(R.string.reservation_error_theater_model_load_failed)
+            view.finishView()
             return
         }
 
@@ -78,7 +79,7 @@ class ReservationDetailPresenter(
 
     override fun minusTicketCount() {
         if (reservationUIModel.ticketCount == 1) {
-            view.showToast(R.string.reservation_info_minimum_ticket_count)
+            view.showInfoMessage(R.string.reservation_info_minimum_ticket_count)
             return
         }
         updateReservationState(

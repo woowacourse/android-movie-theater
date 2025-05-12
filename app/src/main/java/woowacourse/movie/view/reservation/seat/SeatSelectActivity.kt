@@ -1,5 +1,6 @@
 package woowacourse.movie.view.reservation.seat
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TableLayout
@@ -7,18 +8,26 @@ import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.BundleCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectBinding
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.ReservationInfo
-import woowacourse.movie.view.Extras
-import woowacourse.movie.view.ReservationUiFormatter
-import woowacourse.movie.view.getParcelableExtraCompat
+import woowacourse.movie.model.reservation.MovieTicket
+import woowacourse.movie.model.reservation.ReservationInfo
+import woowacourse.movie.model.seat.Seat
+import woowacourse.movie.model.seat.index.Col
+import woowacourse.movie.model.seat.index.Row
 import woowacourse.movie.view.reservation.complete.ReservationCompleteActivity
 import woowacourse.movie.view.reservation.detail.ReservationDetailDialog
+import woowacourse.movie.view.util.AlarmManagerHelper
+import woowacourse.movie.view.util.Extras
+import woowacourse.movie.view.util.Extras.SettingData.NOTIFICATION_KEY
+import woowacourse.movie.view.util.Extras.SettingData.SETTINGS_KEY
+import woowacourse.movie.view.util.ReservationUiFormatter
+import woowacourse.movie.view.util.getParcelableExtraCompat
 
 class SeatSelectActivity :
     AppCompatActivity(),
@@ -26,7 +35,6 @@ class SeatSelectActivity :
     private lateinit var binding: ActivitySeatSelectBinding
     private val presenter: SeatSelectPresenter by lazy { SeatSelectPresenter(this) }
     private val reservationDialog by lazy { ReservationDetailDialog() }
-    private val seatViews: MutableMap<String, TextView> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +57,10 @@ class SeatSelectActivity :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun showErrorDialog() {
+    override fun showErrorMessage(
+        @StringRes messageResId: Int,
+    ) {
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
     }
 
     override fun showReservationInfo(
@@ -71,12 +82,22 @@ class SeatSelectActivity :
         return
     }
 
-    override fun showSelectedSeat(seatId: String) {
-        seatViews[seatId]?.setBackgroundResource(R.color.yellow)
+    override fun showSelectedSeat(
+        row: Row,
+        col: Col,
+    ) {
+        val tableRow = binding.tlSeat.getChildAt(row.index) as TableRow?
+        val seatView = tableRow?.getChildAt(col.index) as TextView?
+        seatView?.setBackgroundResource(R.color.yellow)
     }
 
-    override fun showDeselectedSeat(seatId: String) {
-        seatViews[seatId]?.setBackgroundResource(R.color.white)
+    override fun showDeselectedSeat(
+        row: Row,
+        col: Col,
+    ) {
+        val tableRow = binding.tlSeat.getChildAt(row.index) as TableRow?
+        val seatView = tableRow?.getChildAt(col.index) as TextView?
+        seatView?.setBackgroundResource(R.color.white)
     }
 
     override fun showTotalPrice(totalPrice: Int) {
@@ -101,11 +122,13 @@ class SeatSelectActivity :
             message,
             { dialog -> dialog.dismiss() },
             { _ ->
-                presenter.createReservationInfo { reservationInfo ->
-                    navigateToComplete(reservationInfo)
-                }
+                presenter.confirmReservation()
             },
         )
+    }
+
+    override fun finishView() {
+        finish()
     }
 
     override fun navigateToComplete(reservationInfo: ReservationInfo) {
@@ -117,6 +140,19 @@ class SeatSelectActivity :
         finish()
     }
 
+    @SuppressLint("ScheduleExactAlarm")
+    override fun setMovieAlarm(reservationInfo: ReservationInfo) {
+        if (!isNotificationEnabled()) return
+
+        val alarmManagerHelper = AlarmManagerHelper(this)
+        alarmManagerHelper.scheduleSingleMovieAlarms(reservationInfo)
+    }
+
+    private fun isNotificationEnabled(): Boolean {
+        val sharedPreferences = this.getSharedPreferences(SETTINGS_KEY, MODE_PRIVATE)
+        return sharedPreferences.getBoolean(NOTIFICATION_KEY, false)
+    }
+
     private fun setupSeatView(tableLayout: TableLayout) {
         for (i in 0 until tableLayout.childCount) {
             val row = tableLayout.getChildAt(i)
@@ -124,10 +160,11 @@ class SeatSelectActivity :
                 for (j in 0 until row.childCount) {
                     val seatView = row.getChildAt(j)
                     if (seatView is TextView) {
-                        val seatId = seatView.text.toString()
-                        seatViews[seatId] = seatView
                         seatView.setOnClickListener {
-                            presenter.seatSelect(seatId)
+                            presenter.seatSelect(
+                                row = Row(i),
+                                col = Col(j),
+                            )
                         }
                     }
                 }
@@ -140,7 +177,7 @@ class SeatSelectActivity :
             isClickable = false
             alpha = 0.1f
             setOnClickListener {
-                presenter.confirmClicked(
+                showReservationDialog(
                     getString(R.string.reservation_dialog_title),
                     getString(R.string.reservation_dialog_message),
                 )
@@ -150,15 +187,19 @@ class SeatSelectActivity :
 
     private fun setupSavedData(savedInstanceState: Bundle?) {
         val savedSeats =
-            savedInstanceState?.getStringArrayList(Extras.SeatsData.SEATS_KEY)
-                ?: emptyList<String>()
+            BundleCompat.getParcelableArrayList(
+                savedInstanceState ?: Bundle(),
+                Extras.SeatsData.SEATS_KEY,
+                Seat::class.java,
+            )
+                ?: emptyList<Seat>()
         presenter.restoreSelectedSeats(savedSeats)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putStringArrayList(
+        outState.putParcelableArrayList(
             Extras.SeatsData.SEATS_KEY,
-            ArrayList(presenter.getSelectedSeatIds()),
+            ArrayList(presenter.getSelectedSeats()),
         )
         super.onSaveInstanceState(outState)
     }

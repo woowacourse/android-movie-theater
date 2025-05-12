@@ -2,32 +2,36 @@ package woowacourse.movie.view.reservation.detail
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.android.material.R.layout
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityReservationBinding
-import woowacourse.movie.model.MovieTicket
-import woowacourse.movie.model.TheaterUIModel
-import woowacourse.movie.view.Extras
-import woowacourse.movie.view.getParcelableExtraCompat
-import woowacourse.movie.view.movie.MoviesActivity
+import woowacourse.movie.model.database.DummyMovieDao
+import woowacourse.movie.model.reservation.MovieTicket
+import woowacourse.movie.model.theater.TheaterUIModel
+import woowacourse.movie.view.reservation.detail.viewhelper.DateTimeHelper
+import woowacourse.movie.view.reservation.detail.viewhelper.MovieInfoHelper
 import woowacourse.movie.view.reservation.seat.SeatSelectActivity
+import woowacourse.movie.view.util.Extras
+import woowacourse.movie.view.util.getParcelableExtraCompat
 import java.time.LocalDate
 
 class ReservationDetailActivity :
     AppCompatActivity(),
     ReservationDetailContract.View {
-    private lateinit var binding: ActivityReservationBinding
-    private val reservationDialog by lazy { ReservationDetailDialog() }
-    private val presenter: ReservationDetailPresenter by lazy { ReservationDetailPresenter(this) }
+    lateinit var binding: ActivityReservationBinding
+    val presenter: ReservationDetailPresenter by lazy {
+        ReservationDetailPresenter(
+            this,
+            DummyMovieDao,
+        )
+    }
+    private val movieInfoHelper: MovieInfoHelper by lazy { MovieInfoHelper(this, binding) }
+    private val dateTimeHelper: DateTimeHelper by lazy { DateTimeHelper(this, binding) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,12 +48,8 @@ class ReservationDetailActivity :
         presenter.fetchData {
             intent?.getParcelableExtraCompat<TheaterUIModel>(Extras.TheaterData.THEATER_UI_MODEL_KEY)
         }
-        setupButtonClickListener()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    private fun setupButtonClickListener() {
         setupCompleteButtonClick()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun showMovieInfo(
@@ -59,21 +59,7 @@ class ReservationDetailActivity :
         endDate: String,
         runningTime: Int,
     ) {
-        setupMovieReservationInfo(posterResId, title, startDate, endDate, runningTime)
-        presenter.initDateAdapter()
-    }
-
-    override fun showErrorDialog() {
-        reservationDialog.show(
-            this,
-            getString(R.string.reservation_error_dialog_title),
-            getString(R.string.reservation_error_dialog_message),
-            null,
-        ) { _ ->
-            val intent = Intent(this, MoviesActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+        movieInfoHelper.showMovieInfo(posterResId, title, startDate, endDate, runningTime)
     }
 
     override fun showTicketCount(count: Int) {
@@ -84,82 +70,11 @@ class ReservationDetailActivity :
         duration: List<LocalDate>,
         selected: Int,
     ) {
-        val dateAdapter =
-            ArrayAdapter(
-                this,
-                layout.support_simple_spinner_dropdown_item,
-                duration,
-            )
-
-        binding.spinnerReservationDate.apply {
-            adapter = dateAdapter
-            setSelection(selected)
-            onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long,
-                    ) {
-                        presenter.selectDate(duration[position])
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                    }
-                }
-        }
+        dateTimeHelper.updateDateAdapter(duration, selected)
     }
 
     override fun updateTimeAdapter(times: List<String>) {
-        val timeAdapter =
-            ArrayAdapter(
-                this,
-                layout.support_simple_spinner_dropdown_item,
-                times,
-            )
-
-        binding.spinnerReservationTime.apply {
-            adapter = timeAdapter
-            onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long,
-                    ) {
-                        presenter.selectTime(position)
-                        presenter.isTimeSelected = true
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                    }
-                }
-        }
-    }
-
-    private fun setupMovieReservationInfo(
-        posterResId: Int,
-        title: String,
-        startDate: String,
-        endDate: String,
-        runningTime: Int,
-    ) {
-        val poster =
-            AppCompatResources.getDrawable(
-                this,
-                posterResId,
-            )
-        binding.ivReservationPoster.setImageDrawable(poster)
-
-        binding.tvReservationTitle.text = title
-
-        binding.tvReservationScreeningDate.text =
-            resources.getString(R.string.movie_screening_date, startDate, endDate)
-
-        binding.tvReservationRunningTime.text =
-            getString(R.string.movie_running_time).format(runningTime)
+        dateTimeHelper.updateTimeAdapter(times)
     }
 
     private fun setupCompleteButtonClick() {
@@ -168,12 +83,7 @@ class ReservationDetailActivity :
                 if (presenter.isTimeSelected) {
                     navigateToSeatSelect(ticket)
                 } else {
-                    Toast
-                        .makeText(
-                            this,
-                            getString(R.string.reservation_error_empty_selected_movie_time),
-                            Toast.LENGTH_SHORT,
-                        ).show()
+                    showInfoMessage(R.string.reservation_error_empty_selected_movie_time)
                 }
             }
         }
@@ -187,8 +97,22 @@ class ReservationDetailActivity :
         startActivity(intent)
     }
 
-    override fun showToast(stringResId: Int) {
-        Toast.makeText(this, getString(stringResId), Toast.LENGTH_SHORT).show()
+    override fun showErrorMessage(
+        @StringRes messageResId: Int,
+    ) {
+        showToast(getString(messageResId))
+    }
+
+    override fun showInfoMessage(stringResId: Int) {
+        showToast(getString(stringResId))
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun finishView() {
+        finish()
     }
 
     private fun setupSavedData(savedInstanceState: Bundle?) {
