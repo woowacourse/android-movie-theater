@@ -66,6 +66,7 @@ class SeatSelectPresenter(
         thread {
             reservationRepository.saveReservation(reservationInfo.toDomain())
         }
+        view.navigateToComplete(reservationInfo)
     }
 
     override fun restoreSelectedSeats(seatIds: List<String>) {

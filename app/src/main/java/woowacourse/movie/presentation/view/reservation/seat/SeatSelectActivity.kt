@@ -63,7 +63,6 @@ class SeatSelectActivity :
 
         if (fromAlarmSettings && reservationInfo != null) {
             presenter.saveReservation(reservationInfo)
-            navigateToComplete(reservationInfo)
         }
     }
 
@@ -123,9 +122,8 @@ class SeatSelectActivity :
                 intent.putExtra(Extras.ReservationInfoData.ALARM_SETTING_KEY, true)
                 alarmScheduler.requestExactAlarmPermission(this)
             }.setNegativeButton(R.string.setting_request_permission_dialog_negative) { _, _ ->
-                presenter.saveReservation(reservationInfo)
                 showToast(getString(R.string.reservation_dialog_no_alarm_complete))
-                navigateToComplete(reservationInfo)
+                presenter.saveReservation(reservationInfo)
             }.show()
     }
 
@@ -136,7 +134,6 @@ class SeatSelectActivity :
         }
 
         presenter.saveReservation(reservationInfoUiModel)
-        navigateToComplete(reservationInfoUiModel)
     }
 
     override fun navigateToComplete(reservationInfo: ReservationInfoUiModel) {
