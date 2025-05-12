@@ -12,9 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.launch
 import woowacourse.movie.R
 import woowacourse.movie.data.BookingHistoryDetailsDatabase
 import woowacourse.movie.data.toEntity
@@ -28,6 +26,7 @@ import woowacourse.movie.feature.model.MovieSeatUiModel
 import woowacourse.movie.feature.model.SeatSelectionUiState
 import woowacourse.movie.feature.model.SeatTypeUiModel
 import woowacourse.movie.util.getExtra
+import kotlin.concurrent.thread
 
 class BookingSeatActivity :
     AppCompatActivity(),
@@ -101,9 +100,9 @@ class BookingSeatActivity :
     }
 
     override fun navigateToBookingComplete(bookingInfo: BookingInfoUiModel) {
-        lifecycleScope.launch {
-            val entity = bookingInfo.toEntity()
+        val entity = bookingInfo.toEntity()
 
+        thread {
             BookingHistoryDetailsDatabase
                 .getDatabase(applicationContext)
                 .bookingHistoryDetailsDao()
