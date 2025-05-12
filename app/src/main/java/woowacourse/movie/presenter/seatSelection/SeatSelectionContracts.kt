@@ -17,6 +17,8 @@ interface SeatSelectionContracts {
         fun updateSeatsEnabled(enabled: Boolean)
 
         fun showReservationCompleteView(movieTicket: MovieTicket)
+
+        fun showErrorDialogMessage()
     }
 
     interface Presenter {
@@ -30,5 +32,7 @@ interface SeatSelectionContracts {
         fun updateSelectedSeat(seat: Seat)
 
         fun requestReservationComplete()
+
+        fun requestErrorDialogMessage()
     }
 }

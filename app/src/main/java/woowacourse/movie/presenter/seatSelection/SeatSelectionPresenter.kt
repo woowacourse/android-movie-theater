@@ -3,12 +3,15 @@ package woowacourse.movie.presenter.seatSelection
 import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.ticket.MovieTicket
+import woowacourse.movie.presenter.reservationDetails.ReservationDao
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContracts.View,
+    private val dao: ReservationDao,
+    private val runAsync: (Runnable) -> Unit = { runnable -> Thread(runnable).start() },
 ) : SeatSelectionContracts.Presenter {
     private lateinit var movieToReserve: MovieToReserve
-    private var seats: MutableList<Seat> = mutableListOf()
+    private val seats: MutableSet<Seat> = mutableSetOf()
 
     override fun loadSeats(
         row: Int,
@@ -32,11 +35,7 @@ class SeatSelectionPresenter(
     }
 
     override fun updateSelectedSeat(seat: Seat) {
-        if (seats.contains(seat)) {
-            seats.remove(seat)
-        } else {
-            seats.add(seat)
-        }
+        if (!seats.add(seat)) seats.remove(seat)
 
         updateButtonEnabled()
         updateTotalPrice()
@@ -57,11 +56,18 @@ class SeatSelectionPresenter(
         val movieTicket =
             MovieTicket(
                 title = movieToReserve.title,
-                movieDate = movieToReserve.movieDate.value,
-                movieTime = movieToReserve.movieTime,
+                selectedDate = movieToReserve.movieDate.value,
+                selectedTime = movieToReserve.movieTime,
                 seats = seats.toList(),
                 theater = movieToReserve.theater,
             )
+        runAsync.invoke {
+            dao.saveReservation(movieTicket)
+        }
         view.showReservationCompleteView(movieTicket)
+    }
+
+    override fun requestErrorDialogMessage() {
+        view.showErrorDialogMessage()
     }
 }

@@ -24,11 +24,14 @@ class ReservationPresenter(
         updateView(theaterMovieSchedule.movie)
     }
 
-    private fun updateView(movie: Movie) {
+    private fun updateView(
+        movie: Movie,
+        currentDate: LocalDate = LocalDate.now(),
+    ) {
         view.showMovieInfo(movie)
         view.showTicketCount(ticketCount.value)
-        view.setupDateAdapter(movie.movieDate.getDateTable(LocalDate.now()))
-        view.updateTimes(movieTimes.screeningTimes.map { it.value })
+        view.setupDateAdapter(movie.movieDate.getDateTable(currentDate))
+        view.setupTimeAdapter(movieTimes.getTimeTable(theaterMovieSchedule.movie.movieDate))
     }
 
     override fun increaseTicketCount() {
@@ -37,13 +40,8 @@ class ReservationPresenter(
     }
 
     override fun decreaseTicketCount() {
-        runCatching {
-            ticketCount -= 1
-        }.onSuccess {
-            view.showTicketCount(ticketCount.value)
-        }.onFailure { error ->
-            view.showErrorToastMessage(error.message.toString())
-        }
+        ticketCount -= 1
+        view.showTicketCount(ticketCount.value)
     }
 
     override fun requestMovieToReserve() {
@@ -59,19 +57,19 @@ class ReservationPresenter(
         view.showSeatSelectionView(movieToReserve)
     }
 
-    override fun updateMovieDate(date: LocalDate) {
+    override fun updateMovieDateToTime(date: LocalDate) {
         theaterMovieSchedule.movie.movieDate.updateDate(date)
+        val newTimes = movieTimes.getTimeTable(theaterMovieSchedule.movie.movieDate)
+        view.updateTimes(newTimes)
     }
 
     override fun updateMovieTime(time: LocalTime) {
         selectedMovieTime = time
     }
 
-    override fun updateTicketCount(count: Int?) {
-        if (count != null) {
-            ticketCount += count - 1
-        }
-        view.showTicketCount(ticketCount.value)
+    override fun updateTicketCount(count: Int) {
+        ticketCount = TicketCount(count)
+        view.showTicketCount(count)
     }
 
     override fun updateSelectedDatePosition(position: Int) {
@@ -80,5 +78,9 @@ class ReservationPresenter(
 
     override fun updateSelectedTimePosition(position: Int) {
         view.showSelectedTime(position)
+    }
+
+    override fun requestErrorDialogMessage() {
+        view.showErrorDialogMessage()
     }
 }

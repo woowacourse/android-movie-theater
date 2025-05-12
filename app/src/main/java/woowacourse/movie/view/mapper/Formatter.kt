@@ -8,7 +8,6 @@ object Formatter {
     private val DATE_UI_FORMATTER = DateTimeFormatter.ofPattern("yyyy.MM.dd")
     private val PRICE_UI_FORMATTER = DecimalFormat("#,###")
 
-    @JvmStatic
     fun localDateToUI(date: LocalDate): String = date.format(DATE_UI_FORMATTER)
 
     @JvmStatic

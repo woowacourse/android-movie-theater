@@ -41,8 +41,8 @@ class HomeFragment :
             MovieAdapter(
                 movieClickListener =
                     object : MovieClickListener {
-                        override fun onReservationClick(movieId: Long) {
-                            presenter.onTheaterRequested(movieId)
+                        override fun onMovieClick(movieId: Long) {
+                            presenter.requestTheaters(movieId)
                         }
                     },
                 advertisementClickListener = {

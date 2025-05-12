@@ -50,7 +50,7 @@ class HomePresenterTest {
         every { view.showTheaters(any()) } just Runs
 
         // when
-        presenter.onTheaterRequested(1L)
+        presenter.requestTheaters(1L)
 
         // then
         verify { view.showTheaters(any()) }

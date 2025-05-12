@@ -18,8 +18,10 @@ import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.seat.SeatGrade
 import woowacourse.movie.model.ticket.MovieTicket
+import woowacourse.movie.presenter.reservationDetails.ReservationDatabase
 import woowacourse.movie.presenter.seatSelection.SeatSelectionContracts
 import woowacourse.movie.presenter.seatSelection.SeatSelectionPresenter
+import woowacourse.movie.view.extension.dialogMessage
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.reservationComplete.ReservationCompleteActivity
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.columnToUI
@@ -28,11 +30,15 @@ import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.rowToUI
 class SeatSelectionActivity :
     AppCompatActivity(),
     SeatSelectionContracts.View {
-    private val presenter: SeatSelectionContracts.Presenter = SeatSelectionPresenter(this)
+    private lateinit var presenter: SeatSelectionContracts.Presenter
     private lateinit var binding: ActivitySeatSelectionBinding
+    private val db by lazy { ReservationDatabase.getDatabase(this) }
+    private val dao by lazy { db.reservationDao() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        presenter = SeatSelectionPresenter(this, dao)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.seat_selection_main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -49,9 +55,13 @@ class SeatSelectionActivity :
             getSeatsLayoutRowCount(),
             getSeatsLayoutColumnCount(),
         )
-        presenter.updateMovieToReserve(
-            intent.getSerializableExtraData<MovieToReserve>(MOVIE_TO_RESERVE_DATA_KEY),
-        )
+        val intentMovieToReserveData: MovieToReserve? =
+            intent.getSerializableExtraData<MovieToReserve>(MOVIE_TO_RESERVE_DATA_KEY)
+        if (intentMovieToReserveData == null) {
+            presenter.requestErrorDialogMessage()
+            return
+        }
+        presenter.updateMovieToReserve(intentMovieToReserveData)
     }
 
     private fun getSeatsLayoutRowCount(): Int = binding.tlSeatSelection.childCount
@@ -175,6 +185,10 @@ class SeatSelectionActivity :
     override fun showReservationCompleteView(movieTicket: MovieTicket) {
         startActivity(ReservationCompleteActivity.getIntent(this, movieTicket))
         finish()
+    }
+
+    override fun showErrorDialogMessage() {
+        dialogMessage(this, R.string.not_found_data_error_message)
     }
 
     companion object {

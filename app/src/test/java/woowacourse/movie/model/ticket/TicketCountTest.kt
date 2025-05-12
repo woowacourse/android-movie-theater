@@ -2,17 +2,8 @@ package woowacourse.movie.model.ticket
 
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class TicketCountTest {
-    @Test
-    fun `티켓 개수가 1 미만일 경우 에러를 발생시킨다`() {
-        // given
-        // when
-        // then
-        assertThrows<IllegalArgumentException> { TicketCount(0) }
-    }
-
     @Test
     fun `티켓 개수가 1이고 1을 더하면 값이 2인 티켓 개수를 반환한다`() {
         // given

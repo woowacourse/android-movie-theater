@@ -3,8 +3,6 @@ package woowacourse.movie.view.reservation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +16,7 @@ import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.theater.TheaterMovieSchedule
 import woowacourse.movie.presenter.reservation.ReservationContract
 import woowacourse.movie.presenter.reservation.ReservationPresenter
+import woowacourse.movie.view.extension.dialogMessage
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.extension.showShortToast
 import woowacourse.movie.view.seatSelection.SeatSelectionActivity
@@ -42,14 +41,17 @@ class ReservationActivity :
         }
 
         setupClickListener()
-        setupTimeAdapter()
         updateMovieToPresenter()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun updateMovieToPresenter() {
-        val intentMovieData: TheaterMovieSchedule =
+        val intentMovieData: TheaterMovieSchedule? =
             intent.getSerializableExtraData<TheaterMovieSchedule>(SCREENING_INFO_KEY)
+        if (intentMovieData == null) {
+            presenter.requestErrorDialogMessage()
+            return
+        }
         presenter.updateMovieData(intentMovieData)
     }
 
@@ -77,39 +79,16 @@ class ReservationActivity :
         binding.spinnerReservationDate.apply {
             adapter = dateAdapter
             onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long,
-                    ) {
-                        presenter.updateMovieDate(dates[position])
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-                }
+                ScreeningSelectListener(dates) { presenter.updateMovieDateToTime(it) }
         }
     }
 
-    private fun setupTimeAdapter() {
+    override fun setupTimeAdapter(times: List<LocalTime>) {
         timeSpinnerAdapter = TimeSpinnerAdapter(this, mutableListOf())
         binding.spinnerReservationTime.apply {
             adapter = timeSpinnerAdapter
             onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long,
-                    ) {
-                        val selectedTime: LocalTime = timeSpinnerAdapter.getItem(position) ?: return
-                        presenter.updateMovieTime(selectedTime)
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-                }
+                ScreeningSelectListener(times) { presenter.updateMovieTime(it) }
         }
     }
 
@@ -173,6 +152,10 @@ class ReservationActivity :
 
     override fun showSelectedTime(position: Int) {
         binding.spinnerReservationTime.setSelection(position)
+    }
+
+    override fun showErrorDialogMessage() {
+        dialogMessage(this, R.string.not_found_data_error_message)
     }
 
     companion object {

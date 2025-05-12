@@ -1,10 +1,15 @@
 package woowacourse.movie
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -19,37 +24,70 @@ class MainActivity : AppCompatActivity() {
     private val homeFragment by lazy { HomeFragment().newInstance() }
     private val settingFragment by lazy { SettingFragment().newInstance() }
     private val reservationDetailsFragment by lazy { ReservationDetailsFragment().newInstance() }
+    private var activeFragment = homeFragment
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted: Boolean ->
+            return@registerForActivityResult
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        requestNotificationPermission()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        supportFragmentManager.commit {
+            add(R.id.main_fragment_container, homeFragment)
+            add(R.id.main_fragment_container, settingFragment)
+                .hide(settingFragment)
+            add(R.id.main_fragment_container, reservationDetailsFragment)
+                .hide(reservationDetailsFragment)
+        }
 
+        binding.mainBottomNavigationBar.selectedItemId = R.id.bottom_navigation_home
         binding.mainBottomNavigationBar.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.bottom_navigation_reservation_details ->
-                    replaceFragment(reservationDetailsFragment)
+                    switchFragment(reservationDetailsFragment)
 
                 R.id.bottom_navigation_home ->
-                    replaceFragment(homeFragment)
+                    switchFragment(homeFragment)
 
                 R.id.bottom_navigation_setting ->
-                    replaceFragment(settingFragment)
+                    switchFragment(settingFragment)
             }
             return@setOnItemSelectedListener true
         }
     }
 
-    private fun replaceFragment(selectedFragment: Fragment) {
+    private fun switchFragment(selectedFragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(binding.mainFragmentContainer.id, selectedFragment)
+            if (selectedFragment != activeFragment) {
+                hide(activeFragment)
+                show(selectedFragment)
+                activeFragment = selectedFragment
+            }
+        }
+    }
+
+    private fun requestNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
     }
 
