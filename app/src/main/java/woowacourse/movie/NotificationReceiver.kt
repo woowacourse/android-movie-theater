@@ -36,14 +36,11 @@ class NotificationReceiver : BroadcastReceiver() {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notification =
             NotificationCompat.Builder(context, "channel_id")
-                .setContentTitle("예매 알림")
-                .setContentText("$title 30분 후 상영 예정")
+                .setContentTitle(context.getString(R.string.push_reservation_title))
+                .setContentText(context.getString(R.string.push_reservation_text, title))
                 .setSmallIcon(R.drawable.baseline_movie)
                 .setContentIntent(pendingIntent)
                 .build()
         notificationManager.notify(1, notification)
-    }
-
-    private fun showNotification(context: Context) {
     }
 }

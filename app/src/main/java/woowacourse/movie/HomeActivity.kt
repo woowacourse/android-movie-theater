@@ -107,16 +107,16 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showNotificationPermissionDeniedDialog() {
         AlertDialog.Builder(this)
-            .setTitle("알림 권한이 필요합니다")
-            .setMessage("예매 알림을 받으시려면 알림 권한을 허용해주세요.")
-            .setPositiveButton("설정으로 이동") { _, _ ->
+            .setTitle(R.string.notification_push_title)
+            .setMessage(R.string.notification_push_message)
+            .setPositiveButton(R.string.notification_push_positive_button) { _, _ ->
                 val intent =
                     Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
                         putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
                     }
                 startActivity(intent)
             }
-            .setNegativeButton("취소", null)
+            .setNegativeButton(R.string.cancel, null)
             .show()
     }
 

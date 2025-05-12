@@ -38,16 +38,15 @@ class MovieBookingSeatPresenter(
 
     override fun calculatePrice() {
         val totalPrice = bookingStatus.calculateTicketPrices()
-        selectedAll()
+        setUpActiveButton()
         view.showTotalPrice(totalPrice)
     }
 
-    private fun selectedAll() {
+    private fun setUpActiveButton() {
         if (bookingStatus.seat.isSelectedAll()) view.updateButton()
     }
 
     override fun confirmBooking(context: Context) {
-        var generatedId: Long = 0
         val reservation =
             Reservation(
                 title = bookingStatus.movie.title,
@@ -61,7 +60,7 @@ class MovieBookingSeatPresenter(
 
         thread {
             val db = (context as MovieApplication).database
-            generatedId = db.reservationDao().insert(reservation)
+            val generatedId = db.reservationDao().insert(reservation)
             reservation.uid = generatedId
             Handler(Looper.getMainLooper()).post {
                 view.showConfirmDialog(generatedId)

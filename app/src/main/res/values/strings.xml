@@ -31,4 +31,10 @@
     <string name="booking_confirm">선택 완료</string>
     <string name="push_title">푸시 알림 수신</string>
     <string name="push_detail">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="notification_push_title">알림 권한이 필요합니다.</string>
+    <string name="notification_push_message">예매 알림을 받으시려면 알림 권한을 허용해주세요.</string>
+    <string name="notification_push_positive_button">설정으로 이동</string>
+    <string name="push_reservation_title">예매 알림</string>
+    <string name="push_reservation_text">%s 30분 후 상영 예정</string>
+
 </resources>

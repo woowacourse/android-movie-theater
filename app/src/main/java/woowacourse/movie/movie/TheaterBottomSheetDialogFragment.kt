@@ -41,7 +41,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
             }
 
         val adapter = TheaterListAdapter(Theaters.theaters, movie) { theater -> navigateToTheater(theater, movie) }
-        binding.therters.apply {
+        binding.theaters.apply {
             this.adapter = adapter
         }
     }

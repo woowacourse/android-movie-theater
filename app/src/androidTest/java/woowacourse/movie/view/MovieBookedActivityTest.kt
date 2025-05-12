@@ -18,7 +18,7 @@ import woowacourse.movie.domain.seat.Seat
 import woowacourse.movie.domain.seat.SeatGrade
 import woowacourse.movie.moviebooked.MovieBookedActivity
 
-class MovieBookedContractActivityTest {
+class MovieBookedActivityTest {
     private lateinit var scenario: ActivityScenario<MovieBookedActivity>
     private lateinit var bookingStatus: BookingStatus
 
@@ -30,7 +30,7 @@ class MovieBookedContractActivityTest {
         bookingStatus.seat.add(Seat(Row(1), Column(1), SeatGrade.B))
         bookingStatus.seat.add(Seat(Row(1), Column(2), SeatGrade.B))
 
-        val intent = MovieBookedActivity.movieBookedIntent(ApplicationProvider.getApplicationContext(), bookingStatus, theater)
+        val intent = MovieBookedActivity.newIntent(ApplicationProvider.getApplicationContext(), bookingStatus, theater)
 
         scenario = ActivityScenario.launch(intent)
     }

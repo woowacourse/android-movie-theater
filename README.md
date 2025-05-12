@@ -210,3 +210,8 @@
 - 스피너 테스트 확장 함수 추가
 
 - [x] refactor: TheaterViewHolder inner class에서 class로 변경
+
+- [x] refactor: 코드 정리
+- 오타 수정
+- 사용자에게 보이는 문자열을 strings.xml에 정의
+- 불필요한 코드 정리

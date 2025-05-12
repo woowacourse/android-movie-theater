@@ -15,7 +15,7 @@ import woowacourse.movie.checkWithText
 import woowacourse.movie.moviebookingseat.MovieBookingSeatActivity
 import woowacourse.movie.performClick
 
-class MovieBookingContractSeatActivityTest {
+class MovieBookingSeatActivityTest {
     private lateinit var scenario: ActivityScenario<MovieBookingSeatActivity>
 
     @Before
