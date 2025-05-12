@@ -4,19 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.dao.bookingStatus.BookingStatusDatabase
 import woowacourse.movie.dao.bookingStatus.BookingStatusEntity
 import woowacourse.movie.R
 import woowacourse.movie.dao.bookingseats.BookingSeatDatabase
 import woowacourse.movie.dao.bookingseats.BookingSeatEntity
+import woowacourse.movie.databinding.FragmentBookingBinding
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.moviebooked.MovieBookedActivity
 import kotlin.concurrent.thread
 
 class ReservationFragment : Fragment() {
     private var bookingStatus: MutableList<BookingStatus> = mutableListOf()
+    private lateinit var binding: FragmentBookingBinding
     private lateinit var bookingStatusEntity: List<BookingStatusEntity>
     private lateinit var bookingSeatsEntity: List<BookingSeatEntity>
     private lateinit var reservationListAdapter: ReservationListAdapter
@@ -48,13 +50,12 @@ class ReservationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val view = inflater.inflate(R.layout.fragment_booking, container, false)
-        val reservationList: ListView = view.findViewById(R.id.lv_reservation)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_booking, container, false)
         reservationListAdapter = ReservationListAdapter(
             bookingStatus
         ) { bookingStatus -> navigateToBooked(bookingStatus) }
-        reservationList.adapter = reservationListAdapter
-        return view
+        binding.lvReservation.adapter = reservationListAdapter
+        return binding.root
     }
 
     private fun navigateToBooked(bookingStatus: BookingStatus) {

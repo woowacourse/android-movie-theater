@@ -4,8 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import woowacourse.movie.R
-import woowacourse.movie.reservationfragment.ReservationViewHolder
+import woowacourse.movie.databinding.ItemReservationBinding
 import woowacourse.movie.domain.BookingStatus
 
 class ReservationListAdapter(
@@ -23,20 +22,20 @@ class ReservationListAdapter(
         convertView: View?,
         parent: ViewGroup
     ): View? {
-        val view: View
+        val binding: ItemReservationBinding
         val viewHolder: ReservationViewHolder
 
         if (convertView == null) {
-            view = LayoutInflater.from(parent.context).inflate(R.layout.item_reservation,parent, false)
-            viewHolder = ReservationViewHolder(view, reservations, onClick)
-            view.tag = viewHolder
+            binding = ItemReservationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            viewHolder = ReservationViewHolder(binding, reservations, onClick)
+            binding.root.tag = viewHolder
         } else {
-            view = convertView
-            viewHolder = view.tag as ReservationViewHolder
+            binding = ItemReservationBinding.bind(convertView)
+            viewHolder = binding.root.tag as ReservationViewHolder
         }
 
         viewHolder.bindReservation(position)
 
-        return view
+        return binding.root
     }
 }
