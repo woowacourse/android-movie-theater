@@ -1,7 +1,6 @@
 package woowacourse.movie.data.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -16,7 +15,7 @@ import woowacourse.movie.data.entity.TheaterEntity
 interface ReservationDao {
     @Transaction
     @Query("SELECT * FROM reservation")
-    fun getAll(): List<MovieTicketEntity>
+    fun getAllMovieTickets(): List<MovieTicketEntity>
 
     @Insert
     fun insertReservation(reservation: ReservationInfoEntity): Long
@@ -44,9 +43,6 @@ interface ReservationDao {
         insertSeats(updatedSeats)
         return reservationId
     }
-
-    @Delete
-    fun delete(movieTickets: ReservationInfoEntity)
 
     @Transaction
     @Query("SELECT * FROM reservation WHERE id = :reservationId")

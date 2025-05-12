@@ -14,6 +14,7 @@ import woowacourse.movie.data.db.AppDatabase
 import woowacourse.movie.data.entity.MovieTicketEntity
 import woowacourse.movie.data.entity.ReservationInfoEntity
 import woowacourse.movie.data.entity.SeatEntity
+import woowacourse.movie.data.storage.DefaultReservationStorage
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
 import woowacourse.movie.presenter.reservationComplete.ReservationCompleteContracts
 import woowacourse.movie.presenter.reservationComplete.ReservationCompletePresenter
@@ -25,7 +26,12 @@ import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.seatsToUi
 class ReservationCompleteActivity :
     androidx.appcompat.app.AppCompatActivity(),
     ReservationCompleteContracts.View {
-    private lateinit var presenter: ReservationCompleteContracts.Presenter
+    private val presenter: ReservationCompleteContracts.Presenter by lazy {
+        ReservationCompletePresenter(
+            this,
+            DefaultReservationStorage(AppDatabase.getDatabase(this)),
+        )
+    }
     private lateinit var binding: ActivityReservationCompleteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +44,6 @@ class ReservationCompleteActivity :
             insets
         }
 
-        presenter = ReservationCompletePresenter(this, AppDatabase.getDatabase(this))
         presenter.updateTicketData(
             intent.getSerializableExtraData<Long>(RESERVATION_ID_KEY) ?: run {
                 showShortToast("없는 예약 번호 입니다.")

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.data.db.AppDatabase
 import woowacourse.movie.data.entity.MovieTicketEntity
+import woowacourse.movie.data.storage.DefaultReservationStorage
 import woowacourse.movie.databinding.FragmentReservationDetailsBinding
 import woowacourse.movie.presenter.reservationDetail.ReservationDetailsContracts
 import woowacourse.movie.presenter.reservationDetail.ReservationDetailsPresenter
@@ -16,7 +17,12 @@ class ReservationDetailsFragment :
     ReservationDetailsContracts.View {
     private var _binding: FragmentReservationDetailsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var reservationDetailsPresenter: ReservationDetailsPresenter
+    private val presenter: ReservationDetailsContracts.Presenter by lazy {
+        ReservationDetailsPresenter(
+            this,
+            DefaultReservationStorage(AppDatabase.getDatabase(requireContext())),
+        )
+    }
     private val reservationDetailAdapter =
         ReservationDetailAdapter { navigateToReservationDetail(it) }
 
@@ -29,9 +35,7 @@ class ReservationDetailsFragment :
         _binding = FragmentReservationDetailsBinding.bind(view)
 
         binding.rvReservationDetails.adapter = reservationDetailAdapter
-        reservationDetailsPresenter =
-            ReservationDetailsPresenter(this, AppDatabase.getDatabase(requireContext()))
-        reservationDetailsPresenter.updateReservationDetails()
+        presenter.updateReservationDetails()
     }
 
     private fun navigateToReservationDetail(reservationDetailId: Long) {
@@ -39,15 +43,13 @@ class ReservationDetailsFragment :
     }
 
     override fun showReservationDetails(reservationDetails: List<MovieTicketEntity>) {
-        requireActivity().runOnUiThread {
-            reservationDetailAdapter.submitList(reservationDetails)
-        }
+        reservationDetailAdapter.submitList(reservationDetails)
     }
 
     override fun onResume() {
         super.onResume()
 
-        reservationDetailsPresenter.updateReservationDetails()
+        presenter.updateReservationDetails()
     }
 
     override fun onDestroyView() {

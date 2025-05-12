@@ -17,6 +17,7 @@ import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.data.db.AppDatabase
+import woowacourse.movie.data.storage.DefaultReservationStorage
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.seat.Seat
@@ -40,7 +41,16 @@ import java.time.ZoneId
 class SeatSelectionActivity :
     AppCompatActivity(),
     SeatSelectionContracts.View {
-    private lateinit var presenter: SeatSelectionContracts.Presenter
+    private val presenter: SeatSelectionContracts.Presenter by lazy {
+        SeatSelectionPresenter(
+            this,
+            DefaultReservationStorage(
+                AppDatabase.getDatabase(
+                    this,
+                ),
+            ),
+        )
+    }
     private lateinit var binding: ActivitySeatSelectionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +62,6 @@ class SeatSelectionActivity :
             insets
         }
 
-        presenter = SeatSelectionPresenter(this, AppDatabase.getDatabase(this))
         initView()
         setupClickListener()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -196,10 +205,8 @@ class SeatSelectionActivity :
     }
 
     override fun showReservationCompleteView(reservationId: Long) {
-        runOnUiThread {
-            startActivity(ReservationCompleteActivity.getIntent(this, reservationId))
-            finish()
-        }
+        startActivity(ReservationCompleteActivity.getIntent(this, reservationId))
+        finish()
     }
 
     override fun postAlarm(

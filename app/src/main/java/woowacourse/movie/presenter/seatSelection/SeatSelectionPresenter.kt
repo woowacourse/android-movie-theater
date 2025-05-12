@@ -1,15 +1,13 @@
 package woowacourse.movie.presenter.seatSelection
 
-import woowacourse.movie.data.db.AppDatabase
-import woowacourse.movie.data.mapper.toEntity
+import woowacourse.movie.data.storage.ReservationStorage
 import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.ticket.MovieTicket
-import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContracts.View,
-    private val database: AppDatabase,
+    private val reservationStorage: ReservationStorage,
 ) : SeatSelectionContracts.Presenter {
     private lateinit var movieToReserve: MovieToReserve
     private var seats: MutableList<Seat> = mutableListOf()
@@ -66,16 +64,14 @@ class SeatSelectionPresenter(
                 seats = seats.toList(),
                 theater = movieToReserve.theater,
             )
-        thread {
-            val reservationId: Long =
-                database.reservationDao().insertMovieTicketEntity(movieTicket.toEntity())
+        reservationStorage.saveMovieTicket(movieTicket) {
             view.postAlarm(
-                reservationId,
+                it,
                 movieTicket.movie.title,
                 movieTicket.movieDate,
                 movieTicket.movieTime.value,
             )
-            view.showReservationCompleteView(reservationId)
+            view.showReservationCompleteView(it)
         }
     }
 }
