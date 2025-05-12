@@ -1,7 +1,10 @@
 package woowacourse.movie.feature.setting.view
 
 import android.Manifest
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
@@ -15,6 +18,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.feature.setting.MyReceiver
 import woowacourse.movie.feature.setting.contract.SettingContract
 import woowacourse.movie.feature.setting.presenter.SettingPresenter
 
@@ -36,7 +40,7 @@ class SettingFragment :
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
         alarmSetting = requireActivity().getSharedPreferences("alarmSetting", Context.MODE_PRIVATE)
 
-        presenter = SettingPresenter(requireContext(), this, alarmSetting)
+        presenter = SettingPresenter(this, alarmSetting)
 
         binding.notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
             presenter.toggleNotificationSwitch(isChecked)
@@ -48,6 +52,20 @@ class SettingFragment :
 
     override fun setNotificationSwitchChecked(isChecked: Boolean) {
         binding.notificationSwitch.isChecked = isChecked
+        if (isChecked) {
+            showNotificationPermissionRequest()
+        } else {
+            val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(context, MyReceiver::class.java)
+            val pendingIntent =
+                PendingIntent.getBroadcast(
+                    context,
+                    0,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                )
+            alarmManager.cancel(pendingIntent)
+        }
     }
 
     override fun showNotificationPermissionRequest() {
