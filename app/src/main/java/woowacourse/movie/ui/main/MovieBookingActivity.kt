@@ -21,7 +21,6 @@ import woowacourse.movie.utils.intentSerializable
 class MovieBookingActivity : AppCompatActivity(), MovieBookingContract.View {
     private lateinit var binding: ActivityMovieBookingBinding
     private val presenter: MovieBookingContract.Presenter by lazy { MovieBookingPresenter(this) }
-    private val movieListFragment by lazy { MovieListFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,7 +100,7 @@ class MovieBookingActivity : AppCompatActivity(), MovieBookingContract.View {
     private fun updateBottomNavigation() {
         val activeFragment =
             supportFragmentManager.findFragmentById(R.id.main_fragment_container_view)
-                ?: movieListFragment
+                ?: MovieListFragment()
         when (activeFragment) {
             is MovieListFragment -> binding.navigation.selectedItemId = R.id.navigation_home
             is SettingsFragment -> binding.navigation.selectedItemId = R.id.navigation_settings
