@@ -1,8 +1,15 @@
 package woowacourse.movie.view
 
+import android.app.AlarmManager
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -36,6 +43,33 @@ class MainActivity : AppCompatActivity() {
             switchFragment(HomeFragment::class.java)
             binding.bottomNavMenu.selectedItemId = R.id.menu_fragment_home
         }
+
+        checkExactAlarmPermission()
+    }
+
+    private fun checkExactAlarmPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+            if (!alarmManager.canScheduleExactAlarms()) {
+                showExactAlarmPermissionDialog()
+            }
+        }
+    }
+
+    private fun showExactAlarmPermissionDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("정확한 알람 권한 필요")
+            .setMessage("예매 알림을 받으려면 '정확한 알람' 권한이 필요합니다.\n설정 화면으로 이동하시겠습니까?")
+            .setPositiveButton("설정으로 이동") { _, _ ->
+                val intent =
+                    Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                        data = "package:$packageName".toUri()
+                    }
+                startActivity(intent)
+            }
+            .setNegativeButton("취소", null)
+            .show()
     }
 
     private fun initBottomNavigation() {

@@ -61,7 +61,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 .setContentText(
                     context.getString(
                         R.string.notification_reservation_text,
-                        ticket?.title,
+                        ticket.title,
                     ),
                 )
                 .setContentIntent(pendingIntent)
