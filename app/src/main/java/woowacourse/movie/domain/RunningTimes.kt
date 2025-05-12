@@ -13,7 +13,7 @@ class RunningTimes(
         return dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY
     }
 
-    fun runningTimes(): List<LocalTime> {
+    fun getSchedule(): List<LocalTime> {
         val runningTimes = mutableListOf<LocalTime>()
         val currentDateTime = LocalDateTime.now()
 

@@ -26,7 +26,7 @@ class MovieBookingPresenter(
         view.showMovieInfo()
         view.updateMemberCount(this.count)
         view.showBookingDate(bookedDates)
-        view.showBookingTimes(RunningTimes(bookedDate).runningTimes())
+        view.showBookingTimes(RunningTimes(bookedDate).getSchedule())
     }
 
     override fun increaseCount() {
@@ -45,7 +45,7 @@ class MovieBookingPresenter(
 
     override fun selectDate(date: LocalDate) {
         bookedDate = date
-        view.showBookingTimes(RunningTimes(date).runningTimes())
+        view.showBookingTimes(RunningTimes(date).getSchedule())
     }
 
     override fun selectTime(time: LocalTime) {
