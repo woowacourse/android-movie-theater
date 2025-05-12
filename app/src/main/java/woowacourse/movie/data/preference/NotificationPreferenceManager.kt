@@ -14,7 +14,7 @@ class NotificationPreferenceManager(
             prefs.edit { putBoolean(KEY_NOTIFICATION_ENABLED, value) }
 
     companion object {
-        const val PREF_NAME = "NotificationPrefs"
+        private const val PREF_NAME = "NotificationPrefs"
         private const val KEY_NOTIFICATION_ENABLED = "notification_enabled"
     }
 }
