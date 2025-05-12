@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.movies.adapter
+package woowacourse.movie.presentation.movie.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.common.adapter.ItemClickListener

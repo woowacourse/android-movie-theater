@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.movies
+package woowacourse.movie.presentation.movie
 
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.recyclerview.widget.RecyclerView

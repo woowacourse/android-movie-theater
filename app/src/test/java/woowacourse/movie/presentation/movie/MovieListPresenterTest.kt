@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.movies
+package woowacourse.movie.presentation.movie
 
 import io.mockk.mockk
 import io.mockk.verify

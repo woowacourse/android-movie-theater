@@ -11,7 +11,7 @@ import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.BaseActivity
-import woowacourse.movie.presentation.movies.MovieListFragment
+import woowacourse.movie.presentation.movie.MovieListFragment
 import woowacourse.movie.presentation.settings.SettingsFragment
 import woowacourse.movie.presentation.ticket.list.TicketListFragment
 

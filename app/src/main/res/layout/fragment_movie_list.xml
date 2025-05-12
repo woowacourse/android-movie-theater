@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.movies.MovieListFragment">
+    tools:context=".presentation.movie.MovieListFragment">
 
     <data>
 
         <variable
             name="adapter"
-            type="woowacourse.movie.presentation.movies.adapter.MovieAdapter" />
+            type="woowacourse.movie.presentation.movie.adapter.MovieAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,9 +1,9 @@
-package woowacourse.movie.presentation.movies
+package woowacourse.movie.presentation.movie
 
 import woowacourse.movie.data.repository.DefaultMovieRepository
 import woowacourse.movie.data.repository.MovieRepository
 import woowacourse.movie.domain.model.Movie
-import woowacourse.movie.presentation.movies.adapter.MovieListItem
+import woowacourse.movie.presentation.movie.adapter.MovieListItem
 
 class MovieListPresenter(
     private val view: MovieListContract.View,
