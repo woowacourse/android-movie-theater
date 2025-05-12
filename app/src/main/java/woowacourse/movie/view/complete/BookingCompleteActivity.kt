@@ -15,6 +15,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.view.MenuItem
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
@@ -23,6 +29,8 @@ import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.main.MainActivity
 import woowacourse.movie.view.receiver.AlarmReceiver
+import woowacourse.movie.view.core.ext.requireSerializable
+import woowacourse.movie.view.uiModel.toUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
     private lateinit var binding: ActivityBookingCompleteBinding
@@ -38,6 +46,10 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
         presenter = BookingCompletePresenter.initialize(this, applicationContext)
         presenter.loadTicket(ticketId, isFromSeatScreen)
+        intent.requireSerializable<Ticket>(KEY_TICKET).apply {
+            presenter = BookingCompletePresenter(this@BookingCompleteActivity, this)
+        }
+
         initView()
     }
 
@@ -59,6 +71,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
                         addFlags(FLAG_ACTIVITY_SINGLE_TOP)
                     }
                 startActivity(intent)
+                finish()
                 true
             }
 
@@ -69,6 +82,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     override fun showTicket(ticket: Ticket) {
         binding.model =
             ticket.toCompleteScreen(
+            ticket.toUiModel(
                 getString(R.string.formatter_booking_schedule),
                 getString(R.string.formatter_text_seat_formatter),
                 getString(R.string.formatter_general_people_count),
@@ -134,6 +148,5 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         ) = Intent(context, BookingCompleteActivity::class.java).apply {
             putExtra(KEY_TICKET_ID, ticketId)
             from?.let { putExtra(KEY_FROM, from) }
-        }
     }
 }

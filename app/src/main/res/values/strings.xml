@@ -64,4 +64,7 @@
     <!-- 푸시 알림 -->
     <string name="notification_booking_tile">예매 알림</string>
     <string name="notification_movie_guide">%s 30분 후에 상영</string>
+    <string name="error_missing_movie_info">영화 정보를 불러올 수 없습니다. 다시 시도해주세요.</string>
+    <string name="error_missing_movie_seat">좌석 정보를 불러올 수 없습니다. 다시 시도해주세요.</string>
+    <string name="error_missing_booking_info">예매 정보를 불러올 수 없습니다. 다시 시도해주세요.</string>
 </resources>

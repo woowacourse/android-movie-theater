@@ -1,5 +1,6 @@
 package woowacourse.movie.view.seat
 
+import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
 
 interface SeatContract {

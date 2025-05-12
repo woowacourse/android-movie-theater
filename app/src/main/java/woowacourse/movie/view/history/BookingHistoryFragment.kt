@@ -60,5 +60,6 @@ class BookingHistoryFragment :
     override fun moveToTicketDetail(ticketId: Long) {
         val intent = BookingCompleteActivity.newIntent(requireContext(), ticketId)
         startActivity(intent)
+        return inflater.inflate(R.layout.fragment_booking_history, container, false)
     }
 }

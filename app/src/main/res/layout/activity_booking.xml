@@ -7,7 +7,7 @@
         <variable
             name="model"
             type="woowacourse.movie.view.booking.BookingScreenModel" />
-
+      
         <variable
             name="eventHandler"
             type="woowacourse.movie.view.booking.BookingActionHandler" />

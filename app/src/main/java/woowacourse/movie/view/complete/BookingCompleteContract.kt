@@ -5,7 +5,6 @@ import woowacourse.movie.domain.model.Ticket
 interface BookingCompleteContract {
     interface View {
         fun showTicket(ticket: Ticket)
-
         fun generateAlarm(ticket: Ticket)
     }
 
@@ -14,5 +13,9 @@ interface BookingCompleteContract {
             ticketId: Long,
             requestAlarm: Boolean,
         )
+    }
+
+    interface Presenter {
+        fun loadTicket()
     }
 }

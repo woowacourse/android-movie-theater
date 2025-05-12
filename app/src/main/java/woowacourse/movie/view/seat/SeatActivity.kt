@@ -14,6 +14,9 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatBinding
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.seat.Seat
+import woowacourse.movie.domain.model.Ticket
+import woowacourse.movie.domain.model.seat.Seat
+import woowacourse.movie.domain.model.seat.Seats
 import woowacourse.movie.view.complete.BookingCompleteActivity
 import woowacourse.movie.view.core.ext.getSerializableArrayList
 import woowacourse.movie.view.core.ext.requireSerializable
@@ -126,6 +129,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         const val KEY_FROM_SEAT = "KEY_FROM_SEAT"
         const val KEY_BOOKING = "BOOKING"
         private const val KEY_SEAT = "SEAT"
+
 
         fun newIntent(
             context: Context,

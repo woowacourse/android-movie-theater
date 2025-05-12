@@ -5,6 +5,7 @@ import woowacourse.movie.data.datasource.TicketDataSourceImpl
 import woowacourse.movie.data.db.UserDatabase
 import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.model.Booking
+import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Column
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
@@ -48,7 +49,8 @@ class SeatPresenter(
         if (seats.isNotSelectDone(limit)) {
             return view.showToast(limit)
         }
-        saveTicket()
+        val ticket = Ticket.initialize(booking, seats.item, seats.bookingPrice())
+        view.moveToBookingComplete(ticket)
     }
 
     override fun restore(seat: ArrayList<Seat>) {
