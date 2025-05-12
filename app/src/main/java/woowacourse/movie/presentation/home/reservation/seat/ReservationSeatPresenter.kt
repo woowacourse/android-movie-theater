@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.home.reservation.seat
 
+import woowacourse.movie.AppProvider
 import woowacourse.movie.data.ReservationRepositoryImpl
 import woowacourse.movie.domain.ReservationRepository
 import woowacourse.movie.domain.model.cinema.Seat
@@ -18,7 +19,7 @@ import kotlin.concurrent.thread
 
 class ReservationSeatPresenter(
     private val view: ReservationSeatContract.View,
-    private val reservationRepository: ReservationRepository = ReservationRepositoryImpl(),
+    private val reservationRepository: ReservationRepository = AppProvider.reservationRepository,
     policy: PricePolicy = DiceCinemaPricePolicy(),
 ) : ReservationSeatContract.Presenter {
     private val machine = TicketMachine(policy)

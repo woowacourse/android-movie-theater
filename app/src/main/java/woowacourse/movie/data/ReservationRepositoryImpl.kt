@@ -8,10 +8,7 @@ import woowacourse.movie.domain.ReservationRepository
 import woowacourse.movie.domain.model.ticketing.Ticket
 
 class ReservationRepositoryImpl(
-    private val dao: ReservationDao =
-        ReservationDatabase
-            .getInstance(GlobalApplication.instance)
-            .reservationDao(),
+    private val dao: ReservationDao
 ) : ReservationRepository {
     override fun getAll(): List<Ticket> = dao.getAll().toDomain()
 

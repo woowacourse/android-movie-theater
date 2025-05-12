@@ -6,11 +6,9 @@ import androidx.core.content.edit
 import woowacourse.movie.GlobalApplication
 
 class NotificationPreferenceManager(
-    private val prefs: SharedPreferences = GlobalApplication.instance.getSharedPreferences(
-        PREF_NAME,
-        Context.MODE_PRIVATE
-    ),
+    context: Context,
 ) {
+    private val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
     fun isNotificationEnabled(): Boolean = prefs.getBoolean(KEY_NOTIFICATION_ENABLED, false)
 
@@ -19,7 +17,7 @@ class NotificationPreferenceManager(
     }
 
     companion object {
-        private const val PREF_NAME = "NotificationPrefs"
+        private const val PREF_NAME = "SettingPrefs"
         private const val KEY_NOTIFICATION_ENABLED = "notification_enabled"
     }
 }

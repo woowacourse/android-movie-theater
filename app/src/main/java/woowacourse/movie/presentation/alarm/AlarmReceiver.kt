@@ -4,11 +4,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import woowacourse.movie.AppProvider
 import woowacourse.movie.data.SettingRepositoryImpl
 import woowacourse.movie.domain.SettingRepository
 
 class AlarmReceiver(
-    private val repository: SettingRepository = SettingRepositoryImpl(),
+    private val repository: SettingRepository = AppProvider.settingRepository,
     private val sender: NotificationSender = RemindNotificationSender(),
 ) : BroadcastReceiver() {
     override fun onReceive(

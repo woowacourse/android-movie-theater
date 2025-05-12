@@ -1,19 +1,32 @@
 package woowacourse.movie
 
 import android.app.Application
+import woowacourse.movie.data.ReservationRepositoryImpl
+import woowacourse.movie.data.SettingRepositoryImpl
+import woowacourse.movie.data.db.ReservationDatabase
+import woowacourse.movie.data.preference.NotificationPreferenceManager
 
 class GlobalApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        _instance = this
+        initAppProvider()
     }
 
-    companion object {
-        private const val NOT_INITIALIZED_MESSAGE = "Application Instance가 아직 초기화되지 않음"
+    private fun initAppProvider() {
+        initSettingRepository()
+        initReservationRepository()
+    }
 
-        private var _instance: GlobalApplication? = null
-        val instance: GlobalApplication
-            get() = requireNotNull(_instance) { NOT_INITIALIZED_MESSAGE }
+    private fun initSettingRepository() {
+        val preferenceManager = NotificationPreferenceManager(applicationContext)
+        val settingRepository = SettingRepositoryImpl(preferenceManager)
+        AppProvider.initSettingRepository(settingRepository)
+    }
+
+    private fun initReservationRepository() {
+        val dao = ReservationDatabase.getInstance(applicationContext).reservationDao()
+        val reservationRepository = ReservationRepositoryImpl(dao)
+        AppProvider.initReservationRepository(reservationRepository)
     }
 }
