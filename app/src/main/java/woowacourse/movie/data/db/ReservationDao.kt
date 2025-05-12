@@ -10,6 +10,6 @@ interface ReservationDao {
     @Query("SELECT * FROM reservation")
     fun getAll(): List<ReservationEntity>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(vararg reservation: ReservationEntity)
+    @Insert(onConflict = OnConflictStrategy.NONE)
+    fun insert(reservation: ReservationEntity): Long
 }

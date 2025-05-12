@@ -6,12 +6,12 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemReservationHistoryBinding
 import woowacourse.movie.presentation.common.base.BaseViewHolder
-import woowacourse.movie.presentation.common.model.TicketUiModel
+import woowacourse.movie.presentation.common.model.ReservationHistoryUiModel
 
 class ReservationHistoryViewHolder(
     view: ViewGroup,
     eventListener: ReservationHistoryEventListener,
-) : BaseViewHolder<TicketUiModel, ItemReservationHistoryBinding>(
+) : BaseViewHolder<ReservationHistoryUiModel, ItemReservationHistoryBinding>(
     DataBindingUtil.inflate(
         LayoutInflater.from(view.context),
         R.layout.item_reservation_history,
@@ -23,7 +23,7 @@ class ReservationHistoryViewHolder(
         binding.eventListener = eventListener
     }
 
-    override fun bind(item: TicketUiModel) {
-        binding.history = item
+    override fun bind(item: ReservationHistoryUiModel) {
+        binding.history = item.ticket
     }
 }

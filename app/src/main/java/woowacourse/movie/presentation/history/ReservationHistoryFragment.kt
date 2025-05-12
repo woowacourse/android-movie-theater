@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.presentation.common.base.BaseFragment
+import woowacourse.movie.presentation.common.model.ReservationHistoryUiModel
 import woowacourse.movie.presentation.common.model.TicketUiModel
 import woowacourse.movie.presentation.history.adapter.ReservationHistoryEventListener
 import woowacourse.movie.presentation.history.adapter.ReservationsAdapter
@@ -37,7 +38,7 @@ class ReservationHistoryFragment :
         presenter.fetchData()
     }
 
-    override fun showReservationHistory(histories: List<TicketUiModel>) {
+    override fun showReservationHistory(histories: List<ReservationHistoryUiModel>) {
         requireActivity().runOnUiThread {
             adapter.submitList(histories)
         }

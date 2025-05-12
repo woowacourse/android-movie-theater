@@ -4,20 +4,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import woowacourse.movie.databinding.ItemReservationHistoryBinding
 import woowacourse.movie.presentation.common.base.BaseViewHolder
-import woowacourse.movie.presentation.common.model.TicketUiModel
+import woowacourse.movie.presentation.common.model.ReservationHistoryUiModel
 
 class ReservationsAdapter(
     private val eventListener: ReservationHistoryEventListener,
-) : ListAdapter<TicketUiModel, BaseViewHolder<TicketUiModel, ItemReservationHistoryBinding>>(
+) : ListAdapter<ReservationHistoryUiModel, BaseViewHolder<ReservationHistoryUiModel, ItemReservationHistoryBinding>>(
         ReservationDiffUtil,
     ) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): BaseViewHolder<TicketUiModel, ItemReservationHistoryBinding> = ReservationHistoryViewHolder(parent, eventListener)
+    ): BaseViewHolder<ReservationHistoryUiModel, ItemReservationHistoryBinding> = ReservationHistoryViewHolder(parent, eventListener)
 
     override fun onBindViewHolder(
-        holder: BaseViewHolder<TicketUiModel, ItemReservationHistoryBinding>,
+        holder: BaseViewHolder<ReservationHistoryUiModel, ItemReservationHistoryBinding>,
         position: Int,
     ) {
         holder.bind(getItem(position))

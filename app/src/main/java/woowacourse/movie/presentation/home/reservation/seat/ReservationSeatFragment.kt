@@ -71,14 +71,15 @@ class ReservationSeatFragment :
         binding.canPublish = canPublish
     }
 
-    override fun notifyPublishedTickets(ticket: TicketUiModel) {
-        if (!AlarmHelper.canScheduleExactAlarms(requireContext())) {
-            showExactAlarmPermissionDialog(ticket)
-            return
-        }
+    override fun notifyPublishedTicketSuccess(ticket: TicketUiModel) =
+        requireActivity().runOnUiThread {
+            if (!AlarmHelper.canScheduleExactAlarms(requireContext())) {
+                showExactAlarmPermissionDialog(ticket)
+                return@runOnUiThread
+            }
 
-        navigateToResultScreen(ticket)
-    }
+            navigateToResultScreen(ticket)
+        }
 
     private fun initViews() {
         views = ReservationSeatViews(requireContext(), binding)
@@ -118,6 +119,14 @@ class ReservationSeatFragment :
     }
 
     override fun notifySeatUpdateFailed(message: String) {
+        showFailedToast(message)
+    }
+
+    override fun notifyPublishTicketFailed() = requireActivity().runOnUiThread {
+        showFailedToast(getString(R.string.publish_ticket_failed_message))
+    }
+
+    private fun showFailedToast(message: String) {
         showToast(message.ifEmpty { getString(R.string.default_error_message) })
     }
 

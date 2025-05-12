@@ -1,7 +1,6 @@
 package woowacourse.movie.presentation.home.reservation.seat
 
 import woowacourse.movie.AppProvider
-import woowacourse.movie.data.ReservationRepositoryImpl
 import woowacourse.movie.domain.ReservationRepository
 import woowacourse.movie.domain.model.cinema.Seat
 import woowacourse.movie.domain.model.cinema.Seats
@@ -59,7 +58,6 @@ class ReservationSeatPresenter(
             machine.publishTickets(reservationInfo)
         }.onSuccess {
             saveReservationHistory(it)
-            view.notifyPublishedTickets(it.toUiModel())
         }
     }
 
@@ -83,6 +81,8 @@ class ReservationSeatPresenter(
     private fun saveReservationHistory(ticket: Ticket) {
         thread {
             reservationRepository.insert(ticket)
+                .onSuccess { view.notifyPublishedTicketSuccess(ticket.toUiModel()) }
+                .onFailure { view.notifyPublishTicketFailed() }
         }
     }
 }

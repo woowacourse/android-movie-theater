@@ -95,7 +95,7 @@ class ReservationSeatPresenterTest {
         every { view.updateTotalPrice(any()) } just Runs
         every { view.notifyCanPublish(any()) } just Runs
         every { view.updateSeatState(any()) } just Runs
-        every { view.notifyPublishedTickets(any()) } just Runs
+        every { view.notifyPublishedTicketSuccess(any()) } just Runs
         presenter.fetchData(fakeReservationInfo, Seats.DEFAULT_SEATS.toUiModel(), ScreenUiModel(emptyList()))
         presenter.updateSeat(seat)
 
@@ -103,6 +103,6 @@ class ReservationSeatPresenterTest {
         presenter.publishTickets()
 
         // Then: view에 notifyPublishedTickets가 호출되어야 한다
-        verify { view.notifyPublishedTickets(any()) }
+        verify { view.notifyPublishedTicketSuccess(any()) }
     }
 }
