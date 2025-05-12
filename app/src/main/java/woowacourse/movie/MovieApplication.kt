@@ -9,7 +9,6 @@ import woowacourse.movie.data.database.MovieDatabase.Companion.DATABASE_NAME
 import woowacourse.movie.data.datasource.SettingPreferenceDataSource
 import woowacourse.movie.data.repository.BookingRepositoryImpl
 import woowacourse.movie.data.repository.SettingRepositoryImpl
-import woowacourse.movie.feature.receiver.NotificationReceiver.Companion.MOVIE_NOTIFICATION_CHANNEL_ID
 
 class MovieApplication : Application() {
     val movieDatabase by lazy {
@@ -32,5 +31,9 @@ class MovieApplication : Application() {
         val channel = NotificationChannel(MOVIE_NOTIFICATION_CHANNEL_ID, name, importance)
         val notificationManager: NotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
+    }
+
+    companion object {
+        const val MOVIE_NOTIFICATION_CHANNEL_ID = "MOVIE_NOTIFICATION_CHANNEL"
     }
 }

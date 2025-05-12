@@ -12,6 +12,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import woowacourse.movie.MovieApplication
+import woowacourse.movie.MovieApplication.Companion.MOVIE_NOTIFICATION_CHANNEL_ID
 import woowacourse.movie.R
 import woowacourse.movie.domain.repository.SettingRepository
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
@@ -70,7 +71,6 @@ class NotificationReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        const val MOVIE_NOTIFICATION_CHANNEL_ID = "MOVIE_NOTIFICATION_CHANNEL"
         private const val BOOKING_INFO_KEY = "BOOKING_INFO"
         private const val NOTIFICATION_ACTION = "NOTIFICATION"
 
