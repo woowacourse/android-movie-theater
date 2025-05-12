@@ -49,7 +49,7 @@ class AlarmScheduler(
         )
     }
 
-    fun requestExactAlarmPermission(context: Context) {
+    fun requestExactAlarmPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

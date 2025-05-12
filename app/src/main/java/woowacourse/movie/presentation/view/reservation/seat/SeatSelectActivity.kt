@@ -120,7 +120,7 @@ class SeatSelectActivity :
             .setPositiveButton(R.string.setting_request_permission_dialog_positive) { _, _ ->
                 intent.putExtra(Extras.ReservationInfoData.RESERVATION_KEY, reservationInfo)
                 intent.putExtra(Extras.ReservationInfoData.ALARM_SETTING_KEY, true)
-                alarmScheduler.requestExactAlarmPermission(this)
+                alarmScheduler.requestExactAlarmPermission()
             }.setNegativeButton(R.string.setting_request_permission_dialog_negative) { _, _ ->
                 showToast(getString(R.string.reservation_dialog_no_alarm_complete))
                 presenter.saveReservation(reservationInfo)
