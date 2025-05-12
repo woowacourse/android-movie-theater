@@ -44,6 +44,7 @@ class BookingCompleteActivityTest {
                         seats = MovieSeats(setOf(MovieSeat(1, 1), MovieSeat(2, 2))),
                         ticketCount = TicketCount(2),
                     ).toUi(),
+                "",
             )
 
         activityScenario = ActivityScenario.launch(intent)
