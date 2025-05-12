@@ -23,7 +23,6 @@ import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.main.MainActivity
 import woowacourse.movie.view.receiver.AlarmReceiver
-import woowacourse.movie.view.uiModel.toUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
     private lateinit var binding: ActivityBookingCompleteBinding
@@ -69,7 +68,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
     override fun showTicket(ticket: Ticket) {
         binding.model =
-            ticket.toUiModel(
+            ticket.toCompleteScreen(
                 getString(R.string.formatter_booking_schedule),
                 getString(R.string.formatter_text_seat_formatter),
                 getString(R.string.formatter_general_people_count),

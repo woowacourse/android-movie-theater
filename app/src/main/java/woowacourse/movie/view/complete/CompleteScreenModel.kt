@@ -1,9 +1,9 @@
-package woowacourse.movie.view.uiModel
+package woowacourse.movie.view.complete
 
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.core.util.StringFormatter
 
-data class TicketUiModel(
+data class CompleteScreenModel(
     val title: String,
     val bookingSchedule: String,
     val theaterName: String,
@@ -12,12 +12,12 @@ data class TicketUiModel(
     val price: String,
 )
 
-fun Ticket.toUiModel(
+fun Ticket.toCompleteScreen(
     scheduleFormatter: String,
     seatFormatter: String,
     countFormatter: String,
     paymentFormatter: String,
-): TicketUiModel {
+): CompleteScreenModel {
     val dotFormatted = StringFormatter.dotDateFormat(bookingDate)
     val formatedSchedule = scheduleFormatter.format(dotFormatted, bookingTime)
     val formatedSeats =
@@ -29,7 +29,7 @@ fun Ticket.toUiModel(
     val formatedCount = countFormatter.format(count.value)
     val formatedPrice = paymentFormatter.format(StringFormatter.thousandFormat(price))
 
-    return TicketUiModel(
+    return CompleteScreenModel(
         title = title,
         bookingSchedule = formatedSchedule,
         theaterName = theaterName,

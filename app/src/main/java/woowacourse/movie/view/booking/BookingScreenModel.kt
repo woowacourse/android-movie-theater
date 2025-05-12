@@ -1,27 +1,27 @@
-package woowacourse.movie.view.uiModel
+package woowacourse.movie.view.booking
 
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.view.core.bindingadapter.ImageSource
 import woowacourse.movie.view.core.util.StringFormatter
 
-data class MovieUiModel(
+data class BookingScreenModel(
     val title: String,
     val posterResource: ImageSource,
     val screeningPeriod: String,
     val runningTime: String,
 )
 
-fun Movie.toUiModel(
+fun Movie.toBookingScreen(
     datePeriodFormatter: String,
     runningTimeFormatter: String,
-): MovieUiModel {
+): BookingScreenModel {
     val startDate = StringFormatter.dotDateFormat(screeningStartDate)
     val endDate = StringFormatter.dotDateFormat(screeningEndDate)
 
     val screeningPeriod = datePeriodFormatter.format(startDate, endDate)
     val formattedRunningTimme = runningTimeFormatter.format(runningTime)
 
-    return MovieUiModel(
+    return BookingScreenModel(
         title = title,
         posterResource = ImageSource.Resource(posterResource),
         screeningPeriod = screeningPeriod,
