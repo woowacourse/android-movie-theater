@@ -68,7 +68,7 @@ class HomePresenterTest {
         presenter.updateNotificationPermission(false)
 
         // then:
-        notificationPermissionStorage.updateNotificationPermission(false)
+        verify { notificationPermissionStorage.updateNotificationPermission(false) }
     }
 
     @Test
@@ -80,7 +80,7 @@ class HomePresenterTest {
         presenter.updateNotificationPermission(true)
 
         // then:
-        notificationPermissionStorage.updateNotificationPermission(true)
+        verify { notificationPermissionStorage.updateNotificationPermission(true) }
     }
 
     @After
