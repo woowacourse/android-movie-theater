@@ -7,6 +7,6 @@ interface ScreeningRepository {
     fun fetch(): List<Screening>
 }
 
-class DefaultScreeningRepository : ScreeningRepository {
+class LocalScreeningRepository : ScreeningRepository {
     override fun fetch(): List<Screening> = ScreeningData.values
 }

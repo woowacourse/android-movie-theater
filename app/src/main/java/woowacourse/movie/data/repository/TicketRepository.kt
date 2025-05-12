@@ -12,7 +12,7 @@ interface TicketRepository {
     fun save(ticket: Ticket)
 }
 
-class DefaultTicketRepository(
+class LocalTicketRepository(
     private val database: MovieDatabase,
 ) : TicketRepository {
     override fun getAll(): List<Ticket> {

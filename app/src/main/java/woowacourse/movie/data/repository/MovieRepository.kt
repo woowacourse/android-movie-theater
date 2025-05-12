@@ -7,6 +7,6 @@ interface MovieRepository {
     fun fetch(): List<Movie>
 }
 
-class DefaultMovieRepository : MovieRepository {
+class LocalMovieRepository : MovieRepository {
     override fun fetch(): List<Movie> = MovieData.movies
 }

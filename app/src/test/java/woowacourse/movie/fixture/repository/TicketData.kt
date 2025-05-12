@@ -1,5 +1,7 @@
-package woowacourse.movie.data
+package woowacourse.movie.fixture.repository
 
+import woowacourse.movie.data.MovieData
+import woowacourse.movie.data.TheaterData
 import woowacourse.movie.domain.model.HeadCount
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
