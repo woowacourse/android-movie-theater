@@ -18,27 +18,11 @@ class RemindNotificationSender : NotificationSender {
         val ticket = intent.getParcelableCompat<TicketUiModel>(AlarmHelper.KEY_TICKET)
         val beforeTime = intent.getIntExtra(AlarmHelper.KEY_TIME_BEFORE_MINUTES, 0)
 
-        val pendingIntent = createPendingIntent(context, ticket)
+        val pendingIntent = ReservationResultActivity.newPendingIntent(context, ticket)
         val notification = buildNotification(context, ticket, beforeTime, pendingIntent)
 
         val manager = context.getSystemService(NotificationManager::class.java)
         manager.notify(ticket.hashCode(), notification)
-    }
-
-    private fun createPendingIntent(
-        context: Context,
-        ticket: TicketUiModel,
-    ): PendingIntent {
-        val activityIntent = Intent(context, ReservationResultActivity::class.java)
-        activityIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        activityIntent.putExtra(AlarmHelper.KEY_TICKET, ticket)
-
-        return PendingIntent.getActivity(
-            context,
-            ticket.hashCode(),
-            activityIntent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
-        )
     }
 
     private fun buildNotification(
