@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         initBottomNavigation()
 
         if (savedInstanceState == null) {
-            switchFragment(HomeFragment::class.java)
             binding.bottomNavMenu.selectedItemId = R.id.menu_fragment_home
         }
 
@@ -88,22 +87,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun switchFragment(classType: Class<out Fragment>) {
+        val tag = classType.simpleName
+
+        val currentFragment = supportFragmentManager.findFragmentByTag(currentFragmentTag)
+        val targetFragment = supportFragmentManager.findFragmentByTag(tag)
+
         supportFragmentManager.commit {
             setReorderingAllowed(true)
 
-            supportFragmentManager.fragments.forEach { fragment ->
-                hide(fragment)
-            }
-
-            val targetFragment = supportFragmentManager.findFragmentByTag(classType.simpleName)
+            currentFragment?.let { hide(it) }
 
             if (targetFragment == null) {
-                add(R.id.main_fragment_container, classType, null, classType.simpleName)
+                add(R.id.main_fragment_container, classType, null, tag)
             } else {
                 show(targetFragment)
             }
-            currentFragmentTag = classType.simpleName
         }
+
+        currentFragmentTag = tag
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
