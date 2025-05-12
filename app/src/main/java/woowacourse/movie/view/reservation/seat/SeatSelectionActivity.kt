@@ -14,6 +14,7 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.alarm.AlarmHelper
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.db.ReservationInfoDatabase
 import woowacourse.movie.domain.model.ReservationInfo
@@ -133,6 +134,8 @@ class SeatSelectionActivity :
     }
 
     override fun navigateToResult(reservationInfo: ReservationInfo) {
+        AlarmHelper.setAlarm(this, reservationInfo)
+
         startActivity(ReservationResultActivity.newIntent(this, reservationInfo))
     }
 
