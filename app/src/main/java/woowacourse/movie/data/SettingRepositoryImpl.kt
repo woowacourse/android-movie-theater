@@ -1,14 +1,14 @@
 package woowacourse.movie.data
 
 import woowacourse.movie.data.preference.NotificationPreferenceManager
-import woowacourse.movie.domain.NotificationRepository
+import woowacourse.movie.domain.SettingRepository
 
-class NotificationRepositoryImpl(
+class SettingRepositoryImpl(
     private val preferenceManager: NotificationPreferenceManager = NotificationPreferenceManager(),
-) : NotificationRepository {
+) : SettingRepository {
     override fun updateNotificationEnabled(isEnabled: Boolean) {
         preferenceManager.isNotificationEnabled = isEnabled
     }
 
-    override fun notificationEnabled(): Boolean = preferenceManager.isNotificationEnabled
+    override fun isNotificationEnabled(): Boolean = preferenceManager.isNotificationEnabled
 }

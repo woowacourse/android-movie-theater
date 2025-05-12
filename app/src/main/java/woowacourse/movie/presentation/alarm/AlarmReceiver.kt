@@ -4,18 +4,18 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import woowacourse.movie.data.NotificationRepositoryImpl
-import woowacourse.movie.domain.NotificationRepository
+import woowacourse.movie.data.SettingRepositoryImpl
+import woowacourse.movie.domain.SettingRepository
 
 class AlarmReceiver(
-    private val repository: NotificationRepository = NotificationRepositoryImpl(),
+    private val repository: SettingRepository = SettingRepositoryImpl(),
     private val sender: NotificationSender = RemindNotificationSender(),
 ) : BroadcastReceiver() {
     override fun onReceive(
         context: Context,
         intent: Intent,
     ) {
-        if (!repository.notificationEnabled()) return
+        if (!repository.isNotificationEnabled()) return
 
         runCatching {
             sender.send(context, intent)

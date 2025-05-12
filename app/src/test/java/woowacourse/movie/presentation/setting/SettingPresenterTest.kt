@@ -8,11 +8,11 @@ import io.mockk.verifyAll
 import io.mockk.verifySequence
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.domain.NotificationRepository
+import woowacourse.movie.domain.SettingRepository
 
 class SettingPresenterTest {
     private lateinit var view: SettingContract.View
-    private lateinit var repository: NotificationRepository
+    private lateinit var repository: SettingRepository
     private lateinit var presenter: SettingPresenter
 
     @BeforeEach
@@ -24,14 +24,14 @@ class SettingPresenterTest {
     @Test
     fun `초기화 시 알림 수신 여부를 View에 전달한다`() {
         // given
-        every { repository.notificationEnabled() } returns true
+        every { repository.isNotificationEnabled() } returns true
 
         // when
         presenter = SettingPresenter(view, repository)
 
         // then
         verifyAll {
-            repository.notificationEnabled()
+            repository.isNotificationEnabled()
             view.notifyNotificationEnabled(true)
         }
     }
@@ -40,7 +40,7 @@ class SettingPresenterTest {
     fun `알림 설정을 변경하면 알림 수신 여부가 저장되고 View에 반영된다`() {
         // given
         every { repository.updateNotificationEnabled(any()) } just Runs
-        every { repository.notificationEnabled() } returns true
+        every { repository.isNotificationEnabled() } returns true
 
         presenter = SettingPresenter(view, repository)
 
@@ -49,10 +49,10 @@ class SettingPresenterTest {
 
         // then
         verifySequence {
-            repository.notificationEnabled()
+            repository.isNotificationEnabled()
             view.notifyNotificationEnabled(true)
             repository.updateNotificationEnabled(true)
-            repository.notificationEnabled()
+            repository.isNotificationEnabled()
             view.notifyNotificationEnabled(true)
         }
     }

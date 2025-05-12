@@ -8,14 +8,14 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.domain.NotificationRepository
+import woowacourse.movie.domain.SettingRepository
 import woowacourse.movie.presentation.common.model.TicketUiModel
 import java.time.LocalDateTime
 
 class AlarmReceiverTest {
     private lateinit var context: Context
     private lateinit var intent: Intent
-    private lateinit var repository: NotificationRepository
+    private lateinit var repository: SettingRepository
     private lateinit var receiver: AlarmReceiver
     private val ticket =
         TicketUiModel(
@@ -33,14 +33,14 @@ class AlarmReceiverTest {
         intent = Intent(context, AlarmReceiver::class.java).putExtra(AlarmHelper.KEY_TICKET, ticket)
 
         repository =
-            object : NotificationRepository {
+            object : SettingRepository {
                 private var fakeIsEnabled = false
 
                 override fun updateNotificationEnabled(isEnabled: Boolean) {
                     fakeIsEnabled = isEnabled
                 }
 
-                override fun notificationEnabled(): Boolean = fakeIsEnabled
+                override fun isNotificationEnabled(): Boolean = fakeIsEnabled
             }
         receiver = AlarmReceiver(repository)
     }
