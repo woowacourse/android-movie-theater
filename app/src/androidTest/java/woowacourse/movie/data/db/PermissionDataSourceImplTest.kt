@@ -1,6 +1,7 @@
 package woowacourse.movie.data.db
 
 import android.content.SharedPreferences
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -23,19 +24,30 @@ class PermissionDataSourceImplTest {
 
     @Test
     fun `권한이_허용_되면_true를_저장한다`() {
+        // given
         dataSource.savePermission(true)
 
+        // when
         val result = dataSource.isGranted()
 
+        // then
         assertEquals(true, result)
     }
 
     @Test
     fun `권한이_거부_되면_false를_저장한다`() {
+        // given
         dataSource.savePermission(false)
 
+        // when
         val result = dataSource.isGranted()
 
+        // then
         assertEquals(false, result)
+    }
+
+    @After
+    fun tearDown()  {
+        sharedPreferences.edit().clear().apply()
     }
 }
