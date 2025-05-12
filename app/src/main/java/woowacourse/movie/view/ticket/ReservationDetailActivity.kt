@@ -1,5 +1,7 @@
 package woowacourse.movie.view.ticket
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -10,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
+import woowacourse.movie.ReservationAlarmReceiver
 import woowacourse.movie.contract.ticket.ReservationDetailContract
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
@@ -17,6 +20,7 @@ import woowacourse.movie.domain.ticket.Reservation
 import woowacourse.movie.presenter.ticket.ReservationDetailPresenter
 import woowacourse.movie.view.util.ErrorMessage
 import java.time.LocalDateTime
+import java.time.ZoneId
 
 class ReservationDetailActivity :
     AppCompatActivity(),
@@ -39,18 +43,37 @@ class ReservationDetailActivity :
             insets
         }
 
+        val reservation =
+            intent?.getTicketExtra(EXTRA_TICKET) ?: error(ErrorMessage(CAUSE_TICKET).notProvided())
+
         findViews()
-        initPresenter()
+        initPresenter(reservation)
         initViews()
+        setAlarmManager(reservation)
     }
 
-    private fun initPresenter() {
-        val ticket =
-            intent?.getTicketExtra(EXTRA_TICKET) ?: error(
-                ErrorMessage(CAUSE_TICKET).notProvided(),
-            )
+    private fun setAlarmManager(reservation: Reservation) {
+        val intent = ReservationAlarmReceiver.newIntent(this, reservation)
 
-        presenter = ReservationDetailPresenter(this, ticket)
+        val pendingIntent =
+            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val canScheduleExactAlarms = alarmManager.canScheduleExactAlarms()
+            if (!canScheduleExactAlarms) return
+        }
+
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            reservation.showtime.atZone(ZoneId.systemDefault()).toEpochSecond() * 1_000,
+            pendingIntent,
+        )
+    }
+
+    private fun initPresenter(reservation: Reservation) {
+        presenter = ReservationDetailPresenter(this, reservation)
     }
 
     private fun findViews() {
@@ -125,8 +148,6 @@ class ReservationDetailActivity :
 
     companion object {
         private const val CAUSE_TICKET = "ticket"
-        private const val CAUSE_SEATS = "seats"
-        private const val CAUSE_CINEMA = "cinemaName"
 
         private const val EXTRA_TICKET = "woowacourse.movie.EXTRA_TICKET"
 
