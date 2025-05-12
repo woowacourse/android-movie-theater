@@ -36,7 +36,7 @@ class AlarmReceiver : BroadcastReceiver() {
             val title = context.getString(R.string.notification_content_title)
 
             val openIntent =
-                BookingCompleteActivity.Companion.createIntent(context, BookingType.HISTORY, ticket)
+                BookingCompleteActivity.createIntent(context, BookingType.HISTORY, ticket)
             val contentIntent =
                 PendingIntent.getActivity(
                     context,
