@@ -36,8 +36,7 @@ class MovieBookingActivity : AppCompatActivity(), MovieBookingContract.View {
         setUpPresenter()
         setupDatePicker()
         setupTimePicker()
-        setupMemberCount()
-        setupBookingCompleteButton()
+        setupClickListener()
     }
 
     override fun showMovieInfo() {
@@ -138,13 +137,10 @@ class MovieBookingActivity : AppCompatActivity(), MovieBookingContract.View {
             }
     }
 
-    private fun setupMemberCount() {
+    private fun setupClickListener() {
         binding.bookingPlusMemberCount.setOnClickListener { presenter.increaseCount() }
-        binding.bookingMinusMemberCount.setOnClickListener { presenter.decreaseCount() }
-    }
-
-    private fun setupBookingCompleteButton() {
         binding.bookingCompleteButton.setOnClickListener { presenter.confirmBooking() }
+        binding.bookingMinusMemberCount.setOnClickListener { presenter.decreaseCount() }
     }
 
     companion object {
