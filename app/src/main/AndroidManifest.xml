@@ -33,6 +33,8 @@
         <activity
             android:name=".view.reservation.ReservationActivity"
             android:exported="false" />
+
+        <receiver android:name=".alarm.AlarmReceiver" />
     </application>
 
 </manifest>
