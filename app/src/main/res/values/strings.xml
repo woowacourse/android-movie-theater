@@ -43,4 +43,5 @@
     <string name="setting_alarm_content">해제하면 푸시 알림을 수신할 수 없습니다.</string>
     <string name="notification_ticket_text">%1$s30분 후에 상영.</string>
     <string name="notification_ticket_title">예매 알림</string>
+    <string name="notification_ticket_description">영화 상영전 알림</string>
 </resources>

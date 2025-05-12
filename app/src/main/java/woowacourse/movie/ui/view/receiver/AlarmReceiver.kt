@@ -1,5 +1,6 @@
 package woowacourse.movie.ui.view.receiver
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -21,26 +22,25 @@ class AlarmReceiver : BroadcastReceiver() {
         if (context == null || intent == null) return
         val ticketId = intent.getLongExtra(EXTRA_ALARM_TICKET_ID, -1)
         val ticket = intent.getTicketExtra(ticketId.toString()) ?: return
-        showNotification(context, ticket)
+        showTicketNotification(context, ticket)
     }
 
-    private fun showNotification(
+    private fun showTicketNotification(
         context: Context,
         ticket: Ticket,
     ) {
-        val channelId = "alarm_channel"
+        if (ticket.id == null) return
         val channel =
             NotificationChannel(
-                channelId,
+                CHANNEL_ID,
                 context.getString(R.string.notification_ticket_title),
                 NotificationManager.IMPORTANCE_HIGH,
             ).apply {
-                description = "영화 상영전 알림"
+                description = context.getString(R.string.notification_ticket_description)
             }
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
-
         val ticketIntent =
             ticket.run {
                 TicketActivity.newIntent(
@@ -54,7 +54,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 )
             }
 
-        val resultPendingIntent =
+        val ticketPendingIntent =
             PendingIntent.getActivity(
                 context,
                 0,
@@ -62,17 +62,24 @@ class AlarmReceiver : BroadcastReceiver() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
 
-        val notification =
-            NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.drawable.alarm_icon)
-                .setContentTitle(context.getString(R.string.notification_ticket_title))
-                .setContentText(context.getString(R.string.notification_ticket_text, ticket.title))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(resultPendingIntent)
-                .setAutoCancel(true)
-                .build()
+        val notification = ticketNotification(context, ticket, ticketPendingIntent)
 
-        notificationManager.notify(1001, notification)
+        notificationManager.notify(ticket.id.toInt(), notification)
+    }
+
+    private fun ticketNotification(
+        context: Context,
+        ticket: Ticket,
+        pendingIntent: PendingIntent,
+    ): Notification {
+        return NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.alarm_icon)
+            .setContentTitle(context.getString(R.string.notification_ticket_title))
+            .setContentText(context.getString(R.string.notification_ticket_text, ticket.title))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .build()
     }
 
     @Suppress("DEPRECATION")
@@ -83,4 +90,8 @@ class AlarmReceiver : BroadcastReceiver() {
 
             else -> getSerializableExtra(key) as? Ticket
         }
+
+    companion object {
+        private const val CHANNEL_ID = "id_ticket_alarm_channel"
+    }
 }
