@@ -38,7 +38,7 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         val db = ReservationDatabase.getInstance(requireContext())
-        repository = ReservationRepository(db!!.reservationDao())
+        repository = ReservationRepository(db.reservationDao())
         presenter = ReservationListPresenter(this, repository)
 
         presenter.initializeData()
@@ -65,7 +65,8 @@ class ReservationListFragment : Fragment(), ReservationListContract.View {
     }
 
     override fun startBookingCompleteActivity(reservation: TicketUiModel) {
-        val intent = BookingCompleteActivity.createIntent(requireContext(), BookingType.HISTORY, reservation)
+        val intent =
+            BookingCompleteActivity.createIntent(requireContext(), BookingType.HISTORY, reservation)
         startActivity(intent)
     }
 }

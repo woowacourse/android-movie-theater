@@ -13,18 +13,17 @@ abstract class ReservationDatabase : RoomDatabase() {
         @Volatile
         private var instance: ReservationDatabase? = null
 
-        fun getInstance(context: Context): ReservationDatabase? {
-            if (instance == null) {
-                synchronized(ReservationDatabase::class) {
-                    instance =
-                        Room.databaseBuilder(
-                            context.applicationContext,
-                            ReservationDatabase::class.java,
-                            "reservationDatabase",
-                        ).build()
-                }
+        fun getInstance(context: Context): ReservationDatabase {
+            return instance ?: synchronized(this) {
+                val newInstance =
+                    Room.databaseBuilder(
+                        context.applicationContext,
+                        ReservationDatabase::class.java,
+                        "reservationDatabase",
+                    ).build()
+                instance = newInstance
+                newInstance
             }
-            return instance
         }
     }
 }
