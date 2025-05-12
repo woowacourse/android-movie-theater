@@ -17,8 +17,9 @@ fun ImageView.setPosterImage(movie: Movie?) {
 
 @BindingAdapter("imgRes")
 fun ImageView.setImageViewResource(
-    @DrawableRes resId: Int,
+    @DrawableRes resId: Int?,
 ) {
+    resId ?: return
     setImageResource(resId)
 }
 
