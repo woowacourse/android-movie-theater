@@ -5,9 +5,9 @@ import woowacourse.movie.repository.SettingRepository
 import woowacourse.movie.repository.TicketRepository
 
 class SettingPresenter(
-    val view: SettingContract.View,
-    val repository: TicketRepository,
-    val settingRepository: SettingRepository,
+    private val view: SettingContract.View,
+    private val repository: TicketRepository,
+    private val settingRepository: SettingRepository,
 ) : SettingContract.Presenter {
     override fun setNotification() {
         repository.findAll()
