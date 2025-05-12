@@ -20,7 +20,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.setPadding
 import woowacourse.movie.R
-import woowacourse.movie.ReservationDatabase
 import woowacourse.movie.contract.reservation.SeatSelectionContract
 import woowacourse.movie.data.reservation.LocalReservationData
 import woowacourse.movie.domain.reservation.Row

@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.view.reservation
 
 import androidx.room.Dao
 import androidx.room.Insert

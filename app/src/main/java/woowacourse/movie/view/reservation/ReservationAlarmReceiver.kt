@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.view.reservation
 
 import android.Manifest
 import android.app.PendingIntent
@@ -10,6 +10,7 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import woowacourse.movie.R
 import woowacourse.movie.data.ApplicationSettings
 import woowacourse.movie.domain.ticket.Reservation
 import woowacourse.movie.view.ticket.ReservationDetailActivity
@@ -44,7 +45,7 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
         PendingIntent.getActivity(
             context,
             0,
-            ReservationDetailActivity.newIntent(context, reservation),
+            ReservationDetailActivity.Companion.newIntent(context, reservation),
             PendingIntent.FLAG_IMMUTABLE,
         )
 

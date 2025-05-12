@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.view.reservation
 
 import androidx.room.TypeConverter
 import woowacourse.movie.domain.reservation.Seat

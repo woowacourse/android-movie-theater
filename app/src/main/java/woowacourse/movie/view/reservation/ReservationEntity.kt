@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.view.reservation
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

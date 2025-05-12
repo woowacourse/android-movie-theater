@@ -12,12 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
-import woowacourse.movie.ReservationAlarmReceiver
 import woowacourse.movie.contract.ticket.ReservationDetailContract
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Reservation
 import woowacourse.movie.presenter.ticket.ReservationDetailPresenter
+import woowacourse.movie.view.reservation.ReservationAlarmReceiver
 import woowacourse.movie.view.util.ErrorMessage
 import java.time.LocalDateTime
 import java.time.ZoneId

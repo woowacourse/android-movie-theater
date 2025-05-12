@@ -1,8 +1,8 @@
 package woowacourse.movie.data.reservation
 
-import woowacourse.movie.ReservationDao
 import woowacourse.movie.domain.ticket.Reservation
-import woowacourse.movie.toEntity
+import woowacourse.movie.view.reservation.ReservationDao
+import woowacourse.movie.view.reservation.toEntity
 
 interface ReservationData {
     fun add(reservation: Reservation)
