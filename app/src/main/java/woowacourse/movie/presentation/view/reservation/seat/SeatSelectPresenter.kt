@@ -1,15 +1,14 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
+import woowacourse.movie.domain.SaveReservationFetcher
 import woowacourse.movie.domain.model.ReservationInfo
-import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.toDomain
 import woowacourse.movie.presentation.model.toPresentation
-import kotlin.concurrent.thread
 
 class SeatSelectPresenter(
     val view: SeatSelectContract.View,
-    private val reservationRepository: ReservationRepository,
+    private val saveReservationFetcher: SaveReservationFetcher,
 ) : SeatSelectContract.Presenter {
     private lateinit var reservationInfo: ReservationInfo
     private lateinit var theaterName: String
@@ -63,9 +62,7 @@ class SeatSelectPresenter(
     }
 
     override fun saveReservation(reservationInfo: ReservationInfoUiModel) {
-        thread {
-            reservationRepository.saveReservation(reservationInfo.toDomain())
-        }
+        saveReservationFetcher.saveReservation(reservationInfo.toDomain())
         view.navigateToComplete(reservationInfo)
     }
 

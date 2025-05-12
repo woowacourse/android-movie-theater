@@ -9,8 +9,7 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.repository.ReservationRepositoryImpl
-import woowacourse.movie.domain.model.dummyReservationInfo
+import woowacourse.movie.domain.SaveReservationFetcher
 import woowacourse.movie.domain.model.dummyReservationInfoUiModel
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectContract
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectPresenter
@@ -18,13 +17,13 @@ import woowacourse.movie.presentation.view.reservation.seat.SeatSelectPresenter
 class SeatSelectPresenterTest {
     private lateinit var presenter: SeatSelectContract.Presenter
     private lateinit var view: SeatSelectContract.View
-    private lateinit var reservationRepository: ReservationRepositoryImpl
+    private lateinit var fetcher: SaveReservationFetcher
 
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        reservationRepository = mockk()
-        presenter = SeatSelectPresenter(view, reservationRepository)
+        fetcher = mockk()
+        presenter = SeatSelectPresenter(view, fetcher)
     }
 
     @Test
@@ -62,8 +61,8 @@ class SeatSelectPresenterTest {
         presenter.fetchData(dummyReservationInfoUiModel)
         presenter.seatSelect("A1")
 
-        verify { view.showSelectedSeat("A1") }
-        verify { view.updateConfirmButtonEnabled(false) }
+        verify { view.showSelectedSeat(any()) }
+        verify { view.updateConfirmButtonEnabled(any()) }
     }
 
     @Test

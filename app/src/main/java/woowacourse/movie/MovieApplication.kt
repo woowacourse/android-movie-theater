@@ -2,12 +2,14 @@ package woowacourse.movie
 
 import android.app.Application
 import woowacourse.movie.data.ReservationFetcherImpl
+import woowacourse.movie.data.SaveReservationFetcherImpl
 import woowacourse.movie.data.SettingPreferenceManager
 import woowacourse.movie.data.db.ReservationDao
 import woowacourse.movie.data.db.ReservationDatabase
 import woowacourse.movie.data.repository.ReservationRepositoryImpl
 import woowacourse.movie.data.repository.SettingRepositoryImpl
 import woowacourse.movie.domain.ReservationFetcher
+import woowacourse.movie.domain.SaveReservationFetcher
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.SettingRepository
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectContract
@@ -30,7 +32,7 @@ class MovieApplication : Application() {
         fun provideSeatSelectPresenter(view: SeatSelectContract.View): SeatSelectContract.Presenter =
             SeatSelectPresenter(
                 view = view,
-                reservationRepository = provideReservationRepository(),
+                saveReservationFetcher = provideSaveReservationFetcher(),
             )
 
         fun provideReservationListPresenter(view: ReservationListContract.View): ReservationListContract.Presenter =
@@ -51,6 +53,11 @@ class MovieApplication : Application() {
 
         private fun provideReservationFetcher(): ReservationFetcher =
             ReservationFetcherImpl(
+                provideReservationRepository(),
+            )
+
+        private fun provideSaveReservationFetcher(): SaveReservationFetcher =
+            SaveReservationFetcherImpl(
                 provideReservationRepository(),
             )
 
