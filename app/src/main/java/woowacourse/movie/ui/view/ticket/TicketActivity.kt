@@ -160,7 +160,7 @@ class TicketActivity :
             cinemaName: String,
         ): Intent =
             run {
-                val ticket = Ticket(title, count, showtime, cinemaName)
+                val ticket = Ticket(null, title, count, showtime, cinemaName)
                 Intent(context, TicketActivity::class.java)
                     .putExtra(EXTRA_TICKET, ticket)
                     .putExtra(EXTRA_SEATS, seats as? Serializable)
