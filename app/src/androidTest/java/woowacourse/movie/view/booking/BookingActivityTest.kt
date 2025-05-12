@@ -3,7 +3,6 @@ package woowacourse.movie.view.booking
 import android.content.pm.ActivityInfo
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -12,6 +11,7 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.ext.isDisplayed
+import woowacourse.movie.ext.performClick
 import woowacourse.movie.fixture.fakeContext
 import woowacourse.movie.view.movies.ScreeningInfo
 import java.time.LocalDateTime
@@ -62,7 +62,7 @@ class BookingActivityTest {
         onView(withId(R.id.tv_people_count)).check(matches(withText("1")))
 
         // when
-        onView(withId(R.id.btn_increase)).perform(click())
+        onView(withId(R.id.btn_increase)).performClick()
 
         // then
         onView(withId(R.id.tv_people_count)).check(matches(withText("2")))
@@ -74,7 +74,7 @@ class BookingActivityTest {
         onView(withId(R.id.tv_people_count)).check(matches(withText("1")))
 
         // when
-        onView(withId(R.id.btn_decrease)).perform(click())
+        onView(withId(R.id.btn_decrease)).performClick()
 
         // then
         onView(withId(R.id.tv_people_count)).check(matches(withText("1")))
@@ -87,7 +87,7 @@ class BookingActivityTest {
             .check(matches(withText("1")))
 
         // when
-        onView(withId(R.id.btn_decrease)).perform(click())
+        onView(withId(R.id.btn_decrease)).performClick()
 
         // then
         onView(withId(R.id.tv_people_count)).check(matches(withText("1")))
@@ -96,7 +96,7 @@ class BookingActivityTest {
     @Test
     fun `화면이_회전_되어도_인원수가_유지된다`() {
         // given
-        onView(withId(R.id.btn_increase)).perform(click())
+        onView(withId(R.id.btn_increase)).performClick()
 
         // When
         scenario.onActivity { activity ->
