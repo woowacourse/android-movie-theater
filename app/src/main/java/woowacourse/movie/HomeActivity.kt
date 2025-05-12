@@ -87,7 +87,7 @@ class HomeActivity : AppCompatActivity() {
             val permission = android.Manifest.permission.POST_NOTIFICATIONS
             if (ContextCompat.checkSelfPermission(
                     this,
-                    permission
+                    permission,
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 requestPermissionLauncher.launch(permission)
@@ -110,9 +110,10 @@ class HomeActivity : AppCompatActivity() {
             .setTitle("알림 권한이 필요합니다")
             .setMessage("예매 알림을 받으시려면 알림 권한을 허용해주세요.")
             .setPositiveButton("설정으로 이동") { _, _ ->
-                val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
-                    putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
-                }
+                val intent =
+                    Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                        putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                    }
                 startActivity(intent)
             }
             .setNegativeButton("취소", null)
@@ -124,9 +125,10 @@ class HomeActivity : AppCompatActivity() {
             val name = "예약 알림"
             val descriptionText = "영화 예약 30분 전 알림 채널"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("channel_id", name, importance).apply {
-                description = descriptionText
-            }
+            val channel =
+                NotificationChannel("channel_id", name, importance).apply {
+                    description = descriptionText
+                }
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }

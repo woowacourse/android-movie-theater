@@ -7,8 +7,7 @@ import woowacourse.movie.databinding.ReservationItemBinding
 class ReservationViewHolder(
     private val binding: ReservationItemBinding,
     reservationClickListener: ReservationClickListener,
-): RecyclerView.ViewHolder(binding.root) {
-
+) : RecyclerView.ViewHolder(binding.root) {
     init {
         binding.reservationClickListener = reservationClickListener
     }

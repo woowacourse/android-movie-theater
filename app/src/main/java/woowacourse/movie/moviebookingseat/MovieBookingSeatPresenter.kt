@@ -17,7 +17,10 @@ class MovieBookingSeatPresenter(
     private lateinit var bookingStatus: BookingStatus
     private lateinit var theater: Theater
 
-    override fun loadBookingStatus(bookingStatus: BookingStatus, theater: Theater) {
+    override fun loadBookingStatus(
+        bookingStatus: BookingStatus,
+        theater: Theater,
+    ) {
         this.bookingStatus = bookingStatus
         this.theater = theater
         view.showBookingStatusInfo()
@@ -54,7 +57,7 @@ class MovieBookingSeatPresenter(
                 seats = formattedSeat(bookingStatus.seat.seats),
                 theater = theater.name,
                 price = bookingStatus.calculateTicketPrices(),
-                )
+            )
 
         thread {
             val db = (context as MovieApplication).database
@@ -68,9 +71,9 @@ class MovieBookingSeatPresenter(
 
     private fun formattedSeat(seats: List<Seat>): String {
         return seats.joinToString { seat ->
-                val rowChar = 'A' + seat.row.value
-                val colNumber = seat.column.value + 1
-                "$rowChar$colNumber"
-            }
+            val rowChar = 'A' + seat.row.value
+            val colNumber = seat.column.value + 1
+            "$rowChar$colNumber"
+        }
     }
 }

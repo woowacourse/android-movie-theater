@@ -1,6 +1,5 @@
 package woowacourse.movie.moviebookingseat
 
-import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -113,17 +112,19 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
             val db = (applicationContext as MovieApplication).database
             val reservation = db.reservationDao().getById(id) ?: return@thread
 
-            val intent = Intent(this, NotificationReceiver::class.java).apply {
-                putExtra("reservationId", id)
-                putExtra("title", reservation.title)
-            }
+            val intent =
+                Intent(this, NotificationReceiver::class.java).apply {
+                    putExtra("reservationId", id)
+                    putExtra("title", reservation.title)
+                }
 
-            val pendingIntent = PendingIntent.getBroadcast(
-                this,
-                id.toInt(),
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
+            val pendingIntent =
+                PendingIntent.getBroadcast(
+                    this,
+                    id.toInt(),
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                )
 
             val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")
             val dateTime = LocalDateTime.parse("${reservation.date} ${reservation.time}", formatter)

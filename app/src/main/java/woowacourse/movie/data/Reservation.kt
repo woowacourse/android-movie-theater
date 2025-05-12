@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "reservations")
-data class Reservation (
+data class Reservation(
     @PrimaryKey(autoGenerate = true) var uid: Long = 0,
     @ColumnInfo(name = "title") val title: String?,
     @ColumnInfo(name = "date") val date: String?,

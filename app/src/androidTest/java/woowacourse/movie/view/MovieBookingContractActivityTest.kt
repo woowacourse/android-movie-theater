@@ -15,6 +15,7 @@ import woowacourse.movie.moviebooking.MovieBookingActivity
 
 class MovieBookingContractActivityTest {
     private lateinit var scenario: ActivityScenario<MovieBookingActivity>
+
     @Before
     fun setUp() {
         val movie = MovieFixture.MOVIE

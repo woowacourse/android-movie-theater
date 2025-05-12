@@ -12,12 +12,12 @@ import woowacourse.movie.MovieFixture
 import woowacourse.movie.R
 import woowacourse.movie.checkIsDisplayed
 import woowacourse.movie.checkWithText
-import woowacourse.movie.moviebooked.MovieBookedActivity
 import woowacourse.movie.moviebookingseat.MovieBookingSeatActivity
 import woowacourse.movie.performClick
 
 class MovieBookingContractSeatActivityTest {
     private lateinit var scenario: ActivityScenario<MovieBookingSeatActivity>
+
     @Before
     fun setUp() {
         val bookingStatus = MovieFixture.BOOKING_STATUS

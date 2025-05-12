@@ -3,7 +3,6 @@ package woowacourse.movie.reservation
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +28,10 @@ class ReservationFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         thread {
             val db = (context?.applicationContext as MovieApplication).database
@@ -53,7 +55,7 @@ class ReservationFragment : Fragment() {
                     override fun clickReservation(reservation: Reservation) {
                         navigateToReservation(reservation.uid)
                     }
-                }
+                },
             )
     }
 

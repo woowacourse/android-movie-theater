@@ -28,7 +28,10 @@ interface MovieBookingSeat {
     }
 
     interface Presenter {
-        fun loadBookingStatus(bookingStatus: BookingStatus, theater: Theater)
+        fun loadBookingStatus(
+            bookingStatus: BookingStatus,
+            theater: Theater,
+        )
 
         fun selectSeat(seat: Seat)
 
