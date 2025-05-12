@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 
-class ShowNotificationPermissionInfoDialog(
+class ShowAlarmPermissionInfoDialog(
     context: Context,
 ) {
     private val builder = AlertDialog.Builder(context)
@@ -22,8 +22,8 @@ class ShowNotificationPermissionInfoDialog(
     }
 
     companion object {
-        private const val TITLE = "푸시 알림 권한을 허용해주세요."
-        private const val MESSAGE = "권한을 허용하시면 설정된 알람을 푸시 알림으로 알려드려요!"
+        private const val TITLE = "알람 설정 권한을 허용해주세요."
+        private const val MESSAGE = "권한을 허용하시면 영화 시작 30분 전 알람을 설정할 수 있어요!"
         private const val BUTTON_TEXT = "확인"
     }
 }

@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,6 +24,7 @@ import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Reservation
 import woowacourse.movie.presenter.ticket.ReservationDetailPresenter
 import woowacourse.movie.view.reservation.ReservationAlarmReceiver
+import woowacourse.movie.view.reservation.ShowAlarmPermissionInfoDialog
 import woowacourse.movie.view.reservation.ShowNotificationPermissionInfoDialog
 import woowacourse.movie.view.util.ErrorMessage
 import java.time.LocalDateTime
@@ -33,6 +35,12 @@ class ReservationDetailActivity :
     ReservationDetailContract.View {
     private val showNotificationPermissionInfoDialog: ShowNotificationPermissionInfoDialog by lazy {
         ShowNotificationPermissionInfoDialog(
+            this,
+        )
+    }
+
+    private val showAlarmPermissionInfoDialog: ShowAlarmPermissionInfoDialog by lazy {
+        ShowAlarmPermissionInfoDialog(
             this,
         )
     }
@@ -86,6 +94,12 @@ class ReservationDetailActivity :
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             ApplicationSettings.notificationEnabled = isGranted
+
+            val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                checkSettingAlarmPermission(alarmManager)
+            }
         }
 
     private fun setAlarmManager(reservation: Reservation) {
@@ -93,17 +107,27 @@ class ReservationDetailActivity :
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (!alarmManager.canScheduleExactAlarms()) return
+            checkSettingAlarmPermission(alarmManager)
         }
 
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            reservation.showtime
-                .minusMinutes(30)
-                .atZone(ZoneId.systemDefault())
-                .toEpochSecond() * 1_000,
-            pendingIntent,
-        )
+        if (alarmManager.canScheduleExactAlarms()) {
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                reservation.showtime
+                    .minusMinutes(46)
+                    .atZone(ZoneId.systemDefault())
+                    .toEpochSecond() * 1_000,
+                pendingIntent,
+            )
+        }
+    }
+
+    private fun checkSettingAlarmPermission(alarmManager: AlarmManager) {
+        if (!alarmManager.canScheduleExactAlarms()) {
+            showAlarmPermissionInfoDialog(onDismiss = {
+                startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
+            })
+        }
     }
 
     private fun pendingIntent(reservation: Reservation): PendingIntent {

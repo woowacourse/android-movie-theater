@@ -59,7 +59,7 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle("예매 알림")
             .setContentText("${reservation.title} 30분 후에 상영")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
 
     @Suppress("DEPRECATION")
