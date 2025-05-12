@@ -7,6 +7,7 @@ class MovieApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"))
+        _instance = this
     }
 
     companion object {
