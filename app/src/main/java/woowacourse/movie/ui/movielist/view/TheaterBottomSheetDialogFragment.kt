@@ -83,7 +83,6 @@ class TheaterBottomSheetDialogFragment :
     companion object {
         const val THEATER_DIALOG_TAG = "THEATER_BOTTOM_DIALOG"
 
-        @JvmStatic
         fun newInstance(movieId: Long) =
             TheaterBottomSheetDialogFragment().apply {
                 arguments =
