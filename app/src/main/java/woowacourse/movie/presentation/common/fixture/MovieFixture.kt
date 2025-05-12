@@ -1,9 +1,7 @@
 package woowacourse.movie.presentation.common.fixture
 
-import woowacourse.movie.R
 import woowacourse.movie.domain.model.cinema.MovieSchedule
 import woowacourse.movie.domain.model.movie.Movie
-import woowacourse.movie.domain.model.movie.Poster
 import woowacourse.movie.domain.model.movie.RunningTime
 import woowacourse.movie.domain.model.movie.ScreeningPeriod
 import java.time.LocalDate
@@ -15,7 +13,6 @@ val dummyMovie =
     Movie(
         1,
         "해리 포터와 마법사의 돌",
-        Poster.Resource(R.drawable.harrypotter),
         ScreeningPeriod(
             LocalDate.now(),
             LocalDate.now().plusMonths(1),
