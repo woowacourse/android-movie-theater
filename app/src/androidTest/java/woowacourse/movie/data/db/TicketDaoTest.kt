@@ -27,10 +27,10 @@ class TicketDaoTest {
 
     @Test
     fun `새로운_예매_정보_추가하면_아이디를_반환한다`() {
-        // when
+        // given
         val bookings = listOf(ticketEntity1, ticketEntity2)
 
-        // given
+        // when
         bookings.forEach { ticketDao.insert(it) }
         val expected = ticketDao.readAll()
 
@@ -43,10 +43,10 @@ class TicketDaoTest {
 
     @Test
     fun `새로운_예매_정보_추가하고_모든_예매_정보를_가져온다`() {
-        // when
+        // given
         val bookings = listOf(ticketEntity1, ticketEntity2)
 
-        // given
+        // when
         bookings.forEach { ticketDao.insert(it) }
         val expected = ticketDao.readAll()
 
@@ -59,10 +59,10 @@ class TicketDaoTest {
 
     @Test
     fun `특정_ID의_예매_정보를_불러온다`() {
-        // when
+        // given
         val bookings = listOf(ticketEntity1, ticketEntity2)
 
-        // given
+        // when
         bookings.forEach { ticketDao.insert(it) }
         val expected = ticketDao.readById(1L)
 
