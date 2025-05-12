@@ -65,6 +65,6 @@ class AlarmScheduler(
             .toEpochMilli()
 
     companion object {
-        private const val MINUTES_BEFORE_ALARM = 30L
+        const val MINUTES_BEFORE_ALARM = 30L
     }
 }

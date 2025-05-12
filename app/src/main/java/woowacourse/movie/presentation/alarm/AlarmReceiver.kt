@@ -31,7 +31,11 @@ class AlarmReceiver(
             intent.getParcelableExtraCompat<ReservationInfoUiModel>(
                 Extras.AlarmData.ALARM_RESERVATION_KEY,
             ) ?: return
-        val minutesBeforeAlarm = intent.getLongExtra(Extras.AlarmData.ALARM_MINUTES_KEY, 30L)
+        val minutesBeforeAlarm =
+            intent.getLongExtra(
+                Extras.AlarmData.ALARM_MINUTES_KEY,
+                AlarmScheduler.MINUTES_BEFORE_ALARM,
+            )
 
         createNotificationChannel(context)
 
@@ -67,7 +71,7 @@ class AlarmReceiver(
         val pendingIntent =
             TaskStackBuilder.create(context).run {
                 addNextIntentWithParentStack(resultIntent)
-                getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
+                getPendingIntent(REQUEST_CODE, PendingIntent.FLAG_IMMUTABLE)
             }
 
         return NotificationCompat
@@ -89,5 +93,6 @@ class AlarmReceiver(
         private const val CHANNEL_ID = "movie_alarm_channel"
         private const val CHANNEL_NAME = "영화 예매 알림"
         private const val CHANNEL_DESCRIPTION = "예매된 영화 시작 전 알림"
+        private const val REQUEST_CODE = 0
     }
 }
