@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
+import woowacourse.movie.db.ReservationInfoDatabase
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.view.base.BaseActivity
@@ -24,7 +25,12 @@ import woowacourse.movie.view.reservation.result.ReservationResultActivity
 class SeatSelectionActivity :
     BaseActivity<ActivitySeatSelectionBinding>(R.layout.activity_seat_selection),
     SeatSelectionContract.View {
-    private val presenter: SeatSelectionPresenter by lazy { SeatSelectionPresenter(this) }
+    private val presenter: SeatSelectionPresenter by lazy {
+        SeatSelectionPresenter(
+            this,
+            ReservationInfoDatabase.getInstance(this).reservationInfoDao(),
+        )
+    }
 
     private fun showDialog(
         @StringRes title: Int,
@@ -43,7 +49,8 @@ class SeatSelectionActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val reservation: ReservationInfo = intent.getParcelableCompat<ReservationInfo>(BUNDLE_KEY_RESERVATION_INFO)
+        val reservation: ReservationInfo =
+            intent.getParcelableCompat<ReservationInfo>(BUNDLE_KEY_RESERVATION_INFO)
 
         presenter.loadSeats(reservation)
         setupViews(reservation.title)
