@@ -1,8 +1,13 @@
 package woowacourse.movie.ui.view
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
@@ -23,6 +28,11 @@ class MainActivity :
     private val reservationHistoryFragment by lazy { ReservationHistoryFragment() }
     private val settingFragment by lazy { SettingFragment() }
     private lateinit var binding: ActivityMainBinding
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted: Boolean ->
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +42,6 @@ class MainActivity :
                 this,
                 R.layout.activity_main,
             )
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.layout_main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -42,6 +51,29 @@ class MainActivity :
 
         if (savedInstanceState == null) {
             initBottomNavigation()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requestNotificationPermission()
+    }
+
+    private fun requestNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissionLaunch()
+        }
+    }
+
+    private fun requestPermissionLaunch() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (!shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
     }
 
