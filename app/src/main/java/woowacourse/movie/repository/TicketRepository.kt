@@ -1,11 +1,16 @@
 package woowacourse.movie.repository
 
 import woowacourse.movie.data.dao.TicketDao
+import woowacourse.movie.data.dummy.DummyCinema
+import woowacourse.movie.data.entity.SeatEntity
 import woowacourse.movie.data.entity.TicketEntity
-import woowacourse.movie.domain.model.Cinema
+import woowacourse.movie.data.entity.WholeTicketEntity
+import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Ticket
 
-class TicketRepository(val ticketDao: TicketDao) : Repository<Ticket> {
+class TicketRepository(
+    val ticketDao: TicketDao,
+) : Repository<Ticket> {
     override fun findAll(): Result<List<Ticket>> {
         return runCatching {
             ticketDao.findAll().map {
@@ -16,17 +21,30 @@ class TicketRepository(val ticketDao: TicketDao) : Repository<Ticket> {
 
     override fun save(ticket: Ticket): Result<Unit> {
         return runCatching {
-            ticketDao.save(ticket.toEntity())
+            ticketDao.save(
+                ticket.toEntity(),
+                ticket.seats.map {
+                    SeatEntity(
+                        row = it.row,
+                        column = it.column,
+                    )
+                },
+            )
         }
     }
 
-    private fun TicketEntity.toTicket(): Ticket {
+    private fun WholeTicketEntity.toTicket(): Ticket {
         return Ticket(
-            title,
-            showTime,
-            seats,
-            reservationCount,
-            Cinema(1, cinemaName),
+            ticket.title,
+            ticket.showTime,
+            seats.map {
+                Seat(
+                    it.row,
+                    it.column,
+                )
+            },
+            ticket.reservationCount,
+            DummyCinema.dummyCinemas.find { it.name == ticket.cinemaName }!!,
         )
     }
 
@@ -36,8 +54,7 @@ class TicketRepository(val ticketDao: TicketDao) : Repository<Ticket> {
             showTime = showTime,
             reservationCount = reservationCount,
             cinemaName = cinema.name,
-            seats = seats,
-            totalPrice = totalPrice(),
+            price = totalPrice(),
         )
     }
 }

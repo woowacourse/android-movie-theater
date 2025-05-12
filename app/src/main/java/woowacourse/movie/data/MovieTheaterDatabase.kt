@@ -7,11 +7,15 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import woowacourse.movie.data.converter.TicketConverter
 import woowacourse.movie.data.dao.TicketDao
+import woowacourse.movie.data.entity.CinemaEntity
+import woowacourse.movie.data.entity.SeatEntity
 import woowacourse.movie.data.entity.TicketEntity
 
 @Database(
     entities = [
         TicketEntity::class,
+        CinemaEntity::class,
+        SeatEntity::class,
     ],
     version = 1,
 )
