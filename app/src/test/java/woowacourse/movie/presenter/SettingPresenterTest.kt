@@ -5,14 +5,14 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.repository.SettingRepositoryImpl
+import woowacourse.movie.domain.repository.SettingRepository
 import woowacourse.movie.presentation.view.setting.SettingContract
 import woowacourse.movie.presentation.view.setting.SettingPresenter
 
 class SettingPresenterTest {
     private lateinit var presenter: SettingContract.Presenter
     private lateinit var view: SettingContract.View
-    private lateinit var settingRepository: SettingRepositoryImpl
+    private lateinit var settingRepository: SettingRepository
 
     @BeforeEach
     fun setUp() {
