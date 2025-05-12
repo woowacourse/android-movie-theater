@@ -7,14 +7,17 @@ import woowacourse.movie.feature.model.MovieUiModel
 
 class MovieViewHolder(
     parent: ViewGroup,
-    private val handler: Handler,
+    handler: Handler,
 ) : ContentViewHolder<ContentItem.Movie, ItemMovieBinding>(
         ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false),
     ) {
+    init {
+        binding.handler = handler
+    }
+
     override fun bind(item: ContentItem.Movie) {
         super.bind(item)
         binding.movie = item.value
-        binding.handler = handler
         binding.executePendingBindings()
     }
 

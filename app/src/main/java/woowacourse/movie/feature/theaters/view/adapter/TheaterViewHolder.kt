@@ -6,11 +6,14 @@ import woowacourse.movie.feature.model.ScreeningUiModel
 
 class TheaterViewHolder(
     private val binding: ItemTheaterBinding,
-    private val handler: Handler,
+    handler: Handler,
 ) : RecyclerView.ViewHolder(binding.root) {
+    init {
+        binding.handler = handler
+    }
+
     fun bind(screening: ScreeningUiModel) {
         binding.screening = screening
-        binding.handler = handler
         binding.executePendingBindings()
     }
 

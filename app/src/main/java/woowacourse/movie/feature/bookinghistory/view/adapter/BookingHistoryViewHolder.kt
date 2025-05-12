@@ -6,11 +6,14 @@ import woowacourse.movie.feature.model.BookingInfoUiModel
 
 class BookingHistoryViewHolder(
     private val binding: ItemBookingHistoryBinding,
-    private val handler: Handler,
+    handler: Handler,
 ) : RecyclerView.ViewHolder(binding.root) {
+    init {
+        binding.handler = handler
+    }
+
     fun bind(bookingInfo: BookingInfoUiModel) {
         binding.bookingInfo = bookingInfo
-        binding.handler = handler
     }
 
     interface Handler {
