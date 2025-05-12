@@ -9,23 +9,21 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
+import woowacourse.movie.data.BookingHistoryDetailsDatabase
+import woowacourse.movie.data.toUiModel
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookinghistory.contract.BookingHistoryContract
 import woowacourse.movie.feature.bookinghistory.presenter.BookingHistoryPresenter
 import woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryAdapter
 import woowacourse.movie.feature.model.BookingInfoUiModel
+import kotlin.concurrent.thread
 
 class BookingHistoryFragment :
     Fragment(),
     BookingHistoryContract.View {
     private lateinit var binding: FragmentBookingHistoryBinding
-    private val presenter: BookingHistoryContract.Presenter by lazy {
-        BookingHistoryPresenter(
-            requireContext(),
-            this,
-        )
-    }
+    private val presenter: BookingHistoryContract.Presenter by lazy { BookingHistoryPresenter(this) }
     private val bookingHistoryAdapter: BookingHistoryAdapter by lazy {
         BookingHistoryAdapter { bookingHistory ->
             presenter.selectBookingHistory(bookingHistory)
@@ -47,13 +45,27 @@ class BookingHistoryFragment :
         presenter.prepareBookingHistory()
     }
 
-    override fun showBookingHistory(bookingHistory: List<BookingInfoUiModel>) {
-        bookingHistoryAdapter.submitList(bookingHistory)
-        binding.bookingHistoryAdapter = bookingHistoryAdapter
+    override fun showBookingHistory() {
+        thread {
+            val bookingHistory =
+                BookingHistoryDetailsDatabase
+                    .getDatabase(requireContext())
+                    .bookingHistoryDetailsDao()
+                    .getAll()
+                    .map { it.toUiModel() }
 
-        val divider =
-            DividerItemDecoration(binding.rvBookingHistory.context, LinearLayoutManager.VERTICAL)
-        binding.rvBookingHistory.addItemDecoration(divider)
+            requireActivity().runOnUiThread {
+                bookingHistoryAdapter.submitList(bookingHistory)
+                binding.bookingHistoryAdapter = bookingHistoryAdapter
+
+                val divider =
+                    DividerItemDecoration(
+                        binding.rvBookingHistory.context,
+                        LinearLayoutManager.VERTICAL,
+                    )
+                binding.rvBookingHistory.addItemDecoration(divider)
+            }
+        }
     }
 
     override fun navigateToBookingDetail(bookingHistory: BookingInfoUiModel) {
