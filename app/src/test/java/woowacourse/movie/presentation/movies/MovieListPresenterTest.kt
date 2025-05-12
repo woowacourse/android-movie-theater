@@ -29,7 +29,7 @@ class MovieListPresenterTest {
     }
 
     @Test
-    fun `버튼을 누르면 예매 화면으로 이동한다`() {
+    fun `버튼을 누르면 선택 가능한 극장 목록을 보여준다`() {
         // when
         presenter.selectMovie(HARRY_POTTER)
 
