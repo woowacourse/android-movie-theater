@@ -6,9 +6,9 @@ import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.ui.view.data.TicketDataAdapter
 
 class TicketAdapter(private val dao: TicketDao) : TicketDataAdapter {
-    override fun insert(ticket: Ticket) {
-        dao.insert(ticket.toTicketEntity())
-    }
+    override fun insert(ticket: Ticket) = dao.insert(ticket.toTicketEntity())
+
+    override fun getTicket(id: Long): Ticket = dao.getTicket(id).toTicket()
 
     override fun getAll(): List<Ticket> = dao.getAll().map { it.toTicket() }
 
@@ -22,6 +22,7 @@ class TicketAdapter(private val dao: TicketDao) : TicketDataAdapter {
 
     private fun TicketEntity.toTicket() =
         Ticket(
+            id = id,
             title = title,
             count = count,
             showtime = showtime,

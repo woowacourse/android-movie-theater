@@ -3,6 +3,7 @@ package woowacourse.movie.ui.view.seat
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.ui.view.data.TicketDataAdapter
+import java.util.concurrent.atomic.AtomicReference
 import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
@@ -51,11 +52,17 @@ class SeatSelectionPresenter(
     }
 
     override fun confirmReservation() {
-        thread {
-            ticketDataAdapter.insert(ticket)
-        }
-        ticket.run {
-            view.saveTicket(title, count, showtime, selectedSeats, cinemaName)
+        val insertTicket = AtomicReference<Ticket>()
+        val thread =
+            thread {
+                val insertTicketId = ticketDataAdapter.insert(ticket)
+                val ticket = ticketDataAdapter.getTicket(insertTicketId)
+                insertTicket.set(ticket)
+            }
+        thread.join()
+        insertTicket.get().run {
+            view.setTicketAlarm(this)
+            view.saveTicket(title, count, showtime, seats, cinemaName)
         }
     }
 

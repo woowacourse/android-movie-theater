@@ -26,6 +26,7 @@ import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.reservation.SeatGrade
 import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.ui.view.alarm.Alarm
 import woowacourse.movie.ui.view.reservation.ShowReservationConfirmDialog
 import woowacourse.movie.ui.view.ticket.TicketActivity
 import woowacourse.movie.ui.view.util.ErrorMessage
@@ -222,6 +223,15 @@ class SeatSelectionActivity :
         )
     }
 
+    override fun setTicketAlarm(ticket: Ticket) {
+        val sharedPreferences = getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val isTicketAlarmChecked: Boolean = sharedPreferences.getBoolean("isTicketAlarm", false)
+        if (isTicketAlarmChecked) {
+            val alarm = Alarm(baseContext)
+            alarm.scheduleTicketAlarm(ticket)
+        }
+    }
+
     override fun saveTicket(
         title: String,
         count: Int,
@@ -277,7 +287,7 @@ class SeatSelectionActivity :
             cinemaName: String,
         ): Intent =
             run {
-                val ticket = Ticket(title, count, showtime, cinemaName)
+                val ticket = Ticket(null, title, count, showtime, cinemaName)
                 Intent(context, SeatSelectionActivity::class.java)
                     .putExtra(EXTRA_TICKET, ticket)
                     .putExtra(EXTRA_CINEMA_NAME, cinemaName)

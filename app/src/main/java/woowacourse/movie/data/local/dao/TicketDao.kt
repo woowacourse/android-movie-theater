@@ -8,7 +8,10 @@ import woowacourse.movie.data.local.entity.TicketEntity
 @Dao
 interface TicketDao {
     @Insert
-    fun insert(ticketEntity: TicketEntity)
+    fun insert(ticketEntity: TicketEntity): Long
+
+    @Query("SELECT * FROM ticket WHERE :id")
+    fun getTicket(id: Long): TicketEntity
 
     @Query("SELECT * FROM ticket")
     fun getAll(): List<TicketEntity>

@@ -1,6 +1,7 @@
 package woowacourse.movie.ui.view.seat
 
 import woowacourse.movie.domain.reservation.Seat
+import woowacourse.movie.domain.ticket.Ticket
 import java.time.LocalDateTime
 
 interface SeatSelectionContract {
@@ -40,6 +41,8 @@ interface SeatSelectionContract {
         fun setConfirmEnabled(isEnabled: Boolean)
 
         fun askFinalReservation()
+
+        fun setTicketAlarm(ticket: Ticket)
 
         fun saveTicket(
             title: String,
