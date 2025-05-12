@@ -60,7 +60,7 @@ class ReservationActivityTest {
     }
 
     @Test
-    fun `플러스_버튼을_누르면_인원수가_1명씩_는다`() {
+    fun `초기인원은_1이며_플러스_버튼을_누르면_인원수가_1명씩_는다`() {
         // given
         onView(withId(R.id.btn_reservation_count_plus))
             .performClick()
