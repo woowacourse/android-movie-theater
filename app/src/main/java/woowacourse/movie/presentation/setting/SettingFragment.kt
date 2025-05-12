@@ -16,7 +16,7 @@ class SettingFragment :
     private val presenter: SettingContract.Presenter by lazy {
         SettingPresenter(
             this,
-            NotificationPreferenceImpl()
+            NotificationPreferenceImpl(),
         )
     }
     private var _binding: FragmentSettingBinding? = null
@@ -32,7 +32,10 @@ class SettingFragment :
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         presenter.loadNotificationSetting()
         binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->

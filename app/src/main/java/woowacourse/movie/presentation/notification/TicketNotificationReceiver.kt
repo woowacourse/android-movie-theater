@@ -11,9 +11,12 @@ import woowacourse.movie.presentation.notification.NotificationScheduler.Compani
 import woowacourse.movie.presentation.util.getSerializableExtraCompat
 
 class TicketNotificationReceiver(
-    private val notificationPreference: NotificationPreference = NotificationPreferenceImpl()
+    private val notificationPreference: NotificationPreference = NotificationPreferenceImpl(),
 ) : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         if (!notificationPreference.isNotificationEnabled()) return
         val ticket = intent.getSerializableExtraCompat(KEY_TICKET, MovieTicket::class.java) ?: return
         val time = intent.getLongExtra(KEY_TIME, 0)

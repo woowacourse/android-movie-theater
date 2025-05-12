@@ -12,8 +12,8 @@ import woowacourse.movie.R
 import woowacourse.movie.data.bookinghistory.MovieDatabase
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
-import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
 import woowacourse.movie.presentation.adapter.BookingHistoryAdapter
+import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
 
 class BookingHistoryFragment :
     Fragment(),

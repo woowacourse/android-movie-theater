@@ -1,8 +1,8 @@
 package woowacourse.movie.presentation.seats
 
 import android.app.Activity
-import woowacourse.movie.data.bookinghistory.MovieDatabase
 import woowacourse.movie.data.bookinghistory.BookingHistoryMapper
+import woowacourse.movie.data.bookinghistory.MovieDatabase
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.SelectedSeats

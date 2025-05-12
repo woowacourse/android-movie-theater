@@ -28,12 +28,13 @@ class BookingHistoryPresenterTest {
     @Test
     fun `예매 내역을 클릭하면 화면을 이동한다`() {
         // Given
-        val ticket = MovieTicket(
-            "TestMovie",
-            "TestTheater",
-            LocalDateTime.of(2025, 5, 12, 18, 0),
-            1,
-        )
+        val ticket =
+            MovieTicket(
+                "TestMovie",
+                "TestTheater",
+                LocalDateTime.of(2025, 5, 12, 18, 0),
+                1,
+            )
 
         // When
         presenter.selectBookingHistory(ticket)

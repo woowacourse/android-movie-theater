@@ -25,29 +25,30 @@ class NotificationScheduler(private val context: Context = MovieApplication.inst
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             alarmTime,
-            pendingIntent
+            pendingIntent,
         )
     }
 
     private fun canScheduleAlarm(): Boolean {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.S ||
-                alarmManager.canScheduleExactAlarms()
+            alarmManager.canScheduleExactAlarms()
     }
 
     private fun createPendingIntent(
         ticket: MovieTicket,
         time: Long,
     ): PendingIntent {
-        val intent = Intent(context, TicketNotificationReceiver::class.java).apply {
-            putExtra(KEY_TICKET, ticket)
-            putExtra(KEY_TIME, time)
-        }
+        val intent =
+            Intent(context, TicketNotificationReceiver::class.java).apply {
+                putExtra(KEY_TICKET, ticket)
+                putExtra(KEY_TIME, time)
+            }
 
         return PendingIntent.getBroadcast(
             context,
             ticket.hashCode(),
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
     }
 

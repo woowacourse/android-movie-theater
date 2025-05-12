@@ -14,8 +14,8 @@ import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.SelectedSeats
-import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
 import woowacourse.movie.presentation.DataBindingBaseActivity
+import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
 import woowacourse.movie.presentation.notification.NotificationScheduler
 import woowacourse.movie.presentation.util.TicketUiFormatter
 import woowacourse.movie.presentation.util.getSerializableCompat
@@ -27,7 +27,7 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
         SeatsPresenter(
             this,
             MovieDatabase.getDatabase(),
-            NotificationScheduler()
+            NotificationScheduler(),
         )
     }
     private var confirmDialog: AlertDialog? = null

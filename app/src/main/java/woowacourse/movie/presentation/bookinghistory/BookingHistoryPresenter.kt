@@ -1,8 +1,8 @@
 package woowacourse.movie.presentation.bookinghistory
 
 import androidx.fragment.app.Fragment
-import woowacourse.movie.data.bookinghistory.MovieDatabase
 import woowacourse.movie.data.bookinghistory.BookingHistoryMapper
+import woowacourse.movie.data.bookinghistory.MovieDatabase
 import woowacourse.movie.domain.model.movie.MovieTicket
 import kotlin.concurrent.thread
 

@@ -90,10 +90,10 @@ class SeatsPresenterTest {
             view.navigateToSummary(
                 match {
                     it.movieTitle == movieTicket.movieTitle &&
-                            it.screeningDateTime == movieTicket.screeningDateTime &&
-                            it.headCount == movieTicket.headCount &&
-                            it.seats == listOf(seat) &&
-                            it.amount == 10000
+                        it.screeningDateTime == movieTicket.screeningDateTime &&
+                        it.headCount == movieTicket.headCount &&
+                        it.seats == listOf(seat) &&
+                        it.amount == 10000
                 },
             )
         }

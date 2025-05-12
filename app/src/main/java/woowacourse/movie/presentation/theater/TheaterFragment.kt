@@ -11,8 +11,8 @@ import woowacourse.movie.data.ScreeningInfoData
 import woowacourse.movie.databinding.FragmentTheaterSelectBinding
 import woowacourse.movie.domain.model.ScreeningInfo
 import woowacourse.movie.domain.model.movie.Movie
-import woowacourse.movie.presentation.booking.BookingActivity
 import woowacourse.movie.presentation.adapter.TheaterAdapter
+import woowacourse.movie.presentation.booking.BookingActivity
 import woowacourse.movie.presentation.util.getSerializableCompat
 
 class TheaterFragment :

@@ -7,6 +7,7 @@ interface SettingContract {
 
     interface Presenter {
         fun loadNotificationSetting()
+
         fun changeNotificationSetting(enabled: Boolean)
     }
 }
