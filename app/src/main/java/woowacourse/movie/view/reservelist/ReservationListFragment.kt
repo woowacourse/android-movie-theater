@@ -3,10 +3,10 @@ package woowacourse.movie.view.reservelist
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import woowacourse.movie.Provider
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationListBinding
 import woowacourse.movie.domain.model.Ticket
+import woowacourse.movie.provider.ReservationListProvider
 import woowacourse.movie.view.base.BaseFragment
 import woowacourse.movie.view.movies.reservation.result.ReservationResultActivity
 
@@ -14,7 +14,7 @@ class ReservationListFragment :
     BaseFragment<FragmentReservationListBinding>(R.layout.fragment_reservation_list),
     ReservationListContract.View {
     private val presenter: ReservationListPresenter by lazy {
-        Provider.reservationListPresenter(this)
+        ReservationListProvider.reservationListPresenter(this)
     }
 
     override fun showReservationList(data: List<Ticket>) {
