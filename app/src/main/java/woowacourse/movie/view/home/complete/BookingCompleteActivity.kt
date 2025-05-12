@@ -67,17 +67,15 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         ticket: Ticket,
         time: Long,
     ) {
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val intent = NotificationReceiver.newIntent(this, ticket)
-
         val pendingIntent =
             PendingIntent.getBroadcast(
                 this,
-                0,
-                intent,
+                ticket.hashCode(),
+                NotificationReceiver.newIntent(this, ticket),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
 
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             time,

@@ -28,17 +28,11 @@ class NotificationReceiver : BroadcastReceiver() {
             return
         }
 
-        val startIntent =
-            BookingCompleteActivity.newIntent(
-                context,
-                ticket,
-                MainActivity::class.java,
-            )
         val pendingIntent =
             PendingIntent.getActivity(
                 context,
-                0,
-                startIntent,
+                ticket.hashCode(),
+                BookingCompleteActivity.newIntent(context, ticket, MainActivity::class.java),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
 
@@ -57,7 +51,7 @@ class NotificationReceiver : BroadcastReceiver() {
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(0, notification)
+        notificationManager.notify(ticket.hashCode(), notification)
     }
 
     companion object {
