@@ -8,7 +8,7 @@ import androidx.room.Query
 @Dao
 interface ReservationDao {
     @Insert
-    fun insertReservation(reservation: Reservation)
+    suspend fun insertReservation(reservation: Reservation)
 
     @Delete
     fun deleteReservation(reservation: Reservation)

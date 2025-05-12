@@ -1,14 +1,16 @@
 package woowacourse.movie.booking.complete
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import woowacourse.movie.booking.complete.alarm.AlarmScheduler
-import woowacourse.movie.data.ReservationDao
-import woowacourse.movie.mapper.toEntity
+import woowacourse.movie.reservation.ReservationRepository
 import woowacourse.movie.ui.model.TicketUiModel
-import kotlin.concurrent.thread
 
 class BookingCompletePresenter(
     private val view: BookingCompleteContract.View,
-    private val reservationDao: ReservationDao,
+    private val reservationRepository: ReservationRepository,
     private val alarmScheduler: AlarmScheduler,
 ) : BookingCompleteContract.Presenter {
     private lateinit var ticket: TicketUiModel
@@ -20,11 +22,17 @@ class BookingCompletePresenter(
 
     override fun saveReservation(
         ticket: TicketUiModel,
-        bokkingType: String,
+        bookingType: String,
     ) {
-        thread {
-            if (bokkingType == BookingType.RESERVATION.name) {
-                reservationDao.insertReservation(ticket.toEntity())
+        if (bookingType == BookingType.RESERVATION.name) {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    reservationRepository.insertReservation(ticket)
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        view.showToastErrorAndFinish(ERROR_RESERVATION_TOAST_MESSAGE)
+                    }
+                }
             }
         }
     }
@@ -34,5 +42,9 @@ class BookingCompletePresenter(
         bookingType: String,
     ) {
         alarmScheduler.scheduleAlarm(bookingType, ticket)
+    }
+
+    companion object {
+        private const val ERROR_RESERVATION_TOAST_MESSAGE = "예약 중 오류가 발생했습니다."
     }
 }

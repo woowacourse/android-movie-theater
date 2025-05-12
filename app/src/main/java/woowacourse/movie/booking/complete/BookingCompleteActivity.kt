@@ -23,6 +23,7 @@ import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.main.MainActivity
 import woowacourse.movie.main.sharedPreference.SharedPreferencesProvider
 import woowacourse.movie.mapper.IntentCompat
+import woowacourse.movie.reservation.ReservationRepository
 import woowacourse.movie.ui.model.TicketUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
@@ -66,8 +67,9 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
     private fun setupPresenter() {
         val db = ReservationDatabase.getInstance(applicationContext)
+        val repository = ReservationRepository(db.reservationDao())
         val alarmScheduler = MovieAlarmScheduler(this)
-        presenter = BookingCompletePresenter(this, db.reservationDao(), alarmScheduler)
+        presenter = BookingCompletePresenter(this, repository, alarmScheduler)
     }
 
     private fun requireTicketOrFinish(): TicketUiModel? {
