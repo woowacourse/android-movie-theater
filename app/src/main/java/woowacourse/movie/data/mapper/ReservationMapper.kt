@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.data.mapper
 
 import woowacourse.movie.data.entity.MovieEntity
 import woowacourse.movie.data.entity.MovieTicketEntity

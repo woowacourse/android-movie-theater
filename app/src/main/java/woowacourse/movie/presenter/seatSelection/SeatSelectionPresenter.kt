@@ -1,7 +1,7 @@
 package woowacourse.movie.presenter.seatSelection
 
 import woowacourse.movie.data.db.AppDatabase
-import woowacourse.movie.data.toEntity
+import woowacourse.movie.data.mapper.toEntity
 import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.ticket.MovieTicket
