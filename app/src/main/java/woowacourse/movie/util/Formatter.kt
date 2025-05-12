@@ -25,9 +25,5 @@ object Formatter {
         return LocalTime.parse(time, timeFormatter)
     }
 
-    fun formatStringDate(date: String): LocalDate {
-        return LocalDate.parse(date, dateFormatter)
-    }
-
     fun formatMoney(amount: Int): String = DecimalFormat("#,###").format(amount)
 }

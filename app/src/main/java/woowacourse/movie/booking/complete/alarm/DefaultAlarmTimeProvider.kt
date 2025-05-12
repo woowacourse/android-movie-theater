@@ -1,7 +1,7 @@
 package woowacourse.movie.booking.complete.alarm
 
 import woowacourse.movie.ui.model.TicketUiModel
-import woowacourse.movie.util.Formatter.formatStringDate
+import woowacourse.movie.util.Formatter.formatStringDateDotSeparated
 import woowacourse.movie.util.Formatter.formatStringTimeWithMidnight24
 import java.util.Calendar
 import java.util.TimeZone
@@ -9,7 +9,7 @@ import java.util.TimeZone
 class DefaultAlarmTimeProvider : AlarmTimeProvider {
     override fun getAlarmTime(ticket: TicketUiModel): Calendar {
         val time = formatStringTimeWithMidnight24(ticket.selectedTimeText).minusMinutes(30)
-        val date = formatStringDate(ticket.selectedDateText)
+        val date = formatStringDateDotSeparated(ticket.selectedDateText)
 
         return Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul")).apply {
             set(Calendar.YEAR, date.year)
