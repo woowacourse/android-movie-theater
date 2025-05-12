@@ -11,7 +11,7 @@ data class BookingSeats(
     private val _seats: MutableList<Seat> = mutableListOf(),
 ) : Parcelable {
     val seats: List<Seat>
-        get() = _seats
+        get() = _seats.toList()
 
     init {
         require(value >= MINIMUM_NUMBER_OF_PEOPLE) { BookingSeatsResult.PeopleOverOne }

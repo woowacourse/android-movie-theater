@@ -107,7 +107,7 @@
 - [ ] xml에서 DataBinding을 옹호하는 입장 되어보기
 - [ ] Fragment의 생명주기
 - [X] ItemId가 Fragment의 ID를 의미하는 지 알 수 없음 -> ItmeId 클래스명 수정
-- [ ] BookingStatus 생성자를 사용하지 않고 invoke 연산자를 오버로딩한 이유는 무엇인가요?
-- [ ] 
+- [X] BookingStatus 생성자를 사용하지 않고 invoke 연산자를 오버로딩한 이유는 무엇인가요?
+- [X] 외부에서 BookingSeats의 _seats(mutableList)에 접근하지 못하도록 깊은 복사 실행 
 - 고민할 내용
   - [ ] Fragment로만 탭을 구현할 수 있는가? Fragment의 생명주기는 매우 복잡하고 다루기 어려우니, 그냥 통짜 View를 사용하면 되는 것 아닌가?
