@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.result
+package woowacourse.movie.presentation.ticket
 
 import io.mockk.mockk
 import io.mockk.verify

@@ -17,9 +17,9 @@ abstract class MovieDatabase : RoomDatabase() {
         private var movieDatabase: MovieDatabase? = null
         private const val MOVIE_DATABASE_NAME = "movie-db"
 
-        fun getDatabase(applicationContext: Context): MovieDatabase =
+        fun getDatabase(context: Context): MovieDatabase =
             movieDatabase ?: Room
-                .databaseBuilder(applicationContext, MovieDatabase::class.java, MOVIE_DATABASE_NAME)
+                .databaseBuilder(context, MovieDatabase::class.java, MOVIE_DATABASE_NAME)
                 .build()
     }
 }

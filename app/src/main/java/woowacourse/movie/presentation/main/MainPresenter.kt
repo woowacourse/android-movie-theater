@@ -1,28 +1,22 @@
 package woowacourse.movie.presentation.main
 
 import android.content.Context
-import android.content.SharedPreferences
-import woowacourse.movie.data.MovieSharedPreferences
+import woowacourse.movie.data.repository.NotificationSettingRepository
+import woowacourse.movie.data.repository.SettingRepository
 
 class MainPresenter(
     private val view: MainContract.View,
-    applicationContext: Context,
-    private val settingsSharedPrefs: SharedPreferences =
-        MovieSharedPreferences.getSettingsSharedPrefs(applicationContext),
+    context: Context,
+    private val settingRepository: SettingRepository =
+        NotificationSettingRepository(context),
 ) : MainContract.Presenter {
     override fun checkPermissions() {
-        if (!settingsSharedPrefs.contains(MovieSharedPreferences.KEY_NOTIFICATION)) {
+        if (!settingRepository.isSaved()) {
             view.requestNotificationPermission()
         }
     }
 
     override fun saveNotificationSetting(isEnabled: Boolean) {
-        with(settingsSharedPrefs.edit()) {
-            putBoolean(
-                MovieSharedPreferences.KEY_NOTIFICATION,
-                isEnabled,
-            )
-            apply()
-        }
+        settingRepository.saveSettingState(isEnabled)
     }
 }

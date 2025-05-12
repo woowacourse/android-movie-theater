@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.seat
 
+import android.content.Context
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -7,8 +8,10 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.fixture.A1
 import woowacourse.movie.fixture.TICKET
+import woowacourse.movie.fixture.repository.FakeTicketRepository
+import woowacourse.movie.presentation.notification.ticket.TicketAlarm
 
-class SeatsPresenterTest {
+class SeatSelectPresenterTest {
     private lateinit var view: SeatSelectContract.View
     private lateinit var presenter: SeatSelectContract.Presenter
     private lateinit var ticket: Ticket
@@ -17,7 +20,17 @@ class SeatsPresenterTest {
     fun setUp() {
         view = mockk(relaxed = true)
         ticket = TICKET
-        presenter = SeatsPresenter(view, ticket)
+        val context = mockk<Context>(relaxed = true)
+        val ticketRepository = FakeTicketRepository()
+        val ticketAlarm = mockk<TicketAlarm>(relaxed = true)
+        presenter =
+            SeatSelectPresenter(
+                view,
+                ticket,
+                context,
+                ticketRepository,
+                ticketAlarm,
+            )
     }
 
     @Test

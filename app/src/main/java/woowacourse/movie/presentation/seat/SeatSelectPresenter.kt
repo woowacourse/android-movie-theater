@@ -8,13 +8,13 @@ import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.presentation.notification.ticket.TicketAlarm
 
-class SeatsPresenter(
+class SeatSelectPresenter(
     private val view: SeatSelectContract.View,
     ticket: Ticket,
-    applicationContext: Context,
+    context: Context,
     private val ticketRepository: TicketRepository =
-        DefaultTicketRepository(MovieDatabase.getDatabase(applicationContext)),
-    private val ticketAlarm: TicketAlarm = TicketAlarm(applicationContext),
+        DefaultTicketRepository(MovieDatabase.getDatabase(context)),
+    private val ticketAlarm: TicketAlarm = TicketAlarm(context),
 ) : SeatSelectContract.Presenter {
     private var _ticket: Ticket = ticket.copy()
     val ticket: Ticket get() = _ticket

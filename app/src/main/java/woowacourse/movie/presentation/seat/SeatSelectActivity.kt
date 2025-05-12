@@ -24,13 +24,13 @@ import woowacourse.movie.presentation.ticket.detail.TicketDetailActivity
 class SeatSelectActivity :
     BaseActivity<ActivitySeatsBinding>(R.layout.activity_seats),
     SeatSelectContract.View {
-    private lateinit var presenter: SeatsPresenter
+    private lateinit var presenter: SeatSelectPresenter
     private lateinit var ticket: Ticket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!fetchTicket()) return
-        presenter = SeatsPresenter(this, ticket, applicationContext)
+        presenter = SeatSelectPresenter(this, ticket, applicationContext)
         initView()
         presenter.loadSeatSelect()
     }

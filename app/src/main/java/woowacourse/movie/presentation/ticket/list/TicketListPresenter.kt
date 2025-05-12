@@ -8,9 +8,9 @@ import woowacourse.movie.domain.model.Ticket
 
 class TicketListPresenter(
     private val view: TicketListContract.View,
-    applicationContext: Context,
+    context: Context,
     private val ticketRepository: TicketRepository =
-        DefaultTicketRepository(MovieDatabase.getDatabase(applicationContext)),
+        DefaultTicketRepository(MovieDatabase.getDatabase(context)),
 ) : TicketListContract.Presenter {
     override fun loadTicketList() {
         view.showTicketList(ticketRepository.getAll())
