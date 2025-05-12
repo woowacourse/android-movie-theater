@@ -11,7 +11,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import woowacourse.movie.data.SharedPreferencesStore
+import woowacourse.movie.data.PermissionSharedPreferences
 import woowacourse.movie.view.receiver.AlarmReceiver
 
 @RunWith(AndroidJUnit4::class)
@@ -20,7 +20,7 @@ class AlarmReceiverTest {
     private lateinit var receiver: AlarmReceiver
     private lateinit var intent: Intent
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var sharedPreferencesStore: SharedPreferencesStore
+    private lateinit var permissionSharedPreferences: PermissionSharedPreferences
 
     private var originalNotificationPermission: Boolean = false
 
@@ -30,9 +30,9 @@ class AlarmReceiverTest {
         intent = AlarmReceiver.newIntent(context, "해리포터와 비밀의 방", 1L)
 
         sharedPreferences = context.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-        sharedPreferencesStore = SharedPreferencesStore(context)
+        permissionSharedPreferences = PermissionSharedPreferences(context)
 
-        originalNotificationPermission = sharedPreferencesStore.notificationPermission()
+        originalNotificationPermission = permissionSharedPreferences.notificationPermission()
 
         receiver = AlarmReceiver()
     }

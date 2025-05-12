@@ -3,7 +3,7 @@ package woowacourse.movie.view.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import woowacourse.movie.data.SharedPreferencesStore
+import woowacourse.movie.data.PermissionSharedPreferences
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(
@@ -22,15 +22,14 @@ class AlarmReceiver : BroadcastReceiver() {
                 INVALID_NOTIFICATION_TICKET_ID,
             )
         }
-
         val helper = NotificationHelper(context)
         val notification = helper.notification(ticketId, movieTitle)
         helper.notify(ticketId.toInt(), notification)
     }
 
     private fun checkPermissionState(context: Context): Boolean {
-        val prefs = SharedPreferencesStore(context)
-        return prefs.notificationPermissionStatus()
+        val prefs = PermissionSharedPreferences(context)
+        return prefs.notificationPermission()
     }
 
     companion object {

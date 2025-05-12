@@ -3,7 +3,7 @@ package woowacourse.movie.data
 import android.content.Context
 import androidx.core.content.edit
 
-class SharedPreferencesStore(private val context: Context) {
+class PermissionSharedPreferences(private val context: Context) {
     private val preferences by lazy {
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     }
@@ -15,12 +15,12 @@ class SharedPreferencesStore(private val context: Context) {
         }
     }
 
-    fun notificationPermissionStatus(): Boolean {
+    fun notificationPermission(): Boolean {
         return preferences.getBoolean(KEY_NOTIFICATION_PERMISSION_STATUS, false)
     }
 
     companion object {
         private const val PREFS_NAME = "AppPreferences"
-        private const val KEY_NOTIFICATION_PERMISSION_STATUS = "notification_permission_status"
+        private const val KEY_NOTIFICATION_PERMISSION_STATUS = "notification_permission"
     }
 }

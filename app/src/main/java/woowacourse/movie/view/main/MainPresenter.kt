@@ -1,7 +1,7 @@
 package woowacourse.movie.view.main
 
 import android.content.Context
-import woowacourse.movie.data.SharedPreferencesStore
+import woowacourse.movie.data.PermissionSharedPreferences
 import woowacourse.movie.data.datasource.PermissionDataSourceImpl
 import woowacourse.movie.domain.datasource.PermissionDataSource
 
@@ -14,8 +14,8 @@ class MainPresenter(
 
     companion object {
         fun initialize(context: Context): MainContract.Presenter {
-            val sharedPreferencesStore = SharedPreferencesStore(context)
-            val permissionDataSource = PermissionDataSourceImpl(sharedPreferencesStore)
+            val permissionSharedPreferences = PermissionSharedPreferences(context)
+            val permissionDataSource = PermissionDataSourceImpl(permissionSharedPreferences)
 
             return MainPresenter(permissionDataSource)
         }

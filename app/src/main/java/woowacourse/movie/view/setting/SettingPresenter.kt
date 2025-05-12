@@ -1,7 +1,7 @@
 package woowacourse.movie.view.setting
 
 import android.content.Context
-import woowacourse.movie.data.SharedPreferencesStore
+import woowacourse.movie.data.PermissionSharedPreferences
 import woowacourse.movie.data.datasource.PermissionDataSourceImpl
 import woowacourse.movie.domain.datasource.PermissionDataSource
 
@@ -26,7 +26,7 @@ class SettingPresenter(
             view: SettingContract.View,
             context: Context,
         ): SettingContract.Presenter {
-            val prefsManager = SharedPreferencesStore(context)
+            val prefsManager = PermissionSharedPreferences(context)
             val permissionDataSource = PermissionDataSourceImpl(prefsManager)
             return SettingPresenter(view, permissionDataSource)
         }

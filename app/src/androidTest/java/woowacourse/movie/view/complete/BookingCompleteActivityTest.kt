@@ -14,7 +14,7 @@ class BookingCompleteActivityTest {
 
     @Before
     fun setUp() {
-        intent = BookingCompleteActivity.Companion.newIntent(fakeContext, 1)
+        intent = BookingCompleteActivity.newIntent(fakeContext, 1)
         ActivityScenario.launch<BookingCompleteActivity>(intent)
     }
 
