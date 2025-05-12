@@ -27,7 +27,7 @@ interface TicketDao {
         seats: List<SeatEntity>,
     ) {
         val ticketId = save(ticket)
-        save(seats.map { it.copy(ticketId = ticketId.toInt()) })
+        save(seats.map { it.copy(ticketId = ticketId) })
     }
 }
 

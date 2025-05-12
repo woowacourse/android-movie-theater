@@ -9,5 +9,5 @@ data class SeatEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "row") val row: Int,
     @ColumnInfo(name = "column") val column: Int,
-    @ColumnInfo(name = "ticket_id") val ticketId: Int = 0,
+    @ColumnInfo(name = "ticket_id") val ticketId: Long = 0,
 )
