@@ -11,9 +11,11 @@ import woowacourse.movie.model.movie.Movie
 import woowacourse.movie.model.movie.MovieDate
 import woowacourse.movie.model.movie.MovieTime
 import woowacourse.movie.model.movie.MovieToReserve
+import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.theater.ScreeningInfo
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.model.theater.TheaterMovieSchedule
+import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.model.ticket.TicketCount
 import java.time.LocalDate
 import java.time.LocalTime
@@ -40,20 +42,20 @@ val MOVIE_TO_RESERVE: MovieToReserve =
         Theater(1, "JAY 극장"),
     )
 
-val MOVIE_TICKET_B1_C3 =
+val MOVIE_TICKET_ENTITY_B1_C3 =
     MovieTicketEntity(
         reservationInfoEntity =
             ReservationInfoEntity(
                 id = 1,
-                movieId = 17,
+                movieId = 1,
                 movieDateYear = 2025,
                 movieDateMonth = 5,
                 movieDateDay = 10,
                 movieTimeHour = 19,
                 movieTimeMinute = 0,
                 ticketCount = 2,
-                theaterId = 5,
-                price = 20000,
+                theaterId = 1,
+                price = 25000,
             ),
         seats =
             listOf(
@@ -62,14 +64,23 @@ val MOVIE_TICKET_B1_C3 =
             ),
         movie =
             MovieEntity(
-                id = 17,
-                title = "이상한 나라의 앨리스",
+                id = 1,
+                title = "라라랜드",
             ),
         theater =
             TheaterEntity(
-                id = 5,
-                name = "뭉GV",
+                id = 1,
+                name = "JAY 극장",
             ),
+    )
+
+val MOVIE_TICKET_B1_C3 =
+    MovieTicket(
+        movie = MOVIE,
+        movieDate = LocalDate.of(2025, 5, 10),
+        movieTime = MovieTime(LocalTime.of(19, 0)),
+        seats = listOf(Seat(1, 0), Seat(2, 2)),
+        theater = Theater(1, "JAY 극장"),
     )
 
 val THEATER_MOVIE_SCHEDULE: TheaterMovieSchedule =
