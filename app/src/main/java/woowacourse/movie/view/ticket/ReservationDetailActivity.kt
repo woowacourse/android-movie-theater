@@ -23,6 +23,7 @@ import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Reservation
 import woowacourse.movie.presenter.ticket.ReservationDetailPresenter
 import woowacourse.movie.view.reservation.ReservationAlarmReceiver
+import woowacourse.movie.view.reservation.ShowNotificationPermissionInfoDialog
 import woowacourse.movie.view.util.ErrorMessage
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -30,6 +31,11 @@ import java.time.ZoneId
 class ReservationDetailActivity :
     AppCompatActivity(),
     ReservationDetailContract.View {
+    private val showNotificationPermissionInfoDialog: ShowNotificationPermissionInfoDialog by lazy {
+        ShowNotificationPermissionInfoDialog(
+            this,
+        )
+    }
     private var presenter: ReservationDetailContract.Presenter? = null
 
     private lateinit var cancelDescriptionView: TextView
@@ -47,7 +53,6 @@ class ReservationDetailActivity :
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         val reservation =
             intent?.getTicketExtra(EXTRA_TICKET) ?: error(ErrorMessage(CAUSE_TICKET).notProvided())
 
@@ -59,21 +64,23 @@ class ReservationDetailActivity :
     }
 
     private fun requestNotificationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS,
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    // 권한 요청 거부한 경우
+        showNotificationPermissionInfoDialog(onDismiss = {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS,
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                        // 권한 요청 거부한 경우
+                    } else {
+                        requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    }
                 } else {
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
                 }
-            } else {
-                // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
             }
-        }
+        })
     }
 
     private val requestPermissionLauncher =
