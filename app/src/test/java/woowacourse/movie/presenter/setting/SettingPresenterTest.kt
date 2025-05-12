@@ -8,6 +8,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.fixture.TestData
+import woowacourse.movie.repository.SettingRepository
 import woowacourse.movie.repository.TicketRepository
 import woowacourse.movie.view.setting.SettingContract
 import woowacourse.movie.view.setting.SettingPresenter
@@ -16,12 +17,14 @@ class SettingPresenterTest {
     private lateinit var presenter: SettingPresenter
     private lateinit var view: SettingContract.View
     private lateinit var repository: TicketRepository
+    private lateinit var settingRepository: SettingRepository
 
     @BeforeEach
     fun setUp() {
         view = mockk()
         repository = mockk()
-        presenter = SettingPresenter(view, repository)
+        settingRepository = mockk()
+        presenter = SettingPresenter(view, repository, settingRepository)
     }
 
     @Test
