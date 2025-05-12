@@ -62,6 +62,8 @@ class SeatActivityTest {
 
         // when
         onView(withId(R.id.a1)).perform(click())
+        onView(withId(R.id.tv_price)).check(matches(withText("10,000원")))
+
         onView(withId(R.id.a1)).perform(click())
 
         // then
