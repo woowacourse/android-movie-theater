@@ -5,26 +5,26 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.SettingPreferenceManager
+import woowacourse.movie.data.repository.SettingRepositoryImpl
 import woowacourse.movie.presentation.view.setting.SettingContract
 import woowacourse.movie.presentation.view.setting.SettingPresenter
 
 class SettingPresenterTest {
     private lateinit var presenter: SettingContract.Presenter
     private lateinit var view: SettingContract.View
-    private lateinit var preferenceManager: SettingPreferenceManager
+    private lateinit var settingRepository: SettingRepositoryImpl
 
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        preferenceManager = mockk(relaxed = true)
-        presenter = SettingPresenter(view, preferenceManager)
+        settingRepository = mockk()
+        presenter = SettingPresenter(view, settingRepository)
     }
 
     @Test
     fun `푸시_알람_설정값을_가져와_화면에_보여준다`() {
         // given
-        every { preferenceManager.getPushAlarmEnabled() } returns true
+        every { settingRepository.getNotificationEnabled() } returns true
 
         // when
         presenter.fetchSettingInfo()
@@ -39,6 +39,6 @@ class SettingPresenterTest {
         presenter.savePushAlarmSetting(false)
 
         // then
-        verify { preferenceManager.setPushAlarmEnabled(false) }
+        verify { settingRepository.setNotificationEnabled(false) }
     }
 }

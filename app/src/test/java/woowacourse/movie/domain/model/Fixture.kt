@@ -29,10 +29,22 @@ val dummyTheater =
 val dummyTheaters =
     TheatersUiModel(listOf(dummyTheater))
 
+val dummySeats =
+    Seats.of(listOf(Seat("A1"), Seat("C1")))
+
 val dummySeatsUiModel =
     SeatsUiModel(listOf(SeatUiModel("A1", 10000), SeatUiModel("C1", 15000)))
 
 val dummyReservationInfo =
+    ReservationInfo(
+        "라라랜드",
+        LocalDateTime.of(LocalDate.of(2025, 4, 1), LocalTime.of(14, 0)),
+        dummySeats,
+        TicketCount(2),
+        "선릉",
+    )
+
+val dummyReservationInfoUiModel =
     ReservationInfoUiModel(
         "라라랜드",
         LocalDateTime.of(LocalDate.of(2025, 4, 1), LocalTime.of(14, 0)),

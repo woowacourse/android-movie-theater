@@ -9,24 +9,22 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.repository.ReservationRepositoryImpl
 import woowacourse.movie.domain.model.dummyReservationInfo
-import woowacourse.movie.domain.repository.ReservationRepository
-import woowacourse.movie.presentation.alarm.AlarmScheduler
+import woowacourse.movie.domain.model.dummyReservationInfoUiModel
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectContract
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectPresenter
 
 class SeatSelectPresenterTest {
     private lateinit var presenter: SeatSelectContract.Presenter
     private lateinit var view: SeatSelectContract.View
-    private lateinit var provider: ReservationRepository
-    private lateinit var scheduler: AlarmScheduler
+    private lateinit var reservationRepository: ReservationRepositoryImpl
 
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        provider = mockk()
-        scheduler = mockk()
-        presenter = SeatSelectPresenter(view, provider, scheduler)
+        reservationRepository = mockk()
+        presenter = SeatSelectPresenter(view, reservationRepository)
     }
 
     @Test
@@ -37,7 +35,7 @@ class SeatSelectPresenterTest {
         every { view.showReservationInfo(capture(slot1), capture(slot2)) } just Runs
 
         // when
-        presenter.fetchData(dummyReservationInfo)
+        presenter.fetchData(dummyReservationInfoUiModel)
 
         // then
         assertThat(slot1.captured).isEqualTo("라라랜드")
@@ -61,7 +59,7 @@ class SeatSelectPresenterTest {
         every { view.showTotalPrice(any()) } just Runs
         every { view.updateConfirmButtonEnabled(any()) } just Runs
 
-        presenter.fetchData(dummyReservationInfo)
+        presenter.fetchData(dummyReservationInfoUiModel)
         presenter.seatSelect("A1")
 
         verify { view.showSelectedSeat("A1") }
@@ -76,7 +74,7 @@ class SeatSelectPresenterTest {
         every { view.showTotalPrice(any()) } just Runs
         every { view.updateConfirmButtonEnabled(any()) } just Runs
 
-        presenter.fetchData(dummyReservationInfo)
+        presenter.fetchData(dummyReservationInfoUiModel)
         presenter.seatSelect("A1")
         presenter.seatSelect("A1")
 
@@ -93,7 +91,7 @@ class SeatSelectPresenterTest {
         every { view.showTotalPrice(any()) } just Runs
         every { view.updateConfirmButtonEnabled(capture(buttonSlot)) } just Runs
 
-        val reservationInfo = dummyReservationInfo.copy(count = 2)
+        val reservationInfo = dummyReservationInfoUiModel.copy(count = 2)
         presenter.fetchData(reservationInfo)
         presenter.seatSelect("A1")
         presenter.seatSelect("A2")
@@ -110,7 +108,7 @@ class SeatSelectPresenterTest {
         every { view.showSelectedSeat(any()) } just Runs
         every { view.showTotalPrice(any()) } just Runs
         every { view.updateConfirmButtonEnabled(any()) } just Runs
-        val reservationInfo = dummyReservationInfo.copy(count = 1)
+        val reservationInfo = dummyReservationInfoUiModel.copy(count = 1)
 
         presenter.fetchData(reservationInfo)
         presenter.seatSelect("A1")
