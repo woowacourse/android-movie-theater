@@ -13,15 +13,19 @@ class MovieListPresenter(
     private val movieListView: MovieListContract.View,
     private val appDatabase: AppDatabase,
 ) : MovieListContract.Presenter {
+    private lateinit var movies: List<MovieItem>
+
     override fun loadMovieList() {
-        thread {
-            val movies: List<MovieItem> = getMovieList()
-            val ads: List<AdItem> = getAdvertisementList()
-            movieListView.setMoveListItems(movieListItems(movies, ads))
-        }
+        fetchMovies()
+        val ads: List<AdItem> = fetchAds()
+        movieListView.setMoveListItems(movieListItems(movies, ads))
     }
 
-    private fun getMovieList(): List<MovieItem> = appDatabase.movieDao().getAll().map { MovieItem(MovieMapper.toModel(it)) }
+    private fun fetchMovies() {
+        thread {
+            movies = appDatabase.movieDao().getAll().map { MovieItem(MovieMapper.toModel(it)) }
+        }.join()
+    }
 
-    private fun getAdvertisementList(): List<AdItem> = DUMMY_ADS.map { AdItem(it) }
+    private fun fetchAds(): List<AdItem> = DUMMY_ADS.map { AdItem(it) }
 }

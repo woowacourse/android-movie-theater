@@ -20,6 +20,15 @@ class MovieListFragment :
     private val movieListPresenter by lazy {
         MovieListPresenter(this, AppDatabase.getInstance(requireContext()))
     }
+    private val adapter: MovieAdapter by lazy {
+        MovieAdapter(
+            onClickBooking =
+                BookingButtonClickListener { movie ->
+                    val theaterFragment = TheaterBottomSheetDialogFragment.newInstance(movie)
+                    theaterFragment.show(childFragmentManager, "dialog")
+                },
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,15 +41,6 @@ class MovieListFragment :
     }
 
     override fun setMoveListItems(items: List<MovieListItem>) {
-        val adapter =
-            MovieAdapter(
-                onClickBooking =
-                    BookingButtonClickListener { movie ->
-                        val theaterFragment = TheaterBottomSheetDialogFragment.newInstance(movie)
-                        theaterFragment.show(childFragmentManager, "dialog")
-                    },
-            )
-
         binding.moviesRecyclerView.adapter = adapter
         adapter.submitList(items)
     }
