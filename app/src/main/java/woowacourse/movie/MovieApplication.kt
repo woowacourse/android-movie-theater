@@ -1,14 +1,15 @@
 package woowacourse.movie
 
 import android.app.Application
+import woowacourse.movie.data.ReservationFetcherImpl
 import woowacourse.movie.data.SettingPreferenceManager
 import woowacourse.movie.data.db.ReservationDao
 import woowacourse.movie.data.db.ReservationDatabase
 import woowacourse.movie.data.repository.ReservationRepositoryImpl
 import woowacourse.movie.data.repository.SettingRepositoryImpl
+import woowacourse.movie.domain.ReservationFetcher
 import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.domain.repository.SettingRepository
-import woowacourse.movie.presentation.alarm.AlarmScheduler
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectContract
 import woowacourse.movie.presentation.view.reservation.seat.SeatSelectPresenter
 import woowacourse.movie.presentation.view.reservationlist.ReservationListContract
@@ -35,7 +36,7 @@ class MovieApplication : Application() {
         fun provideReservationListPresenter(view: ReservationListContract.View): ReservationListContract.Presenter =
             ReservationListPresenter(
                 view = view,
-                reservationRepository = provideReservationRepository(),
+                reservationFetcher = provideReservationFetcher(),
             )
 
         fun provideSettingPresenter(view: SettingContract.View): SettingContract.Presenter =
@@ -48,10 +49,13 @@ class MovieApplication : Application() {
 
         private fun provideReservationDao(): ReservationDao = ReservationDatabase.getInstance(instance).reservationDao()
 
+        private fun provideReservationFetcher(): ReservationFetcher =
+            ReservationFetcherImpl(
+                provideReservationRepository(),
+            )
+
         private fun provideReservationRepository(): ReservationRepository = ReservationRepositoryImpl(provideReservationDao())
 
         private fun provideSettingPreferenceManager(): SettingPreferenceManager = SettingPreferenceManager()
-
-        private fun provideAlarmScheduler(): AlarmScheduler = AlarmScheduler(instance)
     }
 }
