@@ -1,18 +1,23 @@
 package woowacourse.movie.view.ticket
 
+import android.Manifest
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
 import woowacourse.movie.contract.ticket.ReservationDetailContract
+import woowacourse.movie.data.ApplicationSettings
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Reservation
@@ -48,9 +53,33 @@ class ReservationDetailActivity :
 
         findViews()
         initPresenter(reservation)
+        requestNotificationPermission()
         initViews()
         setAlarmManager(reservation)
     }
+
+    private fun requestNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                    // 권한 요청 거부한 경우
+                } else {
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            } else {
+                // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
+            }
+        }
+    }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            ApplicationSettings.notificationEnabled = isGranted
+        }
 
     private fun setAlarmManager(reservation: Reservation) {
         val intent = ReservationAlarmReceiver.newIntent(this, reservation)
