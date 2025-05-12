@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.data.bookinghistory.BookingHistoryDatabase
+import woowacourse.movie.data.bookinghistory.MovieDatabase
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
@@ -26,7 +26,7 @@ class SeatsActivity : DataBindingBaseActivity(), SeatsContract.View {
     private val presenter: SeatsPresenter by lazy {
         SeatsPresenter(
             this,
-            BookingHistoryDatabase.getDatabase(),
+            MovieDatabase.getDatabase(),
             NotificationScheduler()
         )
     }

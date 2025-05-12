@@ -1,7 +1,7 @@
 package woowacourse.movie.presentation.seats
 
 import android.app.Activity
-import woowacourse.movie.data.bookinghistory.BookingHistoryDatabase
+import woowacourse.movie.data.bookinghistory.MovieDatabase
 import woowacourse.movie.data.bookinghistory.BookingHistoryMapper
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
@@ -11,7 +11,7 @@ import kotlin.concurrent.thread
 
 class SeatsPresenter(
     private val view: SeatsContract.View,
-    private val database: BookingHistoryDatabase,
+    private val database: MovieDatabase,
     private val notificationScheduler: NotificationScheduler,
 ) : SeatsContract.Presenter {
     private lateinit var movieTicket: MovieTicket

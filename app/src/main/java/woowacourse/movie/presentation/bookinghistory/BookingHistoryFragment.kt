@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.R
-import woowacourse.movie.data.bookinghistory.BookingHistoryDatabase
+import woowacourse.movie.data.bookinghistory.MovieDatabase
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.presentation.bookingsummary.BookingSummaryActivity
@@ -21,7 +21,7 @@ class BookingHistoryFragment :
     private val presenter: BookingHistoryPresenter by lazy {
         BookingHistoryPresenter(
             this,
-            BookingHistoryDatabase.getDatabase(requireContext().applicationContext),
+            MovieDatabase.getDatabase(requireContext().applicationContext),
         )
     }
     private var _binding: FragmentBookingHistoryBinding? = null

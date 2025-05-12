@@ -12,14 +12,14 @@ import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.assertThrows
 
 class BookingHistoryDaoTest {
-    private lateinit var database: BookingHistoryDatabase
+    private lateinit var database: MovieDatabase
     private lateinit var dao: BookingHistoryDao
 
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         database =
-            Room.inMemoryDatabaseBuilder(context, BookingHistoryDatabase::class.java)
+            Room.inMemoryDatabaseBuilder(context, MovieDatabase::class.java)
                 .allowMainThreadQueries()
                 .build()
 
