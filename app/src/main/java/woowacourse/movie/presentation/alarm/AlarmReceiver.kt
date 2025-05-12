@@ -24,7 +24,7 @@ class AlarmReceiver(
         context: Context,
         intent: Intent,
     ) {
-        if (settingRepository.getNotificationEnabled()) return
+        if (!settingRepository.getNotificationEnabled()) return
         if (intent.action != Extras.AlarmData.ACTION_ALARM) return
 
         val reservationInfo =
