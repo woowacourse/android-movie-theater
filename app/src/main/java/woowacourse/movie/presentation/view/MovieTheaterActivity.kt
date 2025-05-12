@@ -1,7 +1,12 @@
 package woowacourse.movie.presentation.view
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
@@ -31,6 +36,15 @@ class MovieTheaterActivity : BaseActivity<ActivityMovieTheaterBinding>(R.layout.
             }
             binding.bottomNavigation.selectedItemId = R.id.menu_home
         }
+        askPermissionNotification()
+    }
+
+    private fun askPermissionNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+        ) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQ_PERMISSION_PUSH)
+        }
     }
 
     private fun setBottomNavigationItemClickListener() {
@@ -54,5 +68,9 @@ class MovieTheaterActivity : BaseActivity<ActivityMovieTheaterBinding>(R.layout.
             currentFragment?.let { hide(it) }
         }
         currentFragment = fragment
+    }
+
+    companion object {
+        private const val REQ_PERMISSION_PUSH = 1001
     }
 }
