@@ -19,14 +19,18 @@ class BootReceiver : BroadcastReceiver() {
         val isTicketAlarmChecked = sharedPreferences.getBoolean("isTicketAlarm", false)
         if (!isTicketAlarmChecked) return
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
-            thread {
-                val alarm = Alarm(context)
-                val database = getMovieDatabase(context)
-                val ticketDataAdapter: TicketDataAdapter = TicketAdapter(database.ticketDao())
-                val tickets = ticketDataAdapter.getAll()
-                tickets.forEach { ticket: Ticket ->
-                    alarm.scheduleTicketAlarm(ticket)
-                }
+            scheduleAlarmAllTicket(context)
+        }
+    }
+
+    private fun scheduleAlarmAllTicket(context: Context) {
+        thread {
+            val alarm = Alarm(context)
+            val database = getMovieDatabase(context)
+            val ticketDataAdapter: TicketDataAdapter = TicketAdapter(database.ticketDao())
+            val tickets = ticketDataAdapter.getAll()
+            tickets.forEach { ticket: Ticket ->
+                alarm.scheduleTicketAlarm(ticket)
             }
         }
     }
