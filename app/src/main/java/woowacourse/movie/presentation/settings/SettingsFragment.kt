@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingsBinding
 
 class SettingsFragment :
@@ -69,9 +70,9 @@ class SettingsFragment :
     private fun showPermissionExplanationDialog() {
         AlertDialog
             .Builder(requireContext())
-            .setTitle("알림 권한 필요")
-            .setMessage("예매 알림을 받으려면 알림 권한이 필요합니다.\n권한을 허용해주세요.")
-            .setPositiveButton("확인", null)
+            .setTitle(R.string.notification_permission_text)
+            .setMessage(R.string.notification_permission_message)
+            .setPositiveButton(R.string.confirm_text, null)
             .setCancelable(false)
             .show()
     }

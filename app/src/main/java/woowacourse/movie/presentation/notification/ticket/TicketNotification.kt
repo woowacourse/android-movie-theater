@@ -33,9 +33,13 @@ class TicketNotification(
             NotificationCompat
                 .Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_notifications)
-                .setContentTitle("예매 알림")
-                .setContentText("${ticket.movie.title} 30분 후에 상영")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentTitle(context.getString(R.string.screening_notification_title))
+                .setContentText(
+                    context.getString(
+                        R.string.screening_notification_text,
+                        ticket.movie.title,
+                    ),
+                ).setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
         val notification = builder.build()

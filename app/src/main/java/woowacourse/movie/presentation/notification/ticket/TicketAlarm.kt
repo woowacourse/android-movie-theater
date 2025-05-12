@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.Context
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.presentation.receiver.MovieBroadcastReceiver
-import java.time.LocalDateTime
 import java.time.ZoneId
 
 class TicketAlarm(
@@ -16,17 +15,9 @@ class TicketAlarm(
     fun setTicketAlarm(ticket: Ticket) {
         val intent = MovieBroadcastReceiver.newIntent(context, ticket)
 
-//        val alarmTimeInMillis =
-//            ticket.showtime
-//                .minusMinutes(30)
-//                .atZone(ZoneId.systemDefault())
-//                .toInstant()
-//                .toEpochMilli()
-
         val alarmTimeInMillis =
-            LocalDateTime
-                .now()
-                .plusSeconds(10)
+            ticket.showtime
+                .minusMinutes(30)
                 .atZone(ZoneId.systemDefault())
                 .toInstant()
                 .toEpochMilli()
