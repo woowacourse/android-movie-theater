@@ -11,6 +11,7 @@ import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.ext.isDisplayed
+import woowacourse.movie.ext.isTextMatches
 import woowacourse.movie.ext.performClick
 import woowacourse.movie.fixture.fakeContext
 import woowacourse.movie.view.movies.ScreeningInfo
@@ -59,38 +60,38 @@ class BookingActivityTest {
     @Test
     fun `인원_증가_버튼을_누르면_인원이_1_증가한다`() {
         // given
-        onView(withId(R.id.tv_people_count)).check(matches(withText("1")))
+        onView(withId(R.id.tv_people_count)).isTextMatches("1")
 
         // when
         onView(withId(R.id.btn_increase)).performClick()
 
         // then
-        onView(withId(R.id.tv_people_count)).check(matches(withText("2")))
+        onView(withId(R.id.tv_people_count)).isTextMatches("2")
     }
 
     @Test
     fun `인원_감소_버튼을_누르면_인원이_1_감소한다`() {
         // given
-        onView(withId(R.id.tv_people_count)).check(matches(withText("1")))
+        onView(withId(R.id.tv_people_count)).isTextMatches("1")
 
         // when
         onView(withId(R.id.btn_decrease)).performClick()
 
         // then
-        onView(withId(R.id.tv_people_count)).check(matches(withText("1")))
+        onView(withId(R.id.tv_people_count)).isTextMatches("1")
     }
 
     @Test
     fun `인원은_1명_이하로_감소하지_않는다`() {
         // when
         onView(withId(R.id.tv_people_count))
-            .check(matches(withText("1")))
+            .isTextMatches("1")
 
         // when
         onView(withId(R.id.btn_decrease)).performClick()
 
         // then
-        onView(withId(R.id.tv_people_count)).check(matches(withText("1")))
+        onView(withId(R.id.tv_people_count)).isTextMatches("1")
     }
 
     @Test
@@ -104,6 +105,6 @@ class BookingActivityTest {
         }
 
         // then
-        onView(withId(R.id.tv_people_count)).check(matches(withText("2")))
+        onView(withId(R.id.tv_people_count)).isTextMatches("2")
     }
 }

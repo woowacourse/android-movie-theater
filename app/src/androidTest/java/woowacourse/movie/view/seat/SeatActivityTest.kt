@@ -13,6 +13,7 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.PeopleCount
 import woowacourse.movie.ext.isDisplayed
+import woowacourse.movie.ext.isTextMatches
 import woowacourse.movie.ext.performClick
 import woowacourse.movie.fixture.fakeContext
 import woowacourse.movie.view.seat.SeatActivity.Companion.newIntent
@@ -46,28 +47,27 @@ class SeatActivityTest {
     @Test
     fun `좌석을_추가하면_좌석_가격을_출력한다`() {
         // given
-        onView(withId(R.id.tv_price)).check(matches(withText("0원")))
+        onView(withId(R.id.tv_price)).isTextMatches("0원")
 
         // when
         onView(withId(R.id.a1)).performClick()
         onView(withId(R.id.a2)).performClick()
 
         // then
-        onView(withId(R.id.tv_price)).check(matches(withText("20,000원")))
+        onView(withId(R.id.tv_price)).isTextMatches("20,000원")
     }
 
     @Test
     fun `좌석을_선택_해제하면_감소된_좌석_가격을_출력한다`() {
         // given
-        onView(withId(R.id.tv_price)).check(matches(withText("0원")))
+        onView(withId(R.id.tv_price)).isTextMatches("0원")
 
         // when
         onView(withId(R.id.a1)).performClick()
-        onView(withId(R.id.tv_price)).check(matches(withText("10,000원")))
-
+        onView(withId(R.id.tv_price)).isTextMatches("10,000원")
         onView(withId(R.id.a1)).performClick()
 
         // then
-        onView(withId(R.id.tv_price)).check(matches(withText("0원")))
+        onView(withId(R.id.tv_price)).isTextMatches("0원")
     }
 }
