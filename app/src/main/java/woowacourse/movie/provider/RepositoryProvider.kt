@@ -8,13 +8,13 @@ import woowacourse.movie.repository.TicketRepository
 object RepositoryProvider {
     fun ticketRepository(context: Context): TicketRepository =
         TicketRepository(
-            ticketDao(context),
+            ticketDao(context.applicationContext),
         )
 
     fun settingRepository(context: Context): SettingRepository =
         SettingRepository(
-            context.getSharedPreferences("setting", Context.MODE_PRIVATE),
+            context.applicationContext.getSharedPreferences("setting", Context.MODE_PRIVATE),
         )
 
-    fun ticketDao(context: Context) = MovieTheaterDatabase.db(context).ticketDao()
+    fun ticketDao(context: Context) = MovieTheaterDatabase.db(context.applicationContext).ticketDao()
 }
