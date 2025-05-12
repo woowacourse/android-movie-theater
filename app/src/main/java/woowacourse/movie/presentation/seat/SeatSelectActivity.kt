@@ -25,11 +25,16 @@ class SeatSelectActivity :
     BaseActivity<ActivitySeatsBinding>(R.layout.activity_seats),
     SeatSelectContract.View {
     private lateinit var presenter: SeatSelectPresenter
-    private lateinit var ticket: Ticket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (!fetchTicket()) return
+        val ticket = intent.getSerializableExtraCompat(EXTRA_TICKET, Ticket::class.java)
+        ticket ?: run {
+            Toast.makeText(this, ERROR_INTENT_KEY, Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
         presenter = SeatSelectPresenter(this, ticket, applicationContext)
         initView()
         presenter.loadSeatSelect()
@@ -70,17 +75,6 @@ class SeatSelectActivity :
     override fun navigateToSummary(ticket: Ticket) {
         val intent = TicketDetailActivity.newIntent(this, ticket)
         startActivity(intent)
-    }
-
-    private fun fetchTicket(): Boolean {
-        val data = intent.getSerializableExtraCompat(EXTRA_TICKET, Ticket::class.java)
-        if (data == null) {
-            Toast.makeText(this, ERROR_INTENT_KEY, Toast.LENGTH_SHORT).show()
-            finish()
-            return false
-        }
-        ticket = data
-        return true
     }
 
     private fun initView() {

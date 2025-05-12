@@ -14,28 +14,22 @@ class TicketDetailActivity :
     BaseActivity<ActivityTicketDetailBinding>(R.layout.activity_ticket_detail),
     TicketDetailContract.View {
     private lateinit var presenter: TicketDetailContract.Presenter
-    private lateinit var ticket: Ticket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (!fetchTicketFromIntent()) return
+        val ticket = intent.getSerializableExtraCompat(EXTRA_TICKET, Ticket::class.java)
+        ticket ?: run {
+            Toast.makeText(this, ERROR_INTENT_KEY, Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
         presenter = TicketDetailPresenter(this, ticket)
         presenter.loadBookingResult()
     }
 
     override fun showTicketInfo(ticket: Ticket) {
         binding.ticket = ticket
-    }
-
-    private fun fetchTicketFromIntent(): Boolean {
-        val data = intent.getSerializableExtraCompat(EXTRA_TICKET, Ticket::class.java)
-        if (data == null) {
-            Toast.makeText(this, ERROR_INTENT_KEY, Toast.LENGTH_SHORT).show()
-            finish()
-            return false
-        }
-        ticket = data
-        return true
     }
 
     companion object {

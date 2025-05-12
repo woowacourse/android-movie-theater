@@ -23,14 +23,19 @@ class BookingActivity :
     BaseActivity<ActivityBookingBinding>(R.layout.activity_booking),
     BookingContract.View {
     private lateinit var presenter: BookingPresenter
-    private lateinit var screening: Screening
 
     private lateinit var dateAdapter: ArrayAdapter<LocalDate>
     private lateinit var timeAdapter: ArrayAdapter<LocalTime>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (!fetchScreening()) return
+        val screening = intent.getSerializableExtraCompat(EXTRA_SCREENING, Screening::class.java)
+        screening ?: run {
+            Toast.makeText(this, ERROR_INTENT_KEY, Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
         presenter = BookingPresenter(this, screening)
         initView()
         presenter.loadBooking()
@@ -113,17 +118,6 @@ class BookingActivity :
     override fun navigateToSeatSelect(ticket: Ticket) {
         val intent = SeatSelectActivity.newIntent(this, ticket)
         startActivity(intent)
-    }
-
-    private fun fetchScreening(): Boolean {
-        val data = intent.getSerializableExtraCompat(EXTRA_SCREENING, Screening::class.java)
-        if (data == null) {
-            Toast.makeText(this, ERROR_INTENT_KEY, Toast.LENGTH_SHORT).show()
-            finish()
-            return false
-        }
-        screening = data
-        return true
     }
 
     private fun initView() {
