@@ -25,7 +25,6 @@ class BookingCompletePresenter(
                 .atZone(ZoneId.systemDefault())
                 .toInstant()
                 .toEpochMilli()
-
         view.setNotification(ticket, notificationTime)
     }
 

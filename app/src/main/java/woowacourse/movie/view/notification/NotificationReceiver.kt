@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
+import woowacourse.movie.data.setting.SettingStorageManagerImpl
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.MainActivity
 import woowacourse.movie.view.MainActivity.Companion.CHANNEL_ID
@@ -27,6 +28,9 @@ class NotificationReceiver : BroadcastReceiver() {
             context.showToast(context.getString(R.string.text_error))
             return
         }
+
+        val manager = SettingStorageManagerImpl(context)
+        if (!manager.loadNotificationSetting()) return
 
         val pendingIntent =
             PendingIntent.getActivity(
