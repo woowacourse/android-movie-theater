@@ -64,7 +64,7 @@ class HomeFragment :
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (shouldShowRequestPermissionRationale(permission.POST_NOTIFICATIONS)) {
-                    requireContext().showShortToast("알림을 허용하지 않으셨습니다. 예매 내역 알림을 받을 수 없습니다.")
+                    requireContext().showShortToast(getString(R.string.alarm_permission_denied_message))
                 } else {
                     requestPermissionLauncher.launch(permission.POST_NOTIFICATIONS)
                 }
