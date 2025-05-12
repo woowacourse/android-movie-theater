@@ -21,7 +21,7 @@ class ReservationAlarm(
             .toEpochMilli()
 
         val intent = Intent(context, ReservationAlarmReceiver::class.java).apply {
-            putExtra("booking_status", bookingStatus)
+            putExtra(KEY_BOOKING_STATUS, bookingStatus)
         }
 
         val pendingIntent = PendingIntent.getBroadcast(
@@ -31,12 +31,17 @@ class ReservationAlarm(
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        val trigger = reservationDateTimeMillis - 1_800_000
+        val trigger = reservationDateTimeMillis - BEFORE_30_MINS
 
         alarmManager.setAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             trigger,
             pendingIntent
         )
+    }
+
+    companion object {
+        private const val KEY_BOOKING_STATUS = "booking_status"
+        private const val BEFORE_30_MINS = 1_800_000
     }
 }

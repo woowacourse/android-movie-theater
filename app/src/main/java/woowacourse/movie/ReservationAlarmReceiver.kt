@@ -14,7 +14,7 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val bookingStatus = BuildVersion().getParcelableClass(
             intent,
-            "booking_status",
+            KEY_BOOKING_STATUS,
             BookingStatus::class
         )
         showNotification(context, bookingStatus)
@@ -32,10 +32,10 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        val builder = NotificationCompat.Builder(context, "reservation_channel_id")
+        val builder = NotificationCompat.Builder(context, NotificationHelper.CHANNEL_ID)
             .setSmallIcon(R.drawable.baseline_alarm_24)
-            .setContentTitle("예매 알림")
-            .setContentText("${bookingStatus.movie.title} 30분 후 상영!")
+            .setContentTitle(context.getString(R.string.push_notification_title))
+            .setContentText(context.getString(R.string.push_notification_content, bookingStatus.movie.title))
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -45,5 +45,9 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
                 notify(bookingStatus.hashCode(), builder.build())
             }
         }
+    }
+
+    companion object {
+        private const val KEY_BOOKING_STATUS = "booking_status"
     }
 }
