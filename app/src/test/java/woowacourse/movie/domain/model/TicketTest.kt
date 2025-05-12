@@ -10,7 +10,7 @@ import woowacourse.movie.fixture.E4
 import woowacourse.movie.fixture.HARRY_POTTER
 import woowacourse.movie.fixture.SEOLLEUNG
 
-class TicketEntityTest {
+class TicketTest {
     @Test
     fun `선택된 좌석이 없으면 총 금액은 0원이다`() {
         // given
