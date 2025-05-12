@@ -11,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
+import woowacourse.movie.ext.isDisplayed
 import woowacourse.movie.fixture.fakeContext
 import woowacourse.movie.view.movies.ScreeningInfo
 import java.time.LocalDateTime
@@ -40,19 +41,19 @@ class BookingActivityTest {
 
     @Test
     fun `전달_받은_영화_이름_상영일_상영_시간을_출력한다`() {
-        onView(withText("해리 포터와 마법사의 돌")).check(matches(isDisplayed()))
-        onView(withText("2025.5.1 ~ 2025.6.5")).check(matches(isDisplayed()))
-        onView(withText("152분")).check(matches(isDisplayed()))
+        onView(withText("해리 포터와 마법사의 돌")).isDisplayed()
+        onView(withText("2025.5.1 ~ 2025.6.5")).isDisplayed()
+        onView(withText("152분")).isDisplayed()
     }
 
     @Test
     fun `상영_날짜_스피너에_날짜_목록이_표시된다`() {
-        onView(withId(R.id.sp_date)).check(matches(isDisplayed()))
+        onView(withId(R.id.sp_date)).isDisplayed()
     }
 
     @Test
     fun `예매_가능_시간_스피너에_시간_목록이_표시된다`() {
-        onView(withId(R.id.sp_time)).check(matches(isDisplayed()))
+        onView(withId(R.id.sp_time)).isDisplayed()
     }
 
     @Test

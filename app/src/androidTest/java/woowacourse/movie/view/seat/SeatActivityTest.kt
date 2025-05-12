@@ -13,6 +13,7 @@ import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.PeopleCount
+import woowacourse.movie.ext.isDisplayed
 import woowacourse.movie.fixture.fakeContext
 import woowacourse.movie.view.seat.SeatActivity.Companion.newIntent
 import java.time.LocalDate
@@ -39,7 +40,7 @@ class SeatActivityTest {
 
     @Test
     fun `전달받은_영화_이름을_출력한다`() {
-        onView(withText("해리 포터와 마법사의 돌")).check(matches(isDisplayed()))
+        onView(withText("해리 포터와 마법사의 돌")).isDisplayed()
     }
 
     @Test

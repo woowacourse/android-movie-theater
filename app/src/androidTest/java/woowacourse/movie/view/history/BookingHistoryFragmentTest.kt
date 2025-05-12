@@ -1,9 +1,7 @@
 package woowacourse.movie.view.history
 
-import androidx.room.Room
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -14,17 +12,12 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.data.db.TicketDao
-import woowacourse.movie.data.db.UserDatabase
-import woowacourse.movie.fixture.fakeContext
-import woowacourse.movie.fixture.ticketEntity1
+import woowacourse.movie.ext.isDisplayed
+import woowacourse.movie.fixture.ticketFixtures
 import woowacourse.movie.view.main.MainActivity
 
 @RunWith(AndroidJUnit4::class)
 class BookingHistoryFragmentTest {
-    private lateinit var db: UserDatabase
-    private lateinit var ticketDao: TicketDao
-
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
@@ -36,21 +29,19 @@ class BookingHistoryFragmentTest {
 
     @Before
     fun setup() {
-        db =
-            Room.inMemoryDatabaseBuilder(fakeContext, UserDatabase::class.java)
-                .allowMainThreadQueries()
-                .build()
+        onView(withId(R.id.action_history)).perform(click())
 
-        ticketDao = db.ticketDao()
-
-        ticketDao.insert(ticketEntity1)
+        activityRule.scenario.onActivity { activity ->
+            val fragment =
+                activity.supportFragmentManager.findFragmentById(
+                    R.id.fragment_container_view,
+                )
+            (fragment as BookingHistoryFragment).showTickets(ticketFixtures)
+        }
     }
 
     @Test
     fun `바텀_네비게이션의_예매_내역_탭을_누르면_예매_내역이_표시된다`() {
-        onView(withId(R.id.action_history)).perform(click())
-
-        onView(withId(R.id.rv))
-            .check(matches(isDisplayed()))
+        onView(withId(R.id.rv)).isDisplayed()
     }
 }
