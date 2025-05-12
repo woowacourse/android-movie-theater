@@ -1,7 +1,5 @@
 package woowacourse.movie.feature.bookingseat.view
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -22,18 +20,14 @@ import woowacourse.movie.data.BookingHistoryDetailsDatabase
 import woowacourse.movie.data.toEntity
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
+import woowacourse.movie.feature.bookingseat.AlarmScheduler
 import woowacourse.movie.feature.bookingseat.contract.BookingSeatContract
 import woowacourse.movie.feature.bookingseat.presenter.BookingSeatPresenter
 import woowacourse.movie.feature.model.BookingInfoUiModel
-import woowacourse.movie.feature.model.MovieDateUiModel
 import woowacourse.movie.feature.model.MovieSeatUiModel
-import woowacourse.movie.feature.model.MovieTimeUiModel
 import woowacourse.movie.feature.model.SeatSelectionUiState
 import woowacourse.movie.feature.model.SeatTypeUiModel
-import woowacourse.movie.feature.setting.MyReceiver
 import woowacourse.movie.util.getExtra
-import java.time.LocalDateTime
-import java.time.ZoneId
 
 class BookingSeatActivity :
     AppCompatActivity(),
@@ -115,7 +109,7 @@ class BookingSeatActivity :
                 .bookingHistoryDetailsDao()
                 .insertAll(entity)
 
-            scheduleAlarm(bookingInfo.date, bookingInfo.movieTime)
+            AlarmScheduler(applicationContext).scheduleAlarm(bookingInfo)
 
             val intent =
                 BookingCompleteActivity.newIntent(
@@ -188,43 +182,6 @@ class BookingSeatActivity :
                     ).show()
             }
         }
-    }
-
-    private fun scheduleAlarm(
-        date: MovieDateUiModel,
-        time: MovieTimeUiModel,
-    ) {
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-
-        val localDateTime =
-            LocalDateTime.of(date.year, date.month, date.day, time.hour, time.minute)
-        val alarmTime = localDateTime.minusMinutes(30).atZone(ZoneId.systemDefault())
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S &&
-            !alarmManager.canScheduleExactAlarms()
-        ) {
-            return
-        }
-
-        val intent =
-            Intent(applicationContext, MyReceiver::class.java).apply {
-                putExtra("BOOKING_INFO", binding.bookingInfo)
-            }
-
-        val pendingIntent =
-            PendingIntent.getBroadcast(
-                this,
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-            )
-
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-//            alarmTime.toEpochSecond() * 1000,
-            System.currentTimeMillis() * 1000,
-            pendingIntent,
-        )
     }
 
     companion object {
