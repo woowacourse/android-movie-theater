@@ -21,13 +21,18 @@
             name="needDivider"
             type="Boolean" />
 
+        <variable
+            name="onClickItemListener"
+            type="android.view.View.OnClickListener" />
+
         <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground">
+        android:background="?attr/selectableItemBackground"
+        android:onClickListener="@{onClickItemListener}">
 
         <TextView
             android:id="@+id/textViewTicket"
