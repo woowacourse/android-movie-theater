@@ -13,6 +13,7 @@ import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
+import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.ui.view.ticket.TicketActivity
 import java.time.LocalDateTime
@@ -28,6 +29,7 @@ class TicketActivityTest {
                 showtime = LocalDateTime.of(2025, 4, 15, 12, 0),
                 seats = setOf(Seat(1, 1), Seat(2, 2)),
                 cinemaName = "선릉 극장,선릉 극장,선릉 극장,선릉 극장,선릉 극장,선릉 극장,선릉 극장,선릉 극장,선릉 극장,선릉 극장,선릉 극장",
+                purchaseType = PurchaseType.DEFAULT,
             ),
         )
 

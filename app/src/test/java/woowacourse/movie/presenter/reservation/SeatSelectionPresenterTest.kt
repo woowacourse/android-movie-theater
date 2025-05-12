@@ -7,19 +7,23 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.ui.view.data.TicketDataAdapter
 import woowacourse.movie.ui.view.seat.SeatSelectionContract
 import woowacourse.movie.ui.view.seat.SeatSelectionPresenter
 import java.time.LocalDateTime
 
 class SeatSelectionPresenterTest {
     private lateinit var view: SeatSelectionContract.View
+    private lateinit var ticketDataAdapter: TicketDataAdapter
     private lateinit var presenter: SeatSelectionContract.Presenter
 
     @BeforeEach
     fun setUp() {
         view = mockk()
+        ticketDataAdapter = mockk()
         presenter =
             SeatSelectionPresenter(
                 view,
@@ -27,8 +31,11 @@ class SeatSelectionPresenterTest {
                     title = "해리 포터와 마법사의 돌",
                     count = 2,
                     showtime = LocalDateTime.of(2025, 4, 15, 11, 0),
+                    cinemaName = "선릉 극장",
+                    seats = emptySet(),
+                    purchaseType = PurchaseType.DEFAULT,
                 ),
-                "선릉 극장",
+                ticketDataAdapter,
                 selectedSeats = emptySet(),
             )
     }
@@ -67,8 +74,11 @@ class SeatSelectionPresenterTest {
                     title = "해리 포터와 마법사의 돌",
                     count = 2,
                     showtime = LocalDateTime.of(2025, 4, 15, 11, 0),
+                    cinemaName = "선릉 극장",
+                    seats = emptySet(),
+                    purchaseType = PurchaseType.DEFAULT,
                 ),
-                "선릉 극장",
+                ticketDataAdapter,
                 selectedSeats = setOf(Seat(1, 1)),
             )
         every { view.setPrice(10000) } just Runs
@@ -104,8 +114,11 @@ class SeatSelectionPresenterTest {
                     title = "해리 포터와 마법사의 돌",
                     count = 2,
                     showtime = LocalDateTime.of(2025, 4, 15, 11, 0),
+                    cinemaName = "선릉 극장",
+                    seats = emptySet(),
+                    purchaseType = PurchaseType.DEFAULT,
                 ),
-                "선릉 극장",
+                ticketDataAdapter,
                 selectedSeats = setOf(Seat(1, 1)),
             )
 
@@ -154,8 +167,9 @@ class SeatSelectionPresenterTest {
                 "해리 포터와 마법사의 돌",
                 2,
                 LocalDateTime.of(2025, 4, 15, 11, 0),
-                setOf(),
-                "선릉 극장",
+                cinemaName = "선릉 극장",
+                seats = emptySet(),
+                purchaseType = PurchaseType.DEFAULT,
             )
         } just Runs
 
@@ -168,8 +182,9 @@ class SeatSelectionPresenterTest {
                 "해리 포터와 마법사의 돌",
                 2,
                 LocalDateTime.of(2025, 4, 15, 11, 0),
-                setOf(),
                 "선릉 극장",
+                setOf(),
+                PurchaseType.DEFAULT,
             )
         }
     }

@@ -65,7 +65,7 @@ class SeatSelectionPresenter(
         thread.join()
         insertTicket.get().run {
             view.setTicketAlarm(this)
-            view.saveTicket(title, count, showtime, seats, cinemaName, purchaseType)
+            view.navigateToTicketScreen(title, count, showtime, cinemaName, seats, purchaseType)
         }
     }
 

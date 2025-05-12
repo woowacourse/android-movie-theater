@@ -14,6 +14,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
+import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.ui.view.seat.SeatSelectionActivity
 import java.time.LocalDateTime
 
@@ -27,6 +28,7 @@ class SeatSelectionActivityTest {
                 1,
                 LocalDateTime.of(2025, 4, 15, 11, 0),
                 "선릉 극장",
+                PurchaseType.DEFAULT,
             ),
         )
 

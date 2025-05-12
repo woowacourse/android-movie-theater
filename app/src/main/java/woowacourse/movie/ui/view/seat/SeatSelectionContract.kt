@@ -45,12 +45,12 @@ interface SeatSelectionContract {
 
         fun setTicketAlarm(ticket: Ticket)
 
-        fun saveTicket(
+        fun navigateToTicketScreen(
             title: String,
             count: Int,
             showtime: LocalDateTime,
-            seats: Set<Seat>,
             cinemaName: String,
+            seats: Set<Seat>,
             purchaseType: PurchaseType,
         )
     }

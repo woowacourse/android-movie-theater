@@ -3,6 +3,7 @@ package woowacourse.movie.domain.ticket
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.reservation.PurchaseType
 import java.time.LocalDateTime
 
 class TicketTest {
@@ -15,6 +16,9 @@ class TicketTest {
                 title = "해리 포터와 마법사의 돌",
                 count = 2,
                 showtime = LocalDateTime.of(2025, 4, 15, 11, 0),
+                cinemaName = "선릉 극장",
+                seats = emptySet(),
+                purchaseType = PurchaseType.DEFAULT,
             )
     }
 

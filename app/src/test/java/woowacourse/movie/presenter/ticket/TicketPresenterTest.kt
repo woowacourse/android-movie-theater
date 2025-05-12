@@ -7,20 +7,24 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.FakeCancelTimePolicy
 import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.ui.view.data.TicketDataAdapter
 import woowacourse.movie.ui.view.ticket.TicketContract
 import woowacourse.movie.ui.view.ticket.TicketPresenter
 import java.time.LocalDateTime
 
 class TicketPresenterTest {
     private lateinit var view: TicketContract.View
+    private lateinit var ticketDataAdapter: TicketDataAdapter
     private lateinit var presenter: TicketContract.Presenter
 
     @BeforeEach
     fun setUp() {
         view = mockk()
+        ticketDataAdapter = mockk()
         presenter =
             TicketPresenter(
                 view,
@@ -28,9 +32,11 @@ class TicketPresenterTest {
                     title = "해리 포터와 마법사의 돌",
                     count = 2,
                     showtime = LocalDateTime.of(2025, 4, 15, 11, 0),
+                    cinemaName = "선릉 극장",
+                    seats = setOf(Seat(1, 1), Seat(2, 2)),
+                    purchaseType = PurchaseType.DEFAULT,
                 ),
-                setOf(Seat(1, 1), Seat(2, 2)),
-                "선릉 극장",
+                emptySet(),
                 FakeCancelTimePolicy(15),
             )
     }
