@@ -7,12 +7,16 @@ object AppProvider {
     private const val NOT_INITIALIZED_MESSAGE = "%s가 초기화되지 않았습니다."
 
     private var _settingRepository: SettingRepository? = null
-    val settingRepository =
-        requireNotNull(_settingRepository) { NOT_INITIALIZED_MESSAGE.format("SettingRepository") }
+    val settingRepository
+        get() = requireNotNull(_settingRepository) {
+            NOT_INITIALIZED_MESSAGE.format(SettingRepository::class.simpleName)
+        }
 
     private var _reservationRepository: ReservationRepository? = null
-    val reservationRepository =
-        requireNotNull(_reservationRepository) { NOT_INITIALIZED_MESSAGE.format("ReservationRepository") }
+    val reservationRepository
+        get() = requireNotNull(_reservationRepository) {
+            NOT_INITIALIZED_MESSAGE.format(ReservationRepository::class.simpleName)
+        }
 
 
     fun initSettingRepository(repository: SettingRepository) {

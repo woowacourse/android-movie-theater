@@ -21,8 +21,8 @@ class NotificationPreferenceManagerTest {
     @Test
     fun `알림_설정_값을_저장하고_불러올_수_있다`() {
         // When
-        notificationPreferenceManager.isNotificationEnabled = true
-        val result = notificationPreferenceManager.isNotificationEnabled
+        notificationPreferenceManager.updateNotificationEnabled(true)
+        val result = notificationPreferenceManager.isNotificationEnabled()
 
         // Then
         assertThat(result).isTrue()

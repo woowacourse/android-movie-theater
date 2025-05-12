@@ -3,12 +3,16 @@ package woowacourse.movie.data.preference
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import woowacourse.movie.GlobalApplication
 
 class NotificationPreferenceManager(
-    context: Context,
+    private val prefs: SharedPreferences,
 ) {
-    private val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    constructor(context: Context) : this(
+        context.getSharedPreferences(
+            PREF_NAME,
+            Context.MODE_PRIVATE
+        )
+    )
 
     fun isNotificationEnabled(): Boolean = prefs.getBoolean(KEY_NOTIFICATION_ENABLED, false)
 
