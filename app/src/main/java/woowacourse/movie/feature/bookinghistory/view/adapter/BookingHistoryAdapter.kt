@@ -7,7 +7,7 @@ import woowacourse.movie.databinding.ItemBookingHistoryBinding
 import woowacourse.movie.feature.model.BookingInfoUiModel
 
 class BookingHistoryAdapter(
-    private val handler: Handler,
+    private val handler: BookingHistoryViewHolder.Handler,
 ) : ListAdapter<BookingInfoUiModel, BookingHistoryViewHolder>(BookingHistoryDiffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -23,6 +23,4 @@ class BookingHistoryAdapter(
     ) {
         holder.bind(getItem(position))
     }
-
-    interface Handler : BookingHistoryViewHolder.Handler
 }

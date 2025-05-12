@@ -14,7 +14,7 @@ import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookinghistory.contract.BookingHistoryContract
 import woowacourse.movie.feature.bookinghistory.presenter.BookingHistoryPresenter
 import woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryAdapter
-import woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryAdapter.Handler
+import woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryViewHolder
 import woowacourse.movie.feature.model.BookingInfoUiModel
 
 class BookingHistoryFragment :
@@ -57,7 +57,7 @@ class BookingHistoryFragment :
     }
 
     private fun setupAdapterClickListener() =
-        object : Handler {
+        object : BookingHistoryViewHolder.Handler {
             override fun onBookingHistoryClick(bookingInfo: BookingInfoUiModel) {
                 presenter.selectBookingHistory(bookingInfo)
             }
