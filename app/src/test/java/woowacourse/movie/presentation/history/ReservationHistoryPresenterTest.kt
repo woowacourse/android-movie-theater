@@ -22,7 +22,7 @@ class ReservationHistoryPresenterTest {
     }
 
     @Test
-    fun `예매 내역을 불러와 화면에 보여준다`() {
+    fun `예매_내역을_불러와_화면에_보여준다`() {
         // Give
         every { view.showReservationHistory(any()) } just Runs
         every { repository.getAll() } returns emptyList()
