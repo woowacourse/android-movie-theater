@@ -8,7 +8,7 @@ object ApplicationSettings {
     private lateinit var settings: SharedPreferences
 
     fun init(applicationContext: Context) {
-        settings = applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        settings = applicationContext.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE)
     }
 
     var notificationEnabled: Boolean
