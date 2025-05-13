@@ -11,5 +11,5 @@ interface BookingDao {
     fun getAll(): List<BookingInfoEntity>
 
     @Insert
-    fun insertAll(vararg bookingInfo: BookingInfoEntity)
+    fun insert(bookingInfo: BookingInfoEntity)
 }

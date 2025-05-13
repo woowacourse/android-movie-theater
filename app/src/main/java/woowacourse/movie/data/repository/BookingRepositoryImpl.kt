@@ -11,7 +11,7 @@ class BookingRepositoryImpl(
 ) : BookingRepository {
     override fun fetchBookingHistory(): List<BookingInfo> = dao.getAll().map { it.toDomain() }
 
-    override fun saveBookingHistory(vararg bookingInfo: BookingInfo) {
-        dao.insertAll(*bookingInfo.map { it.toData() }.toTypedArray())
+    override fun saveBookingHistory(bookingInfo: BookingInfo) {
+        dao.insert(bookingInfo.toData())
     }
 }

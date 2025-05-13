@@ -5,5 +5,5 @@ import woowacourse.movie.domain.model.BookingInfo
 interface BookingRepository {
     fun fetchBookingHistory(): List<BookingInfo>
 
-    fun saveBookingHistory(vararg bookingInfo: BookingInfo)
+    fun saveBookingHistory(bookingInfo: BookingInfo)
 }
