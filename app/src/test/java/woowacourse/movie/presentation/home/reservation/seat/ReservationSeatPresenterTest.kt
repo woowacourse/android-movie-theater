@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.home.reservation.seat
 
+import io.kotest.assertions.any
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -7,7 +8,10 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.ReservationRepository
 import woowacourse.movie.domain.model.cinema.Seats
+import woowacourse.movie.domain.model.ticketing.Ticket
+import woowacourse.movie.presentation.common.fixture.dummyMovie
 import woowacourse.movie.presentation.common.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.common.model.ScreenUiModel
 import woowacourse.movie.presentation.common.model.SeatTypeUiModel
@@ -18,6 +22,8 @@ import java.time.LocalDateTime
 class ReservationSeatPresenterTest {
     private lateinit var view: ReservationSeatContract.View
     private lateinit var presenter: ReservationSeatContract.Presenter
+    private lateinit var repository: ReservationRepository
+
     private val fakeReservationInfo =
         ReservationInfoUiModel(
             "해리포터",
@@ -30,7 +36,8 @@ class ReservationSeatPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk()
-        presenter = ReservationSeatPresenter(view, mockk())
+        repository = mockk()
+        presenter = ReservationSeatPresenter(view, repository)
     }
 
     @Test
@@ -91,11 +98,13 @@ class ReservationSeatPresenterTest {
         val seat = SeatUiModel(0, 1, SeatTypeUiModel.B_CLASS)
 
         // Given: 초기 데이터 로딩, 좌석 업데이트, 티켓 발행 알림 동작을 설정한다
-        every { view.showScreen(any(), any(), any()) } just Runs
         every { view.updateTotalPrice(any()) } just Runs
+        every { view.showScreen(any(), any(), any()) } just Runs
         every { view.notifyCanPublish(any()) } just Runs
         every { view.updateSeatState(any()) } just Runs
         every { view.notifyPublishedTicketSuccess(any()) } just Runs
+        every { repository.insert(any()) } returns Result.success(Unit)
+
         presenter.fetchData(fakeReservationInfo, Seats.DEFAULT_SEATS.toUiModel(), ScreenUiModel(emptyList()))
         presenter.updateSeat(seat)
 
