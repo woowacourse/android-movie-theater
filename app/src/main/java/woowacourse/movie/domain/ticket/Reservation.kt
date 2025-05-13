@@ -4,7 +4,7 @@ import woowacourse.movie.domain.reservation.Seat
 import java.io.Serializable
 import java.time.LocalDateTime
 
-class Reservation(
+data class Reservation(
     val title: String,
     val showtime: LocalDateTime,
     val seats: Set<Seat>,
