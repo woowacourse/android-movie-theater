@@ -48,4 +48,8 @@
     <string name="movie_notification_channel_name">예매 시간 알림</string>
     <string name="booking_history_notification_title">영화 예매 알림</string>
     <string name="booking_history_notification_description">%s 30분 후에 상영합니다!</string>
+
+    <!--    SettingActivity-->
+    <string name="setting_notification_title">푸시 알림 수신</string>
+    <string name="setting_notification_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
 </resources>
