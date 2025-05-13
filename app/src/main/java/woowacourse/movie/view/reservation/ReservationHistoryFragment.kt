@@ -34,7 +34,7 @@ class ReservationHistoryFragment :
         val reservationData: ReservationData =
             (activity as ReservationDataProvider).provideReservationData()
         presenter =
-            ReservationHistoryPresenter(this, reservationData, requireActivity()::runOnUiThread)
+            ReservationHistoryPresenter(this, reservationData)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +69,9 @@ class ReservationHistoryFragment :
     }
 
     override fun updateReservationHistories(reservations: List<Reservation>) {
-        adapter?.submitList(reservations.sortedBy(Reservation::showtime))
+        requireActivity().runOnUiThread {
+            adapter?.submitList(reservations.sortedBy(Reservation::showtime))
+        }
     }
 
     override fun showTicket(reservation: Reservation) {

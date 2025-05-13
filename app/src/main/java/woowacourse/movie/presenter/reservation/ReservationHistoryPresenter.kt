@@ -10,16 +10,13 @@ import kotlin.concurrent.thread
 class ReservationHistoryPresenter(
     private val view: ReservationHistoryContract.View,
     private val reservationData: ReservationData,
-    private val runOnUiThread: (Runnable) -> Unit,
     private val reservationSortingPolicy: ReservationSortingPolicy = ShowtimeAscendingPolicy(),
 ) : ReservationHistoryContract.Presenter {
     override fun fetchReservationHistories() {
         thread {
             val reservations: List<Reservation> = reservationData.reservations()
             val sortedReservations = reservationSortingPolicy.sort(reservations)
-            runOnUiThread {
-                view.updateReservationHistories(sortedReservations)
-            }
+            view.updateReservationHistories(sortedReservations)
         }
     }
 

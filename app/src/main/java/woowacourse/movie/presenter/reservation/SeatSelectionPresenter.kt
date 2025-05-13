@@ -14,7 +14,6 @@ class SeatSelectionPresenter(
     private val showtime: LocalDateTime,
     private val cinemaName: String,
     private val reservationData: ReservationData,
-    private val runOnUiThread: (Runnable) -> Unit,
     selectedSeats: Set<Seat>?,
 ) : SeatSelectionContract.Presenter {
     private val seats: Set<Seat> = Seat.seats()
@@ -64,9 +63,7 @@ class SeatSelectionPresenter(
         val reservation = Reservation(title, showtime, selectedSeats, cinemaName)
         thread {
             reservationData.add(reservation)
-            runOnUiThread {
-                view.navigateToTicketScreen(reservation)
-            }
+            view.navigateToTicketScreen(reservation)
         }
     }
 }

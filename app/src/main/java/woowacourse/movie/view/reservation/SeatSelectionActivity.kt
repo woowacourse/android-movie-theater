@@ -103,7 +103,6 @@ class SeatSelectionActivity :
                 showtime,
                 cinemaName,
                 reservationData,
-                ::runOnUiThread,
                 selectedSeats,
             )
     }
@@ -240,9 +239,11 @@ class SeatSelectionActivity :
     }
 
     override fun navigateToTicketScreen(reservation: Reservation) {
-        val intent = ReservationDetailActivity.newIntent(this, reservation)
-        startActivity(intent)
-        finish()
+        runOnUiThread {
+            val intent = ReservationDetailActivity.newIntent(this, reservation)
+            startActivity(intent)
+            finish()
+        }
     }
 
     companion object {
