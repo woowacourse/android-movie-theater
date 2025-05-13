@@ -15,6 +15,7 @@ import woowacourse.movie.domain.model.MovieDate
 import woowacourse.movie.domain.model.MovieSeat
 import woowacourse.movie.domain.model.MovieSeats
 import woowacourse.movie.domain.model.MovieTime
+import woowacourse.movie.domain.model.NavigateType
 import woowacourse.movie.domain.model.TicketCount
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity.Companion.newIntent
@@ -44,7 +45,7 @@ class BookingCompleteActivityTest {
                         seats = MovieSeats(setOf(MovieSeat(1, 1), MovieSeat(2, 2))),
                         ticketCount = TicketCount(2),
                     ).toUi(),
-                "",
+                NavigateType.NONE,
             )
 
         activityScenario = ActivityScenario.launch(intent)

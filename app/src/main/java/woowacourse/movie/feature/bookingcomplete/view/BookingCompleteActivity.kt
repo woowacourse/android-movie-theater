@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
-import woowacourse.movie.domain.model.BookingType
+import woowacourse.movie.domain.model.NavigateType
 import woowacourse.movie.feature.bookingcomplete.contract.BookingCompleteContract
 import woowacourse.movie.feature.bookingcomplete.presenter.BookingCompletePresenter
 import woowacourse.movie.feature.main.MainActivity
@@ -26,7 +26,7 @@ class BookingCompleteActivity :
             R.layout.activity_booking_complete,
         )
     }
-    private lateinit var bookingType: String
+    private lateinit var navigateType: NavigateType
     private val callback =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -37,7 +37,7 @@ class BookingCompleteActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        bookingType = intent.getStringExtra(BOOKING_TYPE_KEY) ?: BookingType.NONE.name
+        navigateType = intent.getSerializableExtra(BOOKING_TYPE_KEY) as NavigateType
         presenter.prepareBookingInfo(
             bookingInfo = intent.getExtra(BOOKING_INFO_KEY) ?: BookingInfoUiModel(),
         )
@@ -54,7 +54,7 @@ class BookingCompleteActivity :
     }
 
     override fun navigateToBack() {
-        if (bookingType == BookingType.MAIN.name) {
+        if (navigateType == NavigateType.NAVIGATE_TO_MAIN) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
@@ -70,11 +70,11 @@ class BookingCompleteActivity :
         fun newIntent(
             context: Context,
             bookingInfo: BookingInfoUiModel,
-            bookingType: BookingType,
+            navigateType: NavigateType,
         ): Intent =
             Intent(context, BookingCompleteActivity::class.java).apply {
                 putExtra(BOOKING_INFO_KEY, bookingInfo)
-                putExtra(BOOKING_TYPE_KEY, bookingType.name)
+                putExtra(BOOKING_TYPE_KEY, navigateType)
             }
     }
 }

@@ -12,7 +12,7 @@ import woowacourse.movie.R
 import woowacourse.movie.data.BookingHistoryDetailsDatabase
 import woowacourse.movie.data.toUiModel
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
-import woowacourse.movie.domain.model.BookingType
+import woowacourse.movie.domain.model.NavigateType
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookinghistory.contract.BookingHistoryContract
 import woowacourse.movie.feature.bookinghistory.presenter.BookingHistoryPresenter
@@ -74,7 +74,7 @@ class BookingHistoryFragment :
             BookingCompleteActivity.newIntent(
                 requireContext(),
                 bookingHistory,
-                BookingType.BOOKING_HISTORY,
+                NavigateType.NAVIGATE_TO_PREVIOUS,
             )
         startActivity(intent)
     }

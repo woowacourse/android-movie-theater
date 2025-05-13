@@ -17,7 +17,7 @@ import woowacourse.movie.R
 import woowacourse.movie.data.BookingHistoryDetailsDatabase
 import woowacourse.movie.data.toEntity
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
-import woowacourse.movie.domain.model.BookingType
+import woowacourse.movie.domain.model.NavigateType
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookingseat.AlarmScheduler
 import woowacourse.movie.feature.bookingseat.contract.BookingSeatContract
@@ -115,7 +115,7 @@ class BookingSeatActivity :
                 BookingCompleteActivity.newIntent(
                     this@BookingSeatActivity,
                     bookingInfo,
-                    BookingType.MAIN,
+                    NavigateType.NAVIGATE_TO_MAIN,
                 )
             startActivity(intent)
             finish()
