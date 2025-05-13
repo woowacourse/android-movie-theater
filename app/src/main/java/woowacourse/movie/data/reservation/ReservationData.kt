@@ -21,5 +21,4 @@ class LocalReservationData(
         reservationDao
             .reservations()
             .map { it.toDomain() }
-            .sortedBy { it.showtime }
 }
