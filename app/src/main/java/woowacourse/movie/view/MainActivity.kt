@@ -43,6 +43,7 @@ class MainActivity :
 
         ApplicationSettings.init(applicationContext)
         bindData()
+
         initViews(isFirstEntry(savedInstanceState))
         initEventListeners()
     }

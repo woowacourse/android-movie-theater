@@ -50,25 +50,23 @@ android {
 }
 
 dependencies {
-    val fragmentVersion = "1.8.6"
-    val mockVersion = "1.14.0"
-    val roomVersion = "2.7.1"
+
+    kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.google.material)
-    implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
-    implementation("androidx.room:room-runtime:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.room.runtime)
     testImplementation(libs.assertj.core)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.kotest.runner.junit5)
-    testImplementation("io.mockk:mockk:$mockVersion")
-    debugImplementation("androidx.fragment:fragment-testing-manifest:$fragmentVersion")
-    androidTestImplementation("io.mockk:mockk-android:$mockVersion")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.6.1")
-    androidTestImplementation("androidx.fragment:fragment-testing:$fragmentVersion")
+    testImplementation(libs.mockk)
+    debugImplementation(libs.androidx.fragment.testing.manifest)
+    androidTestImplementation(libs.mockk.android)
+    androidTestImplementation(libs.androidx.espresso.contrib)
+    androidTestImplementation(libs.androidx.fragment.testing)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.runner)
