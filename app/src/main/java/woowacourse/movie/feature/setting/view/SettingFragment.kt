@@ -38,6 +38,14 @@ class SettingFragment :
         savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
         alarmSetting = requireActivity().getSharedPreferences("alarmSetting", Context.MODE_PRIVATE)
 
         presenter = SettingPresenter(this, alarmSetting)
@@ -47,7 +55,6 @@ class SettingFragment :
         }
 
         presenter.loadNotificationSettings()
-        return binding.root
     }
 
     override fun setNotificationSwitchChecked(isChecked: Boolean) {
