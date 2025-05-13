@@ -32,12 +32,12 @@ class ReservationAdapter(
                 override fun areItemsTheSame(
                     oldItem: Reservation,
                     newItem: Reservation,
-                ): Boolean = oldItem == newItem
+                ): Boolean = oldItem.title == newItem.title
 
                 override fun areContentsTheSame(
                     oldItem: Reservation,
                     newItem: Reservation,
-                ): Boolean = oldItem.title == newItem.title
+                ): Boolean = oldItem == newItem
             }
     }
 }
