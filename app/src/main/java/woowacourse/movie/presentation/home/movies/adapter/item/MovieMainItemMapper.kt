@@ -5,6 +5,6 @@ import woowacourse.movie.presentation.common.model.toUiModel
 
 fun MovieContent.toUiModel(): MovieMainItem =
     when (this) {
-        is MovieContent.MovieEntry -> MovieItem(this.movie.toUiModel())
-        is MovieContent.MovieAd -> AdItem(this.id)
+        is MovieContent.MovieEntry -> MovieMainItem.MovieItem(this.movie.toUiModel())
+        is MovieContent.MovieAd -> MovieMainItem.AdItem(this.id)
     }
