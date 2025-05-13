@@ -51,8 +51,7 @@ object MovieFixture {
         )
 
 
-    val BOOKING_STATUS =
-        BookingStatus(MOVIE, true, BookingSeats(2), LocalDateTime.of(2025, 4, 30, 9, 0, 0))
+
 
     val THEATER = Theater(
         "선릉",
@@ -73,4 +72,7 @@ object MovieFixture {
                     ),
         ),
     )
+
+    val BOOKING_STATUS =
+        BookingStatus(MOVIE, true, BookingSeats(2), LocalDateTime.of(2025, 4, 30, 9, 0, 0), THEATER)
 }

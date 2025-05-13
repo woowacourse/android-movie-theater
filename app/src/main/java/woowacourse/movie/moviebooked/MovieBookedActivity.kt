@@ -1,7 +1,9 @@
 package woowacourse.movie.moviebooked
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.MovieBookedBinding
 import woowacourse.movie.domain.BookingStatus
-import woowacourse.movie.domain.Theater
 import woowacourse.movie.helper.BuildVersion
 
 class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
@@ -20,6 +21,7 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding = DataBindingUtil.setContentView(this, R.layout.movie_booked)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booked)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -37,16 +39,14 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
                 KEY_BOOKING_STATUS,
                 BookingStatus::class,
             )
-        val theater = BuildVersion().getParcelableClass(intent, KEY_THEATER, Theater::class)
-        presenter.loadBookedStatus(bookingStatus, theater)
+        presenter.loadBookedStatus(bookingStatus)
     }
 
     override fun showBookedStatus(
         bookingStatus: BookingStatus,
-        theater: Theater,
     ) {
         binding.bookingStatus = bookingStatus
-        binding.theater = theater
+        binding.theater = bookingStatus.theater
         val seatsText =
             bookingStatus.seat.seats.joinToString { seat ->
                 val rowChar = 'A' + seat.row.value
@@ -56,19 +56,24 @@ class MovieBookedActivity : AppCompatActivity(), MovieBooked.View {
         binding.bookingSeat.text = seatsText
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     companion object {
         private const val KEY_BOOKING_STATUS = "bookingStatus"
-        private const val KEY_THEATER = "theater"
 
         fun movieBookedIntent(
-            otherActivity: AppCompatActivity,
+            context: Context,
             bookingStatus: BookingStatus,
-            theater: Theater,
         ): Intent {
-            return Intent(otherActivity, MovieBookedActivity::class.java)
+            return Intent(context, MovieBookedActivity::class.java)
                 .apply {
                     putExtra(KEY_BOOKING_STATUS, bookingStatus)
-                    putExtra(KEY_THEATER, theater)
                 }
         }
     }

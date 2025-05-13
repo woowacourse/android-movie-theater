@@ -41,7 +41,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment() {
                 arguments?.getParcelable(ARG_PARAM1) ?: throw IllegalArgumentException()
             }
 
-        val adapter = TheaterListAdapter(Theaters.theaters, movie) { theater -> navigateToTheater(theater, movie) }
+        val adapter = TheaterListAdapter(Theaters.theaters.values, movie) { theater -> navigateToTheater(theater, movie) }
         binding.theaters.apply {
             this.adapter = adapter
         }

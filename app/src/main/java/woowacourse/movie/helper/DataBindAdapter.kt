@@ -8,6 +8,7 @@ import woowacourse.movie.domain.seat.Seat
 import woowacourse.movie.helper.LocalDateHelper.toDotFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 @BindingAdapter("startDate", "endDate", requireAll = true)
 fun setFormattedLocalDate(
@@ -45,4 +46,20 @@ fun setFormattedSeat(
             val colNumber = seat.col.value + 1
             "$rowChar$colNumber"
         }
+}
+
+@BindingAdapter("formattedLocalDate")
+fun setFormattedLocalDate(
+    view: TextView,
+    localDateTime: LocalDateTime,
+) {
+    view.text = localDateTime.toLocalDate().toDotFormat()
+}
+
+@BindingAdapter("formattedLocalTime")
+fun setFormattedLocalTime(
+    view: TextView,
+    localDateTime: LocalDateTime,
+) {
+    view.text = localDateTime.toLocalTime().toDotFormat()
 }

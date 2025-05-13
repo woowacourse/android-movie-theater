@@ -8,6 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityMain2Binding
+import androidx.activity.result.contract.ActivityResultContracts
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
@@ -22,18 +23,30 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         binding.bottomNavigation.selectedItemId = R.id.navigation_home
-        setFrag(ItemId.HOME)
+        setFrag(TabFragmentId.HOME)
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
-            ItemId.from(item.itemId)?.let { setFrag(it) } ?: setFrag(ItemId.HOME)
+            TabFragmentId.from(item.itemId)?.let { setFrag(it) } ?: setFrag(TabFragmentId.HOME)
             true
         }
+        NotificationHelper.createReservationChannel(this)
+
+        val launcher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            SharedPreferences.saveData(applicationContext, isGranted)
+        }
+
+        Notification.askNotificationPermission(this, launcher)
     }
 
-    private fun setFrag(itemId: ItemId) {
-        val fragment = ItemId.from(itemId)
+    private fun setFrag(tabFragmentId: TabFragmentId) {
+        val fragment = TabFragmentId.from(tabFragmentId)
         supportFragmentManager.commit {
             replace(R.id.main_frame, fragment.fragment)
         }
     }
+
+
 }
+

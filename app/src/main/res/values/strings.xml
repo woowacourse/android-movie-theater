@@ -25,4 +25,15 @@
     <string name="title_home">홈</string>
     <string name="title_dashboard">예매 내역</string>
     <string name="title_settings">설정</string>
+    <!--  예매 내역 사용  -->
+    <string name="divider"> | </string>
+    <string name="reservation_date">%d.%d.%d</string>
+    <string name="reservation_running_Time">%02d:%02d</string>
+    <string name="reservation_theater">%s 극장</string>
+    <!--  설정 사용  -->
+    <string name="notification_title">푸시 알림 수신</string>
+    <string name="notification_sub">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <!--  예매 알림 문자  -->
+    <string name="push_notification_title">푸시 알림 수신</string>
+    <string name="push_notification_content">%s 30분 후 상영!</string>
 </resources>

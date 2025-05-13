@@ -9,14 +9,12 @@ interface MovieBooked {
 
         fun showBookedStatus(
             bookingStatus: BookingStatus,
-            theater: Theater,
         )
     }
 
     interface Presenter {
         fun loadBookedStatus(
             bookingStatus: BookingStatus,
-            theater: Theater,
         )
     }
 }
