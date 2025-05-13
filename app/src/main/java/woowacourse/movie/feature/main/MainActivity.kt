@@ -2,6 +2,8 @@ package woowacourse.movie.feature.main
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -96,5 +98,18 @@ class MainActivity : AppCompatActivity() {
 
         activeFragment = newFragment
         return true
+    }
+
+    companion object {
+        fun newIntent(
+            context: Context,
+            singleTop: Boolean = false,
+        ): Intent {
+            val intent = Intent(context, MainActivity::class.java)
+            if (singleTop) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            }
+            return intent
+        }
     }
 }

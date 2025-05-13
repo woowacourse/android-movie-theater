@@ -55,7 +55,7 @@ class BookingCompleteActivity :
 
     override fun navigateToBack() {
         if (navigateType == NavigateType.NAVIGATE_TO_MAIN) {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = MainActivity.newIntent(this, singleTop = true)
             startActivity(intent)
             finish()
         } else {
