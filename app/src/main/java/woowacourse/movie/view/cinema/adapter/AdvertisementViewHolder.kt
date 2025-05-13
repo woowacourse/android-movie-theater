@@ -10,7 +10,7 @@ class AdvertisementViewHolder(
 ) : ScreeningContentViewHolder(binding.root) {
     override fun bind(item: ScreeningContent) {
         val advertisement: Advertisement = item as? Advertisement ?: error("")
+        binding.advertisement = advertisement
         binding.srcDrawable = advertisement.advertisementResourceId()
-        binding.contentDescription = advertisement.description
     }
 }

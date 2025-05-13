@@ -5,12 +5,12 @@
     <data>
 
         <variable
-            name="srcDrawable"
-            type="int" />
+            name="advertisement"
+            type="woowacourse.movie.domain.reservation.Advertisement" />
 
         <variable
-            name="contentDescription"
-            type="String" />
+            name="srcDrawable"
+            type="int" />
     </data>
 
     <ImageView
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:contentDescription="@{contentDescription}"
+        android:contentDescription="@{advertisement.description}"
         app:srcDrawable="@{srcDrawable}" />
 
 </layout>
