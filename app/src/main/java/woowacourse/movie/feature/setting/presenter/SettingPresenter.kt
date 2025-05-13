@@ -7,7 +7,7 @@ class SettingPresenter(
     private val view: SettingContract.View,
     private val settingRepository: SettingRepository,
 ) : SettingContract.Presenter {
-    override fun getNotificationSetting() {
+    override fun loadNotificationSetting() {
         val isNotificationEnabled = settingRepository.fetchNotificationSetting()
         view.updateNotificationSettingSwitch(isNotificationEnabled)
     }

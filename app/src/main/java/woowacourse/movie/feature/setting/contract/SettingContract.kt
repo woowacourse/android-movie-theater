@@ -6,7 +6,7 @@ interface SettingContract {
     }
 
     interface Presenter {
-        fun getNotificationSetting()
+        fun loadNotificationSetting()
 
         fun saveNotificationSetting(isNotificationEnabled: Boolean)
     }

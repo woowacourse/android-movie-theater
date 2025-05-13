@@ -37,7 +37,7 @@ class SettingFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getNotificationSetting()
+        presenter.loadNotificationSetting()
         binding.presenter = presenter
     }
 
