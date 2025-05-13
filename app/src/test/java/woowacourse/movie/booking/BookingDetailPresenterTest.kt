@@ -22,7 +22,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import kotlin.test.assertEquals
 
-class SchedulerDetailPresenterTest {
+class BookingDetailPresenterTest {
     private val selectedDate = LocalDate.of(2028, 10, 13)
     private val selectedTime = LocalTime.of(23, 0)
     private lateinit var presenter: BookingDetailPresenter

@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.booking.complete.BookingCompleteActivity
+import woowacourse.movie.booking.complete.BookingType
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.model.seat.Col
@@ -22,7 +23,7 @@ import woowacourse.movie.model.seat.Row
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.ui.model.TicketUiModel
 
-class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
+class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View, SeatConfirmListener {
     private val presenter = SeatSelectionPresenter(this)
     private lateinit var binding: ActivitySeatSelectionBinding
 
@@ -31,21 +32,17 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_selection)
         setUi()
+        binding.seatConfirmListener = this
 
-        val ticket = requireTicketOrFinish() ?: return
-        presenter.initializeData(ticket)
+        val ticket = requireTicketOrFinish()
 
-        savedInstanceState?.let { bundle ->
-            val seats = bundle.getString(KEY_SEATS)
-
-            if (!seats.isNullOrBlank()) {
-                presenter.restoreTicketData(seats)
-            }
+        if (ticket == null) {
+            showToastErrorAndFinish(getString(R.string.booking_toast_message))
+        } else {
+            presenter.initializeData(ticket)
         }
 
         setupSeatClickListeners()
-        setupConfirmButton()
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -58,17 +55,11 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun requireTicketOrFinish(): TicketUiModel? {
-        val ticket =
-            IntentCompat.getParcelableExtra(
-                intent,
-                KEY_TICKET,
-                TicketUiModel::class.java,
-            )
-        if (ticket == null) {
-            showToastErrorAndFinish(getString(R.string.booking_toast_message))
-            return null
-        }
-        return ticket
+        return IntentCompat.getParcelableExtra(
+            intent,
+            KEY_TICKET,
+            TicketUiModel::class.java,
+        )
     }
 
     private fun setupSeatClickListeners() {
@@ -88,14 +79,6 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             for (colIndex in 0 until row.childCount) {
                 val seat = row.getChildAt(colIndex) as? TextView ?: continue
                 action(rowIndex, colIndex, seat)
-            }
-        }
-    }
-
-    private fun setupConfirmButton() {
-        binding.btnBookingConfirm.setOnClickListener {
-            if (it.isEnabled) {
-                presenter.onButtonClicked()
             }
         }
     }
@@ -156,7 +139,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
     }
 
     private fun startBookingCompleteActivity(ticket: TicketUiModel) {
-        val intent = BookingCompleteActivity.createIntent(this, ticket)
+        val intent = BookingCompleteActivity.createIntent(this, BookingType.RESERVATION, ticket)
         startActivity(intent)
     }
 
@@ -171,6 +154,20 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
         if (ticketUiModel.seats.isNotBlank()) {
             outState.putString(KEY_SEATS, ticketUiModel.seats)
         }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        val seats = savedInstanceState.getString(KEY_SEATS)
+
+        if (!seats.isNullOrBlank()) {
+            presenter.restoreTicketData(seats)
+        }
+    }
+
+    override fun onConfirmSeat() {
+        presenter.onButtonClicked()
     }
 
     companion object {

@@ -20,6 +20,7 @@ import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.fixture.HARRY_POTTER
+import woowacourse.movie.main.MainActivity
 import woowacourse.movie.movie.adapter.AdViewHolder
 
 class MainActivityTest {

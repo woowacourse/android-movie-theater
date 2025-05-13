@@ -36,7 +36,7 @@ class MovieFragment : Fragment(), MovieContract.View {
         presenter.initializeData()
     }
 
-    override fun setupMovieList(movies: List<MovieUiModel>) {
+    override fun showMovieList(movies: List<MovieUiModel>) {
         binding.recyclerViewLayout.adapter =
             MovieAdapter(movies) { movie ->
                 presenter.setTheaters(movie)

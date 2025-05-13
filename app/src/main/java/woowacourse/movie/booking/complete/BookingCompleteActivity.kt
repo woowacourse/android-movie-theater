@@ -1,35 +1,59 @@
 package woowacourse.movie.booking.complete
 
+import android.Manifest
+import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
+import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
-import woowacourse.movie.MainActivity
 import woowacourse.movie.R
+import woowacourse.movie.booking.complete.alarm.MovieAlarmScheduler
+import woowacourse.movie.data.ReservationDatabase
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
+import woowacourse.movie.main.MainActivity
+import woowacourse.movie.main.sharedPreference.SharedPreferencesProvider
 import woowacourse.movie.mapper.IntentCompat
+import woowacourse.movie.reservation.ReservationRepository
 import woowacourse.movie.ui.model.TicketUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
-    private val presenter = BookingCompletePresenter(this)
-
     private lateinit var binding: ActivityBookingCompleteBinding
+    private lateinit var presenter: BookingCompleteContract.Presenter
+    private lateinit var bookingType: String
+    private lateinit var preferencesProvider: SharedPreferencesProvider
 
+    @RequiresPermission(Manifest.permission.SCHEDULE_EXACT_ALARM)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_complete)
         setUpUi()
+        setupPresenter()
 
-        val ticket = requireTicketOrFinish() ?: return
-        presenter.initializeData(ticket)
+        preferencesProvider = SharedPreferencesProvider(this)
+        val ticket = requireTicketOrFinish()
+        bookingType = intent.getStringExtra(KEY_BOOKING_TYPE).toString()
 
+        if (ticket == null) {
+            showToastErrorAndFinish(getString(R.string.booking_toast_message))
+        } else {
+            presenter.initializeData(ticket)
+            presenter.saveReservation(ticket, bookingType)
+
+            checkPermission(ticket)
+        }
+
+        onBackPressedDispatcher.addCallback(this, callback)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -41,19 +65,34 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         }
     }
 
-    private fun requireTicketOrFinish(): TicketUiModel? {
-        val ticket =
-            IntentCompat.getParcelableExtra(
-                intent,
-                KEY_BOOKING_RESULT,
-                TicketUiModel::class.java,
-            )
+    private fun setupPresenter() {
+        val db = ReservationDatabase.getInstance(applicationContext)
+        val repository = ReservationRepository(db.reservationDao())
+        val alarmScheduler = MovieAlarmScheduler(this)
+        presenter = BookingCompletePresenter(this, repository, alarmScheduler)
+    }
 
-        if (ticket == null) {
-            showToastErrorAndFinish(getString(R.string.booking_toast_message))
-            return null
+    private fun requireTicketOrFinish(): TicketUiModel? {
+        return IntentCompat.getParcelableExtra(
+            intent,
+            KEY_BOOKING_RESULT,
+            TicketUiModel::class.java,
+        )
+    }
+
+    private fun checkPermission(ticket: TicketUiModel) {
+        val alarmState = preferencesProvider.isAlarmEnabled()
+        if (alarmState) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || canScheduleExactAlarms()) {
+                presenter.setNotification(ticket, bookingType)
+            }
         }
-        return ticket
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    private fun canScheduleExactAlarms(): Boolean {
+        val alarmManager = getSystemService(AlarmManager::class.java)
+        return alarmManager.canScheduleExactAlarms()
     }
 
     override fun showBookingCompleteResult(ticket: TicketUiModel) {
@@ -68,10 +107,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(intent)
-                onBackPressed()
+                handleBackAction()
                 true
             }
 
@@ -79,22 +115,37 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
+    private val callback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                handleBackAction()
+            }
+        }
+
+    private fun handleBackAction() {
+        if (bookingType == BookingType.HISTORY.name) {
+            finish()
+        } else {
+            val intent =
+                Intent(this, MainActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                }
+            startActivity(intent)
+        }
     }
 
     companion object {
         private const val KEY_BOOKING_RESULT = "bookingResult"
+        private const val KEY_BOOKING_TYPE = "bookingType"
 
         fun createIntent(
             context: Context,
+            bookingType: BookingType,
             ticket: TicketUiModel,
         ): Intent {
             return Intent(context, BookingCompleteActivity::class.java).apply {
                 putExtra(KEY_BOOKING_RESULT, ticket)
+                putExtra(KEY_BOOKING_TYPE, bookingType.name)
             }
         }
     }

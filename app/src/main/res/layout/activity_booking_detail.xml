@@ -13,6 +13,10 @@
             name="headCountListener"
             type="woowacourse.movie.booking.detail.listener.HeadCountListener" />
 
+        <variable
+            name="reservationListener"
+            type="woowacourse.movie.booking.detail.listener.ReservationListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -182,6 +186,7 @@
                         app:layout_constraintTop_toBottomOf="@id/spinner_layout" />
 
                     <Button
+                        android:onClick="@{() -> reservationListener.onReserveTicket()}"
                         android:id="@+id/btn_selection_confirm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

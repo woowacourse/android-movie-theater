@@ -13,6 +13,7 @@ import woowacourse.movie.R
 import woowacourse.movie.booking.detail.adapter.ScreeningDateSpinnerAdapter
 import woowacourse.movie.booking.detail.adapter.ScreeningTimeSpinnerAdapter
 import woowacourse.movie.booking.detail.listener.HeadCountListener
+import woowacourse.movie.booking.detail.listener.ReservationListener
 import woowacourse.movie.booking.detail.listener.ScreeningDateSelectedListener
 import woowacourse.movie.booking.detail.listener.ScreeningTimeSelectedListener
 import woowacourse.movie.databinding.ActivityBookingDetailBinding
@@ -24,7 +25,11 @@ import woowacourse.movie.ui.model.TicketUiModel
 import java.time.LocalDate
 import java.time.LocalTime
 
-class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View, HeadCountListener {
+class BookingDetailActivity :
+    AppCompatActivity(),
+    BookingDetailContract.View,
+    HeadCountListener,
+    ReservationListener {
     private val presenter = BookingDetailPresenter(this)
     private lateinit var binding: ActivityBookingDetailBinding
 
@@ -33,23 +38,19 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View, H
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_booking_detail)
         binding.headCountListener = this
+        binding.reservationListener = this
         setUpUi()
 
-        val movie = requireMovieOrFinish() ?: return
-        val theater = requireTheaterOrFinish() ?: return
+        val movie = requireMovieOrFinish()
+        val theater = requireTheaterOrFinish()
 
-        presenter.initializeData(movie, theater)
-
-        if (savedInstanceState != null) {
-            val headCount = savedInstanceState.getInt(KEY_HEAD_COUNT)
-            val screeningDate = savedInstanceState.getString(KEY_SCREENING_DATE)
-            val screeningTime = savedInstanceState.getString(KEY_SCREENING_TIME)
-            presenter.restoreTicketData(headCount, screeningDate, screeningTime)
+        if (movie == null || theater == null) {
+            showToastErrorAndFinish(getString(R.string.booking_toast_message))
+        } else {
+            presenter.initializeData(movie, theater)
         }
 
         presenter.presentTicketDetails()
-
-        initReserveConfirm()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -63,30 +64,11 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View, H
     }
 
     private fun requireMovieOrFinish(): MovieUiModel? {
-        val movie =
-            IntentCompat.getParcelableExtra(intent, KEY_MOVIE_DATA, MovieUiModel::class.java)
-        if (movie == null) {
-            showToastErrorAndFinish(getString(R.string.booking_toast_message))
-            return null
-        }
-        return movie
+        return IntentCompat.getParcelableExtra(intent, KEY_MOVIE_DATA, MovieUiModel::class.java)
     }
 
     private fun requireTheaterOrFinish(): TheaterUiModel? {
-        val theater =
-            IntentCompat.getParcelableExtra(intent, KEY_THEATER_DATA, TheaterUiModel::class.java)
-
-        if (theater == null) {
-            showToastErrorAndFinish(getString(R.string.booking_toast_message))
-            return null
-        }
-        return theater
-    }
-
-    private fun initReserveConfirm() {
-        binding.btnSelectionConfirm.setOnClickListener {
-            presenter.confirmReservation()
-        }
+        return IntentCompat.getParcelableExtra(intent, KEY_THEATER_DATA, TheaterUiModel::class.java)
     }
 
     override fun showMovieInfo(movie: MovieUiModel) {
@@ -170,6 +152,19 @@ class BookingDetailActivity : AppCompatActivity(), BookingDetailContract.View, H
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return super.onSupportNavigateUp()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        val headCount = savedInstanceState.getInt(KEY_HEAD_COUNT)
+        val screeningDate = savedInstanceState.getString(KEY_SCREENING_DATE)
+        val screeningTime = savedInstanceState.getString(KEY_SCREENING_TIME)
+        presenter.restoreTicketData(headCount, screeningDate, screeningTime)
+    }
+
+    override fun onReserveTicket() {
+        presenter.confirmReservation()
     }
 
     companion object {

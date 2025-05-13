@@ -1,6 +1,6 @@
 package woowacourse.movie.movie
 
-import woowacourse.movie.DefaultMovieData.mockTheaterList
+import woowacourse.movie.main.DefaultMovieData.mockTheaterList
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Movie
@@ -13,7 +13,7 @@ class MoviePresenter(
 
     override fun initializeData() {
         val movies = getReservableMovies().map { it.toUiModel() }
-        view.setupMovieList(movies)
+        view.showMovieList(movies)
     }
 
     private fun getReservableMovies(): List<Movie> {
