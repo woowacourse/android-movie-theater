@@ -14,7 +14,6 @@ class MovieApplication : Application() {
     val movieDatabase by lazy {
         Room
             .databaseBuilder(this, MovieDatabase::class.java, DATABASE_NAME)
-            .allowMainThreadQueries()
             .build()
     }
     val bookingRepository by lazy { BookingRepositoryImpl(movieDatabase.bookingDao()) }

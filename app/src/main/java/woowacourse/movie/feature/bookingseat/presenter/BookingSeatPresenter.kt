@@ -10,6 +10,7 @@ import woowacourse.movie.feature.mapper.toUi
 import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.model.MovieSeatUiModel
 import woowacourse.movie.feature.model.SeatSelectionUiState
+import kotlin.concurrent.thread
 
 class BookingSeatPresenter(
     private val view: BookingSeatContract.View,
@@ -46,7 +47,7 @@ class BookingSeatPresenter(
     }
 
     override fun confirmSeatSelection() {
-        bookingRepository.saveBookingHistory(bookingInfo)
+        thread { bookingRepository.saveBookingHistory(bookingInfo) }
         view.navigateToBookingComplete(bookingInfo.toUi())
         view.scheduleNotification(bookingInfo.toUi(), bookingInfo.getNotificationDelay())
     }

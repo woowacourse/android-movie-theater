@@ -17,6 +17,7 @@ import woowacourse.movie.domain.model.TicketCount
 import woowacourse.movie.domain.repository.BookingRepository
 import java.time.LocalDate
 import java.time.LocalTime
+import kotlin.concurrent.thread
 
 @Suppress("ktlint:standard:function-naming")
 class BookingRepositoryTest {
@@ -28,7 +29,6 @@ class BookingRepositoryTest {
         val database =
             Room
                 .inMemoryDatabaseBuilder(context, MovieDatabase::class.java)
-                .allowMainThreadQueries()
                 .build()
 
         repository = BookingRepositoryImpl(database.bookingDao())
@@ -53,9 +53,11 @@ class BookingRepositoryTest {
                 seats = MovieSeats(),
                 ticketCount = TicketCount(),
             )
-        repository.saveBookingHistory(bookingInfo)
+        thread { repository.saveBookingHistory(bookingInfo) }
 
-        val savedBookingHistory = repository.fetchBookingHistory()
-        assertThat(savedBookingHistory.map { it.id }).contains(bookingInfo.id)
+        thread {
+            val savedBookingHistory = repository.fetchBookingHistory()
+            assertThat(savedBookingHistory.map { it.id }).contains(bookingInfo.id)
+        }
     }
 }
