@@ -7,7 +7,7 @@
 
         <variable
             name="clickListener"
-            type="woowacourse.movie.reservation.TicketClickListener" />
+            type="woowacourse.movie.ticket.TicketClickListener" />
 
         <variable
             name="ticket"

@@ -1,4 +1,4 @@
-package woowacourse.movie.reservation
+package woowacourse.movie.ticket
 
 import android.os.Bundle
 import android.view.LayoutInflater

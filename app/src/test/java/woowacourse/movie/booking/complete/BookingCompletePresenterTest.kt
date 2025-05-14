@@ -1,4 +1,4 @@
-package woowacourse.movie.booking
+package woowacourse.movie.booking.complete
 
 import io.mockk.Runs
 import io.mockk.every
@@ -9,8 +9,6 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.booking.complete.BookingCompleteContract
-import woowacourse.movie.booking.complete.BookingCompletePresenter
 import woowacourse.movie.fixture.SEAT_A1
 import woowacourse.movie.fixture.SEAT_A2
 import woowacourse.movie.fixture.SEAT_C1

@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityMovieBinding
 import woowacourse.movie.movie.MovieFragment
-import woowacourse.movie.reservation.TicketListFragment
 import woowacourse.movie.setting.SettingFragment
+import woowacourse.movie.ticket.TicketListFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieBinding

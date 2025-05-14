@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.data.dao
 
 import android.content.Context
 import androidx.room.Room
@@ -7,7 +7,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.data.dao.TicketDao
 import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.data.entity.TicketEntity
 import woowacourse.movie.fixture.HARRY_POTTER

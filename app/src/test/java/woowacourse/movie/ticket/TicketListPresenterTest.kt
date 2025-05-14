@@ -21,8 +21,6 @@ import woowacourse.movie.fixture.createTicket
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toEntity
 import woowacourse.movie.mapper.toUiModel
-import woowacourse.movie.reservation.TicketListContract
-import woowacourse.movie.reservation.TicketListPresenter
 import woowacourse.movie.ui.model.TicketUiModel
 
 class TicketListPresenterTest {

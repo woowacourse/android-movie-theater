@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.seat
 
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
@@ -14,16 +14,15 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.hamcrest.CoreMatchers.allOf
-import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
+import woowacourse.movie.R
 import woowacourse.movie.fixture.HARRY_POTTER
 import woowacourse.movie.fixture.SEOLLEUNG
 import woowacourse.movie.fixture.createTicket
 import woowacourse.movie.mapper.toUiModel
-import woowacourse.movie.seat.SeatSelectionActivity
 
 class SeatSelectionActivityTest {
     private lateinit var scenario: ActivityScenario<SeatSelectionActivity>
@@ -109,7 +108,11 @@ class SeatSelectionActivityTest {
             val background = view.background
 
             val color = (background as ColorDrawable).color
-            val expectedColor = ContextCompat.getColor(view.context, R.color.seat_selected_background)
+            val expectedColor =
+                ContextCompat.getColor(
+                    view.context,
+                    R.color.seat_selected_background,
+                )
             assertEquals(expectedColor, color)
         }
     }
@@ -122,7 +125,11 @@ class SeatSelectionActivityTest {
             val background = view.background
 
             val color = (background as ColorDrawable).color
-            val expectedColor = ContextCompat.getColor(view.context, R.color.btn_deactivate_background)
+            val expectedColor =
+                ContextCompat.getColor(
+                    view.context,
+                    R.color.btn_deactivate_background,
+                )
             assertEquals(expectedColor, color)
         }
     }
@@ -136,7 +143,11 @@ class SeatSelectionActivityTest {
             val background = view.background
 
             val color = (background as ColorDrawable).color
-            val expectedColor = ContextCompat.getColor(view.context, R.color.btn_activate_background)
+            val expectedColor =
+                ContextCompat.getColor(
+                    view.context,
+                    R.color.btn_activate_background,
+                )
             assertEquals(expectedColor, color)
         }
     }
