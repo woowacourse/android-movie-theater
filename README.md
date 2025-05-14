@@ -43,7 +43,7 @@
 - [x] 푸시 알림을 클릭하면 예매 정보를 보여준다
 
 ### TODOS
-- [ ] MovieConverter | 중복 코드 줄이기
+- [x] MovieConverter | 중복 코드 줄이기
 - [ ] TicketListPresenter | 프레젠터가 안드로이드 의존성을 가지지 않도록 수정
 - [ ] Test | 패키지 맞추기
 - [ ] SeatSelectionActivity | PendingIntent를 받는 곳에서 생성하도록 변경

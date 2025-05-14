@@ -6,9 +6,9 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 object Formatter {
+    val dateHyphenFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-M-d")
+    val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     private val dateDotFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.M.d")
-    private val dateHyphenFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-M-d")
-    private val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
     fun formatDateDotSeparated(date: LocalDate): String = date.format(dateDotFormatter)
 

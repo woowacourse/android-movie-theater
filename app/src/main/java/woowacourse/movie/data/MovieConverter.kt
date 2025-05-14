@@ -3,14 +3,12 @@ package woowacourse.movie.data
 import androidx.room.TypeConverter
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Seat
+import woowacourse.movie.util.Formatter.dateHyphenFormatter
+import woowacourse.movie.util.Formatter.timeFormatter
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 class MovieConverter {
-    private val dateHyphenFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-M-d")
-    private val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-
     @TypeConverter
     fun fromDate(date: LocalDate): String = date.format(dateHyphenFormatter)
 
