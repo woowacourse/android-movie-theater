@@ -45,7 +45,7 @@ class SettingFragment : Fragment(), SettingContract.View {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter.setPermissionState(requireContext())
+        presenter.setPermissionState()
     }
 
     override fun initAlarmState(isGrant: Boolean) {
