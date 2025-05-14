@@ -39,9 +39,7 @@ class ReservationHistoryFragment :
     }
 
     override fun showReservationHistory(histories: List<ReservationHistoryUiModel>) {
-        requireActivity().runOnUiThread {
             adapter.submitList(histories)
-        }
     }
 
     override fun onHistoryClick(ticket: TicketUiModel) {

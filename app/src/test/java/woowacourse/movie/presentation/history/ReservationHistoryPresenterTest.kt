@@ -8,6 +8,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.ReservationRepository
+import woowacourse.movie.domain.model.reservation.ReservationHistory
 
 class ReservationHistoryPresenterTest {
     private lateinit var view: ReservationHistoryContract.View
@@ -23,9 +24,11 @@ class ReservationHistoryPresenterTest {
 
     @Test
     fun `예매_내역을_불러와_화면에_보여준다`() {
-        // Give
+        // Given
         every { view.showReservationHistory(any()) } just Runs
-        every { repository.getAll() } returns emptyList()
+        every { repository.getAll(any()) } answers {
+            arg<(List<ReservationHistory>) -> Unit>(0).invoke(listOf(ReservationHistory(1, mockk(relaxed = true))))
+        }
 
         // When
         presenter.fetchData()

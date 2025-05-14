@@ -14,7 +14,6 @@ import woowacourse.movie.presentation.common.model.ScreenUiModel
 import woowacourse.movie.presentation.common.model.SeatUiModel
 import woowacourse.movie.presentation.common.model.toDomain
 import woowacourse.movie.presentation.common.model.toUiModel
-import kotlin.concurrent.thread
 
 class ReservationSeatPresenter(
     private val view: ReservationSeatContract.View,
@@ -79,8 +78,8 @@ class ReservationSeatPresenter(
     }
 
     private fun saveReservationHistory(ticket: Ticket) {
-        thread {
-            reservationRepository.insert(ticket)
+        reservationRepository.insert(ticket) { result ->
+            result
                 .onSuccess { view.notifyPublishedTicketSuccess(ticket.toUiModel()) }
                 .onFailure { view.notifyPublishTicketFailed() }
         }

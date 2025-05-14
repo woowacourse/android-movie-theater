@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.home.reservation.seat
 
-import io.kotest.assertions.any
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -10,8 +9,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.ReservationRepository
 import woowacourse.movie.domain.model.cinema.Seats
-import woowacourse.movie.domain.model.ticketing.Ticket
-import woowacourse.movie.presentation.common.fixture.dummyMovie
 import woowacourse.movie.presentation.common.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.common.model.ScreenUiModel
 import woowacourse.movie.presentation.common.model.SeatTypeUiModel
@@ -103,7 +100,9 @@ class ReservationSeatPresenterTest {
         every { view.notifyCanPublish(any()) } just Runs
         every { view.updateSeatState(any()) } just Runs
         every { view.notifyPublishedTicketSuccess(any()) } just Runs
-        every { repository.insert(any()) } returns Result.success(Unit)
+        every { repository.insert(any(), any()) } answers {
+            arg<(Result<Long>) -> Unit>(1).invoke(Result.success(1))
+        }
 
         presenter.fetchData(fakeReservationInfo, Seats.DEFAULT_SEATS.toUiModel(), ScreenUiModel(emptyList()))
         presenter.updateSeat(seat)
