@@ -7,7 +7,6 @@ import android.os.Bundle
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationResultBinding
 import woowacourse.movie.presentation.MovieTheaterActivity
-import woowacourse.movie.presentation.alarm.AlarmHelper
 import woowacourse.movie.presentation.common.base.BaseActivity
 import woowacourse.movie.presentation.common.extension.getParcelableCompat
 import woowacourse.movie.presentation.common.model.TicketUiModel
@@ -64,7 +63,7 @@ class ReservationResultActivity :
         ): PendingIntent {
             val activityIntent = Intent(context, ReservationResultActivity::class.java)
             activityIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            activityIntent.putExtra(AlarmHelper.KEY_TICKET, ticket)
+            activityIntent.putExtra(BUNDLE_KEY_TICKET, ticket)
 
             return PendingIntent.getActivity(
                 context,
