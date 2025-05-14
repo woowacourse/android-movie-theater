@@ -41,3 +41,16 @@
 - [x] 사용자가 앱을 재실행해도 설정 데이터가 남아 있어야 한다
 - [x] 영화 시작 시간 30분 전에 푸시 알림이 온다
 - [x] 푸시 알림을 클릭하면 예매 정보를 보여준다
+
+### TODOS
+- [ ] MovieConverter | 중복 코드 줄이기
+- [ ] TicketListPresenter | 프레젠터가 안드로이드 의존성을 가지지 않도록 수정
+- [ ] Test | 패키지 맞추기
+- [ ] SeatSelectionActivity | PendingIntent를 받는 곳에서 생성하도록 변경
+- [ ] SettingFragment | 권한이 필요한 경우 설정화면으로 이동하도록 변경
+- [ ] SettingFragment.initAlarmState | Indent 줄이기
+- [ ] SettingPresenter | 테스트
+- [ ] SettingPresenter.setPermissionState | 사용하지 않는 인자 지우기
+- [ ] AlarmReceiver | onReceive 함수 분리하기
+- [ ] TicketDao | 같은 데이터를 저장할 경우 충돌 고민
+- [ ] TicketDao | findTicket 네이밍 고민
