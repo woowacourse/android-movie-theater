@@ -1,13 +1,14 @@
 package woowacourse.movie.data
 
+import android.database.sqlite.SQLiteConstraintException
 import androidx.room.Room
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.assertThrows
 import woowacourse.movie.data.db.ReservationDao
 import woowacourse.movie.data.db.ReservationDatabase
 import woowacourse.movie.data.db.ReservationEntity
-import woowacourse.movie.domain.model.cinema.Seat
 import woowacourse.movie.presentation.fixture.fakeContext
 import java.time.LocalDateTime
 
@@ -15,13 +16,13 @@ class ReservationDaoTest {
     private lateinit var reservationDao: ReservationDao
     private val fakeReservation =
         ReservationEntity(
+            1,
             "해리 포터",
             "우아한 극장",
             LocalDateTime.now(),
-            listOf(Seat(1, 1)),
+            "1,1",
             1,
             10000,
-            "1",
         )
 
     @Before
@@ -33,7 +34,8 @@ class ReservationDaoTest {
                 .build()
 
         reservationDao = database.reservationDao()
-        reservationDao.insert(fakeReservation.copy(id = "2"), fakeReservation.copy(id = "3"))
+        reservationDao.insert(fakeReservation.copy(id = 2))
+        reservationDao.insert(fakeReservation.copy(id = 3))
     }
 
     @Test
@@ -53,24 +55,22 @@ class ReservationDaoTest {
 
         // then
         assertThat(result).containsExactly(
-            fakeReservation.copy(id = "2"),
-            fakeReservation.copy(id = "3"),
+            fakeReservation.copy(id = 2),
+            fakeReservation.copy(id = 3),
         )
     }
 
     @Test
     fun `중복된_예매_내역은_추가되지_않는다`() {
         // given
-        val dummyReservation = fakeReservation.copy(id = "10")
+        val dummyReservation = fakeReservation.copy(id = 10)
 
         // when
         reservationDao.insert(dummyReservation)
-        reservationDao.insert(dummyReservation)
 
-        val histories = reservationDao.getAll()
-        val result = histories.count { it == dummyReservation }
-
-        // then
-        assertThat(result).isEqualTo(1)
+       // then
+        assertThrows<SQLiteConstraintException> {
+            reservationDao.insert(dummyReservation)
+        }
     }
 }
