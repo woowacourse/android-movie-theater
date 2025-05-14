@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.home.reservation.seat
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
@@ -7,8 +8,6 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationSeatBinding
 import woowacourse.movie.presentation.alarm.AlarmHelper
 import woowacourse.movie.presentation.common.base.BaseFragment
-import woowacourse.movie.presentation.common.custom.CustomAlertDialog
-import woowacourse.movie.presentation.common.custom.DialogInfo
 import woowacourse.movie.presentation.common.extension.getParcelableCompat
 import woowacourse.movie.presentation.common.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.common.model.ScreenUiModel
@@ -21,17 +20,6 @@ class ReservationSeatFragment :
     ReservationSeatContract.View {
     private val presenter: ReservationSeatPresenter by lazy { ReservationSeatPresenter(this) }
     private lateinit var views: ReservationSeatViews
-    private val dialog: CustomAlertDialog by lazy { CustomAlertDialog(requireContext()) }
-    private val publishDialogInfo: DialogInfo by lazy {
-        DialogInfo(
-            title = getString(R.string.reservation_dialog_title),
-            message = getString(R.string.reservation_dialog_message),
-            positiveButtonText = getString(R.string.reservation_dialog_positive),
-            negativeButtonText = getString(R.string.reservation_dialog_negative),
-            onClickPositiveButton = { presenter.publishTickets() },
-            onClickNegativeButton = { it.dismiss() },
-        )
-    }
 
     override fun onViewCreated(
         view: View,
@@ -54,7 +42,7 @@ class ReservationSeatFragment :
         selectedSeats: List<SeatUiModel>,
     ) {
         binding.reservationInfo = reservationInfo
-        binding.btnConfirm.setOnClickListener { dialog.show(publishDialogInfo) }
+        binding.btnConfirm.setOnClickListener { showPublishConfirmDialog() }
         views.setData(screen, selectedSeats)
         views.setSeatListeners { presenter.updateSeat(it) }
     }
@@ -95,27 +83,19 @@ class ReservationSeatFragment :
     }
 
     private fun showExactAlarmPermissionDialog(ticket: TicketUiModel) {
-        DialogInfo(
-            title = getString(R.string.exact_alarm_permission_required_title),
-            message = getString(R.string.exact_alarm_permission_required_message),
-            positiveButtonText = getString(R.string.exact_alarm_permission_required_positive),
-            negativeButtonText = getString(R.string.exact_alarm_permission_required_negative),
-            onClickPositiveButton = {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.exact_alarm_permission_required_title)
+            .setMessage(R.string.exact_alarm_permission_required_message)
+            .setPositiveButton(R.string.exact_alarm_permission_required_positive) { dialog, _ ->
                 AlarmHelper.requestExactAlarmPermission(requireContext())
-                it.dismiss()
-            },
-            onClickNegativeButton = {
+                dialog.dismiss()
+            }
+            .setNegativeButton(R.string.exact_alarm_permission_required_negative) { dialog, _ ->
                 showToast(getString(R.string.exact_alarm_permission_not_granted_message))
                 navigateToResultScreen(ticket)
-                it.dismiss()
-            },
-        ).also { dialog.show(it) }
-    }
-
-    private fun navigateToResultScreen(ticket: TicketUiModel) {
-        AlarmHelper.setAlarm(requireContext(), ticket)
-        startActivity(ReservationResultActivity.newIntent(requireContext(), ticket))
-        requireActivity().finish()
+                dialog.dismiss()
+            }
+            .show()
     }
 
     override fun notifySeatUpdateFailed(message: String) {
@@ -128,6 +108,22 @@ class ReservationSeatFragment :
 
     private fun showFailedToast(message: String) {
         showToast(message.ifEmpty { getString(R.string.default_error_message) })
+    }
+
+    private fun navigateToResultScreen(ticket: TicketUiModel) {
+        AlarmHelper.setAlarm(requireContext(), ticket)
+        startActivity(ReservationResultActivity.newIntent(requireContext(), ticket))
+        requireActivity().finish()
+    }
+
+    private fun showPublishConfirmDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.reservation_dialog_title)
+            .setMessage(R.string.reservation_dialog_message)
+            .setCancelable(false)
+            .setPositiveButton(R.string.reservation_dialog_positive) { _, _ -> presenter.publishTickets() }
+            .setNegativeButton(R.string.reservation_dialog_negative) { dialog, _ -> dialog.dismiss() }
+            .show()
     }
 
     companion object {

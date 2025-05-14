@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.home.reservation.detail
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -8,8 +9,6 @@ import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationDetailBinding
 import woowacourse.movie.presentation.common.base.BaseFragment
-import woowacourse.movie.presentation.common.custom.CustomAlertDialog
-import woowacourse.movie.presentation.common.custom.DialogInfo
 import woowacourse.movie.presentation.common.extension.getParcelableCompat
 import woowacourse.movie.presentation.common.extension.toDateTimeFormatter
 import woowacourse.movie.presentation.common.model.MovieUiModel
@@ -27,18 +26,6 @@ class ReservationDetailFragment :
     ReservationDetailContract.View,
     OnCountClickListener {
     private val presenter: ReservationDetailPresenter by lazy { ReservationDetailPresenter(this) }
-    private val dialog: CustomAlertDialog by lazy { CustomAlertDialog(requireContext()) }
-
-    private val noAvailableTimesDialogInfo: DialogInfo by lazy {
-        DialogInfo(
-            title = getString(R.string.no_available_times_dialog_title),
-            message = getString(R.string.no_available_times_dialog_message),
-            positiveButtonText = getString(R.string.no_available_times_dialog_positive),
-            onClickPositiveButton = {
-                parentFragmentManager.popBackStack()
-            },
-        )
-    }
 
     override fun onViewCreated(
         view: View,
@@ -71,7 +58,11 @@ class ReservationDetailFragment :
     }
 
     override fun notifyNoAvailableDates() {
-        dialog.show(noAvailableTimesDialogInfo)
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.no_available_times_dialog_title)
+            .setMessage(R.string.no_available_times_dialog_message)
+            .setPositiveButton(R.string.no_available_times_dialog_positive) { _, _ -> parentFragmentManager.popBackStack() }
+            .show()
     }
 
     override fun notifyReservationConfirm(
