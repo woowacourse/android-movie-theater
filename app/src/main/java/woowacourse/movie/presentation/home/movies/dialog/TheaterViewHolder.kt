@@ -1,19 +1,32 @@
 package woowacourse.movie.presentation.home.movies.dialog
 
-import androidx.recyclerview.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import woowacourse.movie.R
 import woowacourse.movie.databinding.ItemTheaterBinding
+import woowacourse.movie.presentation.common.base.BaseViewHolder
 import woowacourse.movie.presentation.common.model.TheaterUiModel
 
 class TheaterViewHolder(
-    private val binding: ItemTheaterBinding,
+    parent: ViewGroup,
     eventListener: OnTheaterEventListener,
-) : RecyclerView.ViewHolder(binding.root) {
+) : BaseViewHolder<TheaterUiModel, ItemTheaterBinding>(
+    DataBindingUtil.inflate(
+        LayoutInflater.from(parent.context),
+        R.layout.item_theater,
+        parent,
+        false
+    ),
+) {
+
     init {
         binding.onTheaterClick = eventListener
     }
 
-    fun bind(theater: TheaterUiModel) {
-        binding.theater = theater
+    override fun bind(item: TheaterUiModel) {
+        binding.theater = item
+        binding.executePendingBindings()
     }
 
     interface OnTheaterEventListener {
