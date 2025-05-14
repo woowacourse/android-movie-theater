@@ -21,12 +21,12 @@ class GlobalApplication : Application() {
     private fun initSettingRepository() {
         val preferenceManager = NotificationPreferenceManager(applicationContext)
         val settingRepository = SettingRepositoryImpl(preferenceManager)
-        AppProvider.initSettingRepository(settingRepository)
+        RepositoryProvider.initSettingRepository(settingRepository)
     }
 
     private fun initReservationRepository() {
         val dao = ReservationDatabase.getInstance(applicationContext).reservationDao()
         val reservationRepository = ReservationRepositoryImpl(dao)
-        AppProvider.initReservationRepository(reservationRepository)
+        RepositoryProvider.initReservationRepository(reservationRepository)
     }
 }

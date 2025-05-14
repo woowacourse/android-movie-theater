@@ -1,6 +1,6 @@
 package woowacourse.movie.presentation.home.reservation.seat
 
-import woowacourse.movie.AppProvider
+import woowacourse.movie.RepositoryProvider
 import woowacourse.movie.domain.ReservationRepository
 import woowacourse.movie.domain.model.cinema.Seat
 import woowacourse.movie.domain.model.cinema.Seats
@@ -15,10 +15,10 @@ import woowacourse.movie.presentation.common.model.SeatUiModel
 import woowacourse.movie.presentation.common.model.toDomain
 import woowacourse.movie.presentation.common.model.toUiModel
 
-class ReservationSeatPresenter(
+class ReservationSeatPresenter private constructor(
     private val view: ReservationSeatContract.View,
-    private val reservationRepository: ReservationRepository = AppProvider.reservationRepository,
-    policy: PricePolicy = DiceCinemaPricePolicy(),
+    private val reservationRepository: ReservationRepository,
+    policy: PricePolicy,
 ) : ReservationSeatContract.Presenter {
     private val machine = TicketMachine(policy)
     private lateinit var reservationInfo: ReservationInfo
@@ -83,5 +83,13 @@ class ReservationSeatPresenter(
                 .onSuccess { view.notifyPublishedTicketSuccess(ticket.toUiModel()) }
                 .onFailure { view.notifyPublishTicketFailed() }
         }
+    }
+
+    companion object {
+        fun create(
+            view: ReservationSeatContract.View,
+            reservationRepository: ReservationRepository = RepositoryProvider.reservationRepository,
+            policy: PricePolicy = DiceCinemaPricePolicy(),
+        ): ReservationSeatPresenter = ReservationSeatPresenter(view, reservationRepository, policy)
     }
 }

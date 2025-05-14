@@ -17,7 +17,7 @@ class ReservationHistoryFragment :
     BaseFragment<FragmentReservationHistoryBinding>(R.layout.fragment_reservation_history),
     ReservationHistoryContract.View,
     ReservationHistoryEventListener {
-    private val presenter: ReservationHistoryPresenter by lazy { ReservationHistoryPresenter(this) }
+    private val presenter: ReservationHistoryPresenter by lazy { ReservationHistoryPresenter.create(this) }
     private val adapter by lazy { ReservationsAdapter(this) }
 
     override fun onViewCreated(

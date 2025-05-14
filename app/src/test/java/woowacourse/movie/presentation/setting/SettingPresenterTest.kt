@@ -27,7 +27,7 @@ class SettingPresenterTest {
         every { repository.isNotificationEnabled() } returns true
 
         // when
-        presenter = SettingPresenter(view, repository)
+        presenter = SettingPresenter.create(view, repository)
 
         // then
         verifyAll {
@@ -42,7 +42,7 @@ class SettingPresenterTest {
         every { repository.updateNotificationEnabled(any()) } just Runs
         every { repository.isNotificationEnabled() } returns true
 
-        presenter = SettingPresenter(view, repository)
+        presenter = SettingPresenter.create(view, repository)
 
         // when
         presenter.updateNotificationEnabled(true)

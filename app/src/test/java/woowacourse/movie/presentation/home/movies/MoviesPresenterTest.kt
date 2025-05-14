@@ -15,7 +15,7 @@ class MoviesPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk()
-        presenter = MoviesPresenter(view)
+        presenter = MoviesPresenter.create(view)
     }
 
     @Test

@@ -1,12 +1,11 @@
 package woowacourse.movie.presentation.setting
 
-import woowacourse.movie.AppProvider
-import woowacourse.movie.data.SettingRepositoryImpl
+import woowacourse.movie.RepositoryProvider
 import woowacourse.movie.domain.SettingRepository
 
-class SettingPresenter(
+class SettingPresenter private constructor(
     private val view: SettingContract.View,
-    private val settingRepository: SettingRepository = AppProvider.settingRepository,
+    private val settingRepository: SettingRepository,
 ) : SettingContract.Presenter {
     init {
         view.notifyNotificationEnabled(settingRepository.isNotificationEnabled())
@@ -16,5 +15,14 @@ class SettingPresenter(
         settingRepository.updateNotificationEnabled(isEnabled)
         val updatedEnabled = settingRepository.isNotificationEnabled()
         view.notifyNotificationEnabled(updatedEnabled)
+    }
+
+    companion object {
+        fun create(
+            view: SettingContract.View,
+            settingRepository: SettingRepository = RepositoryProvider.settingRepository,
+        ): SettingPresenter {
+            return SettingPresenter(view, settingRepository)
+        }
     }
 }

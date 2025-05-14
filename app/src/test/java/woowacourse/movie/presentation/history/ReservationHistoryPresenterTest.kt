@@ -19,7 +19,7 @@ class ReservationHistoryPresenterTest {
     fun setUp() {
         view = mockk()
         repository = mockk()
-        presenter = ReservationHistoryPresenter(view, repository)
+        presenter = ReservationHistoryPresenter.create(view, repository)
     }
 
     @Test

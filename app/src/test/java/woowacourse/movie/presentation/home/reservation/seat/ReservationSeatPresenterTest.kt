@@ -34,7 +34,7 @@ class ReservationSeatPresenterTest {
     fun setUp() {
         view = mockk()
         repository = mockk()
-        presenter = ReservationSeatPresenter(view, repository)
+        presenter = ReservationSeatPresenter.create(view, repository)
     }
 
     @Test

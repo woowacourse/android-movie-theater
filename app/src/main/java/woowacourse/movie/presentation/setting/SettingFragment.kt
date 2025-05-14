@@ -47,7 +47,7 @@ class SettingFragment :
     }
 
     private fun setPresenter() {
-        presenter = SettingPresenter(this)
+        presenter = SettingPresenter.create(this)
     }
 
     private fun setNotificationSwitchListener() {

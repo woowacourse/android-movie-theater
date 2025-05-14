@@ -18,7 +18,7 @@ import woowacourse.movie.presentation.home.reservation.result.ReservationResultA
 class ReservationSeatFragment :
     BaseFragment<FragmentReservationSeatBinding>(R.layout.fragment_reservation_seat),
     ReservationSeatContract.View {
-    private val presenter: ReservationSeatPresenter by lazy { ReservationSeatPresenter(this) }
+    private val presenter: ReservationSeatPresenter by lazy { ReservationSeatPresenter.create(this) }
     private lateinit var views: ReservationSeatViews
 
     override fun onViewCreated(

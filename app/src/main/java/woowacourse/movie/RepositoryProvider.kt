@@ -3,7 +3,7 @@ package woowacourse.movie
 import woowacourse.movie.domain.ReservationRepository
 import woowacourse.movie.domain.SettingRepository
 
-object AppProvider {
+object RepositoryProvider {
     private const val NOT_INITIALIZED_MESSAGE = "%s가 초기화되지 않았습니다."
 
     private var _settingRepository: SettingRepository? = null
