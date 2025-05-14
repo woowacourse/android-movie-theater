@@ -13,6 +13,7 @@ import woowacourse.movie.feature.model.ScreeningUiModel
 import woowacourse.movie.feature.theaters.contract.TheatersContract
 import woowacourse.movie.feature.theaters.presenter.TheatersPresenter
 import woowacourse.movie.feature.theaters.view.adapter.TheaterAdapter
+import woowacourse.movie.feature.theaters.view.adapter.TheaterViewHolder
 import woowacourse.movie.util.getParcelableArrayListCompat
 
 class TheatersDialogFragment :
@@ -41,8 +42,8 @@ class TheatersDialogFragment :
         binding.theaterAdapter = theaterAdapter
     }
 
-    private fun setupClickListeners(): TheaterAdapter.Handler =
-        object : TheaterAdapter.Handler {
+    private fun setupClickListeners(): TheaterViewHolder.Handler =
+        object : TheaterViewHolder.Handler {
             override fun onBookingClick(screening: ScreeningUiModel) {
                 presenter.selectTheater(screening)
             }

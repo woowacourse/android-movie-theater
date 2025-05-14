@@ -8,7 +8,7 @@ import woowacourse.movie.feature.model.ScreeningUiModel
 
 class TheaterAdapter(
     private val items: List<ScreeningUiModel>,
-    private val handler: Handler,
+    private val handler: TheaterViewHolder.Handler,
 ) : RecyclerView.Adapter<TheaterViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,6 +27,4 @@ class TheaterAdapter(
     }
 
     override fun getItemCount(): Int = items.size
-
-    interface Handler : TheaterViewHolder.Handler
 }
