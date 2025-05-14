@@ -45,10 +45,10 @@
 ### TODOS
 - [x] MovieConverter | 중복 코드 줄이기
 - [x] Test | 패키지 맞추기
+- [x] SettingFragment.initAlarmState | Indent 줄이기
 - [ ] TicketListPresenter | 프레젠터가 안드로이드 의존성을 가지지 않도록 수정
 - [ ] SeatSelectionActivity | PendingIntent를 받는 곳에서 생성하도록 변경
 - [ ] SettingFragment | 권한이 필요한 경우 설정화면으로 이동하도록 변경
-- [ ] SettingFragment.initAlarmState | Indent 줄이기
 - [ ] SettingPresenter | 테스트
 - [ ] SettingPresenter.setPermissionState | 사용하지 않는 인자 지우기
 - [ ] AlarmReceiver | onReceive 함수 분리하기

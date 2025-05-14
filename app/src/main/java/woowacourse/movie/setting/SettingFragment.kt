@@ -51,11 +51,9 @@ class SettingFragment : Fragment(), SettingContract.View {
     override fun initAlarmState(isGrant: Boolean) {
         setAlarmState(isGrant)
         binding.switchAlarm.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                if (!isPermitted()) {
-                    requestNotificationPermission()
-                    return@setOnCheckedChangeListener
-                }
+            if (isChecked && !isPermitted()) {
+                requestNotificationPermission()
+                return@setOnCheckedChangeListener
             }
             presenter.updatePermission(isChecked)
         }
@@ -76,12 +74,20 @@ class SettingFragment : Fragment(), SettingContract.View {
             ActivityResultContracts.RequestPermission(),
         ) { isGranted: Boolean ->
             if (isGranted) {
-                Toast.makeText(requireContext(), getString(R.string.text_permission_request, "Alarms"), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.text_permission_request, "Alarms"),
+                    Toast.LENGTH_SHORT,
+                ).show()
                 requestExactAlarmPermission()
                 presenter.updatePermission(true)
                 setAlarmState(true)
             } else {
-                Toast.makeText(requireContext(), getString(R.string.text_permission_request, "Notifications"), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.text_permission_request, "Notifications"),
+                    Toast.LENGTH_SHORT,
+                ).show()
                 setAlarmState(false)
             }
         }
