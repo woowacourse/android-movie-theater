@@ -2,7 +2,7 @@ package woowacourse.movie.data.mapper
 
 import woowacourse.movie.domain.model.cinema.Seat
 
-private const val SEAT_DELIMITER = ""
+private const val SEAT_DELIMITER = ";"
 private const val COORDINATE_DELIMITER = ","
 
 fun List<Seat>.convertToString(): String =
