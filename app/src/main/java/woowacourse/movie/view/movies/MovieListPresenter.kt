@@ -43,12 +43,6 @@ class MovieListPresenter(
     }
 
     companion object {
-        fun initialize(view: MovieListContract.View): MovieListContract.Presenter {
-            val movieStore = MovieStore()
-            val theaterStore = TheaterStore(movieStore)
-            return MovieListPresenter(view, movieStore, theaterStore)
-        }
-
         private const val AD_DIVIDE_STANDARD = 3
     }
 }

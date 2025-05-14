@@ -39,11 +39,7 @@ class BookingHistoryFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         ticketAdapterActionHandler = TickAdapterActionHandler(this)
-        val presenter =
-            BookingHistoryPresenter.initialize(
-                this,
-                requireContext().applicationContext,
-            )
+        val presenter = BookingHistoryPresenterFactory().initialize(requireContext(), this)
         presenter.loadHistory()
     }
 

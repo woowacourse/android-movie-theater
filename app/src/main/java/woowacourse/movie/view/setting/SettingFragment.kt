@@ -28,7 +28,7 @@ class SettingFragment : Fragment(), SettingContract.View {
         savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
-        presenter = SettingPresenter.initialize(this@SettingFragment, requireContext())
+        presenter = SettingPresenterFactory().initialize(this@SettingFragment, requireContext())
         return binding.root
     }
 

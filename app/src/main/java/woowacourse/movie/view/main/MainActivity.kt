@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        presenter = MainPresenter.initialize(this)
+        presenter = MainPresenterFactory().initialize(this)
         notificationHelper = NotificationPermissionHelper(this, binding.root, presenter, this)
 
         if (savedInstanceState == null) {

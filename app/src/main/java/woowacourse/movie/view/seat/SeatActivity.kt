@@ -32,7 +32,8 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat)
 
         intent.requireSerializable<Booking>(KEY_BOOKING).apply {
-            presenter = SeatPresenter.initialize(this@SeatActivity, this, applicationContext)
+            presenter =
+                SeatPresenterFactory().initialize(this@SeatActivity, this, applicationContext)
             val handler = SeatActionHandler(presenter)
 
             binding.handler = handler
