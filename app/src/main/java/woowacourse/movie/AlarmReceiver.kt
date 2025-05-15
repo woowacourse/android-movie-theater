@@ -87,12 +87,19 @@ class AlarmReceiver : BroadcastReceiver() {
         private const val CHANNEL_NAME = "TICKET_NOTIFICATION"
         private const val KEY_TICKET_ALARM = "TICKET_ALARM_DATA"
 
-        fun newIntent(
+        private fun newIntent(
             context: Context,
             ticket: TicketUiModel,
         ): Intent =
             Intent(context, AlarmReceiver::class.java).apply {
                 putExtra(KEY_TICKET_ALARM, ticket)
             }
+
+        fun newPendingIntent(
+            context: Context,
+            ticket: TicketUiModel,
+        ): PendingIntent {
+            return PendingIntent.getBroadcast(context, 0, newIntent(context, ticket), PendingIntent.FLAG_IMMUTABLE)
+        }
     }
 }

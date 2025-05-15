@@ -1,7 +1,6 @@
 package woowacourse.movie.seat
 
 import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
@@ -137,9 +136,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             }
         }
 
-        val intent = AlarmReceiver.newIntent(this, ticket)
-        val pendingIntent =
-            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent = AlarmReceiver.newPendingIntent(this, ticket)
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
