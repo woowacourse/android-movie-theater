@@ -11,12 +11,10 @@ import java.time.LocalDateTime
 
 @Entity(tableName = "ticket")
 data class TicketEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "movie") val movie: Movie,
     @ColumnInfo(name = "theater") val theater: Theater,
     @ColumnInfo(name = "showtime") val showtime: LocalDateTime,
     @ColumnInfo(name = "head_count") val headCount: HeadCount,
     @ColumnInfo(name = "seats") val seats: Seats,
-) {
-    @PrimaryKey(autoGenerate = true)
-    var id: Long = 0
-}
+)
