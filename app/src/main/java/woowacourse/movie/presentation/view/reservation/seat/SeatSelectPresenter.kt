@@ -1,14 +1,14 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
-import woowacourse.movie.domain.SaveReservationFetcher
 import woowacourse.movie.domain.model.ReservationInfo
+import woowacourse.movie.domain.repository.ReservationRepository
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.toDomain
 import woowacourse.movie.presentation.model.toPresentation
 
 class SeatSelectPresenter(
     val view: SeatSelectContract.View,
-    private val saveReservationFetcher: SaveReservationFetcher,
+    private val reservationRepository: ReservationRepository,
 ) : SeatSelectContract.Presenter {
     private lateinit var reservationInfo: ReservationInfo
     private lateinit var theaterName: String
@@ -62,7 +62,7 @@ class SeatSelectPresenter(
     }
 
     override fun saveReservation(reservationInfo: ReservationInfoUiModel) {
-        saveReservationFetcher.saveReservation(reservationInfo.toDomain())
+        reservationRepository.saveReservation(reservationInfo.toDomain())
         view.navigateToComplete(reservationInfo)
     }
 

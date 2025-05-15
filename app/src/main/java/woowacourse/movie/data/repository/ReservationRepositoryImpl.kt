@@ -5,13 +5,21 @@ import woowacourse.movie.data.db.ReservationMapper.toDomain
 import woowacourse.movie.data.db.ReservationMapper.toEntity
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.repository.ReservationRepository
+import kotlin.concurrent.thread
 
 class ReservationRepositoryImpl(
     private val dao: ReservationDao,
 ) : ReservationRepository {
-    override fun getAllReservations(): List<ReservationInfo> = dao.getAllReservation().map { it.toDomain() }
+    override fun getAllReservations(onComplete: (List<ReservationInfo>) -> Unit) {
+        thread {
+            val reservations = dao.getAllReservation().map { it.toDomain() }
+            onComplete(reservations)
+        }
+    }
 
     override fun saveReservation(reservation: ReservationInfo) {
-        dao.saveReservation(reservation.toEntity())
+        thread {
+            dao.saveReservation(reservation.toEntity())
+        }
     }
 }
