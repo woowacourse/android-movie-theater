@@ -14,7 +14,7 @@ interface SettingRepository {
 class NotificationSettingRepository(
     context: Context,
 ) : SettingRepository {
-    private val sharedPrefs = MovieSharedPreferences.getSettings(context)
+    private val sharedPrefs = MovieSharedPreferences.getSettingsSharedPreferences(context)
 
     override fun isSaved(): Boolean = sharedPrefs.contains(KEY_NOTIFICATION)
 
