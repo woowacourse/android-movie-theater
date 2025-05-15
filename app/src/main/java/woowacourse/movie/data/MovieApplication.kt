@@ -1,6 +1,7 @@
 package woowacourse.movie.data
 
 import android.app.Application
+import android.util.Log
 import androidx.room.Room
 
 class MovieApplication : Application() {
@@ -17,4 +18,24 @@ class MovieApplication : Application() {
             }
             return _database!!
         }
+
+    override fun onCreate() {
+        super.onCreate()
+        Log.d("TAG", "onCreate")
+    }
+
+    override fun onTerminate() {
+        Log.d("TAG", "onTerminate")
+        super.onTerminate()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        Log.d("TAG", "onLowMemory")
+    }
+
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        Log.d("TAG", "onTrimMemory")
+    }
 }

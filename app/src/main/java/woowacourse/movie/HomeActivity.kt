@@ -19,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityHomeBinding
+import woowacourse.movie.helper.PermissionHelper
 import woowacourse.movie.movie.MovieFragment
 import woowacourse.movie.reservation.ReservationFragment
 
@@ -78,21 +79,12 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setUpNotificationsPermissions() {
-        checkPostNotificationPermission()
+        PermissionHelper.checkPermission(
+            Build.VERSION_CODES.TIRAMISU,
+            android.Manifest.permission.POST_NOTIFICATIONS,
+            this,
+            requestPermissionLauncher)
         checkScheduleExactAlarmPermission()
-    }
-
-    private fun checkPostNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val permission = android.Manifest.permission.POST_NOTIFICATIONS
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    permission,
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                requestPermissionLauncher.launch(permission)
-            }
-        }
     }
 
     private fun checkScheduleExactAlarmPermission() {
