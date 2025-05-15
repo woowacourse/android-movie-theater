@@ -5,26 +5,27 @@ import woowacourse.movie.feature.model.ContentUiModel
 import woowacourse.movie.feature.model.MovieUiModel
 
 sealed class ContentItem(
-    contentItemViewType: ContentItemViewType,
+    val viewType: ContentItemViewType,
 ) {
-    val viewType: ContentItemViewType = contentItemViewType
     abstract val id: Long
 
     data class Movie(
-        override val id: Long,
         val value: MovieUiModel,
-    ) : ContentItem(ContentItemViewType.MOVIE)
+    ) : ContentItem(ContentItemViewType.MOVIE) {
+        override val id: Long get() = value.id
+    }
 
     data class Advertisement(
-        override val id: Long,
         val value: AdvertisementUiModel,
-    ) : ContentItem(ContentItemViewType.ADVERTISEMENT)
+    ) : ContentItem(ContentItemViewType.ADVERTISEMENT) {
+        override val id: Long get() = value.id
+    }
 
     companion object {
         fun from(content: ContentUiModel): ContentItem =
             when (content) {
-                is MovieUiModel -> Movie(content.id, content)
-                is AdvertisementUiModel -> Advertisement(content.id, content)
+                is MovieUiModel -> Movie(content)
+                is AdvertisementUiModel -> Advertisement(content)
             }
     }
 }

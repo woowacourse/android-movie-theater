@@ -1,5 +1,7 @@
 package woowacourse.movie.feature.bookingseat.view
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -13,8 +15,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
+import woowacourse.movie.domain.repository.BookingRepository
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookingseat.contract.BookingSeatContract
 import woowacourse.movie.feature.bookingseat.presenter.BookingSeatPresenter
@@ -22,19 +26,21 @@ import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.model.MovieSeatUiModel
 import woowacourse.movie.feature.model.SeatSelectionUiState
 import woowacourse.movie.feature.model.SeatTypeUiModel
+import woowacourse.movie.feature.receiver.NotificationReceiver
 import woowacourse.movie.util.getParcelableExtraCompat
 
 class BookingSeatActivity :
     AppCompatActivity(),
     BookingSeatContract.View {
+    private val bookingRepository: BookingRepository by lazy { (application as MovieApplication).bookingRepository }
+    private val presenter: BookingSeatContract.Presenter by lazy { BookingSeatPresenter(this, bookingRepository) }
     private val binding: ActivityBookingSeatBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_booking_seat) }
-    private val presenter: BookingSeatContract.Presenter by lazy { BookingSeatPresenter(this) }
     private val seats: MutableMap<TextView, MovieSeatUiModel> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.onSeatSelectCompleteClick = presenter::completeSeatSelection
+        binding.presenter = presenter
         presenter.prepareBookingInfo(bookingInfo = intent.getParcelableExtraCompat(BOOKING_INFO_KEY) ?: BookingInfoUiModel())
     }
 
@@ -88,6 +94,27 @@ class BookingSeatActivity :
         val intent = BookingCompleteActivity.newIntent(this, bookingInfo)
         startActivity(intent)
         finish()
+    }
+
+    override fun scheduleNotification(
+        bookingInfo: BookingInfoUiModel,
+        notificationDelay: Long,
+    ) {
+        val pendingIntent =
+            PendingIntent.getBroadcast(
+                this,
+                bookingInfo.id?.toInt() ?: -1,
+                NotificationReceiver.newIntent(this, bookingInfo),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
+
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            System.currentTimeMillis() + notificationDelay,
+            pendingIntent,
+        )
     }
 
     override fun navigateToBack() {

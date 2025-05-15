@@ -4,7 +4,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.ContentService.getAllContents
+import woowacourse.movie.data.ContentService.contents
 import woowacourse.movie.data.ContentService.getMovieScreenings
 import woowacourse.movie.data.ContentService.movies
 import woowacourse.movie.feature.home.contract.HomeContract
@@ -28,7 +28,7 @@ class MoviesPresenterTest {
 
         // then
         verify {
-            view.showContents(getAllContents().map { it.toUi() })
+            view.showContents(contents.map { it.toUi() })
         }
     }
 

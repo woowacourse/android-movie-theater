@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 
 class ContentsAdapter(
     private val handler: Handler,
-) : ListAdapter<ContentItem, ContentViewHolder<ContentItem, ViewDataBinding>>(DiffCallback) {
+) : ListAdapter<ContentItem, ContentViewHolder<ContentItem, ViewDataBinding>>(ContentDiffCallback) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -25,13 +25,5 @@ class ContentsAdapter(
 
     override fun getItemViewType(position: Int): Int = getItem(position).viewType.ordinal
 
-    override fun submitList(list: List<ContentItem?>?) {
-        if (itemCount + (list?.size ?: 0) > MAX_ITEM_COUNT) return else super.submitList(list)
-    }
-
     interface Handler : MovieViewHolder.Handler
-
-    companion object {
-        private const val MAX_ITEM_COUNT = 10000
-    }
 }

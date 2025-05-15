@@ -17,6 +17,11 @@ interface BookingSeatContract {
 
         fun navigateToBookingComplete(bookingInfo: BookingInfoUiModel)
 
+        fun scheduleNotification(
+            bookingInfo: BookingInfoUiModel,
+            notificationDelay: Long,
+        )
+
         fun navigateToBack()
     }
 

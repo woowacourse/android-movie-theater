@@ -10,12 +10,18 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.DialogFragmentTheatersBinding
 import woowacourse.movie.feature.bookingdetail.view.BookingDetailActivity
 import woowacourse.movie.feature.model.ScreeningUiModel
+import woowacourse.movie.feature.theaters.contract.TheatersContract
+import woowacourse.movie.feature.theaters.presenter.TheatersPresenter
 import woowacourse.movie.feature.theaters.view.adapter.TheaterAdapter
+import woowacourse.movie.feature.theaters.view.adapter.TheaterViewHolder
 import woowacourse.movie.util.getParcelableArrayListCompat
 
-class TheatersDialogFragment : BottomSheetDialogFragment() {
-    private val theaterAdapter: TheaterAdapter by lazy { TheaterAdapter(screenings, ::navigateToBookingDetail) }
+class TheatersDialogFragment :
+    BottomSheetDialogFragment(),
+    TheatersContract.View {
+    private val theaterAdapter: TheaterAdapter by lazy { TheaterAdapter(screenings, setupClickListeners()) }
     private val screenings: List<ScreeningUiModel> by lazy { arguments?.getParcelableArrayListCompat(SCREENINGS_KEY) ?: emptyList() }
+    private val presenter: TheatersContract.Presenter by lazy { TheatersPresenter(this) }
     private lateinit var binding: DialogFragmentTheatersBinding
 
     override fun onCreateView(
@@ -24,6 +30,7 @@ class TheatersDialogFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_fragment_theaters, container, false)
+        binding.executePendingBindings()
         return binding.root
     }
 
@@ -35,7 +42,14 @@ class TheatersDialogFragment : BottomSheetDialogFragment() {
         binding.theaterAdapter = theaterAdapter
     }
 
-    private fun navigateToBookingDetail(screening: ScreeningUiModel) {
+    private fun setupClickListeners(): TheaterViewHolder.Handler =
+        object : TheaterViewHolder.Handler {
+            override fun onBookingClick(screening: ScreeningUiModel) {
+                presenter.selectTheater(screening)
+            }
+        }
+
+    override fun navigateToBookingDetail(screening: ScreeningUiModel) {
         val intent = BookingDetailActivity.newIntent(requireContext(), screening)
         startActivity(intent)
         dismiss()

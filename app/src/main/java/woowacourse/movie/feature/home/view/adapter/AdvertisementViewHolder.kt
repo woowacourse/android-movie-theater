@@ -12,5 +12,6 @@ class AdvertisementViewHolder(
     override fun bind(item: ContentItem.Advertisement) {
         super.bind(item)
         binding.advertisement = item.value
+        binding.executePendingBindings()
     }
 }

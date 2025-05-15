@@ -3,15 +3,18 @@ package woowacourse.movie.feature.bookingseat.presenter
 import woowacourse.movie.domain.model.BookingInfo
 import woowacourse.movie.domain.model.MovieSeat
 import woowacourse.movie.domain.model.SeatSelectionResult
+import woowacourse.movie.domain.repository.BookingRepository
 import woowacourse.movie.feature.bookingseat.contract.BookingSeatContract
 import woowacourse.movie.feature.mapper.toDomain
 import woowacourse.movie.feature.mapper.toUi
 import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.model.MovieSeatUiModel
 import woowacourse.movie.feature.model.SeatSelectionUiState
+import kotlin.concurrent.thread
 
 class BookingSeatPresenter(
     private val view: BookingSeatContract.View,
+    private val bookingRepository: BookingRepository,
 ) : BookingSeatContract.Presenter {
     private lateinit var bookingInfo: BookingInfo
 
@@ -44,7 +47,9 @@ class BookingSeatPresenter(
     }
 
     override fun confirmSeatSelection() {
+        thread { bookingRepository.saveBookingHistory(bookingInfo) }
         view.navigateToBookingComplete(bookingInfo.toUi())
+        view.scheduleNotification(bookingInfo.toUi(), bookingInfo.getNotificationDelay())
     }
 
     override fun cancelSeatSelection() {

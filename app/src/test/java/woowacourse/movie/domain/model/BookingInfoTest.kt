@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.MOVIE_01
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 class BookingInfoTest {
@@ -88,5 +89,18 @@ class BookingInfoTest {
 
         // then
         assertThat(bookingInfo.selectedSeats).hasSize(2)
+    }
+
+    @Test
+    fun `현재 시간으로부터 예매 30분 전의 시간을 밀리초로 반환한다`() {
+        // given
+        val selectedTime: LocalDateTime = LocalDateTime.of(2025, 4, 1, 8, 0)
+        val thirtyMinutesMillis: Long = 1_800_000
+
+        // when
+        val delay: Long = bookingInfo.getNotificationDelay(selectedTime)
+
+        // then
+        assertThat(delay).isEqualTo(thirtyMinutesMillis)
     }
 }

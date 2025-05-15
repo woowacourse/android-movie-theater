@@ -15,7 +15,8 @@ object ContentService {
     private val movie3 = Movie(3, "해리 포터와 불의 잔", MovieDate(2025, 6, 1), MovieDate(2025, 6, 30), 157)
     private val movie4 = Movie(4, "레디 플레이어 원", MovieDate(2025, 5, 11), MovieDate(2025, 9, 28), 140)
 
-    val movies = listOf(movie0, movie1, movie2, movie3, movie4)
+    val movies: List<Movie> = listOf(movie0, movie1, movie2, movie3, movie4)
+    val contents: List<Content> = getAllContents()
 
     private const val THEATER_NAME_0: String = "CGV명동"
     private const val THEATER_NAME_1: String = "CGV동대문"
@@ -106,7 +107,14 @@ object ContentService {
             ),
         )
 
-    fun getAllContents(): List<Content> {
+    fun getMovieScreenings(movieTitle: String): Screenings =
+        Screenings(
+            screenings.value.filter { screening ->
+                screening.movie.title == movieTitle
+            },
+        )
+
+    private fun getAllContents(): List<Content> {
         var id = movies.maxOf { it.id } + 1
         val contents = mutableListOf<Content>()
 
@@ -117,11 +125,4 @@ object ContentService {
 
         return contents
     }
-
-    fun getMovieScreenings(movieTitle: String): Screenings =
-        Screenings(
-            screenings.value.filter { screening ->
-                screening.movie.title == movieTitle
-            },
-        )
 }
