@@ -20,9 +20,9 @@ class SeatSelectPresenter(
     val ticket: Ticket get() = _ticket
 
     override fun loadSeatSelect() {
-        view.showMovieInfo(_ticket.movie)
-        view.showTotalPrice(_ticket.totalPrice())
-        view.updateConfirmButtonState(_ticket.isFull())
+        view.showMovieInfo(ticket.movie)
+        view.showTotalPrice(ticket.totalPrice())
+        view.updateConfirmButtonState(ticket.isFull())
         ticket.seats.seats.forEach {
             view.updateSeatSelectionState(it, true)
         }
@@ -30,20 +30,20 @@ class SeatSelectPresenter(
 
     override fun selectSeat(seat: Seat) {
         _ticket =
-            if (_ticket.seats.contains(seat)) {
-                _ticket.copy(seats = _ticket.seats - seat)
+            if (ticket.seats.contains(seat)) {
+                ticket.copy(seats = ticket.seats - seat)
             } else {
-                _ticket.copy(seats = _ticket.seats + seat)
+                ticket.copy(seats = ticket.seats + seat)
             }
-        view.updateSeatSelectionState(seat, _ticket.seats.contains(seat))
-        view.updateConfirmButtonState(_ticket.isFull())
-        view.showTotalPrice(_ticket.totalPrice())
+        view.updateSeatSelectionState(seat, ticket.seats.contains(seat))
+        view.updateConfirmButtonState(ticket.isFull())
+        view.showTotalPrice(ticket.totalPrice())
     }
 
     override fun finishBooking() {
-        ticketRepository.save(_ticket)
-        ticketAlarm.setTicketAlarm(_ticket)
-        view.navigateToSummary(_ticket)
+        ticketRepository.save(ticket)
+        ticketAlarm.setTicketAlarm(ticket)
+        view.navigateToSummary(ticket)
     }
 
     override fun restoreTicket(ticket: Ticket) {
