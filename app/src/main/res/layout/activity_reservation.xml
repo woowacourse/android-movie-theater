@@ -7,11 +7,11 @@
 
         <variable
             name="reservationInfo"
-            type="woowacourse.movie.view.model.ReservationInfoUiModel" />
+            type="woowacourse.movie.presentation.model.ReservationInfoUiModel" />
 
         <variable
             name="presenter"
-            type="woowacourse.movie.view.reservation.detail.ReservationDetailPresenter" />
+            type="woowacourse.movie.presentation.view.reservation.detail.ReservationDetailPresenter" />
 
         <variable
             name="selectedDate"

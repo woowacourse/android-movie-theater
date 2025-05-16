@@ -9,8 +9,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.dummyMovie
 import woowacourse.movie.domain.model.dummyTheaters
-import woowacourse.movie.view.theater.TheaterContract
-import woowacourse.movie.view.theater.TheaterPresenter
+import woowacourse.movie.presentation.view.theater.TheaterContract
+import woowacourse.movie.presentation.view.theater.TheaterPresenter
 
 class TheaterBottomSheetDialogPresenterTest {
     private lateinit var presenter: TheaterContract.Presenter

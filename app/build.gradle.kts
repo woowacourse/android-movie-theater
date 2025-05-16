@@ -34,6 +34,7 @@ android {
 
     buildFeatures {
         dataBinding = true
+        buildConfig = true
     }
 
     compileOptions {
@@ -60,6 +61,8 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.espresso.contrib)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
 
     testImplementation(libs.assertj.core)
     testImplementation(libs.junit.jupiter)

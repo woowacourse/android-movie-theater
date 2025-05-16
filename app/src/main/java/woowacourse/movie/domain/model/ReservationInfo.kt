@@ -7,4 +7,5 @@ data class ReservationInfo(
     val dateTime: LocalDateTime,
     val seats: Seats,
     val count: TicketCount,
+    val theaterName: String,
 )

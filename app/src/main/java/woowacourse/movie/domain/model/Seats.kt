@@ -31,5 +31,7 @@ class Seats private constructor(
 
     companion object {
         fun create(): Seats = Seats(mutableSetOf())
+
+        fun of(seats: List<Seat>): Seats = Seats(seats.toMutableSet())
     }
 }

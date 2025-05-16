@@ -12,9 +12,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.dummyMovie
 import woowacourse.movie.domain.model.dummyTheater
-import woowacourse.movie.view.model.MovieFixture
-import woowacourse.movie.view.reservation.detail.ReservationDetailContract
-import woowacourse.movie.view.reservation.detail.ReservationDetailPresenter
+import woowacourse.movie.presentation.model.MovieFixture
+import woowacourse.movie.presentation.view.reservation.detail.ReservationDetailContract
+import woowacourse.movie.presentation.view.reservation.detail.ReservationDetailPresenter
 import java.time.LocalDate
 
 class ReservationDetailPresenterTest {

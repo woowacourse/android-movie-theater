@@ -11,10 +11,11 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
-import woowacourse.movie.view.Extras
-import woowacourse.movie.view.model.ReservationInfoUiModel
-import woowacourse.movie.view.model.SeatUiModel
-import woowacourse.movie.view.model.SeatsUiModel
+import woowacourse.movie.presentation.Extras
+import woowacourse.movie.presentation.model.ReservationInfoUiModel
+import woowacourse.movie.presentation.model.SeatUiModel
+import woowacourse.movie.presentation.model.SeatsUiModel
+import woowacourse.movie.presentation.view.reservation.complete.ReservationCompleteActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
