@@ -37,7 +37,7 @@ import java.time.LocalDateTime
 class BookingSeatActivity :
     AppCompatActivity(),
     BookingSeatContract.View {
-    private val database = (application as MovieApplication).database
+    private val database by lazy { (application as MovieApplication).database }
     private val bookingSeatPresenter by lazy {
         BookingSeatPresenter(
             this,
