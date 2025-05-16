@@ -13,7 +13,6 @@ import androidx.core.content.ContextCompat
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.ui.complete.BookingCompleteActivity
-import woowacourse.movie.utils.Destination
 import woowacourse.movie.utils.intentSerializable
 
 class MovieReminderReceiver : BroadcastReceiver() {
@@ -44,7 +43,7 @@ class MovieReminderReceiver : BroadcastReceiver() {
             NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
         notificationManager.createNotificationChannel(channel)
 
-        val intent = BookingCompleteActivity.newIntent(context, bookedTicket, Destination.HOME)
+        val intent = BookingCompleteActivity.newIntent(context, bookedTicket)
         val pendingIntent =
             PendingIntent.getActivity(
                 context,

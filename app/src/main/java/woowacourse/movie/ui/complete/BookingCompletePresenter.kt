@@ -1,20 +1,14 @@
 package woowacourse.movie.ui.complete
 
 import woowacourse.movie.domain.model.BookedTicket
-import woowacourse.movie.utils.Destination
 
 class BookingCompletePresenter(
     private val bookingCompleteView: BookingCompleteContract.View,
 ) : BookingCompleteContract.Presenter {
     private lateinit var bookedTicket: BookedTicket
-    private lateinit var destination: Destination
 
-    override fun loadBookedTicket(
-        bookedTicket: BookedTicket,
-        destination: Destination,
-    ) {
+    override fun loadBookedTicket(bookedTicket: BookedTicket) {
         this.bookedTicket = bookedTicket
-        this.destination = destination
 
         bookingCompleteView.showMovieTitle(bookedTicket.movieTitle)
         bookingCompleteView.showScreeningDateTime(bookedTicket.movieSchedule.screeningDateTime)
@@ -24,17 +18,6 @@ class BookingCompletePresenter(
             bookedTicket.theaterName,
         )
         bookingCompleteView.showTotalPrice(bookedTicket.totalPrice())
-
-        if (isAfterBooking()) bookingCompleteView.handlePermission(bookedTicket)
+        // bookingCompleteView.handlePermission(bookedTicket) , 퍼미션 위치 더 고민해보기 + 현재 예매 내역에서 진입하는 상황도 존재
     }
-
-    override fun navigateTo() {
-        when (destination) {
-            Destination.COMPLETE -> bookingCompleteView.moveTo(Destination.HOME)
-            Destination.HISTORY -> bookingCompleteView.moveTo(Destination.HISTORY)
-            else -> bookingCompleteView.moveTo(Destination.HOME)
-        }
-    }
-
-    private fun isAfterBooking() = destination == Destination.COMPLETE
 }

@@ -6,7 +6,6 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import java.time.LocalDateTime
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.R
@@ -17,7 +16,7 @@ import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.domain.model.TicketType
 import woowacourse.movie.fixture.fakeContext
-import woowacourse.movie.utils.Destination
+import java.time.LocalDateTime
 
 class BookingCompleteActivityTest {
     @Before
@@ -39,10 +38,6 @@ class BookingCompleteActivityTest {
                             ),
                         headcount = Headcount(2),
                     ),
-                )
-                putExtra(
-                    "EXTRA_DESTINATION",
-                    Destination.HISTORY,
                 )
             }
         ActivityScenario.launch<BookingCompleteActivity>(intent)

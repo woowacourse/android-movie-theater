@@ -3,17 +3,11 @@ package woowacourse.movie.ui.complete
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Seats
-import woowacourse.movie.utils.Destination
 import java.time.LocalDateTime
 
 interface BookingCompleteContract {
     interface Presenter {
-        fun loadBookedTicket(
-            bookedTicket: BookedTicket,
-            destination: Destination,
-        )
-
-        fun navigateTo()
+        fun loadBookedTicket(bookedTicket: BookedTicket)
     }
 
     interface View {
@@ -30,7 +24,5 @@ interface BookingCompleteContract {
         fun showTotalPrice(totalPrice: Int)
 
         fun handlePermission(bookedTicket: BookedTicket)
-
-        fun moveTo(destination: Destination)
     }
 }

@@ -11,7 +11,6 @@ import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.ui.complete.BookingCompleteContract
 import woowacourse.movie.ui.complete.BookingCompletePresenter
-import woowacourse.movie.utils.Destination
 import java.time.LocalDateTime
 
 class BookingCompletePresenterTest {
@@ -34,7 +33,6 @@ class BookingCompletePresenterTest {
                         ),
                     headcount = Headcount(1),
                 ),
-            Destination.COMPLETE,
         )
     }
 

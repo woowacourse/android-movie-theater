@@ -29,9 +29,7 @@ import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.notification.MovieReminderReceiver
-import woowacourse.movie.ui.main.MovieBookingActivity
 import woowacourse.movie.utils.AlarmManagerCompat
-import woowacourse.movie.utils.Destination
 import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.intentSerializable
 import java.time.LocalDateTime
@@ -66,7 +64,7 @@ class BookingCompleteActivity :
         applyWindowInsets()
         setOnBackPressedCallback()
 
-        bookingCompletePresenter.loadBookedTicket(restoreBookedTicket(), restoreDestination())
+        bookingCompletePresenter.loadBookedTicket(restoreBookedTicket())
     }
 
     override fun showMovieTitle(movieTitle: String) {
@@ -98,24 +96,10 @@ class BookingCompleteActivity :
         binding.stringFormatter = StringFormatter
     }
 
-    override fun moveTo(destination: Destination) {
-        val intent =
-            MovieBookingActivity.newIntent(this, destination).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            }
-        startActivity(intent)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         finish()
+        return super.onOptionsItemSelected(item)
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean =
-        when (item.itemId) {
-            android.R.id.home -> {
-                bookingCompletePresenter.navigateTo()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
 
     override fun handlePermission(bookedTicket: BookedTicket) {
         requestPostNotificationPermission()
@@ -243,14 +227,12 @@ class BookingCompleteActivity :
 
     private fun restoreBookedTicket(): BookedTicket = intent.intentSerializable(EXTRA_BOOKED_TICKET, BookedTicket::class.java)!!
 
-    private fun restoreDestination(): Destination = intent.intentSerializable(EXTRA_DESTINATION, Destination::class.java)!!
-
     private fun setOnBackPressedCallback() {
         onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    bookingCompletePresenter.navigateTo()
+                    finish()
                 }
             },
         )
@@ -260,17 +242,14 @@ class BookingCompleteActivity :
 
     companion object {
         private const val EXTRA_BOOKED_TICKET = "EXTRA_BOOKED_TICKET"
-        private const val EXTRA_DESTINATION = "EXTRA_DESTINATION"
         private const val ASCII_A = 'A'
 
         fun newIntent(
             context: Context,
             bookedTicket: BookedTicket,
-            destination: Destination,
         ): Intent =
             Intent(context, BookingCompleteActivity::class.java).apply {
                 putExtra(EXTRA_BOOKED_TICKET, bookedTicket)
-                putExtra(EXTRA_DESTINATION, destination)
             }
     }
 }

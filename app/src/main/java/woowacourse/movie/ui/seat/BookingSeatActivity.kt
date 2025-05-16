@@ -22,7 +22,6 @@ import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.ui.complete.BookingCompleteActivity
-import woowacourse.movie.utils.Destination
 import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.intentSerializable
 
@@ -85,7 +84,8 @@ class BookingSeatActivity :
     }
 
     override fun moveToBookedTicket(bookedTicket: BookedTicket) {
-        startActivity(BookingCompleteActivity.newIntent(this, bookedTicket, Destination.COMPLETE))
+        startActivity(BookingCompleteActivity.newIntent(this, bookedTicket))
+        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
