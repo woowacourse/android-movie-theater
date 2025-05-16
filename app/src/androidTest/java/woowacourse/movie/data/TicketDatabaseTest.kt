@@ -20,6 +20,7 @@ import woowacourse.movie.view.MainActivity
 import java.time.LocalDate
 import java.time.LocalTime
 
+@Suppress("FunctionName")
 class TicketDatabaseTest {
     private lateinit var db: TicketDatabase
 

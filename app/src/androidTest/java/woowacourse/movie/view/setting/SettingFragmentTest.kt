@@ -13,6 +13,7 @@ import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.view.MainActivity
 
+@Suppress("FunctionName")
 class SettingFragmentTest {
     @get:Rule
     val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
