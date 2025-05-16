@@ -55,15 +55,17 @@ class SettingFragmentTest {
     @Test
     fun 푸시_알림이_비활성화_된_경우_푸시_알림이_오지_않는다() {
         // given
-        NotificationReceiver.cancelNotification()
+        lateinit var fragment: SettingFragment
+        scenarioRule.scenario.onActivity { activity ->
+            fragment =
+                activity.supportFragmentManager.findFragmentById(
+                    R.id.fragment_container_main,
+                ) as SettingFragment
+        }
         val manager = context.getSystemService(NotificationManager::class.java)
 
         // when
-        NotificationReceiver.setNotification(
-            context,
-            TestData.tickets[0],
-            LocalDateTime.now(),
-        )
+        fragment.setPermissionSwitch(false)
 
         // then
         val result1 = manager.activeNotifications.find { it.id == TestData.tickets[0].hashCode() }
