@@ -5,13 +5,13 @@ import woowacourse.movie.ui.settings.contract.SettingsContract
 class SettingsPresenter(
     private val settingsView: SettingsContract.View,
 ) : SettingsContract.Presenter {
-    private var isChecked: Boolean = false
+    private var isNotificationOptionChecked: Boolean = false
 
-    override fun loadChecked(isChecked: Boolean) {
-        this.isChecked = isChecked
+    override fun loadSwitchChecked(isNotificationOptionChecked: Boolean) {
+        this.isNotificationOptionChecked = isNotificationOptionChecked
     }
 
     override fun refreshChecked() {
-        settingsView.setSwitchChecked()
+        settingsView.setSwitchChecked(isNotificationOptionChecked)
     }
 }

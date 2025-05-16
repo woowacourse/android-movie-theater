@@ -2,12 +2,12 @@ package woowacourse.movie.ui.settings.contract
 
 interface SettingsContract {
     interface Presenter {
-        fun loadChecked(isChecked: Boolean)
+        fun loadSwitchChecked(isNotificationOptionChecked: Boolean)
 
         fun refreshChecked()
     }
 
     interface View {
-        fun setSwitchChecked()
+        fun setSwitchChecked(isNotificationOptionChecked: Boolean)
     }
 }
