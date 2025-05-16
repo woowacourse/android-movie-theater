@@ -16,12 +16,12 @@ interface TicketDao {
     @Insert
     fun save(seatEntities: List<SeatEntity>)
 
-    @Transaction
     @Query(
         "SELECT * FROM ticket ",
     )
     fun findAll(): List<WholeTicketEntity>
 
+    @Transaction
     fun save(
         ticket: TicketEntity,
         seats: List<SeatEntity>,
