@@ -45,7 +45,7 @@ class SettingsFragment :
     }
 
     override fun setSwitchChecked(isNotificationOptionChecked: Boolean) {
-        if (isNotificationPermissionGranted() == false) {
+        if (isNotificationPermissionGranted().not()) {
             binding.switchSettingPostNotification.isChecked = false
         }
         binding.switchSettingPostNotification.isChecked = isNotificationOptionChecked
@@ -55,12 +55,13 @@ class SettingsFragment :
 
     private val notificationSwitchListener: NotificationSwitchListener =
         NotificationSwitchListener { isChecked ->
-            if (isNotificationPermissionGranted()) {
+            if (isNotificationPermissionGranted().not()) {
                 sharedPreference.edit { putBoolean(PREF_KEY_NOTIFICATION, false) }
                 binding.switchSettingPostNotification.isChecked = false
                 showPermissionToast()
             } else {
                 sharedPreference.edit { putBoolean(PREF_KEY_NOTIFICATION, isChecked) }
+                settingsPresenter.loadSwitchChecked(isNotificationOptionChecked())
             }
             settingsPresenter.refreshChecked()
         }
@@ -70,7 +71,7 @@ class SettingsFragment :
             ContextCompat.checkSelfPermission(
                 requireContext(),
                 permission.POST_NOTIFICATIONS,
-            ) != PERMISSION_GRANTED
+            ) == PERMISSION_GRANTED
         } else {
             true
         }
