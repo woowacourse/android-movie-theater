@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (!isGranted &&
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
                 shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)
             ) {
                 requestNotificationPermission()
