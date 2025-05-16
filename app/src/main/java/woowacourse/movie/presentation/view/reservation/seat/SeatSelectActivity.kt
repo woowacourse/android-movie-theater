@@ -62,11 +62,8 @@ class SeatSelectActivity :
 
         val fromAlarmSettings =
             intent?.getBooleanExtra(Extras.ReservationInfoData.ALARM_SETTING_KEY, false) ?: false
-        val reservationInfo =
-            intent?.getParcelableExtraCompat<ReservationInfoUiModel>(Extras.ReservationInfoData.RESERVATION_KEY)
-
-        if (fromAlarmSettings && reservationInfo != null) {
-            presenter.saveReservation(reservationInfo)
+        if (fromAlarmSettings) {
+            presenter.saveReservation()
         }
     }
 
@@ -125,17 +122,19 @@ class SeatSelectActivity :
                 alarmScheduler.requestExactAlarmPermission()
             }.setNegativeButton(R.string.setting_request_permission_dialog_negative) { _, _ ->
                 showToast(getString(R.string.reservation_dialog_no_alarm_complete))
-                presenter.saveReservation(reservationInfo)
+                presenter.setCurrentReservationInfo(reservationInfo)
             }.show()
     }
 
     override fun navigateCompleteWithAlarmCheck(reservationInfoUiModel: ReservationInfoUiModel) {
+        presenter.setCurrentReservationInfo(reservationInfoUiModel)
+
         if (!alarmScheduler.canScheduleAlarm()) {
             showExactAlarmSettingDialog(reservationInfoUiModel)
             return
         }
 
-        presenter.saveReservation(reservationInfoUiModel)
+        presenter.saveReservation()
     }
 
     override fun navigateToComplete(reservationInfo: ReservationInfoUiModel) {

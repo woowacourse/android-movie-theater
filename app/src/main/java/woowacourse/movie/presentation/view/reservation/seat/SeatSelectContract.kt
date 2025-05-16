@@ -44,7 +44,9 @@ interface SeatSelectContract {
             message: String,
         )
 
-        fun saveReservation(reservationInfo: ReservationInfoUiModel)
+        fun setCurrentReservationInfo(reservationInfo: ReservationInfoUiModel)
+
+        fun saveReservation()
 
         fun reservationConfirmed()
 

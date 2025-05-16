@@ -70,9 +70,9 @@ class SeatSelectPresenter(
         )
     }
 
-    override fun saveReservation(reservationInfo: ReservationInfoUiModel) {
-        reservationRepository.saveReservation(reservationInfo.toDomain())
-        view.navigateToComplete(reservationInfo)
+    override fun saveReservation() {
+        reservationRepository.saveReservation(reservationInfo)
+        view.navigateToComplete(reservationInfo.toPresentation())
     }
 
     override fun restoreSelectedSeats(seatIds: List<String>) {
@@ -87,6 +87,10 @@ class SeatSelectPresenter(
     override fun restoreButtonState() {
         val isEnabled = reservationInfo.seats.size == reservationInfo.count.value
         view.updateConfirmButtonEnabled(isEnabled)
+    }
+
+    override fun setCurrentReservationInfo(reservationInfo: ReservationInfoUiModel) {
+        this.reservationInfo = reservationInfo.toDomain()
     }
 
     private fun createReservationInfo(): ReservationInfoUiModel =
