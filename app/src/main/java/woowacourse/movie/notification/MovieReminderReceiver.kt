@@ -17,19 +17,16 @@ import woowacourse.movie.utils.intentSerializable
 
 class MovieReminderReceiver : BroadcastReceiver() {
     override fun onReceive(
-        context: Context?,
-        intent: Intent?,
+        context: Context,
+        intent: Intent,
     ) {
-        context?.let {
-            if (ContextCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.POST_NOTIFICATIONS,
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                val bookedTicket =
-                    intent?.intentSerializable(EXTRA_BOOKED_TICKET, BookedTicket::class.java)!!
-                showNotification(it, bookedTicket)
-            }
+        if (
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            val bookedTicket =
+                intent.intentSerializable(EXTRA_BOOKED_TICKET, BookedTicket::class.java)!!
+            showNotification(context, bookedTicket)
         }
     }
 
