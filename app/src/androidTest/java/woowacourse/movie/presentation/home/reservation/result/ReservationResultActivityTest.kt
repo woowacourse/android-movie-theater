@@ -1,7 +1,6 @@
 package woowacourse.movie.presentation.home.reservation.result
 
-import androidx.core.os.bundleOf
-import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -12,9 +11,10 @@ import woowacourse.movie.R
 import woowacourse.movie.presentation.common.model.SeatTypeUiModel
 import woowacourse.movie.presentation.common.model.SeatUiModel
 import woowacourse.movie.presentation.common.model.TicketUiModel
+import woowacourse.movie.presentation.fixture.fakeContext
 import java.time.LocalDateTime
 
-class ReservationResultFragmentTest {
+class ReservationResultActivityTest {
     private val ticket =
         TicketUiModel(
             "해리 포터와 마법사의 돌",
@@ -28,11 +28,12 @@ class ReservationResultFragmentTest {
             20_000,
         )
 
+    private lateinit var activityScenario: ActivityScenario<ReservationResultActivity>
+
     @Before
     fun setUp() {
-        launchFragmentInContainer(bundleOf("ticket" to ticket)) {
-            ReservationResultFragment()
-        }
+        val intent = ReservationResultActivity.newIntent(fakeContext, ticket)
+        activityScenario = ActivityScenario.launch(intent)
     }
 
     @Test

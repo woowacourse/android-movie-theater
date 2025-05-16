@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.home.reservation.detail
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -8,8 +9,6 @@ import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationDetailBinding
 import woowacourse.movie.presentation.common.base.BaseFragment
-import woowacourse.movie.presentation.common.custom.CustomAlertDialog
-import woowacourse.movie.presentation.common.custom.DialogInfo
 import woowacourse.movie.presentation.common.extension.getParcelableCompat
 import woowacourse.movie.presentation.common.extension.toDateTimeFormatter
 import woowacourse.movie.presentation.common.model.MovieUiModel
@@ -24,20 +23,9 @@ import java.time.LocalTime
 
 class ReservationDetailFragment :
     BaseFragment<FragmentReservationDetailBinding>(R.layout.fragment_reservation_detail),
-    ReservationDetailContract.View {
+    ReservationDetailContract.View,
+    OnCountClickListener {
     private val presenter: ReservationDetailPresenter by lazy { ReservationDetailPresenter(this) }
-    private val dialog: CustomAlertDialog by lazy { CustomAlertDialog(requireContext()) }
-
-    private val noAvailableTimesDialogInfo: DialogInfo by lazy {
-        DialogInfo(
-            title = getString(R.string.no_available_times_dialog_title),
-            message = getString(R.string.no_available_times_dialog_message),
-            positiveButtonText = getString(R.string.no_available_times_dialog_positive),
-            onClickPositiveButton = {
-                parentFragmentManager.popBackStack()
-            },
-        )
-    }
 
     override fun onViewCreated(
         view: View,
@@ -65,23 +53,28 @@ class ReservationDetailFragment :
 
     override fun showScreen(movie: MovieUiModel) {
         binding.movie = movie
-
-        setupReservationCountControls()
+        binding.onCountClickListener = this
         setupFinishButton()
     }
 
     override fun notifyNoAvailableDates() {
-        dialog.show(noAvailableTimesDialogInfo)
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.no_available_times_dialog_title)
+            .setMessage(R.string.no_available_times_dialog_message)
+            .setPositiveButton(R.string.no_available_times_dialog_positive) { _, _ -> parentFragmentManager.popBackStack() }
+            .show()
     }
 
     override fun notifyReservationConfirm(
         reservationInfo: ReservationInfoUiModel,
         screen: ScreenUiModel,
-        theaterName: String,
     ) {
-        val fragment = ReservationSeatFragment.newInstance(reservationInfo, screen)
         parentFragmentManager.commit {
-            add(R.id.fragment_container_view, fragment)
+            replace(
+                R.id.fragment_container_view,
+                ReservationSeatFragment::class.java,
+                ReservationSeatFragment.newBundle(reservationInfo, screen),
+            )
             addToBackStack(null)
         }
     }
@@ -104,9 +97,12 @@ class ReservationDetailFragment :
         if (binding.selectedTime == null) binding.selectedTime = selectedTime
     }
 
-    private fun setupReservationCountControls() {
-        binding.btnReservationCountPlus.setOnClickListener { presenter.updateReservationCount(1) }
-        binding.btnReservationCountMinus.setOnClickListener { presenter.updateReservationCount(-1) }
+    override fun onCountIncrease() {
+        presenter.updateReservationCount(1)
+    }
+
+    override fun onCountDecrease() {
+        presenter.updateReservationCount(-1)
     }
 
     private fun setupFinishButton() {
@@ -149,8 +145,12 @@ class ReservationDetailFragment :
     }
 
     private fun saveReservationCount(outState: Bundle) {
-        binding.tvReservationCount.text.toString().toIntOrNull()?.let { count ->
-            outState.putInt(RESTORE_BUNDLE_KEY_RESERVATION_NUMBER, count)
+        runCatching {
+            binding.tvReservationCount.text
+                .toString()
+                .toInt()
+        }.onSuccess {
+            outState.putInt(RESTORE_BUNDLE_KEY_RESERVATION_NUMBER, it)
         }
     }
 
@@ -166,7 +166,9 @@ class ReservationDetailFragment :
     }
 
     private fun selectedSpinnerDateAndTime(): Pair<LocalDate?, LocalTime?> =
-        binding.spinnerReservationDate.selectedItem as? LocalDate to binding.spinnerReservationTime.selectedItem as? LocalTime
+        runCatching {
+            binding.spinnerReservationDate.selectedItem as? LocalDate to binding.spinnerReservationTime.selectedItem as? LocalTime
+        }.getOrElse { null to null }
 
     companion object {
         private const val BUNDLE_KEY_MOVIE = "movie"
@@ -175,12 +177,12 @@ class ReservationDetailFragment :
         private const val RESTORE_BUNDLE_KEY_RESERVATION_NUMBER = "reservation_number"
         private const val SPINNER_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm"
 
-        fun newInstance(
+        fun newBundle(
             movie: MovieUiModel,
             theater: TheaterUiModel,
-        ): ReservationDetailFragment =
-            ReservationDetailFragment().apply {
-                arguments = bundleOf(BUNDLE_KEY_MOVIE to movie, BUNDLE_KEY_THEATER to theater)
-            }
+        ) = bundleOf(
+            BUNDLE_KEY_MOVIE to movie,
+            BUNDLE_KEY_THEATER to theater,
+        )
     }
 }

@@ -14,6 +14,7 @@ class ReservationInfoTest {
     fun setUp() {
         fakeReservationInfo =
             ReservationInfo(
+                "선릉 극장",
                 "해리 포터와 마법사의 돌",
                 LocalDateTime.of(2025, 4, 30, 20, 0),
                 ReservationCount(2),

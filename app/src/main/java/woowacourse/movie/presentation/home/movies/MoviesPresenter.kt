@@ -13,11 +13,11 @@ import woowacourse.movie.presentation.common.model.toUiModel
 import woowacourse.movie.presentation.home.movies.adapter.item.toUiModel
 import java.time.LocalDateTime
 
-class MoviesPresenter(
+class MoviesPresenter private constructor(
     private val view: MoviesContract.View,
-    private val movies: List<Movie> = createDummyMovies(100),
-    private val theaters: Theaters = dummyTheaters,
-    private val adInsertionPolicy: AdInsertionPolicy<MovieContent, MovieContent.MovieAd> = MovieAdInsertionPolicy(),
+    private val movies: List<Movie>,
+    private val theaters: Theaters,
+    private val adInsertionPolicy: AdInsertionPolicy<MovieContent, MovieContent.MovieAd>,
 ) : MoviesContract.Presenter {
     override fun fetchData() {
         val movieContents = movies.toMovieContent().map { it.toUiModel() }
@@ -35,6 +35,17 @@ class MoviesPresenter(
         val entries = this.map { MovieContent.MovieEntry(it) }
         return adInsertionPolicy.insert(entries) {
             MovieContent.MovieAd(R.drawable.woowacourse_ad)
+        }
+    }
+
+    companion object {
+        fun create(
+            view: MoviesContract.View
+        ): MoviesPresenter {
+            val movies: List<Movie> = createDummyMovies(100)
+            val theaters: Theaters = dummyTheaters
+            val adInsertionPolicy: AdInsertionPolicy<MovieContent, MovieContent.MovieAd> = MovieAdInsertionPolicy()
+            return MoviesPresenter(view, movies, theaters, adInsertionPolicy)
         }
     }
 }

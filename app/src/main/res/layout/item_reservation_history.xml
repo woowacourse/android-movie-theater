@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="history"
+            type="woowacourse.movie.presentation.common.model.TicketUiModel" />
+
+        <variable
+            name="eventListener"
+            type="woowacourse.movie.presentation.history.adapter.ReservationHistoryEventListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:onClick="@{() -> eventListener.onHistoryClick(history)}"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tv_history_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_history_title"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{String.format(@string/reservation_history_info, history.formatDateTime(@string/reservation_date_format), history.formatDateTime(@string/reservation_time_format) , history.theaterName)}"
+            tools:text="2024.3.2 | 17:00 | 선릉 극장" />
+
+        <TextView
+            android:id="@+id/tv_history_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_history_info"
+            android:text="@{history.title}"
+            tools:text="해리 포터와 마법사의 돌" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

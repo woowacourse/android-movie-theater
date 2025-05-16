@@ -19,14 +19,12 @@ class MovieTest {
             Movie(
                 id = 1,
                 title = "해리 포터와 마법사의 돌",
-                poster = Poster.Url("https://example.com/poster.jpg"),
                 screeningPeriod = screeningPeriod,
                 runningTime = runningTime,
             )
 
         assertAll(
             { assertThat(movie.title).isEqualTo("해리 포터와 마법사의 돌") },
-            { assertThat((movie.poster as? Poster.Url)?.url).isEqualTo("https://example.com/poster.jpg") },
             { assertThat(movie.screeningPeriod).isEqualTo(screeningPeriod) },
             { assertThat(movie.runningTime).isEqualTo(runningTime) },
         )

@@ -3,9 +3,7 @@ package woowacourse.movie.domain.model.cinema
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import woowacourse.movie.domain.model.cinema.MovieSchedule
 import woowacourse.movie.domain.model.movie.Movie
-import woowacourse.movie.domain.model.movie.Poster
 import woowacourse.movie.domain.model.movie.RunningTime
 import woowacourse.movie.domain.model.movie.ScreeningPeriod
 import java.time.LocalDate
@@ -18,7 +16,6 @@ class MovieScheduleTest {
             id = 1,
             title = "Dummy Movie",
             screeningPeriod = ScreeningPeriod(LocalDate.now(), LocalDate.now().plusDays(2)),
-            poster = Poster.Url(""),
             runningTime = RunningTime(152),
         )
 

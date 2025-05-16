@@ -5,6 +5,7 @@ import java.time.LocalDateTime
 
 class ReservationInfo(
     val title: String,
+    val theaterName: String,
     val reservationDateTime: LocalDateTime,
     val reservationCount: ReservationCount,
 ) {

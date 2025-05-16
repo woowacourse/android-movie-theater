@@ -16,7 +16,6 @@ import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.presentation.common.extension.toDateTimeFormatter
 import woowacourse.movie.presentation.common.model.MovieUiModel
-import woowacourse.movie.presentation.common.model.PosterUiModel
 import woowacourse.movie.presentation.common.model.ScreeningPeriodUiModel
 import woowacourse.movie.presentation.common.model.TheaterUiModel
 import java.time.LocalDate
@@ -29,7 +28,7 @@ class ReservationDetailFragmentTest {
         MovieUiModel(
             1,
             "해리 포터와 마법사의 돌",
-            PosterUiModel.Resource(R.drawable.harrypotter),
+            R.drawable.harrypotter,
             ScreeningPeriodUiModel(
                 LocalDate.now(),
                 LocalDate.now().plusDays(1),

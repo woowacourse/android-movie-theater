@@ -9,25 +9,26 @@ import java.time.LocalDateTime
 @Parcelize
 class ReservationInfoUiModel(
     val title: String,
+    val theaterName: String,
     val reservationDateTime: LocalDateTime,
     val reservationCount: Int,
     val seats: List<SeatUiModel>,
-    val theaterName: String,
 ) : Parcelable
 
-fun ReservationInfo.toUiModel(theaterName: String): ReservationInfoUiModel =
+fun ReservationInfo.toUiModel(): ReservationInfoUiModel =
     ReservationInfoUiModel(
         title,
+        theaterName,
         reservationDateTime,
         reservationCount.value,
         seats.map { it.toUiModel() },
-        theaterName,
     )
 
 fun ReservationInfoUiModel.toDomain(): ReservationInfo {
     val info =
         ReservationInfo(
             title,
+            theaterName,
             reservationDateTime,
             ReservationCount(reservationCount),
         )

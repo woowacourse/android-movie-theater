@@ -31,8 +31,10 @@ interface ReservationSeatContract {
 
         fun notifyCanPublish(canPublish: Boolean)
 
-        fun notifyPublishedTickets(ticket: TicketUiModel)
+        fun notifyPublishedTicketSuccess(ticket: TicketUiModel)
 
         fun notifySeatUpdateFailed(message: String)
+
+        fun notifyPublishTicketFailed()
     }
 }

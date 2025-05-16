@@ -50,11 +50,12 @@ class ReservationDetailPresenter(
         val reservationInfo =
             ReservationInfo(
                 movie.title,
+                theater.name,
                 reservationDateTime,
                 reservationCount,
-            ).toUiModel(theater.name)
+            ).toUiModel()
 
-        view.notifyReservationConfirm(reservationInfo, seats.toUiModel(), theater.name)
+        view.notifyReservationConfirm(reservationInfo, seats.toUiModel())
     }
 
     private fun setupInitialView(dateTime: LocalDateTime?) {

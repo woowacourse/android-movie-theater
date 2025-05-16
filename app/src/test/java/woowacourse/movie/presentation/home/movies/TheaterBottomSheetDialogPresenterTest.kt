@@ -7,8 +7,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.R
 import woowacourse.movie.presentation.common.model.MovieUiModel
-import woowacourse.movie.presentation.common.model.PosterUiModel
 import woowacourse.movie.presentation.common.model.ScreeningPeriodUiModel
 import woowacourse.movie.presentation.common.model.TheaterUiModel
 import woowacourse.movie.presentation.common.model.TheatersUiModel
@@ -25,7 +25,7 @@ class TheaterBottomSheetDialogPresenterTest {
         MovieUiModel(
             id = 1,
             title = "해리포터",
-            poster = PosterUiModel.Url(""),
+            poster = R.drawable.harrypotter,
             screeningPeriod = ScreeningPeriodUiModel(LocalDate.now(), LocalDate.now().plusDays(2)),
             runningTime = 152,
         )

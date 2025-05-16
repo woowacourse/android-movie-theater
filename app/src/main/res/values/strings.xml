@@ -56,7 +56,37 @@
     <string name="invalid_tickets_dialog_message">예매 정보에 문제가 발생 했습니다.</string>
     <string name="invalid_tickets_dialog_positive">뒤로가기</string>
 
+    <!-- 예매 내역 화면 -->
+    <string name="reservation_history_info">%s | %s | %s</string>
+
+    <!-- 설정 화면 -->
+    <string name="setting_notification_title">푸시 알림 수신</string>
+    <string name="setting_notification_desc">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+
+    <!-- Notification Permission Dialog -->
+    <string name="notification_permission_dialog_title">알림 권한 필요</string>
+    <string name="notification_permission_dialog_message">알림 기능을 사용하려면 권한이 필요합니다.</string>
+    <string name="notification_permission_dialog_positive">설정으로 이동</string>"
+    <string name="notification_permission_dialog_negative">취소</string>"
+
+    <!-- Reservation Remind Notification -->
+    <string name="notification_title">예매 알림</string>
+    <string name="notification_description">%s %d분 후에 상영</string>
+    <string name="notification_channel_name">예매 알림</string>
+    <string name="notification_channel_description">예매 알림을 위한 채널"</string>
+
+    <string name="exact_alarm_permission_required_title">리마인드 알람 권한 필요</string>
+    <string name="exact_alarm_permission_required_message">정확한 알람 권한이 필요합니다.\n설정에서 권한을 허용해 주세요.\n</string>
+    <string name="exact_alarm_permission_required_positive">설정으로 이동</string>
+    <string name="exact_alarm_permission_required_negative">무시하기</string>
+    <string name="exact_alarm_permission_not_granted_message">"알림을 등록을 하지 않았습니다"</string>
+
     <!--  DateTime Format  -->
     <string name="movie_screening_period_format">yyyy.M.d</string>
     <string name="reservation_datetime_format">yyyy.M.d HH:mm</string>
+    <string name="reservation_date_format">yyyy.M.d</string>
+    <string name="reservation_time_format">HH:mm</string>
+
+    <!-- 예외 메시지 -->
+    <string name="publish_ticket_failed_message">이미 예매된 좌석입니다</string>
 </resources>

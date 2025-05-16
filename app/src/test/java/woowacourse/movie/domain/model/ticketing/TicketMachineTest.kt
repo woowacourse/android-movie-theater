@@ -30,6 +30,7 @@ class TicketMachineTest {
         fakeReservationInfo =
             ReservationInfo(
                 "해리 포터",
+                "선릉 극장",
                 LocalDateTime.of(2025, 4, 27, 20, 0),
                 ReservationCount(3),
             )
@@ -44,7 +45,7 @@ class TicketMachineTest {
 
     @Test
     fun `티켓 출판시 티켓 모음이 올바르게 생성된다`() {
-        val ticketBundle = ticketMachine.publishTickets(fakeReservationInfo, "선릉 극장")
+        val ticketBundle = ticketMachine.publishTickets(fakeReservationInfo)
 
         assertAll(
             { assertThat(ticketBundle.title).isEqualTo(fakeReservationInfo.title) },

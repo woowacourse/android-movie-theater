@@ -16,7 +16,7 @@ class MoviesFragment :
     BaseFragment<FragmentMoviesBinding>(R.layout.fragment_movies),
     MoviesContract.View,
     MovieViewHolder.OnMovieEventListener {
-    private val presenter: MoviesPresenter by lazy { MoviesPresenter(this) }
+    private val presenter: MoviesPresenter by lazy { MoviesPresenter.create(this) }
     private val moviesAdapter: MoviesAdapter by lazy { MoviesAdapter(this) }
 
     override fun onViewCreated(
