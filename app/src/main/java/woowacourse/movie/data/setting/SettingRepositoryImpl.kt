@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import androidx.core.content.edit
 
-class SettingStorageManagerImpl(context: Context) : SettingStorageManager {
+class SettingRepositoryImpl(context: Context) : SettingRepository {
     private val sharedPreferences = context.getSharedPreferences(KEY_SETTINGS, MODE_PRIVATE)
 
     override fun isNotificationEnabled(): Boolean {

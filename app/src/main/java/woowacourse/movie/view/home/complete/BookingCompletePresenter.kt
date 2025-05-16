@@ -1,6 +1,6 @@
 package woowacourse.movie.view.home.complete
 
-import woowacourse.movie.data.setting.SettingStorageManager
+import woowacourse.movie.data.setting.SettingRepository
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.domain.model.ticket.Ticket
 import java.time.LocalDateTime
@@ -10,7 +10,7 @@ import kotlin.concurrent.thread
 class BookingCompletePresenter(
     private val view: BookingCompleteContract.View,
     private val repository: TicketRepository,
-    private val manager: SettingStorageManager,
+    private val manager: SettingRepository,
     private val ticket: Ticket,
 ) : BookingCompleteContract.Presenter {
     override fun loadTicket() {

@@ -1,6 +1,6 @@
 package woowacourse.movie.data.setting
 
-interface SettingStorageManager {
+interface SettingRepository {
     fun isNotificationEnabled(): Boolean
 
     fun updateNotificationSetting(enabled: Boolean)

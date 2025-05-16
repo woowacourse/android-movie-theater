@@ -5,7 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.setting.SettingStorageManager
+import woowacourse.movie.data.setting.SettingRepository
 import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.seat.Col
@@ -21,7 +21,7 @@ class BookingCompletePresenterTest {
     private lateinit var view: BookingCompleteContract.View
     private lateinit var presenter: BookingCompletePresenter
     private lateinit var repository: TicketRepository
-    private lateinit var manager: SettingStorageManager
+    private lateinit var manager: SettingRepository
     val ticket =
         Ticket(
             "해리 포터와 마법사의 돌",

@@ -1,10 +1,10 @@
 package woowacourse.movie.view.setting
 
-import woowacourse.movie.data.setting.SettingStorageManager
+import woowacourse.movie.data.setting.SettingRepository
 
 class SettingPresenter(
     private val view: SettingContract.View,
-    private val manager: SettingStorageManager,
+    private val manager: SettingRepository,
 ) : SettingContract.Presenter {
     override fun loadSettings() {
         val notificationEnabled: Boolean = manager.isNotificationEnabled() && view.isNotificationPermitted()
