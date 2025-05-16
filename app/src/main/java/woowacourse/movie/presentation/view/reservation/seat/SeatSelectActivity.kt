@@ -30,7 +30,6 @@ class SeatSelectActivity :
     private val presenter = MovieApplication.provideSeatSelectPresenter(this)
     private val reservationDialog by lazy { ReservationDetailDialog() }
     private val seatViews: MutableMap<String, TextView> = mutableMapOf()
-    private val selectedSeatIds: MutableSet<String> = mutableSetOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +40,6 @@ class SeatSelectActivity :
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         setupSeatView(binding.tlSeat)
 
         val reservationInfo =
@@ -51,6 +49,12 @@ class SeatSelectActivity :
         setupConfirmButton()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        setupSavedData(savedInstanceState)
+        presenter.restoreButtonState()
+        super.onRestoreInstanceState(savedInstanceState)
     }
 
     override fun onResume() {
@@ -83,12 +87,10 @@ class SeatSelectActivity :
 
     override fun showSelectedSeat(seatId: String) {
         seatViews[seatId]?.setBackgroundResource(R.color.yellow)
-        selectedSeatIds.add(seatId)
     }
 
     override fun showDeselectedSeat(seatId: String) {
         seatViews[seatId]?.setBackgroundResource(R.color.white)
-        selectedSeatIds.remove(seatId)
     }
 
     override fun showTotalPrice(totalPrice: Int) {
@@ -190,14 +192,8 @@ class SeatSelectActivity :
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putStringArrayList(Extras.SeatsData.SEATS_KEY, ArrayList(selectedSeatIds))
+        presenter.saveSelectedSeats(outState)
         super.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        setupSavedData(savedInstanceState)
-        presenter.restoreButtonState()
     }
 
     override fun onSupportNavigateUp(): Boolean {

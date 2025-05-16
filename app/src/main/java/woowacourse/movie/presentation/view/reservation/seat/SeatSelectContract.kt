@@ -1,5 +1,6 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
+import android.os.Bundle
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 
 interface SeatSelectContract {
@@ -46,6 +47,8 @@ interface SeatSelectContract {
         fun saveReservation(reservationInfo: ReservationInfoUiModel)
 
         fun reservationConfirmed()
+
+        fun saveSelectedSeats(outState: Bundle)
 
         fun restoreSelectedSeats(seatIds: List<String>)
 

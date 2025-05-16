@@ -1,7 +1,9 @@
 package woowacourse.movie.presentation.view.reservation.seat
 
+import android.os.Bundle
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.repository.ReservationRepository
+import woowacourse.movie.presentation.Extras
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.toDomain
 import woowacourse.movie.presentation.model.toPresentation
@@ -59,6 +61,13 @@ class SeatSelectPresenter(
     override fun reservationConfirmed() {
         val reservationInfoUiModel = createReservationInfo()
         view.navigateCompleteWithAlarmCheck(reservationInfoUiModel)
+    }
+
+    override fun saveSelectedSeats(outState: Bundle) {
+        outState.putStringArrayList(
+            Extras.SeatsData.SEATS_KEY,
+            ArrayList(reservationInfo.seats.labels()),
+        )
     }
 
     override fun saveReservation(reservationInfo: ReservationInfoUiModel) {
