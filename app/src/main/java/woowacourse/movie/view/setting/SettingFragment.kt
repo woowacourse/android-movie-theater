@@ -14,8 +14,8 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.setting.SettingStorageManagerImpl
 import woowacourse.movie.databinding.FragmentSettingBinding
 
 class SettingFragment :
@@ -50,7 +50,8 @@ class SettingFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = SettingPresenter(this, SettingStorageManagerImpl(requireContext()))
+        val application = requireActivity().application as MovieApplication
+        presenter = SettingPresenter(this, application.settingStorageManager)
         presenter.loadSettings()
         binding.handler = this
     }

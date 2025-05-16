@@ -15,7 +15,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.setting.SettingStorageManagerImpl
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.ticket.Ticket
@@ -46,8 +45,14 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             return
         }
 
-        val repository = (application as MovieApplication).repository
-        presenter = BookingCompletePresenter(this, repository, SettingStorageManagerImpl(this), ticket)
+        val application = application as MovieApplication
+        presenter =
+            BookingCompletePresenter(
+                this,
+                application.repository,
+                application.settingStorageManager,
+                ticket,
+            )
         presenter.loadTicket()
 
         val caller: Class<*>? = intent.extras?.getSerializableCompat(KEY_CALLER)

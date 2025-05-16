@@ -7,8 +7,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.setting.SettingStorageManagerImpl
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.MainActivity
 import woowacourse.movie.view.MainActivity.Companion.CHANNEL_ID
@@ -29,8 +29,10 @@ class NotificationReceiver : BroadcastReceiver() {
             return
         }
 
-        val manager = SettingStorageManagerImpl(context)
-        if (manager.isNotificationEnabled()) sendMovieNotification(context, ticket)
+        val application = context.applicationContext as MovieApplication
+        if (application.settingStorageManager.isNotificationEnabled()) {
+            sendMovieNotification(context, ticket)
+        }
     }
 
     private fun sendMovieNotification(
