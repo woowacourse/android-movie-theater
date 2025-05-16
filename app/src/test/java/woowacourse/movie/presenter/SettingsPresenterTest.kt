@@ -21,6 +21,6 @@ class SettingsPresenterTest {
     fun `refreshChecked는 view의 setSwitchChecked를 호출한다`() {
         presenter.refreshChecked()
 
-        verify { view.setSwitchChecked() }
+        verify { view.setSwitchChecked(any()) }
     }
 }

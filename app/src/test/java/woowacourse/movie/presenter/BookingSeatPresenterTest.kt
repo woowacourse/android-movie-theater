@@ -4,9 +4,10 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.database.AppDatabase
+import woowacourse.movie.data.repository.BookedTicketRepository
 import woowacourse.movie.domain.model.movie.Headcount
 import woowacourse.movie.domain.model.movie.TicketType
+import woowacourse.movie.domain.model.seat.AlarmScheduler
 import woowacourse.movie.domain.model.theater.Seat
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.ui.seat.contract.BookingSeatContract
@@ -14,15 +15,17 @@ import woowacourse.movie.ui.seat.presenter.BookingSeatPresenter
 import java.time.LocalDateTime
 
 class BookingSeatPresenterTest {
-    private lateinit var appDatabase: AppDatabase
+    private lateinit var bookedTicketRepository: BookedTicketRepository
     private lateinit var view: BookingSeatContract.View
+    private lateinit var alarmScheduler: AlarmScheduler
     private lateinit var presenter: BookingSeatPresenter
 
     @BeforeEach
     fun setUp() {
-        appDatabase = mockk(relaxed = true)
+        bookedTicketRepository = mockk(relaxed = true)
+        alarmScheduler = mockk(relaxed = true)
         view = mockk(relaxed = true)
-        presenter = BookingSeatPresenter(view, appDatabase)
+        presenter = BookingSeatPresenter(view, bookedTicketRepository, alarmScheduler)
         presenter.loadState(
             theater = Theater(),
             headcount = Headcount(2),

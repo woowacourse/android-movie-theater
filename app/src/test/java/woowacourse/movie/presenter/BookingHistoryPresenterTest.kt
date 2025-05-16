@@ -4,20 +4,20 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.database.AppDatabase
+import woowacourse.movie.data.repository.BookedTicketRepository
 import woowacourse.movie.ui.history.contract.BookingHistoryContract
 import woowacourse.movie.ui.history.presenter.BookingHistoryPresenter
 
 class BookingHistoryPresenterTest {
-    private lateinit var appDatabase: AppDatabase
     private lateinit var presenter: BookingHistoryPresenter
     private lateinit var view: BookingHistoryContract.View
+    private lateinit var bookedTicketRepository: BookedTicketRepository
 
     @BeforeEach
     fun setUp() {
-        appDatabase = mockk(relaxed = true)
+        bookedTicketRepository = mockk(relaxed = true)
         view = mockk(relaxed = true)
-        presenter = BookingHistoryPresenter(view, appDatabase)
+        presenter = BookingHistoryPresenter(view, bookedTicketRepository)
     }
 
     @Test
