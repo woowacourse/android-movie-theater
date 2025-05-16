@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import woowacourse.movie.data.converter.TicketConverter
+import woowacourse.movie.data.dao.CinemaDao
 import woowacourse.movie.data.dao.TicketDao
 import woowacourse.movie.data.entity.CinemaEntity
 import woowacourse.movie.data.entity.SeatEntity
@@ -22,6 +23,8 @@ import woowacourse.movie.data.entity.TicketEntity
 @TypeConverters(TicketConverter::class)
 abstract class MovieTheaterDatabase : RoomDatabase() {
     abstract fun ticketDao(): TicketDao
+
+    abstract fun cinemaDao(): CinemaDao
 
     companion object {
         private const val DATABASE_NAME = "movie_theater_db"

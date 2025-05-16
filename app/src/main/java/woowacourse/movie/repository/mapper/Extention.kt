@@ -1,8 +1,9 @@
 package woowacourse.movie.repository.mapper
 
-import woowacourse.movie.data.dummy.DummyCinema
+import woowacourse.movie.data.entity.CinemaEntity
 import woowacourse.movie.data.entity.TicketEntity
 import woowacourse.movie.data.entity.WholeTicketEntity
+import woowacourse.movie.domain.model.Cinema
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Ticket
 
@@ -17,7 +18,7 @@ fun WholeTicketEntity.toTicket(): Ticket {
             )
         },
         ticket.reservationCount,
-        DummyCinema.dummyCinemas.find { it.name == ticket.cinemaName }!!,
+        cinema.toCinema(),
     )
 }
 
@@ -26,7 +27,20 @@ fun Ticket.toEntity(): TicketEntity {
         title = title,
         showTime = showTime,
         reservationCount = reservationCount,
-        cinemaName = cinema.name,
+        cinemaId = cinema.id,
         price = totalPrice(),
+    )
+}
+
+fun Cinema.toEntity(): CinemaEntity {
+    return CinemaEntity(
+        cinemaName = name,
+    )
+}
+
+fun CinemaEntity.toCinema(): Cinema {
+    return Cinema(
+        id = id,
+        name = cinemaName,
     )
 }

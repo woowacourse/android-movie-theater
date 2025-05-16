@@ -12,6 +12,6 @@ data class TicketEntity(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "show_time") val showTime: LocalDateTime,
     @ColumnInfo(name = "reservation_count") val reservationCount: ReservationCount,
-    @ColumnInfo(name = "cinema_name") val cinemaName: String,
+    @ColumnInfo(name = "cinema_id") val cinemaId: Int,
     @ColumnInfo(name = "total_price") val price: Int,
 )
