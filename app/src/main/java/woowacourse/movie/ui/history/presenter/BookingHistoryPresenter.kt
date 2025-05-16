@@ -7,8 +7,8 @@ import woowacourse.movie.ui.history.contract.BookingHistoryContract
 import kotlin.concurrent.thread
 
 class BookingHistoryPresenter(
-    val bookingHistoryView: BookingHistoryContract.View,
-    val appDatabase: AppDatabase,
+    private val bookingHistoryView: BookingHistoryContract.View,
+    private val appDatabase: AppDatabase,
 ) : BookingHistoryContract.Presenter {
     private lateinit var bookedTickets: List<BookedTicket>
 
