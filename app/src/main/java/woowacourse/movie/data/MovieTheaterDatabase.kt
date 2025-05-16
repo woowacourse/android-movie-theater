@@ -46,7 +46,6 @@ abstract class MovieTheaterDatabase : RoomDatabase() {
                                         MovieTheaterDatabase::class.java,
                                         DATABASE_NAME,
                                     )
-                                        .allowMainThreadQueries()
                                         .build()
                                 database = instance
                             }

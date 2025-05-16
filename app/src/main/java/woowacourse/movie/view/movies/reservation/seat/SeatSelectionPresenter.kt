@@ -5,6 +5,7 @@ import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.SeatFactory
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.repository.TicketRepository
+import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
@@ -51,7 +52,9 @@ class SeatSelectionPresenter(
     }
 
     override fun completeReservation() {
-        repository.save(ticket)
+        thread {
+            repository.save(ticket)
+        }
         view.navigateToResult(ticket, ticket.showTime.minusMinutes(30))
     }
 }

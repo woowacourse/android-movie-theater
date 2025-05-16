@@ -5,6 +5,7 @@ import woowacourse.movie.data.MovieTheaterDatabase
 import woowacourse.movie.data.dao.TicketDao
 import woowacourse.movie.data.dummy.DummyCinema
 import woowacourse.movie.repository.mapper.toEntity
+import kotlin.concurrent.thread
 
 object DatabaseProvider {
     fun ticketDao(context: Context): TicketDao {
@@ -14,9 +15,11 @@ object DatabaseProvider {
 
     private fun initData(context: Context) {
         val cinemaDao = db(context.applicationContext).cinemaDao()
-        cinemaDao.save(
-            DummyCinema.dummyCinemas.map { it.toEntity() },
-        )
+        thread {
+            cinemaDao.save(
+                DummyCinema.dummyCinemas.map { it.toEntity() },
+            )
+        }.join()
     }
 
     private fun db(context: Context): MovieTheaterDatabase {
