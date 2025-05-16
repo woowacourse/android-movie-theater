@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.database.AppDatabase
+import woowacourse.movie.data.repository.MovieRepositoryImpl
 import woowacourse.movie.databinding.FragmentMovieListBinding
 import woowacourse.movie.domain.model.item.MovieListItem
 import woowacourse.movie.ui.movielist.contract.MovieListContract
@@ -16,9 +17,10 @@ import woowacourse.movie.ui.movielist.presenter.MovieListPresenter
 class MovieListFragment :
     Fragment(),
     MovieListContract.View {
+    private val database by lazy { (requireActivity().application as MovieApplication).database }
     private lateinit var binding: FragmentMovieListBinding
     private val movieListPresenter by lazy {
-        MovieListPresenter(this, AppDatabase.getInstance(requireContext()))
+        MovieListPresenter(this, MovieRepositoryImpl(database.movieDao()))
     }
     private val adapter: MovieAdapter by lazy {
         MovieAdapter(

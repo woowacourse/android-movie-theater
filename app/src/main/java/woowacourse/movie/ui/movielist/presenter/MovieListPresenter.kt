@@ -1,8 +1,8 @@
 package woowacourse.movie.ui.movielist.presenter
 
-import woowacourse.movie.data.database.AppDatabase
 import woowacourse.movie.data.dummy.DUMMY_ADS
 import woowacourse.movie.data.mapper.MovieMapper
+import woowacourse.movie.data.repository.MovieRepository
 import woowacourse.movie.domain.model.item.MovieListItem.AdItem
 import woowacourse.movie.domain.model.item.MovieListItem.Companion.movieListItems
 import woowacourse.movie.domain.model.item.MovieListItem.MovieItem
@@ -11,7 +11,7 @@ import kotlin.concurrent.thread
 
 class MovieListPresenter(
     private val movieListView: MovieListContract.View,
-    private val appDatabase: AppDatabase,
+    private val movieRepository: MovieRepository,
 ) : MovieListContract.Presenter {
     private lateinit var movies: List<MovieItem>
 
@@ -23,7 +23,7 @@ class MovieListPresenter(
 
     private fun fetchMovies() {
         thread {
-            movies = appDatabase.movieDao().getAll().map { MovieItem(MovieMapper.toModel(it)) }
+            movies = movieRepository.getAll().map { MovieItem(MovieMapper.toModel(it)) }
         }.join()
     }
 

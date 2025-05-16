@@ -18,8 +18,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.databinding.DataBindingUtil
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.database.AppDatabase
+import woowacourse.movie.data.repository.BookedTicketRepositoryImpl
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
 import woowacourse.movie.domain.model.movie.Headcount
 import woowacourse.movie.domain.model.movie.TicketType
@@ -36,10 +37,14 @@ import java.time.LocalDateTime
 class BookingSeatActivity :
     AppCompatActivity(),
     BookingSeatContract.View {
-    private lateinit var binding: ActivityBookingSeatBinding
+    private val database = (application as MovieApplication).database
     private val bookingSeatPresenter by lazy {
-        BookingSeatPresenter(this, AppDatabase.getInstance(this))
+        BookingSeatPresenter(
+            this,
+            BookedTicketRepositoryImpl(database.bookedTicketDao()),
+        )
     }
+    private lateinit var binding: ActivityBookingSeatBinding
 
     private val seatTextViews: MutableMap<String, TextView> = mutableMapOf()
     private val confirmButton: Button by lazy { binding.btnConfirm }

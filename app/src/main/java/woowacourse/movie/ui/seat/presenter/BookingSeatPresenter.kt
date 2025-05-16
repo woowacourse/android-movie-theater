@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.seat.presenter
 
-import woowacourse.movie.data.database.AppDatabase
 import woowacourse.movie.data.mapper.BookedTicketMapper
+import woowacourse.movie.data.repository.BookedTicketRepository
 import woowacourse.movie.domain.model.movie.Headcount
 import woowacourse.movie.domain.model.theater.BookedTicket
 import woowacourse.movie.domain.model.theater.Seat
@@ -13,7 +13,7 @@ import kotlin.concurrent.thread
 
 class BookingSeatPresenter(
     private val bookingSeatView: BookingSeatContract.View,
-    private val appDatabase: AppDatabase,
+    private val bookedTicketRepository: BookedTicketRepository,
 ) : BookingSeatContract.Presenter {
     private lateinit var headcount: Headcount
     private lateinit var movieTitle: String
@@ -74,8 +74,7 @@ class BookingSeatPresenter(
         thread {
             val bookedTicket =
                 BookedTicket(movieTitle, headcount, bookedDateTime, seats, theater.name)
-            appDatabase
-                .bookedTicketDao()
+            bookedTicketRepository
                 .insertBookedTicket(BookedTicketMapper.toEntity(bookedTicket))
         }
     }

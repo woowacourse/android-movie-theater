@@ -14,13 +14,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
-import woowacourse.movie.data.database.AppDatabase
-import woowacourse.movie.data.dummy.DUMMY_ENTITY_MOVIES
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.ui.history.view.BookingHistoryFragment
 import woowacourse.movie.ui.movielist.view.MovieListFragment
 import woowacourse.movie.ui.settings.view.SettingsFragment
-import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -29,9 +26,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = DataBindingUtil.setContentView(this@MainActivity, R.layout.activity_main)
-        thread {
-            AppDatabase.getInstance(this).movieDao().insertAll(*DUMMY_ENTITY_MOVIES)
-        }.join()
         applyWindowInsets()
 
         if (savedInstanceState == null) {

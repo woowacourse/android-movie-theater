@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.data.database.AppDatabase
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.data.repository.BookedTicketRepositoryImpl
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.theater.BookedTicket
@@ -16,8 +16,9 @@ import woowacourse.movie.ui.history.presenter.BookingHistoryPresenter
 class BookingHistoryFragment :
     Fragment(),
     BookingHistoryContract.View {
+    private val database by lazy { (requireActivity().application as MovieApplication).database }
     private val bookingHistoryPresenter: BookingHistoryPresenter by lazy {
-        BookingHistoryPresenter(this, BookedTicketRepositoryImpl(AppDatabase.getInstance(requireContext()).bookedTicketDao()))
+        BookingHistoryPresenter(this, BookedTicketRepositoryImpl(database.bookedTicketDao()))
     }
     private var _binding: FragmentBookingHistoryBinding? = null
     val binding get() = _binding!!
