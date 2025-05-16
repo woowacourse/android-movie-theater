@@ -10,7 +10,7 @@ interface BookingHistoryContract {
     }
 
     interface Presenter {
-        fun loadTickets(tickets: List<Ticket>)
+        fun loadTickets()
 
         fun selectHistory(ticket: Ticket)
     }

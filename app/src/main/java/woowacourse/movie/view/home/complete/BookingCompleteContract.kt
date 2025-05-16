@@ -16,5 +16,7 @@ interface BookingCompleteContract {
         fun loadTicket()
 
         fun loadNotificationInfo(ticket: Ticket)
+
+        fun addToHistory(ticket: Ticket)
     }
 }

@@ -1,14 +1,17 @@
 package woowacourse.movie.view.home.complete
 
 import woowacourse.movie.data.setting.SettingStorageManager
+import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.domain.model.ticket.Ticket
 import java.time.LocalDateTime
 import java.time.ZoneId
+import kotlin.concurrent.thread
 
 class BookingCompletePresenter(
     private val view: BookingCompleteContract.View,
-    private val ticket: Ticket,
+    private val repository: TicketRepository,
     private val manager: SettingStorageManager,
+    private val ticket: Ticket,
 ) : BookingCompleteContract.Presenter {
     override fun loadTicket() {
         view.showTicket(ticket)
@@ -26,6 +29,12 @@ class BookingCompletePresenter(
                 .toInstant()
                 .toEpochMilli()
         view.setNotification(ticket, notificationTime)
+    }
+
+    override fun addToHistory(ticket: Ticket) {
+        thread {
+            repository.insert(ticket)
+        }
     }
 
     companion object {

@@ -6,17 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.room.Room
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.ticket.TicketDatabase
-import woowacourse.movie.data.ticket.TicketEntity
-import woowacourse.movie.data.ticket.TicketEntity.Companion.TICKET_TABLE_NAME
-import woowacourse.movie.data.ticket.toDomain
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.history.adapter.HistoryAdapter
 import woowacourse.movie.view.home.complete.BookingCompleteActivity
-import kotlin.concurrent.thread
 
 class BookingHistoryFragment : Fragment(R.layout.fragment_booking_history), BookingHistoryContract.View, BookingHistoryEventHandler {
     private var _binding: FragmentBookingHistoryBinding? = null
@@ -37,25 +32,16 @@ class BookingHistoryFragment : Fragment(R.layout.fragment_booking_history), Book
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-
         val decoration = DividerItemDecoration(binding.root.context, DividerItemDecoration.VERTICAL)
         binding.rvBookingHistory.addItemDecoration(decoration)
 
-        presenter = BookingHistoryPresenter(this)
-        val db =
-            Room.databaseBuilder(
-                binding.root.context,
-                TicketDatabase::class.java,
-                TICKET_TABLE_NAME,
-            ).build()
-        thread {
-            val tickets = db.ticketDao().getAll().map(TicketEntity::toDomain)
-            presenter.loadTickets(tickets)
-        }
+        val repository = (requireActivity().application as MovieApplication).repository
+        presenter = BookingHistoryPresenter(this, repository)
+        presenter.loadTickets()
     }
 
     override fun showTickets(tickets: List<Ticket>) {
-        activity?.runOnUiThread {
+        requireActivity().runOnUiThread {
             binding.rvBookingHistory.adapter = HistoryAdapter(tickets, this)
         }
     }

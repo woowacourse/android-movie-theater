@@ -6,6 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.setting.SettingStorageManager
+import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.seat.Col
 import woowacourse.movie.domain.model.seat.Row
@@ -19,6 +20,7 @@ import java.time.LocalTime
 class BookingCompletePresenterTest {
     private lateinit var view: BookingCompleteContract.View
     private lateinit var presenter: BookingCompletePresenter
+    private lateinit var repository: TicketRepository
     private lateinit var manager: SettingStorageManager
     val ticket =
         Ticket(
@@ -35,7 +37,8 @@ class BookingCompletePresenterTest {
     fun setUp() {
         view = mockk(relaxed = true)
         manager = mockk()
-        presenter = BookingCompletePresenter(view, ticket, manager)
+        repository = mockk()
+        presenter = BookingCompletePresenter(view, repository, manager, ticket)
     }
 
     @Test

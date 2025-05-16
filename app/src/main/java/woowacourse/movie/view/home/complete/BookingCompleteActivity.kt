@@ -13,12 +13,9 @@ import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.room.Room
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
 import woowacourse.movie.data.setting.SettingStorageManagerImpl
-import woowacourse.movie.data.ticket.TicketDatabase
-import woowacourse.movie.data.ticket.TicketEntity.Companion.TICKET_TABLE_NAME
-import woowacourse.movie.data.ticket.toEntity
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.ticket.Ticket
@@ -30,7 +27,6 @@ import woowacourse.movie.view.util.getSerializableCompat
 import woowacourse.movie.view.util.showToast
 import java.time.LocalDate
 import java.time.LocalTime
-import kotlin.concurrent.thread
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
     private lateinit var binding: ActivityBookingCompleteBinding
@@ -50,12 +46,13 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             return
         }
 
-        presenter = BookingCompletePresenter(this, ticket, SettingStorageManagerImpl(this))
+        val repository = (application as MovieApplication).repository
+        presenter = BookingCompletePresenter(this, repository, SettingStorageManagerImpl(this), ticket)
         presenter.loadTicket()
 
         val caller: Class<*>? = intent.extras?.getSerializableCompat(KEY_CALLER)
         if (caller == SeatActivity::class.java) {
-            addToHistory(ticket)
+            presenter.addToHistory(ticket)
             presenter.loadNotificationInfo(ticket)
         }
 
@@ -81,19 +78,6 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             time,
             pendingIntent,
         )
-    }
-
-    private fun addToHistory(ticket: Ticket) {
-        val db =
-            Room.databaseBuilder(
-                applicationContext,
-                TicketDatabase::class.java,
-                TICKET_TABLE_NAME,
-            ).build()
-
-        thread {
-            db.ticketDao().insert(ticket.toEntity())
-        }
     }
 
     private fun initView() {

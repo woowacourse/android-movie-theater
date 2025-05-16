@@ -1,9 +1,11 @@
 package woowacourse.movie.presenter
 
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.ticket.TicketRepository
 import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.seat.Col
 import woowacourse.movie.domain.model.seat.Row
@@ -17,11 +19,13 @@ import java.time.LocalTime
 class BookingHistoryPresenterTest {
     private lateinit var view: BookingHistoryContract.View
     private lateinit var presenter: BookingHistoryPresenter
+    private lateinit var repository: TicketRepository
 
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = BookingHistoryPresenter(view)
+        repository = mockk()
+        presenter = BookingHistoryPresenter(view, repository)
     }
 
     @Test
@@ -39,9 +43,10 @@ class BookingHistoryPresenterTest {
                     12000,
                 ),
             )
+        every { repository.getAll() } returns tickets
 
         // when
-        presenter.loadTickets(tickets)
+        presenter.loadTickets()
 
         // then
         verify { view.showTickets(tickets) }
