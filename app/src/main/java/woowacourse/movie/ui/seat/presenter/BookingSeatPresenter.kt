@@ -3,6 +3,7 @@ package woowacourse.movie.ui.seat.presenter
 import woowacourse.movie.data.mapper.BookedTicketMapper
 import woowacourse.movie.data.repository.BookedTicketRepository
 import woowacourse.movie.domain.model.movie.Headcount
+import woowacourse.movie.domain.model.seat.AlarmScheduler
 import woowacourse.movie.domain.model.theater.BookedTicket
 import woowacourse.movie.domain.model.theater.Seat
 import woowacourse.movie.domain.model.theater.Seats
@@ -14,6 +15,7 @@ import kotlin.concurrent.thread
 class BookingSeatPresenter(
     private val bookingSeatView: BookingSeatContract.View,
     private val bookedTicketRepository: BookedTicketRepository,
+    private val alarmScheduler: AlarmScheduler,
 ) : BookingSeatContract.Presenter {
     private lateinit var headcount: Headcount
     private lateinit var movieTitle: String
@@ -72,21 +74,26 @@ class BookingSeatPresenter(
 
     override fun insertBookedTicket() {
         thread {
-            val bookedTicket =
-                BookedTicket(movieTitle, headcount, bookedDateTime, seats, theater.name)
             bookedTicketRepository
-                .insertBookedTicket(BookedTicketMapper.toEntity(bookedTicket))
+                .insertBookedTicket(BookedTicketMapper.toEntity(bookedTicket()))
         }
     }
 
     override fun completeBookingSeat() {
-        val bookedTicket = BookedTicket(movieTitle, headcount, bookedDateTime, seats, theater.name)
-        bookingSeatView.startBookingCompleteActivity(bookedTicket)
+        bookingSeatView.startBookingCompleteActivity(bookedTicket())
     }
 
     override fun postNotification() {
         if (notificationSetting == false) return
-        val bookedTicket = BookedTicket(movieTitle, headcount, bookedDateTime, seats, theater.name)
-        bookingSeatView.setAlarmManager(bookedTicket)
+        alarmScheduler.scheduleBookingAlarm(bookedTicket())
     }
+
+    private fun bookedTicket(): BookedTicket =
+        BookedTicket(
+            movieName = movieTitle,
+            headcount = headcount,
+            dateTime = bookedDateTime,
+            seats = seats,
+            theaterName = theater.name,
+        )
 }

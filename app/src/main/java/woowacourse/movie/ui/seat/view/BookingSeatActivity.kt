@@ -24,6 +24,7 @@ import woowacourse.movie.data.repository.BookedTicketRepositoryImpl
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
 import woowacourse.movie.domain.model.movie.Headcount
 import woowacourse.movie.domain.model.movie.TicketType
+import woowacourse.movie.domain.model.seat.AndroidAlarmScheduler
 import woowacourse.movie.domain.model.theater.BookedTicket
 import woowacourse.movie.domain.model.theater.Seat
 import woowacourse.movie.domain.model.theater.Theater
@@ -42,6 +43,7 @@ class BookingSeatActivity :
         BookingSeatPresenter(
             this,
             BookedTicketRepositoryImpl(database.bookedTicketDao()),
+            AndroidAlarmScheduler(this),
         )
     }
     private lateinit var binding: ActivityBookingSeatBinding
