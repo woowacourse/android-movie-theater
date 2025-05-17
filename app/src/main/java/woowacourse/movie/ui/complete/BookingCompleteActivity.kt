@@ -1,56 +1,29 @@
 package woowacourse.movie.ui.complete
 
-import android.Manifest
-import android.app.AlertDialog
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import java.time.LocalDateTime
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
-import woowacourse.movie.notification.MovieReminderReceiver
-import woowacourse.movie.utils.AlarmManagerCompat
 import woowacourse.movie.utils.StringFormatter
-import woowacourse.movie.utils.intentSerializable
-import java.time.LocalDateTime
-import java.time.ZoneId
 
 class BookingCompleteActivity :
     AppCompatActivity(),
     BookingCompleteContract.View {
     private val bookingCompletePresenter = BookingCompletePresenter(this)
     private lateinit var binding: ActivityBookingCompleteBinding
-    private val sharedPrefs: SharedPreferences by lazy {
-        this.getSharedPreferences(getString(R.string.preference_key), MODE_PRIVATE)
-    }
-    private val isFirstNotificationRequest: Boolean
-        get() =
-            sharedPrefs.getBoolean(
-                getString(R.string.preference_is_first_notification_request),
-                true,
-            )
-    private val isEnablePostNotification: Boolean
-        get() = sharedPrefs.getBoolean(getString(R.string.preference_post_notification), true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,19 +37,35 @@ class BookingCompleteActivity :
         applyWindowInsets()
         setOnBackPressedCallback()
 
-        bookingCompletePresenter.loadBookedTicket(restoreBookedTicket())
+        bookingCompletePresenter.loadBookedTicket(restoreBookedTicketId())
     }
 
-    override fun showMovieTitle(movieTitle: String) {
+    override fun showBookedTicket(bookedTicket: BookedTicket) {
+        showMovieTitle(bookedTicket.movieTitle)
+        showScreeningDateTime(bookedTicket.movieSchedule.screeningDateTime)
+        showDetailInfos(
+            bookedTicket.headcount,
+            bookedTicket.movieSchedule.seats,
+            bookedTicket.theaterName,
+        )
+        showTotalPrice(bookedTicket.totalPrice())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        finish()
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showMovieTitle(movieTitle: String) {
         binding.movieTitle = movieTitle
     }
 
-    override fun showScreeningDateTime(dateTime: LocalDateTime) {
+    private fun showScreeningDateTime(dateTime: LocalDateTime) {
         binding.dateTime = dateTime
         binding.stringFormatter = StringFormatter
     }
 
-    override fun showDetailInfos(
+    private fun showDetailInfos(
         headcount: Headcount,
         seats: Seats,
         theaterName: String,
@@ -91,130 +80,9 @@ class BookingCompleteActivity :
             )
     }
 
-    override fun showTotalPrice(totalPrice: Int) {
+    private fun showTotalPrice(totalPrice: Int) {
         binding.totalPrice = totalPrice
         binding.stringFormatter = StringFormatter
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        finish()
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun handlePermission(bookedTicket: BookedTicket) {
-        requestPostNotificationPermission()
-
-        if (hasPostNotification()) {
-            scheduleNotification(bookedTicket)
-        }
-    }
-
-    private fun requestPostNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val isGranted =
-                ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.POST_NOTIFICATIONS,
-                ) == PackageManager.PERMISSION_GRANTED
-
-            if (!isGranted) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    showRecommendPushNotification()
-                } else { // 최초 요청 || 다시 묻지 않음
-                    if (isFirstNotificationRequest) {
-                        showNotificationDialog(Manifest.permission.POST_NOTIFICATIONS)
-                        sharedPrefs.edit {
-                            putBoolean(
-                                getString(R.string.preference_is_first_notification_request),
-                                false,
-                            )
-                        }
-                    } else {
-                        showRecommendSettingDialog()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun showRecommendPushNotification() {
-        Toast.makeText(
-            this,
-            getString(R.string.recommend_push_notification),
-            Toast.LENGTH_LONG,
-        ).show()
-    }
-
-    private fun showNotificationDialog(permissionName: String) {
-        AlertDialog
-            .Builder(this)
-            .setTitle(getString(R.string.dialog_notification_title))
-            .setMessage(getString(R.string.dialog_notification_message))
-            .setPositiveButton(getString(R.string.dialog_notification_positive_btn)) { _, _ ->
-                requestPermissionLauncher.launch(permissionName)
-            }
-            .setNegativeButton(getString(R.string.dialog_notification_negative_btn)) { dialog, _ ->
-                dialog.dismiss()
-                showRecommendPushNotification()
-            }.setCancelable(false)
-            .show()
-    }
-
-    private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission(),
-        ) { isChecked ->
-            if (isChecked) {
-                AlarmManagerCompat.requestScheduleExactPermission(this)
-            }
-        }
-
-    private fun showRecommendSettingDialog() {
-        AlertDialog
-            .Builder(this)
-            .setTitle(getString(R.string.dialog_notification_title_for_recommend))
-            .setMessage(getString(R.string.dialog_notification_message_for_recommend))
-            .setPositiveButton(getString(R.string.dialog_notification_positive_btn_for_recommend)) { _, _ ->
-                val intent =
-                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                        data = Uri.fromParts("package", packageName, null)
-                    }
-                startActivity(intent)
-            }
-            .setNegativeButton(getString(R.string.dialog_notification_negative_btn_for_recommend)) { dialog, _ ->
-                dialog.dismiss()
-                showRecommendPushNotification()
-            }.setCancelable(false)
-            .show()
-    }
-
-    private fun hasPostNotification(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS,
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            isEnablePostNotification
-        }
-    }
-
-    private fun scheduleNotification(bookedTicket: BookedTicket) {
-        val triggerTime = bookedTicket.movieSchedule.screeningDateTime.minusMinutes(30L)
-        val triggerAtMillis =
-            triggerTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
-        val requestCode = bookedTicket.hashCode()
-        val intent = MovieReminderReceiver.newIntent(this, bookedTicket)
-        val pendingIntent =
-            PendingIntent.getBroadcast(
-                this,
-                requestCode,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-            )
-
-        AlarmManagerCompat.setExact(this, triggerAtMillis, pendingIntent)
     }
 
     private fun applyWindowInsets() {
@@ -225,7 +93,7 @@ class BookingCompleteActivity :
         }
     }
 
-    private fun restoreBookedTicket(): BookedTicket = intent.intentSerializable(EXTRA_BOOKED_TICKET, BookedTicket::class.java)!!
+    private fun restoreBookedTicketId(): Long = intent.getLongExtra(EXTRA_BOOKED_TICKET_ID, 0L)
 
     private fun setOnBackPressedCallback() {
         onBackPressedDispatcher.addCallback(
@@ -241,15 +109,15 @@ class BookingCompleteActivity :
     private fun Seat.toText(): String = Char(row + ASCII_A.code) + (col + 1).toString()
 
     companion object {
-        private const val EXTRA_BOOKED_TICKET = "EXTRA_BOOKED_TICKET"
+        private const val EXTRA_BOOKED_TICKET_ID = "EXTRA_BOOKED_TICKET_ID"
         private const val ASCII_A = 'A'
 
         fun newIntent(
             context: Context,
-            bookedTicket: BookedTicket,
+            bookedTicketId:Long,
         ): Intent =
             Intent(context, BookingCompleteActivity::class.java).apply {
-                putExtra(EXTRA_BOOKED_TICKET, bookedTicket)
+                putExtra(EXTRA_BOOKED_TICKET_ID, bookedTicketId)
             }
     }
 }
