@@ -17,30 +17,33 @@ class NotificationReceiver : BroadcastReceiver() {
         val isNotificationEnabled = sharedPref.getBoolean("notification", true)
 
         val title = intent.getStringExtra("title") ?: return
-        val reservationId = intent.getLongExtra("reservationId", -1)
+        val reservationId = intent.getLongExtra("reservationId", DEFAULT_NOTIFICATION_ID)
 
-        if (!isNotificationEnabled) {
-            return
-        }
+        if (!isNotificationEnabled) return
 
         val notifyIntent = MovieBookedActivity.newIntent(context, reservationId)
 
         val pendingIntent =
             PendingIntent.getActivity(
                 context,
-                0,
+                reservationId.toInt(),
                 notifyIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
 
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notification =
-            NotificationCompat.Builder(context, "channel_id")
+            NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(context.getString(R.string.push_reservation_title))
                 .setContentText(context.getString(R.string.push_reservation_text, title))
                 .setSmallIcon(R.drawable.baseline_movie)
                 .setContentIntent(pendingIntent)
                 .build()
-        notificationManager.notify(1, notification)
+        notificationManager.notify(reservationId.toInt(), notification)
+    }
+
+    companion object {
+        private const val CHANNEL_ID = "channel_id"
+        private const val DEFAULT_NOTIFICATION_ID = 1L
     }
 }
