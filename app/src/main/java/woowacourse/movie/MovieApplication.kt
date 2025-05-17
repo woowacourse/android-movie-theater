@@ -5,7 +5,13 @@ import woowacourse.movie.data.SettingPreference
 import woowacourse.movie.data.database.MovieDatabase
 
 class MovieApplication : Application() {
-    init {
+    override fun onCreate() {
+        super.onCreate()
+
+        initRepository()
+    }
+
+    private fun initRepository() {
         val settingRepository = SettingPreference(applicationContext)
         RepositoryProvider.initSettingRepository(settingRepository)
 
