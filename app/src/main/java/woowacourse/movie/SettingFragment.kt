@@ -27,15 +27,19 @@ class SettingFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPreference = requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
+        sharedPreference = requireContext().getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
         val switch = view.findViewById<Switch>(R.id.switch_push)
-        switch.isChecked = sharedPreference.getBoolean("notification", false)
+        switch.isChecked = sharedPreference.getBoolean(KEY_NOTIFICATION, false)
 
         switch.setOnCheckedChangeListener { _, isChecked ->
             sharedPreference.edit(commit = true) {
-                putBoolean("notification", isChecked)
-                println(isChecked)
+                putBoolean(KEY_NOTIFICATION, isChecked)
             }
         }
+    }
+
+    companion object {
+        private const val PREFERENCE_NAME = "settings"
+        private const val KEY_NOTIFICATION = "notification"
     }
 }
