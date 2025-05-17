@@ -1,6 +1,5 @@
 package woowacourse.movie.ticket
 
-import android.content.Context
 import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.mapper.toDomain
 import woowacourse.movie.mapper.toUiModel
@@ -9,13 +8,13 @@ import kotlin.concurrent.thread
 
 class TicketListPresenter(
     private val view: TicketListContract.View,
+    private val movieDatabase: MovieDatabase,
 ) : TicketListContract.Presenter {
     private val reservations: MutableList<Ticket> = mutableListOf()
 
-    override fun initializeData(context: Context) {
-        val db = MovieDatabase.getDatabase(context)
+    override fun initializeData() {
         thread {
-            val tickets = db.TicketDao().getAllTickets()
+            val tickets = movieDatabase.TicketDao().getAllTickets()
             reservations.addAll(tickets.map { it.toDomain() })
         }.join()
         view.setUpReservationList(reservations.map { it.toUiModel() })

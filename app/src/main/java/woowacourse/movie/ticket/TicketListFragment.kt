@@ -9,12 +9,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.R
+import woowacourse.movie.RepositoryProvider
 import woowacourse.movie.booking.complete.BookingCompleteActivity
 import woowacourse.movie.databinding.FragmentTicketListBinding
 import woowacourse.movie.ui.model.TicketUiModel
 
 class TicketListFragment : Fragment(), TicketListContract.View {
-    private val presenter = TicketListPresenter(this)
+    private val presenter = TicketListPresenter(this, RepositoryProvider.movieDatabase)
     private var _binding: FragmentTicketListBinding? = null
     private val binding get() = _binding!!
 
@@ -33,7 +34,7 @@ class TicketListFragment : Fragment(), TicketListContract.View {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter.initializeData(requireContext().applicationContext)
+        presenter.initializeData()
     }
 
     override fun setUpReservationList(reservations: List<TicketUiModel>) {

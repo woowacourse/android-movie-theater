@@ -1,6 +1,5 @@
 package woowacourse.movie.ticket
 
-import android.content.Context
 import woowacourse.movie.ui.model.TicketUiModel
 
 interface TicketListContract {
@@ -9,6 +8,6 @@ interface TicketListContract {
     }
 
     interface Presenter {
-        fun initializeData(context: Context)
+        fun initializeData()
     }
 }
