@@ -46,9 +46,9 @@ class MovieBookingActivity : AppCompatActivity() {
     }
 
     private fun requestAlarmPermission() {
-        if (hasPermission(Manifest.permission.POST_NOTIFICATIONS)
-            && !AlarmManagerCompat.hasExactAlarmPermission(this)
-            && StorageProvider.isFirstExactAlarmPermissionRequest
+        if (hasPermission(Manifest.permission.POST_NOTIFICATIONS) &&
+            !AlarmManagerCompat.hasExactAlarmPermission(this) &&
+            StorageProvider.isFirstExactAlarmPermissionRequest
         ) {
             AlarmManagerCompat.requestScheduleExactPermission(this)
         }
@@ -113,13 +113,17 @@ class MovieBookingActivity : AppCompatActivity() {
 
     private fun showPushNotificationSuccess() {
         Toast.makeText(
-            this, getString(R.string.push_notification_success), Toast.LENGTH_SHORT
+            this,
+            getString(R.string.push_notification_success),
+            Toast.LENGTH_SHORT,
         ).show()
     }
 
     private fun showPushNotificationRecommend() {
         Toast.makeText(
-            this, getString(R.string.recommend_push_notification), Toast.LENGTH_SHORT
+            this,
+            getString(R.string.recommend_push_notification),
+            Toast.LENGTH_SHORT,
         ).show()
     }
 

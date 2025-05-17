@@ -15,10 +15,11 @@ object StorageProvider {
     }
 
     val isFirstPostNotificationPermissionRequest: Boolean
-        get() = sharedPreferences.getBoolean(
-            IS_FIRST_NOTIFICATION_REQUEST_KEY,
-            true
-        )
+        get() =
+            sharedPreferences.getBoolean(
+                IS_FIRST_NOTIFICATION_REQUEST_KEY,
+                true,
+            )
 
     fun setFirstPostNotificationPermissionRequestState(isFirst: Boolean) {
         sharedPreferences.edit {
@@ -27,10 +28,11 @@ object StorageProvider {
     }
 
     val hasPushNotificationPermission: Boolean
-        get() = sharedPreferences.getBoolean(
-            HAS_PUSH_NOTIFICATION_PERMISSION,
-            false
-        )
+        get() =
+            sharedPreferences.getBoolean(
+                HAS_PUSH_NOTIFICATION_PERMISSION,
+                false,
+            )
 
     fun setPushNotificationPermissionState(hasPermission: Boolean) {
         sharedPreferences.edit {
@@ -39,10 +41,11 @@ object StorageProvider {
     }
 
     val isFirstExactAlarmPermissionRequest: Boolean
-        get() = sharedPreferences.getBoolean(
-            IS_FIRST_EXACT_ALARM_REQUEST_KEY,
-            true
-        )
+        get() =
+            sharedPreferences.getBoolean(
+                IS_FIRST_EXACT_ALARM_REQUEST_KEY,
+                true,
+            )
 
     fun setFirstExactAlarmPermissionState(isFirst: Boolean) {
         sharedPreferences.edit {

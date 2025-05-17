@@ -15,8 +15,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.databinding.DataBindingUtil
-import java.time.LocalDateTime
-import java.time.ZoneId
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
 import woowacourse.movie.domain.model.BookedTicket
@@ -29,6 +27,8 @@ import woowacourse.movie.ui.complete.BookingCompleteActivity
 import woowacourse.movie.utils.AlarmManagerCompat
 import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.intentSerializable
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class BookingSeatActivity :
     AppCompatActivity(),
@@ -95,9 +95,11 @@ class BookingSeatActivity :
     }
 
     private fun handleScheduleNotification(bookedTicket: BookedTicket) {
-        if (StorageProvider.hasPushNotificationPermission
-            && AlarmManagerCompat.hasExactAlarmPermission(this)
-        ) scheduleNotification(bookedTicket)
+        if (StorageProvider.hasPushNotificationPermission &&
+            AlarmManagerCompat.hasExactAlarmPermission(this)
+        ) {
+            scheduleNotification(bookedTicket)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
@@ -204,11 +206,9 @@ class BookingSeatActivity :
 
     private fun restoreMovieId() = intent.getLongExtra(EXTRA_MOVIE_ID, 0L)
 
-    private fun restoreMovieSchedule() =
-        intent.intentSerializable(EXTRA_MOVIE_SCHEDULE, MovieSchedule::class.java)!!
+    private fun restoreMovieSchedule() = intent.intentSerializable(EXTRA_MOVIE_SCHEDULE, MovieSchedule::class.java)!!
 
-    private fun restoreHeadcount() =
-        intent.intentSerializable(EXTRA_HEADCOUNT, Headcount::class.java)!!
+    private fun restoreHeadcount() = intent.intentSerializable(EXTRA_HEADCOUNT, Headcount::class.java)!!
 
     private fun restoreTheaterName() = intent.getStringExtra(EXTRA_THEATER_NAME)!!
 

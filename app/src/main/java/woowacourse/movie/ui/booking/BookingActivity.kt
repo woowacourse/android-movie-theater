@@ -9,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
-import java.time.LocalDate
-import java.time.LocalTime
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.Headcount
@@ -24,6 +22,8 @@ import woowacourse.movie.ui.booking.spinner.listener.ScreeningTimeListener
 import woowacourse.movie.ui.seat.BookingSeatActivity
 import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.intentSerializable
+import java.time.LocalDate
+import java.time.LocalTime
 
 class BookingActivity :
     AppCompatActivity(),

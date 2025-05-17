@@ -1,17 +1,21 @@
 package woowacourse.movie.data
 
-import kotlin.concurrent.thread
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.BookedTicketRepository
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seats
+import kotlin.concurrent.thread
 
 class BookedTicketRepositoryImpl(
-    private val database: BookedTicketDatabase
+    private val database: BookedTicketDatabase,
 ) : BookedTicketRepository {
     private val dao: BookedTicketDao by lazy { database.bookedTicketDao() }
-    override fun insert(bookedTicket: BookedTicket, onIdReceived: (Long) -> Unit) {
+
+    override fun insert(
+        bookedTicket: BookedTicket,
+        onIdReceived: (Long) -> Unit,
+    ) {
         thread {
             val bookedTicketEntity = bookedTicket.toBookedTicketEntity()
             val id: Long = dao.insert(bookedTicketEntity)
@@ -19,7 +23,10 @@ class BookedTicketRepositoryImpl(
         }
     }
 
-    override fun fetchById(id: Long, onTicketLoaded: (BookedTicket) -> Unit) {
+    override fun fetchById(
+        id: Long,
+        onTicketLoaded: (BookedTicket) -> Unit,
+    ) {
         thread {
             val entity: BookedTicketEntity = dao.findBookedTicketEntityById(id)
             onTicketLoaded(entity.toBookedTicket())
@@ -59,4 +66,3 @@ fun BookedTicket.toBookedTicketEntity(): BookedTicketEntity {
         headcount = headcount.count,
     )
 }
-

@@ -50,7 +50,10 @@ object AlarmManagerCompat {
         }
     }
 
-    private fun showNotificationDialog(context: Context, intent: Intent) {
+    private fun showNotificationDialog(
+        context: Context,
+        intent: Intent,
+    ) {
         AlertDialog
             .Builder(context)
             .setTitle(context.getString(R.string.dialog_alarm_title))
@@ -71,14 +74,16 @@ object AlarmManagerCompat {
     private fun showAlarmAllowedMessage(context: Context) {
         Toast.makeText(
             context,
-            context.getString(R.string.dialog_select_positive_message), Toast.LENGTH_SHORT
+            context.getString(R.string.dialog_select_positive_message),
+            Toast.LENGTH_SHORT,
         ).show()
     }
 
     private fun showAlarmNotAllowedMessage(context: Context) {
         Toast.makeText(
             context,
-            context.getString(R.string.dialog_select_negative_message), Toast.LENGTH_SHORT
+            context.getString(R.string.dialog_select_negative_message),
+            Toast.LENGTH_SHORT,
         ).show()
     }
 }

@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.MovieSchedule
-import woowacourse.movie.domain.model.toBookedTicketEntity
 import java.io.IOException
 import java.time.LocalDateTime
 
@@ -31,6 +30,7 @@ class BookedTicketDaoTest {
         bookedTicketDao = db.bookedTicketDao()
         bookedTicket =
             BookedTicket(
+                1L,
                 "선릉 극장",
                 "해리포터",
                 MovieSchedule(

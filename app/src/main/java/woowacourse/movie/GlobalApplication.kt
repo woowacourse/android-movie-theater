@@ -18,8 +18,8 @@ class GlobalApplication : Application() {
     private fun initBookedTicketRepositoryProvider() {
         BookedTicketRepositoryProvider.init(
             BookedTicketRepositoryImpl(
-                database = BookedTicketDatabase.getInstance(this)
-            )
+                database = BookedTicketDatabase.getInstance(this),
+            ),
         )
     }
 

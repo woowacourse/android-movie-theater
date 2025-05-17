@@ -10,22 +10,22 @@ import woowacourse.movie.domain.model.BookedTicket
 class BookingHistoryAdapter(
     private val historyClickListener: HistoryClickListener,
 ) : ListAdapter<BookedTicket, BookingHistoryViewHolder>(
-    object : DiffUtil.ItemCallback<BookedTicket>() {
-        override fun areItemsTheSame(
-            oldItem: BookedTicket,
-            newItem: BookedTicket,
-        ): Boolean {
-            return oldItem.id == newItem.id
-        }
+        object : DiffUtil.ItemCallback<BookedTicket>() {
+            override fun areItemsTheSame(
+                oldItem: BookedTicket,
+                newItem: BookedTicket,
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-        override fun areContentsTheSame(
-            oldItem: BookedTicket,
-            newItem: BookedTicket,
-        ): Boolean {
-            return oldItem == newItem
-        }
-    },
-) {
+            override fun areContentsTheSame(
+                oldItem: BookedTicket,
+                newItem: BookedTicket,
+            ): Boolean {
+                return oldItem == newItem
+            }
+        },
+    ) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,

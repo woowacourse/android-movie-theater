@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
-import java.time.LocalDateTime
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.BookedTicket
@@ -18,6 +17,7 @@ import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
 import woowacourse.movie.utils.StringFormatter
+import java.time.LocalDateTime
 
 class BookingCompleteActivity :
     AppCompatActivity(),
@@ -114,7 +114,7 @@ class BookingCompleteActivity :
 
         fun newIntent(
             context: Context,
-            bookedTicketId:Long,
+            bookedTicketId: Long,
         ): Intent =
             Intent(context, BookingCompleteActivity::class.java).apply {
                 putExtra(EXTRA_BOOKED_TICKET_ID, bookedTicketId)
