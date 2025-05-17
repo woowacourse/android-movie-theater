@@ -15,7 +15,7 @@ class TicketListPresenter(
     override fun initializeData(context: Context) {
         val db = MovieDatabase.getDatabase(context)
         thread {
-            val tickets = db.TicketDao().findTicket()
+            val tickets = db.TicketDao().getAllTickets()
             reservations.addAll(tickets.map { it.toDomain() })
         }.join()
         view.setUpReservationList(reservations.map { it.toUiModel() })

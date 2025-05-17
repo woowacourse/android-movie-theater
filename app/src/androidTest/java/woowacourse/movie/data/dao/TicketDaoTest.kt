@@ -38,7 +38,7 @@ class TicketDaoTest {
     @Test
     fun `티켓_정보를_모두_불러온다`() {
         // given & when
-        val actual = dao.findTicket()
+        val actual = dao.getAllTickets()
         val expected = listOf(dummyData)
 
         // then
@@ -52,7 +52,7 @@ class TicketDaoTest {
 
         // when
         dao.saveTicket(ticket)
-        val actual = dao.findTicket()
+        val actual = dao.getAllTickets()
 
         // then
         assertThat(actual).contains(ticket)

@@ -11,5 +11,5 @@ interface TicketDao {
     fun saveTicket(ticket: TicketEntity)
 
     @Query("SELECT * from tickets")
-    fun findTicket(): List<TicketEntity>
+    fun getAllTickets(): List<TicketEntity>
 }

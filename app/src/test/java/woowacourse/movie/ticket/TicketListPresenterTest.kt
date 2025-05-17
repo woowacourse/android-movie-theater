@@ -46,7 +46,7 @@ class TicketListPresenterTest {
         mockkObject(MovieDatabase)
         every { MovieDatabase.getDatabase(mockContext) } returns mockDatabase
         every { mockDatabase.TicketDao() } returns mockTicketDao
-        every { mockTicketDao.findTicket() } returns dummyTickets
+        every { mockTicketDao.getAllTickets() } returns dummyTickets
 
         presenter = TicketListPresenter(mockView)
     }
