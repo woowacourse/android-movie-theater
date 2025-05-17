@@ -3,6 +3,7 @@ package woowacourse.movie.moviebooked
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -26,7 +27,11 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
     }
 
     override fun fetchReservationInfo() {
-        val id = intent.getLongExtra(KEY_RESERVATION, 0)
+        val id = intent.getLongExtra(KEY_RESERVATION, 0L)
+        if (id == 0L) {
+            Toast.makeText(this, "예약 정보를 찾을 수 없습니다.", Toast.LENGTH_LONG).show()
+            finish()
+        }
         presenter.loadReservationInfo(id)
     }
 

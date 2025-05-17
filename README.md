@@ -239,3 +239,5 @@
 - [x] refactor: 리사이클러뷰홀더 -> ReservationViewHolder으로 타입 한정
 
 - [x] refactor: getSharedPreferences 상위 함수로 이동
+
+- [x] feat: 예약 정보를 찾을 수 없을 때 토스트 메시지와 함께 액티비티 종료
