@@ -13,13 +13,13 @@ class NotificationReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        val sharedPref = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        val isNotificationEnabled = sharedPref.getBoolean("notification", true)
-
-        val title = intent.getStringExtra("title") ?: return
-        val reservationId = intent.getLongExtra("reservationId", DEFAULT_NOTIFICATION_ID)
+        val sharedPref = context.getSharedPreferences(KEY_SETTINGS, Context.MODE_PRIVATE)
+        val isNotificationEnabled = sharedPref.getBoolean(KEY_NOTIFICATION, true)
 
         if (!isNotificationEnabled) return
+
+        val title = intent.getStringExtra(EXTRA_TITLE) ?: return
+        val reservationId = intent.getLongExtra(EXTRA_RESERVATION_ID, DEFAULT_NOTIFICATION_ID)
 
         val notifyIntent = MovieBookedActivity.newIntent(context, reservationId)
 
@@ -45,5 +45,16 @@ class NotificationReceiver : BroadcastReceiver() {
     companion object {
         private const val CHANNEL_ID = "channel_id"
         private const val DEFAULT_NOTIFICATION_ID = 1L
+        private const val EXTRA_RESERVATION_ID = "reservationId"
+        private const val EXTRA_TITLE = "title"
+        private const val KEY_SETTINGS = "settings"
+        private const val KEY_NOTIFICATION = "notification"
+
+        fun newIntent(context: Context, reservationId: Long, title: String): Intent {
+            return Intent(context, NotificationReceiver::class.java).apply {
+                putExtra(EXTRA_RESERVATION_ID, reservationId)
+                putExtra(EXTRA_TITLE, title)
+            }
+        }
     }
 }

@@ -109,17 +109,11 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
 
     @SuppressLint("ScheduleExactAlarm")
     override fun setUpNotification(id: Long) {
-        val sharedPref = getSharedPreferences("settings", Context.MODE_PRIVATE)
-        if (!sharedPref.getBoolean("notification", true)) return
-
         thread {
             val reservationRepository = ReservationRepository.get()
             val reservation = reservationRepository.getReservation(id) ?: return@thread
 
-            val intent = Intent(this, NotificationReceiver::class.java).apply {
-                putExtra("reservationId", id)
-                putExtra("title", reservation.title)
-            }
+            val intent = NotificationReceiver.newIntent(this, id, reservation.title)
 
             val pendingIntent = PendingIntent.getBroadcast(
                 this, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
