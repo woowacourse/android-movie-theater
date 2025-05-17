@@ -14,11 +14,11 @@ interface ReservationDao {
     fun getById(id: Long): Reservation?
 
     @Insert
-    fun insertAll(vararg users: Reservation)
+    fun insertAll(vararg reservations: Reservation)
 
     @Insert
     fun insert(reservation: Reservation): Long
 
     @Delete
-    fun delete(user: Reservation)
+    fun delete(reservation: Reservation)
 }
