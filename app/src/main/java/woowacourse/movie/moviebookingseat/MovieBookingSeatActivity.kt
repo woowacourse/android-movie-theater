@@ -26,6 +26,7 @@ import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.seat.Seat
 import woowacourse.movie.helper.BuildVersion
 import woowacourse.movie.helper.CustomClickListenerHelper.setOnSingleClickListener
+import woowacourse.movie.helper.SettingsPreferenceHelper
 import woowacourse.movie.moviebooked.MovieBookedActivity
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -109,8 +110,8 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
 
     @SuppressLint("ScheduleExactAlarm")
     override fun setUpNotification(id: Long) {
-        val sharedPref = getSharedPreferences(KEY_SETTINGS, Context.MODE_PRIVATE)
-        val isNotificationEnabled = sharedPref.getBoolean(KEY_NOTIFICATION, true)
+
+        val isNotificationEnabled = SettingsPreferenceHelper.isNotificationEnabled(this)
         if (!isNotificationEnabled) return
 
         thread {

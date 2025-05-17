@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Switch
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
+import woowacourse.movie.helper.SettingsPreferenceHelper
 
 class SettingFragment : Fragment() {
     private lateinit var sharedPreference: SharedPreferences
@@ -27,19 +28,11 @@ class SettingFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPreference = requireContext().getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
         val switch = view.findViewById<Switch>(R.id.switch_push)
-        switch.isChecked = sharedPreference.getBoolean(KEY_NOTIFICATION, false)
+        switch.isChecked = SettingsPreferenceHelper.isNotificationEnabled(requireContext())
 
         switch.setOnCheckedChangeListener { _, isChecked ->
-            sharedPreference.edit(commit = true) {
-                putBoolean(KEY_NOTIFICATION, isChecked)
-            }
+            SettingsPreferenceHelper.setNotificationEnabled(requireContext(), isChecked)
         }
-    }
-
-    companion object {
-        private const val PREFERENCE_NAME = "settings"
-        private const val KEY_NOTIFICATION = "notification"
     }
 }
