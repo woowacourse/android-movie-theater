@@ -48,7 +48,7 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
     }
 
     override fun moveToBookedTicket(bookedTicket: BookedTicket) {
-        startActivity(BookingCompleteActivity.newIntent(requireActivity(), bookedTicket))
+        startActivity(BookingCompleteActivity.newIntent(requireActivity(), bookedTicket.id!!))
     }
 
     override fun onDestroyView() {
