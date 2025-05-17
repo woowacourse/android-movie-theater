@@ -217,3 +217,6 @@
 - 불필요한 코드 정리
 
 - [x] refactor: permission 검증을 공통적으로 사용할 수 있도록 변경
+
+- [x] refactor: Database 생성 방법 수정
+- Application의 onCreate()에서 DB를 생성하고 ReservationRepository를 통해 DB에 접근하도록 수정
