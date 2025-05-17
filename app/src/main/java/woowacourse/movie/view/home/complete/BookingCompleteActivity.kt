@@ -1,8 +1,6 @@
 package woowacourse.movie.view.home.complete
 
 import android.Manifest
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -23,7 +21,8 @@ import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.ticket.Ticket
 import woowacourse.movie.view.MainActivity
 import woowacourse.movie.view.home.seat.SeatActivity
-import woowacourse.movie.view.notification.NotificationReceiver
+import woowacourse.movie.view.notification.NotificationManagerImpl
+import woowacourse.movie.view.notification.NotificationScheduler
 import woowacourse.movie.view.util.StringFormatter
 import woowacourse.movie.view.util.getSerializableCompat
 import woowacourse.movie.view.util.showToast
@@ -75,6 +74,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
                 this,
                 application.ticketRepository,
                 application.settingRepository,
+                NotificationManagerImpl(this, NotificationScheduler()),
                 ticket,
             )
     }
@@ -118,26 +118,6 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
 
     override fun notifyNoNotificationPermission() {
         this.showToast(getString(R.string.text_notification_permission_not_granted))
-    }
-
-    override fun setNotification(
-        ticket: Ticket,
-        time: Long,
-    ) {
-        val pendingIntent =
-            PendingIntent.getBroadcast(
-                this,
-                ticket.hashCode(),
-                NotificationReceiver.newIntent(this, ticket),
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-            )
-
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            time,
-            pendingIntent,
-        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

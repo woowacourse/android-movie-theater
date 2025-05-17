@@ -6,11 +6,6 @@ interface BookingCompleteContract {
     interface View {
         fun showTicket(ticket: Ticket)
 
-        fun setNotification(
-            ticket: Ticket,
-            time: Long,
-        )
-
         fun isNotificationPermitted(): Boolean
 
         fun notifyNoNotificationPermission()
