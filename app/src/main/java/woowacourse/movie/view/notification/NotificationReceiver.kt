@@ -10,7 +10,6 @@ import androidx.core.app.NotificationCompat
 import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.ticket.Ticket
-import woowacourse.movie.view.MainActivity
 import woowacourse.movie.view.MainActivity.Companion.CHANNEL_ID
 import woowacourse.movie.view.home.complete.BookingCompleteActivity
 import woowacourse.movie.view.home.complete.BookingCompleteActivity.Companion.KEY_TICKET
@@ -43,7 +42,7 @@ class NotificationReceiver : BroadcastReceiver() {
             PendingIntent.getActivity(
                 context,
                 ticket.hashCode(),
-                BookingCompleteActivity.newIntent(context, ticket, MainActivity::class.java),
+                BookingCompleteActivity.newIntent(context, ticket, false),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
 
