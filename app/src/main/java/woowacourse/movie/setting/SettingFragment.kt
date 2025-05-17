@@ -18,16 +18,16 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
-import woowacourse.movie.data.SettingPreference
+import woowacourse.movie.RepositoryProvider
 import woowacourse.movie.databinding.FragmentSettingBinding
 
 class SettingFragment : Fragment(), SettingContract.View {
-    private val presenter: SettingPresenter by lazy {
+    private val presenter: SettingPresenter =
         SettingPresenter(
             this,
-            SettingPreference(requireContext()),
+            RepositoryProvider.settingRepository,
         )
-    }
+
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
 

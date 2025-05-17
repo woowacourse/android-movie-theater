@@ -4,13 +4,13 @@ import woowacourse.movie.data.SettingRepository
 
 class SettingPresenter(
     private val view: SettingContract.View,
-    private val settingPreference: SettingRepository,
+    private val settingRepository: SettingRepository,
 ) : SettingContract.Presenter {
     override fun setPermissionState() {
-        view.initAlarmState(settingPreference.isAlarmPermitted())
+        view.initAlarmState(settingRepository.isAlarmPermitted())
     }
 
     override fun updatePermission(isGrant: Boolean) {
-        settingPreference.setAlarmPermitted(isGrant)
+        settingRepository.setAlarmPermitted(isGrant)
     }
 }
