@@ -1,19 +1,20 @@
-package woowacourse.movie.ui.booking.view.spinner
+package woowacourse.movie.ui.booking.spinner
 
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import java.time.LocalTime
+import java.time.LocalDate
 
-class ScreeningTimeSpinner(
+class ScreeningDateSpinner(
     private val spinner: Spinner,
+    dates: List<LocalDate>,
 ) {
-    fun updateAdapter(times: List<LocalTime>) {
+    init {
         spinner.adapter =
             ArrayAdapter(
                 spinner.context,
                 android.R.layout.simple_spinner_item,
-                times,
+                dates,
             )
     }
 

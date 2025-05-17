@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.booking.view
+package woowacourse.movie.ui.booking
 
 import android.content.Context
 import android.content.Intent
@@ -17,12 +17,10 @@ import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Theater
-import woowacourse.movie.ui.booking.contract.BookingContract
-import woowacourse.movie.ui.booking.presenter.BookingPresenter
-import woowacourse.movie.ui.booking.view.spinner.ScreeningDateSpinner
-import woowacourse.movie.ui.booking.view.spinner.ScreeningTimeSpinner
-import woowacourse.movie.ui.booking.view.spinner.listener.ScreeningDateListener
-import woowacourse.movie.ui.booking.view.spinner.listener.ScreeningTimeListener
+import woowacourse.movie.ui.booking.spinner.ScreeningDateSpinner
+import woowacourse.movie.ui.booking.spinner.ScreeningTimeSpinner
+import woowacourse.movie.ui.booking.spinner.listener.ScreeningDateListener
+import woowacourse.movie.ui.booking.spinner.listener.ScreeningTimeListener
 import woowacourse.movie.ui.seat.BookingSeatActivity
 import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.intentSerializable

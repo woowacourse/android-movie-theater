@@ -1,11 +1,11 @@
-package woowacourse.movie.ui.booking.view.spinner.listener
+package woowacourse.movie.ui.booking.spinner.listener
 
 import android.view.View
 import android.widget.AdapterView
-import java.time.LocalDate
+import java.time.LocalTime
 
-class ScreeningDateListener(
-    val onSelectDate: (LocalDate) -> Unit,
+class ScreeningTimeListener(
+    val onSelectTime: (LocalTime) -> Unit,
 ) : AdapterView.OnItemSelectedListener {
     override fun onItemSelected(
         parent: AdapterView<*>?,
@@ -13,10 +13,10 @@ class ScreeningDateListener(
         position: Int,
         id: Long,
     ) {
-        onSelectDate(parent?.getItemAtPosition(position) as LocalDate)
+        onSelectTime(parent?.getItemAtPosition(position) as LocalTime)
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        onSelectDate(parent?.getItemAtPosition(0) as LocalDate)
+        onSelectTime(parent?.getItemAtPosition(0) as LocalTime)
     }
 }

@@ -2,12 +2,12 @@ package woowacourse.movie.presenter
 
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import woowacourse.movie.ui.booking.contract.BookingContract
-import woowacourse.movie.ui.booking.presenter.BookingPresenter
 import java.time.LocalDate
 import java.time.LocalTime
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import woowacourse.movie.ui.booking.BookingContract
+import woowacourse.movie.ui.booking.BookingPresenter
 
 class BookingPresenterTest {
     private lateinit var view: BookingContract.View

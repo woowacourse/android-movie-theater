@@ -31,7 +31,7 @@
             android:name=".ui.seat.BookingSeatActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.booking.view.BookingActivity"
+            android:name=".ui.booking.BookingActivity"
             android:exported="false" />
         <activity
             android:name=".ui.complete.BookingCompleteActivity"

@@ -14,6 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withSpinnerText
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import java.time.LocalDateTime
 import org.hamcrest.CoreMatchers.anything
 import org.junit.Before
 import org.junit.Test
@@ -22,8 +23,6 @@ import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.TheaterSchedules
 import woowacourse.movie.fixture.fakeContext
-import woowacourse.movie.ui.booking.view.BookingActivity
-import java.time.LocalDateTime
 
 class BookingActivityTest {
     @Before

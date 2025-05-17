@@ -10,7 +10,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.Theaters
-import woowacourse.movie.ui.booking.view.BookingActivity
+import woowacourse.movie.ui.booking.BookingActivity
 import woowacourse.movie.ui.movielist.contract.TheaterBottomSheetDialogContract
 import woowacourse.movie.ui.movielist.presenter.TheaterBottomSheetDialogPresenter
 
