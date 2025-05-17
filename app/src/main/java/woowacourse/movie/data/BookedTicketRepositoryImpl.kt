@@ -11,10 +11,11 @@ class BookedTicketRepositoryImpl(
     private val database: BookedTicketDatabase
 ) : BookedTicketRepository {
     private val dao: BookedTicketDao by lazy { database.bookedTicketDao() }
-    override fun insert(bookedTicket: BookedTicket) {
+    override fun insert(bookedTicket: BookedTicket, onIdReceived: (Long) -> Unit) {
         thread {
             val bookedTicketEntity = bookedTicket.toBookedTicketEntity()
-            dao.insert(bookedTicketEntity)
+            val id: Long = dao.insert(bookedTicketEntity)
+            onIdReceived(id)
         }
     }
 
