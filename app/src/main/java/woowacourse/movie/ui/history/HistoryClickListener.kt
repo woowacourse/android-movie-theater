@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.history
 
-import woowacourse.movie.data.BookedTicketEntity
+import woowacourse.movie.domain.model.BookedTicket
 
 fun interface HistoryClickListener {
-    fun onClick(bookedTicketEntity: BookedTicketEntity)
+    fun onClick(bookedTicket: BookedTicket)
 }

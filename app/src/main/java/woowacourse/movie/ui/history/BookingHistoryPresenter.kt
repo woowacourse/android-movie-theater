@@ -1,23 +1,22 @@
 package woowacourse.movie.ui.history
 
-import kotlin.concurrent.thread
-import woowacourse.movie.data.BookedTicketDao
-import woowacourse.movie.data.BookedTicketDatabase
-import woowacourse.movie.data.BookedTicketEntity
-import woowacourse.movie.data.toBookedTicket
+import woowacourse.movie.domain.model.BookedTicket
+import woowacourse.movie.domain.model.BookedTicketRepository
+import woowacourse.movie.providers.BookedTicketRepositoryProvider
 
 class BookingHistoryPresenter(
     private val view: BookingHistoryContract.View,
 ) : BookingHistoryContract.Presenter {
-    override fun loadBookingHistories(bookedTicketDatabase: BookedTicketDatabase) {
-        val dao: BookedTicketDao = bookedTicketDatabase.bookedTicketDao()
-        thread {
-            val bookingHistories = dao.findAll()
-            view.showHistories(bookingHistories)
+
+    private val repository: BookedTicketRepository by lazy { BookedTicketRepositoryProvider.provideBookedTicketRepository() }
+
+    override fun loadBookingHistories() {
+        repository.fetchAll { bookedTickets ->
+            view.showHistories(bookedTickets)
         }
     }
 
-    override fun loadBookedTicket(bookedTicketEntity: BookedTicketEntity) {
-        view.moveToBookedTicket(bookedTicketEntity.toBookedTicket())
+    override fun loadBookedTicket(bookedTicket: BookedTicket) {
+        view.moveToBookedTicket(bookedTicket)
     }
 }

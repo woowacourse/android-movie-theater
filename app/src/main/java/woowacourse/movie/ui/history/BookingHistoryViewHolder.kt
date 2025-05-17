@@ -1,8 +1,8 @@
 package woowacourse.movie.ui.history
 
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.data.BookedTicketEntity
 import woowacourse.movie.databinding.HistoryItemBinding
+import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.utils.StringFormatter
 
 class BookingHistoryViewHolder(
@@ -13,8 +13,8 @@ class BookingHistoryViewHolder(
         binding.clickListener = historyClickListener
     }
 
-    fun bind(item: BookedTicketEntity) {
-        binding.bookedTicketEntity = item
+    fun bind(item: BookedTicket) {
+        binding.bookedTicket = item
         binding.stringFormatter = StringFormatter
     }
 }

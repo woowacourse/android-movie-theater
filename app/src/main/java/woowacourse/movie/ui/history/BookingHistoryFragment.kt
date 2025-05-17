@@ -9,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
-import woowacourse.movie.data.BookedTicketDatabase
-import woowacourse.movie.data.BookedTicketEntity
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.ui.complete.BookingCompleteActivity
@@ -19,7 +17,6 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
     private var _binding: FragmentBookingHistoryBinding? = null
     private val binding get() = _binding!!
     private val presenter: BookingHistoryContract.Presenter by lazy { BookingHistoryPresenter(this) }
-    private val bookedTicketDatabase by lazy { BookedTicketDatabase.getInstance(requireContext()) }
     private val bookedHistoryAdapter by lazy { generateBookedHistoryAdapter() }
 
     override fun onCreateView(
@@ -36,7 +33,7 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        presenter.loadBookingHistories(bookedTicketDatabase)
+        presenter.loadBookingHistories()
         binding.layoutRecyclerHistory.apply {
             adapter = bookedHistoryAdapter
             addItemDecoration(
@@ -45,10 +42,9 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
         }
     }
 
-    override fun showHistories(bookingHistories: List<BookedTicketEntity>) {
-        requireActivity().runOnUiThread {
-            bookedHistoryAdapter.submitList(bookingHistories)
-        }
+    override fun showHistories(bookedTickets: List<BookedTicket>) {
+
+        bookedHistoryAdapter.submitList(bookedTickets)
     }
 
     override fun moveToBookedTicket(bookedTicket: BookedTicket) {
@@ -61,8 +57,8 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
     }
 
     private fun generateBookedHistoryAdapter(): BookingHistoryAdapter {
-        return BookingHistoryAdapter { bookedTicketEntity ->
-            presenter.loadBookedTicket(bookedTicketEntity)
+        return BookingHistoryAdapter { bookedTicket ->
+            presenter.loadBookedTicket(bookedTicket)
         }
     }
 }

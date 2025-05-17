@@ -1,18 +1,16 @@
 package woowacourse.movie.ui.history
 
-import woowacourse.movie.data.BookedTicketDatabase
-import woowacourse.movie.data.BookedTicketEntity
 import woowacourse.movie.domain.model.BookedTicket
 
 interface BookingHistoryContract {
     interface Presenter {
-        fun loadBookingHistories(bookedTicketDatabase: BookedTicketDatabase)
+        fun loadBookingHistories()
 
-        fun loadBookedTicket(bookedTicketEntity: BookedTicketEntity)
+        fun loadBookedTicket(bookedTicket: BookedTicket)
     }
 
     interface View {
-        fun showHistories(bookingHistories: List<BookedTicketEntity>)
+        fun showHistories(bookedTickets: List<BookedTicket>)
 
         fun moveToBookedTicket(bookedTicket: BookedTicket)
     }

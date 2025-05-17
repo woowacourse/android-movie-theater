@@ -4,28 +4,28 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import woowacourse.movie.data.BookedTicketEntity
 import woowacourse.movie.databinding.HistoryItemBinding
+import woowacourse.movie.domain.model.BookedTicket
 
 class BookingHistoryAdapter(
     private val historyClickListener: HistoryClickListener,
-) : ListAdapter<BookedTicketEntity, BookingHistoryViewHolder>(
-        object : DiffUtil.ItemCallback<BookedTicketEntity>() {
-            override fun areItemsTheSame(
-                oldItem: BookedTicketEntity,
-                newItem: BookedTicketEntity,
-            ): Boolean {
-                return oldItem.id == newItem.id
-            }
+) : ListAdapter<BookedTicket, BookingHistoryViewHolder>(
+    object : DiffUtil.ItemCallback<BookedTicket>() {
+        override fun areItemsTheSame(
+            oldItem: BookedTicket,
+            newItem: BookedTicket,
+        ): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-            override fun areContentsTheSame(
-                oldItem: BookedTicketEntity,
-                newItem: BookedTicketEntity,
-            ): Boolean {
-                return oldItem == newItem
-            }
-        },
-    ) {
+        override fun areContentsTheSame(
+            oldItem: BookedTicket,
+            newItem: BookedTicket,
+        ): Boolean {
+            return oldItem == newItem
+        }
+    },
+) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
