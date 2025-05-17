@@ -245,3 +245,5 @@
 - [x] refactor: 푸시 알림에 대한 책임 SettingPregerenceHelper로 분리
 
 - [x] refactor: Notification 함수 Helper로 분리
+
+- [x] test: 리팩토링에 의한 테스트 코드 수정
