@@ -13,7 +13,7 @@ class BookingCompletePresenter(
     override fun loadBookedTicket(bookedTicketId: Long) {
         repository.fetchById(bookedTicketId) { bookedTicket ->
             this.bookedTicket = bookedTicket
+            bookingCompleteView.showBookedTicket(bookedTicket)
         }
-        bookingCompleteView.showBookedTicket(bookedTicket)
     }
 }
