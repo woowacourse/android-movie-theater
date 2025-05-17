@@ -27,7 +27,7 @@ class BookedTicketConverter {
     }
 
     @TypeConverter
-    fun String.toSet(): Set<Seat> {
+    fun String.toSeatSet(): Set<Seat> {
         val type = object : TypeToken<Set<Seat>>() {}.type
         return gson.fromJson(this, type)
     }
