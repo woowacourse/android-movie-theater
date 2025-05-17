@@ -5,14 +5,50 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.R
+import woowacourse.movie.MovieApplication
+import woowacourse.movie.data.repository.BookedTicketRepositoryImpl
+import woowacourse.movie.databinding.FragmentBookingHistoryBinding
+import woowacourse.movie.domain.model.theater.BookedTicket
+import woowacourse.movie.ui.complete.view.BookingCompleteActivity
+import woowacourse.movie.ui.history.contract.BookingHistoryContract
+import woowacourse.movie.ui.history.presenter.BookingHistoryPresenter
 
-class BookingHistoryFragment : Fragment() {
+class BookingHistoryFragment :
+    Fragment(),
+    BookingHistoryContract.View {
+    private val database by lazy { (requireActivity().application as MovieApplication).database }
+    private val bookingHistoryPresenter: BookingHistoryPresenter by lazy {
+        BookingHistoryPresenter(this, BookedTicketRepositoryImpl(database.bookedTicketDao()))
+    }
+    private var _binding: FragmentBookingHistoryBinding? = null
+    val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        return inflater.inflate(R.layout.fragment_booking_history, container, false)
+        _binding = FragmentBookingHistoryBinding.inflate(inflater, container, false)
+        bookingHistoryPresenter.loadBookedTickets()
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun setBookedTicketItems(items: List<BookedTicket>) {
+        val adapter =
+            BookedTicketAdapter(
+                onClickBookedTicket =
+                    BookedTicketClickListener { bookedTicket ->
+                        val intent = BookingCompleteActivity.newIntent(requireContext(), bookedTicket)
+                        startActivity(intent)
+                    },
+            )
+
+        binding.bookingHistoryRecyclerView.adapter = adapter
+        adapter.submitList(items)
     }
 }

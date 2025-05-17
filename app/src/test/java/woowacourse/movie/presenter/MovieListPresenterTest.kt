@@ -4,17 +4,20 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.repository.MovieRepository
 import woowacourse.movie.ui.movielist.contract.MovieListContract
 import woowacourse.movie.ui.movielist.presenter.MovieListPresenter
 
 class MovieListPresenterTest {
+    private lateinit var movieRepository: MovieRepository
     private lateinit var presenter: MovieListPresenter
     private lateinit var view: MovieListContract.View
 
     @BeforeEach
     fun setUp() {
+        movieRepository = mockk(relaxed = true)
         view = mockk(relaxed = true)
-        presenter = MovieListPresenter(view)
+        presenter = MovieListPresenter(view, movieRepository)
     }
 
     @Test

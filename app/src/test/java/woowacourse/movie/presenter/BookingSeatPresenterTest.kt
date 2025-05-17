@@ -4,25 +4,34 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.repository.BookedTicketRepository
 import woowacourse.movie.domain.model.movie.Headcount
 import woowacourse.movie.domain.model.movie.TicketType
+import woowacourse.movie.domain.model.seat.AlarmScheduler
 import woowacourse.movie.domain.model.theater.Seat
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.ui.seat.contract.BookingSeatContract
 import woowacourse.movie.ui.seat.presenter.BookingSeatPresenter
+import java.time.LocalDateTime
 
 class BookingSeatPresenterTest {
+    private lateinit var bookedTicketRepository: BookedTicketRepository
     private lateinit var view: BookingSeatContract.View
+    private lateinit var alarmScheduler: AlarmScheduler
     private lateinit var presenter: BookingSeatPresenter
 
     @BeforeEach
     fun setUp() {
+        bookedTicketRepository = mockk(relaxed = true)
+        alarmScheduler = mockk(relaxed = true)
         view = mockk(relaxed = true)
-        presenter = BookingSeatPresenter(view)
+        presenter = BookingSeatPresenter(view, bookedTicketRepository, alarmScheduler)
         presenter.loadState(
             theater = Theater(),
             headcount = Headcount(2),
             title = "",
+            bookedDateTime = LocalDateTime.MIN,
+            notificationSetting = false,
         )
     }
 
@@ -64,7 +73,7 @@ class BookingSeatPresenterTest {
     }
 
     @Test
-    fun `좌석을 클릭할 때마다 가격이 누적되어 10000, 20000원 순으로 반영된다`() {
+    fun `좌석을 클릭할 때마다 가격이 누적되어 10000, 25000원 순으로 반영된다`() {
         val priceSlots = mutableListOf<Int>()
 
         val bGradeSeat = Seat(0, 0, TicketType.B_GRADE)

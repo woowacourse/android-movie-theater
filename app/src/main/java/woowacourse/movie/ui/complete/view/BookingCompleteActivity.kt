@@ -27,7 +27,8 @@ class BookingCompleteActivity :
     AppCompatActivity(),
     BookingCompleteContract.View {
     private lateinit var binding: ActivityBookingCompleteBinding
-    private val bookingCompletePresenter = BookingCompletePresenter(this)
+    private val bookingCompletePresenter =
+        BookingCompletePresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

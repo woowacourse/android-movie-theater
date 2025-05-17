@@ -1,9 +1,12 @@
 package woowacourse.movie.ui.seat.view
 
+import android.app.AlarmManager
 import android.app.AlertDialog
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TableRow
@@ -15,13 +18,15 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.databinding.DataBindingUtil
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
+import woowacourse.movie.data.repository.BookedTicketRepositoryImpl
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
 import woowacourse.movie.domain.model.movie.Headcount
 import woowacourse.movie.domain.model.movie.TicketType
+import woowacourse.movie.domain.model.seat.AndroidAlarmScheduler
 import woowacourse.movie.domain.model.theater.BookedTicket
 import woowacourse.movie.domain.model.theater.Seat
-import woowacourse.movie.domain.model.theater.Seats
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.ui.complete.view.BookingCompleteActivity
 import woowacourse.movie.ui.seat.contract.BookingSeatContract
@@ -33,8 +38,15 @@ import java.time.LocalDateTime
 class BookingSeatActivity :
     AppCompatActivity(),
     BookingSeatContract.View {
+    private val database by lazy { (application as MovieApplication).database }
+    private val bookingSeatPresenter by lazy {
+        BookingSeatPresenter(
+            this,
+            BookedTicketRepositoryImpl(database.bookedTicketDao()),
+            AndroidAlarmScheduler(this),
+        )
+    }
     private lateinit var binding: ActivityBookingSeatBinding
-    private val bookingSeatPresenter = BookingSeatPresenter(this)
 
     private val seatTextViews: MutableMap<String, TextView> = mutableMapOf()
     private val confirmButton: Button by lazy { binding.btnConfirm }
@@ -65,11 +77,18 @@ class BookingSeatActivity :
         val headcount =
             intent.intentSerializable(EXTRA_HEADCOUNT, Headcount::class.java) ?: Headcount()
         val title = intent.getStringExtra(EXTRA_MOVIE_TITLE) ?: ""
+        val bookedDateTime =
+            intent.intentSerializable(EXTRA_DATETIME, LocalDateTime::class.java)
+                ?: LocalDateTime.now()
+        val notificationSetting: Boolean =
+            getSharedPreferences("settings", MODE_PRIVATE).getBoolean("notification", false)
 
         bookingSeatPresenter.loadState(
             theater,
             headcount,
             title,
+            bookedDateTime,
+            notificationSetting,
         )
     }
 
@@ -116,23 +135,7 @@ class BookingSeatActivity :
         confirmButton.isEnabled = isEnabled
     }
 
-    override fun startBookingCompleteActivity(
-        movieTitle: String,
-        headcount: Headcount,
-        seats: Seats,
-        theater: Theater,
-    ) {
-        val bookedDateTime =
-            intent.intentSerializable(EXTRA_DATETIME, LocalDateTime::class.java)
-                ?: LocalDateTime.now()
-        val bookedTicket =
-            BookedTicket(
-                movieTitle,
-                headcount,
-                bookedDateTime,
-                seats,
-                theater.name,
-            )
+    override fun startBookingCompleteActivity(bookedTicket: BookedTicket) {
         startActivity(BookingCompleteActivity.newIntent(this, bookedTicket))
     }
 
@@ -145,6 +148,19 @@ class BookingSeatActivity :
 
             else -> super.onOptionsItemSelected(item)
         }
+
+    override fun setAlarmManager(bookedTicket: BookedTicket) {
+        val alarmMgr = getSystemService(ALARM_SERVICE) as AlarmManager
+        val intent = AlarmReceiver.newIntent(this, bookedTicket)
+        val alarmIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        alarmMgr.set(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            SystemClock.elapsedRealtime() + 3000,
+            // 테스트를 위해 3초로 설정
+            alarmIntent,
+        )
+    }
 
     private fun setConfirmButtonClickListener() {
         binding.confirmBtnClickListener =
@@ -187,7 +203,9 @@ class BookingSeatActivity :
             .setTitle(title)
             .setMessage(description)
             .setPositiveButton(getString(R.string.text_booking_dialog_positive_button)) { _, _ ->
+                bookingSeatPresenter.insertBookedTicket()
                 bookingSeatPresenter.completeBookingSeat()
+                bookingSeatPresenter.postNotification()
             }.setNegativeButton(getString(R.string.text_booking_dialog_negative_button)) { dialog, _ ->
                 dialog.dismiss()
             }.setCancelable(false)

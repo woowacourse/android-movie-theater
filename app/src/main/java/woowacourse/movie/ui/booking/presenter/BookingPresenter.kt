@@ -32,7 +32,7 @@ class BookingPresenter(
         headcount: Headcount,
         movie: Movie,
         selectedDatePosition: Int,
-        selectedTimePosition: Int
+        selectedTimePosition: Int,
     ) {
         this.availableTheater = theater
         this.headcount = headcount
@@ -43,7 +43,7 @@ class BookingPresenter(
 
     override fun loadSelectedDate(
         selectedDate: LocalDate,
-        selectedDatePosition: Int
+        selectedDatePosition: Int,
     ) {
         this.selectedDate = selectedDate
         this.selectedDatePosition = selectedDatePosition

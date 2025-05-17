@@ -4,7 +4,7 @@ import woowacourse.movie.domain.model.movie.Headcount
 import java.io.Serializable
 import java.time.LocalDateTime
 
-class BookedTicket(
+data class BookedTicket(
     val movieName: String,
     val headcount: Headcount,
     val dateTime: LocalDateTime,

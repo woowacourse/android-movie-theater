@@ -1,17 +1,27 @@
 package woowacourse.movie.ui.seat.presenter
 
+import woowacourse.movie.data.mapper.BookedTicketMapper
+import woowacourse.movie.data.repository.BookedTicketRepository
 import woowacourse.movie.domain.model.movie.Headcount
+import woowacourse.movie.domain.model.seat.AlarmScheduler
+import woowacourse.movie.domain.model.theater.BookedTicket
 import woowacourse.movie.domain.model.theater.Seat
 import woowacourse.movie.domain.model.theater.Seats
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.ui.seat.contract.BookingSeatContract
+import java.time.LocalDateTime
+import kotlin.concurrent.thread
 
 class BookingSeatPresenter(
     private val bookingSeatView: BookingSeatContract.View,
+    private val bookedTicketRepository: BookedTicketRepository,
+    private val alarmScheduler: AlarmScheduler,
 ) : BookingSeatContract.Presenter {
     private lateinit var headcount: Headcount
     private lateinit var movieTitle: String
     private lateinit var theater: Theater
+    private lateinit var bookedDateTime: LocalDateTime
+    private var notificationSetting: Boolean = false
     private val seats: Seats = Seats()
 
     fun updateViews() {
@@ -23,11 +33,15 @@ class BookingSeatPresenter(
     override fun loadState(
         theater: Theater,
         headcount: Headcount,
-        title: String
+        title: String,
+        bookedDateTime: LocalDateTime,
+        notificationSetting: Boolean,
     ) {
         this.theater = theater
         this.headcount = headcount
         this.movieTitle = title
+        this.bookedDateTime = bookedDateTime
+        this.notificationSetting = notificationSetting
     }
 
     override fun refreshTotalPrice() {
@@ -58,7 +72,28 @@ class BookingSeatPresenter(
         }
     }
 
-    override fun completeBookingSeat() {
-        bookingSeatView.startBookingCompleteActivity(movieTitle, headcount, seats, theater)
+    override fun insertBookedTicket() {
+        thread {
+            bookedTicketRepository
+                .insertBookedTicket(BookedTicketMapper.toEntity(bookedTicket()))
+        }
     }
+
+    override fun completeBookingSeat() {
+        bookingSeatView.startBookingCompleteActivity(bookedTicket())
+    }
+
+    override fun postNotification() {
+        if (notificationSetting == false) return
+        alarmScheduler.scheduleBookingAlarm(bookedTicket())
+    }
+
+    private fun bookedTicket(): BookedTicket =
+        BookedTicket(
+            movieName = movieTitle,
+            headcount = headcount,
+            dateTime = bookedDateTime,
+            seats = seats,
+            theaterName = theater.name,
+        )
 }

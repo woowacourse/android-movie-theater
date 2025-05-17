@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
     testImplementation(libs.mockk)
     testImplementation(libs.assertj.core)
     testImplementation(libs.junit.jupiter)

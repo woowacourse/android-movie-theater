@@ -8,11 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
+import woowacourse.movie.data.dummy.DUMMY_MOVIES
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetDialogBinding
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.domain.model.theater.Theaters
-import woowacourse.movie.sample.DUMMY_MOVIES
 import woowacourse.movie.ui.booking.view.BookingActivity
 import woowacourse.movie.ui.movielist.contract.TheaterBottomSheetDialogContract
 import woowacourse.movie.ui.movielist.presenter.TheaterBottomSheetDialogPresenter

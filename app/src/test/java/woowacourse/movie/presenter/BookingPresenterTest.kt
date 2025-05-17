@@ -5,9 +5,9 @@ import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.dummy.DUMMY_MOVIES
 import woowacourse.movie.domain.model.movie.Headcount
 import woowacourse.movie.domain.model.theater.Theater
-import woowacourse.movie.sample.DUMMY_MOVIES
 import woowacourse.movie.ui.booking.contract.BookingContract
 import woowacourse.movie.ui.booking.presenter.BookingPresenter
 import java.time.LocalDate
