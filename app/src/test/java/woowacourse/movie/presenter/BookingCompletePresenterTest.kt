@@ -9,7 +9,6 @@ import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.fixture.ticketFixture1
 import woowacourse.movie.view.complete.BookingCompleteContract
 import woowacourse.movie.view.complete.BookingCompletePresenter
-import woowacourse.movie.view.core.util.MainThreadExecutor
 
 class BookingCompletePresenterTest {
     private lateinit var presenter: BookingCompletePresenter
@@ -20,7 +19,7 @@ class BookingCompletePresenterTest {
     fun setUp() {
         view = mockk(relaxed = true)
         dataSource = FakeTicketDataSource()
-        presenter = BookingCompletePresenter(view, dataSource, MainThreadExecutor { it() })
+        presenter = BookingCompletePresenter(view, dataSource)
     }
 
     @Test

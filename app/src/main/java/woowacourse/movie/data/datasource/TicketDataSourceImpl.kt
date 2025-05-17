@@ -2,7 +2,9 @@ package woowacourse.movie.data.datasource
 
 import woowacourse.movie.data.db.TicketDao
 import woowacourse.movie.data.db.TicketEntity
+import woowacourse.movie.domain.Callback
 import woowacourse.movie.domain.datasource.TicketDataSource
+import woowacourse.movie.domain.execute
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
@@ -32,5 +34,11 @@ class TicketDataSourceImpl(private val dao: TicketDao) : TicketDataSource {
         return result
     }
 
-    override fun getTicketById(ticketId: Long) = dao.readById(ticketId).toDomain()
+    override fun getTicketById(
+        ticketId: Long,
+        callback: Callback<Ticket>,
+    ) = execute(
+        task = { dao.readById(ticketId).toDomain() },
+        callback = callback,
+    )
 }

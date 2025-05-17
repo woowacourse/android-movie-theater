@@ -1,5 +1,6 @@
 package woowacourse.movie.domain.datasource
 
+import woowacourse.movie.domain.Callback
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
@@ -13,5 +14,8 @@ interface TicketDataSource {
 
     fun readAllTicket(): List<Ticket>
 
-    fun getTicketById(ticketId: Long): Ticket
+    fun getTicketById(
+        ticketId: Long,
+        callback: Callback<Ticket>,
+    )
 }

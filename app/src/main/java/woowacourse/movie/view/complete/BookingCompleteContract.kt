@@ -6,6 +6,8 @@ interface BookingCompleteContract {
     interface View {
         fun showTicket(ticket: Ticket)
         fun generateAlarm(ticket: Ticket)
+
+        fun showMessage()
     }
 
     interface Presenter {

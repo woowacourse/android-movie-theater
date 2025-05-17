@@ -27,6 +27,7 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
 import woowacourse.movie.domain.model.Ticket
+import woowacourse.movie.view.core.ext.showToast
 import woowacourse.movie.view.main.MainActivity
 import woowacourse.movie.view.receiver.AlarmReceiver
 import woowacourse.movie.view.core.ext.requireSerializable
@@ -89,33 +90,38 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             )
     }
 
-    override fun generateAlarm(ticket: Ticket) {
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+    override fun generateAlarm(ticket: Ticket) =
+        runOnUiThread {
+            val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (!alarmManager.canScheduleExactAlarms()) {
-                showExactAlarmPermissionGuideDialog()
-                return
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (!alarmManager.canScheduleExactAlarms()) {
+                    showExactAlarmPermissionGuideDialog()
+                    return@runOnUiThread
+                }
             }
+
+            val intent = AlarmReceiver.newIntent(this, ticket.title, ticket.id)
+
+            val pendingIntent =
+                PendingIntent.getBroadcast(
+                    this,
+                    ticket.id.toInt(),
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                )
+
+            val alarmMillis = ticket.alarmTime()
+
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                alarmMillis,
+                pendingIntent,
+            )
         }
 
-        val intent = AlarmReceiver.newIntent(this, ticket.title, ticket.id)
-
-        val pendingIntent =
-            PendingIntent.getBroadcast(
-                this,
-                ticket.id.toInt(),
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-            )
-
-        val alarmMillis = ticket.alarmTime()
-
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            alarmMillis,
-            pendingIntent,
-        )
+    override fun showMessage() {
+        runOnUiThread { showToast(R.string.text_booking_fail) }
     }
 
     @RequiresApi(Build.VERSION_CODES.S)
