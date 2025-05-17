@@ -28,15 +28,11 @@
     <string name="push_notification_success">알림 권한이 허용되었습니다.</string>
     <string name="recommend_push_notification">예매하신 영화의 시작 시간을 알려드릴게요. 앱에서 알림 수신을 허용해 주세요:)</string>
     <string name="dialog_alarm_title">영화 시작 알람</string>
-    <string name="dialog_alarm_message">예매한 영화가 시작되기 30분전에 알려드리기 위해서는 알람 권한을 허용으로 변경해주세요 !</string>
+    <string name="dialog_alarm_message">예매한 영화 알람을 받기 위해서는 알람 권한을 허용으로 변경해주세요 !</string>
     <string name="dialog_alarm_positive_btn">설정</string>
     <string name="dialog_alarm_negative_btn">닫기</string>
-    <string name="dialog_notification_title_for_recommend">영화 시작 알림</string>
-    <string name="dialog_notification_message_for_recommend">예매한 영화가 시작되기 30분전에 알려드릴게요.\n알림 받기를 누른 후 알림 수신을 허용해주세요</string>
-    <string name="dialog_notification_positive_btn_for_recommend">설정으로</string>
-    <string name="dialog_notification_negative_btn_for_recommend">괜찮아요</string>
     <string name="notification_title">예매 알림</string>
     <string name="notification_message">%s 30분 후에 상영</string>
     <string name="dialog_select_negative_message">기기 내 설정에서 알람 권한을 허용 후 영화 정보 알람을 받을 수 있습니다.</string>
-    <string name="dialog_select_positive_message">영화 알람 권한이 허용되었습니다.</string>
+    <string name="dialog_select_positive_message">알람 권한을 허용으로 변경해주세요 :)</string>
 </resources>
