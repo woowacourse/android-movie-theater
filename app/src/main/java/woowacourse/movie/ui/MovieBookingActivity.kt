@@ -27,7 +27,6 @@ class MovieBookingActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             binding.navigation.selectedItemId = R.id.navigation_home
-            attachHomeFragment()
         } else {
             updateBottomNavigation()
         }
@@ -35,6 +34,8 @@ class MovieBookingActivity : AppCompatActivity() {
 
     private fun initBottomNavigationListener() {
         binding.navigation.setOnItemSelectedListener { item ->
+            if (binding.navigation.selectedItemId == item.itemId) return@setOnItemSelectedListener false
+
             when (item.itemId) {
                 R.id.navigation_home -> {
                     attachHomeFragment()
