@@ -7,9 +7,9 @@
     <string name="text_theater_movie_count">%d개의 상영 시간</string>
     <string name="text_push_alarm_title">푸시 알림 수신</string>
     <string name="text_push_alarm_message">해제하면 푸시 알림을 수신할 수 없습니다.</string>
-    <string name="text_permission_request">설정에서 %s을 허용해 주세요</string>
     <string name="text_alarm_permission_description">설정에서 알람을 허용하면 30분 전 알림을 받을 수 있습니다 !</string>
-    
+    <string name="text_post_notification_permission_denied">알림 설정이 거부되었습니다</string>
+
     <string name="btn_plus_text">+</string>
     <string name="btn_minus_text">-</string>
     <string name="btn_select_complete">선택 완료</string>
@@ -28,6 +28,12 @@
     <string name="dig_message">정말 예매하시겠습니까?</string>
     <string name="dig_btn_positive_message">예매 완료</string>
     <string name="dig_btn_negative_message">취소</string>
+
+    <string name="dig_notification_permission_title">알림 설정</string>
+    <string name="dig_permission_message">설정 화면으로 이동하시겠습니까?</string>
+    <string name="dig_permission_positive_message">이동</string>
+    <string name="dig_permission_negative_message">취소</string>
+    <string name="dig_exact_alarm_permission_title">정확한 알람 설정 권한 필요</string>
 
     <string name="seat_screen">SCREEN</string>
     <string name="seat_point">%s%d</string>

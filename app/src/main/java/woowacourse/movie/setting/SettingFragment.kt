@@ -2,6 +2,7 @@ package woowacourse.movie.setting
 
 import android.Manifest
 import android.app.AlarmManager
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -48,11 +49,21 @@ class SettingFragment : Fragment(), SettingContract.View {
         presenter.setPermissionState()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val isPermitted = isPermittedExactAlarm() && isPermittedPostNotification()
+        setAlarmState(isPermitted)
+        presenter.updatePermission(isPermitted)
+    }
+
     override fun initAlarmState(isGrant: Boolean) {
         setAlarmState(isGrant)
         binding.switchAlarm.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked && !isPermitted()) {
+            if (isChecked && !isPermittedPostNotification()) {
                 requestNotificationPermission()
+                return@setOnCheckedChangeListener
+            } else if (isChecked && !isPermittedExactAlarm()) {
+                showScheduleExtractAlarmPermissionDialog()
                 return@setOnCheckedChangeListener
             }
             presenter.updatePermission(isChecked)
@@ -65,8 +76,50 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     private fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                showNotificationPermissionDialog()
+            } else {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
+    }
+
+    private fun showNotificationPermissionDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.dig_notification_permission_title))
+            .setMessage(getString(R.string.dig_permission_message))
+            .setPositiveButton(getString(R.string.dig_permission_positive_message)) { _, _ ->
+                val intent =
+                    Intent().apply {
+                        action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                        putExtra(Settings.EXTRA_APP_PACKAGE, "woowacourse.movie")
+                    }
+                startActivity(intent)
+            }
+            .setNegativeButton(getString(R.string.dig_permission_negative_message)) { dialog, _ ->
+                dialog.dismiss()
+                setAlarmState(false)
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun showScheduleExtractAlarmPermissionDialog() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.dig_exact_alarm_permission_title))
+            .setMessage(getString(R.string.dig_permission_message))
+            .setPositiveButton(getString(R.string.dig_permission_positive_message)) { _, _ ->
+                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                startActivity(intent)
+            }
+            .setNegativeButton(getString(R.string.dig_permission_negative_message)) { dialog, _ ->
+                dialog.dismiss()
+                setAlarmState(false)
+            }
+            .setCancelable(false)
+            .show()
     }
 
     private val requestPermissionLauncher =
@@ -74,40 +127,30 @@ class SettingFragment : Fragment(), SettingContract.View {
             ActivityResultContracts.RequestPermission(),
         ) { isGranted: Boolean ->
             if (isGranted) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.text_permission_request, "Alarms"),
-                    Toast.LENGTH_SHORT,
-                ).show()
-                requestExactAlarmPermission()
-                presenter.updatePermission(true)
-                setAlarmState(true)
+                showScheduleExtractAlarmPermissionDialog()
             } else {
                 Toast.makeText(
                     requireContext(),
-                    getString(R.string.text_permission_request, "Notifications"),
+                    getString(R.string.text_post_notification_permission_denied),
                     Toast.LENGTH_SHORT,
                 ).show()
                 setAlarmState(false)
             }
         }
 
-    private fun requestExactAlarmPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val alarmManager = requireContext().getSystemService(ALARM_SERVICE) as AlarmManager
-            if (!alarmManager.canScheduleExactAlarms()) {
-                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                startActivity(intent)
-            }
-        }
-    }
-
-    private fun isPermitted(): Boolean {
+    private fun isPermittedPostNotification(): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return true
 
         return ContextCompat.checkSelfPermission(
             requireContext(), Manifest.permission.POST_NOTIFICATIONS,
         ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun isPermittedExactAlarm(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return true
+
+        val alarmManager = requireContext().getSystemService(ALARM_SERVICE) as AlarmManager
+        return alarmManager.canScheduleExactAlarms()
     }
 
     override fun onDestroyView() {
