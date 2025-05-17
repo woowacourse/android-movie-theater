@@ -11,9 +11,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import woowacourse.movie.R
-import woowacourse.movie.ext.RecyclerViewMatchers
 import woowacourse.movie.ext.isTextMatches
 import woowacourse.movie.fixture.ticketFixtures
+import woowacourse.movie.matchers.RecyclerViewMatchers
 import woowacourse.movie.view.history.adapter.model.toItem
 import woowacourse.movie.view.main.MainActivity
 

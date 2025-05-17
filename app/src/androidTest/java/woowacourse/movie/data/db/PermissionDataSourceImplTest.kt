@@ -47,7 +47,7 @@ class PermissionDataSourceImplTest {
     }
 
     @After
-    fun tearDown()  {
+    fun tearDown() {
         sharedPreferences.edit().clear().apply()
     }
 }

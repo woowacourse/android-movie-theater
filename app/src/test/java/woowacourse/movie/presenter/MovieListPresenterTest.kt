@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.data.MovieStore
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.view.movies.MovieListContract
-import woowacourse.movie.view.movies.MovieListPresenter
+import woowacourse.movie.view.movies.MovieListPresenterFactory
 import woowacourse.movie.view.movies.adapter.model.MovieRvItem
 
 class MovieListPresenterTest {
@@ -21,7 +21,7 @@ class MovieListPresenterTest {
 
     @Test
     fun `영화 리스트를 로딩하면 영화와 광고가 포함된 리스트를 View에 전달한다`() {
-        val presenter = MovieListPresenter.initialize(view)
+        val presenter = MovieListPresenterFactory().initialize(view)
 
         presenter.loadUiData()
 

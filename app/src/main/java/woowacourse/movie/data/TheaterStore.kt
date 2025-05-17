@@ -18,7 +18,7 @@ class TheaterStore(
                     movieSchedules =
                         generateScreenings(
                             theaterName = "선릉 극장",
-                            theaterStartDate = LocalDate.of(2025, 5, 4),
+                            theaterStartDate = LocalDate.of(2025, 5, 30),
                             screeningDays = 40,
                             openTime = LocalTime.of(8, 0),
                             closeTime = LocalTime.of(23, 0),
@@ -29,7 +29,7 @@ class TheaterStore(
                     movieSchedules =
                         generateScreenings(
                             theaterName = "잠실 극장",
-                            theaterStartDate = LocalDate.of(2025, 5, 1),
+                            theaterStartDate = LocalDate.of(2025, 5, 30),
                             screeningDays = 30,
                             openTime = LocalTime.of(8, 0),
                             closeTime = LocalTime.of(23, 0),
@@ -40,7 +40,7 @@ class TheaterStore(
                     movieSchedules =
                         generateScreenings(
                             theaterName = "강남 극장",
-                            theaterStartDate = LocalDate.of(2025, 5, 1),
+                            theaterStartDate = LocalDate.of(2025, 5, 30),
                             screeningDays = 30,
                             openTime = LocalTime.of(7, 0),
                             closeTime = LocalTime.of(23, 0),
