@@ -235,3 +235,5 @@
 - [x] refactor: Receiver Intent 생성 분리 및 중복 코드 제거
 
 - [x] refactor: findViewById -> binding.root로 변경
+
+- [x] refactor: 리사이클러뷰홀더 -> ReservationViewHolder으로 타입 한정
