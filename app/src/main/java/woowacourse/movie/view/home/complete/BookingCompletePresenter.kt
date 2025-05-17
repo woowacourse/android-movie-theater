@@ -34,7 +34,7 @@ class BookingCompletePresenter(
     override fun addToHistory(ticket: Ticket) {
         thread {
             repository.insert(ticket)
-        }
+        }.join()
     }
 
     companion object {

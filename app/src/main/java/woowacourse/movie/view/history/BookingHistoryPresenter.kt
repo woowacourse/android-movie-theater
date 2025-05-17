@@ -11,7 +11,7 @@ class BookingHistoryPresenter(
     override fun loadTickets() {
         thread {
             view.showTickets(repository.getAll())
-        }
+        }.join()
     }
 
     override fun selectHistory(ticket: Ticket) {
