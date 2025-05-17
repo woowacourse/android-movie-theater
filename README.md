@@ -220,3 +220,6 @@
 
 - [x] refactor: Database 생성 방법 수정
 - Application의 onCreate()에서 DB를 생성하고 ReservationRepository를 통해 DB에 접근하도록 수정
+
+- [x] refactor: 프래그먼트 매니저에게 프래그먼트 위임
+- 화면 회전 시 현재 프래그먼트가 유지되지 않고 홈으로 변경되던 현상 수정 -> 번들이 null일 때만 홈으로 설정
