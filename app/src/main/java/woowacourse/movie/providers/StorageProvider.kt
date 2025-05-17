@@ -6,6 +6,7 @@ import androidx.core.content.edit
 object StorageProvider {
     const val PREFERENCE_KEY = "THEATER_PREFERENCE_KEY"
     private const val IS_FIRST_NOTIFICATION_REQUEST_KEY = "IS_FIRST_NOTIFICATION_REQUEST_KEY"
+    private const val HAS_PUSH_NOTIFICATION_PERMISSION = "HAS_PUSH_NOTIFICATION_PERMISSION"
     private lateinit var sharedPreferences: SharedPreferences
 
     fun init(sharedPreferences: SharedPreferences) {
@@ -21,6 +22,18 @@ object StorageProvider {
     fun setFirstPostNotificationPermissionRequestState(isFirst: Boolean) {
         sharedPreferences.edit {
             putBoolean(IS_FIRST_NOTIFICATION_REQUEST_KEY, isFirst)
+        }
+    }
+
+    val hasPushNotificationPermission: Boolean
+        get() = sharedPreferences.getBoolean(
+            HAS_PUSH_NOTIFICATION_PERMISSION,
+            false
+        )
+
+    fun setPushNotificationPermissionState(hasPermission: Boolean) {
+        sharedPreferences.edit {
+            putBoolean(HAS_PUSH_NOTIFICATION_PERMISSION, hasPermission)
         }
     }
 }

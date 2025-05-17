@@ -19,7 +19,7 @@ import woowacourse.movie.databinding.ActivityMovieBookingBinding
 import woowacourse.movie.providers.StorageProvider
 import woowacourse.movie.ui.history.BookingHistoryFragment
 import woowacourse.movie.ui.movielist.view.MovieListFragment
-import woowacourse.movie.ui.settings.view.SettingsFragment
+import woowacourse.movie.ui.settings.SettingsFragment
 
 class MovieBookingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieBookingBinding
@@ -90,6 +90,7 @@ class MovieBookingActivity : AppCompatActivity() {
         ) { isGranted ->
             if (isGranted) {
                 showPushNotificationSuccess()
+                StorageProvider.setPushNotificationPermissionState(true)
                 return@registerForActivityResult
             }
             showPushNotificationRecommend()
