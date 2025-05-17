@@ -43,8 +43,9 @@ class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
     }
 
     override fun showHistories(bookedTickets: List<BookedTicket>) {
-
-        bookedHistoryAdapter.submitList(bookedTickets)
+        requireActivity().runOnUiThread {
+            bookedHistoryAdapter.submitList(bookedTickets)
+        }
     }
 
     override fun moveToBookedTicket(bookedTicket: BookedTicket) {
