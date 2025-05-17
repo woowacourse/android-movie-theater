@@ -1,8 +1,5 @@
 package woowacourse.movie.view.complete
 
-import android.content.Context
-import woowacourse.movie.data.datasource.TicketDataSourceImpl
-import woowacourse.movie.data.db.UserDatabase
 import woowacourse.movie.domain.Callback
 import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.model.Ticket
@@ -28,16 +25,5 @@ class BookingCompletePresenter(
                 }
             },
         )
-    }
-
-    companion object {
-        fun initialize(
-            view: BookingCompleteContract.View,
-            context: Context,
-        ): BookingCompleteContract.Presenter {
-            val dao = UserDatabase.getDatabase(context).ticketDao()
-            val dataSource = TicketDataSourceImpl(dao)
-            return BookingCompletePresenter(view, dataSource)
-        }
     }
 }

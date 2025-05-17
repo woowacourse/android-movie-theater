@@ -44,7 +44,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         val ticketId = intent.getLongExtra(KEY_TICKET_ID, 0)
         val isFromSeatScreen = intent.getStringExtra(KEY_FROM) != null
 
-        val presenter = BookingCompletePresenter.initialize(this, applicationContext)
+        val presenter = BookingCompletePresenterFactory(this, applicationContext).initialize()
         presenter.loadTicket(ticketId, isFromSeatScreen)
         intent.requireSerializable<Ticket>(KEY_TICKET).apply {
             presenter = BookingCompletePresenter(this@BookingCompleteActivity, this)
