@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.databinding.DataBindingUtil
+import java.time.LocalDateTime
 import java.time.ZoneId
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
@@ -23,6 +24,7 @@ import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.notification.MovieReminderReceiver
+import woowacourse.movie.providers.StorageProvider
 import woowacourse.movie.ui.complete.BookingCompleteActivity
 import woowacourse.movie.utils.AlarmManagerCompat
 import woowacourse.movie.utils.StringFormatter
@@ -86,11 +88,16 @@ class BookingSeatActivity :
     }
 
     override fun moveToBookedTicket(bookedTicket: BookedTicket) {
-        // 알림 퍼미션이 커져 있을 때만 실행 로직 추가 필요
-        scheduleNotification(bookedTicket)
+        handleScheduleNotification(bookedTicket)
 
         startActivity(BookingCompleteActivity.newIntent(this, bookedTicket.id!!))
         finish()
+    }
+
+    private fun handleScheduleNotification(bookedTicket: BookedTicket) {
+        if (StorageProvider.hasPushNotificationPermission
+            && AlarmManagerCompat.hasExactAlarmPermission(this)
+        ) scheduleNotification(bookedTicket)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
@@ -138,9 +145,10 @@ class BookingSeatActivity :
 
     private fun scheduleNotification(bookedTicket: BookedTicket) {
         val triggerTime = bookedTicket.movieSchedule.screeningDateTime.minusMinutes(30L)
+        if (triggerTime.isBefore(LocalDateTime.now())) return
+
         val triggerAtMillis =
             triggerTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
         val intent = MovieReminderReceiver.newIntent(this, bookedTicket)
         val requestCode =
             bookedTicket.id!!.toInt() // 현재 Long 타입의 변수이기에 int 범위보다 커질경우 에러가 발생할 가능성 존재
