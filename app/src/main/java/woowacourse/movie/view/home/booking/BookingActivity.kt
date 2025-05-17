@@ -34,6 +34,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
         binding = ActivityBookingBinding.inflate(layoutInflater)
         binding.handler = this
         setContentView(binding.root)
+        initView()
 
         val screeningInfo: ScreeningInfo? = intent.extras?.getSerializableCompat(KEY_SCREENING)
         if (screeningInfo == null) {
@@ -43,8 +44,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
         }
 
         presenter = BookingPresenter(this, screeningInfo)
-        presenter.initBooking(LocalDateTime.now())
-        initView()
+        presenter.loadBooking(LocalDateTime.now())
     }
 
     private fun initView() {
@@ -54,6 +54,21 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
             insets
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun showMovieDetail(movie: Movie) {
+        val poster = movie.posterResource.toDrawableResourceId(this@BookingActivity)
+        val formattedRunningTime = getString(R.string.text_running_time_minute_unit).format(movie.runningTime)
+        val formattedScreeningPeriod =
+            getString(R.string.text_date_period).format(
+                StringFormatter.dotDateFormat(movie.startDate),
+                StringFormatter.dotDateFormat(movie.endDate),
+            )
+
+        binding.tvTitle.text = movie.title
+        binding.imgMoviePoster.setImageResource(poster)
+        binding.tvRunningTime.text = formattedRunningTime
+        binding.tvScreeningPeriod.text = formattedScreeningPeriod
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -69,34 +84,11 @@ class BookingActivity : AppCompatActivity(), BookingContract.View, BookingEventH
             finish()
             return
         }
-        presenter.loadBooking(booking)
-    }
-
-    override fun showMovieDetail(
-        movie: Movie,
-        screeningTimes: List<LocalDateTime>,
-    ) {
-        with(movie) {
-            binding.tvTitle.text = title
-            binding.imgMoviePoster.setImageResource(posterResource.toDrawableResourceId(this@BookingActivity))
-            binding.tvRunningTime.text =
-                getString(R.string.text_running_time_minute_unit).format(runningTime)
-        }
+        presenter.restoreBooking(booking)
     }
 
     override fun showAdmissionCount(count: Int) {
         binding.tvAdmissionCount.text = count.toString()
-    }
-
-    override fun showScreeningPeriod(
-        startDate: LocalDate,
-        endDate: LocalDate,
-    ) {
-        binding.tvScreeningPeriod.text =
-            getString(R.string.text_date_period).format(
-                StringFormatter.dotDateFormat(startDate),
-                StringFormatter.dotDateFormat(endDate),
-            )
     }
 
     override fun showScreeningDates(bookableDates: List<LocalDate>) {

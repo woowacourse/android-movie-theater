@@ -4,6 +4,7 @@ import woowacourse.movie.data.dummy.MovieStore
 import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.booking.Booking
 import woowacourse.movie.domain.model.booking.Schedule
+import woowacourse.movie.domain.model.feed.Feed.Movie
 import woowacourse.movie.view.home.model.ScreeningInfo
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -16,40 +17,57 @@ class BookingPresenter(
     lateinit var booking: Booking
     private val schedule = Schedule(screeningInfo.screenings)
 
-    override fun initBooking(now: LocalDateTime) {
+    override fun loadBooking(now: LocalDateTime) {
         val movie = MovieStore().movies[screeningInfo.movieId]
-        val screenings = screeningInfo.screenings
-
-        val bookableDates = this.schedule.bookableDates(now)
-        val defaultDate: LocalDate =
-            bookableDates.firstOrNull() ?: run {
+        val initialDate: LocalDate =
+            loadBookableDates(now).firstOrNull() ?: run {
                 view.notifyNoAvailableTime()
                 return
             }
-        val bookableTimes = this.schedule.bookableTimes(defaultDate, now)
-        val defaultTime: LocalTime =
-            bookableTimes.firstOrNull() ?: run {
+        val initialTime: LocalTime =
+            loadBookableTimes(initialDate, now).firstOrNull() ?: run {
                 view.notifyNoAvailableTime()
                 return
             }
+        initBooking(movie, initialDate, initialTime)
 
+        view.showMovieDetail(movie)
+        view.showAdmissionCount(booking.count.value)
+    }
+
+    private fun loadBookableDates(now: LocalDateTime): List<LocalDate> {
+        val bookableDates = schedule.bookableDates(now)
+        if (bookableDates.isNotEmpty()) view.showScreeningDates(bookableDates)
+        return bookableDates
+    }
+
+    private fun loadBookableTimes(
+        initialDate: LocalDate,
+        now: LocalDateTime,
+    ): List<LocalTime> {
+        val bookableTimes = this.schedule.bookableTimes(initialDate, now)
+        if (bookableTimes.isNotEmpty()) {
+            view.showScreeningTimes(bookableTimes, bookableTimes.first())
+        }
+        return bookableTimes
+    }
+
+    private fun initBooking(
+        movie: Movie,
+        initialDate: LocalDate,
+        initialTime: LocalTime,
+    ) {
         booking =
             Booking(
                 movie.title,
                 screeningInfo.theaterName,
-                defaultDate,
-                defaultTime,
+                initialDate,
+                initialTime,
                 AdmissionCount(),
             )
-
-        view.showMovieDetail(movie, screenings)
-        view.showScreeningPeriod(this.schedule.startDate, this.schedule.endDate)
-        view.showScreeningDates(bookableDates)
-        view.showScreeningTimes(bookableTimes, defaultTime)
-        view.showAdmissionCount(booking.count.value)
     }
 
-    override fun loadBooking(booking: Booking) {
+    override fun restoreBooking(booking: Booking) {
         this.booking = booking
         view.showAdmissionCount(booking.count.value)
     }

@@ -31,13 +31,13 @@ class BookingPresenterTest {
                     screenings = listOf(LocalDateTime.of(2025, 4, 10, 12, 10)),
                 ),
             )
-        presenter.initBooking(LocalDateTime.of(2025, 4, 10, 12, 0))
+        presenter.loadBooking(LocalDateTime.of(2025, 4, 10, 12, 0))
     }
 
     @Test
     fun `영화 정보를 UI에 표시한다`() {
         // then
-        verify { view.showMovieDetail(any(), any()) }
+        verify { view.showMovieDetail(any()) }
     }
 
     @Test

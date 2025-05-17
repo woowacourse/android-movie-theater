@@ -93,6 +93,6 @@ class BookingCompletePresenterTest {
 
         // then
         verify { view.notifyNoNotificationPermission() }
-        verify(exactly = 0) { notificationManager.setNotification(ticket,) }
+        verify(exactly = 0) { notificationManager.setNotification(ticket) }
     }
 }

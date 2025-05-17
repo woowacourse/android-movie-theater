@@ -44,8 +44,8 @@ class BookingActivityTest {
 
     @Test
     fun `전달_받은_영화_이름_상영일_상영_시간을_출력한다`() {
-        val startDate = LocalDate.now().plusDays(0).format(DateTimeFormatter.ofPattern("yyyy.M.d"))
-        val endDate = LocalDate.now().plusDays(4).format(DateTimeFormatter.ofPattern("yyyy.M.d"))
+        val startDate = LocalDate.now().plusDays(-3).format(DateTimeFormatter.ofPattern("yyyy.M.d"))
+        val endDate = LocalDate.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyy.M.d"))
         onView(withText("해리 포터와 마법사의 돌")).check(matches(isDisplayed()))
         onView(withText("%s ~ %s".format(startDate, endDate))).check(matches(isDisplayed()))
         onView(withText("152분")).check(matches(isDisplayed()))
