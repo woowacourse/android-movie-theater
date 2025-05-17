@@ -34,7 +34,6 @@ import woowacourse.movie.view.uiModel.toUiModel
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
     private lateinit var binding: ActivityBookingCompleteBinding
-    private lateinit var presenter: BookingCompleteContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +43,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         val ticketId = intent.getLongExtra(KEY_TICKET_ID, 0)
         val isFromSeatScreen = intent.getStringExtra(KEY_FROM) != null
 
-        presenter = BookingCompletePresenter.initialize(this, applicationContext)
+        val presenter = BookingCompletePresenter.initialize(this, applicationContext)
         presenter.loadTicket(ticketId, isFromSeatScreen)
         intent.requireSerializable<Ticket>(KEY_TICKET).apply {
             presenter = BookingCompletePresenter(this@BookingCompleteActivity, this)
