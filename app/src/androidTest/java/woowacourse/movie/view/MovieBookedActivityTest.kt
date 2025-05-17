@@ -11,28 +11,31 @@ import woowacourse.movie.MovieFixture
 import woowacourse.movie.R
 import woowacourse.movie.checkIsDisplayed
 import woowacourse.movie.checkWithText
-import woowacourse.movie.domain.BookingStatus
-import woowacourse.movie.domain.seat.Column
-import woowacourse.movie.domain.seat.Row
-import woowacourse.movie.domain.seat.Seat
-import woowacourse.movie.domain.seat.SeatGrade
+import woowacourse.movie.data.Reservation
+import woowacourse.movie.data.ReservationRepository
 import woowacourse.movie.moviebooked.MovieBookedActivity
 
 class MovieBookedActivityTest {
     private lateinit var scenario: ActivityScenario<MovieBookedActivity>
-    private lateinit var bookingStatus: BookingStatus
 
     @Before
     fun setUp() {
-        bookingStatus = MovieFixture.BOOKING_STATUS
-        val theater = MovieFixture.THEATER
-
-        bookingStatus.seat.add(Seat(Row(1), Column(1), SeatGrade.B))
-        bookingStatus.seat.add(Seat(Row(1), Column(2), SeatGrade.B))
-
-        val intent = MovieBookedActivity.newIntent(ApplicationProvider.getApplicationContext(), bookingStatus, theater)
-
+        val reservation = Reservation(
+            title = "해리포터와 마법사의 돌",
+            date = "2025.04.30" ,
+            time = "09:00",
+            personnel = 2,
+            seats = "B2, B3",
+            theater = "선릉",
+            price = 20000
+        )
+        ReservationRepository.initialize(ApplicationProvider.getApplicationContext())
+        ReservationRepository.get().insert(reservation)
+        val intent = MovieBookedActivity.newIntent(ApplicationProvider.getApplicationContext(), 1L)
         scenario = ActivityScenario.launch(intent)
+        scenario.onActivity {
+            it.showReservation(reservation)
+        }
     }
 
     @Test
@@ -54,15 +57,27 @@ class MovieBookedActivityTest {
     }
 
     @Test
-    fun 영화_날짜와_시간이_보여야_한다() {
+    fun 영화_날짜가_보여야_한다() {
         onView(withId(R.id.booked_date))
             .checkIsDisplayed()
     }
 
     @Test
-    fun 인텐트로_전달된_영화_날짜와_시간이_일치한다() {
+    fun 인텐트로_전달된_영화_날짜가_일치한다() {
         onView(withId(R.id.booked_date))
-            .checkWithText(MovieFixture.BOOKING_DATETIME)
+            .checkWithText("2025.04.30")
+    }
+
+    @Test
+    fun 영화_시간이_보여야_한다() {
+        onView(withId(R.id.booked_time))
+            .checkIsDisplayed()
+    }
+
+    @Test
+    fun 인텐트로_전달된_영화_시간이_일치한다() {
+        onView(withId(R.id.booked_time))
+            .checkWithText("09:00")
     }
 
     @Test
@@ -115,8 +130,6 @@ class MovieBookedActivityTest {
 
     @After
     fun tearDown() {
-        bookingStatus.seat.remove(Seat(Row(1), Column(1), SeatGrade.B))
-        bookingStatus.seat.remove(Seat(Row(1), Column(2), SeatGrade.B))
         scenario.close()
     }
 }

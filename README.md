@@ -227,3 +227,5 @@
 - [x] refactor: 채널 아이디 상수화
 
 - [x] test: Room에 데이터를 저장하고 가져오는 Repository에 대한 테스트 추가
+
+- [x] test: Room에 접근해 데이터를 가져오던 MovieBookedActivity에 대한 UI 테스트 코드 추가
