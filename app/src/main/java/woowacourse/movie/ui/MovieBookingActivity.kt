@@ -20,6 +20,7 @@ import woowacourse.movie.providers.StorageProvider
 import woowacourse.movie.ui.history.BookingHistoryFragment
 import woowacourse.movie.ui.movielist.view.MovieListFragment
 import woowacourse.movie.ui.settings.SettingsFragment
+import woowacourse.movie.utils.AlarmManagerCompat
 
 class MovieBookingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieBookingBinding
@@ -36,6 +37,20 @@ class MovieBookingActivity : AppCompatActivity() {
             binding.navigation.selectedItemId = R.id.navigation_home
         } else {
             updateBottomNavigation()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requestAlarmPermission()
+    }
+
+    private fun requestAlarmPermission() {
+        if (hasPermission(Manifest.permission.POST_NOTIFICATIONS)
+            && !AlarmManagerCompat.hasExactAlarmPermission(this)
+            && StorageProvider.isFirstExactAlarmPermissionRequest
+        ) {
+            AlarmManagerCompat.requestScheduleExactPermission(this)
         }
     }
 
@@ -98,13 +113,13 @@ class MovieBookingActivity : AppCompatActivity() {
 
     private fun showPushNotificationSuccess() {
         Toast.makeText(
-            this, getString(R.string.push_notification_success), Toast.LENGTH_LONG
+            this, getString(R.string.push_notification_success), Toast.LENGTH_SHORT
         ).show()
     }
 
     private fun showPushNotificationRecommend() {
         Toast.makeText(
-            this, getString(R.string.recommend_push_notification), Toast.LENGTH_LONG
+            this, getString(R.string.recommend_push_notification), Toast.LENGTH_SHORT
         ).show()
     }
 
