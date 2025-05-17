@@ -40,11 +40,12 @@ class MovieReminderReceiver : BroadcastReceiver() {
             NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
         notificationManager.createNotificationChannel(channel)
 
-        val intent = BookingCompleteActivity.newIntent(context, bookedTicket)
+        val intent = BookingCompleteActivity.newIntent(context, bookedTicket.id!!)
+        val requestCode = bookedTicket.id.toInt()
         val pendingIntent =
             PendingIntent.getActivity(
                 context,
-                bookedTicket.hashCode(),
+                requestCode,
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
@@ -60,7 +61,7 @@ class MovieReminderReceiver : BroadcastReceiver() {
                 .setAutoCancel(true)
                 .build()
 
-        notificationManager.notify(bookedTicket.hashCode(), notification)
+        notificationManager.notify(requestCode, notification)
     }
 
     companion object {
