@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.ActivityHomeBinding
+import woowacourse.movie.helper.NotificationHelper
 import woowacourse.movie.helper.PermissionHelper
 import woowacourse.movie.movie.MovieFragment
 import woowacourse.movie.reservation.ReservationFragment
@@ -132,17 +133,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "예약 알림"
-            val descriptionText = "영화 예약 30분 전 알림 채널"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel =
-                NotificationChannel("channel_id", name, importance).apply {
-                    description = descriptionText
-                }
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
+        NotificationHelper.createNotificationChannel(this)
     }
 
     companion object {
@@ -151,3 +142,5 @@ class HomeActivity : AppCompatActivity() {
         private const val TAG_SETTING = "SETTING"
     }
 }
+
+

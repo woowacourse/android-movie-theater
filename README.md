@@ -243,3 +243,5 @@
 - [x] feat: 예약 정보를 찾을 수 없을 때 토스트 메시지와 함께 액티비티 종료
 
 - [x] refactor: 푸시 알림에 대한 책임 SettingPregerenceHelper로 분리
+
+- [x] refactor: Notification 함수 Helper로 분리
