@@ -18,17 +18,17 @@ import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.AlarmReceiver
 import woowacourse.movie.R
+import woowacourse.movie.RepositoryProvider
 import woowacourse.movie.booking.complete.BookingCompleteActivity
-import woowacourse.movie.data.SettingPreference
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.mapper.IntentCompat
 import woowacourse.movie.ui.model.SeatUiModel
 import woowacourse.movie.ui.model.TicketUiModel
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
-    private val presenter: SeatSelectionPresenter by lazy {
-        SeatSelectionPresenter(this, SettingPreference(this))
-    }
+    private val presenter: SeatSelectionPresenter =
+        SeatSelectionPresenter(this, RepositoryProvider.settingRepository, RepositoryProvider.movieDatabase)
+
     private val seatViews: MutableMap<SeatUiModel, TextView> = mutableMapOf()
     private lateinit var binding: ActivitySeatSelectionBinding
 
@@ -112,7 +112,7 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             .setTitle(getString(R.string.dig_title))
             .setMessage(getString(R.string.dig_message))
             .setPositiveButton(getString(R.string.dig_btn_positive_message)) { _, _ ->
-                presenter.completeSeatsSelection(applicationContext)
+                presenter.completeSeatsSelection()
 
                 startBookingCompleteActivity(ticket)
             }
