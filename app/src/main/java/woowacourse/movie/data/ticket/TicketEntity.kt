@@ -14,6 +14,7 @@ import java.time.LocalTime
 
 @Entity(tableName = TICKET_TABLE_NAME)
 data class TicketEntity(
+    @PrimaryKey(autoGenerate = true) val pk: Int = 0,
     @ColumnInfo(name = "movie_title") val movieTitle: String,
     @ColumnInfo(name = "theater_name") val theaterName: String,
     @ColumnInfo(name = "screening_date") val screeningDate: String,
@@ -22,9 +23,6 @@ data class TicketEntity(
     val seats: String,
     val price: Int,
 ) {
-    @PrimaryKey(autoGenerate = true)
-    var pk: Int = 0
-
     companion object {
         const val TICKET_TABLE_NAME = "tickets"
     }
@@ -32,13 +30,13 @@ data class TicketEntity(
 
 fun Ticket.toEntity(): TicketEntity {
     return TicketEntity(
-        movieTitle,
-        theaterName,
-        screeningDate.toString(),
-        screeningTime.toString(),
-        count.value,
-        seats.joinToString(",") { seat -> "${seat.col.value} ${seat.row.value}" },
-        price,
+        movieTitle = movieTitle,
+        theaterName = theaterName,
+        screeningDate = screeningDate.toString(),
+        screeningTime = screeningTime.toString(),
+        count = count.value,
+        seats = seats.joinToString(",") { seat -> "${seat.col.value} ${seat.row.value}" },
+        price = price,
     )
 }
 
