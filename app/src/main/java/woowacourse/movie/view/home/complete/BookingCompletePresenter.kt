@@ -9,8 +9,8 @@ import kotlin.concurrent.thread
 
 class BookingCompletePresenter(
     private val view: BookingCompleteContract.View,
-    private val repository: TicketRepository,
-    private val manager: SettingRepository,
+    private val ticketRepository: TicketRepository,
+    private val settingRepository: SettingRepository,
     private val ticket: Ticket,
 ) : BookingCompleteContract.Presenter {
     override fun loadTicket() {
@@ -18,7 +18,7 @@ class BookingCompletePresenter(
     }
 
     override fun loadNotificationInfo(ticket: Ticket) {
-        val enabled: Boolean = manager.isNotificationEnabled()
+        val enabled: Boolean = settingRepository.isNotificationEnabled()
         if (!enabled) return
 
         val screeningDateTime = LocalDateTime.of(ticket.screeningDate, ticket.screeningTime)
@@ -33,7 +33,7 @@ class BookingCompletePresenter(
 
     override fun addToHistory(ticket: Ticket) {
         thread {
-            repository.insert(ticket)
+            ticketRepository.insert(ticket)
         }.join()
     }
 

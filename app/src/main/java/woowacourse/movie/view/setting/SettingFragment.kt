@@ -51,7 +51,7 @@ class SettingFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         val application = requireActivity().application as MovieApplication
-        presenter = SettingPresenter(this, application.settingStorageManager)
+        presenter = SettingPresenter(this, application.settingRepository)
         presenter.loadSettings()
         binding.handler = this
     }

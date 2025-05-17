@@ -30,7 +30,7 @@ class NotificationReceiver : BroadcastReceiver() {
         }
 
         val application = context.applicationContext as MovieApplication
-        if (application.settingStorageManager.isNotificationEnabled()) {
+        if (application.settingRepository.isNotificationEnabled()) {
             sendMovieNotification(context, ticket)
         }
     }

@@ -35,7 +35,7 @@ class BookingHistoryFragment : Fragment(R.layout.fragment_booking_history), Book
         val decoration = DividerItemDecoration(binding.root.context, DividerItemDecoration.VERTICAL)
         binding.rvBookingHistory.addItemDecoration(decoration)
 
-        val repository = (requireActivity().application as MovieApplication).repository
+        val repository = (requireActivity().application as MovieApplication).ticketRepository
         presenter = BookingHistoryPresenter(this, repository)
         presenter.loadTickets()
     }

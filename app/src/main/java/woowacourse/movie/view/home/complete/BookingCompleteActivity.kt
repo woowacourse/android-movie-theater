@@ -49,8 +49,8 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         presenter =
             BookingCompletePresenter(
                 this,
-                application.repository,
-                application.settingStorageManager,
+                application.ticketRepository,
+                application.settingRepository,
                 ticket,
             )
         presenter.loadTicket()
