@@ -8,4 +8,6 @@ object BookedTicketRepositoryProvider {
     fun init(bookedTicketRepository: BookedTicketRepository) {
         this.bookedTicketRepository = bookedTicketRepository
     }
+
+    fun provideBookedTicketRepository() = bookedTicketRepository
 }

@@ -1,15 +1,14 @@
 package woowacourse.movie.ui.seat
 
-import woowacourse.movie.data.BookedTicketDatabase
 import woowacourse.movie.domain.model.BookedTicket
+import woowacourse.movie.domain.model.BookedTicketRepository
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
-import woowacourse.movie.domain.model.toBookedTicketEntity
+import woowacourse.movie.providers.BookedTicketRepositoryProvider
 import woowacourse.movie.sample.DUMMY_MOVIES
-import kotlin.concurrent.thread
 
 class BookingSeatPresenter(
     private val bookingSeatView: BookingSeatContract.View,
@@ -19,6 +18,7 @@ class BookingSeatPresenter(
     private lateinit var theaterName: String
     private lateinit var movieSchedule: MovieSchedule
     private lateinit var seats: Seats
+    private val repository: BookedTicketRepository by lazy { BookedTicketRepositoryProvider.provideBookedTicketRepository() }
 
     override fun loadBookingSeatInfo(
         movieId: Long,
@@ -60,8 +60,7 @@ class BookingSeatPresenter(
         bookingSeatView.showConfirmButton(seats.isSeatSelectionComplete(headcount))
     }
 
-    override fun loadBookedTicket(bookedTicketDatabase: BookedTicketDatabase) {
-        val dao = bookedTicketDatabase.bookedTicketDao()
+    override fun bookingTicket() {
         val bookedTicket =
             BookedTicket(
                 theaterName = theaterName,
@@ -69,10 +68,7 @@ class BookingSeatPresenter(
                 movieSchedule = movieSchedule,
                 headcount = headcount,
             )
-
-        thread {
-            dao.insert(bookedTicket.toBookedTicketEntity())
-        }
+        repository.insert(bookedTicket)
 
         bookingSeatView.moveToBookedTicket(bookedTicket)
     }
