@@ -14,12 +14,12 @@ class TheaterListAdapter(
     private val items: List<Theater>,
     private val movie: Movie,
     private val onClicked: (Theater) -> Unit,
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<TheaterViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): RecyclerView.ViewHolder {
+    ): TheaterViewHolder {
         val binding = DataBindingUtil.inflate<BottomSheetItemBinding>(
             LayoutInflater.from(parent.context),
             R.layout.bottom_sheet_item,
@@ -29,9 +29,9 @@ class TheaterListAdapter(
         return TheaterViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TheaterViewHolder, position: Int) {
         val item = items[position]
-        (holder as TheaterViewHolder).setItem(item, movie, onClicked)
+        holder.setItem(item, movie, onClicked)
     }
 
     override fun getItemCount(): Int = items.size
