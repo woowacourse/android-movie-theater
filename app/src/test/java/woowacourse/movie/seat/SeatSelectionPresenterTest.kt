@@ -11,6 +11,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import woowacourse.movie.data.SettingRepository
+import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.fixture.SEAT_A1
 import woowacourse.movie.fixture.SEOLLEUNG
 import woowacourse.movie.fixture.createTicket
@@ -36,13 +37,15 @@ class SeatSelectionPresenterTest {
                 isAlarm = isGranted
             }
         }
+    private lateinit var mockDb: MovieDatabase
 
     @BeforeEach
     fun setUp() {
         mockView = mockk(relaxed = true)
         mockTicketUiData = createTicket(SEOLLEUNG, listOf(), 2).toUiModel()
+        mockDb = mockk(relaxed = true)
 
-        presenter = SeatSelectionPresenter(mockView, settingManager)
+        presenter = SeatSelectionPresenter(mockView, settingManager, mockDb)
         presenter.initializeData(mockTicketUiData)
     }
 
@@ -101,7 +104,7 @@ class SeatSelectionPresenterTest {
         every { mockView.makeAlarm(capture(ticketSlot), capture(timeSlot)) } just Runs
 
         // when
-        presenter.completeSeatsSelection(mockContext)
+        presenter.completeSeatsSelection()
 
         val expected =
             LocalDateTime.of(mockTicketUiData.toDomain().selectedDate, mockTicketUiData.toDomain().selectedTime)

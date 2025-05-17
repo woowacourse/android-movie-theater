@@ -48,7 +48,7 @@ class TicketListPresenterTest {
         every { mockDatabase.TicketDao() } returns mockTicketDao
         every { mockTicketDao.getAllTickets() } returns dummyTickets
 
-        presenter = TicketListPresenter(mockView)
+        presenter = TicketListPresenter(mockView, mockDatabase)
     }
 
     @Test
@@ -58,7 +58,7 @@ class TicketListPresenterTest {
         every { mockView.setUpReservationList(capture(ticket)) } just Runs
 
         // when
-        presenter.initializeData(mockContext)
+        presenter.initializeData()
 
         // then
         verify {
