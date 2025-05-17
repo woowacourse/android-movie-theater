@@ -1,6 +1,8 @@
 package woowacourse.movie.data
 
+import woowacourse.movie.domain.Callback
 import woowacourse.movie.domain.datasource.TicketDataSource
+import woowacourse.movie.domain.execute
 import woowacourse.movie.domain.fixture.ticketFixtures
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.Ticket
@@ -47,7 +49,20 @@ class FakeTicketDataSource : TicketDataSource {
         return id
     }
 
-    override fun readAllTicket(): List<Ticket> = tickets.values.toList()
+    override fun readAllTicket(callback: Callback<List<Ticket>>) {
+        execute(
+            task = { tickets.values.toList() },
+            callback = callback,
+        )
+    }
 
-    override fun getTicketById(ticketId: Long): Ticket = tickets[ticketId]!!
+    override fun getTicketById(
+        ticketId: Long,
+        callback: Callback<Ticket>,
+    ) {
+        execute(
+            task = { tickets[ticketId]!! },
+            callback = callback,
+        )
+    }
 }

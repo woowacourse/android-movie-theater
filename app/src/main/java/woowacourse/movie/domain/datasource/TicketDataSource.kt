@@ -12,7 +12,7 @@ interface TicketDataSource {
         price: Int,
     ): Long
 
-    fun readAllTicket(): List<Ticket>
+    fun readAllTicket(callback: Callback<List<Ticket>>)
 
     fun getTicketById(
         ticketId: Long,

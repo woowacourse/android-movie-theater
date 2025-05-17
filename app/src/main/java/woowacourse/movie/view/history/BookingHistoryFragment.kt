@@ -12,6 +12,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.complete.BookingCompleteActivity
+import woowacourse.movie.view.core.ext.showToast
 import woowacourse.movie.view.history.adapter.TicketAdapter
 import woowacourse.movie.view.history.adapter.model.toItem
 
@@ -45,11 +46,13 @@ class BookingHistoryFragment :
 
     override fun showTickets(tickets: List<Ticket>) {
         val items = tickets.map { it.toItem() }
-        val ticketAdapter = TicketAdapter(ticketAdapterActionHandler, items)
+        requireActivity().runOnUiThread {
+            val ticketAdapter = TicketAdapter(ticketAdapterActionHandler, items)
 
-        with(binding.rv) {
-            adapter = ticketAdapter
-            addItemDecoration(DividerItemDecoration(requireContext(), VERTICAL))
+            with(binding.rv) {
+                adapter = ticketAdapter
+                addItemDecoration(DividerItemDecoration(requireContext(), VERTICAL))
+            }
         }
     }
 
@@ -57,5 +60,11 @@ class BookingHistoryFragment :
         val intent = BookingCompleteActivity.newIntent(requireContext(), ticketId)
         startActivity(intent)
         return inflater.inflate(R.layout.fragment_booking_history, container, false)
+    }
+
+    override fun showMessage() {
+        requireActivity().runOnUiThread {
+            requireContext().showToast(R.string.text_booking_history_fail)
+        }
     }
 }

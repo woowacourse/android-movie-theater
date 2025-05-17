@@ -29,10 +29,11 @@ class TicketDataSourceImpl(private val dao: TicketDao) : TicketDataSource {
         return dao.insert(entity)
     }
 
-    override fun readAllTicket(): List<Ticket> {
-        val result = dao.readAll().map { it.toDomain() }
-        return result
-    }
+    override fun readAllTicket(callback: Callback<List<Ticket>>) =
+        execute(
+            task = { dao.readAll().map { it.toDomain() } },
+            callback = callback,
+        )
 
     override fun getTicketById(
         ticketId: Long,

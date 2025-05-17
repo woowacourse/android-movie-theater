@@ -7,6 +7,8 @@ interface BookingHistoryContract {
         fun showTickets(tickets: List<Ticket>)
 
         fun moveToTicketDetail(ticketId: Long)
+
+        fun showMessage()
     }
 
     interface Presenter {
