@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingsBinding
 import woowacourse.movie.providers.StorageProvider
+import woowacourse.movie.utils.AlarmManagerCompat
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
@@ -39,6 +40,10 @@ class SettingsFragment : Fragment() {
         val toggledStatus = !StorageProvider.hasPushNotificationPermission
         binding.isEnablePostNotification = toggledStatus
         StorageProvider.setPushNotificationPermissionState(toggledStatus)
+
+        if (!toggledStatus && !AlarmManagerCompat.hasExactAlarmPermission(requireContext())) {
+            StorageProvider.setFirstExactAlarmPermissionState(true)
+        }
     }
 }
 
