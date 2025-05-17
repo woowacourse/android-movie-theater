@@ -52,5 +52,5 @@
 - [x] SettingFragment | 권한이 필요한 경우 설정화면으로 이동하도록 변경
 - [x] TicketDao | findTicket 네이밍 고민
 - [x] TicketListPresenter | 프레젠터가 안드로이드 의존성을 가지지 않도록 수정
+- [x] TicketDao | 같은 데이터를 저장할 경우 충돌 고민
 - [ ] SettingPresenter | 테스트
-- [ ] TicketDao | 같은 데이터를 저장할 경우 충돌 고민
