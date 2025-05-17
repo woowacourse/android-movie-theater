@@ -22,3 +22,9 @@ fun Context.checkNotificationPermission(): Boolean {
         true
     }
 }
+
+fun Context.showToast(
+    @StringRes resourceId: Int,
+) {
+    Toast.makeText(this, resourceId, Toast.LENGTH_SHORT).show()
+}
