@@ -4,7 +4,7 @@ import woowacourse.movie.feature.model.BookingInfoUiModel
 
 interface BookingHistoryContract {
     interface View {
-        fun showBookingHistory()
+        fun showBookingHistory(bookingHistory: List<BookingInfoUiModel>)
 
         fun navigateToBookingDetail(bookingHistory: BookingInfoUiModel)
     }
