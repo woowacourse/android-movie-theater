@@ -3,8 +3,8 @@ package woowacourse.movie.moviebookingseat
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import woowacourse.movie.data.MovieApplication
 import woowacourse.movie.data.Reservation
+import woowacourse.movie.data.ReservationRepository
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.seat.Seat
@@ -59,8 +59,8 @@ class MovieBookingSeatPresenter(
             )
 
         thread {
-            val db = (context as MovieApplication).database
-            val generatedId = db.reservationDao().insert(reservation)
+            val reservationRepository = ReservationRepository.get()
+            val generatedId = reservationRepository.insert(reservation)
             reservation.uid = generatedId
             Handler(Looper.getMainLooper()).post {
                 view.showConfirmDialog(generatedId)

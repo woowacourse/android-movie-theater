@@ -21,7 +21,7 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
         enableEdgeToEdge()
         initBinding()
         applyWindowInserts()
-        presenter = MovieBookedPresenter(this, applicationContext)
+        presenter = MovieBookedPresenter(this)
         fetchReservationInfo()
     }
 

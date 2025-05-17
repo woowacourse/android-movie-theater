@@ -1,10 +1,13 @@
 package woowacourse.movie.moviebookingseat
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -16,7 +19,7 @@ import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.NotificationReceiver
 import woowacourse.movie.R
-import woowacourse.movie.data.MovieApplication
+import woowacourse.movie.data.ReservationRepository
 import woowacourse.movie.databinding.MovieBookingSeatBinding
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Theater
@@ -104,39 +107,37 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
             .setCancelable(false)
     }
 
+    @SuppressLint("ScheduleExactAlarm")
     override fun setUpNotification(id: Long) {
         val sharedPref = getSharedPreferences("settings", Context.MODE_PRIVATE)
         if (!sharedPref.getBoolean("notification", true)) return
 
         thread {
-            val db = (applicationContext as MovieApplication).database
-            val reservation = db.reservationDao().getById(id) ?: return@thread
+            val reservationRepository = ReservationRepository.get()
+            val reservation = reservationRepository.getReservation(id) ?: return@thread
 
-            val intent =
-                Intent(this, NotificationReceiver::class.java).apply {
-                    putExtra("reservationId", id)
-                    putExtra("title", reservation.title)
-                }
+            val intent = Intent(this, NotificationReceiver::class.java).apply {
+                putExtra("reservationId", id)
+                putExtra("title", reservation.title)
+            }
 
-            val pendingIntent =
-                PendingIntent.getBroadcast(
-                    this,
-                    id.toInt(),
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-                )
+            val pendingIntent = PendingIntent.getBroadcast(
+                this, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
 
             val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")
             val dateTime = LocalDateTime.parse("${reservation.date} ${reservation.time}", formatter)
             val notifyTime = dateTime.minusMinutes(30).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
-            val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+            Handler(Looper.getMainLooper()).post {
+                val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                notifyTime,
-                pendingIntent,
-            )
+                alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    notifyTime,
+                    pendingIntent,
+                )
+            }
         }
     }
 

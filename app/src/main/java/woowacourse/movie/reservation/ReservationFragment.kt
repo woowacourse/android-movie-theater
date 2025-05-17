@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.R
 import woowacourse.movie.data.MovieApplication
 import woowacourse.movie.data.Reservation
+import woowacourse.movie.data.ReservationRepository
 import woowacourse.movie.databinding.FragmentReservationBinding
 import woowacourse.movie.moviebooked.MovieBookedActivity
 import kotlin.concurrent.thread
@@ -34,8 +35,8 @@ class ReservationFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         thread {
-            val db = (context?.applicationContext as MovieApplication).database
-            val reservations = db.reservationDao().getAll()
+            val reservationRepository = ReservationRepository.get()
+            val reservations = reservationRepository.getReservations()
             Handler(Looper.getMainLooper()).post {
                 showReservation(reservations)
             }
