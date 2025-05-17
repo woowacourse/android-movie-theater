@@ -10,12 +10,16 @@ interface BookingCompleteContract {
             ticket: Ticket,
             time: Long,
         )
+
+        fun isNotificationPermitted(): Boolean
+
+        fun notifyNoNotificationPermission()
     }
 
     interface Presenter {
         fun loadTicket()
 
-        fun loadNotificationInfo(ticket: Ticket)
+        fun decideNotification(ticket: Ticket)
 
         fun addToHistory(ticket: Ticket)
     }

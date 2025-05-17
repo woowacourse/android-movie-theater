@@ -35,4 +35,5 @@
     <string name="text_permission_dialog_negative_button">취소</string>
     <string name="text_booking_notificaiton_title">예매 알림</string>
     <string name="text_booking_notification_body">%1$s 30분 후에 상영</string>
+    <string name="text_notification_permission_not_granted">알림 권한이 없어 알림을 예약하지 못했습니다. 앱 설정에서 알림 권한을 허용해주세요.</string>
 </resources>

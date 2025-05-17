@@ -56,21 +56,37 @@ class BookingCompletePresenterTest {
         every { manager.isNotificationEnabled() } returns false
 
         // when
-        presenter.loadNotificationInfo(ticket)
+        presenter.decideNotification(ticket)
 
         // then
         verify(exactly = 0) { view.setNotification(any(), any()) }
     }
 
     @Test
-    fun `알림 설정이 켜져있으면 알림을 맞춘다`() {
+    fun `알림 설정이 켜져있고 알림 권한이 있으면 안내 문구를 출력하지 않고 알림을 설정한다`() {
         // given
         every { manager.isNotificationEnabled() } returns true
+        every { view.isNotificationPermitted() } returns true
 
         // when
-        presenter.loadNotificationInfo(ticket)
+        presenter.decideNotification(ticket)
 
         // then
+        verify(exactly = 0) { view.notifyNoNotificationPermission() }
         verify { view.setNotification(ticket, any()) }
+    }
+
+    @Test
+    fun `알림 설정이 켜져있지만 알림 권한이 없으면 알림을 설정하지 않고 안내 문구를 출력한다`() {
+        // given
+        every { manager.isNotificationEnabled() } returns true
+        every { view.isNotificationPermitted() } returns false
+
+        // when
+        presenter.decideNotification(ticket)
+
+        // then
+        verify { view.notifyNoNotificationPermission() }
+        verify(exactly = 0) { view.setNotification(ticket, any()) }
     }
 }

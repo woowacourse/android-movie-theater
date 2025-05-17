@@ -17,10 +17,18 @@ class BookingCompletePresenter(
         view.showTicket(ticket)
     }
 
-    override fun loadNotificationInfo(ticket: Ticket) {
-        val enabled: Boolean = settingRepository.isNotificationEnabled()
-        if (!enabled) return
+    override fun decideNotification(ticket: Ticket) {
+        val notificationEnabled: Boolean = settingRepository.isNotificationEnabled()
+        val notificationPermitted: Boolean = view.isNotificationPermitted()
+        if (!notificationEnabled) return
+        if (!notificationPermitted) {
+            view.notifyNoNotificationPermission()
+            return
+        }
+        setNotification(ticket)
+    }
 
+    private fun setNotification(ticket: Ticket) {
         val screeningDateTime = LocalDateTime.of(ticket.screeningDate, ticket.screeningTime)
         val notificationTime =
             screeningDateTime

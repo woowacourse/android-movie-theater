@@ -5,12 +5,15 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.MovieApplication
@@ -24,8 +27,6 @@ import woowacourse.movie.view.notification.NotificationReceiver
 import woowacourse.movie.view.util.StringFormatter
 import woowacourse.movie.view.util.getSerializableCompat
 import woowacourse.movie.view.util.showToast
-import java.time.LocalDate
-import java.time.LocalTime
 
 class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.View {
     private lateinit var binding: ActivityBookingCompleteBinding
@@ -37,6 +38,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         enableEdgeToEdge()
         binding = ActivityBookingCompleteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initView()
 
         val ticket: Ticket? = intent.extras?.getSerializableCompat(KEY_TICKET)
         if (ticket == null) {
@@ -45,6 +47,28 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
             return
         }
 
+        initPresenter(ticket)
+        presenter.loadTicket()
+
+        val caller: Class<*>? = intent.extras?.getSerializableCompat(KEY_CALLER)
+        if (caller == SeatActivity::class.java) {
+            presenter.addToHistory(ticket)
+            presenter.decideNotification(ticket)
+        }
+
+        setBackAction()
+    }
+
+    private fun initView() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun initPresenter(ticket: Ticket) {
         val application = application as MovieApplication
         presenter =
             BookingCompletePresenter(
@@ -53,16 +77,47 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
                 application.settingRepository,
                 ticket,
             )
-        presenter.loadTicket()
+    }
 
-        val caller: Class<*>? = intent.extras?.getSerializableCompat(KEY_CALLER)
-        if (caller == SeatActivity::class.java) {
-            presenter.addToHistory(ticket)
-            presenter.loadNotificationInfo(ticket)
+    override fun showTicket(ticket: Ticket) {
+        val formattedSchedule =
+            getString(R.string.text_booking_schedule).format(
+                StringFormatter.dotDateFormat(ticket.screeningDate),
+                ticket.screeningTime,
+            )
+        val formattedPrice = getString(R.string.text_on_site_payment).format(StringFormatter.thousandFormat(ticket.price))
+
+        binding.tvTitle.text = ticket.movieTitle
+        binding.tvSchedule.text = formattedSchedule
+        binding.tvSeat.text = seatToLabel(ticket.seats)
+        binding.tvTheaterName.text = ticket.theaterName
+        binding.tvAdmissionCount.text = getString(R.string.text_general_people_count).format(ticket.count.value)
+        binding.tvPrice.text = formattedPrice
+    }
+
+    private fun seatToLabel(seats: Set<Seat>): String {
+        return seats.joinToString { seat ->
+            val rowLetter = (ROW_STARTING_VALUE + seat.row.value)
+            val columnNumber = COL_STARTING_VALUE + seat.col.value
+            "$rowLetter$columnNumber"
         }
+    }
 
-        initView()
-        setBackAction()
+    override fun isNotificationPermitted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val permissionStatus =
+                ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS,
+                )
+            permissionStatus == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+    }
+
+    override fun notifyNoNotificationPermission() {
+        this.showToast(getString(R.string.text_notification_permission_not_granted))
     }
 
     override fun setNotification(
@@ -85,13 +140,15 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
         )
     }
 
-    private fun initView() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                moveToHome()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
         }
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun setBackAction() {
@@ -103,70 +160,6 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
                 }
             },
         )
-    }
-
-    override fun showTicket(ticket: Ticket) {
-        with(ticket) {
-            initBookingMovieTitleView(movieTitle)
-            initBookingScheduleView(screeningDate, screeningTime)
-            initBookingSeatView(seats)
-            initTheaterNameView(theaterName)
-            initBookingPeopleCountView(count.value)
-            initBookingTicketPriceView(price)
-        }
-    }
-
-    private fun initBookingMovieTitleView(title: String) {
-        binding.tvTitle.text = title
-    }
-
-    private fun initBookingScheduleView(
-        bookingDate: LocalDate,
-        bookingTime: LocalTime,
-    ) {
-        val formattedBookingDate = StringFormatter.dotDateFormat(bookingDate)
-        val scheduleFormat =
-            getString(R.string.text_booking_schedule).format(formattedBookingDate, bookingTime)
-
-        binding.tvSchedule.text = scheduleFormat
-    }
-
-    private fun initBookingSeatView(seats: Set<Seat>) {
-        binding.tvSeat.text = seatToLabel(seats)
-    }
-
-    private fun initTheaterNameView(theaterName: String) {
-        binding.tvTheaterName.text = theaterName
-    }
-
-    private fun initBookingPeopleCountView(peopleCount: Int) {
-        binding.tvAdmissionCount.text =
-            getString(R.string.text_general_people_count).format(peopleCount)
-    }
-
-    private fun initBookingTicketPriceView(ticketPrice: Int) {
-        val priceFormat = StringFormatter.thousandFormat(ticketPrice)
-        binding.tvPrice.text =
-            getString(R.string.text_on_site_payment).format(priceFormat)
-    }
-
-    private fun seatToLabel(seats: Set<Seat>): String {
-        return seats.joinToString { seat ->
-            val rowLetter = (ROW_STARTING_VALUE + seat.row.value)
-            val columnNumber = COL_STARTING_VALUE + seat.col.value
-            "$rowLetter$columnNumber"
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                moveToHome()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     private fun moveToHome() {
