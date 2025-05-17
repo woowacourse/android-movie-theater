@@ -68,9 +68,13 @@ class BookingSeatPresenter(
                 movieSchedule = movieSchedule,
                 headcount = headcount,
             )
-        repository.insert(bookedTicket)
 
-        bookingSeatView.moveToBookedTicket(bookedTicket)
+        // thread 때문에 콜백으로 처리하다보니 DB에 넣은 id값을 갖고 있는 bookedTicket을 얻기 위해 2번의 쿼리가 발생
+        repository.insert(bookedTicket) { id ->
+            repository.fetchById(id) { bookedTicket ->
+                bookingSeatView.moveToBookedTicket(bookedTicket)
+            }
+        }
     }
 
     private fun allSeatSelectionByIsReserved(

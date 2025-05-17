@@ -1,6 +1,7 @@
 package woowacourse.movie.ui.seat
 
 import android.app.AlertDialog
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -14,13 +15,16 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.databinding.DataBindingUtil
+import java.time.ZoneId
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seat
+import woowacourse.movie.notification.MovieReminderReceiver
 import woowacourse.movie.ui.complete.BookingCompleteActivity
+import woowacourse.movie.utils.AlarmManagerCompat
 import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.intentSerializable
 
@@ -82,7 +86,10 @@ class BookingSeatActivity :
     }
 
     override fun moveToBookedTicket(bookedTicket: BookedTicket) {
-        startActivity(BookingCompleteActivity.newIntent(this, bookedTicket))
+        // 알림 퍼미션이 커져 있을 때만 실행 로직 추가 필요
+        scheduleNotification(bookedTicket)
+
+        startActivity(BookingCompleteActivity.newIntent(this, bookedTicket.id!!))
         finish()
     }
 
@@ -129,6 +136,25 @@ class BookingSeatActivity :
         }
     }
 
+    private fun scheduleNotification(bookedTicket: BookedTicket) {
+        val triggerTime = bookedTicket.movieSchedule.screeningDateTime.minusMinutes(30L)
+        val triggerAtMillis =
+            triggerTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+        val intent = MovieReminderReceiver.newIntent(this, bookedTicket)
+        val requestCode =
+            bookedTicket.id!!.toInt() // 현재 Long 타입의 변수이기에 int 범위보다 커질경우 에러가 발생할 가능성 존재
+        val pendingIntent =
+            PendingIntent.getBroadcast(
+                this,
+                requestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
+
+        AlarmManagerCompat.setExact(this, triggerAtMillis, pendingIntent)
+    }
+
     private fun setSeatTag(
         textView: TextView,
         rowIndex: Int,
@@ -170,9 +196,11 @@ class BookingSeatActivity :
 
     private fun restoreMovieId() = intent.getLongExtra(EXTRA_MOVIE_ID, 0L)
 
-    private fun restoreMovieSchedule() = intent.intentSerializable(EXTRA_MOVIE_SCHEDULE, MovieSchedule::class.java)!!
+    private fun restoreMovieSchedule() =
+        intent.intentSerializable(EXTRA_MOVIE_SCHEDULE, MovieSchedule::class.java)!!
 
-    private fun restoreHeadcount() = intent.intentSerializable(EXTRA_HEADCOUNT, Headcount::class.java)!!
+    private fun restoreHeadcount() =
+        intent.intentSerializable(EXTRA_HEADCOUNT, Headcount::class.java)!!
 
     private fun restoreTheaterName() = intent.getStringExtra(EXTRA_THEATER_NAME)!!
 
