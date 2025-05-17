@@ -1,7 +1,7 @@
 package woowacourse.movie.domain.model
 
 interface BookedTicketRepository {
-    fun insert(bookedTicket: BookedTicket): Long
+    fun insert(bookedTicket: BookedTicket)
 
     fun fetchById(id: Long, onTicketLoaded: (BookedTicket) -> Unit)
 
