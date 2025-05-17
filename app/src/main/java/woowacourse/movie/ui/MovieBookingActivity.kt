@@ -10,7 +10,7 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieBookingBinding
-import woowacourse.movie.ui.history.view.BookingHistoryFragment
+import woowacourse.movie.ui.history.BookingHistoryFragment
 import woowacourse.movie.ui.movielist.view.MovieListFragment
 import woowacourse.movie.ui.settings.view.SettingsFragment
 

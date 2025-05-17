@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.history.view
+package woowacourse.movie.ui.history
 
 import woowacourse.movie.data.BookedTicketEntity
 

@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.history.view
+package woowacourse.movie.ui.history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.history.contract
+package woowacourse.movie.ui.history
 
 import woowacourse.movie.data.BookedTicketDatabase
 import woowacourse.movie.data.BookedTicketEntity

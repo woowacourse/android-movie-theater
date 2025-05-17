@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.history.view
+package woowacourse.movie.ui.history
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,8 +14,6 @@ import woowacourse.movie.data.BookedTicketEntity
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.ui.complete.BookingCompleteActivity
-import woowacourse.movie.ui.history.contract.BookingHistoryContract
-import woowacourse.movie.ui.history.presenter.BookingHistoryPresenter
 
 class BookingHistoryFragment : Fragment(), BookingHistoryContract.View {
     private var _binding: FragmentBookingHistoryBinding? = null

@@ -6,7 +6,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.history.view.BookingHistoryFragment">
+        tools:context=".ui.history.BookingHistoryFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/layout_recycler_history"

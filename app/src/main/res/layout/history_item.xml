@@ -15,7 +15,7 @@
 
         <variable
             name="clickListener"
-            type="woowacourse.movie.ui.history.view.HistoryClickListener" />
+            type="woowacourse.movie.ui.history.HistoryClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
