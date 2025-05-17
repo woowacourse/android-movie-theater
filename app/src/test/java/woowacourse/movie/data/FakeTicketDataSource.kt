@@ -24,6 +24,11 @@ class FakeTicketDataSource : TicketDataSource {
                     ),
                 seats = it.seats,
                 price = it.price,
+                object : Callback<Long> {
+                    override fun onSuccess(result: Long) {}
+
+                    override fun onError(e: Throwable) {}
+                },
             )
         }
     }
@@ -32,7 +37,8 @@ class FakeTicketDataSource : TicketDataSource {
         booking: Booking,
         seats: Set<Seat>,
         price: Int,
-    ): Long {
+        callback: Callback<Long>,
+    ) {
         val id = (tickets.keys.maxOrNull() ?: 0L) + 1L
         val ticket =
             Ticket(
@@ -46,7 +52,6 @@ class FakeTicketDataSource : TicketDataSource {
                 seats = seats,
             )
         tickets[id] = ticket
-        return id
     }
 
     override fun readAllTicket(callback: Callback<List<Ticket>>) {

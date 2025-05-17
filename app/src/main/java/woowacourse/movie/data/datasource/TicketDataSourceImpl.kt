@@ -15,7 +15,8 @@ class TicketDataSourceImpl(private val dao: TicketDao) : TicketDataSource {
         booking: Booking,
         seats: Set<Seat>,
         price: Int,
-    ): Long {
+        callback: Callback<Long>,
+    ) {
         val entity =
             TicketEntity(
                 movieTitle = booking.movieTitle,
@@ -26,7 +27,10 @@ class TicketDataSourceImpl(private val dao: TicketDao) : TicketDataSource {
                 seats = seats,
             )
 
-        return dao.insert(entity)
+        execute(
+            task = { dao.insert(entity) },
+            callback = callback,
+        )
     }
 
     override fun readAllTicket(callback: Callback<List<Ticket>>) =

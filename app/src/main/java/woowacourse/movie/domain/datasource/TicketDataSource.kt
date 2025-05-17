@@ -10,7 +10,8 @@ interface TicketDataSource {
         booking: Booking,
         seats: Set<Seat>,
         price: Int,
-    ): Long
+        callback: Callback<Long>,
+    )
 
     fun readAllTicket(callback: Callback<List<Ticket>>)
 

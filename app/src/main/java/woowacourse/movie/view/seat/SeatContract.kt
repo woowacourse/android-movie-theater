@@ -11,6 +11,8 @@ interface SeatContract {
 
         fun showPrice(price: Int)
 
+        fun showErrorMessage()
+
         fun setConfirmButtonEnabled(clickable: Boolean)
 
         fun moveToBookingComplete(id: Long)

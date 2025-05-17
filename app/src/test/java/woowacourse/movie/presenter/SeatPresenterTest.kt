@@ -35,8 +35,7 @@ class SeatPresenterTest {
         presenter =
             SeatPresenter(
                 mockView, mockSeats, booking, FakeTicketDataSource(),
-            ) { it }
-        presenter = SeatPresenter(mockView, mockSeats, booking)
+            )
     }
 
     @Test

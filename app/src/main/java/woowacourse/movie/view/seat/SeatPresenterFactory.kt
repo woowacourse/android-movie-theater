@@ -5,7 +5,6 @@ import woowacourse.movie.data.datasource.TicketDataSourceImpl
 import woowacourse.movie.data.db.UserDatabase
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.seat.Seats
-import woowacourse.movie.view.core.util.DefaultMainThreadExecutor
 
 class SeatPresenterFactory {
     fun initialize(
@@ -17,7 +16,6 @@ class SeatPresenterFactory {
         val db = UserDatabase.getDatabase(context)
         val dao = db.ticketDao()
         val dataSource = TicketDataSourceImpl(dao)
-        val executor = DefaultMainThreadExecutor()
-        return SeatPresenter(view, seat, booking, dataSource, executor)
+        return SeatPresenter(view, seat, booking, dataSource)
     }
 }

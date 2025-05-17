@@ -1,5 +1,6 @@
 package woowacourse.movie.view.seat
 
+import woowacourse.movie.domain.Callback
 import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.Ticket
@@ -7,15 +8,12 @@ import woowacourse.movie.domain.model.seat.Column
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.Seats
-import woowacourse.movie.view.core.util.MainThreadExecutor
-import kotlin.concurrent.thread
 
 class SeatPresenter(
     private val view: SeatContract.View,
     private val seats: Seats,
     private val booking: Booking,
     private val dataSource: TicketDataSource,
-    private val mainThreadExecutor: MainThreadExecutor,
 ) : SeatContract.Presenter {
     init {
         loadBookingInfo()
@@ -62,11 +60,19 @@ class SeatPresenter(
     }
 
     private fun saveTicket() {
-        thread {
-            val id = dataSource.addTicket(booking, seats.item, seats.bookingPrice())
-            mainThreadExecutor.execute {
-                view.moveToBookingComplete(id)
-            }
-        }
+        dataSource.addTicket(
+            booking,
+            seats.item,
+            seats.bookingPrice(),
+            object : Callback<Long> {
+                override fun onSuccess(result: Long) {
+                    view.moveToBookingComplete(result)
+                }
+
+                override fun onError(e: Throwable) {
+                    view.showErrorMessage()
+                }
+            },
+        )
     }
 }
