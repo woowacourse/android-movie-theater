@@ -237,3 +237,5 @@
 - [x] refactor: findViewById -> binding.root로 변경
 
 - [x] refactor: 리사이클러뷰홀더 -> ReservationViewHolder으로 타입 한정
+
+- [x] refactor: getSharedPreferences 상위 함수로 이동
