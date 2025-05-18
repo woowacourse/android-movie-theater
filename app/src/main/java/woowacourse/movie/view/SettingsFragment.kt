@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import woowacourse.movie.App
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingsBinding
 import woowacourse.movie.sharedPreference.SettingSharedPreferenceManager
@@ -18,10 +19,9 @@ import woowacourse.movie.sharedPreference.SettingSharedPreferenceManager
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
+
     private val prefs: SettingSharedPreferenceManager by lazy {
-        SettingSharedPreferenceManager(
-            requireContext(),
-        )
+        (requireActivity().application as App).preferenceManager
     }
 
     override fun onCreateView(
