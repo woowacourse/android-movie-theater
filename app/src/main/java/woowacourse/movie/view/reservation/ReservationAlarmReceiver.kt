@@ -68,18 +68,26 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
         pendingIntent: PendingIntent?,
     ): NotificationCompat.Builder =
         NotificationCompat
-            .Builder(context, CHANNEL_ID)
+            .Builder(context, context.getString(R.string.reservation_alarm_channel_id))
             .setSmallIcon(R.drawable.notification_icon)
-            .setContentTitle(CONTENT_TITLE)
-            .setContentText(CONTENT_TEXT_FORMAT.format(reservation.title))
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentTitle(context.getString(R.string.reservation_alarm_content_title))
+            .setContentText(
+                context.getString(
+                    R.string.reservation_alarm_content_text_format,
+                    reservation.title,
+                ),
+            ).setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
 
     private fun createNotificationChannel(context: Context) {
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel =
-            NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance).apply {
-                description = CHANNEL_DESCRIPTION
+            NotificationChannel(
+                context.getString(R.string.reservation_alarm_channel_id),
+                CHANNEL_NAME,
+                importance,
+            ).apply {
+                description = context.getString(R.string.reservation_alarm_channel_description)
             }
         val notificationManager: NotificationManager =
             context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
@@ -108,10 +116,6 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
                 .putExtra(EXTRA_RESERVATION, reservation)
 
         private const val EXTRA_RESERVATION = "woowacourse.movie.EXTRA_RESERVATION"
-        private const val CHANNEL_ID = "상영 시각 30분 전 알림 채널"
-        private const val CONTENT_TITLE = "예매 알림"
-        private const val CONTENT_TEXT_FORMAT = "%s 30분 후에 상영"
         private const val CHANNEL_NAME = "Movie Showtime Notification"
-        private const val CHANNEL_DESCRIPTION = "영화 시작 30분 전 알림을 발송합니다."
     }
 }

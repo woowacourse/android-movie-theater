@@ -36,4 +36,10 @@
 
     <!--item_reservation-->
     <string name="item_reservation_ticket">%1$d.%2$d.%3$d | %4$d:%5$02d | %6$s</string>
+
+    <!--ReservationAlarmReceiver-->
+    <string name="reservation_alarm_channel_id">상영 시각 30분 전 알림 채널</string>
+    <string name="reservation_alarm_content_title">예매 알림</string>
+    <string name="reservation_alarm_content_text_format">%s 30분 후에 상영</string>
+    <string name="reservation_alarm_channel_description">영화 시작 30분 전 알림을 발송합니다.</string>
 </resources>
