@@ -15,6 +15,11 @@ interface SeatSelectionContract {
         fun updateCanBook(canBook: Boolean)
 
         fun showBookingAlertDialog(ticket: TicketUiModel)
+
+        fun makeAlarm(
+            ticket: TicketUiModel,
+            time: Long,
+        )
     }
 
     interface Presenter {
@@ -26,6 +31,8 @@ interface SeatSelectionContract {
         )
 
         fun completeBooking()
+
+        fun completeSeatsSelection()
 
         fun restoreSeats(selectedSeats: List<SeatUiModel>)
     }

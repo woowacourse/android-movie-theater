@@ -1,4 +1,4 @@
-package woowacourse.movie.booking
+package woowacourse.movie.booking.detail
 
 import io.mockk.Runs
 import io.mockk.every
@@ -11,8 +11,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import woowacourse.movie.booking.detail.BookingDetailContract
-import woowacourse.movie.booking.detail.BookingDetailPresenter
 import woowacourse.movie.fixture.HARRY_POTTER
 import woowacourse.movie.fixture.createMovie
 import woowacourse.movie.mapper.toUiModel

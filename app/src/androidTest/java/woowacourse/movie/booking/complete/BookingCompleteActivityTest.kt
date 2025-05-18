@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.booking.complete
 
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
@@ -12,7 +12,7 @@ import org.hamcrest.CoreMatchers.allOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.booking.complete.BookingCompleteActivity
+import woowacourse.movie.R
 import woowacourse.movie.fixture.HARRY_POTTER
 import woowacourse.movie.fixture.SEAT_A1
 import woowacourse.movie.fixture.SEAT_C1

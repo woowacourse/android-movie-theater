@@ -44,6 +44,17 @@ object BindingAdapter {
     }
 
     @JvmStatic
+    @BindingAdapter("selectedDate", "selectedTime", "theater")
+    fun setTicketTimeInfo(
+        textView: TextView,
+        selectedDate: String,
+        selectedTime: String,
+        theater: String,
+    ) {
+        textView.text = textView.context.getString(R.string.ticket_time_info, selectedDate, selectedTime, theater)
+    }
+
+    @JvmStatic
     @BindingAdapter("imageId")
     fun setMoviePoster(
         imageView: ImageView,

@@ -1,4 +1,4 @@
-package woowacourse.movie
+package woowacourse.movie.booking.detail
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -23,7 +23,7 @@ import org.hamcrest.CoreMatchers.`is`
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import woowacourse.movie.booking.detail.BookingDetailActivity
+import woowacourse.movie.R
 import woowacourse.movie.fixture.HARRY_POTTER
 import woowacourse.movie.fixture.SEOLLEUNG
 import woowacourse.movie.fixture.createMovie

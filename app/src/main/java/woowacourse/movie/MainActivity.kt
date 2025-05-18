@@ -1,5 +1,7 @@
 package woowacourse.movie
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.databinding.ActivityMovieBinding
 import woowacourse.movie.movie.MovieFragment
+import woowacourse.movie.setting.SettingFragment
+import woowacourse.movie.ticket.TicketListFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieBinding
@@ -41,11 +45,11 @@ class MainActivity : AppCompatActivity() {
     private fun initBottomNav() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_home -> replaceFragment(TAG_MOVIE_FRAGMENT, MovieFragment())
+                R.id.menu_home -> replaceFragment(TAG_MOVIE_FRAGMENT, MovieFragment::class.java)
 
-                R.id.menu_setting -> replaceFragment(TAG_SETTING_FRAGMENT, SettingFragment())
+                R.id.menu_setting -> replaceFragment(TAG_SETTING_FRAGMENT, SettingFragment::class.java)
 
-                R.id.menu_reserve_list -> replaceFragment(TAG_RESERVATION_LIST_FRAGMENT, ReservationListFragment())
+                R.id.menu_reserve_list -> replaceFragment(TAG_RESERVATION_LIST_FRAGMENT, TicketListFragment::class.java)
             }
             true
         }
@@ -53,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun replaceFragment(
         tag: String,
-        fragment: Fragment,
+        fragment: Class<out Fragment>,
     ) {
         val existingFragment = supportFragmentManager.findFragmentByTag(tag)
 
@@ -65,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             if (existingFragment != null) {
                 show(existingFragment)
             } else {
-                add(R.id.fragment_view, fragment, tag)
+                add(R.id.fragment_view, fragment, null, tag)
             }
         }
     }
@@ -74,5 +78,10 @@ class MainActivity : AppCompatActivity() {
         private const val TAG_MOVIE_FRAGMENT = "tag_movie"
         private const val TAG_SETTING_FRAGMENT = "tag_setting"
         private const val TAG_RESERVATION_LIST_FRAGMENT = "tag_reservation"
+
+        fun newIntent(context: Context): Intent =
+            Intent(context, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            }
     }
 }

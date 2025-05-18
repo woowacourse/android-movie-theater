@@ -54,8 +54,7 @@ class BookingCompleteActivity : AppCompatActivity(), BookingCompleteContract.Vie
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                val intent = MainActivity.newIntent(this)
                 startActivity(intent)
                 true
             }

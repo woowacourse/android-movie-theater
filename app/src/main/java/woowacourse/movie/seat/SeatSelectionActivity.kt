@@ -1,11 +1,14 @@
 package woowacourse.movie.seat
 
+import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.widget.TableRow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +16,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
+import woowacourse.movie.AlarmReceiver
 import woowacourse.movie.R
+import woowacourse.movie.RepositoryProvider
 import woowacourse.movie.booking.complete.BookingCompleteActivity
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.mapper.IntentCompat
@@ -21,7 +26,9 @@ import woowacourse.movie.ui.model.SeatUiModel
 import woowacourse.movie.ui.model.TicketUiModel
 
 class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
-    private val presenter = SeatSelectionPresenter(this)
+    private val presenter: SeatSelectionPresenter =
+        SeatSelectionPresenter(this, RepositoryProvider.settingRepository, RepositoryProvider.movieDatabase)
+
     private val seatViews: MutableMap<SeatUiModel, TextView> = mutableMapOf()
     private lateinit var binding: ActivitySeatSelectionBinding
 
@@ -105,6 +112,8 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             .setTitle(getString(R.string.dig_title))
             .setMessage(getString(R.string.dig_message))
             .setPositiveButton(getString(R.string.dig_btn_positive_message)) { _, _ ->
+                presenter.completeSeatsSelection()
+
                 startBookingCompleteActivity(ticket)
             }
             .setNegativeButton(getString(R.string.dig_btn_negative_message)) { dialog, _ ->
@@ -112,6 +121,28 @@ class SeatSelectionActivity : AppCompatActivity(), SeatSelectionContract.View {
             }
             .setCancelable(false)
             .show()
+    }
+
+    override fun makeAlarm(
+        ticket: TicketUiModel,
+        time: Long,
+    ) {
+        val alarmManager = this.getSystemService(ALARM_SERVICE) as AlarmManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!alarmManager.canScheduleExactAlarms()) {
+                Toast.makeText(this, getString(R.string.text_alarm_permission_description), Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
+
+        val pendingIntent = AlarmReceiver.newPendingIntent(this, ticket)
+
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            time,
+            pendingIntent,
+        )
     }
 
     private fun startBookingCompleteActivity(ticket: TicketUiModel) {

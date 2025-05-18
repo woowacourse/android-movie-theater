@@ -29,28 +29,28 @@
 - [x] 각 영화관은 이름, 상영 가능한 영화 정보를 갖는다
 - [x] 각 영화는 이름, 상영일, 러닝타임, 상영 가능한 시간을 갖는다
 
-### TODO
+- [x] 예매를 완료하면 내역을 저장한다
 
-- [x] SeatSelectionActivity | 화면 회전 시 데이터 복원
-- [x] SeatSelectionActivity | 버튼 비활성화 버그 수정
-- [x] 매직 넘버 상수화
-- [x] Scheduler | 현재 날짜 & 시간 고정되어 있는 버그 수정
-- [x] Seat | 행 & 열로 좌석 구분하도록 변경
-- [x] Seats | toggle 함수 고민
-- [x] MovieAdapter | 광고 삽입 로직 이동
-- [x] Presenter | 반환값이 없도록 수정
-- [x] layout | ConstraintLayout 중첩 구조 개선
+### 예매 내역 화면
+- [x] 예매 내역을 보여 준다
+- [x] 예매 내역을 터치하면 예매 정보를 보여 준다
+- [x] 리스트 항목을 누르는 효과를 줘야 한다
 
-- [x] SeatSelectionActivity | 좌석을 더 선택할 수 있는 점 개선하기
-- [x] MainActivity | fragment 재사용에 대한 고민
-- [x] TheaterAdapter | inflate 위치 이동
-- [x] MovieFragment | Binding 객체 null 처리하기
-- [x] MovieFragment | Bundle 사용 시 스코프 함수 활용
-- [x] Ticket | 불변 객체 보장
-- [x] SeatSelectionActivityTest | 중복되는 코드 함수로 분리
+### 설정 화면
+- [x] 설정에서 알림 기능을 On/Off 할 수 있다
+- [x] 사용자가 앱을 재실행해도 설정 데이터가 남아 있어야 한다
+- [x] 영화 시작 시간 30분 전에 푸시 알림이 온다
+- [x] 푸시 알림을 클릭하면 예매 정보를 보여준다
 
-- [x] TheaterViewHolder | 리스너 중복 연결 고민
-- [x] MovieFragment | Bundle 생성 위치 이동
-- [x] SeatSelectionActivity | 좌석 색깔 변경 로직 고민
-- [ ] PresenterTest | Capturing 사용
-- [x] TheaterBottomSheetFragment | MVP 구조로 변경
+### TODOS
+- [x] MovieConverter | 중복 코드 줄이기
+- [x] Test | 패키지 맞추기
+- [x] SettingFragment.initAlarmState | Indent 줄이기
+- [x] SettingPresenter.setPermissionState | 사용하지 않는 인자 지우기
+- [x] AlarmReceiver | onReceive 함수 분리하기
+- [x] SeatSelectionActivity | PendingIntent를 받는 곳에서 생성하도록 변경
+- [x] SettingFragment | 권한이 필요한 경우 설정화면으로 이동하도록 변경
+- [x] TicketDao | findTicket 네이밍 고민
+- [x] TicketListPresenter | 프레젠터가 안드로이드 의존성을 가지지 않도록 수정
+- [x] TicketDao | 같은 데이터를 저장할 경우 충돌 고민
+- [x] SettingPresenter | 테스트

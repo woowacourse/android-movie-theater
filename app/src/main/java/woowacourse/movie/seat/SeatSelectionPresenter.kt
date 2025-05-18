@@ -1,15 +1,23 @@
 package woowacourse.movie.seat
 
+import woowacourse.movie.data.SettingRepository
+import woowacourse.movie.data.database.MovieDatabase
 import woowacourse.movie.mapper.toDomain
+import woowacourse.movie.mapper.toEntity
 import woowacourse.movie.mapper.toUiModel
 import woowacourse.movie.model.Seat
 import woowacourse.movie.model.Seats
 import woowacourse.movie.model.Ticket
 import woowacourse.movie.ui.model.SeatUiModel
 import woowacourse.movie.ui.model.TicketUiModel
+import java.time.LocalDateTime
+import java.time.ZoneId
+import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
+    private val settingPreference: SettingRepository,
+    private val movieDatabase: MovieDatabase,
 ) : SeatSelectionContract.Presenter {
     private lateinit var ticket: Ticket
 
@@ -47,6 +55,34 @@ class SeatSelectionPresenter(
     override fun completeBooking() {
         val ticketUiModel = ticket.toUiModel()
         view.showBookingAlertDialog(ticketUiModel)
+    }
+
+    override fun completeSeatsSelection() {
+        storeSeats()
+        setAlarm()
+    }
+
+    private fun storeSeats() {
+        thread {
+            movieDatabase.TicketDao().saveTicket(
+                ticket.toEntity(),
+            )
+        }
+    }
+
+    private fun setAlarm() {
+        if (settingPreference.isAlarmPermitted()) {
+            view.makeAlarm(ticket.toUiModel(), calculateMovieAlarmTime())
+        }
+    }
+
+    private fun calculateMovieAlarmTime(): Long {
+        val dateTime = LocalDateTime.of(ticket.selectedDate, ticket.selectedTime)
+        return dateTime
+            .minusMinutes(30)
+            .atZone(ZoneId.systemDefault())
+            .toInstant()
+            .toEpochMilli()
     }
 
     override fun restoreSeats(selectedSeats: List<SeatUiModel>) {
