@@ -7,7 +7,6 @@ import woowacourse.movie.domain.model.SettingData
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.repository.SettingRepository
 import woowacourse.movie.repository.TicketRepository
-import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
@@ -55,16 +54,18 @@ class SeatSelectionPresenter(
     }
 
     override fun completeReservation() {
-        thread {
-            repository.save(ticket)
+        repository.save(ticket) {
+            it.onFailure { e ->
+                view.showError(e.message)
+            }
         }
-        thread {
-            val allResult = settingRepository.findAll()
-            allResult.onSuccess { data ->
-                val isEnabled = data.find { it.key == SettingData.NOTIFICATION_KEY }?.value ?: false
+        settingRepository.findAll {
+            it.onSuccess {
+                val isEnabled = it.find { it.key == SettingData.NOTIFICATION_KEY }?.value ?: false
                 view.setAlarm(isEnabled, ticket, ticket.showTime.minusMinutes(30))
             }
         }
+
         view.navigateToResult(ticket)
     }
 }

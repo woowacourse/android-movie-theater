@@ -32,17 +32,30 @@ class TicketRepository(
         }
     }
 
-    fun save(ticket: Ticket): Result<Unit> {
-        return runCatching {
-            ticketDao.save(
-                ticket.toEntity(),
-                ticket.seats.map {
-                    SeatEntity(
-                        row = it.row,
-                        column = it.column,
-                    )
-                },
-            )
+    fun save(
+        ticket: Ticket,
+        callback: (Result<Unit>) -> Unit,
+    ) {
+        thread {
+            runCatching {
+                ticketDao.save(
+                    ticket.toEntity(),
+                    ticket.seats.map {
+                        SeatEntity(
+                            row = it.row,
+                            column = it.column,
+                        )
+                    },
+                )
+            }.onSuccess {
+                handler.post {
+                    callback(Result.success(Unit))
+                }
+            }.onFailure {
+                handler.post {
+                    callback(Result.failure(it))
+                }
+            }
         }
     }
 }
