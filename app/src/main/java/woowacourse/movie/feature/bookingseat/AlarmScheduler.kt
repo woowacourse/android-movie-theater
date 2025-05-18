@@ -5,6 +5,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
+import android.widget.Toast
+import woowacourse.movie.R
 import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.setting.MyReceiver
 import java.time.LocalDateTime
@@ -29,6 +31,12 @@ class AlarmScheduler(
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S &&
             !alarmManager.canScheduleExactAlarms()
         ) {
+            Toast
+                .makeText(
+                    context,
+                    context.getString(R.string.alarm_setting_error_message),
+                    Toast.LENGTH_LONG,
+                ).show()
             return
         }
 
@@ -47,8 +55,8 @@ class AlarmScheduler(
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-//            alarmTime.toEpochSecond(),
-            System.currentTimeMillis(),
+            alarmTime.toEpochSecond(),
+//            System.currentTimeMillis(),
             pendingIntent,
         )
     }
