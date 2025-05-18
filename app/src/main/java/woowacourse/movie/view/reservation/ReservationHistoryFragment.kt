@@ -37,11 +37,6 @@ class ReservationHistoryFragment :
             ReservationHistoryPresenter(this, reservationData)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
