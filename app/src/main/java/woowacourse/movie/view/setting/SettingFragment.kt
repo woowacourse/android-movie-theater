@@ -9,6 +9,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.view.base.BaseFragment
+import woowacourse.movie.view.extension.alarmManager
 import woowacourse.movie.view.receiver.NotificationReceiver
 import java.time.LocalDateTime
 
@@ -42,16 +43,23 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         tickets.forEachIndexed { idx, ticket ->
             NotificationReceiver.setNotification(
                 requireContext(),
-                ticket,
+                NotificationReceiver.pendingIntent(requireContext(), ticket),
                 showTimes[idx],
             )
+        }
+    }
+
+    override fun cancelNotification(tickets: List<Ticket>) {
+        val alarmManager = requireContext().alarmManager()
+        tickets.forEach {
+            alarmManager.cancel(NotificationReceiver.pendingIntent(requireContext(), it))
         }
     }
 
     override fun setPermissionSwitch(isEnabled: Boolean) {
         binding.hasAllPermission = hasAllPermissions() && isEnabled
         binding.switchSettingPushAlarm.setOnCheckedChangeListener { _, isChecked ->
-            presenter.savePushAlarmSetting(isChecked)
+            presenter.savePushAlarmSetting(isChecked && hasAllPermissions())
             if (isChecked) {
                 if (!hasNotificationPermission()) {
                     requestPermissionLauncher.launch(POST_NOTIFICATIONS)
@@ -65,7 +73,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
                 }
                 presenter.setNotification()
             } else {
-                NotificationReceiver.cancelNotification()
+                presenter.cancelNotification()
             }
         }
     }

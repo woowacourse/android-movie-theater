@@ -13,6 +13,8 @@ interface SettingContract {
         fun setPermissionSwitch(isEnabled: Boolean)
 
         fun showError(message: String)
+
+        fun cancelNotification(tickets: List<Ticket>)
     }
 
     interface Presenter {
@@ -21,5 +23,7 @@ interface SettingContract {
         fun setPermissionSwitch()
 
         fun savePushAlarmSetting(isEnabled: Boolean)
+
+        fun cancelNotification()
     }
 }

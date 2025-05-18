@@ -21,6 +21,16 @@ class SettingPresenter(
         }
     }
 
+    override fun cancelNotification() {
+        repository.findAll { result ->
+            result.onSuccess {
+                view.cancelNotification(it)
+            }.onFailure {
+                view.showError(ERR_FAILED_TO_LOAD_TICKETS)
+            }
+        }
+    }
+
     override fun setPermissionSwitch() {
         val settings = settingRepository.findAll()
         settings.onSuccess {
