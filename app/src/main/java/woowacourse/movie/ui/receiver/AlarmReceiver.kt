@@ -16,10 +16,9 @@ import woowacourse.movie.ui.view.ticket.TicketActivity
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(
-        context: Context?,
-        intent: Intent?,
+        context: Context,
+        intent: Intent,
     ) {
-        if (context == null || intent == null) return
         val ticketId = intent.getLongExtra(EXTRA_ALARM_TICKET_ID, -1)
         val ticket = intent.getTicketExtra(ticketId.toString()) ?: return
         showTicketNotification(context, ticket)
