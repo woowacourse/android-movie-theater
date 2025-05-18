@@ -15,6 +15,7 @@ import woowacourse.movie.model.theater.ScreeningInfo
 import woowacourse.movie.model.theater.Theater
 import woowacourse.movie.model.theater.TheaterMovieSchedule
 import woowacourse.movie.model.theater.TheaterMovieSchedules
+import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.model.ticket.TicketCount
 import java.time.LocalDate
 import java.time.LocalTime
@@ -132,6 +133,14 @@ val MOVIE_ENTITY =
     MovieEntity(
         id = 1L,
         title = "라라랜드",
+        poster = 123,
+        movieStartDateYear = 2025,
+        movieStartDateMonth = 5,
+        movieStartDateDay = 12,
+        movieEndDateYear = 2025,
+        movieEndDateMonth = 12,
+        movieEndDateDay = 12,
+        runningTime = 120,
     )
 
 val THEATER_ENTITY =
@@ -146,4 +155,14 @@ val MOVIE_TICKET_ENTITY =
         seats = listOf(SEAT_ENTITY_1_1, SEAT_ENTITY_2_2),
         movie = MOVIE_ENTITY,
         theater = THEATER_ENTITY,
+    )
+
+val MOVIE_TICKET_B1_C3 =
+    MovieTicket(
+        id = 1L,
+        movie = MOVIE,
+        movieDate = LocalDate.of(2025, 5, 10),
+        movieTime = MovieTime(LocalTime.of(19, 0)),
+        seats = listOf(Seat(1, 0), Seat(2, 2)),
+        theater = Theater(1, "JAY 극장"),
     )

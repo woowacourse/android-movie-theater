@@ -10,9 +10,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.entity.MovieTicketEntity
 import woowacourse.movie.data.storage.ReservationStorage
-import woowacourse.movie.presenter.MOVIE_TICKET_ENTITY
+import woowacourse.movie.model.ticket.MovieTicket
+import woowacourse.movie.presenter.MOVIE_TICKET_B1_C3
 
 class ReservationCompletePresenterTest {
     private lateinit var presenter: ReservationCompletePresenter
@@ -31,14 +31,14 @@ class ReservationCompletePresenterTest {
         // given:
         every { view.showMovieTicket(any()) } just Runs
         every { reservationStorage.getMovieTicket(any(), captureLambda()) } answers {
-            lambda<(MovieTicketEntity) -> Unit>().invoke(MOVIE_TICKET_ENTITY)
+            lambda<(MovieTicket) -> Unit>().invoke(MOVIE_TICKET_B1_C3)
         }
 
         // when:
         presenter.fetchTicketData(1L)
 
         // then:
-        verify { view.showMovieTicket(MOVIE_TICKET_ENTITY) }
+        verify { view.showMovieTicket(MOVIE_TICKET_B1_C3) }
     }
 
     @After

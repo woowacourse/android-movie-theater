@@ -27,6 +27,7 @@ class SettingPresenterTest {
     fun `알림 권한을 업데이트하면 알림 권한 허용 여부를 보여준다`() {
         // given:
         every { view.showNotificationPermission(any()) } just Runs
+        every { notificationPermissionStorage.notificationPermission } returns true
 
         // when:
         presenter.updateNotificationPermission()
