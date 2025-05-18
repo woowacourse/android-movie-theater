@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.di.RepositoryInjector.provideBookingHistoryRepository
-import woowacourse.movie.domain.model.NavigateType
 import woowacourse.movie.domain.repository.BookingHistoryRepository
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookinghistory.contract.BookingHistoryContract
 import woowacourse.movie.feature.bookinghistory.presenter.BookingHistoryPresenter
 import woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryAdapter
 import woowacourse.movie.feature.model.BookingInfoUiModel
+import woowacourse.movie.feature.model.NavigateType
 
 class BookingHistoryFragment :
     Fragment(),

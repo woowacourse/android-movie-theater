@@ -9,11 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingCompleteBinding
-import woowacourse.movie.domain.model.NavigateType
 import woowacourse.movie.feature.bookingcomplete.contract.BookingCompleteContract
 import woowacourse.movie.feature.bookingcomplete.presenter.BookingCompletePresenter
 import woowacourse.movie.feature.main.MainActivity
 import woowacourse.movie.feature.model.BookingInfoUiModel
+import woowacourse.movie.feature.model.NavigateType
 import woowacourse.movie.util.getExtra
 
 class BookingCompleteActivity :

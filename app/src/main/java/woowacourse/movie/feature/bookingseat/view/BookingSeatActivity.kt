@@ -16,7 +16,6 @@ import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
 import woowacourse.movie.di.RepositoryInjector.provideBookingHistoryRepository
-import woowacourse.movie.domain.model.NavigateType
 import woowacourse.movie.domain.repository.BookingHistoryRepository
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookingseat.AlarmScheduler
@@ -24,6 +23,7 @@ import woowacourse.movie.feature.bookingseat.contract.BookingSeatContract
 import woowacourse.movie.feature.bookingseat.presenter.BookingSeatPresenter
 import woowacourse.movie.feature.model.BookingInfoUiModel
 import woowacourse.movie.feature.model.MovieSeatUiModel
+import woowacourse.movie.feature.model.NavigateType
 import woowacourse.movie.feature.model.SeatSelectionUiState
 import woowacourse.movie.feature.model.SeatTypeUiModel
 import woowacourse.movie.util.getExtra

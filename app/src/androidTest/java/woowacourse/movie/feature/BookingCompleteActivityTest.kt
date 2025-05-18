@@ -15,11 +15,11 @@ import woowacourse.movie.domain.model.MovieDate
 import woowacourse.movie.domain.model.MovieSeat
 import woowacourse.movie.domain.model.MovieSeats
 import woowacourse.movie.domain.model.MovieTime
-import woowacourse.movie.domain.model.NavigateType
 import woowacourse.movie.domain.model.TicketCount
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity.Companion.newIntent
 import woowacourse.movie.feature.mapper.toUi
+import woowacourse.movie.feature.model.NavigateType
 
 @Suppress("ktlint:standard:function-naming")
 class BookingCompleteActivityTest {
