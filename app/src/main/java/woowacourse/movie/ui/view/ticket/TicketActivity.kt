@@ -15,6 +15,7 @@ import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.ui.util.ErrorMessage
 import woowacourse.movie.ui.view.MainActivity
 import java.io.Serializable
 import java.time.LocalDateTime
@@ -58,11 +59,11 @@ class TicketActivity :
         onBackPressedDispatcher.addCallback(this, callback)
         val ticket =
             intent?.getTicketExtra(EXTRA_TICKET) ?: error(
-                woowacourse.movie.ui.view.util.ErrorMessage(CAUSE_TICKET).notProvided(),
+                ErrorMessage(CAUSE_TICKET).notProvided(),
             )
         val seats: Set<Seat> =
             intent.getSeatsExtra() ?: error(
-                woowacourse.movie.ui.view.util.ErrorMessage(CAUSE_SEATS).notProvided(),
+                ErrorMessage(CAUSE_SEATS).notProvided(),
             )
 
         presenter = TicketPresenter(this, ticket, seats)
@@ -106,7 +107,7 @@ class TicketActivity :
 
     private fun initModel() {
         ticket = intent.getTicketExtra(EXTRA_TICKET) ?: error(
-            woowacourse.movie.ui.view.util.ErrorMessage(CAUSE_TICKET).notProvided(),
+            ErrorMessage(CAUSE_TICKET).notProvided(),
         )
     }
 

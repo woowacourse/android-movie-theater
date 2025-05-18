@@ -11,7 +11,7 @@ import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ScreeningContent
 import woowacourse.movie.ui.view.cinema.CinemaSelectionBottomSheetDialogFragment
 import woowacourse.movie.ui.view.screening.adapter.ScreeningAdapter
-import woowacourse.movie.ui.view.util.ErrorMessage
+import woowacourse.movie.ui.util.ErrorMessage
 
 class ScreeningFragment :
     Fragment(),

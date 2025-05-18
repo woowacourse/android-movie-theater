@@ -20,17 +20,17 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.setPadding
 import woowacourse.movie.R
-import woowacourse.movie.data.local.adapter.TicketData
+import woowacourse.movie.data.local.datasource.TicketDataSource
 import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDatabase
 import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.reservation.SeatGrade
 import woowacourse.movie.domain.ticket.Ticket
-import woowacourse.movie.ui.view.alarm.Alarm
+import woowacourse.movie.ui.alarm.Alarm
 import woowacourse.movie.ui.view.reservation.ShowReservationConfirmDialog
 import woowacourse.movie.ui.view.ticket.TicketActivity
-import woowacourse.movie.ui.view.util.ErrorMessage
+import woowacourse.movie.ui.util.ErrorMessage
 import java.io.Serializable
 import java.time.LocalDateTime
 
@@ -98,7 +98,7 @@ class SeatSelectionActivity :
             SeatSelectionPresenter(
                 this,
                 ticket,
-                TicketData(database.ticketDao()),
+                TicketDataSource(database.ticketDao()),
                 selectedSeats,
             )
     }

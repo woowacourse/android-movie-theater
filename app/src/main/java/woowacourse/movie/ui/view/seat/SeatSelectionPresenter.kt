@@ -2,14 +2,14 @@ package woowacourse.movie.ui.view.seat
 
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
-import woowacourse.movie.ui.view.data.TicketDataAdapter
+import woowacourse.movie.domain.datasource.TicketDataSource
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private var ticket: Ticket,
-    private val ticketDataAdapter: TicketDataAdapter,
+    private val ticketDataSource: TicketDataSource,
     selectedSeats: Set<Seat>?,
 ) : SeatSelectionContract.Presenter {
     private val seats: Set<Seat> = Seat.seats()
@@ -58,8 +58,8 @@ class SeatSelectionPresenter(
         val insertTicket = AtomicReference<Ticket>()
         val thread =
             thread {
-                val insertTicketId = ticketDataAdapter.insert(ticket)
-                val ticket = ticketDataAdapter.getTicket(insertTicketId)
+                val insertTicketId = ticketDataSource.insert(ticket)
+                val ticket = ticketDataSource.getTicket(insertTicketId)
                 insertTicket.set(ticket)
             }
         thread.join()

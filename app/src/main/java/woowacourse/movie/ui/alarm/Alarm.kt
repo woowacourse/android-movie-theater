@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.view.alarm
+package woowacourse.movie.ui.alarm
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import woowacourse.movie.domain.ticket.Ticket
-import woowacourse.movie.ui.view.receiver.AlarmReceiver
+import woowacourse.movie.ui.receiver.AlarmReceiver
 import java.time.ZoneId
 
 class Alarm(private val context: Context) {

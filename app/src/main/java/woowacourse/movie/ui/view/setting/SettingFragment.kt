@@ -10,11 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.data.local.adapter.TicketData
+import woowacourse.movie.data.local.datasource.TicketDataSource
 import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDatabase
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.domain.ticket.Ticket
-import woowacourse.movie.ui.view.alarm.Alarm
+import woowacourse.movie.ui.alarm.Alarm
 
 class SettingFragment : Fragment(), SettingContract.View {
     private var _binding: FragmentSettingBinding? = null
@@ -36,8 +36,8 @@ class SettingFragment : Fragment(), SettingContract.View {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val ticketDataAdapter = TicketData(getMovieDatabase(requireContext()).ticketDao())
-        presenter = SettingPresenter(ticketDataAdapter, this)
+        val ticketDataSourceAdapter = TicketDataSource(getMovieDatabase(requireContext()).ticketDao())
+        presenter = SettingPresenter(ticketDataSourceAdapter, this)
         alarm = Alarm(requireActivity().applicationContext)
         presenter.presentScreen()
     }

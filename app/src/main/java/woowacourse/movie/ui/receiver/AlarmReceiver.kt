@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.view.receiver
+package woowacourse.movie.ui.receiver
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -11,7 +11,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.domain.ticket.Ticket
-import woowacourse.movie.ui.view.alarm.Alarm.Companion.EXTRA_ALARM_TICKET_ID
+import woowacourse.movie.ui.alarm.Alarm.Companion.EXTRA_ALARM_TICKET_ID
 import woowacourse.movie.ui.view.ticket.TicketActivity
 
 class AlarmReceiver : BroadcastReceiver() {

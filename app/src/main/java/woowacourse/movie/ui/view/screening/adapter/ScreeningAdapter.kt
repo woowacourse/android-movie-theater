@@ -8,7 +8,7 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.reservation.Advertisement
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ScreeningContent
-import woowacourse.movie.ui.view.util.ErrorMessage
+import woowacourse.movie.ui.util.ErrorMessage
 
 class ScreeningAdapter(
     private val onClickReserveButton: (Screening) -> Unit,

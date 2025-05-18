@@ -12,7 +12,7 @@ import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
 import woowacourse.movie.ui.view.cinema.adapter.CinemaAdapter
 import woowacourse.movie.ui.view.reservation.ReservationActivity
-import woowacourse.movie.ui.view.util.ErrorMessage
+import woowacourse.movie.ui.util.ErrorMessage
 
 class CinemaSelectionBottomSheetDialogFragment :
     BottomSheetDialogFragment(),

@@ -34,7 +34,7 @@
 - [ ] 뒤로가기 메인화면 재활용
 - [ ] 코드래빗 검토
 - [ ] TicketDataAdapter에서 스레드를 열고 필요한 결과를 프레젠터에게 (콜백) 돌려주어서 (비동기 콜백)테스트
-- [ ] DataAdapter 네이밍 수정 및 패키지 이동
+- [x] TicketDataAdapter 네이밍 수정 및 패키지 이동
 - [ ] SharedPreferences ui레이어 model로 이동
 - [ ] 객체 생활 체조 원칙 준수(depth 감소)
 - [ ] setNotification 역할 생각해서 네이밍 수정
@@ -47,4 +47,4 @@
 - [ ] Id 추가로 areItemsTheSame과 areContentsTheSame 값 비교 수정
 - [ ] 설정에 알림 권한 설정 추가
 - [ ] Entity에서 도메인 타입 제거
-- [ ] TicketDataAdapter 위치 이동
+- [x] TicketDataAdapter 위치 이동

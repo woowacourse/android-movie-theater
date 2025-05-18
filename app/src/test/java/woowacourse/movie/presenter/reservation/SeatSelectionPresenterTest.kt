@@ -10,20 +10,20 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
-import woowacourse.movie.ui.view.data.TicketDataAdapter
+import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.ui.view.seat.SeatSelectionContract
 import woowacourse.movie.ui.view.seat.SeatSelectionPresenter
 import java.time.LocalDateTime
 
 class SeatSelectionPresenterTest {
     private lateinit var view: SeatSelectionContract.View
-    private lateinit var ticketDataAdapter: TicketDataAdapter
+    private lateinit var ticketDataSource: TicketDataSource
     private lateinit var presenter: SeatSelectionContract.Presenter
 
     @BeforeEach
     fun setUp() {
         view = mockk()
-        ticketDataAdapter = mockk()
+        ticketDataSource = mockk()
         presenter =
             SeatSelectionPresenter(
                 view,
@@ -35,7 +35,7 @@ class SeatSelectionPresenterTest {
                     seats = emptySet(),
                     purchaseType = PurchaseType.DEFAULT,
                 ),
-                ticketDataAdapter,
+                ticketDataSource,
                 selectedSeats = emptySet(),
             )
     }
@@ -78,7 +78,7 @@ class SeatSelectionPresenterTest {
                     seats = emptySet(),
                     purchaseType = PurchaseType.DEFAULT,
                 ),
-                ticketDataAdapter,
+                ticketDataSource,
                 selectedSeats = setOf(Seat(1, 1)),
             )
         every { view.setPrice(10000) } just Runs
@@ -118,7 +118,7 @@ class SeatSelectionPresenterTest {
                     seats = emptySet(),
                     purchaseType = PurchaseType.DEFAULT,
                 ),
-                ticketDataAdapter,
+                ticketDataSource,
                 selectedSeats = setOf(Seat(1, 1)),
             )
 

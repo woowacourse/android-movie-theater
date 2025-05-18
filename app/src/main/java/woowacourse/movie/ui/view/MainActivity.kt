@@ -18,7 +18,7 @@ import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.ui.view.history.ReservationHistoryFragment
 import woowacourse.movie.ui.view.screening.ScreeningFragment
 import woowacourse.movie.ui.view.setting.SettingFragment
-import woowacourse.movie.ui.view.util.ErrorMessage
+import woowacourse.movie.ui.util.ErrorMessage
 
 class MainActivity :
     AppCompatActivity(),
