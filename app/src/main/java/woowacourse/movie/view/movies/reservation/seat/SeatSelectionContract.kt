@@ -18,7 +18,10 @@ interface SeatSelectionContract {
 
         fun showReservationDialog()
 
-        fun navigateToResult(
+        fun navigateToResult(ticket: Ticket)
+
+        fun setAlarm(
+            isEnabled: Boolean,
             ticket: Ticket,
             showTime: LocalDateTime,
         )

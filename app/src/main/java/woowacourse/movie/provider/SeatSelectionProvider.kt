@@ -9,6 +9,10 @@ class SeatSelectionProvider(context: Context) {
     private val application = context.applicationContext as MovieTheaterApplication
 
     fun seatSelectionPresenter(view: SeatSelectionContract.View): SeatSelectionPresenter {
-        return SeatSelectionPresenter(view, application.repositoryProvider.ticketRepository)
+        return SeatSelectionPresenter(
+            view,
+            application.repositoryProvider.ticketRepository,
+            application.repositoryProvider.settingRepository,
+        )
     }
 }

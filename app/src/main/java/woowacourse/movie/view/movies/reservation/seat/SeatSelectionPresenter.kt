@@ -3,13 +3,16 @@ package woowacourse.movie.view.movies.reservation.seat
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.SeatFactory
+import woowacourse.movie.domain.model.SettingData
 import woowacourse.movie.domain.model.Ticket
+import woowacourse.movie.repository.SettingRepository
 import woowacourse.movie.repository.TicketRepository
 import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
     private val repository: TicketRepository,
+    private val settingRepository: SettingRepository,
 ) : SeatSelectionContract.Presenter {
     private lateinit var reservationInfo: ReservationInfo
     private lateinit var ticket: Ticket
@@ -55,6 +58,13 @@ class SeatSelectionPresenter(
         thread {
             repository.save(ticket)
         }
-        view.navigateToResult(ticket, ticket.showTime.minusMinutes(30))
+        thread {
+            val allResult = settingRepository.findAll()
+            allResult.onSuccess { data ->
+                val isEnabled = data.find { it.key == SettingData.NOTIFICATION_KEY }?.value ?: false
+                view.setAlarm(isEnabled, ticket, ticket.showTime.minusMinutes(30))
+            }
+        }
+        view.navigateToResult(ticket)
     }
 }

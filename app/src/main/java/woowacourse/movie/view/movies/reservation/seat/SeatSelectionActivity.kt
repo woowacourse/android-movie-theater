@@ -132,11 +132,21 @@ class SeatSelectionActivity :
         showReservationDialog.show()
     }
 
-    override fun navigateToResult(
+    override fun setAlarm(
+        isEnabled: Boolean,
         ticket: Ticket,
         showTime: LocalDateTime,
     ) {
-        NotificationReceiver.setNotification(this, ticket, showTime)
+        if (isEnabled) {
+            NotificationReceiver.setNotification(
+                this,
+                NotificationReceiver.pendingIntent(this, ticket),
+                showTime,
+            )
+        }
+    }
+
+    override fun navigateToResult(ticket: Ticket) {
         startActivity(ReservationResultActivity.newIntent(this, ticket))
     }
 

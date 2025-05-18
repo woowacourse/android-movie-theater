@@ -26,9 +26,7 @@ class NotificationReceiver : BroadcastReceiver() {
         intent: Intent,
     ) {
         val ticket = intent.getParcelableCompatList<Ticket>(TICKET_KEY)
-        if (isEnabled) {
-            sendNotification(context, ticket)
-        }
+        sendNotification(context, ticket)
     }
 
     private fun sendNotification(
@@ -71,8 +69,6 @@ class NotificationReceiver : BroadcastReceiver() {
         private const val CHANNEL_ID = "reservation_random_random"
         private const val CHANNEL_NAME = "reservation"
         private const val TICKET_KEY = "ticket"
-        var isEnabled = false
-            private set
 
         private val channel =
             NotificationChannel(
@@ -90,34 +86,29 @@ class NotificationReceiver : BroadcastReceiver() {
             }
         }
 
-        private fun pendingIntent(
+        fun pendingIntent(
             context: Context,
             ticket: Ticket,
         ): PendingIntent {
             return PendingIntent.getBroadcast(
                 context,
-                0,
+                ticket.hashCode(),
                 newIntent(context, ticket),
                 PendingIntent.FLAG_IMMUTABLE,
             )
         }
 
-        fun cancelNotification() {
-            isEnabled = false
-        }
-
         fun setNotification(
             context: Context,
-            ticket: Ticket,
+            pendingIntent: PendingIntent,
             showTime: LocalDateTime,
         ) {
-            isEnabled = true
             val alarmManager = context.alarmManager()
             if (AlarmManagerCompat.canScheduleExactAlarms(alarmManager)) {
                 alarmManager.setExact(
                     AlarmManager.RTC,
                     showTime.toEpochMilli(),
-                    pendingIntent(context, ticket),
+                    pendingIntent,
                 )
             }
         }
