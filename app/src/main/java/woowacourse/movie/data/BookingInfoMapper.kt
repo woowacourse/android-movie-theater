@@ -6,48 +6,54 @@ import woowacourse.movie.feature.model.MovieSeatUiModel
 import woowacourse.movie.feature.model.MovieTimeUiModel
 import woowacourse.movie.feature.model.MovieUiModel
 import woowacourse.movie.feature.model.SeatTypeUiModel
-import woowacourse.movie.util.SeatLabelFormatter.formatLabel
-import woowacourse.movie.util.SeatLabelFormatter.parseLabel
 
-fun BookingInfoUiModel.toEntity(): BookingInfoEntity {
-    val seatLabels =
-        selectedSeats
-            .sortedWith(compareBy({ it.row }, { it.column }))
-            .joinToString { seat ->
-                formatLabel(seat.row, seat.column)
-            }
+fun BookingInfoUiModel.toEntity(): BookingWithSeatsEntity {
+    val bookingEntity =
+        BookingInfoEntity(
+            movieTitle = movie.title,
+            theaterName = theaterName,
+            date = "${date.year}.${date.month}.${date.day}",
+            time = "${movieTime.hour}:${movieTime.minute}",
+            ticketCount = ticketCount,
+            totalPrice = totalPrice,
+        )
 
-    return BookingInfoEntity(
-        movieTitle = movie.title,
-        theaterName = theaterName,
-        date = "${date.year}.${date.month}.${date.day}",
-        time = "${movieTime.hour}:${movieTime.minute}",
-        ticketCount = ticketCount,
-        totalPrice = totalPrice,
-        selectedSeats = seatLabels,
+    val seatEntities =
+        selectedSeats.map { seat ->
+            BookingSeatEntity(
+                bookingId = 0,
+                row = seat.row,
+                column = seat.column,
+            )
+        }
+
+    return BookingWithSeatsEntity(
+        booking = bookingEntity,
+        selectedSeats = seatEntities,
     )
 }
 
-fun BookingInfoEntity.toUiModel(): BookingInfoUiModel {
+fun BookingWithSeatsEntity.toUiModel(): BookingInfoUiModel {
     val seats =
         selectedSeats
-            .split(", ")
-            .mapNotNull { label ->
-                parseLabel(label)?.let { (row, col) ->
-                    MovieSeatUiModel(row, col, seatType = SeatTypeUiModel.NONE)
-                }
+            .map { seatEntity ->
+                MovieSeatUiModel(
+                    row = seatEntity.row,
+                    column = seatEntity.column,
+                    seatType = SeatTypeUiModel.valueOf(SeatTypeUiModel.NONE.name),
+                )
             }.toSet()
 
-    val (year, month, day) = date.split(".").map { it.toInt() }
-    val (hour, minute) = time.split(":").map { it.toInt() }
+    val (year, month, day) = booking.date.split(".").map { it.toInt() }
+    val (hour, minute) = booking.time.split(":").map { it.toInt() }
 
     return BookingInfoUiModel(
-        movie = MovieUiModel(title = movieTitle),
-        theaterName = theaterName,
+        movie = MovieUiModel(title = booking.movieTitle),
+        theaterName = booking.theaterName,
         date = MovieDateUiModel(year, month, day),
         movieTime = MovieTimeUiModel(hour, minute),
-        ticketCount = ticketCount,
-        totalPrice = totalPrice,
+        ticketCount = booking.ticketCount,
+        totalPrice = booking.totalPrice,
         selectedSeats = seats,
         isRequiredSeatsSelected = seats.isNotEmpty(),
     )

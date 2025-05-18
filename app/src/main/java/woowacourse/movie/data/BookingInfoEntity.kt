@@ -16,5 +16,4 @@ data class BookingInfoEntity(
     @ColumnInfo(name = "time") val time: String,
     @ColumnInfo(name = "ticket_count") val ticketCount: Int,
     @ColumnInfo(name = "total_price") val totalPrice: Int,
-    @ColumnInfo(name = "selected_seats") val selectedSeats: String,
 )

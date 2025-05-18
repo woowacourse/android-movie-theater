@@ -23,7 +23,14 @@ class BookingHistoryRepositoryImpl(
     ) {
         thread {
             val entity = bookingHistory.toEntity()
-            dao.insertAll(entity)
+
+            val bookingId = dao.insertBookingInfo(entity.booking)
+            val seatsWithId =
+                entity.selectedSeats.map {
+                    it.copy(bookingId = bookingId.toInt())
+                }
+            dao.insertSeats(seatsWithId)
+
             callback(bookingHistory)
         }
     }
