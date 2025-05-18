@@ -56,7 +56,7 @@ class BookingHistoryFragment :
     override fun showBookingHistory(bookingHistory: List<BookingInfoUiModel>) {
         requireActivity().runOnUiThread {
             bookingHistoryAdapter.submitList(bookingHistory)
-            binding.bookingHistoryAdapter = bookingHistoryAdapter
+            binding.rvBookingHistory.adapter = bookingHistoryAdapter
 
             val divider =
                 DividerItemDecoration(

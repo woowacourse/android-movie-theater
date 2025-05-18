@@ -4,13 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feature.home.view.HomeFragment">
 
-    <data>
-
-        <variable
-            name="bookingHistoryAdapter"
-            type="woowacourse.movie.feature.bookinghistory.view.adapter.BookingHistoryAdapter" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,7 +12,6 @@
             android:id="@+id/rv_booking_history"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:adapter="@{bookingHistoryAdapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
