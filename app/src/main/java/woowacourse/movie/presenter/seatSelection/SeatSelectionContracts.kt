@@ -2,7 +2,8 @@ package woowacourse.movie.presenter.seatSelection
 
 import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.seat.Seat
-import woowacourse.movie.model.ticket.MovieTicket
+import java.time.LocalDate
+import java.time.LocalTime
 
 interface SeatSelectionContracts {
     interface View {
@@ -16,7 +17,14 @@ interface SeatSelectionContracts {
 
         fun updateSeatsEnabled(enabled: Boolean)
 
-        fun showReservationCompleteView(movieTicket: MovieTicket)
+        fun showReservationCompleteView(reservationId: Long)
+
+        fun postAlarm(
+            reservationId: Long,
+            movieTitle: String,
+            movieDate: LocalDate,
+            movieTime: LocalTime,
+        )
     }
 
     interface Presenter {

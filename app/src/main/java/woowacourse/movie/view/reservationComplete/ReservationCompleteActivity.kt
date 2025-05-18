@@ -10,21 +10,29 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.MainActivity
 import woowacourse.movie.R
+import woowacourse.movie.data.db.AppDatabase
+import woowacourse.movie.data.storage.DefaultReservationStorage
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
+import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.presenter.reservationComplete.ReservationCompleteContracts
 import woowacourse.movie.presenter.reservationComplete.ReservationCompletePresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.extension.showShortToast
-import woowacourse.movie.view.mapper.Formatter.localDateToUi
 import woowacourse.movie.view.mapper.Formatter.priceToUi
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.seatsToUi
+import java.time.LocalDate
+import java.time.LocalTime
 
 class ReservationCompleteActivity :
     androidx.appcompat.app.AppCompatActivity(),
     ReservationCompleteContracts.View {
-    private val presenter: ReservationCompleteContracts.Presenter =
-        ReservationCompletePresenter(this)
+    private val presenter: ReservationCompleteContracts.Presenter by lazy {
+        ReservationCompletePresenter(
+            this,
+            DefaultReservationStorage(AppDatabase.getDatabase(this)),
+        )
+    }
     private lateinit var binding: ActivityReservationCompleteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,13 +45,14 @@ class ReservationCompleteActivity :
             insets
         }
 
-        presenter.updateTicketData(
-            intent.getSerializableExtraData<MovieTicket>(TICKET_DATA_KEY) ?: run {
-                showShortToast("예상치 못한 오류로 영화 예매가 취소 되었습니다. 메인 화면으로 돌아갑니다.")
+        presenter.fetchTicketData(
+            intent.getSerializableExtraData<Long>(RESERVATION_ID_KEY) ?: run {
+                showShortToast("없는 예약 번호 입니다.")
                 startActivity(MainActivity.getIntent(this@ReservationCompleteActivity))
                 return
             },
         )
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupBackPressedDispatcher()
     }
@@ -70,53 +79,55 @@ class ReservationCompleteActivity :
     }
 
     override fun showMovieTicket(movieTicket: MovieTicket) {
-        binding.movieTicket = movieTicket
-        showMovieTimeStamp(movieTicket)
-        showTheaterSeats(movieTicket)
-        showPrice(movieTicket)
+        binding.tvReservationCompleteTitle.text = movieTicket.movie.title
+        showMovieTimeStamp(movieTicket.movieDate, movieTicket.movieTime.value)
+        showTheaterSeats(movieTicket.seats, movieTicket.theater.name)
+        showPrice(movieTicket.price)
     }
 
-    private fun showPrice(movieTicket: MovieTicket) {
-        val formatPrice: String = priceToUi(movieTicket.price)
-
-        binding.tvReservationCompleteTicketPrice.text =
-            getString(
-                R.string.reservation_complete_ticket_price,
-                formatPrice,
-            )
-    }
-
-    private fun showTheaterSeats(movieTicket: MovieTicket) {
-        val formatedSeats: String = seatsToUi(movieTicket.seats, ", ")
-        binding.tvReservationCompleteTicketCount.text =
-            getString(
-                R.string.reservation_complete_seat_theater_name_info,
-                movieTicket.seats.size,
-                formatedSeats,
-                movieTicket.theater.name,
-            )
-    }
-
-    private fun showMovieTimeStamp(movieTicket: MovieTicket) {
-        val formatMovieDate: String = localDateToUi(movieTicket.movieDate)
-        val formatMovieTime: String = movieTicket.movieTime.value.toString()
+    private fun showMovieTimeStamp(
+        movieDate: LocalDate,
+        movieTime: LocalTime,
+    ) {
         binding.tvReservationCompleteTimestamp.text =
             getString(
                 R.string.reservation_complete_ticket_timestamp,
-                formatMovieDate,
-                formatMovieTime,
+                movieDate,
+                movieTime,
+            )
+    }
+
+    private fun showTheaterSeats(
+        seats: List<Seat>,
+        theaterName: String,
+    ) {
+        val formatedSeats: String = seatsToUi(seats, ", ")
+        binding.tvReservationCompleteTicketCount.text =
+            getString(
+                R.string.reservation_complete_seat_theater_name_info,
+                seats.size,
+                formatedSeats,
+                theaterName,
+            )
+    }
+
+    private fun showPrice(price: Int) {
+        binding.tvReservationCompleteTicketPrice.text =
+            getString(
+                R.string.reservation_complete_ticket_price,
+                priceToUi(price),
             )
     }
 
     companion object {
-        private const val TICKET_DATA_KEY = "movieTicket"
+        private const val RESERVATION_ID_KEY = "reservationIdKey"
 
         fun getIntent(
             context: Context,
-            movieTicket: MovieTicket,
+            reservationDetailId: Long,
         ): Intent =
             Intent(context, ReservationCompleteActivity::class.java).apply {
-                putExtra(TICKET_DATA_KEY, movieTicket)
+                putExtra(RESERVATION_ID_KEY, reservationDetailId)
             }
     }
 }

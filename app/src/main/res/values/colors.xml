@@ -11,6 +11,7 @@
     <color name="purple_9160f9">#FF9160F9</color>
     <color name="purple_8e13ef">#FF8E13EF</color>
     <color name="purple_6200ee">#FF6200EE</color>
+    <color name="purple_d9c2fb">#FFD9C2FB</color>
 
     <color name="green_19d358">#FF19D358</color>
 
@@ -21,7 +22,8 @@
     <color name="gray_b7b7b7">#FFB7B7B7</color>
     <color name="gray_727272">#FF727272</color>
     <color name="gray_5f5f5f">#FF5F5F5F</color>
+    <color name="gray_666666">#FF666666</color>
 
     <color name="yellow_faff00">#FFFAFF00</color>
-    
+
 </resources>

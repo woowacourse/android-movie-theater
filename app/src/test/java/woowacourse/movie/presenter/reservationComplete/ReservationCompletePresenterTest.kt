@@ -4,30 +4,38 @@ import io.kotest.core.spec.style.AnnotationSpec.After
 import io.mockk.Runs
 import io.mockk.clearAllMocks
 import io.mockk.every
+import io.mockk.invoke
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.storage.ReservationStorage
+import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.presenter.MOVIE_TICKET_B1_C3
 
 class ReservationCompletePresenterTest {
     private lateinit var presenter: ReservationCompletePresenter
     private lateinit var view: ReservationCompleteContracts.View
+    private lateinit var reservationStorage: ReservationStorage
 
     @BeforeEach
     fun setup() {
         view = mockk()
-        presenter = ReservationCompletePresenter(view)
+        reservationStorage = mockk()
+        presenter = ReservationCompletePresenter(view, reservationStorage)
     }
 
     @Test
     fun `영화 티켓을 업데이트 하면 영화 티켓에 대한 정보가 보인다`() {
         // given:
         every { view.showMovieTicket(any()) } just Runs
+        every { reservationStorage.getMovieTicket(any(), captureLambda()) } answers {
+            lambda<(MovieTicket) -> Unit>().invoke(MOVIE_TICKET_B1_C3)
+        }
 
         // when:
-        presenter.updateTicketData(MOVIE_TICKET_B1_C3)
+        presenter.fetchTicketData(1L)
 
         // then:
         verify { view.showMovieTicket(MOVIE_TICKET_B1_C3) }

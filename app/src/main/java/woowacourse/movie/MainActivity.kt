@@ -28,6 +28,14 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        setupListener()
+        if (savedInstanceState == null) {
+            binding.mainBottomNavigationBar.selectedItemId =
+                R.id.bottom_navigation_reservation_details
+        }
+    }
+
+    private fun setupListener() {
         binding.mainBottomNavigationBar.setOnItemSelectedListener { item ->
             return@setOnItemSelectedListener when (item.itemId) {
                 R.id.bottom_navigation_reservation_details -> {
@@ -59,9 +67,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.fragments.forEach { hide(it) }
             if (fragment.isAdded) {
                 show(fragment)
-                return
+            } else {
+                add(binding.mainFragmentContainer.id, fragment, tag)
             }
-            add(binding.mainFragmentContainer.id, fragment, tag)
         }
     }
 

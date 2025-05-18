@@ -9,15 +9,18 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.storage.NotificationPermissionStorage
 
 class HomePresenterTest {
     private lateinit var presenter: HomePresenter
     private lateinit var view: HomeContracts.View
+    private lateinit var notificationPermissionStorage: NotificationPermissionStorage
 
     @BeforeEach
     fun setup() {
         view = mockk()
-        presenter = HomePresenter(view)
+        notificationPermissionStorage = mockk()
+        presenter = HomePresenter(view, notificationPermissionStorage)
     }
 
     @Test
@@ -54,6 +57,30 @@ class HomePresenterTest {
 
         // then
         verify { view.showTheaters(any()) }
+    }
+
+    @Test
+    fun `알람 권한을 허용하지 않음으로 업데이트하면, 저장소의 알람 권한이 false로 업데이트 된다`() {
+        // given:
+        every { notificationPermissionStorage.updateNotificationPermission(any()) } just Runs
+
+        // when:
+        presenter.updateNotificationPermission(false)
+
+        // then:
+        verify { notificationPermissionStorage.updateNotificationPermission(false) }
+    }
+
+    @Test
+    fun `알람 권한을 허용함으로 업데이트하면, 저장소의 알람 권한이 true로 업데이트 된다`() {
+        // given:
+        every { notificationPermissionStorage.updateNotificationPermission(any()) } just Runs
+
+        // when:
+        presenter.updateNotificationPermission(true)
+
+        // then:
+        verify { notificationPermissionStorage.updateNotificationPermission(true) }
     }
 
     @After

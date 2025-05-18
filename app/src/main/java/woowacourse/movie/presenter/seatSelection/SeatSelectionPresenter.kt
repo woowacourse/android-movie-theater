@@ -1,11 +1,13 @@
 package woowacourse.movie.presenter.seatSelection
 
+import woowacourse.movie.data.storage.ReservationStorage
 import woowacourse.movie.model.movie.MovieToReserve
 import woowacourse.movie.model.seat.Seat
 import woowacourse.movie.model.ticket.MovieTicket
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContracts.View,
+    private val reservationStorage: ReservationStorage,
 ) : SeatSelectionContracts.Presenter {
     private lateinit var movieToReserve: MovieToReserve
     private var seats: MutableList<Seat> = mutableListOf()
@@ -26,7 +28,7 @@ class SeatSelectionPresenter(
     override fun updateMovieToReserve(movieToReserve: MovieToReserve) {
         this.movieToReserve = movieToReserve
 
-        view.showMovieTitle(movieToReserve.title)
+        view.showMovieTitle(movieToReserve.movie.title)
         view.showPrice(0)
         view.showButtonEnabled(false)
     }
@@ -56,12 +58,20 @@ class SeatSelectionPresenter(
     override fun updateMovieTicket() {
         val movieTicket =
             MovieTicket(
-                title = movieToReserve.title,
+                movie = movieToReserve.movie,
                 movieDate = movieToReserve.movieDate.value,
                 movieTime = movieToReserve.movieTime,
                 seats = seats.toList(),
                 theater = movieToReserve.theater,
             )
-        view.showReservationCompleteView(movieTicket)
+        reservationStorage.saveMovieTicket(movieTicket) {
+            view.postAlarm(
+                it,
+                movieTicket.movie.title,
+                movieTicket.movieDate,
+                movieTicket.movieTime.value,
+            )
+            view.showReservationCompleteView(it)
+        }
     }
 }

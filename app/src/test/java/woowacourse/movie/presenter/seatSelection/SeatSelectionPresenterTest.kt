@@ -4,11 +4,13 @@ import io.kotest.core.spec.style.AnnotationSpec.After
 import io.mockk.Runs
 import io.mockk.clearAllMocks
 import io.mockk.every
+import io.mockk.invoke
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.storage.ReservationStorage
 import woowacourse.movie.presenter.MOVIE_TO_RESERVE
 import woowacourse.movie.presenter.SEAT_2_2
 import woowacourse.movie.presenter.SEAT_2_3
@@ -16,11 +18,13 @@ import woowacourse.movie.presenter.SEAT_2_3
 class SeatSelectionPresenterTest {
     private lateinit var presenter: SeatSelectionPresenter
     private lateinit var view: SeatSelectionContracts.View
+    private lateinit var reservationStorage: ReservationStorage
 
     @BeforeEach
     fun setup() {
         view = mockk()
-        presenter = SeatSelectionPresenter(view)
+        reservationStorage = mockk()
+        presenter = SeatSelectionPresenter(view, reservationStorage)
     }
 
     @Test
@@ -118,12 +122,16 @@ class SeatSelectionPresenterTest {
     }
 
     @Test
-    fun `예매 완료 요청이 오면 예매 완료 뷰가 보인다`() {
+    fun `영화 티켓을 업데이트하면, 영화 티켓 저장되고, 알람 등록되고, 예매 완료 뷰가 보인다`() {
         // given:
         every { view.showMovieTitle(any()) } just Runs
         every { view.showPrice(any()) } just Runs
         every { view.showButtonEnabled(false) } just Runs
         every { view.showReservationCompleteView(any()) } just Runs
+        every { view.postAlarm(any(), any(), any(), any()) } just Runs
+        every { reservationStorage.saveMovieTicket(any(), captureLambda()) } answers {
+            lambda<(Long) -> Unit>().invoke(1L)
+        }
 
         presenter.updateMovieToReserve(MOVIE_TO_RESERVE)
 
@@ -131,7 +139,16 @@ class SeatSelectionPresenterTest {
         presenter.updateMovieTicket()
 
         // then:
-        verify { view.showReservationCompleteView(any()) }
+
+        verify {
+            view.postAlarm(
+                1L,
+                MOVIE_TO_RESERVE.movie.title,
+                MOVIE_TO_RESERVE.movieDate.value,
+                MOVIE_TO_RESERVE.movieTime.value,
+            )
+            view.showReservationCompleteView(1L)
+        }
     }
 
     @After

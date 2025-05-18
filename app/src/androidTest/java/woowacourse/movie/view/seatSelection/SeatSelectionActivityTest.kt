@@ -1,4 +1,4 @@
-package woowacourse.movie.seatSelection
+package woowacourse.movie.view.seatSelection
 
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
@@ -15,7 +15,6 @@ import org.junit.Test
 import woowacourse.movie.MOVIE_TO_RESERVE
 import woowacourse.movie.R
 import woowacourse.movie.fakeContext
-import woowacourse.movie.view.seatSelection.SeatSelectionActivity
 
 class SeatSelectionActivityTest {
     private lateinit var intent: Intent
