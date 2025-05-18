@@ -44,4 +44,5 @@
     <string name="notification_ticket_text">%1$s30분 후에 상영.</string>
     <string name="notification_ticket_title">예매 알림</string>
     <string name="notification_ticket_description">영화 상영전 알림</string>
+    <string name="vertical_bar_separator">" | "</string>
 </resources>
