@@ -3,16 +3,15 @@ package woowacourse.movie.moviebooked
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
+import woowacourse.movie.data.Reservation
 import woowacourse.movie.databinding.MovieBookedBinding
-import woowacourse.movie.domain.BookingStatus
-import woowacourse.movie.domain.Theater
-import woowacourse.movie.helper.BuildVersion
 
 class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
     private lateinit var binding: MovieBookedBinding
@@ -24,33 +23,20 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
         initBinding()
         applyWindowInserts()
         presenter = MovieBookedPresenter(this)
-        fetchBookingStatus()
+        fetchReservationInfo()
     }
 
-    override fun fetchBookingStatus() {
-        val bookingStatus =
-            BuildVersion().getParcelableClass(
-                intent,
-                KEY_BOOKING_STATUS,
-                BookingStatus::class,
-            )
-        val theater = BuildVersion().getParcelableClass(intent, KEY_THEATER, Theater::class)
-        presenter.loadBookedStatus(bookingStatus, theater)
+    override fun fetchReservationInfo() {
+        val id = intent.getLongExtra(KEY_RESERVATION, 0L)
+        if (id == 0L) {
+            Toast.makeText(this, "예약 정보를 찾을 수 없습니다.", Toast.LENGTH_LONG).show()
+            finish()
+        }
+        presenter.loadReservationInfo(id)
     }
 
-    override fun showBookedStatus(
-        bookingStatus: BookingStatus,
-        theater: Theater,
-    ) {
-        binding.bookingStatus = bookingStatus
-        binding.theater = theater
-        val seatsText =
-            bookingStatus.seat.seats.joinToString { seat ->
-                val rowChar = 'A' + seat.row.value
-                val colNumber = seat.column.value + 1
-                "$rowChar$colNumber"
-            }
-        binding.bookedBookingSeat.text = seatsText
+    override fun showReservation(reservation: Reservation) {
+        binding.reservation = reservation
     }
 
     private fun initBinding() {
@@ -58,7 +44,7 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
     }
 
     private fun applyWindowInserts() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booked)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -66,18 +52,15 @@ class MovieBookedActivity : AppCompatActivity(), MovieBookedContract.View {
     }
 
     companion object {
-        private const val KEY_BOOKING_STATUS = "bookingStatus"
-        private const val KEY_THEATER = "theater"
+        private const val KEY_RESERVATION = "reservation"
 
-        fun movieBookedIntent(
-            otherActivity: Context,
-            bookingStatus: BookingStatus,
-            theater: Theater,
+        fun newIntent(
+            context: Context,
+            id: Long,
         ): Intent {
-            return Intent(otherActivity, MovieBookedActivity::class.java)
+            return Intent(context, MovieBookedActivity::class.java)
                 .apply {
-                    putExtra(KEY_BOOKING_STATUS, bookingStatus)
-                    putExtra(KEY_THEATER, theater)
+                    putExtra(KEY_RESERVATION, id)
                 }
         }
     }

@@ -1,15 +1,28 @@
 package woowacourse.movie.moviebookingseat
 
+import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import woowacourse.movie.data.Reservation
+import woowacourse.movie.data.ReservationRepository
 import woowacourse.movie.domain.BookingStatus
+import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.seat.Seat
+import woowacourse.movie.helper.LocalDateHelper.toDotFormat
+import kotlin.concurrent.thread
 
 class MovieBookingSeatPresenter(
     private val view: MovieBookingSeat.View,
 ) : MovieBookingSeat.Presenter {
     private lateinit var bookingStatus: BookingStatus
+    private lateinit var theater: Theater
 
-    override fun loadBookingStatus(bookingStatus: BookingStatus) {
+    override fun loadBookingStatus(
+        bookingStatus: BookingStatus,
+        theater: Theater,
+    ) {
         this.bookingStatus = bookingStatus
+        this.theater = theater
         view.showBookingStatusInfo()
     }
 
@@ -25,15 +38,41 @@ class MovieBookingSeatPresenter(
 
     override fun calculatePrice() {
         val totalPrice = bookingStatus.calculateTicketPrices()
-        selectedAll()
+        setUpActiveButton()
         view.showTotalPrice(totalPrice)
     }
 
-    private fun selectedAll() {
+    private fun setUpActiveButton() {
         if (bookingStatus.seat.isSelectedAll()) view.updateButton()
     }
 
-    override fun confirmBooking() {
-        view.showConfirmDialog(bookingStatus)
+    override fun confirmBooking(context: Context) {
+        val reservation =
+            Reservation(
+                title = bookingStatus.movie.title,
+                date = bookingStatus.bookedTime.toLocalDate().toDotFormat(),
+                time = bookingStatus.bookedTime.toLocalTime().toDotFormat(),
+                personnel = bookingStatus.memberCount,
+                seats = formattedSeat(bookingStatus.seat.seats),
+                theater = theater.name,
+                price = bookingStatus.calculateTicketPrices(),
+            )
+
+        thread {
+            val reservationRepository = ReservationRepository.get()
+            val generatedId = reservationRepository.insert(reservation)
+            reservation.uid = generatedId
+            Handler(Looper.getMainLooper()).post {
+                view.showConfirmDialog(generatedId)
+            }
+        }
+    }
+
+    private fun formattedSeat(seats: List<Seat>): String {
+        return seats.joinToString { seat ->
+            val rowChar = 'A' + seat.row.value
+            val colNumber = seat.column.value + 1
+            "$rowChar$colNumber"
+        }
     }
 }

@@ -17,8 +17,8 @@ object MovieFixture {
             Title("해리포터와 마법사의 돌"),
             R.drawable.movie_poster,
             ScreeningPeriod(
-                LocalDate.of(2025, 4, 1),
-                LocalDate.of(2025, 4, 25),
+                LocalDate.of(3025, 4, 1),
+                LocalDate.of(3025, 4, 25),
             ),
             152,
         )
@@ -51,8 +51,8 @@ object MovieFixture {
                     Title("해리포터와 마법사의 돌"),
                     R.drawable.movie_poster,
                     ScreeningPeriod(
-                        LocalDate.of(2025, 4, 1),
-                        LocalDate.of(2025, 4, 25),
+                        LocalDate.of(3025, 4, 1),
+                        LocalDate.of(3025, 4, 25),
                     ),
                     152,
                 ),
@@ -88,8 +88,8 @@ object MovieFixture {
                 Title("해리포터와 마법사의 돌"),
                 R.drawable.movie_poster,
                 ScreeningPeriod(
-                    LocalDate.of(2025, 4, 1),
-                    LocalDate.of(2025, 4, 25),
+                    LocalDate.of(3025, 4, 1),
+                    LocalDate.of(3025, 4, 25),
                 ),
                 152,
             ),

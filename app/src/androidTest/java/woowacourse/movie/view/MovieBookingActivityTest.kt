@@ -10,11 +10,13 @@ import org.junit.Test
 import woowacourse.movie.MovieFixture
 import woowacourse.movie.R
 import woowacourse.movie.checkIsDisplayed
+import woowacourse.movie.checkWithSpinnerText
 import woowacourse.movie.checkWithText
 import woowacourse.movie.moviebooking.MovieBookingActivity
 
-class MovieBookingContractActivityTest {
+class MovieBookingActivityTest {
     private lateinit var scenario: ActivityScenario<MovieBookingActivity>
+
     @Before
     fun setUp() {
         val movie = MovieFixture.MOVIE
@@ -83,15 +85,15 @@ class MovieBookingContractActivityTest {
         onView(withId(R.id.booking_complete_button)).checkIsDisplayed()
     }
 
-//    @Test
-//    fun 예매할_날짜가_보인다() {
-//        onView(withId(R.id.booking_date_picker)).checkWithText("2025.09.29")
-//    }
-//
-//    @Test
-//    fun 예매할_시간이_보인다() {
-//        onView(withId(R.id.booking_time_picker)).checkWithText("10:00")
-//    }
+    @Test
+    fun 예매할_날짜가_보인다() {
+        onView(withId(R.id.booking_date_picker)).checkWithSpinnerText("3025-04-01")
+    }
+
+    @Test
+    fun 예매할_시간이_보인다() {
+        onView(withId(R.id.booking_time_picker)).checkWithSpinnerText("09:00")
+    }
 
     @After
     fun tearDown() {

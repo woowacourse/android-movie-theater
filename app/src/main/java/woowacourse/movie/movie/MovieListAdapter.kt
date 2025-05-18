@@ -11,7 +11,6 @@ class MovieListAdapter(
     private val items: List<FeedItem>,
     private val movieClickListener: MovieClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,

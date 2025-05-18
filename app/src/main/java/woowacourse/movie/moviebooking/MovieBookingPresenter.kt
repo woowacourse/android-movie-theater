@@ -50,7 +50,7 @@ class MovieBookingPresenter(
     }
 
     override fun confirmBooking() {
-        val bookingStatus = BookingStatus.Companion(movie, count, bookedDate, bookedTime)
+        val bookingStatus = BookingStatus(movie, count, bookedDate, bookedTime)
         view.navigateToMovieBookingSeat(bookingStatus)
     }
 }

@@ -120,6 +120,7 @@
 - [x] refactor: xml 레이아웃 아이디를 뷰 타입으로 갖도록 변경
 - Sealed class로 FeedItem 정의
 
+
 ## 1,2단계 2차 변경 사항
 - [x] refactor: 하드코딩된 text strings.xml로 변경
 
@@ -147,3 +148,102 @@
 - [x] refactor: bottomSheet 뒤로가기 시 사라지도록 변경
 
 - [x] test: UI 테스트 코드에 intent 값이 제대로 보이는지 추가
+
+
+## 3단계 기능 요구 사항
+내비게이션의 예매 내역 항목에 예매한 영화 목록을 보여준다.
+- 예매 내역 : 예매한 영화 목록
+- 홈 : 영화 목록 
+- 설정 : 빈 화면
+
+예매 내역 상세 
+- 예매 내역을 터치하면 예매 정보를 보여준다. 
+- 리스트 항목을 누르는 효과를 줘야 한다. (시안 참고)
+
+- 앱을 재실행해도 기존 예매 내역이 유지되어야 한다.
+
+
+## 3단계 구현할 기능 목록
+예매 내역
+- [x] 상영 날짜, 상영 시간, 상영 극장, 영화 제목을 가진다.
+- [x] ReservationInfo를 예약 내역 목록에 보여준다.
+- [x] 예매한 영화 내역이 목록에 보인다.
+- [x] 아이템을 터치하면 클릭 효과가 보인다.
+- [x] 누르면 예매 정보 화면을 볼 수 있다.
+- [x] 재실행해도 기존 예매 내역이 유지된다.
+- [x] 예매 내역은 날짜와 시간 순으로 정렬된다.
+
+
+## 4단계 기능 요구 사항
+설정에서 알림 기능을 On/Off 할 수 있다.
+- 사용자가 앱을 재실행해도 설정 데이터가 남아있어야 한다.
+  영화 시작 시간 30분 전에 푸시 알림이 온다.
+  푸시 알림을 클릭하면 예매 정보를 보여준다.
+  알림 권한 Dialog 및 Notification은 기본 UI를 그대로 사용한다.
+- 단, Notification의 아이콘은 커스텀해본다.
+
+
+## 4단계 구현할 기능 목록
+- [x] 설정 화면 구현
+- [x] 푸시 알림 여부 저장 기능
+- [x] 푸시 알림을 위한 권한 허용 기능
+- [x] 영화 시작 시간 30분 전에 푸시 알림 기능
+- [x] 푸시 알림 클릭 시 예매 완료 화면으로 이동하는 기능
+- [x] Notification 아이콘 변경
+
+### 3, 4단계 변경 사항
+- [x] refactor: BookingFragment 파일 구조 변경 및 ReservationFragment로 변경
+
+- [x] refactor: movie_booked.xml ConstraintLayout 정리
+
+- [x] refactor: Booked에서 BookingStatus, Theater을 ReservationInfo로 변경
+
+- [x] refactor: 좌석 예매 화면에서 데이터베이스에 저장하고 완료 화면에서 uid로 데이터베이스로부터 값을 호출하도록 변경
+
+- [x] chore: TestExtensions 파일명 오타 수정
+
+- [x] fix: 마지막 아이템이 네비게이션 바에 안 보이던 현상 수정
+
+- [x] refactor: 아이템별로 클릭 리스너를 설정했던 함수를 클릭 리스너를 설정하도록 변경
+
+- [x] fix: 스피너 테스트 코드 수정
+- 스피너 테스트 확장 함수 추가
+
+- [x] refactor: TheaterViewHolder inner class에서 class로 변경
+
+- [x] refactor: 코드 정리
+- 오타 수정
+- 사용자에게 보이는 문자열을 strings.xml에 정의
+- 불필요한 코드 정리
+
+- [x] refactor: permission 검증을 공통적으로 사용할 수 있도록 변경
+
+- [x] refactor: Database 생성 방법 수정
+- Application의 onCreate()에서 DB를 생성하고 ReservationRepository를 통해 DB에 접근하도록 수정
+
+- [x] refactor: 프래그먼트 매니저에게 프래그먼트 위임
+- 화면 회전 시 현재 프래그먼트가 유지되지 않고 홈으로 변경되던 현상 수정 -> 번들이 null일 때만 홈으로 설정
+
+- [x] refactor: 채널 아이디 상수화
+
+- [x] test: Room에 데이터를 저장하고 가져오는 Repository에 대한 테스트 추가
+
+- [x] test: Room에 접근해 데이터를 가져오던 MovieBookedActivity에 대한 UI 테스트 코드 추가
+
+- [x] refactor: RecyclerView.Adapter 속성 TheaterViewHolder 타입으로 한정
+
+- [x] refactor: Receiver Intent 생성 분리 및 중복 코드 제거
+
+- [x] refactor: findViewById -> binding.root로 변경
+
+- [x] refactor: 리사이클러뷰홀더 -> ReservationViewHolder으로 타입 한정
+
+- [x] refactor: getSharedPreferences 상위 함수로 이동
+
+- [x] feat: 예약 정보를 찾을 수 없을 때 토스트 메시지와 함께 액티비티 종료
+
+- [x] refactor: 푸시 알림에 대한 책임 SettingPregerenceHelper로 분리
+
+- [x] refactor: Notification 함수 Helper로 분리
+
+- [x] test: 리팩토링에 의한 테스트 코드 수정

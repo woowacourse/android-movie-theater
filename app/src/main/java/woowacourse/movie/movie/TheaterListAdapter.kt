@@ -12,36 +12,27 @@ import woowacourse.movie.domain.Theater
 
 class TheaterListAdapter(
     private val items: List<Theater>,
-    val movie: Movie,
-    val onClicked: (Theater) -> Unit,
-) : RecyclerView.Adapter<TheaterListAdapter.TheaterViewHolder>() {
-    private lateinit var binding: BottomSheetItemBinding
+    private val movie: Movie,
+    private val onClicked: (Theater) -> Unit,
+) : RecyclerView.Adapter<TheaterViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): TheaterViewHolder {
-        binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.bottom_sheet_item, parent, false)
+        val binding = DataBindingUtil.inflate<BottomSheetItemBinding>(
+            LayoutInflater.from(parent.context),
+            R.layout.bottom_sheet_item,
+            parent,
+            false,
+        )
         return TheaterViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = items.size
-
-    override fun onBindViewHolder(
-        holder: TheaterViewHolder,
-        position: Int,
-    ) {
+    override fun onBindViewHolder(holder: TheaterViewHolder, position: Int) {
         val item = items[position]
-        holder.setItem(item)
+        holder.setItem(item, movie, onClicked)
     }
 
-    inner class TheaterViewHolder(binding: BottomSheetItemBinding) : ViewHolder(binding.root) {
-        fun setItem(item: Theater) {
-            binding.theater = item
-            binding.movie = movie
-            itemView.setOnClickListener {
-                onClicked(item)
-            }
-        }
-    }
+    override fun getItemCount(): Int = items.size
 }

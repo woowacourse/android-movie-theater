@@ -1,8 +1,13 @@
 package woowacourse.movie.moviebookingseat
 
+import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -12,14 +17,21 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
+import woowacourse.movie.NotificationReceiver
 import woowacourse.movie.R
+import woowacourse.movie.data.ReservationRepository
 import woowacourse.movie.databinding.MovieBookingSeatBinding
 import woowacourse.movie.domain.BookingStatus
 import woowacourse.movie.domain.Theater
 import woowacourse.movie.domain.seat.Seat
 import woowacourse.movie.helper.BuildVersion
 import woowacourse.movie.helper.CustomClickListenerHelper.setOnSingleClickListener
+import woowacourse.movie.helper.SettingsPreferenceHelper
 import woowacourse.movie.moviebooked.MovieBookedActivity
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import kotlin.concurrent.thread
 
 class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     private lateinit var binding: MovieBookingSeatBinding
@@ -43,7 +55,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
 
     override fun updateButton() {
         binding.seatConfirmButton.setBackgroundResource(R.color.purple_500)
-        binding.seatConfirmButton.setOnSingleClickListener { showConfirmDialog(bookingStatus) }
+        binding.seatConfirmButton.setOnSingleClickListener { presenter.confirmBooking(applicationContext) }
     }
 
     override fun updateSeat(
@@ -63,7 +75,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
             )
     }
 
-    override fun showConfirmDialog(bookingStatus: BookingStatus) {
+    override fun showConfirmDialog(id: Long) {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.check_movie_booking))
             .setMessage(getString(R.string.confirm_reservation_message))
@@ -71,21 +83,18 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
                 dialog.cancel()
             }
             .setPositiveButton(getString(R.string.okay)) { _, _ ->
-                navigateToMovieBooked(bookingStatus, theater)
+                setUpNotification(id)
+                navigateToMovieBooked(id)
             }
             .show()
             .setCancelable(false)
     }
 
-    override fun navigateToMovieBooked(
-        bookingStatus: BookingStatus,
-        theater: Theater,
-    ) {
+    override fun navigateToMovieBooked(id: Long) {
         val intent =
-            MovieBookedActivity.movieBookedIntent(
+            MovieBookedActivity.newIntent(
                 this@MovieBookingSeatActivity,
-                bookingStatus,
-                theater,
+                id,
             )
         startActivity(intent)
         finish()
@@ -99,12 +108,44 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
             .setCancelable(false)
     }
 
+    @SuppressLint("ScheduleExactAlarm")
+    override fun setUpNotification(id: Long) {
+
+        val isNotificationEnabled = SettingsPreferenceHelper.isNotificationEnabled(this)
+        if (!isNotificationEnabled) return
+
+        thread {
+            val reservationRepository = ReservationRepository.get()
+            val reservation = reservationRepository.getReservation(id) ?: return@thread
+
+            val intent =  NotificationReceiver.newIntent(this, id, reservation.title)
+
+            val pendingIntent = PendingIntent.getBroadcast(
+                this, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
+
+            val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")
+            val dateTime = LocalDateTime.parse("${reservation.date} ${reservation.time}", formatter)
+            val notifyTime = dateTime.minusMinutes(30).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+            Handler(Looper.getMainLooper()).post {
+                val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+
+                alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    notifyTime,
+                    pendingIntent,
+                )
+            }
+        }
+    }
+
     private fun initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.movie_booking_seat)
     }
 
     private fun applyWindowInserts() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booking_seat)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -119,7 +160,7 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
 
     private fun setUpPresenter() {
         presenter = MovieBookingSeatPresenter(this@MovieBookingSeatActivity)
-        presenter.loadBookingStatus(bookingStatus)
+        presenter.loadBookingStatus(bookingStatus, theater)
     }
 
     private fun initSeatTable() {
@@ -139,6 +180,8 @@ class MovieBookingSeatActivity : AppCompatActivity(), MovieBookingSeat.View {
     companion object {
         private const val KEY_BOOKING_SEAT = "bookingSeat"
         private const val KEY_THEATER = "theater"
+        private const val KEY_SETTINGS = "settings"
+        private const val KEY_NOTIFICATION = "notification"
 
         fun movieBookingSeatIntent(
             otherActivity: Context,

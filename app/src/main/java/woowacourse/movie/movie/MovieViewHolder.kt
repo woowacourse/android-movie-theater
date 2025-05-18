@@ -7,16 +7,11 @@ class MovieViewHolder(
     private val binding: MovieItemBinding,
     movieClickListener: MovieClickListener,
 ) : RecyclerView.ViewHolder(binding.root) {
-
     init {
         binding.movieClickListener = movieClickListener
     }
 
-    fun bindMovie(
-        movie: FeedItem.MovieItem,
-
-    ) {
+    fun bindMovie(movie: FeedItem.MovieItem) {
         binding.movie = movie.movie
-
     }
 }

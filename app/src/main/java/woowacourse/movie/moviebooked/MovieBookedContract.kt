@@ -1,22 +1,15 @@
 package woowacourse.movie.moviebooked
 
-import woowacourse.movie.domain.BookingStatus
-import woowacourse.movie.domain.Theater
+import woowacourse.movie.data.Reservation
 
 interface MovieBookedContract {
     interface View {
-        fun fetchBookingStatus()
+        fun fetchReservationInfo()
 
-        fun showBookedStatus(
-            bookingStatus: BookingStatus,
-            theater: Theater,
-        )
+        fun showReservation(reservation: Reservation)
     }
 
     interface Presenter {
-        fun loadBookedStatus(
-            bookingStatus: BookingStatus,
-            theater: Theater,
-        )
+        fun loadReservationInfo(id: Long)
     }
 }

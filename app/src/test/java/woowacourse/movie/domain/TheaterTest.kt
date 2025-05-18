@@ -1,6 +1,6 @@
 package woowacourse.movie.domain
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import woowacourse.movie.fixture.MovieFixture
@@ -13,7 +13,7 @@ class TheaterTest {
 
         val actual = theater.isShowing(movie)
 
-        Assertions.assertThat(actual).isTrue
+       assertThat(actual).isTrue
     }
 
     @Test
@@ -23,7 +23,7 @@ class TheaterTest {
 
         val actual = theater.isShowing(movie)
 
-        Assertions.assertThat(actual).isFalse
+        assertThat(actual).isFalse
     }
 
     @Test
@@ -33,14 +33,16 @@ class TheaterTest {
 
         val actual = theater.movieTimeTable(movie)
         val expected = MovieFixture.THEATER_TIMETABLE[Title(movie.title)]
-        Assertions.assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
-    fun `극장은 해당 영화 제목을 찾을 수 없으면 오류를 반환한다`() {
+    fun `극장은 해당 영화 제목을 찾을 수 없으면 빈 리스트를 반환한다`() {
         val theater = Theater("선릉", MovieFixture.THEATER_MOVIES, MovieFixture.THEATER_TIMETABLE)
         val movie = MovieFixture.THEATER_MOVIE_IS_NOT
 
-        assertThrows<IllegalArgumentException> { theater.movieTimeTable(movie) }
+        val actual = theater.movieTimeTable(movie)
+
+        assertThat(actual.size).isEqualTo(0)
     }
 }

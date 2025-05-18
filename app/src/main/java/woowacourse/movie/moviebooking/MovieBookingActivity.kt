@@ -36,8 +36,7 @@ class MovieBookingActivity : AppCompatActivity(), MovieBookingContract.View {
         setUpPresenter()
         setupDatePicker()
         setupTimePicker()
-        setupMemberCount()
-        setupBookingCompleteButton()
+        setupClickListener()
     }
 
     override fun showMovieInfo() {
@@ -79,7 +78,7 @@ class MovieBookingActivity : AppCompatActivity(), MovieBookingContract.View {
     }
 
     private fun applyWindowInserts() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.booking)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -138,13 +137,10 @@ class MovieBookingActivity : AppCompatActivity(), MovieBookingContract.View {
             }
     }
 
-    private fun setupMemberCount() {
+    private fun setupClickListener() {
         binding.bookingPlusMemberCount.setOnClickListener { presenter.increaseCount() }
-        binding.bookingMinusMemberCount.setOnClickListener { presenter.decreaseCount() }
-    }
-
-    private fun setupBookingCompleteButton() {
         binding.bookingCompleteButton.setOnClickListener { presenter.confirmBooking() }
+        binding.bookingMinusMemberCount.setOnClickListener { presenter.decreaseCount() }
     }
 
     companion object {

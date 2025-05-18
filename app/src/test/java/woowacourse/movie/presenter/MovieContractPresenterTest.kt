@@ -39,7 +39,7 @@ class MovieContractPresenterTest {
         // when - 영화 하나를 선택시
         presenter.selectedMovie(movie)
         // then - 영화 예매 페이지를 호출한다
-        verify { view.navigateToBook(any()) }
+        verify { view.navigateToBook(movie) }
     }
 
     @Test
