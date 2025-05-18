@@ -1,40 +1,23 @@
 package woowacourse.movie.view.setting
 
-import androidx.lifecycle.Observer
 import woowacourse.movie.domain.model.SettingData
-import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.repository.SettingRepository
 import woowacourse.movie.repository.TicketRepository
-import woowacourse.movie.util.CustomLiveData
-import kotlin.concurrent.thread
 
 class SettingPresenter(
     private val view: SettingContract.View,
     private val repository: TicketRepository,
     private val settingRepository: SettingRepository,
 ) : SettingContract.Presenter {
-    private val liveData = CustomLiveData<List<Ticket>>()
-    private val observer =
-        object : woowacourse.movie.util.Observer<List<Ticket>> {
-            override fun update(data: List<Ticket>) {
-                val showTimes = data.map { ticket -> ticket.showTime.minusMinutes(30) }
+    override fun setNotification() {
+        repository.findAll { result ->
+            result.onSuccess {
+                val showTimes = it.map { ticket -> ticket.showTime.minusMinutes(30) }
                 view.setNotification(
-                    data,
+                    it,
                     showTimes,
                 )
             }
-        }
-
-    init {
-        liveData.subscribe(observer)
-    }
-
-    override fun setNotification() {
-        thread {
-            repository.findAll()
-                .onSuccess {
-                    liveData.put(it)
-                }
         }
     }
 
@@ -42,8 +25,7 @@ class SettingPresenter(
         val settings = settingRepository.findAll()
         settings.onSuccess {
             val isPushAlarmEnabled =
-                it.find {
-                        setting ->
+                it.find { setting ->
                     setting.key == SettingData.NOTIFICATION_KEY
                 }?.value ?: false
             view.setPermissionSwitch(isPushAlarmEnabled)
