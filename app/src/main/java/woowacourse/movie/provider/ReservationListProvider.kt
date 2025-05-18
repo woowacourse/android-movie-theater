@@ -1,14 +1,16 @@
 package woowacourse.movie.provider
 
-import androidx.fragment.app.Fragment
-import woowacourse.movie.provider.RepositoryProvider.ticketRepository
+import android.content.Context
+import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.view.reservelist.ReservationListContract
 import woowacourse.movie.view.reservelist.ReservationListPresenter
 
-object ReservationListProvider {
-    fun <T> reservationListPresenter(view: T) where T : ReservationListContract.View, T : Fragment =
+class ReservationListProvider(context: Context) {
+    private val application = context.applicationContext as MovieTheaterApplication
+
+    fun reservationListPresenter(view: ReservationListContract.View): ReservationListPresenter =
         ReservationListPresenter(
             view,
-            ticketRepository(view.requireContext().applicationContext),
+            application.repositoryProvider.ticketRepository,
         )
 }

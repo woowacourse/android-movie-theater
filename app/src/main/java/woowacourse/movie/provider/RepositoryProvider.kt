@@ -1,19 +1,20 @@
 package woowacourse.movie.provider
 
 import android.content.Context
-import woowacourse.movie.provider.DatabaseProvider.ticketDao
+import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.repository.SettingRepository
 import woowacourse.movie.repository.TicketRepository
 
-object RepositoryProvider {
-    fun ticketRepository(context: Context): TicketRepository {
-        return TicketRepository(
-            ticketDao(context.applicationContext),
-        )
-    }
+class RepositoryProvider(context: Context) {
+    private val application = context.applicationContext as MovieTheaterApplication
 
-    fun settingRepository(context: Context): SettingRepository =
+    val ticketRepository: TicketRepository =
+        TicketRepository(
+            application.databaseProvider.ticketDao,
+        )
+
+    val settingRepository: SettingRepository =
         SettingRepository(
-            context.applicationContext.getSharedPreferences("setting", Context.MODE_PRIVATE),
+            application.getSharedPreferences("setting", Context.MODE_PRIVATE),
         )
 }

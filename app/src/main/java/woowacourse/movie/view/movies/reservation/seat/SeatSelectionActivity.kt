@@ -11,12 +11,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import woowacourse.movie.MovieTheaterApplication
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatSelectionBinding
 import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.provider.SeatSelectionProvider
 import woowacourse.movie.view.base.BaseActivity
 import woowacourse.movie.view.extension.getParcelableCompat
 import woowacourse.movie.view.extension.getParcelableCompatList
@@ -28,7 +28,8 @@ class SeatSelectionActivity :
     BaseActivity<ActivitySeatSelectionBinding>(R.layout.activity_seat_selection),
     SeatSelectionContract.View {
     private val presenter: SeatSelectionPresenter by lazy {
-        SeatSelectionProvider.seatSelectionPresenter(this)
+        (application as MovieTheaterApplication)
+            .seatSelectionProvider.seatSelectionPresenter(this)
     }
     private lateinit var currentTicket: Ticket
     private lateinit var reservation: ReservationInfo
