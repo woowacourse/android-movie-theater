@@ -8,6 +8,6 @@ interface ReservationCompleteContracts {
     }
 
     interface Presenter {
-        fun updateTicketData(reservationDetailId: Long)
+        fun fetchTicketData(reservationDetailId: Long)
     }
 }

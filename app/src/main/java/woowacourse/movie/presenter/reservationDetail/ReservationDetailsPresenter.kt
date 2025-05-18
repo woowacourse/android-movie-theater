@@ -6,7 +6,7 @@ class ReservationDetailsPresenter(
     private val view: ReservationDetailsContracts.View,
     private val reservationStorage: ReservationStorage,
 ) : ReservationDetailsContracts.Presenter {
-    override fun updateReservationDetails() {
+    override fun fetchReservationDetails() {
         reservationStorage.getAllMovieTickets {
             view.showReservationDetails(it)
         }

@@ -8,6 +8,6 @@ interface ReservationDetailsContracts {
     }
 
     interface Presenter {
-        fun updateReservationDetails()
+        fun fetchReservationDetails()
     }
 }

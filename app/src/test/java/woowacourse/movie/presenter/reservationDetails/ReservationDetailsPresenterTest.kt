@@ -37,7 +37,7 @@ class ReservationDetailsPresenterTest {
         every { view.showReservationDetails(any()) } just Runs
 
         // when:
-        reservationDetailsPresenter.updateReservationDetails()
+        reservationDetailsPresenter.fetchReservationDetails()
 
         // then:
         verify { view.showReservationDetails(any()) }

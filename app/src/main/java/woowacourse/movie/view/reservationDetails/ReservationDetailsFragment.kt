@@ -48,7 +48,7 @@ class ReservationDetailsFragment :
     override fun onResume() {
         super.onResume()
 
-        presenter.updateReservationDetails()
+        presenter.fetchReservationDetails()
     }
 
     override fun onDestroyView() {

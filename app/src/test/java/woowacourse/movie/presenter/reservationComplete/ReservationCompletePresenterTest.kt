@@ -35,7 +35,7 @@ class ReservationCompletePresenterTest {
         }
 
         // when:
-        presenter.updateTicketData(1L)
+        presenter.fetchTicketData(1L)
 
         // then:
         verify { view.showMovieTicket(MOVIE_TICKET_ENTITY) }

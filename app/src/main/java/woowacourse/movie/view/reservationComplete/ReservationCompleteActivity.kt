@@ -44,7 +44,7 @@ class ReservationCompleteActivity :
             insets
         }
 
-        presenter.updateTicketData(
+        presenter.fetchTicketData(
             intent.getSerializableExtraData<Long>(RESERVATION_ID_KEY) ?: run {
                 showShortToast("없는 예약 번호 입니다.")
                 startActivity(MainActivity.getIntent(this@ReservationCompleteActivity))
