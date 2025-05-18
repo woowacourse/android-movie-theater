@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
 
         setupListener()
         if (savedInstanceState == null) {
-            replaceFragment<ReservationDetailsFragment>()
+            binding.mainBottomNavigationBar.selectedItemId =
+                R.id.bottom_navigation_reservation_details
         }
     }
 
