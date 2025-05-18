@@ -26,6 +26,7 @@ import woowacourse.movie.feature.model.MovieSeatUiModel
 import woowacourse.movie.feature.model.NavigateType
 import woowacourse.movie.feature.model.SeatSelectionUiState
 import woowacourse.movie.feature.model.SeatTypeUiModel
+import woowacourse.movie.util.SeatLabelFormatter.formatLabel
 import woowacourse.movie.util.getExtra
 
 class BookingSeatActivity :
@@ -80,7 +81,13 @@ class BookingSeatActivity :
                         rowIndex + SEAT_POSITION_OFFSET,
                         columnIndex + SEAT_POSITION_OFFSET,
                     )
-                val seatView = createSeatTextView(movieSeat.toLabel())
+                val seatView =
+                    createSeatTextView(
+                        formatLabel(
+                            movieSeat.row,
+                            movieSeat.column,
+                        ),
+                    )
 
                 tableRow.addView(seatView)
                 seats[seatView] = movieSeat
@@ -142,7 +149,11 @@ class BookingSeatActivity :
         seatView: TextView,
         movieSeat: MovieSeatUiModel,
     ) {
-        seatView.text = movieSeat.toLabel()
+        seatView.text =
+            formatLabel(
+                movieSeat.row,
+                movieSeat.column,
+            )
         seatView.isSelected = movieSeat.isSelected
         seatView.setTextColor(getSeatLabelColor(movieSeat.seatType))
         seatView.setOnClickListener {

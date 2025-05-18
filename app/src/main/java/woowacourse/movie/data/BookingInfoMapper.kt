@@ -6,12 +6,16 @@ import woowacourse.movie.feature.model.MovieSeatUiModel
 import woowacourse.movie.feature.model.MovieTimeUiModel
 import woowacourse.movie.feature.model.MovieUiModel
 import woowacourse.movie.feature.model.SeatTypeUiModel
+import woowacourse.movie.util.SeatLabelFormatter.formatLabel
+import woowacourse.movie.util.SeatLabelFormatter.parseLabel
 
 fun BookingInfoUiModel.toEntity(): BookingInfoEntity {
     val seatLabels =
         selectedSeats
-            .sortedWith(compareBy({ it.row }, { it.column })) // 일관된 순서
-            .joinToString(", ") { it.toLabel() }
+            .sortedWith(compareBy({ it.row }, { it.column }))
+            .joinToString { seat ->
+                formatLabel(seat.row, seat.column)
+            }
 
     return BookingInfoEntity(
         movieTitle = movie.title,
@@ -28,10 +32,10 @@ fun BookingInfoEntity.toUiModel(): BookingInfoUiModel {
     val seats =
         selectedSeats
             .split(", ")
-            .map { label ->
-                val row = label[0] - 'A' + 1
-                val col = label.substring(1).toInt()
-                MovieSeatUiModel(row, col, seatType = SeatTypeUiModel.NONE)
+            .mapNotNull { label ->
+                parseLabel(label)?.let { (row, col) ->
+                    MovieSeatUiModel(row, col, seatType = SeatTypeUiModel.NONE)
+                }
             }.toSet()
 
     val (year, month, day) = date.split(".").map { it.toInt() }
