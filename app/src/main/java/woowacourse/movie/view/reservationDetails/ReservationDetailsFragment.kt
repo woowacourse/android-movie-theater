@@ -35,7 +35,6 @@ class ReservationDetailsFragment :
         _binding = FragmentReservationDetailsBinding.bind(view)
 
         binding.rvReservationDetails.adapter = reservationDetailAdapter
-        presenter.updateReservationDetails()
     }
 
     private fun navigateToReservationDetail(reservationDetailId: Long) {
