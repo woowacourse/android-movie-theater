@@ -41,5 +41,5 @@ data class Movie(
             .find {
                 it.cinema == cinema
             }?.screeningTimes
-            ?.size ?: throw IllegalArgumentException()
+            ?.size ?: throw IllegalArgumentException("해당 극장에서 상영 정보가 없습니다")
 }
