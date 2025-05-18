@@ -46,6 +46,13 @@ class HomeFragment :
                 },
         )
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted: Boolean ->
+            presenter.updateNotificationPermission(isGranted)
+        }
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -71,13 +78,6 @@ class HomeFragment :
             }
         }
     }
-
-    private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission(),
-        ) { isGranted: Boolean ->
-            presenter.updateNotificationPermission(isGranted)
-        }
 
     override fun showMovies(movies: List<MovieType>) {
         binding.rvMainMovies.adapter = movieAdapter
