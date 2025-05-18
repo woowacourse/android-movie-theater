@@ -1,6 +1,7 @@
 package woowacourse.movie.ui.seat
 
 import android.app.AlertDialog
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -20,9 +21,14 @@ import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seat
+import woowacourse.movie.notification.MovieReminderReceiver
+import woowacourse.movie.providers.StorageProvider
 import woowacourse.movie.ui.complete.BookingCompleteActivity
+import woowacourse.movie.utils.AlarmManagerCompat
 import woowacourse.movie.utils.StringFormatter
 import woowacourse.movie.utils.intentSerializable
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class BookingSeatActivity :
     AppCompatActivity(),
@@ -81,14 +87,19 @@ class BookingSeatActivity :
         binding.btnConfirm.isEnabled = isEnabled
     }
 
-    override fun moveToBookedTicket(
-        theaterName: String,
-        movieTitle: String,
-        schedule: MovieSchedule,
-        headcount: Headcount,
-    ) {
-        val bookedTicket = BookedTicket(theaterName, movieTitle, schedule, headcount)
-        startActivity(BookingCompleteActivity.newIntent(this@BookingSeatActivity, bookedTicket))
+    override fun moveToBookedTicket(bookedTicket: BookedTicket) {
+        handleScheduleNotification(bookedTicket)
+
+        startActivity(BookingCompleteActivity.newIntent(this, bookedTicket.id!!))
+        finish()
+    }
+
+    private fun handleScheduleNotification(bookedTicket: BookedTicket) {
+        if (StorageProvider.hasPushNotificationPermission &&
+            AlarmManagerCompat.hasExactAlarmPermission(this)
+        ) {
+            scheduleNotification(bookedTicket)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
@@ -134,6 +145,26 @@ class BookingSeatActivity :
         }
     }
 
+    private fun scheduleNotification(bookedTicket: BookedTicket) {
+        val triggerTime = bookedTicket.movieSchedule.screeningDateTime.minusMinutes(30L)
+        if (triggerTime.isBefore(LocalDateTime.now())) return
+
+        val triggerAtMillis =
+            triggerTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        val intent = MovieReminderReceiver.newIntent(this, bookedTicket)
+        val requestCode =
+            bookedTicket.id!!.toInt() // 현재 Long 타입의 변수이기에 int 범위보다 커질경우 에러가 발생할 가능성 존재
+        val pendingIntent =
+            PendingIntent.getBroadcast(
+                this,
+                requestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
+
+        AlarmManagerCompat.setExact(this, triggerAtMillis, pendingIntent)
+    }
+
     private fun setSeatTag(
         textView: TextView,
         rowIndex: Int,
@@ -165,7 +196,7 @@ class BookingSeatActivity :
             .setTitle(title)
             .setMessage(description)
             .setPositiveButton(getString(R.string.text_booking_dialog_positive_button)) { _, _ ->
-                bookingSeatPresenter.loadBookedTicket()
+                bookingSeatPresenter.bookingTicket()
             }
             .setNegativeButton(getString(R.string.text_booking_dialog_negative_button)) { dialog, _ ->
                 dialog.dismiss()

@@ -12,4 +12,7 @@
     <color name="seat_s_grade">#19D358</color>
     <color name="seat_a_grade">#1B48E9</color>
     <color name="selected_seat">#FAFF00</color>
+    <color name="booking_seat_bg">#EAEAEA</color>
+    <color name="booking_seat_screen_info_bg">#494949</color>
+    <color name="history_text_divider">#D0D0D0</color>
 </resources>

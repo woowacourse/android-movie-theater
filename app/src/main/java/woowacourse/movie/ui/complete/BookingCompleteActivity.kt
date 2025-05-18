@@ -16,9 +16,7 @@ import woowacourse.movie.domain.model.BookedTicket
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
-import woowacourse.movie.ui.MovieBookingActivity
 import woowacourse.movie.utils.StringFormatter
-import woowacourse.movie.utils.intentSerializable
 import java.time.LocalDateTime
 
 class BookingCompleteActivity :
@@ -39,19 +37,35 @@ class BookingCompleteActivity :
         applyWindowInsets()
         setOnBackPressedCallback()
 
-        bookingCompletePresenter.loadBookedTicket(restoreBookedTicket())
+        bookingCompletePresenter.loadBookedTicket(restoreBookedTicketId())
     }
 
-    override fun showMovieTitle(movieTitle: String) {
+    override fun showBookedTicket(bookedTicket: BookedTicket) {
+        showMovieTitle(bookedTicket.movieTitle)
+        showScreeningDateTime(bookedTicket.movieSchedule.screeningDateTime)
+        showDetailInfos(
+            bookedTicket.headcount,
+            bookedTicket.movieSchedule.seats,
+            bookedTicket.theaterName,
+        )
+        showTotalPrice(bookedTicket.totalPrice())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        finish()
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showMovieTitle(movieTitle: String) {
         binding.movieTitle = movieTitle
     }
 
-    override fun showScreeningDateTime(dateTime: LocalDateTime) {
+    private fun showScreeningDateTime(dateTime: LocalDateTime) {
         binding.dateTime = dateTime
         binding.stringFormatter = StringFormatter
     }
 
-    override fun showDetailInfos(
+    private fun showDetailInfos(
         headcount: Headcount,
         seats: Seats,
         theaterName: String,
@@ -66,20 +80,10 @@ class BookingCompleteActivity :
             )
     }
 
-    override fun showTotalPrice(totalPrice: Int) {
+    private fun showTotalPrice(totalPrice: Int) {
         binding.totalPrice = totalPrice
         binding.stringFormatter = StringFormatter
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean =
-        when (item.itemId) {
-            android.R.id.home -> {
-                moveToHome()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
 
     private fun applyWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -89,40 +93,31 @@ class BookingCompleteActivity :
         }
     }
 
-    private fun restoreBookedTicket(): BookedTicket = intent.intentSerializable(EXTRA_BOOKED_TICKET, BookedTicket::class.java)!!
+    private fun restoreBookedTicketId(): Long = intent.getLongExtra(EXTRA_BOOKED_TICKET_ID, 0L)
 
     private fun setOnBackPressedCallback() {
         onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    moveToHome()
+                    finish()
                 }
             },
         )
     }
 
-    private fun moveToHome() {
-        val intent =
-            Intent(this, MovieBookingActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            }
-        startActivity(intent)
-        finish()
-    }
-
     private fun Seat.toText(): String = Char(row + ASCII_A.code) + (col + 1).toString()
 
     companion object {
+        private const val EXTRA_BOOKED_TICKET_ID = "EXTRA_BOOKED_TICKET_ID"
+        private const val ASCII_A = 'A'
+
         fun newIntent(
             context: Context,
-            bookedTicket: BookedTicket,
+            bookedTicketId: Long,
         ): Intent =
             Intent(context, BookingCompleteActivity::class.java).apply {
-                putExtra(EXTRA_BOOKED_TICKET, bookedTicket)
+                putExtra(EXTRA_BOOKED_TICKET_ID, bookedTicketId)
             }
-
-        private const val EXTRA_BOOKED_TICKET = "bookedTicket"
-        private const val ASCII_A = 'A'
     }
 }

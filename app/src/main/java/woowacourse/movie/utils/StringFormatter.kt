@@ -7,22 +7,27 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 object StringFormatter {
+    private const val PERIOD_FORMAT = "%s ~ %s"
+    private const val DATE_FORMAT = "yyyy.M.d"
+    private const val TIME_FORMAT = "HH:mm"
+    private const val THOUSAND_UNIT_FORMAT = "#,###"
+
     fun periodFormat(screeningPeriod: ScreeningPeriod): String =
         PERIOD_FORMAT.format(
             dotDateFormat(screeningPeriod.startDate),
             dotDateFormat(screeningPeriod.endDate),
         )
 
-    fun dotDateFormat(time: LocalDate): String {
-        val formatter = DateTimeFormatter.ofPattern(DATE_TIME_DOT_FORMAT)
-        return time.format(formatter)
-    }
-
     fun thousandFormat(price: Int): String = DecimalFormat(THOUSAND_UNIT_FORMAT).format(price)
 
-    fun dateTimeFormat(localDateTime: LocalDateTime): String = localDateTime.format(DateTimeFormatter.ofPattern("yyyy.M.d HH:mm"))
+    fun dateTimeFormat(localDateTime: LocalDateTime): String =
+        localDateTime.format(DateTimeFormatter.ofPattern("$DATE_FORMAT $TIME_FORMAT"))
 
-    private const val PERIOD_FORMAT = "%s ~ %s"
-    private const val DATE_TIME_DOT_FORMAT = "yyyy.M.d"
-    private const val THOUSAND_UNIT_FORMAT = "#,###"
+    fun toDate(localDateTime: LocalDateTime): String = localDateTime.format(DateTimeFormatter.ofPattern(DATE_FORMAT))
+
+    fun toTime(localDateTime: LocalDateTime): String = localDateTime.format(DateTimeFormatter.ofPattern(TIME_FORMAT))
+
+    private fun dotDateFormat(date: LocalDate): String {
+        return date.format(DateTimeFormatter.ofPattern(DATE_FORMAT))
+    }
 }

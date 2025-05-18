@@ -22,6 +22,8 @@ val DUMMY_THEATERS =
                                         MovieSchedule(LocalDateTime.of(2025, 5, 10, 13, 0)),
                                         MovieSchedule(LocalDateTime.of(2025, 5, 10, 15, 0)),
                                         MovieSchedule(LocalDateTime.of(2025, 5, 10, 17, 0)),
+                                        MovieSchedule(LocalDateTime.of(2025, 5, 12, 1, 55)),
+                                        MovieSchedule(LocalDateTime.of(2025, 5, 12, 1, 53)),
                                     ),
                                 2L to
                                     setOf(
@@ -30,6 +32,7 @@ val DUMMY_THEATERS =
                                         MovieSchedule(LocalDateTime.of(2025, 5, 8, 20, 0)),
                                         MovieSchedule(LocalDateTime.of(2025, 5, 10, 15, 0)),
                                         MovieSchedule(LocalDateTime.of(2025, 5, 10, 17, 0)),
+                                        MovieSchedule(LocalDateTime.of(2025, 5, 12, 2, 1)),
                                     ),
                                 4L to
                                     setOf(
@@ -94,6 +97,8 @@ val DUMMY_THEATERS =
                                         MovieSchedule(LocalDateTime.of(2025, 5, 9, 20, 0)),
                                         MovieSchedule(LocalDateTime.of(2025, 5, 10, 15, 0)),
                                         MovieSchedule(LocalDateTime.of(2025, 5, 11, 17, 0)),
+                                        MovieSchedule(LocalDateTime.of(2025, 5, 12, 2, 34)),
+                                        MovieSchedule(LocalDateTime.of(2025, 5, 12, 2, 5)),
                                     ),
                                 8L to
                                     setOf(

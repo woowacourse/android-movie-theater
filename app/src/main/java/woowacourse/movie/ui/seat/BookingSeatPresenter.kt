@@ -1,10 +1,13 @@
 package woowacourse.movie.ui.seat
 
+import woowacourse.movie.domain.model.BookedTicket
+import woowacourse.movie.domain.model.BookedTicketRepository
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Seat
 import woowacourse.movie.domain.model.Seats
+import woowacourse.movie.providers.BookedTicketRepositoryProvider
 import woowacourse.movie.sample.DUMMY_MOVIES
 
 class BookingSeatPresenter(
@@ -15,6 +18,7 @@ class BookingSeatPresenter(
     private lateinit var theaterName: String
     private lateinit var movieSchedule: MovieSchedule
     private lateinit var seats: Seats
+    private val repository: BookedTicketRepository by lazy { BookedTicketRepositoryProvider.provideBookedTicketRepository() }
 
     override fun loadBookingSeatInfo(
         movieId: Long,
@@ -56,13 +60,21 @@ class BookingSeatPresenter(
         bookingSeatView.showConfirmButton(seats.isSeatSelectionComplete(headcount))
     }
 
-    override fun loadBookedTicket() {
-        bookingSeatView.moveToBookedTicket(
-            theaterName = theaterName,
-            movieTitle = movie.title,
-            schedule = movieSchedule,
-            headcount = headcount,
-        )
+    override fun bookingTicket() {
+        val bookedTicket =
+            BookedTicket(
+                theaterName = theaterName,
+                movieTitle = movie.title,
+                movieSchedule = movieSchedule,
+                headcount = headcount,
+            )
+
+        // thread 때문에 콜백으로 처리하다보니 DB에 넣은 id값을 갖고 있는 bookedTicket을 얻기 위해 2번의 쿼리가 발생
+        repository.insert(bookedTicket) { id ->
+            repository.fetchById(id) { bookedTicket ->
+                bookingSeatView.moveToBookedTicket(bookedTicket)
+            }
+        }
     }
 
     private fun allSeatSelectionByIsReserved(

@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.booking.presenter
+package woowacourse.movie.ui.booking
 
 import woowacourse.movie.domain.model.Headcount
 import woowacourse.movie.domain.model.Movie
@@ -6,7 +6,6 @@ import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.TheaterSchedules
 import woowacourse.movie.sample.DUMMY_MOVIES
 import woowacourse.movie.sample.DUMMY_THEATERS
-import woowacourse.movie.ui.booking.contract.BookingContract
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

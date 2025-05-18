@@ -12,22 +12,22 @@ class TheaterAdapter(
     private val movieId: Long,
     private val clickListener: TheaterClickListener,
 ) : ListAdapter<Theater, TheaterViewHolder>(
-    object : DiffUtil.ItemCallback<Theater>() {
-        override fun areItemsTheSame(
-            oldItem: Theater,
-            newItem: Theater,
-        ): Boolean {
-            return oldItem.name == newItem.name
-        }
+        object : DiffUtil.ItemCallback<Theater>() {
+            override fun areItemsTheSame(
+                oldItem: Theater,
+                newItem: Theater,
+            ): Boolean {
+                return oldItem.name == newItem.name
+            }
 
-        override fun areContentsTheSame(
-            oldItem: Theater,
-            newItem: Theater,
-        ): Boolean {
-            return oldItem == newItem
-        }
-    },
-) {
+            override fun areContentsTheSame(
+                oldItem: Theater,
+                newItem: Theater,
+            ): Boolean {
+                return oldItem == newItem
+            }
+        },
+    ) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,

@@ -2,7 +2,7 @@ package woowacourse.movie.ui.complete
 
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -24,7 +24,7 @@ class BookingCompleteActivityTest {
         val intent =
             Intent(fakeContext, BookingCompleteActivity::class.java).apply {
                 putExtra(
-                    "bookedTicket",
+                    "EXTRA_BOOKED_TICKET",
                     BookedTicket(
                         theaterName = "선릉 극장",
                         movieTitle = "해리 포터와 마법사의 돌",
@@ -45,29 +45,25 @@ class BookingCompleteActivityTest {
 
     @Test
     fun `영화_이름을_출력한다`() {
-        Espresso
-            .onView(withId(R.id.tv_title))
+        onView(withId(R.id.tv_title))
             .check(matches(withText("해리 포터와 마법사의 돌")))
     }
 
     @Test
     fun `상영_시간을_출력한다`() {
-        Espresso
-            .onView(withId(R.id.tv_release_date))
+        onView(withId(R.id.tv_release_date))
             .check(matches(withText("2025.4.1 12:00")))
     }
 
     @Test
     fun `예매_인원을_출력한다`() {
-        Espresso
-            .onView(withId(R.id.tv_detail_info))
+        onView(withId(R.id.tv_detail_info))
             .check(matches(withText("일반 2명 | A1, C4 | 선릉 극장")))
     }
 
     @Test
     fun `예매_가격을_출력한다`() {
-        Espresso
-            .onView(withId(R.id.tv_price))
+        onView(withId(R.id.tv_price))
             .check(matches(withText("25,000원 (현장 결제)")))
     }
 }

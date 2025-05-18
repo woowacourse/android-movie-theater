@@ -2,7 +2,8 @@ package woowacourse.movie.domain.model
 
 import java.io.Serializable
 
-class BookedTicket(
+data class BookedTicket(
+    val id: Long? = null,
     val theaterName: String,
     val movieTitle: String,
     val movieSchedule: MovieSchedule,

@@ -22,7 +22,6 @@ import woowacourse.movie.domain.model.MovieSchedule
 import woowacourse.movie.domain.model.Theater
 import woowacourse.movie.domain.model.TheaterSchedules
 import woowacourse.movie.fixture.fakeContext
-import woowacourse.movie.ui.booking.view.BookingActivity
 import java.time.LocalDateTime
 
 class BookingActivityTest {

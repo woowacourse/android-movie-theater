@@ -4,8 +4,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.ui.booking.contract.BookingContract
-import woowacourse.movie.ui.booking.presenter.BookingPresenter
+import woowacourse.movie.ui.booking.BookingContract
+import woowacourse.movie.ui.booking.BookingPresenter
 import java.time.LocalDate
 import java.time.LocalTime
 

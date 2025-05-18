@@ -1,85 +1,161 @@
 package woowacourse.movie.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieBookingBinding
-import woowacourse.movie.ui.history.view.BookingHistoryFragment
+import woowacourse.movie.providers.StorageProvider
+import woowacourse.movie.ui.history.BookingHistoryFragment
 import woowacourse.movie.ui.movielist.view.MovieListFragment
-import woowacourse.movie.ui.settings.view.SettingsFragment
+import woowacourse.movie.ui.settings.SettingsFragment
+import woowacourse.movie.utils.AlarmManagerCompat
 
 class MovieBookingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieBookingBinding
-    private val homeFragment by lazy { MovieListFragment() }
-    private val settingFragment by lazy { SettingsFragment() }
-    private val historyFragment by lazy { BookingHistoryFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        binding =
-            DataBindingUtil.setContentView(
-                this@MovieBookingActivity,
-                R.layout.activity_movie_booking,
-            )
-
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_booking)
         applyWindowInsets()
+        initBottomNavigationListener()
+        requestPostNotificationPermission()
 
         if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace(R.id.main_fragment_container_view, homeFragment)
-                binding.navigation.selectedItemId = R.id.navigation_home
-            }
+            binding.navigation.selectedItemId = R.id.navigation_home
         } else {
-            val currentFragment =
-                supportFragmentManager.findFragmentById(R.id.main_fragment_container_view)
-            when (currentFragment) {
-                is MovieListFragment -> binding.navigation.selectedItemId = R.id.navigation_home
-                is SettingsFragment -> binding.navigation.selectedItemId = R.id.navigation_settings
-                is BookingHistoryFragment ->
-                    binding.navigation.selectedItemId =
-                        R.id.navigation_history
-            }
+            updateBottomNavigation()
         }
-        setBottomNavigationView()
     }
 
-    private fun setBottomNavigationView() {
+    override fun onResume() {
+        super.onResume()
+        requestAlarmPermission()
+    }
+
+    private fun requestAlarmPermission() {
+        if (hasPermission(Manifest.permission.POST_NOTIFICATIONS) &&
+            !AlarmManagerCompat.hasExactAlarmPermission(this) &&
+            StorageProvider.isFirstExactAlarmPermissionRequest
+        ) {
+            AlarmManagerCompat.requestScheduleExactPermission(this)
+        }
+    }
+
+    private fun initBottomNavigationListener() {
         binding.navigation.setOnItemSelectedListener { item ->
+            if (binding.navigation.selectedItemId == item.itemId) return@setOnItemSelectedListener false
+
             when (item.itemId) {
                 R.id.navigation_home -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container_view, homeFragment)
-                    }
+                    attachHomeFragment()
                     true
                 }
 
                 R.id.navigation_history -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container_view, historyFragment)
-                    }
+                    attachHistoryFragment()
                     true
                 }
 
                 R.id.navigation_settings -> {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        replace(R.id.main_fragment_container_view, settingFragment)
-                    }
+                    attachSettingFragment()
                     true
                 }
 
                 else -> false
             }
+        }
+    }
+
+    private fun requestPostNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val hasGranted = hasPermission(Manifest.permission.POST_NOTIFICATIONS)
+            if (hasGranted) return
+
+            if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                showPushNotificationRecommend()
+                return
+            }
+
+            if (StorageProvider.isFirstPostNotificationPermissionRequest) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                StorageProvider.setFirstPostNotificationPermissionRequestState(false)
+            }
+        }
+    }
+
+    private fun hasPermission(permissionName: String): Boolean =
+        ContextCompat.checkSelfPermission(this, permissionName) == PackageManager.PERMISSION_GRANTED
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted ->
+            if (isGranted) {
+                showPushNotificationSuccess()
+                StorageProvider.setPushNotificationPermissionState(true)
+                return@registerForActivityResult
+            }
+            showPushNotificationRecommend()
+        }
+
+    private fun showPushNotificationSuccess() {
+        Toast.makeText(
+            this,
+            getString(R.string.push_notification_success),
+            Toast.LENGTH_SHORT,
+        ).show()
+    }
+
+    private fun showPushNotificationRecommend() {
+        Toast.makeText(
+            this,
+            getString(R.string.recommend_push_notification),
+            Toast.LENGTH_SHORT,
+        ).show()
+    }
+
+    private fun attachHomeFragment() {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace<MovieListFragment>(R.id.main_fragment_container_view)
+        }
+    }
+
+    private fun attachHistoryFragment() {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace<BookingHistoryFragment>(R.id.main_fragment_container_view)
+        }
+    }
+
+    private fun attachSettingFragment() {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace<SettingsFragment>(R.id.main_fragment_container_view)
+        }
+    }
+
+    private fun updateBottomNavigation() {
+        val activeFragment =
+            supportFragmentManager.findFragmentById(R.id.main_fragment_container_view)
+                ?: MovieListFragment()
+        when (activeFragment) {
+            is MovieListFragment -> binding.navigation.selectedItemId = R.id.navigation_home
+            is SettingsFragment -> binding.navigation.selectedItemId = R.id.navigation_settings
+            is BookingHistoryFragment -> binding.navigation.selectedItemId = R.id.navigation_history
         }
     }
 
