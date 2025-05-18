@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "reservation_details")
-data class BookingHistoryDetails(
+data class BookingInfoEntity(
     @PrimaryKey(
         autoGenerate =
         true,

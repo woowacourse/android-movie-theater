@@ -8,12 +8,12 @@ class BookingHistoryViewHolder(
     private val binding: ItemBookingHistoryBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(
-        bookingHistoryDetails: BookingInfoUiModel,
+        BookingInfo: BookingInfoUiModel,
         onBookingHistoryClick: (BookingInfoUiModel) -> Unit,
     ) {
-        binding.bookingInfo = bookingHistoryDetails
+        binding.bookingInfo = BookingInfo
         binding.root.setOnClickListener {
-            onBookingHistoryClick(bookingHistoryDetails)
+            onBookingHistoryClick(BookingInfo)
         }
     }
 }

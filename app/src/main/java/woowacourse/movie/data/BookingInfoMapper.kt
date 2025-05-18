@@ -7,13 +7,13 @@ import woowacourse.movie.feature.model.MovieTimeUiModel
 import woowacourse.movie.feature.model.MovieUiModel
 import woowacourse.movie.feature.model.SeatTypeUiModel
 
-fun BookingInfoUiModel.toEntity(): BookingHistoryDetails {
+fun BookingInfoUiModel.toEntity(): BookingInfoEntity {
     val seatLabels =
         selectedSeats
             .sortedWith(compareBy({ it.row }, { it.column })) // 일관된 순서
             .joinToString(", ") { it.toLabel() }
 
-    return BookingHistoryDetails(
+    return BookingInfoEntity(
         movieTitle = movie.title,
         theaterName = theaterName,
         date = "${date.year}.${date.month}.${date.day}",
@@ -24,7 +24,7 @@ fun BookingInfoUiModel.toEntity(): BookingHistoryDetails {
     )
 }
 
-fun BookingHistoryDetails.toUiModel(): BookingInfoUiModel {
+fun BookingInfoEntity.toUiModel(): BookingInfoUiModel {
     val seats =
         selectedSeats
             .split(", ")

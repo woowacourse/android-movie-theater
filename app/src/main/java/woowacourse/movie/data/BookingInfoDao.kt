@@ -6,13 +6,13 @@ import androidx.room.Insert
 import androidx.room.Query
 
 @Dao
-interface BookingHistoryDetailsDao {
+interface BookingInfoDao {
     @Query("SELECT * FROM reservation_details")
-    fun getAll(): List<BookingHistoryDetails>
+    fun getAll(): List<BookingInfoEntity>
 
     @Insert
-    fun insertAll(vararg bookingHistoryDetails: BookingHistoryDetails)
+    fun insertAll(vararg bookingInfo: BookingInfoEntity)
 
     @Delete
-    fun delete(bookingHistoryDetails: BookingHistoryDetails)
+    fun delete(bookingInfo: BookingInfoEntity)
 }
