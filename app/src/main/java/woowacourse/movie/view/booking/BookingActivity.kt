@@ -55,6 +55,7 @@ class BookingActivity : AppCompatActivity(), BookingContract.View {
         screeningTimes: List<LocalDateTime>,
     ) {
         binding.model =
+            movie.toBookingScreen(
             movie.toUiModel(
                 getString(R.string.formatter_date_period),
                 getString(R.string.formatter_running_time_minute_unit),

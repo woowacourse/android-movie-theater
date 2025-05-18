@@ -40,7 +40,7 @@ class MovieListFragment : Fragment(R.layout.fragment_home), MovieListContract.Vi
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = MovieListPresenter.initialize(this)
+        presenter = MovieListPresenterFactory().initialize(this)
         movieAdapterEventHandler = MovieAdapterEventHandler(presenter)
         presenter.loadUiData()
 

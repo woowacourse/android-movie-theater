@@ -6,7 +6,7 @@
     <data>
         <variable
             name="model"
-            type="woowacourse.movie.view.uiModel.TicketUiModel" />
+            type="woowacourse.movie.view.complete.CompleteScreenModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -5,6 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.data.FakeTicketDataSource
 import woowacourse.movie.domain.model.Booking
 import woowacourse.movie.domain.model.PeopleCount
 import woowacourse.movie.domain.model.seat.Column
@@ -31,7 +32,10 @@ class SeatPresenterTest {
 
     @BeforeEach
     fun setUp() {
-        presenter = SeatPresenter(mockView, mockSeats, booking)
+        presenter =
+            SeatPresenter(
+                mockView, mockSeats, booking, FakeTicketDataSource(),
+            )
     }
 
     @Test

@@ -13,12 +13,14 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatBinding
 import woowacourse.movie.domain.model.Booking
+import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.Seats
 import woowacourse.movie.view.complete.BookingCompleteActivity
 import woowacourse.movie.view.core.ext.getSerializableArrayList
 import woowacourse.movie.view.core.ext.requireSerializable
+import woowacourse.movie.view.core.ext.showToast
 import woowacourse.movie.view.core.util.StringFormatter
 
 class SeatActivity : AppCompatActivity(), SeatContract.View {
@@ -31,7 +33,8 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat)
 
         intent.requireSerializable<Booking>(KEY_BOOKING).apply {
-            presenter = SeatPresenter(this@SeatActivity, Seats(), this)
+            presenter =
+                SeatPresenterFactory().initialize(this@SeatActivity, this, applicationContext)
             val handler = SeatActionHandler(presenter)
 
             binding.handler = handler
@@ -78,14 +81,21 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
         binding.tvPrice.text = getString(R.string.formatter_korea_unit).format(formattedPrice)
     }
 
+    override fun showErrorMessage() {
+        runOnUiThread {
+            showToast(R.string.text_booking_fail)
+        }
+    }
+
     override fun setConfirmButtonEnabled(clickable: Boolean) {
         binding.btnBooking.isEnabled = clickable
     }
 
-    override fun moveToBookingComplete(ticket: Ticket) {
-        val intent = BookingCompleteActivity.newIntent(this, ticket)
-        startActivity(intent)
-    }
+    override fun moveToBookingComplete(ticketId: Long) =
+        runOnUiThread {
+            val intent = BookingCompleteActivity.newIntent(this, ticketId, KEY_FROM_SEAT)
+            startActivity(intent)
+        }
 
     private fun showDialog() {
         AlertDialog.Builder(this)
@@ -125,8 +135,10 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     }
 
     companion object {
-        private const val KEY_SEAT = "SEAT"
+        const val KEY_FROM_SEAT = "KEY_FROM_SEAT"
         const val KEY_BOOKING = "BOOKING"
+        private const val KEY_SEAT = "SEAT"
+
 
         fun newIntent(
             context: Context,

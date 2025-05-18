@@ -6,8 +6,8 @@
     <data>
         <variable
             name="model"
-            type="woowacourse.movie.view.uiModel.MovieUiModel" />
-
+            type="woowacourse.movie.view.booking.BookingScreenModel" />
+      
         <variable
             name="eventHandler"
             type="woowacourse.movie.view.booking.BookingActionHandler" />
