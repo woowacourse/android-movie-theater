@@ -1,7 +1,5 @@
 package woowacourse.movie.view.reservation.history
 
-import android.view.View
-import android.view.View.OnClickListener
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemHistoryBinding
 import woowacourse.movie.domain.model.ReservationInfo
@@ -13,13 +11,9 @@ class HistoryViewHolder(
     fun bind(reservationInfo: ReservationInfo) {
         binding.tvHistoryTitle.text = reservationInfo.title
         binding.tvHistoryInfo.text =
-            reservationInfo.reservationDateTime.toString() + reservationInfo.cinema.name
+            "${reservationInfo.reservationDateTime} - ${reservationInfo.cinema.name}"
         binding.root.setOnClickListener(
-            object : OnClickListener {
-                override fun onClick(v: View?) {
-                    onClickHistory(reservationInfo)
-                }
-            },
+            { onClickHistory(reservationInfo) },
         )
     }
 }
