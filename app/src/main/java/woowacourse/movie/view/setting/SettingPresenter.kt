@@ -32,15 +32,17 @@ class SettingPresenter(
     }
 
     override fun setPermissionSwitch() {
-        val settings = settingRepository.findAll()
-        settings.onSuccess {
-            val isPushAlarmEnabled =
-                it.find { setting ->
-                    setting.key == SettingData.NOTIFICATION_KEY
-                }?.value ?: false
-            view.setPermissionSwitch(isPushAlarmEnabled)
-        }.onFailure {
-            view.showError(ERR_FAILED_TO_LOAD_SETTINGS)
+        settingRepository.findAll { it ->
+            it.onSuccess {
+                val isPushAlarmEnabled =
+                    it.find { setting ->
+                        setting.key == SettingData.NOTIFICATION_KEY
+                    }?.value ?: false
+                view.setPermissionSwitch(isPushAlarmEnabled)
+            }
+            it.onFailure {
+                view.showError(ERR_FAILED_TO_LOAD_SETTINGS)
+            }
         }
     }
 
