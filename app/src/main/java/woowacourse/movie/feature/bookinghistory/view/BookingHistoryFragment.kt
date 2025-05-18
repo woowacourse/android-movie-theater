@@ -45,12 +45,15 @@ class BookingHistoryFragment :
     ): View? {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_booking_history, container, false)
+        presenter.prepareBookingHistory()
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.prepareBookingHistory()
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            presenter.prepareBookingHistory()
+        }
     }
 
     override fun showBookingHistory(bookingHistory: List<BookingInfoUiModel>) {
