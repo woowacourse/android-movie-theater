@@ -1,10 +1,10 @@
 package woowacourse.movie.presenter.reservationComplete
 
-import woowacourse.movie.data.entity.MovieTicketEntity
+import woowacourse.movie.model.ticket.MovieTicket
 
 interface ReservationCompleteContracts {
     interface View {
-        fun showMovieTicket(movieTicketEntity: MovieTicketEntity)
+        fun showMovieTicket(movieTicket: MovieTicket)
     }
 
     interface Presenter {

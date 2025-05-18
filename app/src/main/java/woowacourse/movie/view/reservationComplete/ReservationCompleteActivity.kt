@@ -11,17 +11,18 @@ import androidx.databinding.DataBindingUtil
 import woowacourse.movie.MainActivity
 import woowacourse.movie.R
 import woowacourse.movie.data.db.AppDatabase
-import woowacourse.movie.data.entity.MovieTicketEntity
-import woowacourse.movie.data.entity.ReservationInfoEntity
-import woowacourse.movie.data.entity.SeatEntity
 import woowacourse.movie.data.storage.DefaultReservationStorage
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
+import woowacourse.movie.model.seat.Seat
+import woowacourse.movie.model.ticket.MovieTicket
 import woowacourse.movie.presenter.reservationComplete.ReservationCompleteContracts
 import woowacourse.movie.presenter.reservationComplete.ReservationCompletePresenter
 import woowacourse.movie.view.extension.getSerializableExtraData
 import woowacourse.movie.view.extension.showShortToast
 import woowacourse.movie.view.mapper.Formatter.priceToUi
 import woowacourse.movie.view.seatSelection.SeatSelectionFormatter.seatsToUi
+import java.time.LocalDate
+import java.time.LocalTime
 
 class ReservationCompleteActivity :
     androidx.appcompat.app.AppCompatActivity(),
@@ -77,26 +78,17 @@ class ReservationCompleteActivity :
         finish()
     }
 
-    override fun showMovieTicket(movieTicketEntity: MovieTicketEntity) {
-        binding.tvReservationCompleteTitle.text = movieTicketEntity.movie.title
-        showMovieTimeStamp(movieTicketEntity.reservationInfoEntity)
-        showTheaterSeats(movieTicketEntity.seats, movieTicketEntity.theater.name)
-        showPrice(movieTicketEntity.reservationInfoEntity.price)
+    override fun showMovieTicket(movieTicket: MovieTicket) {
+        binding.tvReservationCompleteTitle.text = movieTicket.movie.title
+        showMovieTimeStamp(movieTicket.movieDate, movieTicket.movieTime.value)
+        showTheaterSeats(movieTicket.seats, movieTicket.theater.name)
+        showPrice(movieTicket.price)
     }
 
-    private fun showMovieTimeStamp(reservationInfo: ReservationInfoEntity) {
-        val movieDate =
-            listOf(
-                reservationInfo.movieDateYear,
-                reservationInfo.movieDateMonth,
-                reservationInfo.movieDateDay,
-            ).joinToString(".")
-        val movieTime =
-            listOf(
-                reservationInfo.movieTimeHour,
-                reservationInfo.movieTimeMinute,
-            ).joinToString(":")
-
+    private fun showMovieTimeStamp(
+        movieDate: LocalDate,
+        movieTime: LocalTime,
+    ) {
         binding.tvReservationCompleteTimestamp.text =
             getString(
                 R.string.reservation_complete_ticket_timestamp,
@@ -106,7 +98,7 @@ class ReservationCompleteActivity :
     }
 
     private fun showTheaterSeats(
-        seats: List<SeatEntity>,
+        seats: List<Seat>,
         theaterName: String,
     ) {
         val formatedSeats: String = seatsToUi(seats, ", ")

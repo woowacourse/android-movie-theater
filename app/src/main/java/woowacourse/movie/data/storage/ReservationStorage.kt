@@ -11,7 +11,7 @@ interface ReservationStorage {
 
     fun getMovieTicket(
         reservationId: Long,
-        onComplete: (movieTicket: MovieTicketEntity?) -> Unit,
+        onComplete: (movieTicket: MovieTicket?) -> Unit,
     )
 
     fun getAllMovieTickets(onComplete: (movieTickets: List<MovieTicketEntity>) -> Unit)

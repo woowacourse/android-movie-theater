@@ -8,6 +8,7 @@ import java.io.Serializable
 import java.time.LocalDate
 
 data class MovieTicket(
+    val id: Long = 0L,
     val movie: Movie,
     val movieDate: LocalDate,
     val movieTime: MovieTime,
