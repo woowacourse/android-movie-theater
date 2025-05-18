@@ -69,5 +69,6 @@
     <string name="permission_confirm">확인</string>
     <string name="permission_cancel">취소</string>
     <string name="permission_denied">권한이 거절되어 알림을 받을 수 없습니다.</string>
+    <string name="permission_confirmed">알람 권한이 승인되었습니다.</string>
     
 </resources>
