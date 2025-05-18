@@ -1,14 +1,20 @@
 package woowacourse.movie.ui.view.setting
 
+import woowacourse.movie.domain.datasource.SettingsDataSource
 import woowacourse.movie.domain.datasource.TicketDataSource
 import kotlin.concurrent.thread
 
 class SettingPresenter(
     private val ticketDataSource: TicketDataSource,
+    private val settingsDataSource: SettingsDataSource,
     private val view: SettingContract.View,
 ) : SettingContract.Presenter {
     override fun presentScreen() {
-        view.switchAlarmSetting()
+        view.switchAlarmSetting(settingsDataSource.isTicketAlarmChecked)
+    }
+
+    override fun setIsTicketAlarmChecked(isTicketAlarmChecked: Boolean) {
+        settingsDataSource.setTicketAlarmChecked(isTicketAlarmChecked)
     }
 
     override fun setNotification() {

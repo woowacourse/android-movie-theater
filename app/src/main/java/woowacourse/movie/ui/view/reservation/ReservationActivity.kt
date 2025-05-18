@@ -20,9 +20,9 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
+import woowacourse.movie.ui.util.ErrorMessage
 import woowacourse.movie.ui.view.reservation.Poster.posterId
 import woowacourse.movie.ui.view.seat.SeatSelectionActivity
-import woowacourse.movie.ui.util.ErrorMessage
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

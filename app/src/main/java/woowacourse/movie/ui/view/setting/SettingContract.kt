@@ -6,13 +6,15 @@ interface SettingContract {
     interface Presenter {
         fun presentScreen()
 
+        fun setIsTicketAlarmChecked(isTicketAlarmChecked: Boolean)
+
         fun setNotification()
 
         fun deleteNotification()
     }
 
     interface View {
-        fun switchAlarmSetting()
+        fun switchAlarmSetting(isTicketAlarmChecked: Boolean)
 
         fun cancelAllAlarms(tickets: List<Ticket>)
 

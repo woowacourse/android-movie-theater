@@ -7,11 +7,11 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.FakeCancelTimePolicy
 import woowacourse.movie.domain.ticket.Ticket
-import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.ui.view.ticket.TicketContract
 import woowacourse.movie.ui.view.ticket.TicketPresenter
 import java.time.LocalDateTime

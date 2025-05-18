@@ -2,10 +2,10 @@ package woowacourse.movie.data.local.datasource
 
 import woowacourse.movie.data.local.dao.TicketDao
 import woowacourse.movie.data.local.entity.TicketEntity
-import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.domain.datasource.TicketDataSource
+import woowacourse.movie.domain.ticket.Ticket
 
-class TicketDataSource(private val dao: TicketDao) :
+class TicketDataSourceImpl(private val dao: TicketDao) :
     TicketDataSource {
     override fun insert(ticket: Ticket) = dao.insert(ticket.toTicketEntity())
 

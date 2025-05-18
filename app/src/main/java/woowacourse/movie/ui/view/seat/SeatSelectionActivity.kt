@@ -19,18 +19,21 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.setPadding
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
-import woowacourse.movie.data.local.datasource.TicketDataSource
 import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDatabase
+import woowacourse.movie.data.local.datasource.TicketDataSourceImpl
+import woowacourse.movie.domain.datasource.SettingsDataSource
+import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.reservation.SeatGrade
 import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.ui.alarm.Alarm
+import woowacourse.movie.ui.util.ErrorMessage
 import woowacourse.movie.ui.view.reservation.ShowReservationConfirmDialog
 import woowacourse.movie.ui.view.ticket.TicketActivity
-import woowacourse.movie.ui.util.ErrorMessage
 import java.io.Serializable
 import java.time.LocalDateTime
 
@@ -93,12 +96,16 @@ class SeatSelectionActivity :
                     CAUSE_TICKET,
                 ).notProvided(),
             )
-        val database = getMovieDatabase(this)
+        val ticketDataSource: TicketDataSource =
+            TicketDataSourceImpl(getMovieDatabase(this).ticketDao())
+        val settingsDataSource: SettingsDataSource =
+            (application as MovieApplication).settingDataSource
         presenter =
             SeatSelectionPresenter(
                 this,
                 ticket,
-                TicketDataSource(database.ticketDao()),
+                ticketDataSource,
+                settingsDataSource,
                 selectedSeats,
             )
     }
@@ -224,9 +231,10 @@ class SeatSelectionActivity :
         )
     }
 
-    override fun setTicketAlarm(ticket: Ticket) {
-        val sharedPreferences = getSharedPreferences("settings", Context.MODE_PRIVATE)
-        val isTicketAlarmChecked: Boolean = sharedPreferences.getBoolean("isTicketAlarm", false)
+    override fun setTicketAlarm(
+        ticket: Ticket,
+        isTicketAlarmChecked: Boolean,
+    ) {
         if (isTicketAlarmChecked) {
             val alarm = Alarm(baseContext)
             alarm.scheduleTicketAlarm(ticket)

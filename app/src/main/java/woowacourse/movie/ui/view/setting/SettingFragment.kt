@@ -10,9 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.data.local.datasource.TicketDataSource
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDatabase
+import woowacourse.movie.data.local.datasource.TicketDataSourceImpl
 import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.domain.datasource.SettingsDataSource
+import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.ui.alarm.Alarm
 
@@ -36,8 +39,11 @@ class SettingFragment : Fragment(), SettingContract.View {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val ticketDataSourceAdapter = TicketDataSource(getMovieDatabase(requireContext()).ticketDao())
-        presenter = SettingPresenter(ticketDataSourceAdapter, this)
+        val ticketDataSource: TicketDataSource =
+            TicketDataSourceImpl(getMovieDatabase(requireContext()).ticketDao())
+        val settingDataSource: SettingsDataSource =
+            (requireActivity().applicationContext as MovieApplication).settingDataSource
+        presenter = SettingPresenter(ticketDataSource, settingDataSource, this)
         alarm = Alarm(requireActivity().applicationContext)
         presenter.presentScreen()
     }
@@ -54,16 +60,10 @@ class SettingFragment : Fragment(), SettingContract.View {
         }
     }
 
-    override fun switchAlarmSetting() {
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("settings", Context.MODE_PRIVATE)
-        val isTicketAlarmChecked = sharedPreferences.getBoolean("isTicketAlarm", false)
+    override fun switchAlarmSetting(isTicketAlarmChecked: Boolean) {
         binding.switchAlarm.isChecked = isTicketAlarmChecked
         binding.switchAlarm.setOnCheckedChangeListener { _, isChecked ->
-            with(sharedPreferences.edit()) {
-                putBoolean("isTicketAlarm", isChecked)
-                apply()
-            }
+            presenter.setIsTicketAlarmChecked(isChecked)
             if (isChecked) {
                 handleExactAlarmPermission()
             } else {

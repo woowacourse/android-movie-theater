@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import woowacourse.movie.data.local.datasource.TicketDataSource
 import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDatabase
+import woowacourse.movie.data.local.datasource.TicketDataSourceImpl
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.ui.view.history.adapter.ReservationAdapter
@@ -33,7 +33,7 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
     ) {
         super.onViewCreated(view, savedInstanceState)
         val database = getMovieDatabase(requireContext())
-        presenter = ReservationHistoryPresenter(this, TicketDataSource(database.ticketDao()))
+        presenter = ReservationHistoryPresenter(this, TicketDataSourceImpl(database.ticketDao()))
         reservationAdapter =
             ReservationAdapter { ticket: Ticket ->
                 ticket.run {

@@ -6,13 +6,21 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @BindingAdapter(value = ["formatDate", "formatPattern"])
-fun setDateFormat(view: TextView, localDateTime: LocalDateTime?, format: String?) {
+fun setDateFormat(
+    view: TextView,
+    localDateTime: LocalDateTime?,
+    format: String?,
+) {
     val formatter = DateTimeFormatter.ofPattern(format)
     view.text = formatter.format(localDateTime)
 }
 
 @BindingAdapter(value = ["formatTime", "formatPattern"])
-fun setTimeFormat(view: TextView, localDateTime: LocalDateTime?, format: String?) {
+fun setTimeFormat(
+    view: TextView,
+    localDateTime: LocalDateTime?,
+    format: String?,
+) {
     val formatter = DateTimeFormatter.ofPattern(format)
     view.text = formatter.format(localDateTime)
 }

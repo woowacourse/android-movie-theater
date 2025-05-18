@@ -43,7 +43,10 @@ interface SeatSelectionContract {
 
         fun askFinalReservation()
 
-        fun setTicketAlarm(ticket: Ticket)
+        fun setTicketAlarm(
+            ticket: Ticket,
+            isTicketAlarmChecked: Boolean,
+        )
 
         fun navigateToTicketScreen(
             title: String,

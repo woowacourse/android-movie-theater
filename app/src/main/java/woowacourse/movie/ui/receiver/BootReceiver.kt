@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDatabase
+import woowacourse.movie.data.local.datasource.SettingsDataSourceImpl
 import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.ui.alarm.Alarm
 import kotlin.concurrent.thread
@@ -13,9 +14,8 @@ class BootReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        val sharedPreferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        val isTicketAlarmChecked = sharedPreferences.getBoolean("isTicketAlarm", false)
-        if (!isTicketAlarmChecked) return
+        val settingsDataSource = SettingsDataSourceImpl.of(context)
+        if (!settingsDataSource.isTicketAlarmChecked) return
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             scheduleAlarmAllTicket(context)
         }
@@ -25,9 +25,9 @@ class BootReceiver : BroadcastReceiver() {
         thread {
             val alarm = Alarm(context)
             val database = getMovieDatabase(context)
-            val ticketDataSource: woowacourse.movie.domain.datasource.TicketDataSource =
-                woowacourse.movie.data.local.datasource.TicketDataSource(database.ticketDao())
-            val tickets = ticketDataSource.getAll()
+            val ticketDataSourceImpl: woowacourse.movie.domain.datasource.TicketDataSource =
+                woowacourse.movie.data.local.datasource.TicketDataSourceImpl(database.ticketDao())
+            val tickets = ticketDataSourceImpl.getAll()
             tickets.forEach { ticket: Ticket ->
                 alarm.scheduleTicketAlarm(ticket)
             }
