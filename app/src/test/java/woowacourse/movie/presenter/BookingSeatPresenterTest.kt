@@ -1,5 +1,7 @@
 package woowacourse.movie.presenter
 
+import io.mockk.every
+import io.mockk.invoke
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
@@ -13,6 +15,7 @@ import woowacourse.movie.domain.model.MovieSeat
 import woowacourse.movie.domain.model.MovieSeats
 import woowacourse.movie.domain.model.MovieTime
 import woowacourse.movie.domain.model.TicketCount
+import woowacourse.movie.domain.repository.BookingHistoryRepository
 import woowacourse.movie.feature.bookingseat.contract.BookingSeatContract
 import woowacourse.movie.feature.bookingseat.presenter.BookingSeatPresenter
 import woowacourse.movie.feature.mapper.toUi
@@ -24,11 +27,13 @@ class BookingSeatPresenterTest {
     private lateinit var view: BookingSeatContract.View
 
     private lateinit var bookingInfoUiModel: BookingInfoUiModel
+    private lateinit var mockRepository: BookingHistoryRepository
 
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter = BookingSeatPresenter(view)
+        mockRepository = mockk<BookingHistoryRepository>(relaxed = true)
+        presenter = BookingSeatPresenter(view, mockRepository)
         bookingInfoUiModel =
             BookingInfo(
                 movie =
@@ -77,20 +82,27 @@ class BookingSeatPresenterTest {
     @Test
     fun `completeSeatSelection 호출 시 예약 완료 다이얼로그를 띄운다`() {
         // given & when
-        presenter.completeSeatSelection()
+        presenter.completeSeatSelection(bookingInfoUiModel)
 
         // then
-        verify { view.showBookingCompleteDialog() }
+        verify { view.showBookingCompleteDialog(bookingInfoUiModel) }
     }
 
     @Test
     fun `confirmSeatSelection 호출 시 예약 완료 화면으로 이동한다`() {
         // given
         val bookingInfo = slot<BookingInfoUiModel>()
-        presenter.prepareBookingInfo(bookingInfoUiModel)
+
+        every {
+            mockRepository.saveBookingHistory(any(), captureLambda())
+        } answers {
+            val uiModel = firstArg<BookingInfoUiModel>()
+            val callback = lambda<(BookingInfoUiModel) -> Unit>()
+            callback.invoke(uiModel)
+        }
 
         // when
-        presenter.confirmSeatSelection()
+        presenter.confirmSeatSelection(bookingInfoUiModel)
 
         // then
         verify { view.navigateToBookingComplete(capture(bookingInfo)) }

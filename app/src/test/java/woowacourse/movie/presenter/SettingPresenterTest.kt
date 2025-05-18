@@ -59,9 +59,11 @@ class SettingPresenterTest {
         presenter.toggleNotificationSwitch(isChecked)
 
         // then
-        verify { mockEditor.putBoolean("NOTIFICATION_ENABLED", true) }
-        verify { mockEditor.apply() }
-        verify { mockView.showNotificationPermissionRequest() }
+        verify {
+            mockEditor.putBoolean("NOTIFICATION_ENABLED", true)
+            mockEditor.apply()
+            mockView.showNotificationPermissionRequest()
+        }
     }
 
     @Test

@@ -1,6 +1,5 @@
 package woowacourse.movie.presenter
 
-import android.content.Context
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -8,6 +7,7 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.MovieDate
 import woowacourse.movie.domain.model.MovieTime
+import woowacourse.movie.domain.repository.BookingHistoryRepository
 import woowacourse.movie.feature.bookinghistory.contract.BookingHistoryContract
 import woowacourse.movie.feature.bookinghistory.presenter.BookingHistoryPresenter
 import woowacourse.movie.feature.mapper.toUi
@@ -23,8 +23,8 @@ class BookingHistoryPresenterTest {
     @BeforeEach
     fun setup() {
         view = mockk(relaxed = true)
-        val mockContext = mockk<Context>(relaxed = true)
-        presenter = BookingHistoryPresenter(mockContext, view)
+        val mockRepository = mockk<BookingHistoryRepository>(relaxed = true)
+        presenter = BookingHistoryPresenter(view, mockRepository)
 
         movieUiModel =
             Movie(

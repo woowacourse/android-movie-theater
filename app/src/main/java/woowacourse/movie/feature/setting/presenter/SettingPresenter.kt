@@ -16,5 +16,9 @@ class SettingPresenter(
     override fun toggleNotificationSwitch(isChecked: Boolean) {
         sharedPreferences.edit { putBoolean("NOTIFICATION_ENABLED", isChecked) }
         view.setNotificationSwitchChecked(isChecked)
+
+        if (isChecked) {
+            view.showNotificationPermissionRequest()
+        }
     }
 }
