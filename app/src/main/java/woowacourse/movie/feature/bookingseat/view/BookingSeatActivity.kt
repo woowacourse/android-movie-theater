@@ -14,10 +14,10 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import woowacourse.movie.R
-import woowacourse.movie.data.BookingHistoryDetailsDatabase
-import woowacourse.movie.data.toEntity
 import woowacourse.movie.databinding.ActivityBookingSeatBinding
+import woowacourse.movie.di.RepositoryInjector.provideBookingHistoryRepository
 import woowacourse.movie.domain.model.NavigateType
+import woowacourse.movie.domain.repository.BookingHistoryRepository
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookingseat.AlarmScheduler
 import woowacourse.movie.feature.bookingseat.contract.BookingSeatContract
@@ -27,7 +27,6 @@ import woowacourse.movie.feature.model.MovieSeatUiModel
 import woowacourse.movie.feature.model.SeatSelectionUiState
 import woowacourse.movie.feature.model.SeatTypeUiModel
 import woowacourse.movie.util.getExtra
-import kotlin.concurrent.thread
 
 class BookingSeatActivity :
     AppCompatActivity(),
@@ -38,7 +37,15 @@ class BookingSeatActivity :
             R.layout.activity_booking_seat,
         )
     }
-    private val presenter: BookingSeatContract.Presenter by lazy { BookingSeatPresenter(this) }
+    private val repository: BookingHistoryRepository by lazy {
+        provideBookingHistoryRepository(applicationContext)
+    }
+    private val presenter: BookingSeatContract.Presenter by lazy {
+        BookingSeatPresenter(
+            this,
+            repository,
+        )
+    }
     private val seats: MutableMap<TextView, MovieSeatUiModel> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,38 +95,29 @@ class BookingSeatActivity :
         binding.bookingInfo = bookingInfo
     }
 
-    override fun showBookingCompleteDialog() {
+    override fun showBookingCompleteDialog(bookingHistory: BookingInfoUiModel) {
         AlertDialog
             .Builder(this)
             .setTitle(getString(R.string.booking_detail_booking_check))
             .setMessage(getString(R.string.booking_detail_booking_check_description))
             .setPositiveButton(getString(R.string.booking_detail_booking_complete)) { _, _ ->
-                presenter.confirmSeatSelection()
+                presenter.confirmSeatSelection(bookingHistory)
             }.setNegativeButton(getString(R.string.booking_detail_booking_cancel), null)
             .setCancelable(false)
             .show()
     }
 
     override fun navigateToBookingComplete(bookingInfo: BookingInfoUiModel) {
-        val entity = bookingInfo.toEntity()
+        AlarmScheduler(applicationContext).scheduleAlarm(bookingInfo)
 
-        thread {
-            BookingHistoryDetailsDatabase
-                .getDatabase(applicationContext)
-                .bookingHistoryDetailsDao()
-                .insertAll(entity)
-
-            AlarmScheduler(applicationContext).scheduleAlarm(bookingInfo)
-
-            val intent =
-                BookingCompleteActivity.newIntent(
-                    this@BookingSeatActivity,
-                    bookingInfo,
-                    NavigateType.NAVIGATE_TO_MAIN,
-                )
-            startActivity(intent)
-            finish()
-        }
+        val intent =
+            BookingCompleteActivity.newIntent(
+                this@BookingSeatActivity,
+                bookingInfo,
+                NavigateType.NAVIGATE_TO_MAIN,
+            )
+        startActivity(intent)
+        finish()
     }
 
     override fun navigateToBack() {
