@@ -22,10 +22,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         registerForActivityResult(
             RequestPermission(),
         ) { isGranted: Boolean ->
-            if (hasAllPermissions()) {
-                binding.switchSettingPushAlarm.isChecked = true
-                presenter.setNotification()
-            }
+            binding.switchSettingPushAlarm.isChecked = true
+            presenter.setNotification()
         }
 
     override fun onViewCreated(
@@ -57,18 +55,12 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
     }
 
     override fun setPermissionSwitch(isEnabled: Boolean) {
-        binding.hasAllPermission = hasAllPermissions() && isEnabled
+        binding.hasAllPermission = hasNotificationPermission() && isEnabled
         binding.switchSettingPushAlarm.setOnCheckedChangeListener { _, isChecked ->
-            presenter.savePushAlarmSetting(isChecked && hasAllPermissions())
+            presenter.savePushAlarmSetting(isChecked && hasNotificationPermission())
             if (isChecked) {
                 if (!hasNotificationPermission()) {
                     requestPermissionLauncher.launch(POST_NOTIFICATIONS)
-                }
-                if (!hasExactAlarmPermission()) {
-                    requestExactAlarmPermission()
-                }
-                if (!hasAllPermissions()) {
-                    binding.switchSettingPushAlarm.isChecked = false
                     return@setOnCheckedChangeListener
                 }
                 presenter.setNotification()

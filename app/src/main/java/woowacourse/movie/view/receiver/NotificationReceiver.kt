@@ -8,7 +8,6 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import androidx.core.app.AlarmManagerCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import woowacourse.movie.R
@@ -103,14 +102,11 @@ class NotificationReceiver : BroadcastReceiver() {
             pendingIntent: PendingIntent,
             showTime: LocalDateTime,
         ) {
-            val alarmManager = context.alarmManager()
-            if (AlarmManagerCompat.canScheduleExactAlarms(alarmManager)) {
-                alarmManager.setExact(
-                    AlarmManager.RTC,
-                    showTime.toEpochMilli(),
-                    pendingIntent,
-                )
-            }
+            context.alarmManager().set(
+                AlarmManager.RTC,
+                showTime.toEpochMilli(),
+                pendingIntent,
+            )
         }
     }
 }
