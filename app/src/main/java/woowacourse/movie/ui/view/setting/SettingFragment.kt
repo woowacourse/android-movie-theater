@@ -9,6 +9,7 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import woowacourse.movie.MovieApplication
 import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDatabase
@@ -72,17 +73,22 @@ class SettingFragment : Fragment(), SettingContract.View {
     }
 
     private fun handleExactAlarmPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val alarmManager =
-                requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            if (!alarmManager.canScheduleExactAlarms()) {
-                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                startActivity(intent)
-            } else {
-                presenter.scheduleAlarms()
-            }
-        } else {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
             presenter.scheduleAlarms()
+            return
+        }
+
+        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        requestExactAlarmPermission(alarmManager)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    private fun requestExactAlarmPermission(alarmManager: AlarmManager) {
+        if (alarmManager.canScheduleExactAlarms()) {
+            presenter.scheduleAlarms()
+        } else {
+            val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+            startActivity(intent)
         }
     }
 
