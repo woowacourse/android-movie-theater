@@ -16,14 +16,14 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentSettingBinding
 
-class SettingFragment : Fragment() {
+class SettingFragment : Fragment(), SettingContract.View {
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var alarmBtn: SwitchCompat
 
     private val sharedPref by lazy {
-        requireActivity().getSharedPreferences("setting", Context.MODE_PRIVATE)
+        requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     }
 
     private val requestPermissionLauncher =
@@ -32,7 +32,7 @@ class SettingFragment : Fragment() {
         ) { isGranted: Boolean ->
 
             alarmBtn.isChecked = isGranted
-            sharedPref.edit { putBoolean("isAlarmOn", isGranted) }
+            sharedPref.edit { putBoolean(KEY_IS_ALARM_ON, isGranted) }
         }
 
     override fun onCreateView(
@@ -43,7 +43,7 @@ class SettingFragment : Fragment() {
         _binding = FragmentSettingBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val isAlarmOn = sharedPref.getBoolean("isAlarmOn", false)
+        val isAlarmOn = sharedPref.getBoolean(KEY_IS_ALARM_ON, false)
         setAlarmBtn(isAlarmOn)
 
         return view
@@ -65,7 +65,7 @@ class SettingFragment : Fragment() {
             }
 
             alarmBtn.isChecked = false
-            sharedPref.edit { putBoolean("isAlarmOn", false) }
+            sharedPref.edit { putBoolean(KEY_IS_ALARM_ON, false) }
         }
     }
 
@@ -89,9 +89,14 @@ class SettingFragment : Fragment() {
     private fun showPermissionDialog() {
         val builder = AlertDialog.Builder(requireContext())
 
-        builder.setTitle("알림 권한 요청")
-        builder.setMessage("설정 > 알림 권한을 허용해주세요.")
+        builder.setTitle("@string/setting_notification_title")
+        builder.setMessage("@string/setting_notification_description")
         builder.setNegativeButton(android.R.string.cancel, null)
         builder.show()
+    }
+
+    companion object {
+        private const val PREFS_NAME = "setting"
+        private const val KEY_IS_ALARM_ON = "isAlarmOn"
     }
 }

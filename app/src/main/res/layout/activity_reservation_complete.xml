@@ -29,7 +29,7 @@
                 android:paddingBottom="10dp"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                tools:text="@string/movie_cancel_deadline" />
+                tools:text="@string/reservation_complete_movie_cancel_deadline" />
 
         </LinearLayout>
 
@@ -89,7 +89,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:textSize="25sp"
-                            tools:text="@string/moviePersonnel" />
+                            tools:text="@string/complete_movie_personnel" />
 
                         <TextView
                             android:id="@+id/tv_seat_list"
@@ -108,7 +108,7 @@
                             android:ellipsize="marquee"
                             android:textColor="@color/black"
                             android:textSize="25sp"
-                            tools:text="@string/theater_name" />
+                            tools:text="@string/seat_theater_name" />
 
                     </LinearLayout>
                 </HorizontalScrollView>
@@ -122,7 +122,7 @@
                 android:layout_marginTop="30dp"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                tools:text="@string/movieTotalPrice" />
+                tools:text="@string/complete_movie_total_price" />
 
         </LinearLayout>
 

@@ -42,7 +42,7 @@ class HomeFragment : Fragment(), HomeContract.View {
         _binding = null
     }
 
-    override fun showMovies(movieItems: List<MovieListItem>) {
+    override fun showMovies(movieListItems: List<MovieListItem>) {
         movieAdapter =
             MovieAdapter(
                 object : OnMovieEventListener {
@@ -52,7 +52,7 @@ class HomeFragment : Fragment(), HomeContract.View {
                 },
             )
         binding.recyclerView.adapter = movieAdapter
-        movieAdapter.submitList(movieItems)
+        movieAdapter.submitList(movieListItems)
     }
 
     override fun showTheaterSelectDialog(movie: Movie) {

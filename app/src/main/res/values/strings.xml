@@ -1,32 +1,56 @@
 <resources>
     <string name="app_name">Movie</string>
-    <string name="movieDate">상영일: %1$s ~ %2$s</string>
-    <string name="movieTime">러닝타임: %1$s분</string>
-    <string name="moviePersonnel">일반 %1$d명</string>
-    <string name="movieTotalPrice">%1$s원 (현장 결제)</string>
+
+    <!-- Movie -->
+    <string name="movie_title">영화 제목</string>
+
+    <!-- Home Screen -->
+    <string name="movie_reservation_now_text">지금 예매</string>
+
+    <!-- Detail Screen -->
     <string name="plus">+</string>
     <string name="reserve_complete">선택 완료</string>
     <string name="default_personnel">0</string>
     <string name="minus">-</string>
-    <string name="movie_title">영화 제목</string>
-    <string name="movie_cancel_deadline">영화 상영 시작 %1$d분 전까지\n 취소가 가능합니다.</string>
     <string name="default_movie_date_time">2025.1.1. 00:00</string>
     <string name="message_not_allowed_time">다른 날짜를 선택해 주세요</string>
-    <string name="reserve_confirm">예매 확인</string>
-    <string name="askFor_reserve">정말 예매하시겠습니까?</string>
-    <string name="complete">예매 완료</string>
-    <string name="cancel">취소</string>
-    <string name="error">오류가 생겼습니다.</string>
-    <string name="wrong_approach">잘못된 접근입니다.</string>
-    <string name="confirm">확인</string>
-    <string name="screen">SCREEN</string>
-    <string name="movie_money">%1$s원</string>
+
+    <!-- Reservation Complete Screen -->
+    <string name="reservation_complete_movie_cancel_deadline">영화 상영 시작 %1$d분 전까지\n 취소가 가능합니다.</string>
+    <string name="complete_movie_date">상영일: %1$s ~ %2$s</string>
+    <string name="complete_movie_time">러닝타임: %1$s분</string>
+    <string name="complete_movie_personnel">일반 %1$d명</string>
+    <string name="complete_movie_total_price">%1$s원 (현장 결제)</string>
+
+    <!-- Seat Screen -->
+    <string name="seat_screen_text">SCREEN</string>
+    <string name="seat_movie_money">%1$s원</string>
     <string name="seat_list">| %1$s</string>
-    <string name="theater_name">| %1$s</string>
-    <string name="reservation_now">지금 예매</string>
+    <string name="seat_theater_name">| %1$s</string>
+
+    <!-- Setting Screen -->
+    <string name="setting_notification_title">푸시 알림 수신</string>
+    <string name="setting_notification_description">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+
+    <!-- Notification -->
     <string name="reservation_notification_channel_name">예매 알림</string>
     <string name="reservation_notification_title">예매 알림</string>
     <string name="reservation_notification_channel_description">예매 알림 채널</string>
     <string name="notification_reservation_text">%1$s 30분 후에 상영</string>
+
+    <!-- Reservation Dialog -->
+    <string name="reserve_confirm">예매 확인</string>
+    <string name="ask_for_reserve">정말 예매하시겠습니까?</string>
+    <string name="complete">예매 완료</string>
+    <string name="cancel">취소</string>
+
+    <!-- Notification Permission Dialog -->
+    <string name="notification_permission_title">알림 권한 요청</string>
+    <string name="notification_permission_message">설정 > 알림 권한을 허용해주세요.</string>
+
+    <!-- Error Message -->
+    <string name="error">오류가 생겼습니다.</string>
+    <string name="wrong_approach">잘못된 접근입니다.</string>
+    <string name="confirm">확인</string>
 
 </resources>

@@ -45,7 +45,7 @@
                 android:id="@+id/tv_movie_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/movieDate">
+                tools:text="@string/complete_movie_date">
 
             </TextView>
 
@@ -54,7 +54,7 @@
                 android:id="@+id/tv_movie_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/movieTime">
+                tools:text="@string/complete_movie_time">
 
             </TextView>
 
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:text="@string/reservation_now">
+                android:text="@string/movie_reservation_now_text">
 
             </Button>
 

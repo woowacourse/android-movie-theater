@@ -42,7 +42,7 @@ class AlarmReceiver : BroadcastReceiver() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        val ticket = intent.getSerializableExtraCompat("TICKET", Ticket::class.java)
+        val ticket = intent.getSerializableExtraCompat(TICKET_KEY, Ticket::class.java)
 
         val receivedIntent = ticket?.let { ReservationCompleteActivity.newIntent(context, it) } ?: return
 
@@ -70,6 +70,7 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     companion object {
+        private const val TICKET_KEY = "TICKET"
         private const val CHANNEL_ID = "alarm_channel"
     }
 }

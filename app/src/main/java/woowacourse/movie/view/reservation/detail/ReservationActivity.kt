@@ -109,8 +109,8 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         val end = movie.date.endDate.format(formatter)
 
         movieTitleTextView.text = movie.title
-        movieDateTextView.text = getString(R.string.movieDate, start, end)
-        movieTimeTextView.text = getString(R.string.movieTime, movie.time.toString())
+        movieDateTextView.text = getString(R.string.complete_movie_date, start, end)
+        movieTimeTextView.text = getString(R.string.complete_movie_time, movie.time.toString())
         moviePosterImageView.setImageResource(movie.image)
     }
 

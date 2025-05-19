@@ -109,11 +109,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString("currentFragmentTag", currentFragmentTag)
+        outState.putString(CURRENT_FRAGMENT_TAG, currentFragmentTag)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        currentFragmentTag = savedInstanceState.getString("currentFragmentTag")
+        currentFragmentTag = savedInstanceState.getString(CURRENT_FRAGMENT_TAG)
+    }
+
+    companion object {
+        private const val CURRENT_FRAGMENT_TAG = "currentFragmentTag"
     }
 }

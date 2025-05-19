@@ -25,7 +25,7 @@
                 android:background="@color/dark_gray"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="@string/screen"
+                android:text="@string/seat_screen_text"
                 android:textColor="@color/white"
                 android:textSize="30sp" />
 

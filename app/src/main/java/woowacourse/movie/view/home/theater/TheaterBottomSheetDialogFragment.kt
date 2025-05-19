@@ -37,7 +37,7 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), TheaterCon
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movie = arguments?.getSerializableCompat("movie", Movie::class.java)
+        val movie = arguments?.getSerializableCompat(MOVIE_KEY, Movie::class.java)
 
         if (movie == null) {
             handleInvalidTicket()
@@ -91,12 +91,14 @@ class TheaterBottomSheetDialogFragment : BottomSheetDialogFragment(), TheaterCon
     }
 
     companion object {
+        private const val MOVIE_KEY = "movie"
+
         fun newInstance(movie: Movie): TheaterBottomSheetDialogFragment {
             val fragment = TheaterBottomSheetDialogFragment()
             return fragment.apply {
                 arguments =
                     Bundle().apply {
-                        putSerializable("movie", movie)
+                        putSerializable(MOVIE_KEY, movie)
                     }
             }
         }

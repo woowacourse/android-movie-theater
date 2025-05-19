@@ -16,6 +16,7 @@
             android:id="@+id/iv_movie_image"
             android:layout_width="match_parent"
             android:layout_height="450dp"
+            android:contentDescription="@null"
             android:scaleType="centerCrop"
             tools:src="@drawable/poster_suzume" />
 
@@ -44,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-                tools:text="@string/movieDate">
+                tools:text="@string/complete_movie_date">
 
             </TextView>
 
@@ -55,7 +56,7 @@
                 android:layout_marginBottom="30dp"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-                tools:text="@string/movieTime" />
+                tools:text="@string/complete_movie_time" />
 
             <LinearLayout
                 android:layout_width="match_parent"

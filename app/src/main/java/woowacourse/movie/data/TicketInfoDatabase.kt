@@ -10,19 +10,20 @@ abstract class TicketInfoDatabase : RoomDatabase() {
     abstract fun ticketInfoDao(): TicketInfoDao
 
     companion object {
+        private const val DATABASE_NAME = "ticketInfo"
+
         @Volatile
-        @Suppress("ktlint:standard:property-naming")
-        private var INSTANCE: TicketInfoDatabase? = null
+        private var database: TicketInfoDatabase? = null
 
         fun getDatabase(context: Context): TicketInfoDatabase {
-            return INSTANCE ?: synchronized(this) {
+            return database ?: synchronized(this) {
                 val instance =
                     Room.databaseBuilder(
                         context.applicationContext,
                         TicketInfoDatabase::class.java,
-                        "ticketInfo",
+                        DATABASE_NAME,
                     ).build()
-                INSTANCE = instance
+                database = instance
                 instance
             }
         }
