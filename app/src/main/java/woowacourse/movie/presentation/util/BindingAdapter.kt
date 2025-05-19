@@ -1,4 +1,4 @@
-package woowacourse.movie.presentation.adapter
+package woowacourse.movie.presentation.util
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
@@ -6,11 +6,9 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.seat.Seat
-import woowacourse.movie.presentation.util.PosterMapper
 import woowacourse.movie.presentation.util.TicketUiFormatter.formatAmount
 import woowacourse.movie.presentation.util.TicketUiFormatter.formatDateTime
 import woowacourse.movie.presentation.util.TicketUiFormatter.formatHeadCount
-import woowacourse.movie.presentation.util.toUi
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
