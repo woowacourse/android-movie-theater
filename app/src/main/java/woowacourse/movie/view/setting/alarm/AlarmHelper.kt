@@ -34,8 +34,10 @@ object AlarmHelper {
             Intent(context, AlarmReceiver::class.java).apply {
                 putExtra("TICKET", ticket)
             }
+        val requestCode = ticket.hashCode()
+
         val pendingIntent =
-            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_IMMUTABLE)
 
         val alarmTime = convertToMillis(ticket.dateTime.minusMinutes(30))
 
