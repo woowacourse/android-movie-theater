@@ -47,6 +47,5 @@
 - [x] 데이터 이전시 Id를 전달하고 각 화면에서 database에서 호출하도록 변경
 - [x] Ticket의 Id TicketHistory로 이전
 - [x] TicketHistory areItemsTheSame과 areContentsTheSame 값 비교 수정
-- [ ] 설정에 알림 권한 설정 추가
-- [ ] Entity에서 도메인 타입 제거
+- [x] Entity에서 도메인 타입 제거
 - [x] TicketDataAdapter 위치 이동

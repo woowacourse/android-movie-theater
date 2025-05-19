@@ -3,6 +3,8 @@ package woowacourse.movie.data.local.datasource
 import woowacourse.movie.data.local.dao.TicketDao
 import woowacourse.movie.data.local.entity.TicketEntity
 import woowacourse.movie.domain.datasource.TicketDataSource
+import woowacourse.movie.domain.reservation.PurchaseType
+import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.domain.ticket.TicketHistory
 import kotlin.concurrent.thread
@@ -42,8 +44,8 @@ class TicketDataSourceImpl(private val dao: TicketDao) :
             count = count,
             showtime = showtime,
             cinemaName = cinemaName,
-            seats = seats,
-            purchaseType = purchaseType,
+            seats = toSeatSet(seats),
+            purchaseType = purchaseType.name,
         )
 
     private fun TicketEntity.toTicket() =
@@ -53,7 +55,24 @@ class TicketDataSourceImpl(private val dao: TicketDao) :
             count = count,
             showtime = showtime,
             cinemaName = cinemaName,
-            seats = seats,
-            purchaseType = purchaseType,
+            seats = fromSeatSet(seats),
+            purchaseType = PurchaseType.of(purchaseType),
         )
+
+    private fun fromSeatSet(value: String): Set<Seat> {
+        return value.split(";").mapNotNull { pair ->
+            val parts = pair.split(",")
+            if (parts.size == 2) {
+                val row = parts[0].toIntOrNull()
+                val col = parts[1].toIntOrNull()
+                if (row != null && col != null) Seat.invoke(row, col) else null
+            } else {
+                null
+            }
+        }.toSet()
+    }
+
+    private fun toSeatSet(seats: Set<Seat>): String {
+        return seats.joinToString(";") { "${it.row.value},${it.column.value}" }
+    }
 }
