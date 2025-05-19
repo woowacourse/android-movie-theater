@@ -19,7 +19,7 @@ interface SeatSelectionContract {
 
         fun confirmReservation()
 
-        fun getSelectedSeats(): Set<Seat>
+        fun selectedSeats(onComplete: (seats: Set<Seat>) -> Unit)
     }
 
     interface View {

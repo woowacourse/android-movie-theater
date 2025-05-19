@@ -85,7 +85,7 @@ class SeatSelectionActivity :
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        presenter.getSelectedSeats().let { selectedSeats: Set<Seat> ->
+        presenter.selectedSeats { selectedSeats: Set<Seat> ->
             outState.putSerializable(KEY_SEATS, selectedSeats as Serializable)
         }
     }

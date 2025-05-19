@@ -41,7 +41,7 @@
 - [x] SharedPreferences에 key값 관리
 - [ ] 객체 생활 체조 원칙 준수(depth 감소)
 - [x] setNotification 역할 생각해서 네이밍 수정
-- [ ] presenter에서 반환값 제거
+- [x] presenter에서 반환값 제거
 - [x] presenter에서 view 기본 세팅 init블럭으로 처리
 - [x] BroadCastReceiver nullable 제거
 - [x] 데이터 이전시 Id를 전달하고 각 화면에서 database에서 호출하도록 변경

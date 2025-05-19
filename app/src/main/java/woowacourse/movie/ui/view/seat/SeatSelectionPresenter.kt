@@ -66,5 +66,7 @@ class SeatSelectionPresenter(
 
     private fun canSelectSeat(): Boolean = ticket.seats.size < ticket.count
 
-    override fun getSelectedSeats(): Set<Seat> = ticket.seats.toSet()
+    override fun selectedSeats(onComplete: (seats: Set<Seat>) -> Unit) {
+        onComplete(ticket.seats)
+    }
 }
