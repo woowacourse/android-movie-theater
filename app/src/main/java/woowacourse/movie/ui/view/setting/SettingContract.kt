@@ -8,7 +8,7 @@ interface SettingContract {
 
         fun setIsTicketAlarmChecked(isTicketAlarmChecked: Boolean)
 
-        fun setNotification()
+        fun scheduleAlarms()
 
         fun deleteNotification()
     }

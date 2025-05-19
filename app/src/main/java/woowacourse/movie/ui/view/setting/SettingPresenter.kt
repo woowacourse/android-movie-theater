@@ -17,7 +17,7 @@ class SettingPresenter(
         settingsDataSource.setTicketAlarmChecked(isTicketAlarmChecked)
     }
 
-    override fun setNotification() {
+    override fun scheduleAlarms() {
         thread {
             val tickets = ticketDataSource.getAll()
             view.scheduleAllAlarms(tickets)

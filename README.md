@@ -40,7 +40,7 @@
 - [x] SharedPreferences ui레이어 model로 이동
 - [x] SharedPreferences에 key값 관리
 - [ ] 객체 생활 체조 원칙 준수(depth 감소)
-- [ ] setNotification 역할 생각해서 네이밍 수정
+- [x] setNotification 역할 생각해서 네이밍 수정
 - [ ] presenter에서 반환값 제거
 - [ ] presenter에서 view 기본 세팅 init블럭으로 처리 및 DataBinding으로 초기화 및 수정
 - [x] BroadCastReceiver nullable 제거

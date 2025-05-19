@@ -80,10 +80,10 @@ class SettingFragment : Fragment(), SettingContract.View {
                 val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
                 startActivity(intent)
             } else {
-                presenter.setNotification()
+                presenter.scheduleAlarms()
             }
         } else {
-            presenter.setNotification()
+            presenter.scheduleAlarms()
         }
     }
 
