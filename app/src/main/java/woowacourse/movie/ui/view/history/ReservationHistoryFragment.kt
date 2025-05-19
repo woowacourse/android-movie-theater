@@ -40,12 +40,7 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
                     val intent =
                         TicketActivity.newIntent(
                             requireContext(),
-                            title,
-                            count,
-                            showtime,
-                            cinemaName,
-                            seats,
-                            purchaseType,
+                            ticket.id ?: return@ReservationAdapter,
                         )
                     startActivity(intent)
                 }

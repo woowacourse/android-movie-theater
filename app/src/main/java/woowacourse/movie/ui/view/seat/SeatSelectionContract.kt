@@ -1,9 +1,7 @@
 package woowacourse.movie.ui.view.seat
 
-import woowacourse.movie.domain.reservation.PurchaseType
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
-import java.time.LocalDateTime
 
 interface SeatSelectionContract {
     interface Presenter {
@@ -48,13 +46,6 @@ interface SeatSelectionContract {
             isTicketAlarmChecked: Boolean,
         )
 
-        fun navigateToTicketScreen(
-            title: String,
-            count: Int,
-            showtime: LocalDateTime,
-            cinemaName: String,
-            seats: Set<Seat>,
-            purchaseType: PurchaseType,
-        )
+        fun navigateToTicketScreen(ticketId: Long)
     }
 }

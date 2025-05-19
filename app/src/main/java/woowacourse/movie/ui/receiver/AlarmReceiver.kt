@@ -44,12 +44,7 @@ class AlarmReceiver : BroadcastReceiver() {
             ticket.run {
                 TicketActivity.newIntent(
                     context,
-                    title,
-                    count,
-                    showtime,
-                    cinemaName,
-                    seats,
-                    purchaseType,
+                    ticket.id,
                 )
             }
 

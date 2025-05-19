@@ -11,19 +11,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import woowacourse.movie.R
-import woowacourse.movie.domain.reservation.PurchaseType
+import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDatabase
+import woowacourse.movie.data.local.datasource.TicketDataSourceImpl
+import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
-import woowacourse.movie.ui.util.ErrorMessage
 import woowacourse.movie.ui.view.MainActivity
-import java.io.Serializable
 import java.time.LocalDateTime
 
 class TicketActivity :
     AppCompatActivity(),
     TicketContract.View {
-    private var ticket: Ticket? = null
     private lateinit var presenter: TicketContract.Presenter
 
     private lateinit var cancelDescriptionView: TextView
@@ -43,7 +42,6 @@ class TicketActivity :
         }
         setBackPressed()
         findViews()
-        initModel()
 
         val callback =
             object : OnBackPressedCallback(true) {
@@ -57,16 +55,10 @@ class TicketActivity :
                 }
             }
         onBackPressedDispatcher.addCallback(this, callback)
-        val ticket =
-            intent?.getTicketExtra(EXTRA_TICKET) ?: error(
-                ErrorMessage(CAUSE_TICKET).notProvided(),
-            )
-        val seats: Set<Seat> =
-            intent.getSeatsExtra() ?: error(
-                ErrorMessage(CAUSE_SEATS).notProvided(),
-            )
-
-        presenter = TicketPresenter(this, ticket, seats)
+        val ticketId = intent.getLongExtra(EXTRA_TICKET_ID, 0L)
+        val ticketDataSource: TicketDataSource =
+            TicketDataSourceImpl(getMovieDatabase(this).ticketDao())
+        presenter = TicketPresenter(this, ticketDataSource, ticketId)
         initViews()
     }
 
@@ -85,30 +77,12 @@ class TicketActivity :
         onBackPressedDispatcher.addCallback(this, callback)
     }
 
-    @Suppress("DEPRECATION")
-    private fun Intent.getSeatsExtra(): Set<Seat>? =
-        when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ->
-                getSerializableExtra(
-                    EXTRA_SEATS,
-                    LinkedHashSet::class.java,
-                ) as Set<Seat>
-
-            else -> (getSerializableExtra(EXTRA_SEATS) as? Set<Seat>)
-        }
-
     private fun findViews() {
         cancelDescriptionView = findViewById<TextView>(R.id.tv_ticket_cancel_description)
         priceView = findViewById<TextView>(R.id.tv_ticket_price)
         descriptionView = findViewById<TextView>(R.id.tv_ticket_description)
         showtimeView = findViewById<TextView>(R.id.tv_ticket_showtime)
         titleView = findViewById<TextView>(R.id.tv_ticket_movie_title)
-    }
-
-    private fun initModel() {
-        ticket = intent.getTicketExtra(EXTRA_TICKET) ?: error(
-            ErrorMessage(CAUSE_TICKET).notProvided(),
-        )
     }
 
     @Suppress("DEPRECATION")
@@ -175,29 +149,11 @@ class TicketActivity :
     }
 
     companion object {
-        private const val CAUSE_TICKET = "ticket"
-        private const val CAUSE_SEATS = "seats"
-        private const val CAUSE_CINEMA = "cinemaName"
-
-        private const val EXTRA_TICKET = "woowacourse.movie.EXTRA_TICKET"
-        private const val EXTRA_SEATS = "woowacourse.movie.EXTRA_SEATS"
-        private const val EXTRA_CINEMA_NAME = "woowacourse.movie.EXTRA_CINEMA_NAME"
+        private const val EXTRA_TICKET_ID = "woowacourse.movie.EXTRA_TICKET_ID"
 
         fun newIntent(
             context: Context,
-            title: String,
-            count: Int,
-            showtime: LocalDateTime,
-            cinemaName: String,
-            seats: Set<Seat>,
-            purchaseType: PurchaseType,
-        ): Intent =
-            run {
-                val ticket = Ticket(null, title, count, showtime, cinemaName, seats, purchaseType)
-                Intent(context, TicketActivity::class.java)
-                    .putExtra(EXTRA_TICKET, ticket)
-                    .putExtra(EXTRA_SEATS, seats as? Serializable)
-                    .putExtra(EXTRA_CINEMA_NAME, cinemaName)
-            }
+            ticketId: Long,
+        ): Intent = Intent(context, TicketActivity::class.java).putExtra(EXTRA_TICKET_ID, ticketId)
     }
 }

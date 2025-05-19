@@ -241,23 +241,11 @@ class SeatSelectionActivity :
         }
     }
 
-    override fun navigateToTicketScreen(
-        title: String,
-        count: Int,
-        showtime: LocalDateTime,
-        cinemaName: String,
-        seats: Set<Seat>,
-        purchaseType: PurchaseType,
-    ) {
+    override fun navigateToTicketScreen(ticketId: Long) {
         val intent =
             TicketActivity.newIntent(
                 this,
-                title,
-                count,
-                showtime,
-                cinemaName,
-                seats,
-                purchaseType,
+                ticketId,
             )
         startActivity(intent)
         finish()

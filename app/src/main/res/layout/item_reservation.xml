@@ -5,8 +5,6 @@
 
     <data>
 
-        <import type="woowacourse.movie.ui.util.DateTimeFormatUtil" />
-
         <variable
             name="ticket"
             type="woowacourse.movie.domain.ticket.Ticket" />
