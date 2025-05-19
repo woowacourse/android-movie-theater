@@ -19,7 +19,7 @@ class SettingsPresenterTest {
     fun `알림 설정 상태를 출력한다`() {
         // given
         val settingRepository = FakeSettingRepository(isSaved = true, isGranted = true)
-        presenter = SettingsPresenter(view, mockk(relaxed = true), settingRepository)
+        presenter = SettingsPresenter(view, settingRepository)
 
         // when
         presenter.loadSettings()
@@ -32,7 +32,7 @@ class SettingsPresenterTest {
     fun `알림 설정을 저장한다`() {
         // given
         val settingRepository = FakeSettingRepository(isSaved = false, isGranted = true)
-        presenter = SettingsPresenter(view, mockk(relaxed = true), settingRepository)
+        presenter = SettingsPresenter(view, settingRepository)
 
         // when
         presenter.saveNotificationSetting(true)

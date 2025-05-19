@@ -36,13 +36,8 @@ class SeatSelectActivity :
             return
         }
 
-        presenter =
-            SeatSelectPresenter(
-                this,
-                ticket,
-                (application as MovieApplication).ticketRepository,
-                (application as MovieApplication).ticketAlarm,
-            )
+        val app = application as MovieApplication
+        presenter = SeatSelectPresenter(this, ticket, app.ticketRepository, app.ticketAlarm)
         initView()
         presenter.loadSeatSelect()
     }

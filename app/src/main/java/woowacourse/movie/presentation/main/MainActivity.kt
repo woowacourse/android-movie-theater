@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presentation.BaseActivity
@@ -18,7 +19,7 @@ import woowacourse.movie.presentation.ticket.list.TicketListFragment
 class MainActivity :
     BaseActivity<ActivityMainBinding>(R.layout.activity_main),
     MainContract.View {
-    private val presenter: MainPresenter by lazy { MainPresenter(this, applicationContext) }
+    private val presenter: MainPresenter by lazy { MainPresenter(this, (application as MovieApplication).settingRepository) }
 
     private val ticketListFragment = TicketListFragment()
     private val movieListFragment = MovieListFragment()

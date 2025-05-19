@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentSettingsBinding
 
@@ -21,7 +22,8 @@ class SettingsFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = SettingsPresenter(this, requireContext().applicationContext)
+        val app = requireActivity().application as MovieApplication
+        presenter = SettingsPresenter(this, app.settingRepository)
     }
 
     override fun onCreateView(

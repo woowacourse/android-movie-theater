@@ -1,7 +1,6 @@
 package woowacourse.movie.data.repository
 
-import android.content.Context
-import woowacourse.movie.data.MovieSharedPreferences
+import android.content.SharedPreferences
 
 interface SettingRepository {
     fun isSaved(): Boolean
@@ -12,10 +11,8 @@ interface SettingRepository {
 }
 
 class NotificationSettingRepository(
-    context: Context,
+    private val sharedPrefs: SharedPreferences,
 ) : SettingRepository {
-    private val sharedPrefs = MovieSharedPreferences.getSettingsSharedPreferences(context)
-
     override fun isSaved(): Boolean = sharedPrefs.contains(KEY_NOTIFICATION)
 
     override fun isGranted(): Boolean = sharedPrefs.getBoolean(KEY_NOTIFICATION, false)
