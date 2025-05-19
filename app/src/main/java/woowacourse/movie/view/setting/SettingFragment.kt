@@ -61,6 +61,9 @@ class SettingFragment : Fragment(), SettingContract.View {
         alarmBtn.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 requestNotificationPermission()
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                    sharedPref.edit { putBoolean(KEY_IS_ALARM_ON, true) }
+                }
                 return@setOnCheckedChangeListener
             }
 
