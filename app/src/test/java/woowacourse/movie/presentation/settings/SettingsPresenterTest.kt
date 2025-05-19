@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.settings
 
-import android.content.Context
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -14,14 +13,29 @@ class SettingsPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        val context: Context = mockk(relaxed = true)
-        val settingRepository = FakeSettingRepository(isSaved = true, isGranted = true)
-        presenter = SettingsPresenter(view, context, settingRepository)
     }
 
     @Test
     fun `알림 설정 상태를 출력한다`() {
+        // given
+        val settingRepository = FakeSettingRepository(isSaved = true, isGranted = true)
+        presenter = SettingsPresenter(view, mockk(relaxed = true), settingRepository)
+
         // when
+        presenter.loadSettings()
+
+        // then
+        verify { view.updateNotificationSetting(true) }
+    }
+
+    @Test
+    fun `알림 설정을 저장한다`() {
+        // given
+        val settingRepository = FakeSettingRepository(isSaved = false, isGranted = true)
+        presenter = SettingsPresenter(view, mockk(relaxed = true), settingRepository)
+
+        // when
+        presenter.saveNotificationSetting(true)
         presenter.loadSettings()
 
         // then
