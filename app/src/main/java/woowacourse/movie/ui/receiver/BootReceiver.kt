@@ -7,7 +7,6 @@ import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDat
 import woowacourse.movie.data.local.datasource.SettingsDataSourceImpl
 import woowacourse.movie.domain.ticket.TicketHistory
 import woowacourse.movie.ui.alarm.Alarm
-import kotlin.concurrent.thread
 
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(
@@ -22,12 +21,11 @@ class BootReceiver : BroadcastReceiver() {
     }
 
     private fun scheduleAlarmAllTicket(context: Context) {
-        thread {
-            val alarm = Alarm(context)
-            val database = getMovieDatabase(context)
-            val ticketDataSourceImpl: woowacourse.movie.domain.datasource.TicketDataSource =
-                woowacourse.movie.data.local.datasource.TicketDataSourceImpl(database.ticketDao())
-            val tickets = ticketDataSourceImpl.getAll()
+        val alarm = Alarm(context)
+        val database = getMovieDatabase(context)
+        val ticketDataSourceImpl: woowacourse.movie.domain.datasource.TicketDataSource =
+            woowacourse.movie.data.local.datasource.TicketDataSourceImpl(database.ticketDao())
+        ticketDataSourceImpl.getAll { tickets: List<TicketHistory> ->
             tickets.forEach { ticketHistory: TicketHistory ->
                 alarm.scheduleTicketAlarm(ticketHistory)
             }

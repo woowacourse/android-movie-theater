@@ -13,6 +13,7 @@ class TicketHistoryTest {
     fun setUp() {
         ticketHistory =
             TicketHistory(
+                id = 2,
                 title = "해리 포터와 마법사의 돌",
                 count = 2,
                 showtime = LocalDateTime.of(2025, 4, 15, 11, 0),

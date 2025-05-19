@@ -204,7 +204,7 @@ class SeatSelectionActivity :
 
     override fun setSeatIsSelected(
         seat: Seat,
-        isSelected: Boolean,
+        selected: Boolean,
     ) {
         val seatView: TextView =
             seatViewMap[seat] ?: error(
@@ -212,11 +212,11 @@ class SeatSelectionActivity :
                     "seat",
                 ).noSuch(),
             )
-        seatView.isSelected = isSelected
+        seatView.isSelected = selected
     }
 
-    override fun setConfirmEnabled(enabled: Boolean) {
-        completeView.isEnabled = enabled
+    override fun setConfirmEnabled(isEnabled: Boolean) {
+        completeView.isEnabled = isEnabled
     }
 
     override fun askFinalReservation() {

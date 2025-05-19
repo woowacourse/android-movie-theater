@@ -35,7 +35,7 @@
 - [x] 바인딩 어댑터 고도화
 - [ ] 뒤로가기 메인화면 재활용
 - [ ] 코드래빗 검토
-- [ ] TicketDataAdapter에서 스레드를 열고 필요한 결과를 프레젠터에게 (콜백) 돌려주어서 (비동기 콜백)테스트
+- [x] TicketDataSource에서 스레드를 열고 필요한 결과를 프레젠터에게 (콜백) 돌려주어서 (비동기 콜백)테스트
 - [x] TicketDataAdapter 네이밍 수정 및 패키지 이동
 - [x] SharedPreferences ui레이어 model로 이동
 - [x] SharedPreferences에 key값 관리

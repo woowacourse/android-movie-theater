@@ -46,7 +46,6 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
                 }
             }
         binding.recyclerViewReservations.adapter = reservationAdapter
-        presenter.presentScreen()
     }
 
     override fun updateScreen(ticketHistories: List<TicketHistory>) {

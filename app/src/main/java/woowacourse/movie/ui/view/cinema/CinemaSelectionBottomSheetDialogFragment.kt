@@ -34,7 +34,6 @@ class CinemaSelectionBottomSheetDialogFragment :
     ): View {
         _binding =
             FragmentCinemaSelectionBottomSheetDialogBinding.inflate(inflater, container, false)
-        binding.cinemaAdapter = cinemaAdapter
         return binding.root
     }
 
@@ -43,8 +42,9 @@ class CinemaSelectionBottomSheetDialogFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        initPresenter()
         initCinemaAdapter()
+        initPresenter()
+        binding.cinemaAdapter = cinemaAdapter
     }
 
     override fun onDestroyView() {

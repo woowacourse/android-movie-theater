@@ -2,7 +2,7 @@ package woowacourse.movie.ui.view.setting
 
 import woowacourse.movie.domain.datasource.SettingsDataSource
 import woowacourse.movie.domain.datasource.TicketDataSource
-import kotlin.concurrent.thread
+import woowacourse.movie.domain.ticket.TicketHistory
 
 class SettingPresenter(
     private val ticketDataSource: TicketDataSource,
@@ -18,15 +18,13 @@ class SettingPresenter(
     }
 
     override fun scheduleAlarms() {
-        thread {
-            val tickets = ticketDataSource.getAll()
+        ticketDataSource.getAll { tickets: List<TicketHistory> ->
             view.scheduleAllAlarms(tickets)
         }
     }
 
     override fun deleteNotification() {
-        thread {
-            val tickets = ticketDataSource.getAll()
+        ticketDataSource.getAll { tickets: List<TicketHistory> ->
             view.cancelAllAlarms(tickets)
         }
     }

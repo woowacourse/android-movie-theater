@@ -5,8 +5,6 @@ import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.Ticket
 import woowacourse.movie.domain.ticket.TicketHistory
-import java.util.concurrent.atomic.AtomicReference
-import kotlin.concurrent.thread
 
 class SeatSelectionPresenter(
     private val view: SeatSelectionContract.View,
@@ -58,15 +56,11 @@ class SeatSelectionPresenter(
     }
 
     override fun confirmReservation() {
-        val insertTicketHistory = AtomicReference<TicketHistory>()
-        thread {
-            val insertTicketId = ticketDataSource.insert(ticket)
-            val ticket = ticketDataSource.getTicket(insertTicketId)
-            insertTicketHistory.set(ticket)
-        }.join()
-        insertTicketHistory.get().run {
-            view.setTicketAlarm(this, settingsDataSource.isTicketAlarmChecked)
-            view.navigateToTicketScreen(id)
+        ticketDataSource.insert(ticket) { id ->
+            ticketDataSource.getTicket(id) { ticket: TicketHistory ->
+                view.setTicketAlarm(ticket, settingsDataSource.isTicketAlarmChecked)
+                view.navigateToTicketScreen(ticket.id)
+            }
         }
     }
 
