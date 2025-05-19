@@ -57,10 +57,10 @@ class ReservationHistoryFragment :
         presenter.fetchReservationHistories()
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         _binding = null
         adapter = null
-        super.onDestroy()
+        super.onDestroyView()
     }
 
     override fun updateReservationHistories(reservations: List<Reservation>) {
