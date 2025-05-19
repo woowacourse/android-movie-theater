@@ -27,14 +27,13 @@ class ReservationHistoryFragment :
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        initPresenter()
+        initPresenter(context)
     }
 
-    private fun initPresenter() {
+    private fun initPresenter(context: Context) {
         val reservationData: ReservationData =
-            (activity as ReservationDataProvider).provideReservationData()
-        presenter =
-            ReservationHistoryPresenter(this, reservationData)
+            (context as ReservationDataProvider).provideReservationData()
+        presenter = ReservationHistoryPresenter(this, reservationData)
     }
 
     override fun onCreateView(
