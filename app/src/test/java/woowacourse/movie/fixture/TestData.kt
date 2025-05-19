@@ -8,6 +8,7 @@ import woowacourse.movie.domain.model.ReservationInfo
 import woowacourse.movie.domain.model.RunningTime
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.Seat
+import woowacourse.movie.domain.model.Ticket
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -34,7 +35,15 @@ object TestData {
             movie.title,
             LocalDateTime.of(2025, 5, 1, 9, 0, 0),
             ReservationCount(2),
-            mutableListOf(Seat(0, 1), Seat(3, 1)),
             cinema = Cinema(1, "잠실, 극장"),
+        )
+
+    val ticket =
+        Ticket(
+            movie.title,
+            LocalDateTime.of(2025, 5, 1, 9, 0, 0),
+            listOf(Seat(0, 1)),
+            ReservationCount(2),
+            cinema = Cinema(1, "잠실"),
         )
 }

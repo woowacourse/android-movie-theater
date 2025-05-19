@@ -7,12 +7,12 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.DummyScreening
+import woowacourse.movie.data.dummy.DummyScreening
 import woowacourse.movie.domain.model.Cinema
 import woowacourse.movie.domain.model.ReservationCount
 import woowacourse.movie.domain.model.ReservationInfo
-import woowacourse.movie.view.reservation.ReservationContract
-import woowacourse.movie.view.reservation.ReservationPresenter
+import woowacourse.movie.view.movies.reservation.ReservationContract
+import woowacourse.movie.view.movies.reservation.ReservationPresenter
 import java.time.LocalDateTime
 
 class ReservationPresenterTest {

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -11,16 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Movie"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        android:name=".MovieTheaterApplication">
         <activity
-            android:name=".view.reservation.seat.SeatSelectionActivity"
+            android:name=".view.movies.reservation.seat.SeatSelectionActivity"
             android:exported="false" />
         <activity
-            android:name=".view.reservation.result.ReservationResultActivity"
+            android:name=".view.movies.reservation.result.ReservationResultActivity"
             android:exported="false"
             android:parentActivityName=".view.MainActivity"/>
         <activity
-            android:name=".view.reservation.ReservationActivity"
+            android:name=".view.movies.reservation.ReservationActivity"
             android:exported="false" />
         <activity
             android:name=".view.MainActivity"
@@ -31,6 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".view.receiver.NotificationReceiver"/>
     </application>
 
 </manifest>

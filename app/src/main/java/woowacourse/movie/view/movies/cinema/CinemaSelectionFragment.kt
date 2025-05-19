@@ -11,7 +11,7 @@ import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentCinemaSeclectionBinding
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.view.extension.getParcelableCompatList
-import woowacourse.movie.view.reservation.ReservationActivity
+import woowacourse.movie.view.movies.reservation.ReservationActivity
 
 class CinemaSelectionFragment : BottomSheetDialogFragment() {
     private lateinit var screenings: List<Screening>

@@ -1,0 +1,44 @@
+package woowacourse.movie.view.movies.reservation.seat
+
+import woowacourse.movie.domain.model.ReservationInfo
+import woowacourse.movie.domain.model.Seat
+import woowacourse.movie.domain.model.Ticket
+import java.time.LocalDateTime
+
+interface SeatSelectionContract {
+    interface View {
+        fun showSeats(
+            seats: List<Seat>,
+            selected: List<Seat>,
+        )
+
+        fun updateTicketInfo(ticket: Ticket)
+
+        fun showError(message: String?)
+
+        fun showReservationDialog()
+
+        fun navigateToResult(ticket: Ticket)
+
+        fun setAlarm(
+            isEnabled: Boolean,
+            ticket: Ticket,
+            showTime: LocalDateTime,
+        )
+    }
+
+    interface Presenter {
+        fun loadSeats(reservationInfo: ReservationInfo)
+
+        fun loadSeats(
+            reservationInfo: ReservationInfo,
+            ticket: Ticket,
+        )
+
+        fun selectSeat(seat: Seat)
+
+        fun showConfirmButton()
+
+        fun completeReservation()
+    }
+}

@@ -22,6 +22,10 @@ mockk = "1.14.0"
 fragment-testing = "1.8.6"
 junit-ktx = "1.2.1"
 navigation-ui-ktx = "2.8.9"
+room-compiler = "2.7.1"
+room-compiler-version = "2.6.1"
+room-runtime = "2.7.1"
+rules = "1.6.1"
 
 [libraries]
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidx-activity-ktx" }
@@ -31,7 +35,11 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "androidx-espresso-core" }
 androidx-espresso-contrib-v330 = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espresso-contrib" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }
+androidx-espresso-intents = { module = "androidx.test.espresso:espresso-intents", version.ref = "androidx-espresso-core" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment-testing" }
+androidx-room-compiler = { module = "androidx.room:room-compiler" }
+androidx-room-compiler-v261 = { module = "androidx.room:room-compiler", version.ref = "room-compiler-version" }
+androidx-room-runtime = { module = "androidx.room:room-runtime" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidx-test-runner" }
 assertj-core = { group = "org.assertj", name = "assertj-core", version.ref = "assertj-core" }
@@ -46,6 +54,9 @@ mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 androidx-fragment-testing = { group = "androidx.fragment", name = "fragment-testing", version.ref = "fragment-testing" }
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit-ktx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-ui-ktx" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room-compiler" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-runtime" }
+androidx-rules = { group = "androidx.test", name = "rules", version.ref = "rules" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }

@@ -37,7 +37,10 @@ class MoviesFragmentTest {
         onView(withId(R.id.movies))
             .isDisplayed()
 
-        onView(withRecyclerView(R.id.lv_movie).atPositionOnView(0, R.id.tv_title))
+        onView(
+            withRecyclerView(R.id.lv_movie)
+                .atPositionOnView(0, R.id.tv_title),
+        )
             .matchText("해리 포터와 마법사의 돌")
         onView(withRecyclerView(R.id.lv_movie).atPositionOnView(0, R.id.tv_date))
             .matchText("상영일: 2025.5.1 ~ 2025.5.30")

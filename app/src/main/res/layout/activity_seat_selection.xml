@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:width="292dp"
         android:background="@color/light_gray"
-        tools:context=".view.reservation.seat.SeatSelectionActivity">
+        tools:context=".view.movies.reservation.seat.SeatSelectionActivity">
 
         <TextView
             android:id="@+id/tv_screen"

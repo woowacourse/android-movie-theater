@@ -15,6 +15,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setMenuBarEventListener()
+        setMenuBarReselectedListener()
+        savedInstanceState ?: run {
+            binding.bottomNavView.setSelectedItemId(R.id.home)
+        }
     }
 
     private fun setMenuBarEventListener() {
@@ -24,7 +28,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
             true
         }
-        binding.bottomNavView.setSelectedItemId(R.id.home)
+    }
+
+    private fun setMenuBarReselectedListener() {
+        binding.bottomNavView.setOnItemReselectedListener {
+            true
+        }
     }
 
     private fun menuFragment(item: MenuItem): Fragment {
