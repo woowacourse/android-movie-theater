@@ -3,11 +3,10 @@ package woowacourse.movie.data.notification
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import woowacourse.movie.MovieApplication
 
-class NotificationPreferenceImpl : NotificationPreference {
+class NotificationPreferenceImpl private constructor(context: Context) : NotificationPreference {
     private val prefs: SharedPreferences =
-        MovieApplication.instance.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
     override fun isNotificationEnabled(): Boolean {
         return prefs.getBoolean(KEY_NOTIFICATION_ENABLED, true)
@@ -20,5 +19,15 @@ class NotificationPreferenceImpl : NotificationPreference {
     companion object {
         private const val PREF_NAME = "notification_setting"
         private const val KEY_NOTIFICATION_ENABLED = "notification_enabled"
+
+        private var _INSTANCE: NotificationPreferenceImpl? = null
+        val INSTANCE: NotificationPreferenceImpl
+            get() = _INSTANCE ?: throw IllegalArgumentException("[ERROR] SharedPreference가 초기화되지 않았습니다.")
+
+        fun initialize(context: Context) {
+            if (_INSTANCE == null) {
+                _INSTANCE = NotificationPreferenceImpl(context)
+            }
+        }
     }
 }

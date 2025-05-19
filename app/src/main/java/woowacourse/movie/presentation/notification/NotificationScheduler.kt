@@ -3,14 +3,12 @@ package woowacourse.movie.presentation.notification
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.os.Build
-import woowacourse.movie.MovieApplication
 import woowacourse.movie.domain.model.movie.MovieTicket
 import java.time.LocalDateTime
 import java.time.ZoneId
 
-class NotificationScheduler(private val context: Context = MovieApplication.instance) {
+class NotificationScheduler(private val context: Context) {
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     fun schedule(
@@ -38,11 +36,7 @@ class NotificationScheduler(private val context: Context = MovieApplication.inst
         ticket: MovieTicket,
         time: Long,
     ): PendingIntent {
-        val intent =
-            Intent(context, TicketNotificationReceiver::class.java).apply {
-                putExtra(KEY_TICKET, ticket)
-                putExtra(KEY_TIME, time)
-            }
+        val intent = TicketNotificationReceiver.newIntent(context, ticket, time)
 
         return PendingIntent.getBroadcast(
             context,
@@ -57,10 +51,5 @@ class NotificationScheduler(private val context: Context = MovieApplication.inst
             .atZone(ZoneId.systemDefault())
             .toInstant()
             .toEpochMilli()
-    }
-
-    companion object {
-        const val KEY_TICKET = "Ticket"
-        const val KEY_TIME = "Time"
     }
 }

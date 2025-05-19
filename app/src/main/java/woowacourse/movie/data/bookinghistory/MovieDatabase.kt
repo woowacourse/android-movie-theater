@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import woowacourse.movie.MovieApplication
 
 @Database(entities = [BookingHistory::class], version = 1)
 @TypeConverters(BookingHistoryConverters::class)
@@ -16,7 +15,7 @@ abstract class MovieDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: MovieDatabase? = null
 
-        fun getDatabase(context: Context = MovieApplication.instance): MovieDatabase {
+        fun getDatabase(context: Context): MovieDatabase {
             return INSTANCE ?: synchronized(this) {
                 Room.databaseBuilder(
                     context,
