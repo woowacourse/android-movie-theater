@@ -2,7 +2,6 @@ package woowacourse.movie.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,21 +10,13 @@ import woowacourse.movie.databinding.ItemBookingHistoryBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 
 class BookingHistoryAdapter(
-    private val onClick: (MovieTicket) -> Unit,
+    private val onClick: ClickListener<MovieTicket>,
 ) : ListAdapter<MovieTicket, BookingHistoryAdapter.BookingHistoryViewHolder>(diffCallBack) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): BookingHistoryViewHolder {
-        return BookingHistoryViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.item_booking_history,
-                parent,
-                false,
-            ),
-            onClick,
-        )
+        return BookingHistoryViewHolder(parent, onClick)
     }
 
     override fun onBindViewHolder(
@@ -36,12 +27,19 @@ class BookingHistoryAdapter(
     }
 
     class BookingHistoryViewHolder(
-        private val binding: ItemBookingHistoryBinding,
-        private val onClick: (MovieTicket) -> Unit,
-    ) : RecyclerView.ViewHolder(binding.root) {
+        parent: ViewGroup,
+        onClick: ClickListener<MovieTicket>,
+    ) : RecyclerView.ViewHolder(
+        LayoutInflater.from(parent.context).inflate(R.layout.item_booking_history, parent, false)
+    ) {
+        private val binding = ItemBookingHistoryBinding.bind(itemView)
+
+        init {
+            binding.listener = onClick
+        }
+
         fun bind(movieTicket: MovieTicket) {
             binding.ticket = movieTicket
-            binding.listener = ClickListener<MovieTicket> { onClick(it) }
         }
     }
 
@@ -56,7 +54,8 @@ class BookingHistoryAdapter(
                 override fun areItemsTheSame(
                     oldItem: MovieTicket,
                     newItem: MovieTicket,
-                ): Boolean = oldItem.movieTitle == newItem.movieTitle && oldItem.screeningDateTime == newItem.screeningDateTime
+                ): Boolean =
+                    oldItem.movieTitle == newItem.movieTitle && oldItem.screeningDateTime == newItem.screeningDateTime
             }
     }
 }
