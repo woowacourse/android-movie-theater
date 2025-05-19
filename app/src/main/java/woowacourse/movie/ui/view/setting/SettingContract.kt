@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.view.setting
 
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.TicketHistory
 
 interface SettingContract {
     interface Presenter {
@@ -16,8 +16,8 @@ interface SettingContract {
     interface View {
         fun switchAlarmSetting(isTicketAlarmChecked: Boolean)
 
-        fun cancelAllAlarms(tickets: List<Ticket>)
+        fun cancelAllAlarms(ticketHistories: List<TicketHistory>)
 
-        fun scheduleAllAlarms(tickets: List<Ticket>)
+        fun scheduleAllAlarms(ticketHistories: List<TicketHistory>)
     }
 }

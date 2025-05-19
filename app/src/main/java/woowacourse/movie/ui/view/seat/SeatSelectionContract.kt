@@ -1,7 +1,7 @@
 package woowacourse.movie.ui.view.seat
 
 import woowacourse.movie.domain.reservation.Seat
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.TicketHistory
 
 interface SeatSelectionContract {
     interface Presenter {
@@ -42,7 +42,7 @@ interface SeatSelectionContract {
         fun askFinalReservation()
 
         fun setTicketAlarm(
-            ticket: Ticket,
+            ticketHistory: TicketHistory,
             isTicketAlarmChecked: Boolean,
         )
 

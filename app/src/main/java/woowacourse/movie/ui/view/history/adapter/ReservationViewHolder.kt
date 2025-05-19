@@ -1,15 +1,15 @@
 package woowacourse.movie.ui.view.history.adapter
 
 import woowacourse.movie.databinding.ItemReservationBinding
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.TicketHistory
 import woowacourse.movie.ui.view.screening.adapter.BaseViewHolder
 
 class ReservationViewHolder(
     private val binding: ItemReservationBinding,
-    private val onClick: (ticket: Ticket) -> Unit,
+    private val onClick: (ticketHistory: TicketHistory) -> Unit,
 ) :
-    BaseViewHolder<Ticket>(itemView = binding.root) {
-    override fun bind(item: Ticket) {
+    BaseViewHolder<TicketHistory>(itemView = binding.root) {
+    override fun bind(item: TicketHistory) {
         binding.ticket = item
         binding.root.setOnClickListener {
             onClick(item)

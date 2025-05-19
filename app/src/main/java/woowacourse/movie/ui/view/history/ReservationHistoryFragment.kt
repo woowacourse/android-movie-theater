@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDatabase
 import woowacourse.movie.data.local.datasource.TicketDataSourceImpl
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.TicketHistory
 import woowacourse.movie.ui.view.history.adapter.ReservationAdapter
 import woowacourse.movie.ui.view.ticket.TicketActivity
 
@@ -35,12 +35,12 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
         val database = getMovieDatabase(requireContext())
         presenter = ReservationHistoryPresenter(this, TicketDataSourceImpl(database.ticketDao()))
         reservationAdapter =
-            ReservationAdapter { ticket: Ticket ->
-                ticket.run {
+            ReservationAdapter { ticketHistory: TicketHistory ->
+                ticketHistory.run {
                     val intent =
                         TicketActivity.newIntent(
                             requireContext(),
-                            ticket.id ?: return@ReservationAdapter,
+                            ticketHistory.id,
                         )
                     startActivity(intent)
                 }
@@ -49,9 +49,9 @@ class ReservationHistoryFragment : Fragment(), ReservationHistoryContract.View {
         presenter.presentScreen()
     }
 
-    override fun updateScreen(tickets: List<Ticket>) {
+    override fun updateScreen(ticketHistories: List<TicketHistory>) {
         requireActivity().runOnUiThread {
-            reservationAdapter.submitList(tickets)
+            reservationAdapter.submitList(ticketHistories)
         }
     }
 }

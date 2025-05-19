@@ -10,7 +10,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.TicketHistory
 import woowacourse.movie.ui.alarm.Alarm.Companion.EXTRA_ALARM_TICKET_ID
 import woowacourse.movie.ui.view.ticket.TicketActivity
 
@@ -26,9 +26,9 @@ class AlarmReceiver : BroadcastReceiver() {
 
     private fun showTicketNotification(
         context: Context,
-        ticket: Ticket,
+        ticketHistory: TicketHistory,
     ) {
-        if (ticket.id == null) return
+        if (ticketHistory.id == null) return
         val channel =
             NotificationChannel(
                 CHANNEL_ID,
@@ -41,10 +41,10 @@ class AlarmReceiver : BroadcastReceiver() {
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
         val ticketIntent =
-            ticket.run {
+            ticketHistory.run {
                 TicketActivity.newIntent(
                     context,
-                    ticket.id,
+                    ticketHistory.id,
                 )
             }
 
@@ -56,20 +56,20 @@ class AlarmReceiver : BroadcastReceiver() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )
 
-        val notification = ticketNotification(context, ticket, ticketPendingIntent)
+        val notification = ticketNotification(context, ticketHistory, ticketPendingIntent)
 
-        notificationManager.notify(ticket.id.toInt(), notification)
+        notificationManager.notify(ticketHistory.id.toInt(), notification)
     }
 
     private fun ticketNotification(
         context: Context,
-        ticket: Ticket,
+        ticketHistory: TicketHistory,
         pendingIntent: PendingIntent,
     ): Notification {
         return NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.alarm_icon)
             .setContentTitle(context.getString(R.string.notification_ticket_title))
-            .setContentText(context.getString(R.string.notification_ticket_text, ticket.title))
+            .setContentText(context.getString(R.string.notification_ticket_text, ticketHistory.title))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
@@ -77,12 +77,12 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     @Suppress("DEPRECATION")
-    private fun Intent.getTicketExtra(key: String): Ticket? =
+    private fun Intent.getTicketExtra(key: String): TicketHistory? =
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ->
-                getSerializableExtra(key, Ticket::class.java)
+                getSerializableExtra(key, TicketHistory::class.java)
 
-            else -> getSerializableExtra(key) as? Ticket
+            else -> getSerializableExtra(key) as? TicketHistory
         }
 
     companion object {

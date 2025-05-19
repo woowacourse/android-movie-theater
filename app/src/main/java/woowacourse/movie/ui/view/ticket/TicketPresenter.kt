@@ -3,7 +3,7 @@ package woowacourse.movie.ui.view.ticket
 import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.ticket.CancelTimePolicy
 import woowacourse.movie.domain.ticket.DefaultCancelTimePolicy
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.TicketHistory
 import kotlin.concurrent.thread
 
 class TicketPresenter(
@@ -12,20 +12,20 @@ class TicketPresenter(
     ticketId: Long,
     private val cancelTimePolicy: CancelTimePolicy = DefaultCancelTimePolicy,
 ) : TicketContract.Presenter {
-    private lateinit var ticket: Ticket
+    private lateinit var ticketHistory: TicketHistory
 
     init {
         thread {
-            ticket = ticketDataSource.getTicket(ticketId)
+            ticketHistory = ticketDataSource.getTicket(ticketId)
         }.join()
     }
 
     override fun presentTitle() {
-        view.setMovieTitle(ticket.title)
+        view.setMovieTitle(ticketHistory.title)
     }
 
     override fun presentShowtime() {
-        view.setShowtime(ticket.showtime)
+        view.setShowtime(ticketHistory.showtime)
     }
 
     override fun presentCancelDescription() {
@@ -33,12 +33,12 @@ class TicketPresenter(
     }
 
     override fun presentCount() {
-        with(ticket) {
+        with(ticketHistory) {
             view.setCount(count, seats, cinemaName)
         }
     }
 
     override fun presentPrice() {
-        view.setPrice(ticket.price)
+        view.setPrice(ticketHistory.price)
     }
 }

@@ -16,7 +16,7 @@ import woowacourse.movie.data.local.datasource.TicketDataSourceImpl
 import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.TicketHistory
 import woowacourse.movie.ui.view.MainActivity
 import java.time.LocalDateTime
 
@@ -86,15 +86,15 @@ class TicketActivity :
     }
 
     @Suppress("DEPRECATION")
-    private fun Intent.getTicketExtra(key: String): Ticket? =
+    private fun Intent.getTicketExtra(key: String): TicketHistory? =
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ->
                 getSerializableExtra(
                     key,
-                    Ticket::class.java,
+                    TicketHistory::class.java,
                 )
 
-            else -> getSerializableExtra(key) as? Ticket
+            else -> getSerializableExtra(key) as? TicketHistory
         }
 
     private fun initViews() {

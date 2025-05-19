@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import woowacourse.movie.data.local.database.MovieDatabase.Companion.getMovieDatabase
 import woowacourse.movie.data.local.datasource.SettingsDataSourceImpl
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.TicketHistory
 import woowacourse.movie.ui.alarm.Alarm
 import kotlin.concurrent.thread
 
@@ -28,8 +28,8 @@ class BootReceiver : BroadcastReceiver() {
             val ticketDataSourceImpl: woowacourse.movie.domain.datasource.TicketDataSource =
                 woowacourse.movie.data.local.datasource.TicketDataSourceImpl(database.ticketDao())
             val tickets = ticketDataSourceImpl.getAll()
-            tickets.forEach { ticket: Ticket ->
-                alarm.scheduleTicketAlarm(ticket)
+            tickets.forEach { ticketHistory: TicketHistory ->
+                alarm.scheduleTicketAlarm(ticketHistory)
             }
         }
     }

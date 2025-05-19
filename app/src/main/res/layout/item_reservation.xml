@@ -7,7 +7,7 @@
 
         <variable
             name="ticket"
-            type="woowacourse.movie.domain.ticket.Ticket" />
+            type="woowacourse.movie.domain.ticket.TicketHistory" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

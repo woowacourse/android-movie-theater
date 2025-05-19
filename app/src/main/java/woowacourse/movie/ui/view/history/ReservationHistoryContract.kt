@@ -1,6 +1,6 @@
 package woowacourse.movie.ui.view.history
 
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.TicketHistory
 
 interface ReservationHistoryContract {
     interface Presenter {
@@ -8,6 +8,6 @@ interface ReservationHistoryContract {
     }
 
     interface View {
-        fun updateScreen(tickets: List<Ticket>)
+        fun updateScreen(ticketHistories: List<TicketHistory>)
     }
 }

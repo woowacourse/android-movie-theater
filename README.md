@@ -45,7 +45,7 @@
 - [ ] presenter에서 view 기본 세팅 init블럭으로 처리 및 DataBinding으로 초기화 및 수정
 - [x] BroadCastReceiver nullable 제거
 - [x] 데이터 이전시 Id를 전달하고 각 화면에서 database에서 호출하도록 변경
-- [ ] 티켓 생성 id에 nullable 관련 고민
+- [x] Ticket의 Id TicketHistory로 이전
 - [ ] Id 추가로 areItemsTheSame과 areContentsTheSame 값 비교 수정
 - [ ] 설정에 알림 권한 설정 추가
 - [ ] Entity에서 도메인 타입 제거

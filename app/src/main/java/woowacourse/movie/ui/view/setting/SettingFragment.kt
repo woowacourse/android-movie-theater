@@ -16,7 +16,7 @@ import woowacourse.movie.data.local.datasource.TicketDataSourceImpl
 import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.domain.datasource.SettingsDataSource
 import woowacourse.movie.domain.datasource.TicketDataSource
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.TicketHistory
 import woowacourse.movie.ui.alarm.Alarm
 
 class SettingFragment : Fragment(), SettingContract.View {
@@ -48,15 +48,15 @@ class SettingFragment : Fragment(), SettingContract.View {
         presenter.presentScreen()
     }
 
-    override fun scheduleAllAlarms(tickets: List<Ticket>) {
-        tickets.forEach { ticket ->
+    override fun scheduleAllAlarms(ticketHistories: List<TicketHistory>) {
+        ticketHistories.forEach { ticket ->
             alarm.scheduleTicketAlarm(ticket)
         }
     }
 
-    override fun cancelAllAlarms(tickets: List<Ticket>) {
-        tickets.forEach { ticket ->
-            alarm.cancelTicketAlarm(ticket.id ?: return)
+    override fun cancelAllAlarms(ticketHistories: List<TicketHistory>) {
+        ticketHistories.forEach { ticket ->
+            alarm.cancelTicketAlarm(ticket.id)
         }
     }
 

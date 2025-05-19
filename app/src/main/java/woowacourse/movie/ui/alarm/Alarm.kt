@@ -5,36 +5,35 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.TicketHistory
 import woowacourse.movie.ui.receiver.AlarmReceiver
 import java.time.ZoneId
 
 class Alarm(private val context: Context) {
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-    fun scheduleTicketAlarm(ticket: Ticket) {
-        val pendingIntent: PendingIntent = ticketAlarmPendingIntent(ticket) ?: return
-        val triggerAtMillis: Long = ticketTriggerAtMillis(ticket)
+    fun scheduleTicketAlarm(ticketHistory: TicketHistory) {
+        val pendingIntent: PendingIntent = ticketAlarmPendingIntent(ticketHistory) ?: return
+        val triggerAtMillis: Long = ticketTriggerAtMillis(ticketHistory)
         scheduleExactAlarmIfPermitted(triggerAtMillis, pendingIntent)
     }
 
-    private fun ticketAlarmPendingIntent(ticket: Ticket): PendingIntent? {
-        if (ticket.id == null) return null
+    private fun ticketAlarmPendingIntent(ticketHistory: TicketHistory): PendingIntent? {
         val intent =
             Intent(context, AlarmReceiver::class.java).apply {
-                putExtra(EXTRA_ALARM_TICKET_ID, ticket.id)
-                putExtra(ticket.id.toString(), ticket)
+                putExtra(EXTRA_ALARM_TICKET_ID, ticketHistory.id)
+                putExtra(ticketHistory.id.toString(), ticketHistory)
             }
         return PendingIntent.getBroadcast(
             context,
-            ticket.id.toInt(),
+            ticketHistory.id.toInt(),
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
     }
 
-    private fun ticketTriggerAtMillis(ticket: Ticket): Long {
-        val triggerShowtime = ticket.notifyBeforeMinutes()
+    private fun ticketTriggerAtMillis(ticketHistory: TicketHistory): Long {
+        val triggerShowtime = ticketHistory.notifyBeforeMinutes()
         val zoneId = ZoneId.systemDefault()
         return triggerShowtime.atZone(zoneId).toInstant().toEpochMilli()
     }

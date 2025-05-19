@@ -18,7 +18,7 @@ import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.ui.view.ticket.TicketActivity
 import java.time.LocalDateTime
 
-class TicketActivityTest {
+class TicketHistoryActivityTest {
     @get:Rule
     val activityRule: ActivityScenarioRule<TicketActivity> =
         ActivityScenarioRule(
