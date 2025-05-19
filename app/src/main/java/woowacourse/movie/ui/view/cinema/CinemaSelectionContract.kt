@@ -6,8 +6,6 @@ import woowacourse.movie.domain.reservation.ShowtimePolicy
 
 interface CinemaSelectionContract {
     interface Presenter {
-        fun presentCinemas()
-
         fun onSelectCinema(
             cinemaName: String,
             showtimePolicy: ShowtimePolicy,

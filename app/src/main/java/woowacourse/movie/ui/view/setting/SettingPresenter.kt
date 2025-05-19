@@ -9,7 +9,7 @@ class SettingPresenter(
     private val settingsDataSource: SettingsDataSource,
     private val view: SettingContract.View,
 ) : SettingContract.Presenter {
-    override fun presentScreen() {
+    init {
         view.switchAlarmSetting(settingsDataSource.isTicketAlarmChecked)
     }
 

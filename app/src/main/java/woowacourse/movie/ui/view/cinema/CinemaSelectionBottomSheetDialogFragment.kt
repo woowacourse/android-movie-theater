@@ -27,12 +27,6 @@ class CinemaSelectionBottomSheetDialogFragment :
     private lateinit var cinemaAdapter: CinemaAdapter
     private lateinit var presenter: CinemaSelectionPresenter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initPresenter()
-        initCinemaAdapter()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,7 +43,8 @@ class CinemaSelectionBottomSheetDialogFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.presentCinemas()
+        initPresenter()
+        initCinemaAdapter()
     }
 
     override fun onDestroyView() {

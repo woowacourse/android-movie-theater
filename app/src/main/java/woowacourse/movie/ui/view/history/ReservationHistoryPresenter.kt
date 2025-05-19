@@ -7,7 +7,7 @@ class ReservationHistoryPresenter(
     private val view: ReservationHistoryContract.View,
     private val ticketDataSource: TicketDataSource,
 ) : ReservationHistoryContract.Presenter {
-    override fun presentScreen() {
+    init {
         thread { view.updateScreen(ticketDataSource.getAll()) }
     }
 }

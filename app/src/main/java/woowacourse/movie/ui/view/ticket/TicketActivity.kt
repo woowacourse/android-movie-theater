@@ -2,7 +2,6 @@ package woowacourse.movie.ui.view.ticket
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -16,7 +15,6 @@ import woowacourse.movie.data.local.datasource.TicketDataSourceImpl
 import woowacourse.movie.domain.datasource.TicketDataSource
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
-import woowacourse.movie.domain.ticket.TicketHistory
 import woowacourse.movie.ui.view.MainActivity
 import java.time.LocalDateTime
 
@@ -59,7 +57,6 @@ class TicketActivity :
         val ticketDataSource: TicketDataSource =
             TicketDataSourceImpl(getMovieDatabase(this).ticketDao())
         presenter = TicketPresenter(this, ticketDataSource, ticketId)
-        initViews()
     }
 
     private fun setBackPressed() {
@@ -83,28 +80,6 @@ class TicketActivity :
         descriptionView = findViewById<TextView>(R.id.tv_ticket_description)
         showtimeView = findViewById<TextView>(R.id.tv_ticket_showtime)
         titleView = findViewById<TextView>(R.id.tv_ticket_movie_title)
-    }
-
-    @Suppress("DEPRECATION")
-    private fun Intent.getTicketExtra(key: String): TicketHistory? =
-        when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ->
-                getSerializableExtra(
-                    key,
-                    TicketHistory::class.java,
-                )
-
-            else -> getSerializableExtra(key) as? TicketHistory
-        }
-
-    private fun initViews() {
-        presenter.run {
-            presentCancelDescription()
-            presentTitle()
-            presentShowtime()
-            presentCount()
-            presentPrice()
-        }
     }
 
     override fun setCancelDescription(minutes: Int) {

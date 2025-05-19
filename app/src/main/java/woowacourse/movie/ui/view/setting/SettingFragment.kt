@@ -45,7 +45,6 @@ class SettingFragment : Fragment(), SettingContract.View {
             (requireActivity().applicationContext as MovieApplication).settingDataSource
         presenter = SettingPresenter(ticketDataSource, settingDataSource, this)
         alarm = Alarm(requireActivity().applicationContext)
-        presenter.presentScreen()
     }
 
     override fun scheduleAllAlarms(ticketHistories: List<TicketHistory>) {

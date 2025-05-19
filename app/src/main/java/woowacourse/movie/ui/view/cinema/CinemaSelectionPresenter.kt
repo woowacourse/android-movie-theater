@@ -16,7 +16,7 @@ class CinemaSelectionPresenter(
     private val reservableCinemas: List<Cinema>
         get() = cinemas.filter { it.showtimeCount(LocalDateTime.now()) != 0 }
 
-    override fun presentCinemas() {
+    init {
         view.setCinemas(reservableCinemas)
     }
 

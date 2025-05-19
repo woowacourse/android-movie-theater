@@ -4,17 +4,7 @@ import woowacourse.movie.domain.reservation.Seat
 import java.time.LocalDateTime
 
 interface TicketContract {
-    interface Presenter {
-        fun presentCancelDescription()
-
-        fun presentTitle()
-
-        fun presentShowtime()
-
-        fun presentCount()
-
-        fun presentPrice()
-    }
+    interface Presenter
 
     interface View {
         fun setCancelDescription(minutes: Int)

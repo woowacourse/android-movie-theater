@@ -4,8 +4,6 @@ import woowacourse.movie.domain.ticket.TicketHistory
 
 interface SettingContract {
     interface Presenter {
-        fun presentScreen()
-
         fun setIsTicketAlarmChecked(isTicketAlarmChecked: Boolean)
 
         fun scheduleAlarms()
