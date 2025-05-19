@@ -14,12 +14,22 @@ abstract class MovieDatabase : RoomDatabase() {
     abstract val ticketDao: TicketDao
 
     companion object {
-        private var movieDatabase: MovieDatabase? = null
         private const val MOVIE_DATABASE_NAME = "movie-db"
 
+        @Volatile
+        private var movieDatabase: MovieDatabase? = null
+
         fun getDatabase(context: Context): MovieDatabase =
-            movieDatabase ?: Room
-                .databaseBuilder(context, MovieDatabase::class.java, MOVIE_DATABASE_NAME)
-                .build()
+            movieDatabase ?: synchronized(this) {
+                movieDatabase ?: Room
+                    .databaseBuilder(
+                        context,
+                        MovieDatabase::class.java,
+                        MOVIE_DATABASE_NAME,
+                    ).build()
+                    .also {
+                        movieDatabase = it
+                    }
+            }
     }
 }
