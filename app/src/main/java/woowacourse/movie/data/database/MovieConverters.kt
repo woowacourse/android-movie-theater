@@ -21,11 +21,11 @@ class MovieConverters {
             movie.startDate.toString(),
             movie.endDate.toString(),
             movie.runningTime.toString(),
-        ).joinToString("|")
+        ).joinToString(DELIMITER)
 
     @TypeConverter
     fun toMovie(data: String): Movie {
-        val parts = data.split("|")
+        val parts = data.split(DELIMITER)
         return Movie(
             title = parts[0],
             startDate = LocalDate.parse(parts[1]),
@@ -36,11 +36,11 @@ class MovieConverters {
 
     // Theater
     @TypeConverter
-    fun fromTheater(theater: Theater): String = "${theater.name}|${theater.cancelableTime}"
+    fun fromTheater(theater: Theater): String = "${theater.name}$DELIMITER${theater.cancelableTime}"
 
     @TypeConverter
     fun toTheater(data: String): Theater {
-        val parts = data.split("|")
+        val parts = data.split(DELIMITER)
         return Theater(
             name = parts[0],
             cancelableTime = parts[1].toInt(),
@@ -63,18 +63,22 @@ class MovieConverters {
 
     // Seats
     @TypeConverter
-    fun fromSeats(seats: Seats): String = seats.seats.joinToString("|") { "${it.row},${it.col}" }
+    fun fromSeats(seats: Seats): String = seats.seats.joinToString(DELIMITER) { "${it.row},${it.col}" }
 
     @TypeConverter
     fun toSeats(data: String): Seats {
         if (data.isBlank()) return Seats()
         val seatSet =
             data
-                .split("|")
+                .split(DELIMITER)
                 .map {
                     val (row, col) = it.split(",").map(String::toInt)
                     Seat.from(row, col)
                 }.toSet()
         return Seats(seatSet)
+    }
+
+    companion object {
+        private const val DELIMITER = "###"
     }
 }
