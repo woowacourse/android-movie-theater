@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="woowacourse.movie.common.util.StringFormatter" />
+        <import type="woowacourse.movie.util.StringFormatter" />
 
         <variable
             name="ticket"
@@ -13,7 +13,7 @@
 
         <variable
             name="handler"
-            type="woowacourse.movie.common.adapter.ItemClickListener" />
+            type="woowacourse.movie.presentation.common.ItemClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

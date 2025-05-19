@@ -8,7 +8,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import woowacourse.movie.data.database.MovieDatabase
-import woowacourse.movie.data.entity.toEntity
+import woowacourse.movie.data.ticket.TicketDao
+import woowacourse.movie.data.ticket.toEntity
 import woowacourse.movie.fixture.BOOKED_TICKET
 
 @Suppress("ktlint:standard:function-naming")

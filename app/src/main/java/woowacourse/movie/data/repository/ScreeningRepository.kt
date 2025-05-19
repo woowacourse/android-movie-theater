@@ -1,6 +1,6 @@
 package woowacourse.movie.data.repository
 
-import woowacourse.movie.data.ScreeningData
+import woowacourse.movie.data.dummy.ScreeningData
 import woowacourse.movie.domain.model.Screening
 
 interface ScreeningRepository {

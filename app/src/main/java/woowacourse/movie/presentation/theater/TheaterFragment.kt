@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.common.util.getSerializableCompat
 import woowacourse.movie.databinding.FragmentTheaterBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.presentation.booking.BookingActivity
 import woowacourse.movie.presentation.theater.adapter.TheaterAdapter
+import woowacourse.movie.util.getSerializableCompat
 
 class TheaterFragment :
     BottomSheetDialogFragment(),

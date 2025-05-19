@@ -3,10 +3,10 @@ package woowacourse.movie.presentation.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import woowacourse.movie.common.util.getSerializableExtraCompat
 import woowacourse.movie.data.repository.NotificationSettingRepository
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.presentation.notification.ticket.TicketNotification
+import woowacourse.movie.util.getSerializableExtraCompat
 
 class MovieBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(

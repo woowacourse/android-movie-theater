@@ -1,9 +1,9 @@
 package woowacourse.movie.presentation.ticket.list.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.common.adapter.ItemClickListener
 import woowacourse.movie.databinding.ItemTicketBinding
 import woowacourse.movie.domain.model.Ticket
+import woowacourse.movie.presentation.common.ItemClickListener
 
 class TicketViewHolder(
     private val binding: ItemTicketBinding,

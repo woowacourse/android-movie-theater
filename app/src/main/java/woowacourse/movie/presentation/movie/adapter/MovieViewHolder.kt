@@ -1,9 +1,9 @@
 package woowacourse.movie.presentation.movie.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.common.adapter.ItemClickListener
 import woowacourse.movie.databinding.ItemMovieBinding
 import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.presentation.common.ItemClickListener
 
 class MovieViewHolder(
     private val binding: ItemMovieBinding,

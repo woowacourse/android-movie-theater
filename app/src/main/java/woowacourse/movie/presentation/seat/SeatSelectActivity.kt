@@ -9,8 +9,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import woowacourse.movie.R
-import woowacourse.movie.common.util.getSerializableCompat
-import woowacourse.movie.common.util.getSerializableExtraCompat
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Ticket
@@ -20,6 +18,8 @@ import woowacourse.movie.presentation.seat.model.SeatUiModel
 import woowacourse.movie.presentation.seat.model.toDomain
 import woowacourse.movie.presentation.seat.model.toUiModel
 import woowacourse.movie.presentation.ticket.detail.TicketDetailActivity
+import woowacourse.movie.util.getSerializableCompat
+import woowacourse.movie.util.getSerializableExtraCompat
 
 class SeatSelectActivity :
     BaseActivity<ActivitySeatsBinding>(R.layout.activity_seats),

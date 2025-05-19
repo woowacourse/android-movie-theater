@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import woowacourse.movie.data.dao.TicketDao
-import woowacourse.movie.data.entity.TicketEntity
+import woowacourse.movie.data.ticket.TicketDao
+import woowacourse.movie.data.ticket.TicketEntity
 
 @Database(entities = [TicketEntity::class], version = 1)
 @TypeConverters(MovieConverters::class)

@@ -8,14 +8,14 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import woowacourse.movie.R
-import woowacourse.movie.common.util.getSerializableCompat
-import woowacourse.movie.common.util.getSerializableExtraCompat
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.presentation.BaseActivity
 import woowacourse.movie.presentation.seat.SeatSelectActivity
+import woowacourse.movie.util.getSerializableCompat
+import woowacourse.movie.util.getSerializableExtraCompat
 import java.time.LocalDate
 import java.time.LocalTime
 

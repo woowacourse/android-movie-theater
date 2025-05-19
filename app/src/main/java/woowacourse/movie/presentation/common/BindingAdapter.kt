@@ -1,10 +1,10 @@
-package woowacourse.movie.common.adapter
+package woowacourse.movie.presentation.common
 
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
-import woowacourse.movie.data.MovieData
+import woowacourse.movie.data.dummy.MovieData
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.seat.Seats
 import woowacourse.movie.presentation.seat.model.toUiModel

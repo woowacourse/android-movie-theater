@@ -1,8 +1,8 @@
 package woowacourse.movie.data.repository
 
 import woowacourse.movie.data.database.MovieDatabase
-import woowacourse.movie.data.entity.toDomainModel
-import woowacourse.movie.data.entity.toEntity
+import woowacourse.movie.data.ticket.toDomainModel
+import woowacourse.movie.data.ticket.toEntity
 import woowacourse.movie.domain.model.Ticket
 import kotlin.concurrent.thread
 

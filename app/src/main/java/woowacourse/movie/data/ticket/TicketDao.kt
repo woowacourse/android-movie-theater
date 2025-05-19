@@ -1,9 +1,8 @@
-package woowacourse.movie.data.dao
+package woowacourse.movie.data.ticket
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import woowacourse.movie.data.entity.TicketEntity
 
 @Dao
 interface TicketDao {

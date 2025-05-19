@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import woowacourse.movie.R
-import woowacourse.movie.common.util.getSerializableExtraCompat
 import woowacourse.movie.databinding.ActivityTicketDetailBinding
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.presentation.BaseActivity
+import woowacourse.movie.util.getSerializableExtraCompat
 
 class TicketDetailActivity :
     BaseActivity<ActivityTicketDetailBinding>(R.layout.activity_ticket_detail),
