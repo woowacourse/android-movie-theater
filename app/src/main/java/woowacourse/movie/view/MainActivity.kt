@@ -10,26 +10,19 @@ import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.contract.MainContract
 import woowacourse.movie.data.ApplicationSettings
-import woowacourse.movie.data.reservation.LocalReservationData
-import woowacourse.movie.data.reservation.ReservationData
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presenter.MainPresenter
 import woowacourse.movie.view.cinema.HomeFragment
-import woowacourse.movie.view.reservation.ReservationDatabase
+import woowacourse.movie.view.reservation.LocalReservationData
 import woowacourse.movie.view.reservation.ReservationHistoryFragment
 import woowacourse.movie.view.setting.SettingFragment
 import woowacourse.movie.view.util.ErrorMessage
 
 class MainActivity :
     AppCompatActivity(),
-    MainContract.View,
-    ReservationDataProvider {
+    MainContract.View {
     private val presenter: MainContract.Presenter = MainPresenter(this)
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val reservationData: ReservationData by lazy {
-        val dao = ReservationDatabase.create(applicationContext).reservationDao()
-        LocalReservationData(dao)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +35,8 @@ class MainActivity :
         }
 
         ApplicationSettings.init(applicationContext)
+        LocalReservationData.init(applicationContext)
         bindData()
-
         initViews(isFirstEntry(savedInstanceState))
         initEventListeners()
     }
@@ -98,15 +91,9 @@ class MainActivity :
         }
     }
 
-    override fun provideReservationData(): ReservationData = reservationData
-
     companion object {
         private const val SCREEN_ID_RESERVATION_HISTORY = 0
         private const val SCREEN_ID_HOME = 1
         private const val SCREEN_ID_SETTING = 2
     }
-}
-
-interface ReservationDataProvider {
-    fun provideReservationData(): ReservationData
 }

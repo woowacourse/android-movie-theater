@@ -21,7 +21,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.setPadding
 import woowacourse.movie.R
 import woowacourse.movie.contract.reservation.SeatSelectionContract
-import woowacourse.movie.data.reservation.LocalReservationData
 import woowacourse.movie.domain.reservation.Row
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.reservation.SeatGrade
@@ -93,8 +92,6 @@ class SeatSelectionActivity :
         val cinemaName =
             intent.getStringExtra(EXTRA_CINEMA_NAME)
                 ?: error(ErrorMessage(CAUSE_CINEMA_NAME).notProvided())
-        val dao = ReservationDatabase.create(applicationContext).reservationDao()
-        val reservationData = LocalReservationData(dao)
         presenter =
             SeatSelectionPresenter(
                 this,
@@ -102,7 +99,7 @@ class SeatSelectionActivity :
                 count,
                 showtime,
                 cinemaName,
-                reservationData,
+                LocalReservationData,
                 selectedSeats,
             )
     }
