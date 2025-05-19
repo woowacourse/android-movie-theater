@@ -64,6 +64,6 @@ class NotificationHelper(private val context: Context) {
     }
 
     companion object {
-        const val CHANNEL_ID = "TICKET_REMINDER"
+        private const val CHANNEL_ID = "TICKET_REMINDER"
     }
 }
