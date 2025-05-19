@@ -52,6 +52,7 @@ class SettingsFragment :
                 if (!isNotificationPermissionGranted()) {
                     showPermissionExplanationDialog()
                     binding.isNotificationChecked = false
+                    presenter.saveNotificationSetting(false)
                 } else {
                     presenter.saveNotificationSetting(true)
                 }
