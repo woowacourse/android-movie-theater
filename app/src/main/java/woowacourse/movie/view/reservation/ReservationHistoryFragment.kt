@@ -64,7 +64,7 @@ class ReservationHistoryFragment :
 
     override fun updateReservationHistories(reservations: List<Reservation>) {
         requireActivity().runOnUiThread {
-            adapter?.submitList(reservations.sortedBy(Reservation::showtime))
+            adapter?.submitList(reservations)
         }
     }
 
