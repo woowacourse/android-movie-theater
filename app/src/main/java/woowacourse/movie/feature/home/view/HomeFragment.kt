@@ -28,7 +28,7 @@ class HomeFragment :
             )
         }
     }
-    private val presenter: HomeContract.Presenter by lazy { HomePresenter(this).apply { prepareMovies() } }
+    private val presenter: HomeContract.Presenter by lazy { HomePresenter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +48,8 @@ class HomeFragment :
     }
 
     override fun showMovies(movies: List<MovieUiModel>) {
-        moviesAdapter.submitList(Item.from(movies))
+        val currentItems = moviesAdapter.currentList
+        moviesAdapter.submitList(currentItems + Item.from(movies))
         binding.moviesAdapter = moviesAdapter
     }
 

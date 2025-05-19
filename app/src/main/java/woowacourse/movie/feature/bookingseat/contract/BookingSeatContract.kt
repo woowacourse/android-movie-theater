@@ -13,7 +13,7 @@ interface BookingSeatContract {
 
         fun updateBookingInfo(bookingInfo: BookingInfoUiModel)
 
-        fun showBookingCompleteDialog()
+        fun showBookingCompleteDialog(bookingHistory: BookingInfoUiModel)
 
         fun navigateToBookingComplete(bookingInfo: BookingInfoUiModel)
 
@@ -30,9 +30,9 @@ interface BookingSeatContract {
 
         fun selectSeat(seat: MovieSeatUiModel): SeatSelectionUiState
 
-        fun completeSeatSelection()
+        fun completeSeatSelection(bookingHistory: BookingInfoUiModel)
 
-        fun confirmSeatSelection()
+        fun confirmSeatSelection(bookingHistory: BookingInfoUiModel)
 
         fun cancelSeatSelection()
     }

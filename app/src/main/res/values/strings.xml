@@ -36,10 +36,20 @@
     <string name="theater_name">%s 극장</string>
     <string name="theater_movie_time">%d개의 상영 시간</string>
 
+    <!--   BookingHistoryFragment-->
+    <string name="date_time_theater">%s | %s | %s 극장</string>
+
+    <!--   SettingFragment-->
+    <string name="alarm_title">푸시 알림 수신</string>
+    <string name="alarm_guide">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+
     <!--    bottom_nav-->
     <string name="bottom_nav_booking_history">예매 내역</string>
     <string name="bottom_nav_home">홈</string>
     <string name="bottom_nav_setting">설정</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    NotificationHelper-->
+    <string name="notification_title">예매 알림</string>
+    <string name="notification_description">%s  30분 후에 상영</string>
+    <string name="alarm_setting_error_message">알람 권한이 없어 알람이 설정되지 않았습니다.</string>
 </resources>

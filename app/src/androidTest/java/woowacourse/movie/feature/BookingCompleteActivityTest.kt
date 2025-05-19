@@ -19,6 +19,7 @@ import woowacourse.movie.domain.model.TicketCount
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity
 import woowacourse.movie.feature.bookingcomplete.view.BookingCompleteActivity.Companion.newIntent
 import woowacourse.movie.feature.mapper.toUi
+import woowacourse.movie.feature.model.NavigateType
 
 @Suppress("ktlint:standard:function-naming")
 class BookingCompleteActivityTest {
@@ -44,6 +45,7 @@ class BookingCompleteActivityTest {
                         seats = MovieSeats(setOf(MovieSeat(1, 1), MovieSeat(2, 2))),
                         ticketCount = TicketCount(2),
                     ).toUi(),
+                NavigateType.NONE,
             )
 
         activityScenario = ActivityScenario.launch(intent)

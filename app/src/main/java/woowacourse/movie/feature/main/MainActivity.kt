@@ -1,5 +1,9 @@
 package woowacourse.movie.feature.main
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -11,9 +15,9 @@ import woowacourse.movie.R.id.item_booking_history
 import woowacourse.movie.R.id.item_home
 import woowacourse.movie.R.id.item_setting
 import woowacourse.movie.databinding.ActivityMainBinding
-import woowacourse.movie.feature.bookinghistory.BookingHistoryFragment
+import woowacourse.movie.feature.bookinghistory.view.BookingHistoryFragment
 import woowacourse.movie.feature.home.view.HomeFragment
-import woowacourse.movie.feature.setting.SettingFragment
+import woowacourse.movie.feature.setting.view.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
@@ -50,6 +54,15 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavMain.selectedItemId = item_home
         setupNavigationItemClickListener()
+
+        val channel =
+            NotificationChannel(
+                "booking_history_channel",
+                "예매 알림 채널",
+                NotificationManager.IMPORTANCE_DEFAULT,
+            )
+        val manager = getSystemService(NotificationManager::class.java)
+        manager?.createNotificationChannel(channel)
     }
 
     private fun setupNavigationItemClickListener() {
@@ -85,5 +98,18 @@ class MainActivity : AppCompatActivity() {
 
         activeFragment = newFragment
         return true
+    }
+
+    companion object {
+        fun newIntent(
+            context: Context,
+            singleTop: Boolean = false,
+        ): Intent {
+            val intent = Intent(context, MainActivity::class.java)
+            if (singleTop) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            }
+            return intent
+        }
     }
 }

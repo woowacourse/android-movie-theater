@@ -3,6 +3,7 @@ package woowacourse.movie.feature.bookingseat.presenter
 import woowacourse.movie.domain.model.BookingInfo
 import woowacourse.movie.domain.model.MovieSeat
 import woowacourse.movie.domain.model.SeatSelectionResult
+import woowacourse.movie.domain.repository.BookingHistoryRepository
 import woowacourse.movie.feature.bookingseat.contract.BookingSeatContract
 import woowacourse.movie.feature.mapper.toDomain
 import woowacourse.movie.feature.mapper.toUi
@@ -12,6 +13,7 @@ import woowacourse.movie.feature.model.SeatSelectionUiState
 
 class BookingSeatPresenter(
     private val view: BookingSeatContract.View,
+    private val repository: BookingHistoryRepository,
 ) : BookingSeatContract.Presenter {
     private lateinit var bookingInfo: BookingInfo
 
@@ -39,12 +41,14 @@ class BookingSeatPresenter(
         }
     }
 
-    override fun completeSeatSelection() {
-        view.showBookingCompleteDialog()
+    override fun completeSeatSelection(bookingHistory: BookingInfoUiModel) {
+        view.showBookingCompleteDialog(bookingHistory)
     }
 
-    override fun confirmSeatSelection() {
-        view.navigateToBookingComplete(bookingInfo.toUi())
+    override fun confirmSeatSelection(bookingHistory: BookingInfoUiModel) {
+        repository.saveBookingHistory(bookingHistory) { bookingInfo ->
+            view.navigateToBookingComplete(bookingInfo)
+        }
     }
 
     override fun cancelSeatSelection() {
