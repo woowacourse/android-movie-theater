@@ -28,19 +28,17 @@ class AlarmReceiver : BroadcastReceiver() {
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel =
-                NotificationChannel(
-                    CHANNEL_ID,
-                    context.getString(R.string.reservation_notification_channel_name),
-                    NotificationManager.IMPORTANCE_HIGH,
-                ).apply {
-                    description =
-                        context.getString(R.string.reservation_notification_channel_description)
-                }
+        val channel =
+            NotificationChannel(
+                CHANNEL_ID,
+                context.getString(R.string.reservation_notification_channel_name),
+                NotificationManager.IMPORTANCE_HIGH,
+            ).apply {
+                description =
+                    context.getString(R.string.reservation_notification_channel_description)
+            }
 
-            notificationManager.createNotificationChannel(channel)
-        }
+        notificationManager.createNotificationChannel(channel)
 
         val ticket = intent.getSerializableExtraCompat(TICKET_KEY, Ticket::class.java)
 
