@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.databinding.FragmentTicketListBinding
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.presentation.ticket.detail.TicketDetailActivity
@@ -21,7 +22,11 @@ class TicketListFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = TicketListPresenter(this, requireContext().applicationContext)
+        presenter =
+            TicketListPresenter(
+                this,
+                (requireActivity().application as MovieApplication).ticketRepository,
+            )
     }
 
     override fun onCreateView(

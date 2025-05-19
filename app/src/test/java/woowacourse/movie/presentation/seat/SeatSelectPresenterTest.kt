@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.seat
 
-import android.content.Context
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -20,14 +19,12 @@ class SeatSelectPresenterTest {
     fun setUp() {
         view = mockk(relaxed = true)
         ticket = TICKET
-        val context = mockk<Context>(relaxed = true)
         val ticketRepository = FakeTicketRepository()
         val ticketAlarm = mockk<TicketAlarm>(relaxed = true)
         presenter =
             SeatSelectPresenter(
                 view,
                 ticket,
-                context,
                 ticketRepository,
                 ticketAlarm,
             )

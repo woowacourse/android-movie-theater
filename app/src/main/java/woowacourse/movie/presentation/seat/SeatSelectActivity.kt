@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.Movie
@@ -35,7 +36,13 @@ class SeatSelectActivity :
             return
         }
 
-        presenter = SeatSelectPresenter(this, ticket, applicationContext)
+        presenter =
+            SeatSelectPresenter(
+                this,
+                ticket,
+                (application as MovieApplication).ticketRepository,
+                (application as MovieApplication).ticketAlarm,
+            )
         initView()
         presenter.loadSeatSelect()
     }

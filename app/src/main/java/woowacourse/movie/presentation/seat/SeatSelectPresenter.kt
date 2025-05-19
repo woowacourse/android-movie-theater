@@ -1,8 +1,5 @@
 package woowacourse.movie.presentation.seat
 
-import android.content.Context
-import woowacourse.movie.data.database.MovieDatabase
-import woowacourse.movie.data.repository.LocalTicketRepository
 import woowacourse.movie.data.repository.TicketRepository
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
@@ -11,10 +8,8 @@ import woowacourse.movie.presentation.notification.ticket.TicketAlarm
 class SeatSelectPresenter(
     private val view: SeatSelectContract.View,
     ticket: Ticket,
-    context: Context,
-    private val ticketRepository: TicketRepository =
-        LocalTicketRepository(MovieDatabase.getDatabase(context)),
-    private val ticketAlarm: TicketAlarm = TicketAlarm(context),
+    private val ticketRepository: TicketRepository,
+    private val ticketAlarm: TicketAlarm,
 ) : SeatSelectContract.Presenter {
     private var _ticket: Ticket = ticket.copy()
     val ticket: Ticket get() = _ticket

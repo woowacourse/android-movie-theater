@@ -1,6 +1,5 @@
 package woowacourse.movie.presentation.ticket
 
-import android.content.Context
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -17,9 +16,8 @@ class TicketListPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        val context: Context = mockk(relaxed = true)
         val ticketRepository = FakeTicketRepository()
-        presenter = TicketListPresenter(view, context, ticketRepository)
+        presenter = TicketListPresenter(view, ticketRepository)
     }
 
     @Test
