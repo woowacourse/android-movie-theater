@@ -15,7 +15,7 @@ class ReservationAdapter(private val onClick: (ticketHistory: TicketHistory) -> 
                 oldItem: TicketHistory,
                 newItem: TicketHistory,
             ): Boolean {
-                return oldItem === newItem
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
