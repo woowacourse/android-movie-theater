@@ -20,9 +20,7 @@ class AlarmPermissionHandler(
         }
 
         val alarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        if (alarmManager.canScheduleExactAlarms()) {
-            onGranted()
-        } else {
+        if (!alarmManager.canScheduleExactAlarms()) {
             showPermissionDialog()
         }
     }
