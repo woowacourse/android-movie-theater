@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="showtime"
+            type="java.time.LocalDateTime" />
+
+        <variable
+            name="cinemaName"
+            type="String" />
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="needDivider"
+            type="Boolean" />
+
+        <variable
+            name="onClickItemListener"
+            type="android.view.View.OnClickListener" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:onClickListener="@{onClickItemListener}">
+
+        <TextView
+            android:id="@+id/textViewTicket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{@string/item_reservation_ticket(showtime.year, showtime.monthValue, showtime.dayOfMonth, showtime.hour, showtime.minute, cinemaName)}"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/textViewTitle"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2024.3.2 | 17:00 | 선릉 극장 2024.3.2 | 17:00 | 선릉 극장 2024.3.2 | 17:00 | 선릉 극장" />
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="12dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{title}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/dividerView"
+            app:layout_constraintTop_toBottomOf="@id/textViewTicket"
+            tools:text="해리 포터와 마법사의 돌 해리 포터와 마법사의 돌 해리 포터와 마법사의 돌" />
+
+        <View
+            android:id="@+id/dividerView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0"
+            android:visibility="@{needDivider ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -30,8 +30,16 @@
     <!--item_cinema-->
     <string name="content_description_item_cinema_navigation">이동하기</string>
     <string name="item_cinema_showtime_count">%d개의 상영시간</string>
-
     <string name="menu_main_reservation_history_title">예매 내역</string>
     <string name="menu_main_home_title">홈</string>
     <string name="menu_main_setting_title">설정</string>
+
+    <!--item_reservation-->
+    <string name="item_reservation_ticket">%1$d.%2$d.%3$d | %4$d:%5$02d | %6$s</string>
+
+    <!--ReservationAlarmReceiver-->
+    <string name="reservation_alarm_channel_id">상영 시각 30분 전 알림 채널</string>
+    <string name="reservation_alarm_content_title">예매 알림</string>
+    <string name="reservation_alarm_content_text_format">%s 30분 후에 상영</string>
+    <string name="reservation_alarm_channel_description">영화 시작 30분 전 알림을 발송합니다.</string>
 </resources>

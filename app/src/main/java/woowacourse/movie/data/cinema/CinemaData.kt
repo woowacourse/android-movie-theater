@@ -17,6 +17,7 @@ class LocalCinemaData(
     override val value: List<Cinema> =
         listOf(
             Cinema(
+                0,
                 "선릉 극장",
                 screeningData.value,
                 object : ShowtimePolicy() {
@@ -32,6 +33,7 @@ class LocalCinemaData(
                 },
             ),
             Cinema(
+                1,
                 "잠실 극장",
                 screeningData.value,
                 object : ShowtimePolicy() {
@@ -52,6 +54,7 @@ class LocalCinemaData(
                 },
             ),
             Cinema(
+                2,
                 "강남 극장",
                 screeningData.value,
                 object : ShowtimePolicy() {

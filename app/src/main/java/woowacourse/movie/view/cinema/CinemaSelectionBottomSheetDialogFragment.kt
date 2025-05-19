@@ -78,6 +78,7 @@ class CinemaSelectionBottomSheetDialogFragment :
                 cinema.showtimePolicy,
             )
         startActivity(intent)
+        dismiss()
     }
 
     @Suppress("DEPRECATION")

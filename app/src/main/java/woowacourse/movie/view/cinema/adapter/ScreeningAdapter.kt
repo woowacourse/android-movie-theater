@@ -4,7 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import woowacourse.movie.R
+import woowacourse.movie.databinding.ItemAdvertisementBinding
+import woowacourse.movie.databinding.ItemScreeningBinding
 import woowacourse.movie.domain.reservation.Advertisement
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ScreeningContent
@@ -41,13 +42,15 @@ class ScreeningAdapter(
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             VIEW_TYPE_SCREENING -> {
-                val view = layoutInflater.inflate(R.layout.item_screening, parent, false)
-                ScreeningViewHolder(view, onClickReserveButton)
+                val binding: ItemScreeningBinding =
+                    ItemScreeningBinding.inflate(layoutInflater, parent, false)
+                ScreeningViewHolder(binding, onClickReserveButton)
             }
 
             VIEW_TYPE_ADVERTISEMENT -> {
-                val view = layoutInflater.inflate(R.layout.item_advertisement, parent, false)
-                AdvertisementViewHolder(view)
+                val binding: ItemAdvertisementBinding =
+                    ItemAdvertisementBinding.inflate(layoutInflater, parent, false)
+                AdvertisementViewHolder(binding)
             }
 
             else -> error(ErrorMessage("viewType").noSuch())

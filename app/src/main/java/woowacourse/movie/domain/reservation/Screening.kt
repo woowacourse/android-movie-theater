@@ -61,8 +61,8 @@ class Screening(
         current: LocalDateTime = this.current,
     ) = Screening(movie, start, end, current)
 
-    private val dates: List<LocalDate>
-        get() = List(start.between(end).days) { daysToAdd: Int -> start.plusDays(daysToAdd.toLong()) }
+    private val dates: List<LocalDate> =
+        List(start.between(end).days) { daysToAdd: Int -> start.plusDays(daysToAdd.toLong()) }
 
     private fun LocalDate.between(inclusiveEnd: LocalDate): Period = until(inclusiveEnd).plusDays(1)
 }

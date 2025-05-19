@@ -10,30 +10,19 @@ class CinemaViewHolder(
     private val binding: ItemCinemaBinding,
     private val onClick: (cinema: Cinema) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private var name: String = ""
-    private var showtimesCount: Int = 0
-    private var onItemClickListener: OnClickListener? = null
-
     fun bind(
         cinema: Cinema,
         screening: Screening,
     ) {
-        initData(cinema, screening)
-        bindData()
+        bindData(cinema, screening)
     }
 
-    private fun initData(
+    private fun bindData(
         cinema: Cinema,
         screening: Screening,
     ) {
-        name = cinema.name
-        showtimesCount = cinema.showtimeCount(screening)
-        onItemClickListener = OnClickListener { onClick(cinema) }
-    }
-
-    private fun bindData() {
-        binding.name = name
-        binding.showtimesCount = showtimesCount
-        binding.onItemClickListener = onItemClickListener
+        binding.name = cinema.name
+        binding.showtimesCount = cinema.showtimeCount(screening)
+        binding.onItemClickListener = OnClickListener { onClick(cinema) }
     }
 }

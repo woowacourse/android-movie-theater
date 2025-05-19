@@ -7,23 +7,23 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.contract.ticket.TicketContract
+import woowacourse.movie.contract.ticket.ReservationDetailContract
 import woowacourse.movie.domain.reservation.Seat
 import woowacourse.movie.domain.ticket.FakeCancelTimePolicy
-import woowacourse.movie.domain.ticket.Ticket
+import woowacourse.movie.domain.ticket.Reservation
 import java.time.LocalDateTime
 
 class TicketPresenterTest {
-    private lateinit var view: TicketContract.View
-    private lateinit var presenter: TicketContract.Presenter
+    private lateinit var view: ReservationDetailContract.View
+    private lateinit var presenter: ReservationDetailContract.Presenter
 
     @BeforeEach
     fun setUp() {
         view = mockk()
         presenter =
-            TicketPresenter(
+            ReservationDetailPresenter(
                 view,
-                Ticket(
+                Reservation(
                     title = "해리 포터와 마법사의 돌",
                     count = 2,
                     showtime = LocalDateTime.of(2025, 4, 15, 11, 0),

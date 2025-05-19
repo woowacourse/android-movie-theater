@@ -14,14 +14,14 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.movie.R
 import woowacourse.movie.domain.reservation.Seat
-import woowacourse.movie.view.ticket.TicketActivity
+import woowacourse.movie.view.ticket.ReservationDetailActivity
 import java.time.LocalDateTime
 
 class TicketActivityTest {
     @get:Rule
-    val activityRule: ActivityScenarioRule<TicketActivity> =
+    val activityRule: ActivityScenarioRule<ReservationDetailActivity> =
         ActivityScenarioRule(
-            TicketActivity.Companion.newIntent(
+            ReservationDetailActivity.Companion.newIntent(
                 ApplicationProvider.getApplicationContext(),
                 title = "해리 포터와 마법사의 돌",
                 count = 2,

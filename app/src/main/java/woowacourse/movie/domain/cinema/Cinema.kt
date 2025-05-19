@@ -6,6 +6,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class Cinema(
+    val id: Int,
     val name: String,
     screenings: List<Screening>,
     val showtimePolicy: ShowtimePolicy,

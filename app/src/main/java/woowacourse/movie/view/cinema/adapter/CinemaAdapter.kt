@@ -11,19 +11,7 @@ import woowacourse.movie.domain.reservation.Screening
 class CinemaAdapter(
     private val screening: Screening,
     private val onClickItem: (cinema: Cinema) -> Unit,
-) : ListAdapter<Cinema, CinemaViewHolder>(
-        object : DiffUtil.ItemCallback<Cinema>() {
-            override fun areItemsTheSame(
-                oldItem: Cinema,
-                newItem: Cinema,
-            ): Boolean = oldItem === newItem
-
-            override fun areContentsTheSame(
-                oldItem: Cinema,
-                newItem: Cinema,
-            ): Boolean = oldItem == newItem
-        },
-    ) {
+) : ListAdapter<Cinema, CinemaViewHolder>(diffUtil) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -42,5 +30,20 @@ class CinemaAdapter(
         position: Int,
     ) {
         holder.bind(getItem(position), screening)
+    }
+
+    companion object {
+        val diffUtil =
+            object : DiffUtil.ItemCallback<Cinema>() {
+                override fun areItemsTheSame(
+                    oldItem: Cinema,
+                    newItem: Cinema,
+                ): Boolean = oldItem.id == newItem.id
+
+                override fun areContentsTheSame(
+                    oldItem: Cinema,
+                    newItem: Cinema,
+                ): Boolean = oldItem == newItem
+            }
     }
 }

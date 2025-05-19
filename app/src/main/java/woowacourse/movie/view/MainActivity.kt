@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.contract.MainContract
+import woowacourse.movie.data.ApplicationSettings
 import woowacourse.movie.databinding.ActivityMainBinding
 import woowacourse.movie.presenter.MainPresenter
 import woowacourse.movie.view.cinema.HomeFragment
+import woowacourse.movie.view.reservation.LocalReservationData
 import woowacourse.movie.view.reservation.ReservationHistoryFragment
 import woowacourse.movie.view.setting.SettingFragment
 import woowacourse.movie.view.util.ErrorMessage
@@ -32,6 +34,8 @@ class MainActivity :
             insets
         }
 
+        ApplicationSettings.init(applicationContext)
+        LocalReservationData.init(applicationContext)
         bindData()
         initViews(isFirstEntry(savedInstanceState))
         initEventListeners()
