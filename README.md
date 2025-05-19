@@ -39,7 +39,7 @@
 - [x] TicketDataAdapter 네이밍 수정 및 패키지 이동
 - [x] SharedPreferences ui레이어 model로 이동
 - [x] SharedPreferences에 key값 관리
-- [ ] 객체 생활 체조 원칙 준수(depth 감소)
+- [x] 객체 생활 체조 원칙 준수(depth 감소)
 - [x] setNotification 역할 생각해서 네이밍 수정
 - [x] presenter에서 반환값 제거
 - [x] presenter에서 view 기본 세팅 init블럭으로 처리

@@ -41,18 +41,6 @@ class TicketActivity :
         setBackPressed()
         findViews()
 
-        val callback =
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    val intent =
-                        Intent(this@TicketActivity, MainActivity::class.java).apply {
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        }
-                    startActivity(intent)
-                    finish()
-                }
-            }
-        onBackPressedDispatcher.addCallback(this, callback)
         val ticketId = intent.getLongExtra(EXTRA_TICKET_ID, 0L)
         val ticketDataSource: TicketDataSource =
             TicketDataSourceImpl(getMovieDatabase(this).ticketDao())
