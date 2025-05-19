@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.DataBindingUtil
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivitySeatBinding
 import woowacourse.movie.domain.model.booking.Booking
@@ -29,15 +28,18 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat)
-        val booking: Booking =
-            intent.extras?.getSerializableCompat(KEY_BOOKING) ?: run {
-                showToast(getString(R.string.text_error))
-                finish()
-                return
-            }
+        binding = ActivitySeatBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val booking: Booking? = intent.extras?.getSerializableCompat(KEY_BOOKING)
+        if (booking == null) {
+            showToast(getString(R.string.text_error))
+            finish()
+            return
+        }
 
         presenter = SeatPresenter(this, Seats(), booking)
+        presenter.loadBookingInfo()
         initView()
     }
 
@@ -90,7 +92,7 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     }
 
     override fun moveToBookingComplete(ticket: Ticket) {
-        val intent = BookingCompleteActivity.newIntent(this, ticket)
+        val intent = BookingCompleteActivity.newIntent(this, ticket, true)
         startActivity(intent)
     }
 
@@ -115,12 +117,13 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val seats: Seats =
-            savedInstanceState.getSerializableCompat(KEY_SEATS) ?: run {
-                showToast(getString(R.string.text_error))
-                finish()
-                return
-            }
+        val seats: Seats? = savedInstanceState.getSerializableCompat(KEY_SEATS)
+        if (seats == null) {
+            showToast(getString(R.string.text_error))
+            finish()
+            return
+        }
+
         seats.item.forEach { seat ->
             presenter.changeSeat(seat)
         }
@@ -138,8 +141,8 @@ class SeatActivity : AppCompatActivity(), SeatContract.View {
     }
 
     companion object {
-        const val KEY_BOOKING = "BOOKING"
-        private const val KEY_SEATS = "SEATS"
+        const val KEY_BOOKING = "booking"
+        private const val KEY_SEATS = "seats"
 
         fun newIntent(
             context: Context,

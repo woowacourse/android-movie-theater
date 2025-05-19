@@ -11,7 +11,7 @@ class AdmissionCountTest {
         val admissionCount = AdmissionCount(1)
 
         // when
-        val expected = admissionCount.increase(10).value
+        val expected = admissionCount.increase(20).value
 
         // then
         assertEquals(expected, 2)
@@ -30,7 +30,7 @@ class AdmissionCountTest {
     }
 
     @Test
-    fun `인원수가 한명보다 적으면 감소되지 않는다`() {
+    fun `인원수는 1명 밑으로 감소하지 않는다`() {
         // given
         val admissionCount = AdmissionCount(1)
 
@@ -39,5 +39,17 @@ class AdmissionCountTest {
 
         // then
         assertEquals(expected, AdmissionCount(1).value)
+    }
+
+    @Test
+    fun `인원수는 20명 위로 증가하지 않는다`() {
+        // given
+        val admissionCount = AdmissionCount(20)
+
+        // when
+        val expected = admissionCount.increase(20).value
+
+        // then
+        assertEquals(expected, AdmissionCount(20).value)
     }
 }

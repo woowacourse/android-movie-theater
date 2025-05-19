@@ -16,7 +16,7 @@ interface TheaterListContract {
 
         fun selectTheater(
             movieId: Int,
-            selectedTheater: Theater,
+            theater: Theater,
         )
     }
 }

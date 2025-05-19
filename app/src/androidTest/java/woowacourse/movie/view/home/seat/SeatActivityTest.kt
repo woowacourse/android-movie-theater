@@ -1,4 +1,4 @@
-package woowacourse.movie.view.seat
+package woowacourse.movie.view.home.seat
 
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
@@ -14,7 +14,6 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.model.booking.AdmissionCount
 import woowacourse.movie.domain.model.booking.Booking
 import woowacourse.movie.fixture.fakeContext
-import woowacourse.movie.view.home.seat.SeatActivity
 import woowacourse.movie.view.home.seat.SeatActivity.Companion.newIntent
 import java.time.LocalDate
 import java.time.LocalTime
@@ -39,12 +38,12 @@ class SeatActivityTest {
     }
 
     @Test
-    fun 전달받은_영화_이름을_출력한다() {
+    fun `전달받은_영화_이름을_출력한다`() {
         onView(withText("해리 포터와 마법사의 돌")).check(matches(isDisplayed()))
     }
 
     @Test
-    fun 좌석을_추가하면_좌석_가격을_출력한다() {
+    fun `좌석을_추가하면_좌석_가격을_출력한다`() {
         // given
         onView(withId(R.id.tv_price)).check(matches(withText("0원")))
 
@@ -57,7 +56,7 @@ class SeatActivityTest {
     }
 
     @Test
-    fun 좌석을_선택_해제하면_감소된_좌석_가격을_출력한다() {
+    fun `좌석을_선택_해제하면_감소된_좌석_가격을_출력한다`() {
         // given
         onView(withId(R.id.tv_price)).check(matches(withText("0원")))
 

@@ -41,14 +41,14 @@ class TheaterTest {
         val theater = Theater("잠실 극장", screening)
 
         // then
-        val excepted = theater.screeningTimes(1)
+        val excepted = theater.screenings(1)
 
         assertEquals(
             excepted,
             listOf(
-                MOVIE_1_SCREENING.time,
-                MOVIE_1_SCREENING.time,
-                MOVIE_1_SCREENING.time,
+                MOVIE_1_SCREENING.showtime,
+                MOVIE_1_SCREENING.showtime,
+                MOVIE_1_SCREENING.showtime,
             ),
         )
     }

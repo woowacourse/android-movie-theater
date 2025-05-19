@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import woowacourse.movie.R
-import woowacourse.movie.data.TheaterStore
+import woowacourse.movie.data.dummy.TheaterStore
 import woowacourse.movie.databinding.FragmentTheaterBottomSheetBinding
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.domain.model.theater.Theaters
@@ -46,7 +46,7 @@ class TheaterListFragment :
     }
 
     override fun showTheaters(theaters: Theaters) {
-        binding.rv.adapter = TheaterAdapter(movieId, theaters, this)
+        binding.rvTheaterList.adapter = TheaterAdapter(movieId, theaters, this)
     }
 
     override fun moveToBooking(screeningInfo: ScreeningInfo) {
@@ -65,7 +65,7 @@ class TheaterListFragment :
 
     companion object {
         private const val MOVIE_ID_NOT_INITIALIZED = -1
-        private const val KEY_MOVIE_ID = "MOVIE_ID"
+        private const val KEY_MOVIE_ID = "movie_id"
 
         fun newInstance(movieId: Int): TheaterListFragment {
             val arguments = Bundle().apply { putInt(KEY_MOVIE_ID, movieId) }

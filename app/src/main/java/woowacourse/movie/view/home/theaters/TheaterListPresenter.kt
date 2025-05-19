@@ -1,6 +1,6 @@
 package woowacourse.movie.view.home.theaters
 
-import woowacourse.movie.data.TheaterStore
+import woowacourse.movie.data.dummy.TheaterStore
 import woowacourse.movie.domain.model.theater.Theater
 import woowacourse.movie.view.home.model.ScreeningInfo
 
@@ -15,12 +15,11 @@ class TheaterListPresenter(
 
     override fun selectTheater(
         movieId: Int,
-        selectedTheater: Theater,
+        theater: Theater,
     ) {
-        val theaterName = selectedTheater.name
-        val screeningTimes = selectedTheater.screeningTimes(movieId)
+        val theaterName = theater.name
+        val screeningTimes = theater.screenings(movieId)
         val screeningInfo = ScreeningInfo(movieId, theaterName, screeningTimes)
-
         view.moveToBooking(screeningInfo)
     }
 }

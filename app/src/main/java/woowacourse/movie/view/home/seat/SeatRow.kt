@@ -4,7 +4,7 @@ import android.graphics.Color
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.core.view.children
-import woowacourse.movie.domain.model.seat.Column
+import woowacourse.movie.domain.model.seat.Col
 import woowacourse.movie.domain.model.seat.Row
 import woowacourse.movie.domain.model.seat.Seat
 
@@ -19,7 +19,7 @@ class SeatRow(
         row.children
             .filterIsInstance<TextView>()
             .forEachIndexed { colIndex, view ->
-                val position = Seat(Column(colIndex + 1), Row(rowIndex + 1))
+                val position = Seat(Col(colIndex), Row(rowIndex))
                 view.tag = position
                 seatViews[position] = view
                 view.setOnClickListener { onSeatClick(position) }

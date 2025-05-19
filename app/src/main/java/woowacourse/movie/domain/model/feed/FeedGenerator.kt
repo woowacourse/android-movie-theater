@@ -1,6 +1,6 @@
 package woowacourse.movie.domain.model.feed
 
-import woowacourse.movie.data.MovieStore
+import woowacourse.movie.data.dummy.MovieStore
 import woowacourse.movie.domain.model.feed.Feed.Ad
 
 class FeedGenerator {

@@ -3,8 +3,8 @@ package woowacourse.movie.domain.model.seat
 import java.io.Serializable
 
 data class Seat(
-    val x: Column,
-    val y: Row,
+    val col: Col,
+    val row: Row,
 ) : Serializable {
-    fun price() = SeatPolicy.get(y.value).price
+    fun price() = SeatPolicy.get(row.value).price
 }

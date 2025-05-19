@@ -8,21 +8,16 @@ import java.time.LocalTime
 
 interface BookingContract {
     interface View {
-        fun showMovieDetail(
-            movie: Movie,
-            screeningTimes: List<LocalDateTime>,
-        )
+        fun showMovieDetail(movie: Movie)
 
         fun showAdmissionCount(count: Int)
 
-        fun showScreeningPeriod(
-            startDate: LocalDate,
-            endDate: LocalDate,
-        )
-
         fun showScreeningDates(bookableDates: List<LocalDate>)
 
-        fun showScreeningTimes(bookableTimes: List<LocalTime>)
+        fun showScreeningTimes(
+            bookableTimes: List<LocalTime>,
+            savedTime: LocalTime,
+        )
 
         fun notifyNoAvailableTime()
 
@@ -30,31 +25,18 @@ interface BookingContract {
     }
 
     interface Presenter {
-        fun loadAdmissionCount()
+        fun loadBooking(now: LocalDateTime)
 
-        fun loadMovieDetail()
+        fun restoreBooking(booking: Booking)
 
-        fun loadScreeningDates(
-            screeningDateTimes: List<LocalDateTime>,
-            now: LocalDateTime,
-        )
+        fun selectDate(date: LocalDate)
 
-        fun loadScreeningTimes(
-            selectedDate: LocalDate,
-            now: LocalDateTime,
-        )
-
-        fun loadBooking(
-            movieTitle: String,
-            screeningDate: String,
-            screeningTime: String,
-            admissionCount: String,
-        )
+        fun selectTime(time: LocalTime)
 
         fun decreaseAdmissionCount()
 
         fun increaseAdmissionCount(limit: Int)
 
-        fun restoreAdmissionCount(savedCount: Int)
+        fun completeBooking()
     }
 }
