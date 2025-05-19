@@ -19,6 +19,8 @@ import woowacourse.movie.domain.ticket.Reservation
 import woowacourse.movie.view.ticket.ReservationDetailActivity
 
 class ReservationAlarmReceiver : BroadcastReceiver() {
+    private var notificationBuilder: NotificationCompat.Builder? = null
+
     override fun onReceive(
         context: Context,
         intent: Intent,
@@ -31,13 +33,22 @@ class ReservationAlarmReceiver : BroadcastReceiver() {
         ) {
             return
         }
+        createNotificationChannel(context)
         val reservation: Reservation = intent.getTicketExtra(EXTRA_RESERVATION) ?: return
         val pendingIntent = pendingIntent(context, reservation)
-        val builder: NotificationCompat.Builder =
-            notificationBuilder(context, reservation, pendingIntent)
-        createNotificationChannel(context)
-        builder.notify(context)
+        getOrCreateNotificationBuilder(context, reservation, pendingIntent).notify(context)
     }
+
+    private fun getOrCreateNotificationBuilder(
+        context: Context,
+        reservation: Reservation,
+        pendingIntent: PendingIntent?,
+    ): NotificationCompat.Builder =
+        notificationBuilder ?: notificationBuilder(
+            context,
+            reservation,
+            pendingIntent,
+        ).also { notificationBuilder = it }
 
     @Suppress("DEPRECATION")
     private fun Intent.getTicketExtra(key: String): Reservation? =
