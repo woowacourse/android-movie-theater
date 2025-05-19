@@ -1,5 +1,7 @@
 package woowacourse.movie.presentation.bookinghistory
 
+import io.mockk.every
+import io.mockk.invoke
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -18,6 +20,23 @@ class BookingHistoryPresenterTest {
         view = mockk(relaxed = true)
         repository = mockk(relaxed = true)
         presenter = BookingHistoryPresenter(view, repository)
+    }
+
+    @Test
+    fun `예매 내역을 가져와 화면에 출력한다`() {
+        // Given
+        val tickets = listOf<MovieTicket>()
+        every {
+            repository.getBookings(captureLambda())
+        } answers {
+            lambda<(List<MovieTicket>) -> Unit>().invoke(tickets)
+        }
+
+        // When
+        presenter.loadBookingHistory()
+
+        // Then
+        verify { view.showBookingHistory(any()) }
     }
 
     @Test
