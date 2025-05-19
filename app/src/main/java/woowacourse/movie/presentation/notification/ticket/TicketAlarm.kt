@@ -17,7 +17,7 @@ class TicketAlarm(
 
         val alarmTimeInMillis =
             ticket.showtime
-                .minusMinutes(30)
+                .minusMinutes(TICKET_ALARM_INTERVAL)
                 .atZone(ZoneId.systemDefault())
                 .toInstant()
                 .toEpochMilli()
@@ -25,11 +25,15 @@ class TicketAlarm(
         val alarmIntent =
             PendingIntent.getBroadcast(
                 context,
-                0,
+                ticket.hashCode(),
                 intent,
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
             )
 
         alarmManager.set(AlarmManager.RTC, alarmTimeInMillis, alarmIntent)
+    }
+
+    companion object {
+        private const val TICKET_ALARM_INTERVAL = 30L
     }
 }
