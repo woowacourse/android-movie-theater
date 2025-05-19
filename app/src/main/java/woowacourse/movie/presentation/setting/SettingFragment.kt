@@ -16,7 +16,7 @@ class SettingFragment :
     private val presenter: SettingContract.Presenter by lazy {
         SettingPresenter(
             this,
-            NotificationPreferenceImpl(),
+            NotificationPreferenceImpl.INSTANCE,
         )
     }
     private var _binding: FragmentSettingBinding? = null

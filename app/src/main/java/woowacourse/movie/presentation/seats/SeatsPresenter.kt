@@ -1,17 +1,14 @@
 package woowacourse.movie.presentation.seats
 
-import android.app.Activity
-import woowacourse.movie.data.bookinghistory.BookingHistoryMapper
-import woowacourse.movie.data.bookinghistory.MovieDatabase
+import woowacourse.movie.data.bookinghistory.BookingHistoryRepository
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.SelectedSeats
 import woowacourse.movie.presentation.notification.NotificationScheduler
-import kotlin.concurrent.thread
 
 class SeatsPresenter(
     private val view: SeatsContract.View,
-    private val database: MovieDatabase,
+    private val bookingHistoryRepository: BookingHistoryRepository,
     private val notificationScheduler: NotificationScheduler,
 ) : SeatsContract.Presenter {
     private lateinit var movieTicket: MovieTicket
@@ -49,9 +46,7 @@ class SeatsPresenter(
             )
         addToSchedule(movieTicket)
         insertTicket(movieTicket)
-        (view as Activity).runOnUiThread {
-            view.navigateToSummary(movieTicket)
-        }
+        view.navigateToSummary(movieTicket)
     }
 
     override fun restoreSeats(selectedSeats: SelectedSeats?) {
@@ -67,9 +62,6 @@ class SeatsPresenter(
     }
 
     private fun insertTicket(ticket: MovieTicket) {
-        thread {
-            val dao = database.bookingHistoryDao()
-            dao.insert(BookingHistoryMapper.mapToBookingHistory(ticket))
-        }
+        bookingHistoryRepository.saveBooking(ticket)
     }
 }

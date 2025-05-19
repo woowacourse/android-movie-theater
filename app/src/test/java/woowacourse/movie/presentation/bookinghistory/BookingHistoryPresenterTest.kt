@@ -1,28 +1,23 @@
 package woowacourse.movie.presentation.bookinghistory
 
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.bookinghistory.BookingHistoryDao
-import woowacourse.movie.data.bookinghistory.MovieDatabase
+import woowacourse.movie.data.bookinghistory.BookingHistoryRepository
 import woowacourse.movie.domain.model.movie.MovieTicket
 import java.time.LocalDateTime
 
 class BookingHistoryPresenterTest {
     private lateinit var presenter: BookingHistoryPresenter
     private lateinit var view: BookingHistoryContract.View
-    private lateinit var database: MovieDatabase
-    private lateinit var dao: BookingHistoryDao
+    private lateinit var repository: BookingHistoryRepository
 
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        database = mockk()
-        dao = mockk()
-        every { database.bookingHistoryDao() } returns dao
-        presenter = BookingHistoryPresenter(view, database)
+        repository = mockk(relaxed = true)
+        presenter = BookingHistoryPresenter(view, repository)
     }
 
     @Test

@@ -4,7 +4,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.movie.data.bookinghistory.MovieDatabase
+import woowacourse.movie.data.bookinghistory.BookingHistoryRepository
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.presentation.notification.NotificationScheduler
@@ -13,6 +13,8 @@ import java.time.LocalDateTime
 class SeatsPresenterTest {
     private lateinit var view: SeatsContract.View
     private lateinit var presenter: SeatsContract.Presenter
+    private lateinit var repository: BookingHistoryRepository
+    private lateinit var scheduler: NotificationScheduler
     private val movieTicket =
         MovieTicket(
             "Test",
@@ -24,8 +26,9 @@ class SeatsPresenterTest {
     @BeforeEach
     fun setUp() {
         view = mockk(relaxed = true)
-        presenter =
-            SeatsPresenter(view, MovieDatabase.getDatabase(), NotificationScheduler())
+        repository = mockk(relaxed = true)
+        scheduler = mockk(relaxed = true)
+        presenter = SeatsPresenter(view, repository, scheduler)
         presenter.initializeSeats(movieTicket)
     }
 

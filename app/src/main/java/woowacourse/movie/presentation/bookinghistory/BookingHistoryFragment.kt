@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import woowacourse.movie.R
-import woowacourse.movie.data.bookinghistory.MovieDatabase
+import woowacourse.movie.data.bookinghistory.BookingHistoryRepositoryImpl
 import woowacourse.movie.databinding.FragmentBookingHistoryBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.presentation.adapter.BookingHistoryAdapter
@@ -21,7 +21,7 @@ class BookingHistoryFragment :
     private val presenter: BookingHistoryPresenter by lazy {
         BookingHistoryPresenter(
             this,
-            MovieDatabase.getDatabase(requireContext().applicationContext),
+            BookingHistoryRepositoryImpl.INSTANCE,
         )
     }
     private var _binding: FragmentBookingHistoryBinding? = null
@@ -44,14 +44,16 @@ class BookingHistoryFragment :
     }
 
     override fun showBookingHistory(tickets: List<MovieTicket>) {
-        val adapter =
-            BookingHistoryAdapter {
-                presenter.selectBookingHistory(it)
+        requireActivity().runOnUiThread {
+            val adapter =
+                BookingHistoryAdapter {
+                    presenter.selectBookingHistory(it)
+                }
+            adapter.submitList(tickets)
+            binding.rvBookingList.apply {
+                this.adapter = adapter
+                addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
             }
-        adapter.submitList(tickets)
-        binding.rvBookingList.apply {
-            this.adapter = adapter
-            addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
         }
     }
 
