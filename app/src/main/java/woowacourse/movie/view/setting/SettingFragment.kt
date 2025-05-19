@@ -1,6 +1,5 @@
 package woowacourse.movie.view.setting
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,18 +14,6 @@ class SettingFragment : Fragment() {
     private var _binding: FragmentSettingBinding? = null
     private val binding: FragmentSettingBinding get() = requireNotNull(_binding) { "_binding is null" }
 
-    private lateinit var onNotificationClickListener: OnClickListener
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        onNotificationClickListener =
-            OnClickListener { view ->
-                view as SwitchCompat
-                ApplicationSettings.notificationEnabled = view.isChecked
-            }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -38,7 +25,10 @@ class SettingFragment : Fragment() {
     ): View {
         _binding = FragmentSettingBinding.inflate(inflater, container, false)
         binding.applicationSettings = ApplicationSettings
-        binding.onNotificationClickListener = onNotificationClickListener
+        binding.onNotificationClickListener =
+            OnClickListener { view ->
+                ApplicationSettings.notificationEnabled = (view as SwitchCompat).isChecked
+            }
         return binding.root
     }
 }
