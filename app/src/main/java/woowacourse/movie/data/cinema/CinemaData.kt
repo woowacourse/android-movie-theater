@@ -1,7 +1,5 @@
 package woowacourse.movie.data.cinema
 
-import woowacourse.movie.data.reservation.LocalScreeningData
-import woowacourse.movie.data.reservation.ScreeningData
 import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.ShowtimePolicy
 import java.time.LocalDateTime
@@ -11,14 +9,11 @@ interface CinemaData {
     val value: List<Cinema>
 }
 
-class LocalCinemaData(
-    screeningData: ScreeningData = LocalScreeningData(),
-) : CinemaData {
+class LocalCinemaData() : CinemaData {
     override val value: List<Cinema> =
         listOf(
             Cinema(
                 "선릉 극장",
-                screeningData.value,
                 object : ShowtimePolicy() {
                     override fun showtimes(current: LocalDateTime): List<LocalTime> =
                         listOf(
@@ -33,7 +28,6 @@ class LocalCinemaData(
             ),
             Cinema(
                 "잠실 극장",
-                screeningData.value,
                 object : ShowtimePolicy() {
                     override fun showtimes(current: LocalDateTime): List<LocalTime> =
                         listOf(
@@ -53,7 +47,6 @@ class LocalCinemaData(
             ),
             Cinema(
                 "강남 극장",
-                screeningData.value,
                 object : ShowtimePolicy() {
                     override fun showtimes(current: LocalDateTime): List<LocalTime> =
                         listOf(

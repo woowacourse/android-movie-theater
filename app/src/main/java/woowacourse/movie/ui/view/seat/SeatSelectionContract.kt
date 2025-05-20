@@ -1,0 +1,51 @@
+package woowacourse.movie.ui.view.seat
+
+import woowacourse.movie.domain.reservation.Seat
+import woowacourse.movie.domain.ticket.TicketHistory
+
+interface SeatSelectionContract {
+    interface Presenter {
+        fun presentSeats()
+
+        fun presentTitle()
+
+        fun presentPrice()
+
+        fun presentCompleteButton()
+
+        fun onSeatSelect(seat: Seat)
+
+        fun tryReservation()
+
+        fun confirmReservation()
+
+        fun selectedSeats(onComplete: (seats: Set<Seat>) -> Unit)
+    }
+
+    interface View {
+        fun setSeats(
+            seats: Set<Seat>,
+            selectedSeats: Set<Seat>,
+        )
+
+        fun setTitle(title: String)
+
+        fun setPrice(price: Int)
+
+        fun setSeatIsSelected(
+            seat: Seat,
+            selected: Boolean,
+        )
+
+        fun setConfirmEnabled(isEnabled: Boolean)
+
+        fun askFinalReservation()
+
+        fun setTicketAlarm(
+            ticketHistory: TicketHistory,
+            isTicketAlarmChecked: Boolean,
+        )
+
+        fun navigateToTicketScreen(ticketId: Long)
+    }
+}

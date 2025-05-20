@@ -3,7 +3,7 @@ package woowacourse.movie.ui.view.reservation
 import androidx.annotation.DrawableRes
 import woowacourse.movie.R
 import woowacourse.movie.domain.reservation.Advertisement
-import woowacourse.movie.ui.view.util.ErrorMessage
+import woowacourse.movie.ui.util.ErrorMessage
 
 object AdvertisementImage {
     @DrawableRes

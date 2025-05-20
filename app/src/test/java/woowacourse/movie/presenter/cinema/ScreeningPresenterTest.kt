@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.data.reservation.FakeScreeningData
 import woowacourse.movie.domain.reservation.Movie
 import woowacourse.movie.domain.reservation.Screening
-import woowacourse.movie.ui.contract.cinema.ScreeningContract
-import woowacourse.movie.ui.presenter.cinema.ScreeningPresenter
+import woowacourse.movie.ui.view.screening.ScreeningContract
+import woowacourse.movie.ui.view.screening.ScreeningPresenter
 import java.time.LocalDate
 
 class ScreeningPresenterTest {

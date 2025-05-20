@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test
 import woowacourse.movie.domain.reservation.Movie
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
-import woowacourse.movie.ui.contract.reservation.ReservationContract
-import woowacourse.movie.ui.presenter.reservation.ReservationPresenter
+import woowacourse.movie.ui.view.reservation.ReservationContract
+import woowacourse.movie.ui.view.reservation.ReservationPresenter
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

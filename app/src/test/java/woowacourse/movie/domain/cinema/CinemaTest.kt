@@ -29,7 +29,6 @@ class CinemaTest {
         cinema =
             Cinema(
                 "선릉 극장",
-                listOf(screening),
                 showtimePolicy =
                     object : ShowtimePolicy() {
                         override fun showtimes(current: LocalDateTime): List<LocalTime> {
@@ -37,15 +36,6 @@ class CinemaTest {
                         }
                     },
             )
-    }
-
-    @Test
-    fun `극장별로 상영하는 영화는 달라질 수 있다`() {
-        // when
-        val screenings = cinema.screenings
-
-        // then
-        assertThat(screenings).isEqualTo(listOf(screening))
     }
 
     @Test

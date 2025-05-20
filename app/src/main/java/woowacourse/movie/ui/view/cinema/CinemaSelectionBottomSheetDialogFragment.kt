@@ -10,11 +10,9 @@ import woowacourse.movie.databinding.FragmentCinemaSelectionBottomSheetDialogBin
 import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.Screening
 import woowacourse.movie.domain.reservation.ShowtimePolicy
-import woowacourse.movie.ui.contract.cinema.CinemaSelectionContract
-import woowacourse.movie.ui.presenter.cinema.CinemaSelectionPresenter
+import woowacourse.movie.ui.util.ErrorMessage
 import woowacourse.movie.ui.view.cinema.adapter.CinemaAdapter
 import woowacourse.movie.ui.view.reservation.ReservationActivity
-import woowacourse.movie.ui.view.util.ErrorMessage
 
 class CinemaSelectionBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
@@ -29,12 +27,6 @@ class CinemaSelectionBottomSheetDialogFragment :
     private lateinit var cinemaAdapter: CinemaAdapter
     private lateinit var presenter: CinemaSelectionPresenter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initPresenter()
-        initCinemaAdapter()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,7 +34,6 @@ class CinemaSelectionBottomSheetDialogFragment :
     ): View {
         _binding =
             FragmentCinemaSelectionBottomSheetDialogBinding.inflate(inflater, container, false)
-        binding.cinemaAdapter = cinemaAdapter
         return binding.root
     }
 
@@ -51,7 +42,9 @@ class CinemaSelectionBottomSheetDialogFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.presentCinemas()
+        initCinemaAdapter()
+        initPresenter()
+        binding.cinemaAdapter = cinemaAdapter
     }
 
     override fun onDestroyView() {

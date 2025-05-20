@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="ticket"
+            type="woowacourse.movie.domain.ticket.TicketHistory" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <TextView
+            android:id="@+id/text_view_item_screening_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:includeFontPadding="false"
+            android:textSize="12sp"
+            app:formatDate="@{ticket.showtime}"
+            app:formatPattern="@{@string/date_format}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2024.3.2" />
+
+        <TextView
+            android:id="@+id/text_view_separator_date_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/vertical_bar_separator"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_view_item_screening_date"
+            app:layout_constraintStart_toEndOf="@id/text_view_item_screening_date"
+            tools:text="|" />
+
+        <TextView
+            android:id="@+id/text_view_item_screening_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textSize="12sp"
+            app:formatPattern="@{@string/time_format}"
+            app:formatTime="@{ticket.showtime}"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_view_item_screening_date"
+            app:layout_constraintStart_toEndOf="@id/text_view_separator_date_time"
+            tools:text="15:30" />
+
+        <TextView
+            android:id="@+id/text_view_separator_time_cinema"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/vertical_bar_separator"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_view_item_screening_date"
+            app:layout_constraintStart_toEndOf="@id/text_view_item_screening_time"
+            tools:text="|" />
+
+        <TextView
+            android:id="@+id/text_view_item_screening_cinema"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@{ticket.cinemaName}"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_view_item_screening_date"
+            app:layout_constraintStart_toEndOf="@id/text_view_separator_time_cinema"
+            tools:text="선릉 극장" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="12dp"
+            android:text="@{ticket.title}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_item_screening_date"
+            app:layout_goneMarginTop="12dp"
+            tools:text="해리 포터와 마법사의 돌" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/default_line"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

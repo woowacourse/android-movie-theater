@@ -4,6 +4,7 @@ import android.view.View.OnClickListener
 import woowacourse.movie.databinding.ItemCinemaBinding
 import woowacourse.movie.domain.cinema.Cinema
 import woowacourse.movie.domain.reservation.ShowtimePolicy
+import woowacourse.movie.ui.view.screening.adapter.BaseViewHolder
 import java.time.LocalDateTime
 
 class CinemaViewHolder(

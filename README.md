@@ -14,6 +14,8 @@
 - [x] 하단의 네비게이션 뷰 통해 홈 화면으로 이동할 수 있다.
 - [x] 하단의 네비게이션 뷰 통해 설정 화면으로 이동할 수 있다.
 - [x] 메인 액티비티의 첫 화면은 홈이다.
+- [x] 예매 했을 경우 예매 내역을 LocalDatabase에 저장한다.
+- [x] 예매 내역을 표시한다.
 
 ### 1차 피드백 반영
 
@@ -23,3 +25,27 @@
 - [x] Cinema를 class로 변경
 - [x] onCreate 함수 분리
 - [x] 데이터 바인딩에 필요한 값들만 대입하도록 수정
+
+### 2차 피드백 반영
+
+- [x] Domain에서 사용하지 않는 프로퍼티 제거
+
+### 3차 피드백 반영
+
+- [x] 바인딩 어댑터 고도화
+- [x] 뒤로가기 메인화면 재활용
+- [x] 코드래빗 검토
+- [x] TicketDataSource에서 스레드를 열고 필요한 결과를 프레젠터에게 (콜백) 돌려주어서 (비동기 콜백)테스트
+- [x] TicketDataAdapter 네이밍 수정 및 패키지 이동
+- [x] SharedPreferences ui레이어 model로 이동
+- [x] SharedPreferences에 key값 관리
+- [x] 객체 생활 체조 원칙 준수(depth 감소)
+- [x] setNotification 역할 생각해서 네이밍 수정
+- [x] presenter에서 반환값 제거
+- [x] presenter에서 view 기본 세팅 init블럭으로 처리
+- [x] BroadCastReceiver nullable 제거
+- [x] 데이터 이전시 Id를 전달하고 각 화면에서 database에서 호출하도록 변경
+- [x] Ticket의 Id TicketHistory로 이전
+- [x] TicketHistory areItemsTheSame과 areContentsTheSame 값 비교 수정
+- [x] Entity에서 도메인 타입 제거
+- [x] TicketDataAdapter 위치 이동

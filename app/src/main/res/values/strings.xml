@@ -34,4 +34,15 @@
     <string name="menu_main_reservation_history_title">예매 내역</string>
     <string name="menu_main_home_title">홈</string>
     <string name="menu_main_setting_title">설정</string>
+
+    <string name="screening_info">%1$s | %2$s | %3$s</string>
+
+    <string name="date_format">yyyy.MM.dd</string>
+    <string name="time_format">HH:mm</string>
+    <string name="setting_alarm_title">푸시 알림 수신</string>
+    <string name="setting_alarm_content">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="notification_ticket_text">%1$s30분 후에 상영.</string>
+    <string name="notification_ticket_title">예매 알림</string>
+    <string name="notification_ticket_description">영화 상영전 알림</string>
+    <string name="vertical_bar_separator">" | "</string>
 </resources>
