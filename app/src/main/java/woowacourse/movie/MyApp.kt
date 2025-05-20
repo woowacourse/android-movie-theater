@@ -1,16 +1,21 @@
 package woowacourse.movie
 
 import android.app.Application
-import android.content.Context
+import woowacourse.movie.data.TicketDao
+import woowacourse.movie.data.TicketDatabase
+import woowacourse.movie.data.TicketRepositoryImpl
+import woowacourse.movie.domain.TicketRepository
 
 class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        initProvider()
     }
 
-    companion object {
-        private lateinit var instance: MyApp
-        val applicationContext: Context get() = instance.applicationContext
+    private fun initProvider() {
+        val database: TicketDatabase = TicketDatabase.getDataBase(this)
+        val dao: TicketDao = database.ticketDao()
+        val repository: TicketRepository = TicketRepositoryImpl(dao)
+        TicketProvider.initTicketRepository(repository)
     }
 }

@@ -1,11 +1,10 @@
 package woowacourse.movie.data
 
-import woowacourse.movie.MyApp
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.TicketRepository
 
 class TicketRepositoryImpl(
-    private val dao: TicketDao = TicketDatabase.getDataBase(MyApp.applicationContext).ticketDao(),
+    private val dao: TicketDao,
 ) : TicketRepository {
     override fun getAll(): List<Ticket> {
         return dao.getAll().toDomain()

@@ -1,7 +1,7 @@
 package woowacourse.movie.view.reservation.seat
 
 import android.os.Bundle
-import woowacourse.movie.data.TicketRepositoryImpl
+import woowacourse.movie.TicketProvider
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.TicketRepository
 import woowacourse.movie.domain.movieseat.Position
@@ -12,7 +12,7 @@ import kotlin.concurrent.thread
 
 class ReservationSeatPresenter(
     val view: ReservationSeatContract.View,
-    private val ticketRepository: TicketRepository = TicketRepositoryImpl(),
+    private val ticketRepository: TicketRepository,
 ) : ReservationSeatContract.Present {
     private var seats = Seats(mutableSetOf())
     private lateinit var ticket: Ticket
@@ -74,5 +74,10 @@ class ReservationSeatPresenter(
 
     companion object {
         const val KEY_SEATS = "seats"
+
+        fun provideFactory(
+            view: ReservationSeatContract.View,
+            repository: TicketRepository = TicketProvider.ticketRepository,
+        ): ReservationSeatContract.Present = ReservationSeatPresenter(view, repository)
     }
 }

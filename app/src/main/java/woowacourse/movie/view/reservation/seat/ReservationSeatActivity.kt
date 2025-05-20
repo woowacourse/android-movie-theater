@@ -26,7 +26,7 @@ import woowacourse.movie.view.setting.alarm.AlarmHelper
 
 class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.View {
     private val presenter: ReservationSeatContract.Present by lazy {
-        ReservationSeatPresenter(this)
+        ReservationSeatPresenter.provideFactory(this)
     }
     private var _binding: ActivityReservationSeatBinding? = null
     private val binding get() = _binding!!

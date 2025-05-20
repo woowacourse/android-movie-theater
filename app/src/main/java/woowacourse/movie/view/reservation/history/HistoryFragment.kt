@@ -16,7 +16,7 @@ import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
 class HistoryFragment : Fragment(), HistoryContract.View {
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
-    private val presenter by lazy { HistoryPresenter(this) }
+    private val presenter by lazy { HistoryPresenter.provideFactory(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
