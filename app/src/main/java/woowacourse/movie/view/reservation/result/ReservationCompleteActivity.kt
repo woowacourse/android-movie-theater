@@ -10,10 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.BindingAdapter
+import woowacourse.movie.data.mapper.toDomain
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.reservation.TicketUi
-import woowacourse.movie.view.reservation.toDomain
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

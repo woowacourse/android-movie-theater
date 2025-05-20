@@ -1,9 +1,9 @@
 package woowacourse.movie.view.reservation.history
 
 import woowacourse.movie.TicketProvider
+import woowacourse.movie.data.mapper.toUi
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.TicketRepository
-import woowacourse.movie.view.reservation.toUi
 import kotlin.concurrent.thread
 
 class HistoryPresenter(

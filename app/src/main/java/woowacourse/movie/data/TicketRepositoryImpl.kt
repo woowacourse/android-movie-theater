@@ -1,5 +1,7 @@
 package woowacourse.movie.data
 
+import woowacourse.movie.data.mapper.toDomain
+import woowacourse.movie.data.mapper.toEntity
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.TicketRepository
 
@@ -13,24 +15,4 @@ class TicketRepositoryImpl(
     override fun insertAll(vararg ticket: Ticket) {
         dao.insertAll(*ticket.map { it.toEntity() }.toTypedArray())
     }
-
-    private fun List<TicketEntity>.toDomain() =
-        this.map { entity ->
-            Ticket(
-                entity.title,
-                entity.date,
-                entity.personnel,
-                entity.theaterName,
-                entity.seats,
-            )
-        }
-
-    private fun Ticket.toEntity() =
-        TicketEntity(
-            title = this.title,
-            date = this.date,
-            personnel = this.personnel,
-            theaterName = this.theaterName,
-            seats = this.seats,
-        )
 }

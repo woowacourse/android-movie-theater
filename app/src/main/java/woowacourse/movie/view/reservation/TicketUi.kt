@@ -1,7 +1,6 @@
 package woowacourse.movie.view.reservation
 
 import woowacourse.movie.domain.PurchasePolicy
-import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Seats
 import java.io.Serializable
 import java.time.LocalDateTime
@@ -30,21 +29,3 @@ data class TicketUi(
         return "$timeText | ${this.theaterName}"
     }
 }
-
-fun TicketUi.toDomain() =
-    Ticket(
-        title = this.title,
-        date = this.date,
-        personnel = this.personnel,
-        theaterName = this.theaterName,
-        seats = this.seats,
-    )
-
-fun Ticket.toUi() =
-    TicketUi(
-        title = this.title,
-        date = this.date,
-        personnel = this.personnel,
-        theaterName = this.theaterName,
-        seats = this.seats,
-    )

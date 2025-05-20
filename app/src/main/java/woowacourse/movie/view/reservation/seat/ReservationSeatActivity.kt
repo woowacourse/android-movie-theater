@@ -15,13 +15,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.data.mapper.toDomain
 import woowacourse.movie.databinding.ActivityReservationSeatBinding
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.dialog.DialogInfo
 import woowacourse.movie.view.reservation.TicketUi
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
-import woowacourse.movie.view.reservation.toDomain
 import woowacourse.movie.view.setting.alarm.AlarmHelper
 
 class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.View {

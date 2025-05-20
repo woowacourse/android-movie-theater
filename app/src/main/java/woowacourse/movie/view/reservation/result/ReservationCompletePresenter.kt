@@ -1,9 +1,9 @@
 package woowacourse.movie.view.reservation.result
 
+import woowacourse.movie.data.mapper.toUi
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.domain.movieseat.Seats
-import woowacourse.movie.view.reservation.toUi
 
 class ReservationCompletePresenter(
     val view: ReservationCompleteContract.View,

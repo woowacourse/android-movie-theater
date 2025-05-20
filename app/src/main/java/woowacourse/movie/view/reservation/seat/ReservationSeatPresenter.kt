@@ -2,12 +2,12 @@ package woowacourse.movie.view.reservation.seat
 
 import android.os.Bundle
 import woowacourse.movie.TicketProvider
+import woowacourse.movie.data.mapper.toUi
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.TicketRepository
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.domain.movieseat.Seat
 import woowacourse.movie.domain.movieseat.Seats
-import woowacourse.movie.view.reservation.toUi
 import kotlin.concurrent.thread
 
 class ReservationSeatPresenter(
