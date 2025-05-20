@@ -84,7 +84,7 @@
 - [x] TicketRepositoryImpl | mapper 분리
 - [x] Seat | domain model이 왜 view에 표시가 되기 위한 값을 직접 만들지 않도록 변경
 - [x] ReservationViewHolder | ViewHolder에서 ticket을 가지지 않도록 변경
-- [ ] Destroy | DestroyView에서 binding 값이 null로 변하도록 변경
+- [x] Destroy | DestroyView에서 binding 값이 null로 변하도록 변경
 - [ ] setDateTime | 패키지 위치 변경
 - [ ] ReservationCompletePresenter | 로그 기록 지우기
 - [ ] SettingFragment | 상수화 되지 않은 string값 string.xml로 이동

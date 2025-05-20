@@ -71,11 +71,6 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         binding.price = moviePrice
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
     companion object {
         private const val KEY_TICKET = "ticket"
 
