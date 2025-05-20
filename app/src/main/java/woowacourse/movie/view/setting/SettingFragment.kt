@@ -11,8 +11,8 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -25,11 +25,17 @@ class SettingFragment : Fragment() {
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
 
-    private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission(),
-        ) { isGranted: Boolean ->
-        }
+    private val preferences by lazy {
+        requireContext().getSharedPreferences("setting_preferences", Context.MODE_PRIVATE)
+    }
+
+    private fun isNotificationEnabledInApp(): Boolean {
+        return preferences.getBoolean("notification_isEnabled", false)
+    }
+
+    private fun setNotificationEnabledInApp(enabled: Boolean) {
+        preferences.edit { putBoolean("notification_isEnabled", enabled) }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,16 +53,30 @@ class SettingFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.swNotification.setOnCheckedChangeListener(null)
+        binding.swNotification.isChecked = isNotificationEnabledInApp()
+
         binding.swNotification.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 handleSwitchOn()
+            } else {
+                setNotificationEnabledInApp(false)
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        binding.swNotification.isChecked = hasDeviceAlarmPermission()
+        binding.swNotification.setOnCheckedChangeListener(null)
+        binding.swNotification.isChecked =
+            hasDeviceAlarmPermission() && isNotificationEnabledInApp()
+        binding.swNotification.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                handleSwitchOn()
+            } else {
+                setNotificationEnabledInApp(false)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -66,19 +86,40 @@ class SettingFragment : Fragment() {
 
     private fun handleSwitchOn() {
         if (!hasDeviceAlarmPermission()) {
-            showInitialPermissionDialog()
+            showPermissionAlarmDialog()
+            binding.swNotification.isChecked = false
+        } else if (!isNotificationPermissionGranted()) {
+            showPermissionNotificationDialog()
             binding.swNotification.isChecked = false
         } else {
-            requestNotificationPermission()
+            setNotificationEnabledInApp(true)
         }
     }
 
-    private fun showInitialPermissionDialog() {
+    private fun showPermissionNotificationDialog() {
+        DialogFactory().show(
+            DialogInfo(
+                requireContext(),
+                getString(R.string.need_permission),
+                getString(R.string.ask_for_need_notification_permission),
+                getString(R.string.agree),
+                getString(R.string.cancel),
+            ),
+        ) {
+            val intent =
+                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = "package:${requireContext().packageName}".toUri()
+                }
+            startActivity(intent)
+        }
+    }
+
+    private fun showPermissionAlarmDialog() {
         DialogFactory().show(
             DialogInfo(
                 requireContext(),
                 this.getString(R.string.need_permission),
-                this.getString(R.string.ask_for_need_permission),
+                this.getString(R.string.ask_for_need_alarm_permission),
                 this.getString(R.string.agree),
                 this.getString(R.string.cancel),
             ),
@@ -105,20 +146,14 @@ class SettingFragment : Fragment() {
         }
     }
 
-    private fun requestNotificationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(), Manifest.permission.POST_NOTIFICATIONS,
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                    // 권한 요청 거부한 경우
-                } else {
-                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
-            } else {
-                // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
-            }
+    private fun isNotificationPermissionGranted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
         }
     }
 }

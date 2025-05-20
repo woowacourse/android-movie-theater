@@ -18,6 +18,11 @@ class AlarmReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
+        val prefs = context.getSharedPreferences("setting_preferences", Context.MODE_PRIVATE)
+        if (!prefs.getBoolean("notification_isEnabled", false)) {
+            return
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
             context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
             != android.content.pm.PackageManager.PERMISSION_GRANTED
