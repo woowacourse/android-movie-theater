@@ -8,7 +8,9 @@ import woowacourse.movie.domain.movieseat.Seats
 class SeatsConverter {
     @TypeConverter
     fun fromSeats(seats: Seats): String {
-        return seats.all.joinToString("|")
+        return seats.all.joinToString("|") { seat ->
+            "${seat.position.row},${seat.position.column}"
+        }
     }
 
     @TypeConverter
