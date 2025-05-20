@@ -16,7 +16,7 @@ class SettingsPresenterTest {
     }
 
     @Test
-    fun `알림 설정 상태를 출력한다`() {
+    fun `저장된 알림 설정 값을 화면에 반영한다`() {
         // given
         val settingRepository = FakeSettingRepository(isSaved = true, isGranted = true)
         presenter = SettingsPresenter(view, settingRepository)
@@ -29,7 +29,7 @@ class SettingsPresenterTest {
     }
 
     @Test
-    fun `알림 설정을 저장한다`() {
+    fun `알림 설정 값을 저장하고 화면에 반영한다`() {
         // given
         val settingRepository = FakeSettingRepository(isSaved = false, isGranted = true)
         presenter = SettingsPresenter(view, settingRepository)
