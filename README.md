@@ -78,3 +78,15 @@
 - [x] 앱을 재실행해도 알림 설정 값이 유지된다.
 - [x] 영화 시작 30분 전에 푸시 알림이 전송된다.
 - [x] 푸시 알림을 클릭하면 해당 영화의 예매 상세 정보 화면으로 이동한다.
+
+### 3,4단계 피드백 반영
+- [ ] TicketRepositoryImpl | 생성자에서 Dao자체를 직접 주입받도록 변경
+- [ ] TicketRepositoryImpl | mapper 분리
+- [ ] Seat | domain model이 왜 view에 표시가 되기 위한 값을 직접 만들지 않도록 변경
+- [ ] ReservationViewHolder | ViewHolder에서 ticket을 가지지 않도록 변경
+- [ ] Destroy | DestroyView에서 binding 값이 null로 변하도록 변경
+- [ ] setDateTime | 패키지 위치 변경
+- [ ] ReservationCompletePresenter | 로그 기록 지우기
+- [ ] SettingFragment | 상수화 되지 않은 string값 string.xml로 이동
+- [ ] AlarmReceiver | 공통값 재활용
+- [ ] AlarmHelper | ZoneId에서 오류가 생기는 이유 찾기
