@@ -1,9 +1,7 @@
 package woowacourse.movie.view.reservation.history
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.databinding.ItemHistoryBinding
 import woowacourse.movie.domain.model.ReservationInfo
 
 class ReservationHistoryAdapter(
@@ -13,15 +11,7 @@ class ReservationHistoryAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): HistoryViewHolder {
-        val binding =
-            ItemHistoryBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false,
-            )
-        return HistoryViewHolder(binding, onClickHistory)
-    }
+    ): HistoryViewHolder = HistoryViewHolder.create(parent, onClickHistory)
 
     override fun getItemCount(): Int = items.size
 
