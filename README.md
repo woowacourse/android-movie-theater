@@ -86,7 +86,7 @@
 - [x] ReservationViewHolder | ViewHolder에서 ticket을 가지지 않도록 변경
 - [x] Destroy | DestroyView에서 binding 값이 null로 변하도록 변경
 - [x] setDateTime | 패키지 위치 변경
-- [ ] ReservationCompletePresenter | 로그 기록 지우기
+- [x] ReservationCompletePresenter | 로그 기록 지우기
 - [ ] SettingFragment | 상수화 되지 않은 string값 string.xml로 이동
 - [ ] AlarmReceiver | 공통값 재활용
 - [ ] AlarmHelper | ZoneId에서 오류가 생기는 이유 찾기

@@ -12,7 +12,6 @@ class ReservationCompletePresenter(
         view.showTicketInfo(ticket.toUi())
         view.showSeatsInfo(ticket.seats.toSeatString())
         view.showTicketMoney(ticket.seats.reservationPrice())
-        println("seat : ${ticket.seats.all.joinToString("|")}")
     }
 
     private fun Seats.toSeatString(): String {
