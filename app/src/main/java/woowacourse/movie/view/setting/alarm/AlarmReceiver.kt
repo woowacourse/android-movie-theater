@@ -9,6 +9,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
+import woowacourse.movie.domain.movieseat.RemainTimePolicy
 import woowacourse.movie.view.reservation.TicketUi
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
 
@@ -30,11 +31,11 @@ class AlarmReceiver : BroadcastReceiver() {
         val channel =
             NotificationChannel(
                 CHANNEL_ID,
-                "예매 알림",
+                context.getString(R.string.notification_reserve),
                 NotificationManager.IMPORTANCE_HIGH,
             ).apply {
                 description =
-                    "예매한 영화의 시작 알림"
+                    context.getString(R.string.notification_reservation_movie_start)
             }
 
         notificationManager.createNotificationChannel(channel)
@@ -59,8 +60,14 @@ class AlarmReceiver : BroadcastReceiver() {
         val builder =
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.alarm_icon)
-                .setContentTitle("예매 알림")
-                .setContentText("${ticketUi.title} 30분 후 상영")
+                .setContentTitle(context.getString(R.string.notification_reserve))
+                .setContentText(
+                    context.getString(
+                        R.string.notificaton_reservation_movie_alarm,
+                        ticketUi.title,
+                        RemainTimePolicy.NormalPolicy.time.minute,
+                    ),
+                )
                 .setContentIntent(pendingIntent)
 
         notificationManager.notify(1, builder.build())

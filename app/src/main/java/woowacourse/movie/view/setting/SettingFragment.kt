@@ -77,10 +77,10 @@ class SettingFragment : Fragment() {
         DialogFactory().show(
             DialogInfo(
                 requireContext(),
-                "권한 필요",
-                "Movie에서 알람을 보내도록 허용하시겠습니까?",
-                "허용",
-                "취소",
+                this.getString(R.string.need_permission),
+                this.getString(R.string.ask_for_need_permission),
+                this.getString(R.string.agree),
+                this.getString(R.string.cancel),
             ),
         ) {
             requestDeviceAlarmPermission(requireContext())

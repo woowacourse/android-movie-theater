@@ -87,6 +87,6 @@
 - [x] Destroy | DestroyView에서 binding 값이 null로 변하도록 변경
 - [x] setDateTime | 패키지 위치 변경
 - [x] ReservationCompletePresenter | 로그 기록 지우기
-- [ ] SettingFragment | 상수화 되지 않은 string값 string.xml로 이동
-- [ ] AlarmReceiver | 공통값 재활용
-- [ ] AlarmHelper | ZoneId에서 오류가 생기는 이유 찾기
+- [x] SettingFragment | 상수화 되지 않은 string값 string.xml로 이동
+- [x] AlarmReceiver | 공통값 재활용
+- [x] AlarmHelper | ZoneId에서 오류가 생기는 이유 찾기

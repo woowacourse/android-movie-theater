@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import woowacourse.movie.domain.movieseat.RemainTimePolicy
 import woowacourse.movie.view.reservation.TicketUi
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -35,7 +36,7 @@ object AlarmHelper {
         val pendingIntent =
             PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
-        val alarmTime = convertToMillis(ticketUi.date.minusMinutes(30))
+        val alarmTime = convertToMillis(ticketUi.date.minusMinutes(RemainTimePolicy.NormalPolicy.time.minute.toLong()))
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
@@ -45,7 +46,7 @@ object AlarmHelper {
     }
 
     private fun convertToMillis(localDateTime: LocalDateTime): Long {
-        val zoneId = ZoneId.of("Asia/Seoul")
+        val zoneId = ZoneId.systemDefault()
         return localDateTime.atZone(zoneId).toInstant().toEpochMilli()
     }
 }
