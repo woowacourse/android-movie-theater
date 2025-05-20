@@ -16,7 +16,10 @@ interface SeatsContract {
 
         fun updateAmount(amount: Int)
 
-        fun updateSelectedSeat(seat: Seat, isSelected: Boolean)
+        fun updateSelectedSeat(
+            seat: Seat,
+            isSelected: Boolean,
+        )
 
         fun updateConfirmButtonEnabled(canConfirm: Boolean)
 

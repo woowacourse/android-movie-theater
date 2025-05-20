@@ -7,7 +7,7 @@ import woowacourse.movie.domain.model.movie.Movie
 
 class TheaterPresenter(
     private val view: TheaterContract.View,
-    screeningInfoData: ScreeningInfoData
+    screeningInfoData: ScreeningInfoData,
 ) : TheaterContract.Presenter {
     private val screeningInfos = ScreeningInfos(screeningInfoData.values)
     private lateinit var movie: Movie

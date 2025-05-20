@@ -1,4 +1,4 @@
-package woowacourse.movie.ui.adapter
+package woowacourse.movie.presentation.util
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
@@ -6,12 +6,11 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.seat.Seat
-import woowacourse.movie.ui.util.PosterMapper
-import woowacourse.movie.ui.util.TicketUiFormatter.formatAmount
-import woowacourse.movie.ui.util.TicketUiFormatter.formatDateTime
-import woowacourse.movie.ui.util.TicketUiFormatter.formatHeadCount
-import woowacourse.movie.ui.util.toUi
+import woowacourse.movie.presentation.util.TicketUiFormatter.formatAmount
+import woowacourse.movie.presentation.util.TicketUiFormatter.formatDateTime
+import woowacourse.movie.presentation.util.TicketUiFormatter.formatHeadCount
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @BindingAdapter("posterImage")
 fun ImageView.setPosterImage(title: String?) {
@@ -42,4 +41,18 @@ fun TextView.setFormattedAmount(amount: Int) {
 @BindingAdapter("seats")
 fun TextView.setSeats(seats: List<Seat>) {
     text = seats.toUi()
+}
+
+@BindingAdapter("formattedDate")
+fun TextView.setFormattedDate(dateTime: LocalDateTime?) {
+    dateTime?.let {
+        text = it.toLocalDate().format(DateTimeFormatter.ofPattern("yyyy.M.dd"))
+    }
+}
+
+@BindingAdapter("formattedTime")
+fun TextView.setFormattedTime(dateTime: LocalDateTime?) {
+    dateTime?.let {
+        text = it.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+    }
 }

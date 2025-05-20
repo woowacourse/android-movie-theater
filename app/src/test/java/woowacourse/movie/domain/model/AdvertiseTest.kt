@@ -12,12 +12,15 @@ class AdvertiseTest {
     @Test
     fun `광고는 3개의 영화마다 1개씩 삽입된다`() {
         // Given
-        val movies: List<Movie> = List(6) { Movie(
-            "승부",
-            LocalDate.of(2025, 3, 26),
-            LocalDate.of(2025, 5, 26),
-            115,
-        ) }
+        val movies: List<Movie> =
+            List(6) {
+                Movie(
+                    "승부",
+                    LocalDate.of(2025, 3, 26),
+                    LocalDate.of(2025, 5, 26),
+                    115,
+                )
+            }
         val advertise = Advertise(movies)
 
         // When

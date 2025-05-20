@@ -12,9 +12,9 @@ import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.ScreeningInfo
 import woowacourse.movie.domain.model.movie.Movie
 import woowacourse.movie.domain.model.movie.MovieTicket
+import woowacourse.movie.presentation.DataBindingBaseActivity
 import woowacourse.movie.presentation.seats.SeatsActivity
-import woowacourse.movie.ui.DataBindingBaseActivity
-import woowacourse.movie.ui.util.getSerializableExtraCompat
+import woowacourse.movie.presentation.util.getSerializableExtraCompat
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Locale
@@ -156,7 +156,10 @@ class BookingActivity :
         private const val INTEGER_FORMAT = "%d"
         private const val BOOKING_KEY = "Booking"
 
-        fun newIntent(context: Context, screeningInfo: ScreeningInfo): Intent {
+        fun newIntent(
+            context: Context,
+            screeningInfo: ScreeningInfo,
+        ): Intent {
             return Intent(context, BookingActivity::class.java).apply {
                 putExtra(BOOKING_KEY, screeningInfo)
             }

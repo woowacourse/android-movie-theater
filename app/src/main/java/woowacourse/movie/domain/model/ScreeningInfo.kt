@@ -7,5 +7,5 @@ import java.time.LocalTime
 data class ScreeningInfo(
     val theater: String,
     val movie: Movie,
-    val times: List<LocalTime>
+    val times: List<LocalTime>,
 ) : Serializable

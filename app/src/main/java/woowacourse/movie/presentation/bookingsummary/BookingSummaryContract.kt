@@ -5,6 +5,7 @@ import woowacourse.movie.domain.model.movie.MovieTicket
 interface BookingSummaryContract {
     interface View {
         fun showTicket(ticket: MovieTicket)
+
         fun showCancelableTime(cancelableTime: Int)
     }
 

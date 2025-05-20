@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.addCallback
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityBookingsummaryBinding
 import woowacourse.movie.domain.model.movie.MovieTicket
-import woowacourse.movie.ui.DataBindingBaseActivity
-import woowacourse.movie.ui.util.getSerializableExtraCompat
+import woowacourse.movie.presentation.DataBindingBaseActivity
+import woowacourse.movie.presentation.main.MainActivity
+import woowacourse.movie.presentation.util.getSerializableExtraCompat
 
 class BookingSummaryActivity :
     DataBindingBaseActivity(),
@@ -20,6 +22,7 @@ class BookingSummaryActivity :
         super.onCreate(savedInstanceState)
         if (!fetchTicketFromIntent()) return
         setupScreen(binding.root)
+        setOnBackPressed()
     }
 
     override fun showTicket(ticket: MovieTicket) {
@@ -41,10 +44,24 @@ class BookingSummaryActivity :
         return true
     }
 
+    private fun setOnBackPressed() {
+        onBackPressedDispatcher.addCallback(this) {
+            val intent =
+                Intent(this@BookingSummaryActivity, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                }
+            startActivity(intent)
+            finish()
+        }
+    }
+
     companion object {
         private const val BOOKING_SUMMARY_KEY = "BookingSummary"
 
-        fun newIntent(context: Context, ticket: MovieTicket): Intent {
+        fun newIntent(
+            context: Context,
+            ticket: MovieTicket,
+        ): Intent {
             return Intent(context, BookingSummaryActivity::class.java).apply {
                 putExtra(BOOKING_SUMMARY_KEY, ticket)
             }

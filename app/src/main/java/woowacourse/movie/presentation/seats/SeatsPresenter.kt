@@ -1,11 +1,15 @@
 package woowacourse.movie.presentation.seats
 
+import woowacourse.movie.data.bookinghistory.BookingHistoryRepository
 import woowacourse.movie.domain.model.movie.MovieTicket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.domain.model.seat.SelectedSeats
+import woowacourse.movie.presentation.notification.NotificationScheduler
 
 class SeatsPresenter(
     private val view: SeatsContract.View,
+    private val bookingHistoryRepository: BookingHistoryRepository,
+    private val notificationScheduler: NotificationScheduler,
 ) : SeatsContract.Presenter {
     private lateinit var movieTicket: MovieTicket
     lateinit var selectedSeats: SelectedSeats
@@ -40,6 +44,8 @@ class SeatsPresenter(
                 amount = selectedSeats.getTotalPrice(),
                 seats = selectedSeats.value,
             )
+        addToSchedule(movieTicket)
+        insertTicket(movieTicket)
         view.navigateToSummary(movieTicket)
     }
 
@@ -49,5 +55,13 @@ class SeatsPresenter(
         selectedSeats.value.forEach { seat -> view.updateSelectedSeat(seat, true) }
         view.updateAmount(selectedSeats.getTotalPrice())
         view.updateConfirmButtonEnabled(selectedSeats.isFull())
+    }
+
+    private fun addToSchedule(ticket: MovieTicket) {
+        notificationScheduler.schedule(ticket)
+    }
+
+    private fun insertTicket(ticket: MovieTicket) {
+        bookingHistoryRepository.saveBooking(ticket)
     }
 }

@@ -94,8 +94,8 @@ class BookingPresenterTest {
             view.navigateToSeats(
                 match {
                     it.movieTitle == testMovie.title &&
-                            it.screeningDateTime == LocalDateTime.of(date, time) &&
-                            it.headCount == 1
+                        it.screeningDateTime == LocalDateTime.of(date, time) &&
+                        it.headCount == 1
                 },
             )
         }

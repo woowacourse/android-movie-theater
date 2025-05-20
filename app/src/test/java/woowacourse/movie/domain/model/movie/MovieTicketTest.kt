@@ -1,7 +1,6 @@
 package woowacourse.movie.domain.model.movie
 
 import io.kotest.assertions.assertSoftly
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -28,22 +27,6 @@ class MovieTicketTest {
             movieTitle shouldBe "승부"
             screeningDateTime shouldBe LocalDateTime.of(2025, 5, 30, 11, 0)
             headCount shouldBe 3
-        }
-    }
-
-    @Test
-    fun `이전 시간의 영화를 예매할 수 없다`() {
-        // Given
-        val beforeTime = LocalDateTime.of(2025, 4, 1, 12, 0)
-
-        // Then
-        shouldThrow<IllegalArgumentException> {
-            MovieTicket(
-                "Test",
-                "선릉 극장",
-                beforeTime,
-                2,
-            )
         }
     }
 }

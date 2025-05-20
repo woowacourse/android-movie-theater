@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="ticket"
+            type="woowacourse.movie.domain.model.movie.MovieTicket" />
+
+        <variable
+            name="listener"
+            type="woowacourse.movie.presentation.adapter.ClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:focusable="true"
+        android:onClick="@{() -> listener.onClick(ticket)}">
+
+        <TextView
+            android:id="@+id/tv_screening_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:formattedDate="@{ticket.screeningDateTime}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2025.5.8" />
+
+        <View
+            android:id="@+id/divider_1"
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_margin="4dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintStart_toEndOf="@id/tv_screening_date"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_screening_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:formattedTime="@{ticket.screeningDateTime}"
+            app:layout_constraintStart_toEndOf="@+id/divider_1"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="12:00" />
+
+        <View
+            android:id="@+id/divider_2"
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_margin="4dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintStart_toEndOf="@id/tv_screening_time"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_theater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@{ticket.theaterName}"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@+id/divider_2"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="선릉 극장" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{ticket.movieTitle}"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_screening_date"
+            tools:text="해리 포터와 마법사의 돌" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

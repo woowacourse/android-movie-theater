@@ -6,7 +6,7 @@ import woowacourse.movie.domain.model.movie.Movie
 
 class MoviesPresenter(
     private val view: MoviesContract.View,
-    private val movieData: MovieData
+    private val movieData: MovieData,
 ) : MoviesContract.Presenter {
     override fun initializeMovies() {
         val screeningMovies = movieData.getData()
