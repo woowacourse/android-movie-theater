@@ -10,15 +10,12 @@ class ReservationViewHolder(
     eventListener: OnReservationEventListener,
     val binding: ReservationHistoryItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private var ticket: TicketUi? = null
-
     init {
         binding.onItemClick =
-            OnClickListener { ticket?.let { eventListener.onClickReservation(adapterPosition) } }
+            OnClickListener { eventListener.onClickReservation(adapterPosition) }
     }
 
     fun bind(ticket: TicketUi) {
-        this.ticket = ticket
         binding.ticket = ticket
     }
 }

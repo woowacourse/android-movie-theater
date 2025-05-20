@@ -83,7 +83,7 @@
 - [x] TicketRepositoryImpl | 생성자에서 Dao자체를 직접 주입받도록 변경
 - [x] TicketRepositoryImpl | mapper 분리
 - [x] Seat | domain model이 왜 view에 표시가 되기 위한 값을 직접 만들지 않도록 변경
-- [ ] ReservationViewHolder | ViewHolder에서 ticket을 가지지 않도록 변경
+- [x] ReservationViewHolder | ViewHolder에서 ticket을 가지지 않도록 변경
 - [ ] Destroy | DestroyView에서 binding 값이 null로 변하도록 변경
 - [ ] setDateTime | 패키지 위치 변경
 - [ ] ReservationCompletePresenter | 로그 기록 지우기

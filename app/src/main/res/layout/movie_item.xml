@@ -10,8 +10,8 @@
             type="woowacourse.movie.view.home.movies.MovieUi" />
 
         <variable
-            name="onConfirm"
-            type="android.view.View.OnClickListener" />
+            name="onMovieEventListener"
+            type="woowacourse.movie.view.home.movies.OnMovieEventListener" />
     </data>
 
     <LinearLayout
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:text="@string/reservation_now"
-                android:onClick="@{onConfirm}">
+                android:onClick="@{() -> onMovieEventListener.onClickShowTheater(movieUi)}">
 
             </Button>
 

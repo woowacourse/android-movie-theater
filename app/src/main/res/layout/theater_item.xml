@@ -9,8 +9,8 @@
             type="woowacourse.movie.view.home.theater.Showing" />
 
         <variable
-            name="onConfirm"
-            type="android.view.View.OnClickListener" />
+            name="OnTheaterEventListener"
+            type="woowacourse.movie.view.home.theater.OnTheaterEventListener" />
 
     </data>
 
@@ -55,7 +55,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:onClick="@{onConfirm}"/>
+            android:onClick="@{() -> OnTheaterEventListener.onClickReservation(showing)}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
