@@ -7,12 +7,8 @@ class SettingPresenter(
     private val view: SettingContract.View,
     private val repository: NotificationRepository,
 ) : SettingContract.Presenter {
-    override fun initViewCreatedBinding() {
-        view.setCheckNotification(repository.getNotificationEnabled())
-    }
-
-    override fun initResumeBinding(isDeviceAlarmPermission: Boolean) {
-        view.setCheckNotification(isDeviceAlarmPermission && repository.getNotificationEnabled())
+    override fun initBinding(hasDeviceAlarmPermission: Boolean) {
+        view.setCheckNotification(hasDeviceAlarmPermission && repository.getNotificationEnabled())
     }
 
     override fun notification(

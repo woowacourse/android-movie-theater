@@ -2,9 +2,7 @@ package woowacourse.movie.view.setting
 
 interface SettingContract {
     interface Presenter {
-        fun initResumeBinding(isDeviceAlarmPermission: Boolean)
-
-        fun initViewCreatedBinding()
+        fun initBinding(hasDeviceAlarmPermission: Boolean)
 
         fun notification(
             isChecked: Boolean,

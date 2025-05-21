@@ -42,7 +42,6 @@ class SettingFragment : Fragment(), SettingContract.View {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.initViewCreatedBinding()
         initBinding()
     }
 
@@ -52,12 +51,12 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     override fun onResume() {
         super.onResume()
-        presenter.initResumeBinding(hasDeviceAlarmPermission())
         initBinding()
     }
 
     private fun initBinding() {
         binding.swNotification.setOnCheckedChangeListener(null)
+        presenter.initBinding(hasDeviceAlarmPermission())
         binding.swNotification.setOnCheckedChangeListener { _, isChecked ->
             presenter.notification(
                 isChecked,
