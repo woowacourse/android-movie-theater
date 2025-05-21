@@ -14,6 +14,8 @@ abstract class TicketDatabase : RoomDatabase() {
     abstract fun ticketDao(): TicketDao
 
     companion object {
+        private const val TICKET_DATABASE = "ticket_database"
+
         @Volatile
         private var instance: TicketDatabase? = null
 
@@ -23,7 +25,7 @@ abstract class TicketDatabase : RoomDatabase() {
                     Room.databaseBuilder(
                         context.applicationContext,
                         TicketDatabase::class.java,
-                        "ticket_database",
+                        TICKET_DATABASE,
                     ).build()
                 this.instance = instance
 
