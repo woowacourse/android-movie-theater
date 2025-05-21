@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import woowacourse.movie.domain.model.ReservationInfo
-import java.time.LocalDateTime
 import java.time.ZoneId
 
 object AlarmHelper {
@@ -27,16 +26,10 @@ object AlarmHelper {
 
         alarmManager.set(
             AlarmManager.RTC_WAKEUP,
-            LocalDateTime
-                .now()
-                .plusSeconds(5)
+            reservationInfo.reservationDateTime
                 .atZone(ZoneId.systemDefault())
                 .toInstant()
                 .toEpochMilli(),
-//            reservationInfo.reservationDateTime
-//                .atZone(ZoneId.systemDefault())
-//                .toInstant()
-//                .toEpochMilli(),
             alarmIntent,
         )
     }
