@@ -8,15 +8,14 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import woowacourse.movie.R
-import woowacourse.movie.common.util.getSerializableCompat
-import woowacourse.movie.common.util.getSerializableExtraCompat
 import woowacourse.movie.databinding.ActivityBookingBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.domain.model.Ticket
-import woowacourse.movie.domain.model.scheduler.DefaultScheduler
 import woowacourse.movie.presentation.BaseActivity
 import woowacourse.movie.presentation.seat.SeatSelectActivity
+import woowacourse.movie.util.getSerializableCompat
+import woowacourse.movie.util.getSerializableExtraCompat
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -24,15 +23,20 @@ class BookingActivity :
     BaseActivity<ActivityBookingBinding>(R.layout.activity_booking),
     BookingContract.View {
     private lateinit var presenter: BookingPresenter
-    private lateinit var screening: Screening
 
     private lateinit var dateAdapter: ArrayAdapter<LocalDate>
     private lateinit var timeAdapter: ArrayAdapter<LocalTime>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (!fetchScreening()) return
-        presenter = BookingPresenter(this, screening, DefaultScheduler(screening))
+        val screening = intent.getSerializableExtraCompat(EXTRA_SCREENING, Screening::class.java)
+        screening ?: run {
+            Toast.makeText(this, ERROR_INTENT_KEY, Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
+        presenter = BookingPresenter(this, screening)
         initView()
         presenter.loadBooking()
     }
@@ -114,17 +118,6 @@ class BookingActivity :
     override fun navigateToSeatSelect(ticket: Ticket) {
         val intent = SeatSelectActivity.newIntent(this, ticket)
         startActivity(intent)
-    }
-
-    private fun fetchScreening(): Boolean {
-        val data = intent.getSerializableExtraCompat(EXTRA_SCREENING, Screening::class.java)
-        if (data == null) {
-            Toast.makeText(this, ERROR_INTENT_KEY, Toast.LENGTH_SHORT).show()
-            finish()
-            return false
-        }
-        screening = data
-        return true
     }
 
     private fun initView() {

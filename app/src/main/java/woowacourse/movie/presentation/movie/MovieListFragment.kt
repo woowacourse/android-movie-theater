@@ -1,0 +1,65 @@
+package woowacourse.movie.presentation.movie
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import woowacourse.movie.databinding.FragmentMovieListBinding
+import woowacourse.movie.domain.model.Movie
+import woowacourse.movie.presentation.movie.adapter.MovieAdapter
+import woowacourse.movie.presentation.movie.adapter.MovieListClickListener
+import woowacourse.movie.presentation.movie.adapter.MovieListItem
+import woowacourse.movie.presentation.theater.TheaterFragment
+
+class MovieListFragment :
+    Fragment(),
+    MovieListContract.View {
+    private var _binding: FragmentMovieListBinding? = null
+    private val binding: FragmentMovieListBinding get() = _binding!!
+    private lateinit var presenter: MovieListPresenter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter = MovieListPresenter(this)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentMovieListBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.loadMovieList()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun showMovieList(items: List<MovieListItem>) {
+        val adapter =
+            MovieAdapter(
+                items = items,
+                clickListener =
+                    object : MovieListClickListener {
+                        override fun onClickMovie(item: Movie) = presenter.selectMovie(item)
+                    },
+            )
+        binding.adapter = adapter
+    }
+
+    override fun showTheaterList(movie: Movie) {
+        val theaterFragment = TheaterFragment.newInstance(movie)
+        theaterFragment.show(childFragmentManager, theaterFragment.tag)
+    }
+}

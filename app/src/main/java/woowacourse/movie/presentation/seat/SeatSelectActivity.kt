@@ -8,29 +8,36 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
+import woowacourse.movie.MovieApplication
 import woowacourse.movie.R
-import woowacourse.movie.common.util.getSerializableCompat
-import woowacourse.movie.common.util.getSerializableExtraCompat
 import woowacourse.movie.databinding.ActivitySeatsBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Ticket
 import woowacourse.movie.domain.model.seat.Seat
 import woowacourse.movie.presentation.BaseActivity
-import woowacourse.movie.presentation.result.BookingResultActivity
 import woowacourse.movie.presentation.seat.model.SeatUiModel
 import woowacourse.movie.presentation.seat.model.toDomain
 import woowacourse.movie.presentation.seat.model.toUiModel
+import woowacourse.movie.presentation.ticket.detail.TicketDetailActivity
+import woowacourse.movie.util.getSerializableCompat
+import woowacourse.movie.util.getSerializableExtraCompat
 
 class SeatSelectActivity :
     BaseActivity<ActivitySeatsBinding>(R.layout.activity_seats),
     SeatSelectContract.View {
-    private lateinit var presenter: SeatsPresenter
-    private lateinit var ticket: Ticket
+    private lateinit var presenter: SeatSelectPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (!fetchTicket()) return
-        presenter = SeatsPresenter(this, ticket)
+        val ticket = intent.getSerializableExtraCompat(EXTRA_TICKET, Ticket::class.java)
+        ticket ?: run {
+            Toast.makeText(this, ERROR_INTENT_KEY, Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
+        val app = application as MovieApplication
+        presenter = SeatSelectPresenter(this, ticket, app.ticketRepository, app.ticketAlarm)
         initView()
         presenter.loadSeatSelect()
     }
@@ -68,19 +75,8 @@ class SeatSelectActivity :
     }
 
     override fun navigateToSummary(ticket: Ticket) {
-        val intent = BookingResultActivity.newIntent(this, ticket)
+        val intent = TicketDetailActivity.newIntent(this, ticket)
         startActivity(intent)
-    }
-
-    private fun fetchTicket(): Boolean {
-        val data = intent.getSerializableExtraCompat(EXTRA_TICKET, Ticket::class.java)
-        if (data == null) {
-            Toast.makeText(this, ERROR_INTENT_KEY, Toast.LENGTH_SHORT).show()
-            finish()
-            return false
-        }
-        ticket = data
-        return true
     }
 
     private fun initView() {

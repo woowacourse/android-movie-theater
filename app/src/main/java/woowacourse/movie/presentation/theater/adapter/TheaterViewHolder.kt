@@ -1,9 +1,9 @@
 package woowacourse.movie.presentation.theater.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.movie.common.adapter.ItemClickListener
 import woowacourse.movie.databinding.ItemTheaterBinding
 import woowacourse.movie.domain.model.Screening
+import woowacourse.movie.presentation.common.ItemClickListener
 
 class TheaterViewHolder(
     private val binding: ItemTheaterBinding,

@@ -24,4 +24,10 @@
     <string name="confirm_text">확인</string>
     <string name="delimiter"> | </string>
     <string name="screening_time_message">%d개의 상영 시간</string>
+    <string name="setting_notifications_text">푸시 알림 수신</string>
+    <string name="setting_notifications_message">해제하면 푸시 알림을 수신할 수 없습니다.</string>
+    <string name="notification_permission_text">알림 권한 필요</string>
+    <string name="notification_permission_message">예매 알림을 받으려면 알림 권한이 필요합니다.\n권한을 허용해주세요.</string>
+    <string name="screening_notification_title">예매 알림</string>
+    <string name="screening_notification_text">%s 30분 후에 상영</string>
 </resources>

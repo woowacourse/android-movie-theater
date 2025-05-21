@@ -11,7 +11,7 @@
 
         <variable
             name="handler"
-            type="woowacourse.movie.common.adapter.ItemClickListener" />
+            type="woowacourse.movie.presentation.common.ItemClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

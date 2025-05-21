@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import woowacourse.movie.R
-import woowacourse.movie.common.util.getSerializableCompat
-import woowacourse.movie.data.repository.DefaultScreeningRepository
 import woowacourse.movie.databinding.FragmentTheaterBinding
 import woowacourse.movie.domain.model.Movie
 import woowacourse.movie.domain.model.Screening
 import woowacourse.movie.presentation.booking.BookingActivity
 import woowacourse.movie.presentation.theater.adapter.TheaterAdapter
+import woowacourse.movie.util.getSerializableCompat
 
 class TheaterFragment :
     BottomSheetDialogFragment(),
@@ -27,7 +24,7 @@ class TheaterFragment :
         val movie =
             arguments?.getSerializableCompat(EXTRA_MOVIE, Movie::class.java)
                 ?: dismiss().run { return }
-        presenter = TheaterPresenter(this, movie, DefaultScreeningRepository())
+        presenter = TheaterPresenter(this, movie)
     }
 
     override fun onCreateView(
@@ -35,8 +32,7 @@ class TheaterFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_theater, container, false)
+        _binding = FragmentTheaterBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -60,6 +56,7 @@ class TheaterFragment :
     override fun navigateToBooking(screening: Screening) {
         val intent = BookingActivity.newIntent(context, screening)
         startActivity(intent)
+        dismiss()
     }
 
     companion object {
