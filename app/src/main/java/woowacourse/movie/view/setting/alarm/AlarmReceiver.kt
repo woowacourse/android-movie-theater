@@ -77,6 +77,7 @@ class AlarmReceiver(
                     ),
                 )
                 .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
 
         notificationManager.notify(1, builder.build())
     }
