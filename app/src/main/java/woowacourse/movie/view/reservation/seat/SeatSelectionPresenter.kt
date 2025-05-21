@@ -51,7 +51,6 @@ class SeatSelectionPresenter(
 
     override fun completeReservation() {
         reservationInfo?.let {
-//            ticketMachine.publishTickets(it)
             thread {
                 dao.saveReservation(it.toEntity())
             }
