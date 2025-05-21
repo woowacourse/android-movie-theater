@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -21,20 +20,11 @@ import woowacourse.movie.databinding.FragmentSettingBinding
 import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.dialog.DialogInfo
 
-class SettingFragment : Fragment() {
+class SettingFragment : Fragment(), SettingContract.View {
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
-
-    private val preferences by lazy {
-        requireContext().getSharedPreferences("setting_preferences", Context.MODE_PRIVATE)
-    }
-
-    private fun isNotificationEnabledInApp(): Boolean {
-        return preferences.getBoolean("notification_isEnabled", false)
-    }
-
-    private fun setNotificationEnabledInApp(enabled: Boolean) {
-        preferences.edit { putBoolean("notification_isEnabled", enabled) }
+    private val presenter: SettingContract.Presenter by lazy {
+        SettingPresenter.provideFactory(this)
     }
 
     override fun onCreateView(
@@ -52,51 +42,32 @@ class SettingFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        presenter.initViewCreatedBinding()
+        initBinding()
+    }
 
-        binding.swNotification.setOnCheckedChangeListener(null)
-        binding.swNotification.isChecked = isNotificationEnabledInApp()
-
-        binding.swNotification.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                handleSwitchOn()
-            } else {
-                setNotificationEnabledInApp(false)
-            }
-        }
+    override fun setCheckNotification(isCheck: Boolean) {
+        binding.swNotification.isChecked = isCheck
     }
 
     override fun onResume() {
         super.onResume()
+        presenter.initResumeBinding(hasDeviceAlarmPermission())
+        initBinding()
+    }
+
+    private fun initBinding() {
         binding.swNotification.setOnCheckedChangeListener(null)
-        binding.swNotification.isChecked =
-            hasDeviceAlarmPermission() && isNotificationEnabledInApp()
         binding.swNotification.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                handleSwitchOn()
-            } else {
-                setNotificationEnabledInApp(false)
-            }
+            presenter.notification(
+                isChecked,
+                hasDeviceAlarmPermission(),
+                isNotificationPermissionGranted(),
+            )
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun handleSwitchOn() {
-        if (!hasDeviceAlarmPermission()) {
-            showPermissionAlarmDialog()
-            binding.swNotification.isChecked = false
-        } else if (!isNotificationPermissionGranted()) {
-            showPermissionNotificationDialog()
-            binding.swNotification.isChecked = false
-        } else {
-            setNotificationEnabledInApp(true)
-        }
-    }
-
-    private fun showPermissionNotificationDialog() {
+    override fun showPermissionNotificationDialog() {
         DialogFactory().show(
             DialogInfo(
                 requireContext(),
@@ -114,7 +85,7 @@ class SettingFragment : Fragment() {
         }
     }
 
-    private fun showPermissionAlarmDialog() {
+    override fun showPermissionAlarmDialog() {
         DialogFactory().show(
             DialogInfo(
                 requireContext(),
@@ -137,15 +108,6 @@ class SettingFragment : Fragment() {
         }
     }
 
-    private fun requestDeviceAlarmPermission(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-            intent.data = "package:${context.packageName}".toUri()
-
-            context.startActivity(intent)
-        }
-    }
-
     private fun isNotificationPermissionGranted(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ContextCompat.checkSelfPermission(
@@ -155,5 +117,19 @@ class SettingFragment : Fragment() {
         } else {
             true
         }
+    }
+
+    private fun requestDeviceAlarmPermission(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+            intent.data = "package:${context.packageName}".toUri()
+
+            context.startActivity(intent)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

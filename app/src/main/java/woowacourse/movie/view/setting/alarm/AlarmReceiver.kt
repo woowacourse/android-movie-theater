@@ -9,17 +9,20 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
+import woowacourse.movie.TicketProvider
+import woowacourse.movie.data.NotificationRepository
 import woowacourse.movie.domain.movieseat.RemainTimePolicy
 import woowacourse.movie.view.reservation.TicketUi
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
 
-class AlarmReceiver : BroadcastReceiver() {
+class AlarmReceiver(
+    private val repository: NotificationRepository = TicketProvider.notificationRepository,
+) : BroadcastReceiver() {
     override fun onReceive(
         context: Context,
         intent: Intent,
     ) {
-        val prefs = context.getSharedPreferences("setting_preferences", Context.MODE_PRIVATE)
-        if (!prefs.getBoolean("notification_isEnabled", false)) {
+        if (!repository.getNotificationEnabled()) {
             return
         }
 
