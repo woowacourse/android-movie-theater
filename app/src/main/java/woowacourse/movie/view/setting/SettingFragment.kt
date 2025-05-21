@@ -1,63 +1,134 @@
 package woowacourse.movie.view.setting
 
+import android.Manifest
+import android.app.AlarmManager
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentSettingBinding
+import woowacourse.movie.view.dialog.DialogFactory
+import woowacourse.movie.view.dialog.DialogInfo
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SettingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+class SettingFragment : Fragment(), SettingContract.View {
+    private var _binding: FragmentSettingBinding? = null
+    private val binding get() = _binding!!
+    private val presenter: SettingContract.Presenter by lazy {
+        SettingPresenter.provideFactory(this)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+    ): View {
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SettingFragment.
-         */
-        @JvmStatic
-        fun newInstance(
-            param1: String,
-            param2: String,
-        ) = SettingFragment().apply {
-            arguments =
-                Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        initBinding()
+    }
+
+    override fun setCheckNotification(isCheck: Boolean) {
+        binding.swNotification.isChecked = isCheck
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initBinding()
+    }
+
+    private fun initBinding() {
+        binding.swNotification.setOnCheckedChangeListener(null)
+        presenter.initBinding(hasDeviceAlarmPermission())
+        binding.swNotification.setOnCheckedChangeListener { _, isChecked ->
+            presenter.notification(
+                isChecked,
+                hasDeviceAlarmPermission(),
+                isNotificationPermissionGranted(),
+            )
         }
+    }
+
+    override fun showPermissionNotificationDialog() {
+        DialogFactory().show(
+            DialogInfo(
+                requireContext(),
+                getString(R.string.need_permission),
+                getString(R.string.ask_for_need_notification_permission),
+                getString(R.string.agree),
+                getString(R.string.cancel),
+            ),
+        ) {
+            val intent =
+                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = "package:${requireContext().packageName}".toUri()
+                }
+            startActivity(intent)
+        }
+    }
+
+    override fun showPermissionAlarmDialog() {
+        DialogFactory().show(
+            DialogInfo(
+                requireContext(),
+                this.getString(R.string.need_permission),
+                this.getString(R.string.ask_for_need_alarm_permission),
+                this.getString(R.string.agree),
+                this.getString(R.string.cancel),
+            ),
+        ) {
+            requestDeviceAlarmPermission(requireContext())
+        }
+    }
+
+    private fun hasDeviceAlarmPermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val alarmManager = requireContext().getSystemService(AlarmManager::class.java)
+            alarmManager.canScheduleExactAlarms()
+        } else {
+            true
+        }
+    }
+
+    private fun isNotificationPermissionGranted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+    }
+
+    private fun requestDeviceAlarmPermission(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+            intent.data = "package:${context.packageName}".toUri()
+
+            context.startActivity(intent)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

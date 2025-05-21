@@ -1,13 +1,18 @@
 package woowacourse.movie.view.reservation.seat
 
 import android.os.Bundle
+import woowacourse.movie.TicketProvider
+import woowacourse.movie.data.mapper.toUi
+import woowacourse.movie.domain.Ticket
+import woowacourse.movie.domain.TicketRepository
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.domain.movieseat.Seat
 import woowacourse.movie.domain.movieseat.Seats
-import woowacourse.movie.view.reservation.Ticket
+import kotlin.concurrent.thread
 
 class ReservationSeatPresenter(
     val view: ReservationSeatContract.View,
+    private val ticketRepository: TicketRepository,
 ) : ReservationSeatContract.Present {
     private var seats = Seats(mutableSetOf())
     private lateinit var ticket: Ticket
@@ -47,6 +52,12 @@ class ReservationSeatPresenter(
         canSelectedButton()
     }
 
+    override fun createTicket() {
+        this.ticket.seats.addSeat(seats)
+        saveTicket()
+        view.handleReservationComplete(ticket.toUi())
+    }
+
     override fun updateMoney() {
         view.showTicketMoney(seats.reservationPrice())
     }
@@ -55,11 +66,18 @@ class ReservationSeatPresenter(
         view.setButton(seats.canSelect(ticket.personnel))
     }
 
-    override fun handle() {
-        view.handleReservationComplete(ticket, seats)
+    private fun saveTicket() {
+        thread {
+            ticketRepository.insertAll(ticket)
+        }
     }
 
     companion object {
         const val KEY_SEATS = "seats"
+
+        fun provideFactory(
+            view: ReservationSeatContract.View,
+            repository: TicketRepository = TicketProvider.ticketRepository,
+        ): ReservationSeatContract.Present = ReservationSeatPresenter(view, repository)
     }
 }

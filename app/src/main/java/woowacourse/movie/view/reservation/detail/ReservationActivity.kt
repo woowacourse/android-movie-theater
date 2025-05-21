@@ -21,7 +21,7 @@ import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.home.movies.MovieUi
 import woowacourse.movie.view.home.movies.getMovieById
 import woowacourse.movie.view.home.theater.Showing
-import woowacourse.movie.view.reservation.Ticket
+import woowacourse.movie.view.reservation.TicketUi
 import woowacourse.movie.view.reservation.seat.ReservationSeatActivity
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -125,8 +125,8 @@ class ReservationActivity : AppCompatActivity(), ReservationContract.View {
         }
     }
 
-    override fun navigateToReservationComplete(ticket: Ticket) {
-        val intent = ReservationSeatActivity.newIntent(this@ReservationActivity, ticket)
+    override fun navigateToReservationComplete(ticketUi: TicketUi) {
+        val intent = ReservationSeatActivity.newIntent(this@ReservationActivity, ticketUi)
         startActivity(intent)
     }
 

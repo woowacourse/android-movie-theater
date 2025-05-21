@@ -4,18 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.BindingAdapter
+import woowacourse.movie.data.mapper.toDomain
 import woowacourse.movie.databinding.ActivityReservationCompleteBinding
-import woowacourse.movie.domain.movieseat.Seats
 import woowacourse.movie.view.dialog.DialogFactory
-import woowacourse.movie.view.reservation.Ticket
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import woowacourse.movie.view.reservation.TicketUi
 
 class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteContract.View {
     private val presenter by lazy {
@@ -37,29 +33,19 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         }
         val ticket =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getSerializableExtra(KEY_TICKET, Ticket::class.java)
+                intent.getSerializableExtra(KEY_TICKET, TicketUi::class.java)
             } else {
-                intent.getSerializableExtra(KEY_TICKET) as? Ticket
+                intent.getSerializableExtra(KEY_TICKET) as? TicketUi
             }
 
-        val seats =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getSerializableExtra(KET_SEATS, Seats::class.java)
-            } else {
-                intent.getSerializableExtra(KET_SEATS) as? Seats
-            }
-
-        checkTicket(ticket, seats)
+        checkTicket(ticket)
     }
 
-    private fun checkTicket(
-        ticket: Ticket?,
-        seats: Seats?,
-    ) {
-        if (ticket == null || seats == null) {
+    private fun checkTicket(ticketUi: TicketUi?) {
+        if (ticketUi == null) {
             handleInvalidTicket()
         } else {
-            presenter.fetchData(ticket, seats)
+            presenter.fetchData(ticketUi.toDomain())
         }
     }
 
@@ -69,8 +55,8 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         }
     }
 
-    override fun showTicketInfo(ticket: Ticket) {
-        binding.ticket = ticket
+    override fun showTicketInfo(ticketUi: TicketUi) {
+        binding.ticket = ticketUi
     }
 
     override fun showSeatsInfo(seats: String) {
@@ -83,30 +69,12 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
 
     companion object {
         private const val KEY_TICKET = "ticket"
-        private const val KET_SEATS = "seats"
 
         fun newIntent(
             context: Context,
-            ticket: Ticket,
-            seats: Seats,
+            ticketUi: TicketUi,
         ): Intent =
             Intent(context, ReservationCompleteActivity::class.java)
-                .putExtra(KEY_TICKET, ticket)
-                .putExtra(KET_SEATS, seats)
+                .putExtra(KEY_TICKET, ticketUi)
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-}
-
-@BindingAdapter("dateTime")
-fun setDateTime(
-    view: TextView,
-    date: LocalDateTime,
-) {
-    val formatter = DateTimeFormatter.ofPattern("yyyy.M.d. HH:mm")
-    val dateTimeFormat = date.format(formatter)
-    view.text = dateTimeFormat.toString()
 }

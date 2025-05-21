@@ -61,8 +61,32 @@
 - [x] HomeFragment | 함수형 인터페이스로 변경
 - [x] HomeFragment | 데이터 이동의 책임을 view -> presenter로 이동
 - [x] HomeFragment | findViewById 삭제
-- [ ] HomeFragment | superCall의 필요성?
 - [x] MovieAdapter |  areItemsTheSame | 아이템을 비교하는 메서드 수정
 - [x] TheaterBottomSheetDialogFragment | 생성자 삭제
 - [x] 데이터 바인딩
 - [x] MainActivity | 화면이 회전되어도 현재 Fragment가 유지되도록 수정
+
+### 3,4단계 기능 요구사항
+
+- [x] "예매 내역" 화면에는 사용자가 예매한 영화 목록을 보여준다.
+- [x] "설정" 화면은 기본적으로 알림 기능 On/Off 설정을 제공하며, 초기에는 빈 화면이다.
+- [x] 예매 내역 화면에서 예매한 영화 목록이 리스트 형태로 표시된다.
+- [x] 리스트 항목을 터치하면 해당 영화의 예매 상세 정보 화면으로 이동한다.
+- [x] 리스트 항목을 터치했을 때 시각적 효과(선택 효과 등)가 적용된다. (디자인 시안 참고)
+- [x] 앱을 재실행해도 기존 예매 내역이 유지된다.
+- [ ] 설정 화면에서 알림 기능을 On/Off로 설정할 수 있다.
+- [x] 앱을 재실행해도 알림 설정 값이 유지된다.
+- [x] 영화 시작 30분 전에 푸시 알림이 전송된다.
+- [x] 푸시 알림을 클릭하면 해당 영화의 예매 상세 정보 화면으로 이동한다.
+
+### 3,4단계 피드백 반영
+- [x] TicketRepositoryImpl | 생성자에서 Dao자체를 직접 주입받도록 변경
+- [x] TicketRepositoryImpl | mapper 분리
+- [x] Seat | domain model이 왜 view에 표시가 되기 위한 값을 직접 만들지 않도록 변경
+- [x] ReservationViewHolder | ViewHolder에서 ticket을 가지지 않도록 변경
+- [x] Destroy | DestroyView에서 binding 값이 null로 변하도록 변경
+- [x] setDateTime | 패키지 위치 변경
+- [x] ReservationCompletePresenter | 로그 기록 지우기
+- [x] SettingFragment | 상수화 되지 않은 string값 string.xml로 이동
+- [x] AlarmReceiver | 공통값 재활용
+- [x] AlarmHelper | ZoneId에서 오류가 생기는 이유 찾기
