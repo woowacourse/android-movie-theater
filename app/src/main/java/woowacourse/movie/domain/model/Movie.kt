@@ -2,7 +2,7 @@ package woowacourse.movie.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.movie.data.DummyScreening
+import woowacourse.movie.db.DummyScreening
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -29,17 +29,17 @@ data class Movie(
         return dates.filterNot { it.isBefore(startDate) }
     }
 
-    fun findByMovie(movie: Movie): List<Screening> {
-        return DummyScreening.dummyScreenings.filter { it.movie == movie }
-    }
+    fun findByMovie(movie: Movie): List<Screening> = DummyScreening.dummyScreenings.filter { it.movie == movie }
 
-    fun screeningCinemas(): List<Cinema> {
-        return screening.map { screening ->
+    fun screeningCinemas(): List<Cinema> =
+        screening.map { screening ->
             screening.cinema
         }
-    }
 
-    fun totalScreeningTimes(cinema: Cinema): Int {
-        return screening.find { it.cinema == cinema }?.screeningTimes?.size ?: throw IllegalArgumentException()
-    }
+    fun totalScreeningTimes(cinema: Cinema): Int =
+        screening
+            .find {
+                it.cinema == cinema
+            }?.screeningTimes
+            ?.size ?: throw IllegalArgumentException("해당 극장에서 상영 정보가 없습니다")
 }

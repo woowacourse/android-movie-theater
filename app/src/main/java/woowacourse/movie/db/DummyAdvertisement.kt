@@ -1,4 +1,4 @@
-package woowacourse.movie.data
+package woowacourse.movie.db
 
 import woowacourse.movie.R
 import woowacourse.movie.domain.model.Advertisement
