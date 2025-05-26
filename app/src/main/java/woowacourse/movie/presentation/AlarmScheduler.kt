@@ -19,10 +19,7 @@ class AlarmScheduler(
         dateTime: LocalDateTime,
         ticketBundle : TicketBundleUiModel
     ) {
-        val intent =
-            Intent(context, AlarmReceiver::class.java).apply {
-                putExtra("ticket", ticketBundle)
-            }
+        val intent = AlarmReceiver.createAlarmIntent(context,ticketBundle)
         val pendingIntent =
             PendingIntent.getBroadcast(
                 context,

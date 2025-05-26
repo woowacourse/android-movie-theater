@@ -21,22 +21,18 @@ class AlarmReceiver : BroadcastReceiver() {
             return
         }
 
-        val ticket = intent.getParcelableExtra<TicketBundleUiModel>("ticket") ?: return
+        val ticketBundle = intent.getParcelableExtra<TicketBundleUiModel>("ticket") ?: return
 
 
         NotificationUtil.ensureNotificationChannel(context)
 
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-
-        val activityIntent = Intent(context, ReservationResultActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra("ticket",ticket)
-        }
+        val activityIntent = createAlarmIntent(context , ticketBundle)
 
         val pendingIntent = PendingIntent.getActivity(
             context,
-            ticket.title.hashCode(),
+            ticketBundle.title.hashCode(),
             activityIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
@@ -44,12 +40,23 @@ class AlarmReceiver : BroadcastReceiver() {
         val notification = NotificationCompat.Builder(context, "movie_alarm")
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("예매 알림")
-            .setContentText("${ticket.title} 30분 후에 상영")
+            .setContentText("${ticketBundle.title} 30분 후에 상영")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
             .build()
 
-        notificationManager.notify(ticket.title.hashCode(), notification)
+        notificationManager.notify(ticketBundle.title.hashCode(), notification)
+    }
+
+    companion object {
+        fun createAlarmIntent(
+            context: Context,
+            ticketBundle: TicketBundleUiModel,
+        ): Intent {
+            return Intent(context, AlarmReceiver::class.java).apply {
+                putExtra("ticket", ticketBundle)
+            }
+        }
     }
 }
