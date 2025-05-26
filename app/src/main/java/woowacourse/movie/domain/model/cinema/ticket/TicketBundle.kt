@@ -12,7 +12,7 @@ class TicketBundle(
     val size: Int = tickets.size
     val totalPrice: Int = tickets.sumOf { it.price }
     val labels: List<Seat> = tickets.map { it.seat }
-
+    fun getAlarmTime(): LocalDateTime = dateTime.minusMinutes(30)
     companion object {
         fun bundleOf(
             title: String,

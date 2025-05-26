@@ -122,7 +122,7 @@ class ReservationSeatFragment :
 
         Thread {
             repository.saveReservation(ticketBundle)
-            val alarmTime = ticketBundle.dateTime.minusMinutes(30)
+            val alarmTime = ticketBundle.getAlarmTime()
             if (alarmTime.isAfter(LocalDateTime.now()) &&
                 (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
                         ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)
