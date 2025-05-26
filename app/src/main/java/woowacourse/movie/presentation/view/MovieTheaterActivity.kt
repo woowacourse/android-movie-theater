@@ -1,7 +1,6 @@
 package woowacourse.movie.presentation.view
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -10,20 +9,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import woowacourse.movie.R
 import woowacourse.movie.databinding.ActivityMovieTheaterBinding
-import woowacourse.movie.domain.model.cinema.ticket.TicketBundle
-import woowacourse.movie.presentation.AlarmScheduler
 import woowacourse.movie.presentation.base.BaseActivity
 import woowacourse.movie.presentation.view.history.historyList.ReservationHistoryFragment
-import woowacourse.movie.presentation.view.history.historyList.ReservationHistoryRepository
 import woowacourse.movie.presentation.view.home.movies.MoviesFragment
 import woowacourse.movie.presentation.view.setting.SettingFragment
-import java.time.LocalDateTime
 
 class MovieTheaterActivity : BaseActivity<ActivityMovieTheaterBinding>(R.layout.activity_movie_theater) {
     val homeFragment = MoviesFragment()
