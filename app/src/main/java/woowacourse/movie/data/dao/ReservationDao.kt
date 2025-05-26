@@ -14,9 +14,9 @@ interface ReservationDao {
 
     @Transaction
     @Query("SELECT * FROM ticket_bundle")
-    fun findAllTicketBundles(): List<TicketBundleWithTickets>
+    fun findAllTicketBundles(): List<TicketBundleDao>
 
     @Transaction
     @Query("SELECT * FROM ticket_bundle WHERE id = :bundleId")
-    fun findTicketBundleWithTicketsById(bundleId: Int): TicketBundleWithTickets?
+    fun findTicketBundleWithTicketsById(bundleId: Int): TicketBundleDao?
 }

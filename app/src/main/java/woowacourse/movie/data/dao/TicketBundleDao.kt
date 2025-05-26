@@ -6,7 +6,7 @@ import androidx.room.Relation
 import woowacourse.movie.data.entity.TicketBundleEntity
 import woowacourse.movie.data.entity.TicketEntity
 
-data class TicketBundleWithTickets(
+data class TicketBundleDao(
     @Embedded val bundle: TicketBundleEntity,
     @Relation(
         parentColumn = "id",
