@@ -9,7 +9,6 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import woowacourse.movie.R
 import woowacourse.movie.presentation.model.TicketBundleUiModel
-import woowacourse.movie.presentation.view.history.detailResult.ReservationResultActivity
 import woowacourse.movie.presentation.view.setting.PushPreferenceHelper
 import woowacourse.movie.presentation.util.NotificationUtil
 
@@ -21,7 +20,7 @@ class AlarmReceiver : BroadcastReceiver() {
             return
         }
 
-        val ticketBundle = intent.getParcelableExtra<TicketBundleUiModel>("ticket") ?: return
+        val ticketBundle = intent.getParcelableExtra<TicketBundleUiModel>(TICKET_BUNDLE_KEY) ?: return
 
 
         NotificationUtil.ensureNotificationChannel(context)
@@ -39,8 +38,8 @@ class AlarmReceiver : BroadcastReceiver() {
 
         val notification = NotificationCompat.Builder(context, "movie_alarm")
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("예매 알림")
-            .setContentText("${ticketBundle.title} 30분 후에 상영")
+            .setContentTitle(RESERVATION_TITLE_MESSAGE)
+            .setContentText(ticketBundle.title+RESERVATION_MESSAGE)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
@@ -50,12 +49,15 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     companion object {
+        private const val RESERVATION_MESSAGE = " 30분 후에 상영"
+        private const val RESERVATION_TITLE_MESSAGE = "예매 알림"
+        private const val TICKET_BUNDLE_KEY = "ticket"
         fun createAlarmIntent(
             context: Context,
             ticketBundle: TicketBundleUiModel,
         ): Intent {
             return Intent(context, AlarmReceiver::class.java).apply {
-                putExtra("ticket", ticketBundle)
+                putExtra(TICKET_BUNDLE_KEY, ticketBundle)
             }
         }
     }
