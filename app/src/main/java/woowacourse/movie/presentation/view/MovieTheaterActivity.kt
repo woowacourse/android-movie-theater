@@ -48,34 +48,6 @@ class MovieTheaterActivity : BaseActivity<ActivityMovieTheaterBinding>(R.layout.
         }
 
         askPermissionNotification()
-        setupAlarmsFromDatabase()
-    }
-
-    private fun setupAlarmsFromDatabase() {
-        val dao = ReservationDatabase.getInstance(this).reservationDao()
-        val repository = ReservationHistoryRepository(dao)
-
-        lifecycleScope.launch(Dispatchers.IO) {
-            val bundles = repository.getReservation()
-            withContext(Dispatchers.Main) {
-                scheduleAllUpcomingAlarms(this@MovieTheaterActivity, bundles)
-            }
-        }
-    }
-
-    fun scheduleAllUpcomingAlarms(
-        context: Context,
-        ticketBundles: List<TicketBundle>,
-    ) {
-        val alarmScheduler = AlarmScheduler(context)
-        val now = LocalDateTime.now()
-
-        ticketBundles.forEach { bundle ->
-            val alarmTime = bundle.dateTime.minusMinutes(30)
-            if (alarmTime.isAfter(now)) {
-                alarmScheduler.schedule(alarmTime, bundle.title)
-            }
-        }
     }
 
     private fun askPermissionNotification() {
