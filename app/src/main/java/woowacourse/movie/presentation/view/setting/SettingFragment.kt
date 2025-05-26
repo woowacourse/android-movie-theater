@@ -10,6 +10,7 @@ class SettingFragment :
     BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting),
     SettingContract.View {
     private lateinit var presenter: SettingContract.Presenter
+    var isUserInteraction = true
 
     override fun onViewCreated(
         view: View,
@@ -20,16 +21,17 @@ class SettingFragment :
         presenter = SettingPresenter(this)
         presenter.checkPreference()
 
+
         binding.pushSwitch.setOnCheckedChangeListener { _, isChecked ->
-            presenter.updatePreference(isChecked)
+            if (isUserInteraction) {
+                presenter.updatePreference(isChecked)
+            }
         }
     }
 
     override fun updateSwitch(isEnabled: Boolean) {
-        binding.pushSwitch.setOnCheckedChangeListener(null)
+        isUserInteraction = false
         binding.pushSwitch.isChecked = isEnabled
-        binding.pushSwitch.setOnCheckedChangeListener { _, isChecked ->
-            presenter.updatePreference(isChecked)
-        }
+        isUserInteraction = true
     }
 }
