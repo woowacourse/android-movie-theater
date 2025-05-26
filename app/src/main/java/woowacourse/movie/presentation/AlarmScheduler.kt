@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.RequiresPermission
+import woowacourse.movie.presentation.model.TicketBundleUiModel
 import java.time.LocalDateTime
 import java.time.ZoneId
 import kotlin.jvm.java
@@ -16,16 +17,16 @@ class AlarmScheduler(
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     fun schedule(
         dateTime: LocalDateTime,
-        title: String,
+        ticketBundle : TicketBundleUiModel
     ) {
         val intent =
             Intent(context, AlarmReceiver::class.java).apply {
-                putExtra("title", title)
+                putExtra("ticket", ticketBundle)
             }
         val pendingIntent =
             PendingIntent.getBroadcast(
                 context,
-                title.hashCode(),
+                ticketBundle.title.hashCode(),
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
             )

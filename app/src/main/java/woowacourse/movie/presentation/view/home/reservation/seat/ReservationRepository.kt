@@ -9,7 +9,7 @@ import woowacourse.movie.domain.model.cinema.ticket.toLabel
 class ReservationRepository(
     private val dao: ReservationDao,
 ) {
-    fun saveReservation(ticketBundle: TicketBundle) {
+    fun saveReservation(ticketBundle: TicketBundle){
         val bundleEntity = ticketBundle.toEntity()
         val bundleId = dao.saveTicketBundle(bundleEntity).toInt()
         val ticketEntities =

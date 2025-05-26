@@ -21,6 +21,7 @@ import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.ScreenUiModel
 import woowacourse.movie.presentation.model.SeatUiModel
 import woowacourse.movie.presentation.model.TicketBundleUiModel
+import woowacourse.movie.presentation.model.toUiModel
 import woowacourse.movie.presentation.util.CustomAlertDialog
 import woowacourse.movie.presentation.util.DialogInfo
 import woowacourse.movie.presentation.view.home.reservation.result.ReservationResultFragment
@@ -126,7 +127,7 @@ class ReservationSeatFragment :
                 (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
                         ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)
             ) {
-                alarmScheduler.schedule(alarmTime, ticketBundle.title)
+                alarmScheduler.schedule(alarmTime, ticketBundle.toUiModel())
             }
         }.start()
     }
