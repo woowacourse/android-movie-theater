@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.databinding.ItemHistoryBinding
 import woowacourse.movie.presentation.model.TicketBundleUiModel
-
 class TicketBundleAdapter(
     private val onClick: (TicketBundleUiModel) -> Unit,
 ) : ListAdapter<TicketBundleUiModel, TicketBundleAdapter.TicketViewHolder>(DIFF_CALLBACK) {
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -31,13 +31,19 @@ class TicketBundleAdapter(
         private val binding: ItemHistoryBinding,
         private val onClick: (TicketBundleUiModel) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
+
+        private var currentItem: TicketBundleUiModel? = null
+
+        init {
+            binding.root.setOnClickListener {
+                currentItem?.let { onClick(it) }
+            }
+        }
+
         fun bind(item: TicketBundleUiModel) {
+            currentItem = item
             binding.ticketBundle = item
             binding.executePendingBindings()
-
-            binding.root.setOnClickListener {
-                onClick(item)
-            }
         }
     }
 
