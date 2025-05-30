@@ -8,9 +8,6 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationSeatBinding
 import woowacourse.movie.domain.model.cinema.ticket.TicketBundle

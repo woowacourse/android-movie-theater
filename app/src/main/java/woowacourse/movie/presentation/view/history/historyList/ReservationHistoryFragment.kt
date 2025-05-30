@@ -4,9 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationHistoryBinding
 import woowacourse.movie.presentation.base.BaseFragment
@@ -37,12 +34,12 @@ class ReservationHistoryFragment :
     }
 
     override fun showScreen() {
-        lifecycleScope.launch(Dispatchers.IO) {
+        Thread {
             val ticketBundleUiModels = repository.getReservation().map { it.toUiModel() }
-            launch(Dispatchers.Main) {
+            activity?.runOnUiThread {
                 binding.ticketBundleList = ticketBundleUiModels
             }
-        }
+        }.start()
     }
 
     private fun moveToDetail(ticket: TicketBundleUiModel) {
