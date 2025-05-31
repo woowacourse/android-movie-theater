@@ -1,20 +1,28 @@
 package woowacourse.movie.presentation.view.home.reservation.seat
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import woowacourse.movie.R
 import woowacourse.movie.databinding.FragmentReservationSeatBinding
+import woowacourse.movie.domain.model.cinema.ticket.TicketBundle
+import woowacourse.movie.presentation.AlarmScheduler
 import woowacourse.movie.presentation.base.BaseFragment
 import woowacourse.movie.presentation.extension.getParcelableCompat
 import woowacourse.movie.presentation.model.ReservationInfoUiModel
 import woowacourse.movie.presentation.model.ScreenUiModel
 import woowacourse.movie.presentation.model.SeatUiModel
 import woowacourse.movie.presentation.model.TicketBundleUiModel
+import woowacourse.movie.presentation.model.toUiModel
 import woowacourse.movie.presentation.util.CustomAlertDialog
 import woowacourse.movie.presentation.util.DialogInfo
 import woowacourse.movie.presentation.view.home.reservation.result.ReservationResultFragment
+import java.time.LocalDateTime
 
 class ReservationSeatFragment :
     BaseFragment<FragmentReservationSeatBinding>(R.layout.fragment_reservation_seat),
@@ -101,6 +109,24 @@ class ReservationSeatFragment :
 
     override fun notifySeatUpdateFailed(message: String) {
         showToast(message.ifEmpty { getString(R.string.default_error_message) })
+    }
+
+    override fun savePublishedTickets(ticketBundle: TicketBundle) {
+        val context = requireContext()
+        val dao = ReservationDatabase.getInstance(context).reservationDao()
+        val repository = ReservationRepository(dao)
+        val alarmScheduler = AlarmScheduler(context)
+
+        Thread {
+            repository.saveReservation(ticketBundle)
+            val alarmTime = ticketBundle.getAlarmTime()
+            if (alarmTime.isAfter(LocalDateTime.now()) &&
+                (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)
+            ) {
+                alarmScheduler.schedule(alarmTime, ticketBundle.toUiModel())
+            }
+        }.start()
     }
 
     companion object {

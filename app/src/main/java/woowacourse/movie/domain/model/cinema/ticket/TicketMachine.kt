@@ -13,13 +13,11 @@ class TicketMachine(
                 reservationInfo.toTicket(seat)
             }
 
-        return TicketBundle.bundleOf(tickets)
+        return TicketBundle.bundleOf(reservationInfo.title, reservationInfo.reservationDateTime, reservationInfo.theaterName, tickets)
     }
 
     private fun ReservationInfo.toTicket(seat: Seat): Ticket =
         Ticket(
-            this.title,
-            this.reservationDateTime,
             seat,
             policy.calculatePrice(seat.type),
         )

@@ -19,7 +19,7 @@ class TheaterBottomSheetDialogFragment :
     BottomSheetDialogFragment(),
     TheaterBottomSheetDialogContract.View {
     private var mBinding: FragmentTheaterBottomSheetDialogBinding? = null
-    private val binding get() = mBinding!!
+    private val binding get() = mBinding ?: throw IllegalStateException("바인딩이 초기화되지 않았습니다")
     private val presenter: TheaterBottomSheetDialogPresenter by lazy {
         TheaterBottomSheetDialogPresenter(
             this,
@@ -70,6 +70,11 @@ class TheaterBottomSheetDialogFragment :
         val intent = ReservationActivity.newIntent(requireContext(), movie, theater)
         startActivity(intent)
         dismiss()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mBinding = null
     }
 
     companion object {
