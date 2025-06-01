@@ -5,29 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import woowacourse.movie.data.TicketInfoDatabase
 import woowacourse.movie.data.TicketRepository
 import woowacourse.movie.databinding.FragmentHistoryBinding
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
-import kotlin.concurrent.thread
 
-class HistoryFragment : Fragment() {
+class HistoryFragment :
+    Fragment(),
+    HistoryContract.View {
     private var _binding: FragmentHistoryBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
+
+    private lateinit var presenter: HistoryContract.Presenter
 
     private val historyAdapter =
         HistoryAdapter { ticket ->
             navigateToReservationComplete(ticket)
         }
-
-    private var recyclerView: RecyclerView? = null
-
-    private val repository: TicketRepository by lazy {
-        val dao = TicketInfoDatabase.getDatabase(requireContext()).ticketInfoDao()
-        TicketRepository(dao)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,11 +30,10 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
-        val view = binding.root
 
-        recyclerView = binding.recyclerView
+        initPresenter()
 
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(
@@ -49,12 +43,16 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.adapter = historyAdapter
 
-        thread {
-            val tickets = repository.loadTickets()
-            requireActivity().runOnUiThread {
-                (binding.recyclerView.adapter as HistoryAdapter).submitList(tickets)
-            }
-        }
+        presenter.loadTickets()
+    }
+
+    override fun showTickets(tickets: List<Ticket>) {
+        historyAdapter.submitList(tickets)
+    }
+
+    override fun navigateToReservationComplete(ticket: Ticket) {
+        val intent = ReservationCompleteActivity.newIntent(requireContext(), ticket)
+        startActivity(intent)
     }
 
     override fun onDestroyView() {
@@ -62,8 +60,9 @@ class HistoryFragment : Fragment() {
         _binding = null
     }
 
-    private fun navigateToReservationComplete(ticket: Ticket) {
-        val intent = ReservationCompleteActivity.newIntent(requireContext(), ticket)
-        startActivity(intent)
+    private fun initPresenter() {
+        val dao = TicketInfoDatabase.getDatabase(requireContext()).ticketInfoDao()
+        val repository = TicketRepository(dao)
+        presenter = HistoryPresenter(this, repository)
     }
 }

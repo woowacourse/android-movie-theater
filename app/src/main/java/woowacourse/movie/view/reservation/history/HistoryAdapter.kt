@@ -33,16 +33,12 @@ class HistoryAdapter(
                 override fun areItemsTheSame(
                     oldItem: Ticket,
                     newItem: Ticket,
-                ): Boolean {
-                    return oldItem.title == newItem.title
-                }
+                ): Boolean = oldItem.title == newItem.title
 
                 override fun areContentsTheSame(
                     oldItem: Ticket,
                     newItem: Ticket,
-                ): Boolean {
-                    return oldItem == newItem
-                }
+                ): Boolean = oldItem == newItem
             }
     }
 }
