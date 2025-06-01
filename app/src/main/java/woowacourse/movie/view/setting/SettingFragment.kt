@@ -16,9 +16,11 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import woowacourse.movie.databinding.FragmentSettingBinding
 
-class SettingFragment : Fragment(), SettingContract.View {
+class SettingFragment :
+    Fragment(),
+    SettingContract.View {
     private var _binding: FragmentSettingBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     private lateinit var alarmBtn: SwitchCompat
 
@@ -74,7 +76,8 @@ class SettingFragment : Fragment(), SettingContract.View {
 
     private fun requestNotificationPermission() {
         if (ContextCompat.checkSelfPermission(
-                requireContext(), Manifest.permission.POST_NOTIFICATIONS,
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS,
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

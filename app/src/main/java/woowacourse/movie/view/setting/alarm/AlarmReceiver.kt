@@ -1,6 +1,5 @@
 package woowacourse.movie.view.setting.alarm
 
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -12,6 +11,7 @@ import woowacourse.movie.R
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.util.getSerializableExtraCompat
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
+import woowacourse.movie.view.setting.notification.NotificationHelper.CHANNEL_ID
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(
@@ -25,24 +25,9 @@ class AlarmReceiver : BroadcastReceiver() {
             return
         }
 
-        val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        val channel =
-            NotificationChannel(
-                CHANNEL_ID,
-                context.getString(R.string.reservation_notification_channel_name),
-                NotificationManager.IMPORTANCE_HIGH,
-            ).apply {
-                description =
-                    context.getString(R.string.reservation_notification_channel_description)
-            }
-
-        notificationManager.createNotificationChannel(channel)
-
         val ticket = intent.getSerializableExtraCompat(TICKET_KEY, Ticket::class.java)
-
-        val receivedIntent = ticket?.let { ReservationCompleteActivity.newIntent(context, it) } ?: return
+        val receivedIntent =
+            ticket?.let { ReservationCompleteActivity.newIntent(context, it) } ?: return
 
         val pendingIntent: PendingIntent =
             PendingIntent.getActivity(
@@ -53,7 +38,8 @@ class AlarmReceiver : BroadcastReceiver() {
             )
 
         val builder =
-            NotificationCompat.Builder(context, CHANNEL_ID)
+            NotificationCompat
+                .Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.alarm_icon)
                 .setContentTitle(context.getString(R.string.reservation_notification_title))
                 .setContentText(
@@ -61,14 +47,14 @@ class AlarmReceiver : BroadcastReceiver() {
                         R.string.notification_reservation_text,
                         ticket.title,
                     ),
-                )
-                .setContentIntent(pendingIntent)
+                ).setContentIntent(pendingIntent)
 
-        notificationManager.notify(1, builder.build())
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(ticket.hashCode(), builder.build())
     }
 
     companion object {
         private const val TICKET_KEY = "TICKET"
-        private const val CHANNEL_ID = "alarm_channel"
     }
 }
