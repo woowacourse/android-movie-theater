@@ -14,6 +14,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import woowacourse.movie.R
+import woowacourse.movie.data.TicketInfoDatabase
+import woowacourse.movie.data.TicketRepository
 import woowacourse.movie.databinding.ActivityReservationSeatBinding
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Position
@@ -24,11 +26,16 @@ import woowacourse.movie.view.dialog.DialogFactory
 import woowacourse.movie.view.dialog.DialogInfo
 import woowacourse.movie.view.reservation.result.ReservationCompleteActivity
 import woowacourse.movie.view.reservation.seat.ReservationSeatPresenter.Companion.KEY_SEATS
+import woowacourse.movie.view.setting.alarm.AlarmHelper
 import java.text.DecimalFormat
 
 class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.View {
     private val presenter: ReservationSeatContract.Present by lazy {
-        ReservationSeatPresenter(this)
+
+        val dao = TicketInfoDatabase.getDatabase(applicationContext).ticketInfoDao()
+        val repository = TicketRepository(dao)
+
+        ReservationSeatPresenter(this, repository)
     }
     private lateinit var binding: ActivityReservationSeatBinding
     private lateinit var seatLayout: TableLayout
@@ -128,7 +135,8 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
 
     override fun showTicketMoney(moviePrice: Int) {
         val priceFormatter = DecimalFormat(PRICE_PATTERN)
-        binding.reservationMovieMoney.text = getString(R.string.movie_money, priceFormatter.format(moviePrice))
+        binding.reservationMovieMoney.text =
+            getString(R.string.movie_money, priceFormatter.format(moviePrice))
     }
 
     override fun setReservationButton(onClickConfirm: () -> Unit) {
@@ -182,17 +190,18 @@ class ReservationSeatActivity : AppCompatActivity(), ReservationSeatContract.Vie
                 R.string.cancel,
             ),
         ) {
-            navigateToReservationComplete(ticket, seats)
+            val finalTicket: Ticket = ticket.copy(seats = seats)
+
+            presenter.saveTicketInfo(finalTicket)
+            AlarmHelper.setAlarm(applicationContext, finalTicket)
+            navigateToReservationComplete(finalTicket)
             finish()
         }
     }
 
-    override fun navigateToReservationComplete(
-        ticket: Ticket,
-        seats: Seats,
-    ) {
+    override fun navigateToReservationComplete(ticket: Ticket) {
         val intent =
-            ReservationCompleteActivity.newIntent(this@ReservationSeatActivity, ticket, seats)
+            ReservationCompleteActivity.newIntent(this@ReservationSeatActivity, ticket)
         startActivity(intent)
     }
 

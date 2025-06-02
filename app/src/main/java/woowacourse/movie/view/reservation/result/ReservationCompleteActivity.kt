@@ -31,7 +31,7 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         }
 
         val ticket = intent.getSerializableExtraCompat(KEY_TICKET, Ticket::class.java)
-        val seats = intent.getSerializableExtraCompat(KET_SEATS, Seats::class.java)
+        val seats = ticket?.seats
 
         checkTicket(ticket, seats)
     }
@@ -58,7 +58,7 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
         seats: Seats,
     ) {
         val formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN)
-        val dateTimeFormat = ticket.date.format(formatter)
+        val dateTimeFormat = ticket.dateTime.format(formatter)
 
         val movieTitleTextView = findViewById<TextView>(R.id.tv_movie_title)
         val movieCancelInfoTextView = findViewById<TextView>(R.id.tv_cancel_info)
@@ -67,9 +67,9 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
 
         movieTitleTextView.text = ticket.title
         movieCancelInfoTextView.text =
-            getString(R.string.movie_cancel_deadline, Ticket.CANCEL_DEADLINE)
+            getString(R.string.reservation_complete_movie_cancel_deadline, Ticket.CANCEL_DEADLINE)
         movieDateTextView.text = dateTimeFormat
-        moviePersonnel.text = getString(R.string.moviePersonnel, ticket.personnel)
+        moviePersonnel.text = getString(R.string.complete_movie_personnel, ticket.personnel)
     }
 
     override fun showSeatsInfo(seats: String) {
@@ -79,29 +79,26 @@ class ReservationCompleteActivity : AppCompatActivity(), ReservationCompleteCont
 
     override fun showTheaterName(theaterName: String) {
         val theaterNameTextView = findViewById<TextView>(R.id.tv_selected_theater_name)
-        theaterNameTextView.text = getString(R.string.theater_name, theaterName)
+        theaterNameTextView.text = getString(R.string.seat_theater_name, theaterName)
     }
 
     override fun showTicketMoney(moviePrice: Int) {
         val priceFormatter = java.text.DecimalFormat(PRICE_PATTERN)
         val movieTotalPrice = findViewById<TextView>(R.id.tv_movie_total_price)
         movieTotalPrice.text =
-            getString(R.string.movieTotalPrice, priceFormatter.format(moviePrice))
+            getString(R.string.complete_movie_total_price, priceFormatter.format(moviePrice))
     }
 
     companion object {
         private const val DATETIME_PATTERN = "yyyy.M.d. HH:mm"
         private const val PRICE_PATTERN = "#,###"
         private const val KEY_TICKET = "ticket"
-        private const val KET_SEATS = "seats"
 
         fun newIntent(
             context: Context,
             ticket: Ticket,
-            seats: Seats,
         ): Intent =
             Intent(context, ReservationCompleteActivity::class.java)
                 .putExtra(KEY_TICKET, ticket)
-                .putExtra(KET_SEATS, seats)
     }
 }

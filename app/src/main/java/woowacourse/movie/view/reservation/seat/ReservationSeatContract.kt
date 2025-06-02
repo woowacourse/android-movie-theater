@@ -15,6 +15,8 @@ interface ReservationSeatContract {
         fun deselectSeat(position: Position)
 
         fun restoreSeat(seats: Seats)
+
+        fun saveTicketInfo(ticket: Ticket)
     }
 
     interface View {
@@ -43,10 +45,7 @@ interface ReservationSeatContract {
             seats: Seats,
         )
 
-        fun navigateToReservationComplete(
-            ticket: Ticket,
-            seats: Seats,
-        )
+        fun navigateToReservationComplete(ticket: Ticket)
 
         fun selectableButton()
 

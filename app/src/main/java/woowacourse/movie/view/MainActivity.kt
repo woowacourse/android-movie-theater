@@ -1,8 +1,15 @@
 package woowacourse.movie.view
 
+import android.app.AlarmManager
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -16,6 +23,8 @@ import woowacourse.movie.view.setting.SettingFragment
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
+    private var currentFragmentTag: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -28,36 +37,87 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        initBottomNavigation()
+
         if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                add(R.id.main_fragment_container, HomeFragment())
-            }
+            binding.bottomNavMenu.selectedItemId = R.id.menu_fragment_home
         }
 
-        initBottomNavigation()
+        checkExactAlarmPermission()
+    }
+
+    private fun checkExactAlarmPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+            if (!alarmManager.canScheduleExactAlarms()) {
+                showExactAlarmPermissionDialog()
+            }
+        }
+    }
+
+    private fun showExactAlarmPermissionDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("정확한 알람 권한 필요")
+            .setMessage("예매 알림을 받으려면 '정확한 알람' 권한이 필요합니다.\n설정 화면으로 이동하시겠습니까?")
+            .setPositiveButton("설정으로 이동") { _, _ ->
+                val intent =
+                    Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                        data = "package:$packageName".toUri()
+                    }
+                startActivity(intent)
+            }
+            .setNegativeButton("취소", null)
+            .show()
     }
 
     private fun initBottomNavigation() {
-        binding.bottomNavMenu.selectedItemId = R.id.menu_fragment_home
-
         binding.bottomNavMenu.setOnItemSelectedListener { item ->
             val fragment =
                 when (item.itemId) {
-                    R.id.menu_fragment_home -> HomeFragment()
-                    R.id.menu_fragment_history -> HistoryFragment()
-                    R.id.menu_fragment_settings -> SettingFragment()
+                    R.id.menu_fragment_home -> HomeFragment::class.java
+                    R.id.menu_fragment_history -> HistoryFragment::class.java
+                    R.id.menu_fragment_settings -> SettingFragment::class.java
                     else -> return@setOnItemSelectedListener false
                 }
 
-            replaceFragment(fragment)
+            switchFragment(fragment)
             return@setOnItemSelectedListener true
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun switchFragment(classType: Class<out Fragment>) {
+        val tag = classType.simpleName
+
+        val currentFragment = supportFragmentManager.findFragmentByTag(currentFragmentTag)
+        val targetFragment = supportFragmentManager.findFragmentByTag(tag)
+
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.main_fragment_container, fragment)
+
+            currentFragment?.let { hide(it) }
+
+            if (targetFragment == null) {
+                add(R.id.main_fragment_container, classType, null, tag)
+            } else {
+                show(targetFragment)
+            }
         }
+
+        currentFragmentTag = tag
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(CURRENT_FRAGMENT_TAG, currentFragmentTag)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        currentFragmentTag = savedInstanceState.getString(CURRENT_FRAGMENT_TAG)
+    }
+
+    companion object {
+        private const val CURRENT_FRAGMENT_TAG = "currentFragmentTag"
     }
 }

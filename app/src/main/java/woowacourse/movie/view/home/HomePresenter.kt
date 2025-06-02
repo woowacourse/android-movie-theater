@@ -15,21 +15,20 @@ class HomePresenter(
         view.showMovies(movieItems)
     }
 
-    private fun addAdItemToMovieItem(movies: List<Movie>): MutableList<MovieListItem> {
-        val movieListItems = mutableListOf<MovieListItem>()
-
-        movies.forEachIndexed { index, movie ->
-            movieListItems.add(MovieListItem.ItemMovie(movie))
-            if ((index + 1) % 3 == 0) {
-                movieListItems.add(
-                    MovieListItem.ItemAd(
-                        AdType.Banner(
-                            imageUrl = R.drawable.advertisement,
+    private fun addAdItemToMovieItem(movies: List<Movie>): List<MovieListItem> {
+        return buildList {
+            movies.forEachIndexed { index, movie ->
+                add(MovieListItem.ItemMovie(movie))
+                if ((index + 1) % 3 == 0) {
+                    add(
+                        MovieListItem.ItemAd(
+                            AdType.Banner(
+                                imageUrl = R.drawable.advertisement,
+                            ),
                         ),
-                    ),
-                )
+                    )
+                }
             }
         }
-        return movieListItems
     }
 }

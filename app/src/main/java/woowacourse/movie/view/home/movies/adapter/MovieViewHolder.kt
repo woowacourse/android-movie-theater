@@ -39,12 +39,12 @@ class MovieViewHolder(
         val startDateFormatted = date.startDate.format(formatter)
         val endDateFormatted = date.endDate.format(formatter)
         movieDate.text =
-            itemView.context?.getString(R.string.movieDate, startDateFormatted, endDateFormatted)
+            itemView.context?.getString(R.string.complete_movie_date, startDateFormatted, endDateFormatted)
     }
 
     private fun setTimeTextView(time: Int) {
         movieTime.text =
-            itemView.context?.getString(R.string.movieTime, time.toString())
+            itemView.context?.getString(R.string.complete_movie_time, time.toString())
     }
 
     companion object {

@@ -32,15 +32,14 @@ class ReservationCompleteActivityTest {
             LocalDateTime.of(2025, 4, 21, 18, 0),
             2,
             "선릉 극장",
+            Seats(mutableSetOf(Seat(Position(0, 0)))),
         )
-
-    private val seats = Seats(mutableSetOf(Seat(Position(0, 0))))
 
     @Before
     fun setUp() {
         testName = nameRule.methodName
         if (testName == "`null값이_Intent된_경우_ErrorDialog를_띄운다`") return
-        val intent = ReservationCompleteActivity.newIntent(fakeContext, ticket, seats)
+        val intent = ReservationCompleteActivity.newIntent(fakeContext, ticket)
         ActivityScenario.launch<ReservationCompleteActivity>(intent)
     }
 

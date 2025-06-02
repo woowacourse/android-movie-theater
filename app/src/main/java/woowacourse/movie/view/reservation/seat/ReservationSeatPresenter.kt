@@ -1,12 +1,15 @@
 package woowacourse.movie.view.reservation.seat
 
+import woowacourse.movie.data.TicketRepository
 import woowacourse.movie.domain.Ticket
 import woowacourse.movie.domain.movieseat.Position
 import woowacourse.movie.domain.movieseat.Seat
 import woowacourse.movie.domain.movieseat.Seats
+import kotlin.concurrent.thread
 
 class ReservationSeatPresenter(
     val view: ReservationSeatContract.View,
+    val repository: TicketRepository,
 ) : ReservationSeatContract.Present {
     private lateinit var ticket: Ticket
     private var seats = Seats()
@@ -61,6 +64,12 @@ class ReservationSeatPresenter(
             view.selectableButton()
         } else {
             view.deSelectableButton()
+        }
+    }
+
+    override fun saveTicketInfo(ticket: Ticket) {
+        thread {
+            repository.saveTicket(ticket)
         }
     }
 

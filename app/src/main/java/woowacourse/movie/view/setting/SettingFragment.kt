@@ -1,63 +1,108 @@
 package woowacourse.movie.view.setting
 
+import android.Manifest
+import android.app.AlertDialog
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.SwitchCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
-import woowacourse.movie.R
+import woowacourse.movie.databinding.FragmentSettingBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class SettingFragment :
+    Fragment(),
+    SettingContract.View {
+    private var _binding: FragmentSettingBinding? = null
+    val binding get() = _binding!!
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SettingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var alarmBtn: SwitchCompat
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private val sharedPref by lazy {
+        requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted: Boolean ->
+
+            alarmBtn.isChecked = isGranted
+            sharedPref.edit { putBoolean(KEY_IS_ALARM_ON, isGranted) }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+    ): View {
+        _binding = FragmentSettingBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        val isAlarmOn = sharedPref.getBoolean(KEY_IS_ALARM_ON, false)
+        setAlarmBtn(isAlarmOn)
+
+        return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun setAlarmBtn(isAlarmOn: Boolean) {
+        alarmBtn = binding.settingAlarmSwitchBtn
+        alarmBtn.isChecked = isAlarmOn
+
+        alarmBtn.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                requestNotificationPermission()
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                    sharedPref.edit { putBoolean(KEY_IS_ALARM_ON, true) }
+                }
+                return@setOnCheckedChangeListener
+            }
+
+            alarmBtn.isChecked = false
+            sharedPref.edit { putBoolean(KEY_IS_ALARM_ON, false) }
+        }
+    }
+
+    private fun requestNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                    showPermissionDialog()
+                } else {
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            } else {
+                // 안드로이드 12 이하는 Notification에 관한 권한 필요 없음
+            }
+        }
+    }
+
+    private fun showPermissionDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+
+        builder.setTitle("@string/setting_notification_title")
+        builder.setMessage("@string/setting_notification_description")
+        builder.setNegativeButton(android.R.string.cancel, null)
+        builder.show()
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SettingFragment.
-         */
-        @JvmStatic
-        fun newInstance(
-            param1: String,
-            param2: String,
-        ) = SettingFragment().apply {
-            arguments =
-                Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-        }
+        private const val PREFS_NAME = "setting"
+        private const val KEY_IS_ALARM_ON = "isAlarmOn"
     }
 }

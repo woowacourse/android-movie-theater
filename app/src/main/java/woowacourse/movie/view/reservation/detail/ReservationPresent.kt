@@ -4,6 +4,7 @@ import android.os.Bundle
 import woowacourse.movie.domain.Movie
 import woowacourse.movie.domain.Showings
 import woowacourse.movie.domain.Ticket
+import woowacourse.movie.domain.movieseat.Seats
 import java.time.LocalDateTime
 
 class ReservationPresent(
@@ -13,6 +14,7 @@ class ReservationPresent(
     private var selectedDatePosition = DEFAULT_DATE_POSITION
     private var selectedTimePosition = DEFAULT_TIME_POSITION
     private lateinit var movie: Movie
+    private val seats = Seats()
 
     override fun fetchData(
         movie: Movie,
@@ -70,10 +72,11 @@ class ReservationPresent(
     ) {
         val ticket =
             Ticket(
-                movie.title,
-                selectedDateTime,
-                count,
-                theaterName,
+                title = movie.title,
+                dateTime = selectedDateTime,
+                personnel = count,
+                theaterName = theaterName,
+                seats = seats,
             )
         view.navigateToReservationComplete(ticket)
     }

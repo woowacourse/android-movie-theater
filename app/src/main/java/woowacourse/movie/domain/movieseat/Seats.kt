@@ -15,3 +15,43 @@ class Seats(private val seats: Set<Seat> = emptySet()) : Serializable {
 
     fun reservationPrice() = seats.sumOf { it.seatPrice() }
 }
+
+fun Seats.toSeatString(): String {
+    return selectedSeats
+        .map { it.toDisplayName() }
+        .sorted()
+        .joinToString(", ")
+}
+
+fun Seat.toDisplayName(): String {
+    val rowChar = 'A' + position.row
+    return "$rowChar${position.column + 1}"
+}
+
+fun String.toSeat(): Seat {
+    if (this.isEmpty() || this.length < 2) {
+        throw IllegalArgumentException("잘못된 좌석 형식: $this")
+    }
+
+    val rowChar = this[0]
+    val columnNumberStr = this.substring(1)
+
+    if (!rowChar.isLetter() || !columnNumberStr.all { it.isDigit() }) {
+        throw IllegalArgumentException("잘못된 좌석 형식: $this")
+    }
+
+    val columnNumber = columnNumberStr.toInt()
+
+    val row = rowChar - 'A'
+    val column = columnNumber - 1
+
+    return Seat(Position(row, column))
+}
+
+fun String.toSeats(): Seats {
+    return Seats(
+        this.split(",")
+            .map { it.trim().toSeat() }
+            .toSet(),
+    )
+}
